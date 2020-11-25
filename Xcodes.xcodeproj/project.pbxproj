@@ -21,7 +21,7 @@
 		CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A52449575000113D76 /* Assets.xcassets */; };
 		CAD2E7A92449575000113D76 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A82449575000113D76 /* Preview Assets.xcassets */; };
 		CAD2E7AC2449575000113D76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7AA2449575000113D76 /* Main.storyboard */; };
-		CAD2E7B82449575100113D76 /* XcodesMacTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7B72449575100113D76 /* XcodesMacTests.swift */; };
+		CAD2E7B82449575100113D76 /* XcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7B72449575100113D76 /* XcodesTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,7 +55,7 @@
 		CAD2E7AD2449575000113D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAD2E7AE2449575000113D76 /* Xcodes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Xcodes.entitlements; sourceTree = "<group>"; };
 		CAD2E7B32449575100113D76 /* XcodesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAD2E7B72449575100113D76 /* XcodesMacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesMacTests.swift; sourceTree = "<group>"; };
+		CAD2E7B72449575100113D76 /* XcodesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesTests.swift; sourceTree = "<group>"; };
 		CAD2E7B92449575100113D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -105,7 +105,7 @@
 				CA538A0F255A4F3300E64DD7 /* XcodesKit */,
 				CA538A0C255A4F1A00E64DD7 /* AppleAPI */,
 				CAD2E7A02449574E00113D76 /* Xcodes */,
-				CAD2E7B62449575100113D76 /* XcodesMacTests */,
+				CAD2E7B62449575100113D76 /* XcodesTests */,
 				CAD2E79F2449574E00113D76 /* Products */,
 				CA538A12255A4F7C00E64DD7 /* Frameworks */,
 			);
@@ -146,13 +146,13 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		CAD2E7B62449575100113D76 /* XcodesMacTests */ = {
+		CAD2E7B62449575100113D76 /* XcodesTests */ = {
 			isa = PBXGroup;
 			children = (
-				CAD2E7B72449575100113D76 /* XcodesMacTests.swift */,
+				CAD2E7B72449575100113D76 /* XcodesTests.swift */,
 				CAD2E7B92449575100113D76 /* Info.plist */,
 			);
-			path = XcodesMacTests;
+			path = XcodesTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -278,7 +278,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAD2E7B82449575100113D76 /* XcodesMacTests.swift in Sources */,
+				CAD2E7B82449575100113D76 /* XcodesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,13 +469,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z2R9WCWER2;
-				INFOPLIST_FILE = XcodesMacTests/Info.plist;
+				INFOPLIST_FILE = XcodesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesMacTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xcodes.app/Contents/MacOS/Xcodes";
@@ -490,13 +490,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = Z2R9WCWER2;
-				INFOPLIST_FILE = XcodesMacTests/Info.plist;
+				INFOPLIST_FILE = XcodesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesMacTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xcodes.app/Contents/MacOS/Xcodes";
