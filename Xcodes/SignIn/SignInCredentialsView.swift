@@ -7,27 +7,30 @@ struct SignInCredentialsView: View {
     @State private var password: String = ""
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
+            Text("Sign in with your Apple ID.")
+                .bold()
+                .padding(.vertical)
             HStack {
-                Text("Apple ID")
-                TextField("Apple ID", text: $username)
+                Text("Apple ID:")
+                    .frame(minWidth: 100, alignment: .trailing)
+                TextField("example@icloud.com", text: $username)
+                    .frame(width: 250)
+            }
+            HStack {
+                Text("Password:")
+                    .frame(minWidth: 100, alignment: .trailing)
+                SecureField("Required", text: $password)
+                    .frame(width: 250)
             }
             
             HStack {
-                Text("Password")
-                SecureField("Password", text: $password)
-            }
-            
-            HStack {
-                Button("Cancel") {
-                    isPresented = false
-                }
-                .keyboardShortcut(.cancelAction)
                 Spacer()
-                Button("Sign In") {
-                    appState.continueLogin(username: username, password: password) 
-                }
-                .keyboardShortcut(.defaultAction)
+                Button("Cancel") { isPresented = false }
+                    .keyboardShortcut(.cancelAction)
+                Button("Next") { appState.continueLogin(username: username, password: password) }
+                    .disabled(username.isEmpty)
+                    .keyboardShortcut(.defaultAction)
             }
         }
         .padding()

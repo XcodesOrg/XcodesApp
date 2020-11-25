@@ -1,11 +1,15 @@
-import Cocoa
 import SwiftUI
 
 @main
 struct XcodesApp: App {
+    @StateObject private var appState = AppState()
+    
     var body: some Scene {
-        WindowGroup {
-            ContentView()
+        Group {
+            WindowGroup("Xcodes") {
+                ContentView()
+                    .environmentObject(appState)
+            }
         }
     }
 }

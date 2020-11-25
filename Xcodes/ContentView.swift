@@ -4,12 +4,34 @@ import Version
 import PromiseKit
 
 struct ContentView: View {
-    @ObservedObject var appState = AppState()
+    @EnvironmentObject var appState: AppState
     @State private var selection = Set<String>()
     @State private var rowBeingConfirmedForUninstallation: AppState.XcodeVersion?
-
+    @State private var category: Category = .all
+    @State private var searchText: String = ""
+    
+    var visibleVersions: [AppState.XcodeVersion] {
+        var versions: [AppState.XcodeVersion]
+        switch category {
+        case .all:
+            versions = appState.allVersions
+        case .installed:
+            versions = appState.allVersions.filter { $0.installed }
+        }
+        
+        if !searchText.isEmpty {
+            versions = versions.filter { $0.title.contains(searchText) }
+        }
+        
+        return versions
+    }
+    
+    enum Category {
+        case all, installed
+    }
+    
     var body: some View {
-        List(appState.allVersions, selection: $selection) { row in
+        List(visibleVersions, selection: $selection) { row in
             VStack(alignment: .leading) {
                 HStack {
                     Text(row.title)
@@ -22,32 +44,13 @@ struct ContentView: View {
                     Button(row.installed ? "INSTALLED" : "INSTALL") {
                         print("Installing...")
                     }
-                    .buttonStyle(AppStoreButtonStyle(installed: row.installed, 
+                    .buttonStyle(AppStoreButtonStyle(installed: row.installed,
                                                      highlighted: self.selection.contains(row.id)))
                     .disabled(row.installed)
                 }
                 Text(verbatim: row.path ?? "")
                     .font(.caption)
                     .foregroundColor(self.selection.contains(row.id) ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
-                //                if row.installed {
-                //                    HStack {
-                //                        Button(action: { row.installed ? self.rowBeingConfirmedForUninstallation = row : self.appState.install(id: row.id) }) { 
-                //                            Text("Uninstall") 
-                //                        }
-                //                        Button(action: { self.appState.reveal(id: row.id) }) {
-                //                            Text("Reveal in Finder") 
-                //                        }
-                //                        Button(action: { self.appState.select(id: row.id) }) {
-                //                            Text("Select") 
-                //                        }
-                //                    }
-                //                    .buttonStyle(PlainButtonStyle())
-                //                    .foregroundColor(
-                //                        self.selection.contains(row.id) ?
-                //                            Color(NSColor.selectedMenuItemTextColor) :
-                //                            .accentColor
-                //                    )
-                //                }
             }
             .contextMenu {
                 Button(action: { row.installed ? self.rowBeingConfirmedForUninstallation = row : self.appState.install(id: row.id) }) { 
@@ -63,16 +66,31 @@ struct ContentView: View {
                 }
             }
         }
-        .frame(minWidth: 200, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
-        .onAppear(perform: appState.load)
         .toolbar {
-            ToolbarItem {
-                Button(action: { appState.update().cauterize() }) {
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: { self.appState.update() }) {
                     Image(systemName: "arrow.clockwise")
                 }
-                .keyboardShortcut("r")
+                .keyboardShortcut(KeyEquivalent("r"))
+            }
+            ToolbarItem(placement: .principal) {
+                Picker("", selection: $category) {
+                    Text("All")
+                        .tag(Category.all)
+                    Text("Installed")
+                        .tag(Category.installed)
+                }
+                .pickerStyle(SegmentedPickerStyle())
+            }
+            ToolbarItem {
+                TextField("Search...", text: $searchText)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 200)
             }
         }
+        .navigationSubtitle(Text("Updated \(Date().addingTimeInterval(-600), style: .relative) ago"))
+        .frame(minWidth: 200, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
+        .onAppear(perform: appState.load)
         .alert(item: $appState.error) { error in
             Alert(title: Text(error.title), 
                   message: Text(verbatim: error.message), 
@@ -84,15 +102,28 @@ struct ContentView: View {
                   primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: row.id) }), 
                   secondaryButton: .cancel(Text("Cancel")))
         }
-        .sheet(isPresented: $appState.presentingSignInAlert, content: {
+        .sheet(isPresented: $appState.presentingSignInAlert) {
             SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
                 .environmentObject(appState)
-        })
+        }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
+        Group {
+            ContentView()
+                .environmentObject({ () -> AppState in
+                    let a = AppState()
+                    a.allVersions = [
+                        AppState.XcodeVersion(title: "12.3", installState: .installed, selected: true, path: nil),
+                        AppState.XcodeVersion(title: "12.2", installState: .notInstalled, selected: false, path: nil),
+                        AppState.XcodeVersion(title: "12.1", installState: .notInstalled, selected: false, path: nil),
+                        AppState.XcodeVersion(title: "12.0", installState: .installed, selected: false, path: nil),
+                    ]
+                    return a
+                }())
+        }
+        .previewLayout(.sizeThatFits)
     }
 }
