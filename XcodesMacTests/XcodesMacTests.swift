@@ -1,5 +1,5 @@
 import XCTest
-@testable import XcodesMac
+@testable import Xcodes
 
 class XcodesMacTests: XCTestCase {
 

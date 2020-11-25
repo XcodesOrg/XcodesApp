@@ -38,8 +38,8 @@
 		CA378F982466567600A58CE0 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
 		CA44901E2463AD34003D8213 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
-		CA538A0C255A4F1A00E64DD7 /* AppleAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppleAPI; path = XcodesMac/AppleAPI; sourceTree = "<group>"; };
-		CA538A0F255A4F3300E64DD7 /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XcodesKit; path = XcodesMac/XcodesKit; sourceTree = "<group>"; };
+		CA538A0C255A4F1A00E64DD7 /* AppleAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppleAPI; path = Xcodes/AppleAPI; sourceTree = "<group>"; };
+		CA538A0F255A4F3300E64DD7 /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XcodesKit; path = Xcodes/XcodesKit; sourceTree = "<group>"; };
 		CA8FB5F8256E0F9400469DA5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCredentialsView.swift; sourceTree = "<group>"; };
 		CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn2FAView.swift; sourceTree = "<group>"; };
@@ -52,8 +52,8 @@
 		CAD2E7A82449575000113D76 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CAD2E7AB2449575000113D76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CAD2E7AD2449575000113D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CAD2E7AE2449575000113D76 /* XcodesMac.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XcodesMac.entitlements; sourceTree = "<group>"; };
-		CAD2E7B32449575100113D76 /* XcodesMacTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodesMacTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAD2E7AE2449575000113D76 /* Xcodes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Xcodes.entitlements; sourceTree = "<group>"; };
+		CAD2E7B32449575100113D76 /* XcodesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD2E7B72449575100113D76 /* XcodesMacTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesMacTests.swift; sourceTree = "<group>"; };
 		CAD2E7B92449575100113D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -102,7 +102,7 @@
 				CA8FB5F8256E0F9400469DA5 /* README.md */,
 				CA538A0F255A4F3300E64DD7 /* XcodesKit */,
 				CA538A0C255A4F1A00E64DD7 /* AppleAPI */,
-				CAD2E7A02449574E00113D76 /* XcodesMac */,
+				CAD2E7A02449574E00113D76 /* Xcodes */,
 				CAD2E7B62449575100113D76 /* XcodesMacTests */,
 				CAD2E79F2449574E00113D76 /* Products */,
 				CA538A12255A4F7C00E64DD7 /* Frameworks */,
@@ -113,12 +113,12 @@
 			isa = PBXGroup;
 			children = (
 				CAD2E79E2449574E00113D76 /* Xcodes.app */,
-				CAD2E7B32449575100113D76 /* XcodesMacTests.xctest */,
+				CAD2E7B32449575100113D76 /* XcodesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CAD2E7A02449574E00113D76 /* XcodesMac */ = {
+		CAD2E7A02449574E00113D76 /* Xcodes */ = {
 			isa = PBXGroup;
 			children = (
 				CAD2E7A12449574E00113D76 /* XcodesApp.swift */,
@@ -130,10 +130,10 @@
 				CAD2E7A52449575000113D76 /* Assets.xcassets */,
 				CAD2E7AA2449575000113D76 /* Main.storyboard */,
 				CAD2E7AD2449575000113D76 /* Info.plist */,
-				CAD2E7AE2449575000113D76 /* XcodesMac.entitlements */,
+				CAD2E7AE2449575000113D76 /* Xcodes.entitlements */,
 				CAD2E7A72449575000113D76 /* Preview Content */,
 			);
-			path = XcodesMac;
+			path = Xcodes;
 			sourceTree = "<group>";
 		};
 		CAD2E7A72449575000113D76 /* Preview Content */ = {
@@ -156,9 +156,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CAD2E79D2449574E00113D76 /* XcodesMac */ = {
+		CAD2E79D2449574E00113D76 /* Xcodes */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CAD2E7BC2449575100113D76 /* Build configuration list for PBXNativeTarget "XcodesMac" */;
+			buildConfigurationList = CAD2E7BC2449575100113D76 /* Build configuration list for PBXNativeTarget "Xcodes" */;
 			buildPhases = (
 				CAD2E79A2449574E00113D76 /* Sources */,
 				CAD2E79B2449574E00113D76 /* Frameworks */,
@@ -168,7 +168,7 @@
 			);
 			dependencies = (
 			);
-			name = XcodesMac;
+			name = Xcodes;
 			packageProductDependencies = (
 				CAA1CB2C255A5262003FD669 /* AppleAPI */,
 				CAA1CB2E255A5262003FD669 /* XcodesKit */,
@@ -177,9 +177,9 @@
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CAD2E7B22449575100113D76 /* XcodesMacTests */ = {
+		CAD2E7B22449575100113D76 /* XcodesTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CAD2E7BF2449575100113D76 /* Build configuration list for PBXNativeTarget "XcodesMacTests" */;
+			buildConfigurationList = CAD2E7BF2449575100113D76 /* Build configuration list for PBXNativeTarget "XcodesTests" */;
 			buildPhases = (
 				CAD2E7AF2449575100113D76 /* Sources */,
 				CAD2E7B02449575100113D76 /* Frameworks */,
@@ -190,9 +190,9 @@
 			dependencies = (
 				CAD2E7B52449575100113D76 /* PBXTargetDependency */,
 			);
-			name = XcodesMacTests;
+			name = XcodesTests;
 			productName = XcodesMacTests;
-			productReference = CAD2E7B32449575100113D76 /* XcodesMacTests.xctest */;
+			productReference = CAD2E7B32449575100113D76 /* XcodesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
@@ -214,7 +214,7 @@
 					};
 				};
 			};
-			buildConfigurationList = CAD2E7992449574E00113D76 /* Build configuration list for PBXProject "XcodesMac" */;
+			buildConfigurationList = CAD2E7992449574E00113D76 /* Build configuration list for PBXProject "Xcodes" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -229,8 +229,8 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				CAD2E79D2449574E00113D76 /* XcodesMac */,
-				CAD2E7B22449575100113D76 /* XcodesMacTests */,
+				CAD2E79D2449574E00113D76 /* Xcodes */,
+				CAD2E7B22449575100113D76 /* XcodesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -285,7 +285,7 @@
 /* Begin PBXTargetDependency section */
 		CAD2E7B52449575100113D76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CAD2E79D2449574E00113D76 /* XcodesMac */;
+			target = CAD2E79D2449574E00113D76 /* Xcodes */;
 			targetProxy = CAD2E7B42449575100113D76 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -352,7 +352,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -406,7 +406,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MACOSX_DEPLOYMENT_TARGET = 11.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -419,20 +419,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = XcodesMac/XcodesMac.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Xcodes/Xcodes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"XcodesMac/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = Z2R9WCWER2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = XcodesMac/Info.plist;
+				INFOPLIST_FILE = Xcodes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesMac;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
 			};
@@ -442,20 +441,19 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = XcodesMac/XcodesMac.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Xcodes/Xcodes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_ASSET_PATHS = "\"XcodesMac/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = Z2R9WCWER2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = XcodesMac/Info.plist;
+				INFOPLIST_FILE = Xcodes/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesMac;
+				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
 			};
@@ -475,11 +473,10 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesMacTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XcodesMac.app/Contents/MacOS/XcodesMac";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xcodes.app/Contents/MacOS/Xcodes";
 			};
 			name = Debug;
 		};
@@ -497,18 +494,17 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesMacTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/XcodesMac.app/Contents/MacOS/XcodesMac";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xcodes.app/Contents/MacOS/Xcodes";
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CAD2E7992449574E00113D76 /* Build configuration list for PBXProject "XcodesMac" */ = {
+		CAD2E7992449574E00113D76 /* Build configuration list for PBXProject "Xcodes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CAD2E7BA2449575100113D76 /* Debug */,
@@ -517,7 +513,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CAD2E7BC2449575100113D76 /* Build configuration list for PBXNativeTarget "XcodesMac" */ = {
+		CAD2E7BC2449575100113D76 /* Build configuration list for PBXNativeTarget "Xcodes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CAD2E7BD2449575100113D76 /* Debug */,
@@ -526,7 +522,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CAD2E7BF2449575100113D76 /* Build configuration list for PBXNativeTarget "XcodesMacTests" */ = {
+		CAD2E7BF2449575100113D76 /* Build configuration list for PBXNativeTarget "XcodesTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CAD2E7C02449575100113D76 /* Debug */,
