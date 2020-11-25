@@ -1,0 +1,11 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: macOS-11.0
+    steps:
+    - uses: actions/checkout@v2.3.4
+    - name: Run tests
+      env: 
+        DEVELOPER_DIR: /Applications/Xcode_12.2.app
+      run: xcodebuild test -scheme Xcodes

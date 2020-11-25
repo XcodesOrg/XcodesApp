@@ -41,6 +41,7 @@
 		CA538A0C255A4F1A00E64DD7 /* AppleAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppleAPI; path = Xcodes/AppleAPI; sourceTree = "<group>"; };
 		CA538A0F255A4F3300E64DD7 /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XcodesKit; path = Xcodes/XcodesKit; sourceTree = "<group>"; };
 		CA8FB5F8256E0F9400469DA5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		CA8FB61C256E115700469DA5 /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .github; sourceTree = "<group>"; };
 		CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCredentialsView.swift; sourceTree = "<group>"; };
 		CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn2FAView.swift; sourceTree = "<group>"; };
 		CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSMSView.swift; sourceTree = "<group>"; };
@@ -100,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				CA8FB5F8256E0F9400469DA5 /* README.md */,
+				CA8FB61C256E115700469DA5 /* .github */,
 				CA538A0F255A4F3300E64DD7 /* XcodesKit */,
 				CA538A0C255A4F1A00E64DD7 /* AppleAPI */,
 				CAD2E7A02449574E00113D76 /* Xcodes */,
