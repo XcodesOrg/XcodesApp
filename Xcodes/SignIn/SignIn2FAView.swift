@@ -5,6 +5,7 @@ struct SignIn2FAView: View {
     @EnvironmentObject var appState: AppState
     @Binding var isPresented: Bool
     @State private var code: String = ""
+    let sessionData: AppleSessionData
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -18,7 +19,7 @@ struct SignIn2FAView: View {
                 Button("Cancel", action: { isPresented = false  })
                 Button("Send SMS", action: {})
                 Spacer()
-                Button("Continue", action: {})
+                Button("Continue", action: { appState.submit2FACode(code, sessionData: sessionData) })
             }
         }
         .padding()
@@ -27,7 +28,7 @@ struct SignIn2FAView: View {
 
 struct SignIn2FAView_Previews: PreviewProvider {
     static var previews: some View {
-        SignIn2FAView(isPresented: .constant(true))
+        SignIn2FAView(isPresented: .constant(true), sessionData: AppleSessionData(serviceKey: "", sessionID: "", scnt: ""))
             .environmentObject(AppState())
     }
 }

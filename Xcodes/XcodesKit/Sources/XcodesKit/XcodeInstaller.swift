@@ -248,9 +248,9 @@ public final class XcodeInstaller {
 
     private func downloadXcode(version: Version, downloader: Downloader) -> Promise<(Xcode, URL)> {
         return firstly { () -> Promise<Version> in
-            loginIfNeeded().map { version }
-        }
-        .then { version -> Promise<Version> in
+//            loginIfNeeded().map { version }
+//        }
+//        .then { version -> Promise<Version> in
             if self.xcodeList.shouldUpdate {
                 return self.xcodeList.update().map { _ in version }
             }
@@ -282,60 +282,60 @@ public final class XcodeInstaller {
         }
     }
 
-    func loginIfNeeded(withUsername existingUsername: String? = nil) -> Promise<Void> {
-        return firstly { () -> Promise<Void> in
-            return Current.network.validateSession()
-        }
-        .recover { error -> Promise<Void> in
-            guard
-                let username = existingUsername ?? self.findUsername() ?? Current.shell.readLine(prompt: "Apple ID: "),
-                let password = self.findPassword(withUsername: username) ?? Current.shell.readSecureLine(prompt: "Apple ID Password: ")
-            else { throw Error.missingUsernameOrPassword }
-
-            return firstly { () -> Promise<Void> in
-                self.login(username, password: password)
-            }
-            .recover { error -> Promise<Void> in
-                Current.logging.log(error.legibleLocalizedDescription)
-
-                if case Client.Error.invalidUsernameOrPassword = error {
-                    Current.logging.log("Try entering your password again")
-                    return self.loginIfNeeded(withUsername: username)
-                }
-                else {
-                    return Promise(error: error)
-                }
-            }
-        }
-    }
-
-    public func login(_ username: String, password: String) -> Promise<Void> {
-        return firstly { () -> Promise<Void> in
-            Current.network.login(accountName: username, password: password)
-        }
-        .recover { error -> Promise<Void> in
-
-            if let error = error as? Client.Error {
-              switch error  {
-              case .invalidUsernameOrPassword(_):
-                  // remove any keychain password if we fail to log with an invalid username or password so it doesn't try again.
-                  try? Current.keychain.remove(username)
-              default:
-                  break
-              }
-            }
-
-            return Promise(error: error)
-        }
-        .done { _ in
-            try? Current.keychain.set(password, key: username)
-
-            if self.configuration.defaultUsername != username {
-                self.configuration.defaultUsername = username
-                try? self.configuration.save()
-            }
-        }
-    }
+//    func loginIfNeeded(withUsername existingUsername: String? = nil) -> Promise<Void> {
+//        return firstly { () -> Promise<Void> in
+//            return Current.network.validateSession()
+//        }
+//        .recover { error -> Promise<Void> in
+//            guard
+//                let username = existingUsername ?? self.findUsername() ?? Current.shell.readLine(prompt: "Apple ID: "),
+//                let password = self.findPassword(withUsername: username) ?? Current.shell.readSecureLine(prompt: "Apple ID Password: ")
+//            else { throw Error.missingUsernameOrPassword }
+//
+//            return firstly { () -> Promise<Void> in
+//                self.login(username, password: password)
+//            }
+//            .recover { error -> Promise<Void> in
+//                Current.logging.log(error.legibleLocalizedDescription)
+//
+//                if case Client.AuthenticationErrro.invalidUsernameOrPassword = error {
+//                    Current.logging.log("Try entering your password again")
+//                    return self.loginIfNeeded(withUsername: username)
+//                }
+//                else {
+//                    return Promise(error: error)
+//                }
+//            }
+//        }
+//    }
+//
+//    public func login(_ username: String, password: String) -> Promise<Void> {
+//        return firstly { () -> Promise<Void> in
+//            Current.network.login(accountName: username, password: password)
+//        }
+//        .recover { error -> Promise<Void> in
+//
+//            if let error = error as? Client.AuthenticationErrro {
+//              switch error  {
+//              case .invalidUsernameOrPassword(_):
+//                  // remove any keychain password if we fail to log with an invalid username or password so it doesn't try again.
+//                  try? Current.keychain.remove(username)
+//              default:
+//                  break
+//              }
+//            }
+//
+//            return Promise(error: error)
+//        }
+//        .done { _ in
+//            try? Current.keychain.set(password, key: username)
+//
+//            if self.configuration.defaultUsername != username {
+//                self.configuration.defaultUsername = username
+//                try? self.configuration.save()
+//            }
+//        }
+//    }
 
     let xcodesUsername = "XCODES_USERNAME"
     let xcodesPassword = "XCODES_PASSWORD"
@@ -511,12 +511,12 @@ public final class XcodeInstaller {
     }
 
     public func update() -> Promise<[Xcode]> {
-        return firstly { () -> Promise<Void> in
-            loginIfNeeded()
-        }
-        .then { () -> Promise<[Xcode]> in
+//        return firstly { () -> Promise<Void> in
+//            loginIfNeeded()
+//        }
+//        .then { () -> Promise<[Xcode]> in
             self.xcodeList.update()
-        }
+//        }
     }
 
     public func updateAndPrint(destination: Path) -> Promise<Void> {
