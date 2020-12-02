@@ -6,20 +6,28 @@ struct SignIn2FAView: View {
     @Binding var isPresented: Bool
     @State private var code: String = ""
     let sessionData: AppleSessionData
+    // TODO: dynamic number of digits
+    let numberOfDigits = 6
     
     var body: some View {
         VStack(alignment: .leading) {
             Text("Enter the \(6) digit code from one of your trusted devices:")
             
             HStack {
-                TextField("\(6) digit code", text: $code)
+                Spacer()
+                PinCodeTextField(code: $code, numberOfDigits: numberOfDigits)
+                Spacer()
             }
+            .padding()
             
             HStack {
                 Button("Cancel", action: { isPresented = false  })
+                    .keyboardShortcut(.cancelAction)
                 Button("Send SMS", action: {})
                 Spacer()
                 Button("Continue", action: { appState.submit2FACode(code, sessionData: sessionData) })
+                    .keyboardShortcut(.defaultAction)
+                    .disabled(code.count != numberOfDigits)
             }
         }
         .padding()
