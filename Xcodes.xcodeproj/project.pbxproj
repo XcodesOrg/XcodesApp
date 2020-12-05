@@ -11,6 +11,8 @@
 		CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */; };
 		CA44901F2463AD34003D8213 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA44901E2463AD34003D8213 /* Tag.swift */; };
 		CA5D781E257365D6008EDE9D /* PinCodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */; };
+		CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA735108257BF96D00EA9CF8 /* AttributedText.swift */; };
+		CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */; };
 		CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA1CB2C255A5262003FD669 /* AppleAPI */; };
 		CAA1CB2F255A5262003FD669 /* XcodesKit in Frameworks */ = {isa = PBXBuildFile; productRef = CAA1CB2E255A5262003FD669 /* XcodesKit */; };
 		CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */; };
@@ -42,6 +44,8 @@
 		CA538A0C255A4F1A00E64DD7 /* AppleAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppleAPI; path = Xcodes/AppleAPI; sourceTree = "<group>"; };
 		CA538A0F255A4F3300E64DD7 /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XcodesKit; path = Xcodes/XcodesKit; sourceTree = "<group>"; };
 		CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeTextView.swift; sourceTree = "<group>"; };
+		CA735108257BF96D00EA9CF8 /* AttributedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedText.swift; sourceTree = "<group>"; };
+		CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
 		CA8FB5F8256E0F9400469DA5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CA8FB61C256E115700469DA5 /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .github; sourceTree = "<group>"; };
 		CA8FB64D256E17B100469DA5 /* XcodesTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XcodesTest.entitlements; sourceTree = "<group>"; };
@@ -133,6 +137,8 @@
 				CAA1CB50255A5D16003FD669 /* SignIn */,
 				CA378F982466567600A58CE0 /* AppState.swift */,
 				CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */,
+				CA735108257BF96D00EA9CF8 /* AttributedText.swift */,
+				CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */,
 				CA44901E2463AD34003D8213 /* Tag.swift */,
 				CAD2E7A52449575000113D76 /* Assets.xcassets */,
 				CAD2E7AA2449575000113D76 /* Main.storyboard */,
@@ -267,12 +273,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
 				CA44901F2463AD34003D8213 /* Tag.swift in Sources */,
 				CA378F992466567600A58CE0 /* AppState.swift in Sources */,
 				CAD2E7A42449574E00113D76 /* ContentView.swift in Sources */,
 				CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */,
 				CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */,
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
+				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
 				CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */,
 				CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */,
 				CA5D781E257365D6008EDE9D /* PinCodeTextView.swift in Sources */,

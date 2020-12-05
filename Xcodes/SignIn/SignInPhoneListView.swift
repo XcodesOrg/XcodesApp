@@ -18,10 +18,10 @@ struct SignInPhoneListView: View {
                 }
                 .frame(height: 200)
             } else {
-                // TODO: This should be a clickable hyperlink
-                Text("Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication. See https://support.apple.com/en-ca/HT204915.")
-                    // lineLimit doesn't work, fixedSize(horizontal: false, vertical: true) is too large in an Alert
-                    .frame(height: 50)
+                AttributedText(
+                    NSAttributedString(string: "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication. See https://support.apple.com/en-ca/HT204915.")
+                        .convertingURLsToLinkAttributes()
+                )
             }
             
             HStack {
