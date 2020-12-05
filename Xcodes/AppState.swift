@@ -34,7 +34,13 @@ class AppState: ObservableObject {
     @Published var error: AlertContent?
     
     @Published var presentingSignInAlert = false
-    @Published var secondFactorSessionData: AppleSessionData?
+    @Published var secondFactorData: SecondFactorData?
+    
+    struct SecondFactorData {
+        let option: TwoFactorOption
+        let authOptions: AuthOptionsResponse
+        let sessionData: AppleSessionData
+    }
     
     private var cancellables = Set<AnyCancellable>()
     let client = AppleAPI.Client()
@@ -55,6 +61,8 @@ class AppState: ObservableObject {
 //        }        
     }
     
+    // MARK: - Authentication
+    
     func validateSession() -> AnyPublisher<Void, Error> {
         return client.validateSession()
             .handleEvents(receiveCompletion: { completion in 
@@ -71,129 +79,50 @@ class AppState: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
-                    if case .failure = completion {
-                        // TODO: show error
-                    }
+                    self.handleAuthenticationFlowCompletion(completion)
                 }, 
                 receiveValue: { authenticationState in 
                     self.authenticationState = authenticationState
-                    if case let AuthenticationState.waitingForSecondFactor(option, sessionData) = authenticationState {
-                        self.handleTwoFactorOption(option, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
+                }
+            )
+            .store(in: &cancellables)
+    }
+    
+    func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
+        self.presentingSignInAlert = false
+        self.secondFactorData = SecondFactorData(
+            option: option,
+            authOptions: authOptions,
+            sessionData: AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
+        )
+    }
+
+    func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
+        client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
+            .sink(
+                receiveCompletion: { completion in
+                    self.handleAuthenticationFlowCompletion(completion)
+                }, 
+                receiveValue: { authenticationState in 
+                    self.authenticationState = authenticationState
+                    if case let AuthenticationState.waitingForSecondFactor(option, authOptions, sessionData) = authenticationState {
+                        self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
                     }
                 }
             )
             .store(in: &cancellables)
     }
     
-    func handleTwoFactorOption(_ option: TwoFactorOption, serviceKey: String, sessionID: String, scnt: String) {
-//        Current.logging.log("Two-factor authentication is enabled for this account.\n")
-        switch option {
-        case let .smsSent(codeLength, phoneNumber):
-            break
-//            return Result {
-//                let code = self.promptForSMSSecurityCode(length: codeLength, for: phoneNumber)
-//                return try URLRequest.submitSecurityCode(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, code: code)
-//            }
-//            .publisher
-//            .flatMap { request in
-//                return Current.network.dataTask(with: request)
-//                    .validateSecurityCodeResponse()
-//                    .mapError { $0 as Error }
-//            }
-//            .flatMap { (data, response) in
-//                self.updateSession(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-//            }
-//            .eraseToAnyPublisher()
-        case let .smsPendingChoice(codeLength, trustedPhoneNumbers):
-            break
-//            return handleWithPhoneNumberSelection(codeLength: codeLength, trustedPhoneNumbers: trustedPhoneNumbers, serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        case let .codeSent(codeLength):
-            self.presentingSignInAlert = false
-            self.secondFactorSessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-//            let code = Current.shell.readLine("""
-//        Enter "sms" without quotes to exit this prompt and choose a phone number to send an SMS security code to.
-//        Enter the \(codeLength) digit code from one of your trusted devices: 
-//        """) ?? ""
-//            
-//            if code == "sms" {
-                // return handleWithPhoneNumberSelection(codeLength: codeLength, trustedPhoneNumbers: authOp, serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-//            }
-        }
+    func choosePhoneNumberForSMS(authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {
+        secondFactorData = SecondFactorData(option: .smsPendingChoice, authOptions: authOptions, sessionData: sessionData)
     }
     
-//    func selectPhoneNumberInteractively(from trustedPhoneNumbers: [AuthOptionsResponse.TrustedPhoneNumber]) -> AnyPublisher<AuthOptionsResponse.TrustedPhoneNumber, Swift.Error> {
-//        return Result {
-//            Current.logging.log("Trusted phone numbers:")
-//            trustedPhoneNumbers.enumerated().forEach { (index, phoneNumber) in
-//                Current.logging.log("\(index + 1): \(phoneNumber.numberWithDialCode)")
-//            }
-//
-//            let possibleSelectionNumberString = Current.shell.readLine("Select a trusted phone number to receive a code via SMS: ")
-//            guard
-//                let selectionNumberString = possibleSelectionNumberString,
-//                let selectionNumber = Int(selectionNumberString) ,
-//                trustedPhoneNumbers.indices.contains(selectionNumber - 1)
-//            else {
-//                throw AuthenticationError.invalidPhoneNumberIndex(min: 1, max: trustedPhoneNumbers.count, given: possibleSelectionNumberString)
-//            }
-//
-//            return trustedPhoneNumbers[selectionNumber - 1]
-//        }
-//        .publisher
-//        .catch { error -> AnyPublisher<AuthOptionsResponse.TrustedPhoneNumber, Swift.Error> in
-//            guard case AuthenticationError.invalidPhoneNumberIndex = error else { 
-//                return Fail<AuthOptionsResponse.TrustedPhoneNumber, Swift.Error>(error: error).eraseToAnyPublisher() 
-//            }
-//            Current.logging.log("\(error.localizedDescription)\n")
-//            return self.selectPhoneNumberInteractively(from: trustedPhoneNumbers)
-//        }
-//        .eraseToAnyPublisher()
-//    }
-//    
-//    func promptForSMSSecurityCode(length: Int, for trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber) -> SecurityCode {
-//        let code = Current.shell.readLine("Enter the \(length) digit code sent to \(trustedPhoneNumber.numberWithDialCode): ") ?? ""
-//        return .sms(code: code, phoneNumberId: trustedPhoneNumber.id)
-//    }
-    
-//    func handleWithPhoneNumberSelection(codeLength: Int, trustedPhoneNumbers: [AuthOptionsResponse.TrustedPhoneNumber]?, serviceKey: String, sessionID: String, scnt: String) -> AnyPublisher<AuthenticationState, Error> {
-//        // I don't think this should ever be nil or empty, because 2FA requires at least one trusted phone number,
-//        // but if it is nil or empty it's better to inform the user so they can try to address it instead of crashing.
-//        guard let trustedPhoneNumbers = trustedPhoneNumbers, trustedPhoneNumbers.isEmpty == false else {
-//            return Fail(error: AuthenticationError.noTrustedPhoneNumbers)
-//                .eraseToAnyPublisher()
-//        }
-//        
-//        return selectPhoneNumberInteractively(from: trustedPhoneNumbers)
-//            .flatMap { trustedPhoneNumber in
-//                Current.network.dataTask(with: try URLRequest.requestSecurityCode(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, trustedPhoneID: trustedPhoneNumber.id))
-//                    .map { _ in
-//                        self.promptForSMSSecurityCode(length: codeLength, for: trustedPhoneNumber)
-//                    }
-//            }
-//            .flatMap { code in
-//                Current.network.dataTask(with: try URLRequest.submitSecurityCode(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, code: code))
-//                    .validateSecurityCodeResponse()
-//            }
-//            .flatMap { (data, response) -> AnyPublisher<AuthenticationState, Error> in
-//                self.updateSession(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-//            }
-//            .eraseToAnyPublisher()
-//    }
-    
-    func submit2FACode(_ code: String, sessionData: AppleSessionData) {
+    func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
         client.submitSecurityCode(code, sessionData: sessionData)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
-                    switch completion {
-                    case let .failure(error):
-                        self.error = AlertContent(title: "Error logging in", message: error.legibleLocalizedDescription)
-                    case .finished:
-                        if case .authenticated = self.authenticationState {
-                            self.presentingSignInAlert = false
-                            self.secondFactorSessionData = nil
-                        }
-                    }
+                    self.handleAuthenticationFlowCompletion(completion)
                 },
                 receiveValue: { authenticationState in
                     self.authenticationState = authenticationState
@@ -201,6 +130,23 @@ class AppState: ObservableObject {
             )
             .store(in: &cancellables)
     }
+    
+    private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
+        switch completion {
+        case let .failure(error):
+            self.error = AlertContent(title: "Error signing in", message: error.legibleLocalizedDescription)
+        case .finished:
+            switch self.authenticationState {
+            case .authenticated, .unauthenticated:
+                self.presentingSignInAlert = false
+                self.secondFactorData = nil
+            case let .waitingForSecondFactor(option, authOptions, sessionData):
+                self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
+            }
+        }
+    }
+    
+    // MARK: -
     
     public func update() -> AnyPublisher<[Xcode], Error> {
 //        return firstly { () -> Promise<Void> in

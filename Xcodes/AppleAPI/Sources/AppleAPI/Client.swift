@@ -83,27 +83,39 @@ public class Client {
 
         // SMS was sent automatically 
         if authOptions.smsAutomaticallySent {
-            option = .smsSent(authOptions.securityCode.length, authOptions.trustedPhoneNumbers!.first!)
+            option = .smsSent(authOptions.trustedPhoneNumbers!.first!)
         // SMS wasn't sent automatically because user needs to choose a phone to send to
         } else if authOptions.canFallBackToSMS {
-            option = .smsPendingChoice(authOptions.securityCode.length, authOptions.trustedPhoneNumbers ?? [])
+            option = .smsPendingChoice
         // Code is shown on trusted devices
         } else {
-            option = .codeSent(authOptions.securityCode.length)
+            option = .codeSent
         }
         
         let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        return Just(AuthenticationState.waitingForSecondFactor(option, sessionData))
+        return Just(AuthenticationState.waitingForSecondFactor(option, authOptions, sessionData))
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
-        // return handleTwoFactorOption(option, serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
     }
     
     // MARK: - Continue 2FA
     
-    public func submitSecurityCode(_ code: String, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
+    public func requestSMSSecurityCode(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
         Result {
-            try URLRequest.submitSecurityCode(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, code: .device(code: code))
+            try URLRequest.requestSecurityCode(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, trustedPhoneID: trustedPhoneNumber.id)
+        }
+        .publisher
+        .flatMap { request in
+            Current.network.dataTask(with: request)
+                .mapError { $0 as Error } 
+        }
+        .map { _ in AuthenticationState.waitingForSecondFactor(.smsSent(trustedPhoneNumber), authOptions, sessionData) }
+        .eraseToAnyPublisher()
+    }
+    
+    public func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
+        Result {
+            try URLRequest.submitSecurityCode(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, code: code)
         }
         .publisher
         .flatMap { request in
@@ -146,7 +158,7 @@ public class Client {
 
 public enum AuthenticationState: Equatable {
     case unauthenticated
-    case waitingForSecondFactor(TwoFactorOption, AppleSessionData)
+    case waitingForSecondFactor(TwoFactorOption, AuthOptionsResponse, AppleSessionData)
     case authenticated
 }
 
@@ -157,7 +169,6 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case incorrectSecurityCode
     case unexpectedSignInResponse(statusCode: Int, message: String?)
     case appleIDAndPrivacyAcknowledgementRequired
-    case noTrustedPhoneNumbers
     case accountUsesTwoStepAuthentication
     case accountUsesUnknownAuthenticationKind(String?)
 
@@ -169,8 +180,6 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             return "You must sign in to https://appstoreconnect.apple.com and acknowledge the Apple ID & Privacy agreement."
         case .invalidPhoneNumberIndex(let min, let max, let given):
             return "Not a valid phone number index. Expecting a whole number between \(min)-\(max), but was given \(given ?? "nothing")."
-        case .noTrustedPhoneNumbers:
-            return "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication. See https://support.apple.com/en-ca/HT204915."
         case .accountUsesTwoStepAuthentication:
             return "Received a response from Apple that indicates this account has two-step authentication enabled. xcodes currently only supports the newer two-factor authentication, though. Please consider upgrading to two-factor authentication, or open an issue on GitHub explaining why this isn't an option for you here: https://github.com/RobotsAndPencils/xcodes/issues/new"
         case .accountUsesUnknownAuthenticationKind:
@@ -214,9 +223,9 @@ struct SignInResponse: Decodable {
 }
 
 public enum TwoFactorOption: Equatable {
-    case smsSent(Int, AuthOptionsResponse.TrustedPhoneNumber)
-    case codeSent(Int)
-    case smsPendingChoice(Int, [AuthOptionsResponse.TrustedPhoneNumber])
+    case smsSent(AuthOptionsResponse.TrustedPhoneNumber)
+    case codeSent
+    case smsPendingChoice
 }
 
 public extension Publisher where Output == (data: Data, response: URLResponse) {
@@ -239,13 +248,27 @@ public extension Publisher where Output == (data: Data, response: URLResponse) {
 }
 
 public struct AuthOptionsResponse: Equatable, Decodable {
-    let trustedPhoneNumbers: [TrustedPhoneNumber]?
-    let trustedDevices: [TrustedDevice]?
-    let securityCode: SecurityCodeInfo
-    let noTrustedDevices: Bool?
-    let serviceErrors: [ServiceError]?
+    public let trustedPhoneNumbers: [TrustedPhoneNumber]?
+    public let trustedDevices: [TrustedDevice]?
+    public let securityCode: SecurityCodeInfo
+    public let noTrustedDevices: Bool?
+    public let serviceErrors: [ServiceError]?
     
-    var kind: Kind {
+    public init(
+        trustedPhoneNumbers: [AuthOptionsResponse.TrustedPhoneNumber]?, 
+        trustedDevices: [AuthOptionsResponse.TrustedDevice]?, 
+        securityCode: AuthOptionsResponse.SecurityCodeInfo, 
+        noTrustedDevices: Bool? = nil, 
+        serviceErrors: [ServiceError]? = nil
+    ) {
+        self.trustedPhoneNumbers = trustedPhoneNumbers
+        self.trustedDevices = trustedDevices
+        self.securityCode = securityCode
+        self.noTrustedDevices = noTrustedDevices
+        self.serviceErrors = serviceErrors
+    }
+    
+    public var kind: Kind {
         if trustedDevices != nil {
             return .twoStep
         } else if trustedPhoneNumbers != nil {
@@ -259,31 +282,56 @@ public struct AuthOptionsResponse: Equatable, Decodable {
     // This should have been a situation where an SMS security code was sent automatically.
     // This resolved itself either after some time passed, or by signing into appleid.apple.com with the account.
     // Not sure if it's worth explicitly handling this case or if it'll be really rare.
-    var canFallBackToSMS: Bool {
+    public var canFallBackToSMS: Bool {
         noTrustedDevices == true
     }
     
-    var smsAutomaticallySent: Bool {
+    public var smsAutomaticallySent: Bool {
         trustedPhoneNumbers?.count == 1 && canFallBackToSMS
     }
     
-    public struct TrustedPhoneNumber: Equatable, Decodable {
-        let id: Int
-        let numberWithDialCode: String
+    public struct TrustedPhoneNumber: Equatable, Decodable, Identifiable {
+        public let id: Int
+        public let numberWithDialCode: String
+
+        public init(id: Int, numberWithDialCode: String) {
+            self.id = id
+            self.numberWithDialCode = numberWithDialCode
+        }
     }
     
-    public struct TrustedDevice: Equatable, Decodable {
-        let id: String
-        let name: String
-        let modelName: String
+    public struct TrustedDevice: Equatable, Decodable {        
+        public let id: String
+        public let name: String
+        public let modelName: String
+
+        public init(id: String, name: String, modelName: String) {
+            self.id = id
+            self.name = name
+            self.modelName = modelName
+        }
     }
     
-    public struct SecurityCodeInfo: Equatable, Decodable {
-        let length: Int
-        let tooManyCodesSent: Bool
-        let tooManyCodesValidated: Bool
-        let securityCodeLocked: Bool
-        let securityCodeCooldown: Bool
+    public struct SecurityCodeInfo: Equatable, Decodable {        
+        public let length: Int
+        public let tooManyCodesSent: Bool
+        public let tooManyCodesValidated: Bool
+        public let securityCodeLocked: Bool
+        public let securityCodeCooldown: Bool
+
+        public init(
+            length: Int,
+            tooManyCodesSent: Bool = false,
+            tooManyCodesValidated: Bool = false,
+            securityCodeLocked: Bool = false,
+            securityCodeCooldown: Bool = false
+        ) {
+            self.length = length
+            self.tooManyCodesSent = tooManyCodesSent
+            self.tooManyCodesValidated = tooManyCodesValidated
+            self.securityCodeLocked = securityCodeLocked
+            self.securityCodeCooldown = securityCodeCooldown
+        }
     }
     
     public enum Kind: Equatable {
@@ -296,7 +344,7 @@ public struct ServiceError: Decodable, Equatable {
     let message: String
 }
 
-enum SecurityCode {
+public enum SecurityCode {
     case device(code: String)
     case sms(code: String, phoneNumberId: Int)
     

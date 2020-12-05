@@ -107,11 +107,22 @@ struct ContentView: View {
                   primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: row.id) }), 
                   secondaryButton: .cancel(Text("Cancel")))
         }
-        .sheet(item: $appState.secondFactorSessionData) { sessionData in
-            SignIn2FAView(isPresented: $appState.secondFactorSessionData.isNotNil, sessionData: sessionData)
+        .sheet(isPresented: $appState.secondFactorData.isNotNil) {
+            secondFactorView(appState.secondFactorData!)
                 .environmentObject(appState)
         }
-        
+    }
+    
+    @ViewBuilder
+    func secondFactorView(_ secondFactorData: AppState.SecondFactorData) -> some View {
+        switch secondFactorData.option {
+        case .codeSent:
+            SignIn2FAView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+        case .smsSent(let trustedPhoneNumber):
+            SignInSMSView(isPresented: $appState.secondFactorData.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+        case .smsPendingChoice:
+            SignInPhoneListView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+        }
     }
 }
 
