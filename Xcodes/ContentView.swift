@@ -73,7 +73,7 @@ struct ContentView: View {
                         SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
                             .environmentObject(appState)
                     }
-                Button(action: { self.appState.update() }) {
+                Button(action: { self.appState.load() }) {
                     Image(systemName: "arrow.clockwise")
                 }
                 .keyboardShortcut(KeyEquivalent("r"))
