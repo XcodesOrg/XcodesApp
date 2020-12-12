@@ -121,7 +121,17 @@ public class Client {
         .flatMap { request in
             Current.network.dataTask(with: request)
                 .mapError { $0 as Error }
-                // .validateSecurityCodeResponse()
+                .tryMap { (data, response) throws -> (Data, URLResponse) in
+                    guard let urlResponse = response as? HTTPURLResponse else { return (data, response) }
+                    switch urlResponse.statusCode {
+                    case 200..<300:
+                        return (data, urlResponse)
+                    case 401:
+                        throw AuthenticationError.incorrectSecurityCode
+                    case let code:
+                        throw AuthenticationError.badStatusCode(code, data, urlResponse)
+                    }
+                }
                 .flatMap { (data, response) -> AnyPublisher<AuthenticationState, Error> in
                     self.updateSession(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
                 }
@@ -171,6 +181,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case appleIDAndPrivacyAcknowledgementRequired
     case accountUsesTwoStepAuthentication
     case accountUsesUnknownAuthenticationKind(String?)
+    case badStatusCode(Int, Data, HTTPURLResponse)
 
     public var errorDescription: String? {
         switch self {
@@ -226,25 +237,6 @@ public enum TwoFactorOption: Equatable {
     case smsSent(AuthOptionsResponse.TrustedPhoneNumber)
     case codeSent
     case smsPendingChoice
-}
-
-public extension Publisher where Output == (data: Data, response: URLResponse) {
-    func validateSecurityCodeResponse() -> AnyPublisher<Output, Failure> {
-        self.eraseToAnyPublisher()
-//        validate()
-//            .recover { error -> AnyPublisher<Output, Swift.Error> in
-//                switch error {
-//                case PMKHTTPError.badStatusCode(let code, _, _):
-//                    if code == 401 {
-//                        throw Client.Error.incorrectSecurityCode
-//                    } else {
-//                        throw error
-//                    }
-//                default:
-//                    throw error
-//                }
-//            }
-    }
 }
 
 public struct AuthOptionsResponse: Equatable, Decodable {
