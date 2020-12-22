@@ -5,20 +5,28 @@ struct SignIn2FAView: View {
     @EnvironmentObject var appState: AppState
     @Binding var isPresented: Bool
     @State private var code: String = ""
+    let authOptions: AuthOptionsResponse
+    let sessionData: AppleSessionData
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Enter the \(6) digit code from one of your trusted devices:")
+            Text("Enter the \(authOptions.securityCode.length) digit code from one of your trusted devices:")
             
             HStack {
-                TextField("\(6) digit code", text: $code)
-            }
-            
-            HStack {
-                Button("Cancel", action: { isPresented = false  })
-                Button("Send SMS", action: {})
                 Spacer()
-                Button("Continue", action: {})
+                PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode.length)
+                Spacer()
+            }
+            .padding()
+            
+            HStack {
+                Button("Cancel", action: { isPresented = false })
+                    .keyboardShortcut(.cancelAction)
+                Button("Send SMS", action: { appState.choosePhoneNumberForSMS(authOptions: authOptions, sessionData: sessionData) })
+                Spacer()
+                Button("Continue", action: { appState.submitSecurityCode(.device(code: code), sessionData: sessionData) })
+                    .keyboardShortcut(.defaultAction)
+                    .disabled(code.count != authOptions.securityCode.length)
             }
         }
         .padding()
@@ -27,7 +35,15 @@ struct SignIn2FAView: View {
 
 struct SignIn2FAView_Previews: PreviewProvider {
     static var previews: some View {
-        SignIn2FAView(isPresented: .constant(true))
+        SignIn2FAView(
+            isPresented: .constant(true),
+            authOptions: AuthOptionsResponse(
+                trustedPhoneNumbers: nil,
+                trustedDevices: nil,
+                securityCode: .init(length: 6)
+            ),
+            sessionData: AppleSessionData(serviceKey: "", sessionID: "", scnt: "")
+        )
             .environmentObject(AppState())
     }
 }

@@ -67,8 +67,13 @@ struct ContentView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button(action: { self.appState.update() }) {
+            ToolbarItemGroup(placement: .primaryAction) {
+                Button("Login", action: { self.appState.presentingSignInAlert = true })
+                    .sheet(isPresented: $appState.presentingSignInAlert) {
+                        SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
+                            .environmentObject(appState)
+                    }
+                Button(action: { self.appState.load() }) {
                     Image(systemName: "arrow.clockwise")
                 }
                 .keyboardShortcut(KeyEquivalent("r"))
@@ -102,9 +107,21 @@ struct ContentView: View {
                   primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: row.id) }), 
                   secondaryButton: .cancel(Text("Cancel")))
         }
-        .sheet(isPresented: $appState.presentingSignInAlert) {
-            SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
+        .sheet(isPresented: $appState.secondFactorData.isNotNil) {
+            secondFactorView(appState.secondFactorData!)
                 .environmentObject(appState)
+        }
+    }
+    
+    @ViewBuilder
+    func secondFactorView(_ secondFactorData: AppState.SecondFactorData) -> some View {
+        switch secondFactorData.option {
+        case .codeSent:
+            SignIn2FAView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+        case .smsSent(let trustedPhoneNumber):
+            SignInSMSView(isPresented: $appState.secondFactorData.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+        case .smsPendingChoice:
+            SignInPhoneListView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         }
     }
 }
@@ -125,5 +142,13 @@ struct ContentView_Previews: PreviewProvider {
                 }())
         }
         .previewLayout(.sizeThatFits)
+    }
+}
+
+extension Optional {
+    /// Note that this is lossy when setting, so you can really only set it to nil, but this is sufficient for mapping `Binding<Item?>` to `Binding<Bool>` for Alerts, Popovers, etc.
+    var isNotNil: Bool {
+        get { self != nil }
+        set { self = newValue ? self : nil }
     }
 }

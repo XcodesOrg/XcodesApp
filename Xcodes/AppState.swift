@@ -22,6 +22,8 @@ class AppState: ObservableObject {
         case installing(Progress)
         case installed
     }
+    
+    @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var allVersions: [XcodeVersion] = []
     
     struct AlertContent: Identifiable {
@@ -32,53 +34,175 @@ class AppState: ObservableObject {
     @Published var error: AlertContent?
     
     @Published var presentingSignInAlert = false
+    @Published var secondFactorData: SecondFactorData?
+    
+    struct SecondFactorData {
+        let option: TwoFactorOption
+        let authOptions: AuthOptionsResponse
+        let sessionData: AppleSessionData
+    }
+    
+    private var cancellables = Set<AnyCancellable>()
+    let client = AppleAPI.Client()
 
     func load() {
 //        if list.shouldUpdate {
+        // Treat this implementation as a placeholder that can be thrown away.
+        // It's only here to make it easy to see that auth works.
             update()
-                .done { _ in
-                    self.updateAllVersions()
-                }
-                .catch { error in
-                    self.error = AlertContent(title: "Error", 
-                                              message: error.localizedDescription)
-                }
-//        }
+                .sink(
+                    receiveCompletion: { completion in
+                        dump(completion)
+                    },
+                    receiveValue: { xcodes in
+                        let installedXcodes = Current.files.installedXcodes(Path.root/"Applications")
+                        var allXcodeVersions = xcodes.map { $0.version }
+                        for installedXcode in installedXcodes {
+                            // If an installed version isn't listed online, add the installed version
+                            if !allXcodeVersions.contains(where: { version in
+                                version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version)
+                            }) {
+                                allXcodeVersions.append(installedXcode.version)
+                            }
+                            // If an installed version is the same as one that's listed online which doesn't have build metadata, replace it with the installed version with build metadata
+                            else if let index = allXcodeVersions.firstIndex(where: { version in
+                                version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version) &&
+                                version.buildMetadataIdentifiers.isEmpty
+                            }) {
+                                allXcodeVersions[index] = installedXcode.version
+                            }
+                        }
+
+                        self.allVersions = allXcodeVersions
+                            .sorted(by: >)
+                            .map { xcodeVersion in
+                                let installedXcode = installedXcodes.first(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) })
+                                return XcodeVersion(
+                                    title: xcodeVersion.xcodeDescription, 
+                                    installState: installedXcodes.contains(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) }) ? .installed : .notInstalled,
+                                    selected: installedXcode?.path.string.contains("12.2") == true, 
+                                    path: installedXcode?.path.string
+                                )
+                            }
+                    }
+                )
+                .store(in: &cancellables)
+//                .done { _ in
+//                    self.updateAllVersions()
+//                }
+//                .catch { error in
+//                    self.error = AlertContent(title: "Error", 
+//                                              message: error.localizedDescription)
+//                }
+////        }
 //        else {
 //            updateAllVersions()
 //        }        
     }
     
-    func validateSession() -> Promise<Void> {
-        return firstly { () -> Promise<Void> in
-            return Current.network.validateSession()
-        }
-        .recover { _ in
-            self.presentingSignInAlert = true
-        }
+    // MARK: - Authentication
+    
+    func validateSession() -> AnyPublisher<Void, Error> {
+        return client.validateSession()
+            .handleEvents(receiveCompletion: { completion in 
+                if case .failure = completion {
+                    self.authenticationState = .unauthenticated
+                    self.presentingSignInAlert = true
+                }
+            })
+            .eraseToAnyPublisher()
     }
     
-    func continueLogin(username: String, password: String) -> Promise<Void> {
-        firstly { () -> Promise<Void> in
-            self.installer.login(username, password: password)
-        }
-        .recover { error -> Promise<Void> in
-            XcodesKit.Current.logging.log(error.legibleLocalizedDescription)
+    func login(username: String, password: String) {
+        client.login(accountName: username, password: password)
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { completion in
+                    self.handleAuthenticationFlowCompletion(completion)
+                }, 
+                receiveValue: { authenticationState in 
+                    self.authenticationState = authenticationState
+                }
+            )
+            .store(in: &cancellables)
+    }
+    
+    func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
+        self.presentingSignInAlert = false
+        self.secondFactorData = SecondFactorData(
+            option: option,
+            authOptions: authOptions,
+            sessionData: AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
+        )
+    }
 
-            if case Client.Error.invalidUsernameOrPassword = error {
-                self.presentingSignInAlert = true
+    func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
+        client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
+            .sink(
+                receiveCompletion: { completion in
+                    self.handleAuthenticationFlowCompletion(completion)
+                }, 
+                receiveValue: { authenticationState in 
+                    self.authenticationState = authenticationState
+                    if case let AuthenticationState.waitingForSecondFactor(option, authOptions, sessionData) = authenticationState {
+                        self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
+                    }
+                }
+            )
+            .store(in: &cancellables)
+    }
+    
+    func choosePhoneNumberForSMS(authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {
+        secondFactorData = SecondFactorData(option: .smsPendingChoice, authOptions: authOptions, sessionData: sessionData)
+    }
+    
+    func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
+        client.submitSecurityCode(code, sessionData: sessionData)
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { completion in
+                    self.handleAuthenticationFlowCompletion(completion)
+                },
+                receiveValue: { authenticationState in
+                    self.authenticationState = authenticationState
+                }
+            )
+            .store(in: &cancellables)
+    }
+    
+    private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
+        switch completion {
+        case let .failure(error):
+            self.error = AlertContent(title: "Error signing in", message: error.legibleLocalizedDescription)
+        case .finished:
+            switch self.authenticationState {
+            case .authenticated, .unauthenticated:
+                self.presentingSignInAlert = false
+                self.secondFactorData = nil
+            case let .waitingForSecondFactor(option, authOptions, sessionData):
+                self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
             }
-            return Promise(error: error)
         }
     }
     
-    public func update() -> Promise<[Xcode]> {
-        return firstly { () -> Promise<Void> in
-            validateSession()
+    // MARK: -
+    
+    public func update() -> AnyPublisher<[Xcode], Error> {
+//        return firstly { () -> Promise<Void> in
+//            validateSession()
+//        }
+//        .then { () -> Promise<[Xcode]> in
+//            self.list.update()
+//        }
+        // Wrap the Promise API in a Publisher for now
+        return Deferred {
+            Future { promise in
+                self.list.update()
+                    .done { promise(.success($0)) }
+                    .catch { promise(.failure($0)) }                
+            }
         }
-        .then { () -> Promise<[Xcode]> in
-            self.list.update()
-        }
+        .eraseToAnyPublisher()
     }
     
     private func updateAllVersions() {

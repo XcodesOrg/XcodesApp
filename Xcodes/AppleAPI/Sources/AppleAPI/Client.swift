@@ -1,269 +1,266 @@
 import Foundation
-import PromiseKit
-import PMKFoundation
+import Combine
 
 public class Client {
     private static let authTypes = ["sa", "hsa", "non-sa", "hsa2"]
 
     public init() {}
 
-    public enum Error: Swift.Error, LocalizedError, Equatable {
-        case invalidSession
-        case invalidUsernameOrPassword(username: String)
-        case invalidPhoneNumberIndex(min: Int, max: Int, given: String?)
-        case incorrectSecurityCode
-        case unexpectedSignInResponse(statusCode: Int, message: String?)
-        case appleIDAndPrivacyAcknowledgementRequired
-        case noTrustedPhoneNumbers
+    // MARK: - Login
 
-        public var errorDescription: String? {
-            switch self {
-            case .invalidUsernameOrPassword(let username):
-                return "Invalid username and password combination. Attempted to sign in with username \(username)."
-            case .appleIDAndPrivacyAcknowledgementRequired:
-                return "You must sign in to https://appstoreconnect.apple.com and acknowledge the Apple ID & Privacy agreement."
-            case .invalidPhoneNumberIndex(let min, let max, let given):
-                return "Not a valid phone number index. Expecting a whole number between \(min)-\(max), but was given \(given ?? "nothing")."
-            case .noTrustedPhoneNumbers:
-                return "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication. See https://support.apple.com/en-ca/HT204915."
-            default:
-                return String(describing: self)
-            }
-        }
-    }
-
-    /// Use the olympus session endpoint to see if the existing session is still valid
-    public func validateSession() -> Promise<Void> {
-        return Current.network.dataTask(with: URLRequest.olympusSession)
-        .done { data, response in
-            guard
-                let jsonObject = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
-                jsonObject["provider"] != nil
-            else { throw Error.invalidSession }
-        }
-    }
-
-    public func login(accountName: String, password: String) -> Promise<Void> {
+    public func login(accountName: String, password: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
         var serviceKey: String!
 
-        return firstly { () -> Promise<(data: Data, response: URLResponse)> in
-            Current.network.dataTask(with: URLRequest.itcServiceKey)
-        }
-        .then { (data, _) -> Promise<(data: Data, response: URLResponse)> in
-            struct ServiceKeyResponse: Decodable {
-                let authServiceKey: String
+        return Current.network.dataTask(with: URLRequest.itcServiceKey)
+            .map(\.data)
+            .decode(type: ServiceKeyResponse.self, decoder: JSONDecoder())
+            .flatMap { serviceKeyResponse -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+                serviceKey = serviceKeyResponse.authServiceKey
+                return Current.network.dataTask(with: URLRequest.signIn(serviceKey: serviceKey, accountName: accountName, password: password))
+                    .mapError { $0 as Swift.Error }
+                    .eraseToAnyPublisher()
             }
-
-            let response = try JSONDecoder().decode(ServiceKeyResponse.self, from: data)
-            serviceKey = response.authServiceKey
-
-            return Current.network.dataTask(with: URLRequest.signIn(serviceKey: serviceKey, accountName: accountName, password: password))
-        }
-        .then { (data, response) -> Promise<Void> in
-            struct SignInResponse: Decodable {
-                let authType: String?
-                let serviceErrors: [ServiceError]?
-
-                struct ServiceError: Decodable, CustomStringConvertible {
-                    let code: String
-                    let message: String
-
-                    var description: String {
-                        return "\(code): \(message)"
+            .flatMap { result -> AnyPublisher<AuthenticationState, Swift.Error> in
+                let (data, response) = result
+                return Just(data)
+                    .decode(type: SignInResponse.self, decoder: JSONDecoder())
+                    .flatMap { responseBody -> AnyPublisher<AuthenticationState, Swift.Error> in
+                        let httpResponse = response as! HTTPURLResponse
+                        
+                        switch httpResponse.statusCode {
+                        case 200:
+                            return Current.network.dataTask(with: URLRequest.olympusSession)
+                                .map { _ in AuthenticationState.authenticated }
+                                .mapError { $0 as Swift.Error }
+                                .eraseToAnyPublisher()
+                        case 401:
+                            return Fail(error: AuthenticationError.invalidUsernameOrPassword(username: accountName))
+                                .eraseToAnyPublisher()
+                        case 409:
+                            return self.handleTwoStepOrFactor(data: data, response: response, serviceKey: serviceKey)
+                        case 412 where Client.authTypes.contains(responseBody.authType ?? ""):
+                            return Fail(error: AuthenticationError.appleIDAndPrivacyAcknowledgementRequired)
+                                .eraseToAnyPublisher()
+                        default:
+                            return Fail(error: AuthenticationError.unexpectedSignInResponse(statusCode: httpResponse.statusCode,
+                                                                 message: responseBody.serviceErrors?.map { $0.description }.joined(separator: ", ")))
+                                .eraseToAnyPublisher()
+                        }
                     }
-                }
+                    .eraseToAnyPublisher()
             }
-
-            let httpResponse = response as! HTTPURLResponse
-            let responseBody = try JSONDecoder().decode(SignInResponse.self, from: data)
-
-            switch httpResponse.statusCode {
-            case 200:
-                return Current.network.dataTask(with: URLRequest.olympusSession).asVoid()
-            case 401:
-                throw Error.invalidUsernameOrPassword(username: accountName)
-            case 409:
-                return self.handleTwoStepOrFactor(data: data, response: response, serviceKey: serviceKey)
-            case 412 where Client.authTypes.contains(responseBody.authType ?? ""):
-                throw Error.appleIDAndPrivacyAcknowledgementRequired
-            default:
-                throw Error.unexpectedSignInResponse(statusCode: httpResponse.statusCode,
-                                                     message: responseBody.serviceErrors?.map { $0.description }.joined(separator: ", "))
-            }
-        }
+            .mapError { $0 as Swift.Error }
+            .eraseToAnyPublisher()
     }
 
-    func handleTwoStepOrFactor(data: Data, response: URLResponse, serviceKey: String) -> Promise<Void> {
+    func handleTwoStepOrFactor(data: Data, response: URLResponse, serviceKey: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
         let httpResponse = response as! HTTPURLResponse
         let sessionID = (httpResponse.allHeaderFields["X-Apple-ID-Session-Id"] as! String)
         let scnt = (httpResponse.allHeaderFields["scnt"] as! String)
 
-        return firstly { () -> Promise<AuthOptionsResponse> in
-            return Current.network.dataTask(with: URLRequest.authOptions(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt))
-                .map { try JSONDecoder().decode(AuthOptionsResponse.self, from: $0.data) }
-        }
-        .then { authOptions -> Promise<Void> in
-            switch authOptions.kind {
-            case .twoStep:
-                Current.logging.log("Received a response from Apple that indicates this account has two-step authentication enabled. xcodes currently only supports the newer two-factor authentication, though. Please consider upgrading to two-factor authentication, or open an issue on GitHub explaining why this isn't an option for you here: https://github.com/RobotsAndPencils/xcodes/issues/new")
-                return Promise.value(())
-            case .twoFactor:
-                return self.handleTwoFactor(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, authOptions: authOptions)
-            case .unknown:
-                Current.logging.log("Received a response from Apple that indicates this account has two-step or two-factor authentication enabled, but xcodes is unsure how to handle this response:")
-                String(data: data, encoding: .utf8).map { Current.logging.log($0) }
-                return Promise.value(())
+        return Current.network.dataTask(with: URLRequest.authOptions(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt))
+            .map(\.data)
+            .decode(type: AuthOptionsResponse.self, decoder: JSONDecoder())
+            .flatMap { authOptions -> AnyPublisher<AuthenticationState, Error> in
+                switch authOptions.kind {
+                case .twoStep:
+                    return Fail(error: AuthenticationError.accountUsesTwoStepAuthentication)
+                        .eraseToAnyPublisher()
+                case .twoFactor:
+                    return self.handleTwoFactor(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, authOptions: authOptions)
+                        .eraseToAnyPublisher()
+                case .unknown:
+                    let possibleResponseString = String(data: data, encoding: .utf8)
+                    return Fail(error: AuthenticationError.accountUsesUnknownAuthenticationKind(possibleResponseString))
+                        .eraseToAnyPublisher()
+                }
             }
-        }
+            .eraseToAnyPublisher()
     }
     
-    func handleTwoFactor(serviceKey: String, sessionID: String, scnt: String, authOptions: AuthOptionsResponse) -> Promise<Void> {
+    func handleTwoFactor(serviceKey: String, sessionID: String, scnt: String, authOptions: AuthOptionsResponse) -> AnyPublisher<AuthenticationState, Error> {
         let option: TwoFactorOption
 
         // SMS was sent automatically 
         if authOptions.smsAutomaticallySent {
-            option = .smsSent(authOptions.securityCode.length, authOptions.trustedPhoneNumbers!.first!)
+            option = .smsSent(authOptions.trustedPhoneNumbers!.first!)
         // SMS wasn't sent automatically because user needs to choose a phone to send to
         } else if authOptions.canFallBackToSMS {
-            option = .smsPendingChoice(authOptions.securityCode.length, authOptions.trustedPhoneNumbers ?? [])
+            option = .smsPendingChoice
         // Code is shown on trusted devices
         } else {
-            option = .codeSent(authOptions.securityCode.length)
+            option = .codeSent
         }
         
-        return handleTwoFactorOption(option, serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
+        let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
+        return Just(AuthenticationState.waitingForSecondFactor(option, authOptions, sessionData))
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
     }
     
-    func handleTwoFactorOption(_ option: TwoFactorOption, serviceKey: String, sessionID: String, scnt: String) -> Promise<Void> {
-        Current.logging.log("Two-factor authentication is enabled for this account.\n")
-        switch option {
-        case let .smsSent(codeLength, phoneNumber):
-            return firstly { () throws -> Promise<(data: Data, response: URLResponse)> in
-                let code = self.promptForSMSSecurityCode(length: codeLength, for: phoneNumber)
-                return Current.network.dataTask(with: try URLRequest.submitSecurityCode(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, code: code))
-                    .validateSecurityCodeResponse()
-            }
-            .then { (data, response) -> Promise<Void>  in
-                self.updateSession(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-            }
-        case let .smsPendingChoice(codeLength, trustedPhoneNumbers):
-            return handleWithPhoneNumberSelection(codeLength: codeLength, trustedPhoneNumbers: trustedPhoneNumbers, serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        case let .codeSent(codeLength):
-            let code = Current.shell.readLine("""
-        Enter "sms" without quotes to exit this prompt and choose a phone number to send an SMS security code to.
-        Enter the \(codeLength) digit code from one of your trusted devices: 
-        """) ?? ""
-            
-            if code == "sms" {
-                // return handleWithPhoneNumberSelection(codeLength: codeLength, trustedPhoneNumbers: authOp, serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-            }
-            
-            return firstly {
-                Current.network.dataTask(with: try URLRequest.submitSecurityCode(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, code: .device(code: code)))
-                    .validateSecurityCodeResponse()
-                
-            }
-            .then { (data, response) -> Promise<Void>  in
-                self.updateSession(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-            }
+    // MARK: - Continue 2FA
+    
+    public func requestSMSSecurityCode(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
+        Result {
+            try URLRequest.requestSecurityCode(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, trustedPhoneID: trustedPhoneNumber.id)
         }
+        .publisher
+        .flatMap { request in
+            Current.network.dataTask(with: request)
+                .mapError { $0 as Error } 
+        }
+        .map { _ in AuthenticationState.waitingForSecondFactor(.smsSent(trustedPhoneNumber), authOptions, sessionData) }
+        .eraseToAnyPublisher()
     }
     
-    func updateSession(serviceKey: String, sessionID: String, scnt: String) -> Promise<Void> {
-        return Current.network.dataTask(with: URLRequest.trust(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt))
-            .then { (data, response) -> Promise<Void> in
-                Current.network.dataTask(with: URLRequest.olympusSession).asVoid()
-            }
-    }
-    
-    func selectPhoneNumberInteractively(from trustedPhoneNumbers: [AuthOptionsResponse.TrustedPhoneNumber]) -> Promise<AuthOptionsResponse.TrustedPhoneNumber> {
-        return firstly { () throws -> Guarantee<AuthOptionsResponse.TrustedPhoneNumber> in
-            Current.logging.log("Trusted phone numbers:")
-            trustedPhoneNumbers.enumerated().forEach { (index, phoneNumber) in
-                Current.logging.log("\(index + 1): \(phoneNumber.numberWithDialCode)")
-            }
-
-            let possibleSelectionNumberString = Current.shell.readLine("Select a trusted phone number to receive a code via SMS: ")
-            guard
-                let selectionNumberString = possibleSelectionNumberString,
-                let selectionNumber = Int(selectionNumberString) ,
-                trustedPhoneNumbers.indices.contains(selectionNumber - 1)
-            else {
-                throw Error.invalidPhoneNumberIndex(min: 1, max: trustedPhoneNumbers.count, given: possibleSelectionNumberString)
-            }
-
-            return .value(trustedPhoneNumbers[selectionNumber - 1])
+    public func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
+        Result {
+            try URLRequest.submitSecurityCode(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, code: code)
         }
-        .recover { error throws -> Promise<AuthOptionsResponse.TrustedPhoneNumber> in
-            guard case Error.invalidPhoneNumberIndex = error else { throw error }
-            Current.logging.log("\(error.localizedDescription)\n")
-            return self.selectPhoneNumberInteractively(from: trustedPhoneNumbers)
-        }
-    }
-    
-    func promptForSMSSecurityCode(length: Int, for trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber) -> SecurityCode {
-        let code = Current.shell.readLine("Enter the \(length) digit code sent to \(trustedPhoneNumber.numberWithDialCode): ") ?? ""
-        return .sms(code: code, phoneNumberId: trustedPhoneNumber.id)
-    }
-    
-    func handleWithPhoneNumberSelection(codeLength: Int, trustedPhoneNumbers: [AuthOptionsResponse.TrustedPhoneNumber]?, serviceKey: String, sessionID: String, scnt: String) -> Promise<Void> {
-        return firstly { () throws -> Promise<AuthOptionsResponse.TrustedPhoneNumber> in
-            // I don't think this should ever be nil or empty, because 2FA requires at least one trusted phone number,
-            // but if it is nil or empty it's better to inform the user so they can try to address it instead of crashing.
-            guard let trustedPhoneNumbers = trustedPhoneNumbers, trustedPhoneNumbers.isEmpty == false else {
-                throw Error.noTrustedPhoneNumbers
-            }
-            
-            return selectPhoneNumberInteractively(from: trustedPhoneNumbers)
-        }
-        .then { trustedPhoneNumber in
-            Current.network.dataTask(with: try URLRequest.requestSecurityCode(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, trustedPhoneID: trustedPhoneNumber.id))
-                .map { _ in
-                    self.promptForSMSSecurityCode(length: codeLength, for: trustedPhoneNumber)
-                }
-        }
-        .then { code in
-            Current.network.dataTask(with: try URLRequest.submitSecurityCode(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, code: code))
-                .validateSecurityCodeResponse()
-        }
-        .then { (data, response) -> Promise<Void>  in
-            self.updateSession(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        }
-    }
-}
-
-enum TwoFactorOption {
-    case smsSent(Int, AuthOptionsResponse.TrustedPhoneNumber)
-    case codeSent(Int)
-    case smsPendingChoice(Int, [AuthOptionsResponse.TrustedPhoneNumber])
-}
-
-public extension Promise where T == (data: Data, response: URLResponse) {
-    func validateSecurityCodeResponse() -> Promise<T> {
-        validate()
-            .recover { error -> Promise<(data: Data, response: URLResponse)> in
-                switch error {
-                case PMKHTTPError.badStatusCode(let code, _, _):
-                    if code == 401 {
-                        throw Client.Error.incorrectSecurityCode
-                    } else {
-                        throw error
+        .publisher
+        .flatMap { request in
+            Current.network.dataTask(with: request)
+                .mapError { $0 as Error }
+                .tryMap { (data, response) throws -> (Data, URLResponse) in
+                    guard let urlResponse = response as? HTTPURLResponse else { return (data, response) }
+                    switch urlResponse.statusCode {
+                    case 200..<300:
+                        return (data, urlResponse)
+                    case 401:
+                        throw AuthenticationError.incorrectSecurityCode
+                    case let code:
+                        throw AuthenticationError.badStatusCode(code, data, urlResponse)
                     }
-                default:
-                    throw error
                 }
+                .flatMap { (data, response) -> AnyPublisher<AuthenticationState, Error> in
+                    self.updateSession(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
+                }
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    // MARK: - Session
+    
+    /// Use the olympus session endpoint to see if the existing session is still valid
+    public func validateSession() -> AnyPublisher<Void, Error> {
+        return Current.network.dataTask(with: URLRequest.olympusSession)
+            .tryMap { (data, response) in
+                guard
+                    let jsonObject = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
+                    jsonObject["provider"] != nil
+                else { throw AuthenticationError.invalidSession }
             }
+            .eraseToAnyPublisher()
+    }
+    
+    func updateSession(serviceKey: String, sessionID: String, scnt: String) -> AnyPublisher<AuthenticationState, Error> {
+        return Current.network.dataTask(with: URLRequest.trust(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt))
+            .flatMap { (data, response) in
+                Current.network.dataTask(with: URLRequest.olympusSession)
+                    .map { _ in AuthenticationState.authenticated }
+            }
+            .mapError { $0 as Error }
+            .eraseToAnyPublisher()
     }
 }
 
-struct AuthOptionsResponse: Decodable {
-    let trustedPhoneNumbers: [TrustedPhoneNumber]?
-    let trustedDevices: [TrustedDevice]?
-    let securityCode: SecurityCodeInfo
-    let noTrustedDevices: Bool?
+// MARK: - Types
+
+public enum AuthenticationState: Equatable {
+    case unauthenticated
+    case waitingForSecondFactor(TwoFactorOption, AuthOptionsResponse, AppleSessionData)
+    case authenticated
+}
+
+public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
+    case invalidSession
+    case invalidUsernameOrPassword(username: String)
+    case invalidPhoneNumberIndex(min: Int, max: Int, given: String?)
+    case incorrectSecurityCode
+    case unexpectedSignInResponse(statusCode: Int, message: String?)
+    case appleIDAndPrivacyAcknowledgementRequired
+    case accountUsesTwoStepAuthentication
+    case accountUsesUnknownAuthenticationKind(String?)
+    case badStatusCode(Int, Data, HTTPURLResponse)
+
+    public var errorDescription: String? {
+        switch self {
+        case .invalidUsernameOrPassword(let username):
+            return "Invalid username and password combination. Attempted to sign in with username \(username)."
+        case .appleIDAndPrivacyAcknowledgementRequired:
+            return "You must sign in to https://appstoreconnect.apple.com and acknowledge the Apple ID & Privacy agreement."
+        case .invalidPhoneNumberIndex(let min, let max, let given):
+            return "Not a valid phone number index. Expecting a whole number between \(min)-\(max), but was given \(given ?? "nothing")."
+        case .accountUsesTwoStepAuthentication:
+            return "Received a response from Apple that indicates this account has two-step authentication enabled. xcodes currently only supports the newer two-factor authentication, though. Please consider upgrading to two-factor authentication, or open an issue on GitHub explaining why this isn't an option for you here: https://github.com/RobotsAndPencils/xcodes/issues/new"
+        case .accountUsesUnknownAuthenticationKind:
+            return "Received a response from Apple that indicates this account has two-step or two-factor authentication enabled, but xcodes is unsure how to handle this response:"
+        default:
+            return String(describing: self)
+        }
+    }
+}
+
+public struct AppleSessionData: Equatable, Identifiable {    
+    public let serviceKey: String
+    public let sessionID: String 
+    public let scnt: String
+    
+    public var id: String { sessionID }
+
+    public init(serviceKey: String, sessionID: String, scnt: String) {
+        self.serviceKey = serviceKey
+        self.sessionID = sessionID
+        self.scnt = scnt
+    }
+}
+
+struct ServiceKeyResponse: Decodable {
+    let authServiceKey: String
+}
+
+struct SignInResponse: Decodable {
+    let authType: String?
     let serviceErrors: [ServiceError]?
     
-    var kind: Kind {
+    struct ServiceError: Decodable, CustomStringConvertible {
+        let code: String
+        let message: String
+        
+        var description: String {
+            return "\(code): \(message)"
+        }
+    }
+}
+
+public enum TwoFactorOption: Equatable {
+    case smsSent(AuthOptionsResponse.TrustedPhoneNumber)
+    case codeSent
+    case smsPendingChoice
+}
+
+public struct AuthOptionsResponse: Equatable, Decodable {
+    public let trustedPhoneNumbers: [TrustedPhoneNumber]?
+    public let trustedDevices: [TrustedDevice]?
+    public let securityCode: SecurityCodeInfo
+    public let noTrustedDevices: Bool?
+    public let serviceErrors: [ServiceError]?
+    
+    public init(
+        trustedPhoneNumbers: [AuthOptionsResponse.TrustedPhoneNumber]?, 
+        trustedDevices: [AuthOptionsResponse.TrustedDevice]?, 
+        securityCode: AuthOptionsResponse.SecurityCodeInfo, 
+        noTrustedDevices: Bool? = nil, 
+        serviceErrors: [ServiceError]? = nil
+    ) {
+        self.trustedPhoneNumbers = trustedPhoneNumbers
+        self.trustedDevices = trustedDevices
+        self.securityCode = securityCode
+        self.noTrustedDevices = noTrustedDevices
+        self.serviceErrors = serviceErrors
+    }
+    
+    public var kind: Kind {
         if trustedDevices != nil {
             return .twoStep
         } else if trustedPhoneNumbers != nil {
@@ -277,34 +274,59 @@ struct AuthOptionsResponse: Decodable {
     // This should have been a situation where an SMS security code was sent automatically.
     // This resolved itself either after some time passed, or by signing into appleid.apple.com with the account.
     // Not sure if it's worth explicitly handling this case or if it'll be really rare.
-    var canFallBackToSMS: Bool {
+    public var canFallBackToSMS: Bool {
         noTrustedDevices == true
     }
     
-    var smsAutomaticallySent: Bool {
+    public var smsAutomaticallySent: Bool {
         trustedPhoneNumbers?.count == 1 && canFallBackToSMS
     }
     
-    struct TrustedPhoneNumber: Decodable {
-        let id: Int
-        let numberWithDialCode: String
+    public struct TrustedPhoneNumber: Equatable, Decodable, Identifiable {
+        public let id: Int
+        public let numberWithDialCode: String
+
+        public init(id: Int, numberWithDialCode: String) {
+            self.id = id
+            self.numberWithDialCode = numberWithDialCode
+        }
     }
     
-    struct TrustedDevice: Decodable {
-        let id: String
-        let name: String
-        let modelName: String
+    public struct TrustedDevice: Equatable, Decodable {        
+        public let id: String
+        public let name: String
+        public let modelName: String
+
+        public init(id: String, name: String, modelName: String) {
+            self.id = id
+            self.name = name
+            self.modelName = modelName
+        }
     }
     
-    struct SecurityCodeInfo: Decodable {
-        let length: Int
-        let tooManyCodesSent: Bool
-        let tooManyCodesValidated: Bool
-        let securityCodeLocked: Bool
-        let securityCodeCooldown: Bool
+    public struct SecurityCodeInfo: Equatable, Decodable {        
+        public let length: Int
+        public let tooManyCodesSent: Bool
+        public let tooManyCodesValidated: Bool
+        public let securityCodeLocked: Bool
+        public let securityCodeCooldown: Bool
+
+        public init(
+            length: Int,
+            tooManyCodesSent: Bool = false,
+            tooManyCodesValidated: Bool = false,
+            securityCodeLocked: Bool = false,
+            securityCodeCooldown: Bool = false
+        ) {
+            self.length = length
+            self.tooManyCodesSent = tooManyCodesSent
+            self.tooManyCodesValidated = tooManyCodesValidated
+            self.securityCodeLocked = securityCodeLocked
+            self.securityCodeCooldown = securityCodeCooldown
+        }
     }
     
-    enum Kind {
+    public enum Kind: Equatable {
         case twoStep, twoFactor, unknown
     }
 }
@@ -314,7 +336,7 @@ public struct ServiceError: Decodable, Equatable {
     let message: String
 }
 
-enum SecurityCode {
+public enum SecurityCode {
     case device(code: String)
     case sms(code: String, phoneNumberId: Int)
     

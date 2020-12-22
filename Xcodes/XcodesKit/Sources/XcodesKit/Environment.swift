@@ -246,12 +246,12 @@ public struct Network {
         return downloadTask(convertible, saveLocation, resumeData)
     }
 
-    public var validateSession: () -> Promise<Void> = client.validateSession
-
-    public var login: (String, String) -> Promise<Void> = { client.login(accountName: $0, password: $1) }
-    public func login(accountName: String, password: String) -> Promise<Void> {
-        login(accountName, password)
-    }
+//    public var validateSession: () -> Promise<Void> = client.validateSession
+//
+//    public var login: (String, String) -> Promise<Void> = { client.login(accountName: $0, password: $1) }
+//    public func login(accountName: String, password: String) -> Promise<Void> {
+//        login(accountName, password)
+//    }
 }
 
 public struct Logging {

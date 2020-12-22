@@ -28,7 +28,7 @@ struct SignInCredentialsView: View {
                 Spacer()
                 Button("Cancel") { isPresented = false }
                     .keyboardShortcut(.cancelAction)
-                Button("Next") { appState.continueLogin(username: username, password: password) }
+                Button("Next") { appState.login(username: username, password: password) }
                     .disabled(username.isEmpty)
                     .keyboardShortcut(.defaultAction)
             }
