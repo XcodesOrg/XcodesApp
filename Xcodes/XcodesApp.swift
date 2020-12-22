@@ -5,11 +5,14 @@ struct XcodesApp: App {
     @StateObject private var appState = AppState()
     
     var body: some Scene {
-        Group {
-            WindowGroup("Xcodes") {
-                XcodeListView()
-                    .environmentObject(appState)
-            }
+        WindowGroup("Xcodes") {
+            XcodeListView()
+                .environmentObject(appState)
+        }
+
+        Settings {
+            SettingsView()
+                .environmentObject(appState)
         }
     }
 }

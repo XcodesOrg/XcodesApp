@@ -67,11 +67,6 @@ struct XcodeListView: View {
         }
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
-                Button("Login", action: { self.appState.presentingSignInAlert = true })
-                    .sheet(isPresented: $appState.presentingSignInAlert) {
-                        SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
-                            .environmentObject(appState)
-                    }
                 Button(action: appState.update) {
                     Image(systemName: "arrow.clockwise")
                 }

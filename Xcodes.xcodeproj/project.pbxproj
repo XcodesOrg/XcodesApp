@@ -39,6 +39,8 @@
 		CABFA9F32592F0E400380FEE /* PMKFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F22592F0E400380FEE /* PMKFoundation */; };
 		CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F72592F0F900380FEE /* KeychainAccess */; };
 		CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9FC2592F13300380FEE /* LegibleError */; };
+		CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2A2592FBFC00380FEE /* SettingsView.swift */; };
+		CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2B2592FBFC00380FEE /* Configure.swift */; };
 		CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A12449574E00113D76 /* XcodesApp.swift */; };
 		CAD2E7A42449574E00113D76 /* XcodeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A32449574E00113D76 /* XcodeListView.swift */; };
 		CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A52449575000113D76 /* Assets.xcassets */; };
@@ -90,6 +92,8 @@
 		CABFA9B92592EEEA00380FEE /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
 		CABFA9D42592EF6300380FEE /* DECISIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DECISIONS.md; sourceTree = "<group>"; };
+		CABFAA2A2592FBFC00380FEE /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Xcodes/SettingsView.swift; sourceTree = SOURCE_ROOT; };
+		CABFAA2B2592FBFC00380FEE /* Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configure.swift; path = Xcodes/Backend/Configure.swift; sourceTree = SOURCE_ROOT; };
 		CAD2E79E2449574E00113D76 /* Xcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD2E7A12449574E00113D76 /* XcodesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesApp.swift; sourceTree = "<group>"; };
 		CAD2E7A32449574E00113D76 /* XcodeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListView.swift; sourceTree = "<group>"; };
@@ -164,6 +168,7 @@
 			isa = PBXGroup;
 			children = (
 				CA378F982466567600A58CE0 /* AppState.swift */,
+				CABFAA2B2592FBFC00380FEE /* Configure.swift */,
 				CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */,
 				CABFA9B22592EEEA00380FEE /* Entry+.swift */,
 				CABFA9A92592EEE900380FEE /* Environment.swift */,
@@ -187,6 +192,7 @@
 			children = (
 				CAA1CB50255A5D16003FD669 /* SignIn */,
 				CABFAA142592F73000380FEE /* XcodeList */,
+				CABFAA2A2592FBFC00380FEE /* SettingsView.swift */,
 			);
 			path = Frontend;
 			sourceTree = "<group>";
@@ -394,11 +400,13 @@
 				CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */,
 				CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */,
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
+				CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
 				CABFA9C22592EEEA00380FEE /* Promise+.swift in Sources */,
 				CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */,
 				CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */,
 				CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */,
+				CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */,
 				CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */,
 				CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */,
 				CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */,
