@@ -2,7 +2,7 @@
 
 The easiest way to install and switch between multiple versions of Xcode.
 
-_If you're looking for a command-line version of Xcodes.app, try `[xcodes](https://github.com/RobotsAndPencils/xcodes).`_
+_If you're looking for a command-line version of Xcodes.app, try [`xcodes`](https://github.com/RobotsAndPencils/xcodes)._
 
 ![CI](https://github.com/RobotsAndPencils/Xcodes.app/workflows/CI/badge.svg)
 
