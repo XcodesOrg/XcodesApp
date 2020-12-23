@@ -40,7 +40,7 @@
 		CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F72592F0F900380FEE /* KeychainAccess */; };
 		CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9FC2592F13300380FEE /* LegibleError */; };
 		CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A12449574E00113D76 /* XcodesApp.swift */; };
-		CAD2E7A42449574E00113D76 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A32449574E00113D76 /* ContentView.swift */; };
+		CAD2E7A42449574E00113D76 /* XcodeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A32449574E00113D76 /* XcodeListView.swift */; };
 		CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A52449575000113D76 /* Assets.xcassets */; };
 		CAD2E7A92449575000113D76 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A82449575000113D76 /* Preview Assets.xcassets */; };
 		CAD2E7AC2449575000113D76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7AA2449575000113D76 /* Main.storyboard */; };
@@ -92,7 +92,7 @@
 		CABFA9D42592EF6300380FEE /* DECISIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DECISIONS.md; sourceTree = "<group>"; };
 		CAD2E79E2449574E00113D76 /* Xcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD2E7A12449574E00113D76 /* XcodesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesApp.swift; sourceTree = "<group>"; };
-		CAD2E7A32449574E00113D76 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		CAD2E7A32449574E00113D76 /* XcodeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListView.swift; sourceTree = "<group>"; };
 		CAD2E7A52449575000113D76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAD2E7A82449575000113D76 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		CAD2E7AB2449575000113D76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -139,6 +139,8 @@
 		CAA1CB50255A5D16003FD669 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
+				CA735108257BF96D00EA9CF8 /* AttributedText.swift */,
+				CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */,
 				CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */,
 				CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */,
 				CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */,
@@ -146,6 +148,59 @@
 				CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */,
 			);
 			path = SignIn;
+			sourceTree = "<group>";
+		};
+		CABFAA142592F73000380FEE /* XcodeList */ = {
+			isa = PBXGroup;
+			children = (
+				CAD2E7A32449574E00113D76 /* XcodeListView.swift */,
+				CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */,
+				CA44901E2463AD34003D8213 /* Tag.swift */,
+			);
+			path = XcodeList;
+			sourceTree = "<group>";
+		};
+		CABFAA172592F77E00380FEE /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				CA378F982466567600A58CE0 /* AppState.swift */,
+				CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */,
+				CABFA9B22592EEEA00380FEE /* Entry+.swift */,
+				CABFA9A92592EEE900380FEE /* Environment.swift */,
+				CABFA9B82592EEEA00380FEE /* FileManager+.swift */,
+				CABFA9AC2592EEE900380FEE /* Foundation.swift */,
+				CABFA9B92592EEEA00380FEE /* Models.swift */,
+				CABFA9AE2592EEE900380FEE /* Path+.swift */,
+				CABFA9B42592EEEA00380FEE /* Process.swift */,
+				CABFA9B02592EEEA00380FEE /* Promise+.swift */,
+				CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */,
+				CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */,
+				CABFA9A82592EEE900380FEE /* Version+.swift */,
+				CABFA9A62592EEE900380FEE /* Version+Xcode.swift */,
+				CABFA9A72592EEE900380FEE /* XcodeList.swift */,
+			);
+			path = Backend;
+			sourceTree = "<group>";
+		};
+		CABFAA1A2592F7D900380FEE /* Frontend */ = {
+			isa = PBXGroup;
+			children = (
+				CAA1CB50255A5D16003FD669 /* SignIn */,
+				CABFAA142592F73000380FEE /* XcodeList */,
+			);
+			path = Frontend;
+			sourceTree = "<group>";
+		};
+		CABFAA1D2592F7F200380FEE /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CAD2E7A52449575000113D76 /* Assets.xcassets */,
+				CAD2E7AA2449575000113D76 /* Main.storyboard */,
+				CAD2E7AD2449575000113D76 /* Info.plist */,
+				CAD2E7AE2449575000113D76 /* Xcodes.entitlements */,
+				CA8FB64D256E17B100469DA5 /* XcodesTest.entitlements */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		CAD2E7952449574E00113D76 = {
@@ -178,32 +233,9 @@
 			isa = PBXGroup;
 			children = (
 				CAD2E7A12449574E00113D76 /* XcodesApp.swift */,
-				CA378F982466567600A58CE0 /* AppState.swift */,
-				CAD2E7A32449574E00113D76 /* ContentView.swift */,
-				CAA1CB50255A5D16003FD669 /* SignIn */,
-				CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */,
-				CA735108257BF96D00EA9CF8 /* AttributedText.swift */,
-				CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */,
-				CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */,
-				CABFA9B22592EEEA00380FEE /* Entry+.swift */,
-				CABFA9A92592EEE900380FEE /* Environment.swift */,
-				CABFA9B82592EEEA00380FEE /* FileManager+.swift */,
-				CABFA9AC2592EEE900380FEE /* Foundation.swift */,
-				CABFA9B92592EEEA00380FEE /* Models.swift */,
-				CABFA9AE2592EEE900380FEE /* Path+.swift */,
-				CABFA9B42592EEEA00380FEE /* Process.swift */,
-				CABFA9B02592EEEA00380FEE /* Promise+.swift */,
-				CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */,
-				CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */,
-				CABFA9A82592EEE900380FEE /* Version+.swift */,
-				CABFA9A62592EEE900380FEE /* Version+Xcode.swift */,
-				CABFA9A72592EEE900380FEE /* XcodeList.swift */,
-				CA44901E2463AD34003D8213 /* Tag.swift */,
-				CAD2E7A52449575000113D76 /* Assets.xcassets */,
-				CAD2E7AA2449575000113D76 /* Main.storyboard */,
-				CAD2E7AD2449575000113D76 /* Info.plist */,
-				CAD2E7AE2449575000113D76 /* Xcodes.entitlements */,
-				CA8FB64D256E17B100469DA5 /* XcodesTest.entitlements */,
+				CABFAA1A2592F7D900380FEE /* Frontend */,
+				CABFAA172592F77E00380FEE /* Backend */,
+				CABFAA1D2592F7F200380FEE /* Resources */,
 				CAD2E7A72449575000113D76 /* Preview Content */,
 			);
 			path = Xcodes;
@@ -354,7 +386,7 @@
 				CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */,
 				CABFA9C32592EEEA00380FEE /* Models.swift in Sources */,
 				CA378F992466567600A58CE0 /* AppState.swift in Sources */,
-				CAD2E7A42449574E00113D76 /* ContentView.swift in Sources */,
+				CAD2E7A42449574E00113D76 /* XcodeListView.swift in Sources */,
 				CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */,
 				CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */,
 				CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */,
@@ -469,7 +501,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Xcodes/XcodesTest.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Xcodes/ResourcesXcodesTest.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -477,7 +509,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Xcodes/Info.plist;
+				INFOPLIST_FILE = Xcodes/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -629,14 +661,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Xcodes/Xcodes.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/Xcodes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = PBH8V487HB;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Xcodes/Info.plist;
+				INFOPLIST_FILE = Xcodes/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -651,14 +683,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Xcodes/Xcodes.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/Xcodes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = PBH8V487HB;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
-				INFOPLIST_FILE = Xcodes/Info.plist;
+				INFOPLIST_FILE = Xcodes/Resources/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

@@ -2,7 +2,7 @@ import SwiftUI
 import Version
 import PromiseKit
 
-struct ContentView: View {
+struct XcodeListView: View {
     @EnvironmentObject var appState: AppState
     @State private var selection = Set<String>()
     @State private var rowBeingConfirmedForUninstallation: AppState.XcodeVersion?
@@ -125,10 +125,10 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct XcodeListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ContentView()
+            XcodeListView()
                 .environmentObject({ () -> AppState in
                     let a = AppState()
                     a.allVersions = [

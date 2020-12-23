@@ -7,7 +7,7 @@ struct XcodesApp: App {
     var body: some Scene {
         Group {
             WindowGroup("Xcodes") {
-                ContentView()
+                XcodeListView()
                     .environmentObject(appState)
             }
         }
