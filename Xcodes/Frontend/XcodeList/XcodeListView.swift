@@ -95,12 +95,15 @@ struct XcodeListView: View {
                   message: Text(verbatim: error.message), 
                   dismissButton: .default(Text("OK")))
         }
-        .alert(item: self.$rowBeingConfirmedForUninstallation) { row in
-            Alert(title: Text("Uninstall Xcode \(row.title)?"), 
-                  message: Text("It will be moved to the Trash, but won't be emptied."), 
-                  primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: row.id) }), 
-                  secondaryButton: .cancel(Text("Cancel")))
-        }
+        /*
+         Removing this for now, because it's overriding the error alert that's being worked on above.
+         .alert(item: self.$rowBeingConfirmedForUninstallation) { row in
+             Alert(title: Text("Uninstall Xcode \(row.title)?"), 
+                   message: Text("It will be moved to the Trash, but won't be emptied."), 
+                   primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: row.id) }), 
+                   secondaryButton: .cancel(Text("Cancel")))
+         }
+         **/
         .sheet(isPresented: $appState.secondFactorData.isNotNil) {
             secondFactorView(appState.secondFactorData!)
                 .environmentObject(appState)

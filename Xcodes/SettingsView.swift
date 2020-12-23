@@ -8,21 +8,15 @@ struct SettingsView: View {
         VStack(alignment: .leading) {
             GroupBox(label: Text("Apple ID")) {
                 VStack(alignment: .leading) {
-                    switch appState.authenticationState {
-                    case .authenticated:
-                        Text("Signed in")
-                        Button("Sign Out", action: {})
-                        
-                    case .unauthenticated:
+                    if let username = Current.defaults.string(forKey: "username") {
+                        Text(username)
+                        Button("Sign Out", action: appState.logOut)
+                    } else {
                         Button("Sign In", action: { self.appState.presentingSignInAlert = true })
                             .sheet(isPresented: $appState.presentingSignInAlert) {
                                 SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
                                     .environmentObject(appState)
                             }
-                        
-                    case .waitingForSecondFactor:
-                        Button("Signing In...", action: {})
-                            .disabled(true)
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -40,23 +34,7 @@ struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             SettingsView()
-                .environmentObject(configure(AppState()) {
-                    $0.authenticationState = .authenticated
-                })
-            
-            SettingsView()
-                .environmentObject(configure(AppState()) {
-                    $0.authenticationState = .unauthenticated
-                })
-            
-            SettingsView()
-                .environmentObject(configure(AppState()) {
-                    $0.authenticationState = .waitingForSecondFactor(
-                        TwoFactorOption.codeSent,
-                        AuthOptionsResponse(trustedPhoneNumbers: nil, trustedDevices: nil, securityCode: .init(length: 6)), 
-                        AppleSessionData(serviceKey: "", sessionID: "", scnt: "")
-                    )
-                })
+                .environmentObject(AppState())
         }
     }
 }

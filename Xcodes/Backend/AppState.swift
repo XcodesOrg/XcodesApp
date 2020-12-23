@@ -4,6 +4,7 @@ import Combine
 import Path
 import PromiseKit
 import LegibleError
+import KeychainAccess
 
 class AppState: ObservableObject {
     private let list = XcodeList()
@@ -20,6 +21,7 @@ class AppState: ObservableObject {
     
     func validateSession() -> AnyPublisher<Void, Error> {
         return client.validateSession()
+            .receive(on: DispatchQueue.main)
             .handleEvents(receiveCompletion: { completion in 
                 if case .failure = completion {
                     self.authenticationState = .unauthenticated
@@ -29,18 +31,48 @@ class AppState: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    func login(username: String, password: String) {
-        client.login(accountName: username, password: password)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                }, 
-                receiveValue: { authenticationState in 
-                    self.authenticationState = authenticationState
+    func loginIfNeeded() -> AnyPublisher<Void, Error> {
+        validateSession()
+            .catch { (error) -> AnyPublisher<Void, Error> in
+                guard
+                    let username = Current.defaults.string(forKey: "username"),
+                    let password = try? Current.keychain.getString(username)
+                else {
+                    return Fail(error: error) 
+                        .eraseToAnyPublisher()
                 }
+
+                return self.login(username: username, password: password)
+                    .map { _ in Void() }
+                    .eraseToAnyPublisher()
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func login(username: String, password: String) {
+        login(username: username, password: password)
+            .sink(
+                receiveCompletion: { _ in }, 
+                receiveValue: { _ in }
             )
             .store(in: &cancellables)
+    }
+    
+    func login(username: String, password: String) -> AnyPublisher<AuthenticationState, Error> {
+        try? Current.keychain.set(password, key: username)
+        Current.defaults.set(username, forKey: "username")
+        
+        return client.login(accountName: username, password: password)
+            .receive(on: DispatchQueue.main)
+            .handleEvents(
+                receiveOutput: { authenticationState in 
+                    self.authenticationState = authenticationState
+                },
+                receiveCompletion: { completion in
+                    self.handleAuthenticationFlowCompletion(completion)
+                }
+            )
+            .eraseToAnyPublisher()
     }
     
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
@@ -89,6 +121,12 @@ class AppState: ObservableObject {
     private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
         switch completion {
         case let .failure(error):
+            if case .invalidUsernameOrPassword = error as? AuthenticationError,
+               let username = Current.defaults.string(forKey: "username") {
+                // remove any keychain password if we fail to log with an invalid username or password so it doesn't try again.
+                try? Current.keychain.remove(username)
+            }
+            
             self.error = AlertContent(title: "Error signing in", message: error.legibleLocalizedDescription)
         case .finished:
             switch self.authenticationState {
@@ -101,30 +139,55 @@ class AppState: ObservableObject {
         }
     }
     
+    func logOut() {
+        let username = Current.defaults.string(forKey: "username")
+        Current.defaults.removeObject(forKey: "username")
+        if let username = username {
+            try? Current.keychain.remove(username)
+        }
+        AppleAPI.Current.network.session.configuration.httpCookieStorage?.removeCookies(since: .distantPast)
+        authenticationState = .unauthenticated
+    }
+    
     // MARK: - Load Xcode Versions
     
     func update() {
-        // Treat this implementation as a placeholder that can be thrown away.
-        // It's only here to make it easy to see that auth works.
         update()
-            .sink(receiveCompletion: { _ in },
-                  receiveValue: { _ in })
+            .sink(
+                receiveCompletion: { _ in },
+                receiveValue: { _ in }
+            )
             .store(in: &cancellables)     
     }
     
-    public func update() -> AnyPublisher<[Xcode], Error> {
-        // Wrap the Promise API in a Publisher for now
-        return Deferred {
-            Future { promise in
-                self.list.update()
-                    .done { promise(.success($0)) }
-                    .catch { promise(.failure($0)) }                
+    public func update() -> AnyPublisher<[Xcode], Never> {
+        loginIfNeeded()
+            .flatMap {
+                // Wrap the Promise API in a Publisher for now
+                Deferred {
+                    Future { promise in
+                        self.list.update()
+                            .done { promise(.success($0)) }
+                            .catch { promise(.failure($0)) }                
+                    }
+                }
+                .handleEvents(
+                    receiveCompletion: { completion in
+                        if case let .failure(error) = completion {
+                            self.error = AlertContent(title: "Update Error", message: error.legibleLocalizedDescription)
+                        }
+                    }
+                )
             }
-        }
-        .handleEvents(receiveOutput: { [unowned self] xcodes in
-            self.updateAllVersions(xcodes)
-        })
-        .eraseToAnyPublisher()
+            .catch { _ in
+                Just(self.list.availableXcodes)
+            }
+            .handleEvents(
+                receiveOutput: { [unowned self] xcodes in
+                    self.updateAllVersions(xcodes)
+                }
+            )
+            .eraseToAnyPublisher()
     }
     
     private func updateAllVersions(_ xcodes: [Xcode]) {
