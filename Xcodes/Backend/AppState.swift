@@ -31,7 +31,7 @@ class AppState: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    func loginIfNeeded() -> AnyPublisher<Void, Error> {
+    func signInIfNeeded() -> AnyPublisher<Void, Error> {
         validateSession()
             .catch { (error) -> AnyPublisher<Void, Error> in
                 guard
@@ -42,15 +42,15 @@ class AppState: ObservableObject {
                         .eraseToAnyPublisher()
                 }
 
-                return self.login(username: username, password: password)
+                return self.signIn(username: username, password: password)
                     .map { _ in Void() }
                     .eraseToAnyPublisher()
             }
             .eraseToAnyPublisher()
     }
     
-    func login(username: String, password: String) {
-        login(username: username, password: password)
+    func signIn(username: String, password: String) {
+        signIn(username: username, password: password)
             .sink(
                 receiveCompletion: { _ in }, 
                 receiveValue: { _ in }
@@ -58,7 +58,7 @@ class AppState: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func login(username: String, password: String) -> AnyPublisher<AuthenticationState, Error> {
+    func signIn(username: String, password: String) -> AnyPublisher<AuthenticationState, Error> {
         try? Current.keychain.set(password, key: username)
         Current.defaults.set(username, forKey: "username")
         
@@ -139,7 +139,7 @@ class AppState: ObservableObject {
         }
     }
     
-    func logOut() {
+    func signOut() {
         let username = Current.defaults.string(forKey: "username")
         Current.defaults.removeObject(forKey: "username")
         if let username = username {
@@ -161,7 +161,7 @@ class AppState: ObservableObject {
     }
     
     public func update() -> AnyPublisher<[Xcode], Never> {
-        loginIfNeeded()
+        signInIfNeeded()
             .flatMap {
                 // Wrap the Promise API in a Publisher for now
                 Deferred {

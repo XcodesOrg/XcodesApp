@@ -122,13 +122,6 @@ public struct Network {
     public func downloadTask(with convertible: URLRequestConvertible, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, promise: Promise<(saveLocation: URL, response: URLResponse)>) {
         return downloadTask(convertible, saveLocation, resumeData)
     }
-
-//    public var validateSession: () -> Promise<Void> = client.validateSession
-//
-//    public var login: (String, String) -> Promise<Void> = { client.login(accountName: $0, password: $1) }
-//    public func login(accountName: String, password: String) -> Promise<Void> {
-//        login(accountName, password)
-//    }
 }
 
 public struct Logging {

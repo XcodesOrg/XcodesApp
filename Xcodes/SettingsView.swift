@@ -10,7 +10,7 @@ struct SettingsView: View {
                 VStack(alignment: .leading) {
                     if let username = Current.defaults.string(forKey: "username") {
                         Text(username)
-                        Button("Sign Out", action: appState.logOut)
+                        Button("Sign Out", action: appState.signOut)
                     } else {
                         Button("Sign In", action: { self.appState.presentingSignInAlert = true })
                             .sheet(isPresented: $appState.presentingSignInAlert) {
