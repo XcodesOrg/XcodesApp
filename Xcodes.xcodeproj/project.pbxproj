@@ -14,11 +14,31 @@
 		CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA735108257BF96D00EA9CF8 /* AttributedText.swift */; };
 		CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */; };
 		CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA1CB2C255A5262003FD669 /* AppleAPI */; };
-		CAA1CB2F255A5262003FD669 /* XcodesKit in Frameworks */ = {isa = PBXBuildFile; productRef = CAA1CB2E255A5262003FD669 /* XcodesKit */; };
 		CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */; };
 		CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */; };
 		CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */; };
 		CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */; };
+		CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */; };
+		CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A92592EEE900380FEE /* Environment.swift */; };
+		CABFA9BF2592EEEA00380FEE /* URLSession+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */; };
+		CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A82592EEE900380FEE /* Version+.swift */; };
+		CABFA9C22592EEEA00380FEE /* Promise+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B02592EEEA00380FEE /* Promise+.swift */; };
+		CABFA9C32592EEEA00380FEE /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B92592EEEA00380FEE /* Models.swift */; };
+		CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B82592EEEA00380FEE /* FileManager+.swift */; };
+		CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B22592EEEA00380FEE /* Entry+.swift */; };
+		CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */; };
+		CABFA9CA2592EEEA00380FEE /* XcodeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A72592EEE900380FEE /* XcodeList.swift */; };
+		CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AE2592EEE900380FEE /* Path+.swift */; };
+		CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AC2592EEE900380FEE /* Foundation.swift */; };
+		CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A62592EEE900380FEE /* Version+Xcode.swift */; };
+		CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B42592EEEA00380FEE /* Process.swift */; };
+		CABFA9DF2592F07A00380FEE /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9DE2592F07A00380FEE /* Path */; };
+		CABFA9E42592F08E00380FEE /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9E32592F08E00380FEE /* Version */; };
+		CABFA9E92592F0B400380FEE /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9E82592F0B400380FEE /* PromiseKit */; };
+		CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9ED2592F0CC00380FEE /* SwiftSoup */; };
+		CABFA9F32592F0E400380FEE /* PMKFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F22592F0E400380FEE /* PMKFoundation */; };
+		CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F72592F0F900380FEE /* KeychainAccess */; };
+		CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9FC2592F13300380FEE /* LegibleError */; };
 		CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A12449574E00113D76 /* XcodesApp.swift */; };
 		CAD2E7A42449574E00113D76 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A32449574E00113D76 /* ContentView.swift */; };
 		CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A52449575000113D76 /* Assets.xcassets */; };
@@ -42,7 +62,6 @@
 		CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
 		CA44901E2463AD34003D8213 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		CA538A0C255A4F1A00E64DD7 /* AppleAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppleAPI; path = Xcodes/AppleAPI; sourceTree = "<group>"; };
-		CA538A0F255A4F3300E64DD7 /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = folder; name = XcodesKit; path = Xcodes/XcodesKit; sourceTree = "<group>"; };
 		CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeTextView.swift; sourceTree = "<group>"; };
 		CA735108257BF96D00EA9CF8 /* AttributedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedText.swift; sourceTree = "<group>"; };
 		CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+.swift"; sourceTree = "<group>"; };
@@ -56,6 +75,20 @@
 		CABFA9A02592EAF500380FEE /* R&PLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "R&PLogo.png"; sourceTree = "<group>"; };
 		CABFA9A12592EAFB00380FEE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		CABFA9A32592ED5700380FEE /* Apple.paw */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple.paw; path = ../xcodes/Apple.paw; sourceTree = "<group>"; };
+		CABFA9A62592EEE900380FEE /* Version+Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Version+Xcode.swift"; sourceTree = "<group>"; };
+		CABFA9A72592EEE900380FEE /* XcodeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeList.swift; sourceTree = "<group>"; };
+		CABFA9A82592EEE900380FEE /* Version+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Version+.swift"; sourceTree = "<group>"; };
+		CABFA9A92592EEE900380FEE /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Apple.swift"; sourceTree = "<group>"; };
+		CABFA9AC2592EEE900380FEE /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
+		CABFA9AE2592EEE900380FEE /* Path+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Path+.swift"; sourceTree = "<group>"; };
+		CABFA9B02592EEEA00380FEE /* Promise+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+.swift"; sourceTree = "<group>"; };
+		CABFA9B22592EEEA00380FEE /* Entry+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+.swift"; sourceTree = "<group>"; };
+		CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Promise.swift"; sourceTree = "<group>"; };
+		CABFA9B42592EEEA00380FEE /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
+		CABFA9B82592EEEA00380FEE /* FileManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+.swift"; sourceTree = "<group>"; };
+		CABFA9B92592EEEA00380FEE /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
 		CABFA9D42592EF6300380FEE /* DECISIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DECISIONS.md; sourceTree = "<group>"; };
 		CAD2E79E2449574E00113D76 /* Xcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD2E7A12449574E00113D76 /* XcodesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesApp.swift; sourceTree = "<group>"; };
@@ -75,8 +108,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
+				CABFA9E92592F0B400380FEE /* PromiseKit in Frameworks */,
+				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
+				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
+				CABFA9F32592F0E400380FEE /* PMKFoundation in Frameworks */,
 				CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */,
-				CAA1CB2F255A5262003FD669 /* XcodesKit in Frameworks */,
+				CABFA9DF2592F07A00380FEE /* Path in Frameworks */,
+				CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,7 +157,6 @@
 				CABFA9A32592ED5700380FEE /* Apple.paw */,
 				CABFA9A12592EAFB00380FEE /* LICENSE */,
 				CA8FB61C256E115700469DA5 /* .github */,
-				CA538A0F255A4F3300E64DD7 /* XcodesKit */,
 				CA538A0C255A4F1A00E64DD7 /* AppleAPI */,
 				CAD2E7A02449574E00113D76 /* Xcodes */,
 				CAD2E7B62449575100113D76 /* XcodesTests */,
@@ -139,19 +177,33 @@
 		CAD2E7A02449574E00113D76 /* Xcodes */ = {
 			isa = PBXGroup;
 			children = (
-				CA8FB64D256E17B100469DA5 /* XcodesTest.entitlements */,
 				CAD2E7A12449574E00113D76 /* XcodesApp.swift */,
+				CA378F982466567600A58CE0 /* AppState.swift */,
 				CAD2E7A32449574E00113D76 /* ContentView.swift */,
 				CAA1CB50255A5D16003FD669 /* SignIn */,
-				CA378F982466567600A58CE0 /* AppState.swift */,
 				CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */,
 				CA735108257BF96D00EA9CF8 /* AttributedText.swift */,
 				CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */,
+				CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */,
+				CABFA9B22592EEEA00380FEE /* Entry+.swift */,
+				CABFA9A92592EEE900380FEE /* Environment.swift */,
+				CABFA9B82592EEEA00380FEE /* FileManager+.swift */,
+				CABFA9AC2592EEE900380FEE /* Foundation.swift */,
+				CABFA9B92592EEEA00380FEE /* Models.swift */,
+				CABFA9AE2592EEE900380FEE /* Path+.swift */,
+				CABFA9B42592EEEA00380FEE /* Process.swift */,
+				CABFA9B02592EEEA00380FEE /* Promise+.swift */,
+				CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */,
+				CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */,
+				CABFA9A82592EEE900380FEE /* Version+.swift */,
+				CABFA9A62592EEE900380FEE /* Version+Xcode.swift */,
+				CABFA9A72592EEE900380FEE /* XcodeList.swift */,
 				CA44901E2463AD34003D8213 /* Tag.swift */,
 				CAD2E7A52449575000113D76 /* Assets.xcassets */,
 				CAD2E7AA2449575000113D76 /* Main.storyboard */,
 				CAD2E7AD2449575000113D76 /* Info.plist */,
 				CAD2E7AE2449575000113D76 /* Xcodes.entitlements */,
+				CA8FB64D256E17B100469DA5 /* XcodesTest.entitlements */,
 				CAD2E7A72449575000113D76 /* Preview Content */,
 			);
 			path = Xcodes;
@@ -192,7 +244,13 @@
 			name = Xcodes;
 			packageProductDependencies = (
 				CAA1CB2C255A5262003FD669 /* AppleAPI */,
-				CAA1CB2E255A5262003FD669 /* XcodesKit */,
+				CABFA9DE2592F07A00380FEE /* Path */,
+				CABFA9E32592F08E00380FEE /* Version */,
+				CABFA9E82592F0B400380FEE /* PromiseKit */,
+				CABFA9ED2592F0CC00380FEE /* SwiftSoup */,
+				CABFA9F22592F0E400380FEE /* PMKFoundation */,
+				CABFA9F72592F0F900380FEE /* KeychainAccess */,
+				CABFA9FC2592F13300380FEE /* LegibleError */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -245,6 +303,13 @@
 			);
 			mainGroup = CAD2E7952449574E00113D76;
 			packageReferences = (
+				CABFA9DD2592F07A00380FEE /* XCRemoteSwiftPackageReference "Path" */,
+				CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */,
+				CABFA9E72592F0B400380FEE /* XCRemoteSwiftPackageReference "PromiseKit" */,
+				CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
+				CABFA9F12592F0E400380FEE /* XCRemoteSwiftPackageReference "Foundation" */,
+				CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
+				CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -282,14 +347,28 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
+				CABFA9CA2592EEEA00380FEE /* XcodeList.swift in Sources */,
 				CA44901F2463AD34003D8213 /* Tag.swift in Sources */,
+				CABFA9BF2592EEEA00380FEE /* URLSession+Promise.swift in Sources */,
+				CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */,
+				CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */,
+				CABFA9C32592EEEA00380FEE /* Models.swift in Sources */,
 				CA378F992466567600A58CE0 /* AppState.swift in Sources */,
 				CAD2E7A42449574E00113D76 /* ContentView.swift in Sources */,
 				CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */,
+				CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */,
+				CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */,
+				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
+				CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */,
 				CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */,
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
+				CABFA9C22592EEEA00380FEE /* Promise+.swift in Sources */,
 				CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */,
+				CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */,
+				CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */,
+				CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */,
+				CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */,
 				CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */,
 				CA5D781E257365D6008EDE9D /* PinCodeTextView.swift in Sources */,
 				CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */,
@@ -667,14 +746,104 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		CABFA9DD2592F07A00380FEE /* XCRemoteSwiftPackageReference "Path" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/Path.swift";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.16.0;
+			};
+		};
+		CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/Version";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.3;
+			};
+		};
+		CABFA9E72592F0B400380FEE /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/PromiseKit";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 6.8.3;
+			};
+		};
+		CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/scinfu/SwiftSoup";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		CABFA9F12592F0E400380FEE /* XCRemoteSwiftPackageReference "Foundation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/PromiseKit/Foundation";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.3.1;
+			};
+		};
+		CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
+		CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/LegibleError";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		CAA1CB2C255A5262003FD669 /* AppleAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppleAPI;
 		};
-		CAA1CB2E255A5262003FD669 /* XcodesKit */ = {
+		CABFA9DE2592F07A00380FEE /* Path */ = {
 			isa = XCSwiftPackageProductDependency;
-			productName = XcodesKit;
+			package = CABFA9DD2592F07A00380FEE /* XCRemoteSwiftPackageReference "Path" */;
+			productName = Path;
+		};
+		CABFA9E32592F08E00380FEE /* Version */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */;
+			productName = Version;
+		};
+		CABFA9E82592F0B400380FEE /* PromiseKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CABFA9E72592F0B400380FEE /* XCRemoteSwiftPackageReference "PromiseKit" */;
+			productName = PromiseKit;
+		};
+		CABFA9ED2592F0CC00380FEE /* SwiftSoup */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
+			productName = SwiftSoup;
+		};
+		CABFA9F22592F0E400380FEE /* PMKFoundation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CABFA9F12592F0E400380FEE /* XCRemoteSwiftPackageReference "Foundation" */;
+			productName = PMKFoundation;
+		};
+		CABFA9F72592F0F900380FEE /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
+		CABFA9FC2592F13300380FEE /* LegibleError */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */;
+			productName = LegibleError;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

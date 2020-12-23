@@ -3,7 +3,7 @@
     "pins": [
       {
         "package": "PMKFoundation",
-        "repositoryURL": "https://github.com/PromiseKit/Foundation.git",
+        "repositoryURL": "https://github.com/PromiseKit/Foundation",
         "state": {
           "branch": null,
           "revision": "1a276e598dac59489ed904887e0740fa75e571e0",
@@ -12,7 +12,7 @@
       },
       {
         "package": "KeychainAccess",
-        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess.git",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
         "state": {
           "branch": null,
           "revision": "8d33ffd6f74b3bcfc99af759d4204c6395a3f918",
@@ -21,7 +21,7 @@
       },
       {
         "package": "LegibleError",
-        "repositoryURL": "https://github.com/mxcl/LegibleError.git",
+        "repositoryURL": "https://github.com/mxcl/LegibleError",
         "state": {
           "branch": null,
           "revision": "909e9bab3ded97350b28a5ab41dd745dd8aa9710",
@@ -30,7 +30,7 @@
       },
       {
         "package": "Path.swift",
-        "repositoryURL": "https://github.com/mxcl/Path.swift.git",
+        "repositoryURL": "https://github.com/mxcl/Path.swift",
         "state": {
           "branch": null,
           "revision": "dac007e907a4f4c565cfdc55a9ce148a761a11d5",
@@ -39,29 +39,29 @@
       },
       {
         "package": "PromiseKit",
-        "repositoryURL": "https://github.com/mxcl/PromiseKit.git",
+        "repositoryURL": "https://github.com/mxcl/PromiseKit",
         "state": {
           "branch": null,
-          "revision": "aea48ea1855f5d82e2dffa6027afce3aab8f3dd7",
-          "version": "6.13.3"
+          "revision": "1c296a8637838901d2b01e4c46875ee749506133",
+          "version": "6.8.5"
         }
       },
       {
         "package": "SwiftSoup",
-        "repositoryURL": "https://github.com/scinfu/SwiftSoup.git",
+        "repositoryURL": "https://github.com/scinfu/SwiftSoup",
         "state": {
           "branch": null,
-          "revision": "774dc9c7213085db8aa59595e27c1cd22e428904",
-          "version": "2.3.2"
+          "revision": "aeb5b4249c273d1783a5299e05be1b26e061ea81",
+          "version": "2.0.0"
         }
       },
       {
         "package": "Version",
-        "repositoryURL": "https://github.com/mxcl/Version.git",
+        "repositoryURL": "https://github.com/mxcl/Version",
         "state": {
           "branch": null,
-          "revision": "a94b48f36763c05629fc102837398505032dead9",
-          "version": "2.0.0"
+          "revision": "087c91fedc110f9f833b14ef4c32745dabca8913",
+          "version": "1.0.3"
         }
       }
     ]

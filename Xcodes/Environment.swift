@@ -53,130 +53,6 @@ public struct Shell {
     public func xcodeSelectSwitch(password: String?, path: String) -> Promise<ProcessOutput> {
         xcodeSelectSwitch(password, path)
     }
-    
-    public var downloadWithAria2: (Path, URL, Path, [HTTPCookie]) -> (Progress, Promise<Void>) = { aria2Path, url, destination, cookies in
-        let process = Process()
-        process.executableURL = aria2Path.url
-        process.arguments = [
-            "--header=Cookie: \(cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; "))",     
-            "--max-connection-per-server=16",
-            "--split=16",
-            "--summary-interval=1",
-            "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)",
-            "--dir=\(destination.parent.string)",
-            "--out=\(destination.basename())",
-            url.absoluteString,
-        ]
-        let stdOutPipe = Pipe()
-        process.standardOutput = stdOutPipe
-        let stdErrPipe = Pipe()
-        process.standardError = stdErrPipe
-        
-        var progress = Progress(totalUnitCount: 100)
-
-        let observer = NotificationCenter.default.addObserver(
-            forName: .NSFileHandleDataAvailable, 
-            object: nil, 
-            queue: OperationQueue.main
-        ) { note in
-            guard
-                // This should always be the case for Notification.Name.NSFileHandleDataAvailable
-                let handle = note.object as? FileHandle,
-                handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
-            else { return }
-
-            defer { handle.waitForDataInBackgroundAndNotify() }
-
-            let string = String(decoding: handle.availableData, as: UTF8.self)
-            let regex = try! NSRegularExpression(pattern: #"((?<percent>\d+)%\))"#)
-            let range = NSRange(location: 0, length: string.utf16.count)
-
-            guard
-                let match = regex.firstMatch(in: string, options: [], range: range),
-                let matchRange = Range(match.range(withName: "percent"), in: string),
-                let percentCompleted = Int64(string[matchRange])
-            else { return }
-
-            progress.completedUnitCount = percentCompleted
-        }
-
-        stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-        stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-        
-        do {
-            try process.run()
-        } catch {
-            return (progress, Promise(error: error))
-        }
-
-        let promise = Promise<Void> { seal in
-            DispatchQueue.global(qos: .default).async {
-                process.waitUntilExit()
-                
-                NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
-
-                guard process.terminationReason == .exit, process.terminationStatus == 0 else {
-                    if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
-                        return seal.reject(aria2cError)
-                    } else {
-                        return seal.reject(Process.PMKError.execution(process: process, standardOutput: "", standardError: ""))
-                    }
-                }
-                seal.fulfill(())
-            }
-        }
-        
-        return (progress, promise)
-    }
-
-    public var readLine: (String) -> String? = { prompt in
-        print(prompt, terminator: "")
-        return Swift.readLine()
-    }
-    public func readLine(prompt: String) -> String? {
-        readLine(prompt)
-    }
-
-    public var readSecureLine: (String, Int) -> String? = { prompt, maximumLength in
-        let buffer = UnsafeMutablePointer<Int8>.allocate(capacity: maximumLength)
-        buffer.initialize(repeating: 0, count: maximumLength)
-        defer {
-            buffer.deinitialize(count: maximumLength)
-            buffer.initialize(repeating: 0, count: maximumLength)
-            buffer.deinitialize(count: maximumLength)
-            buffer.deallocate()
-        }
-
-        guard let passwordData = readpassphrase(prompt, buffer, maximumLength, 0) else {
-            return nil
-        }
-
-        return String(validatingUTF8: passwordData)
-    }
-    /**
-     Like `readLine()`, but doesn't echo the user's input to the screen.
-
-     - Parameter prompt: Prompt printed on the line preceding user input
-     - Parameter maximumLength: The maximum length to read, in bytes
-
-     - Returns: The entered password, or nil if an error occurred.
-
-     Buffer is zeroed after use.
-
-     - SeeAlso: [readpassphrase man page](https://developer.apple.com/library/archive/documentation/System/Conceptual/ManPages_iPhoneOS/man3/readpassphrase.3.html)
-     */
-    public func readSecureLine(prompt: String, maximumLength: Int = 8192) -> String? {
-        readSecureLine(prompt, maximumLength)
-    }
-
-    public var env: (String) -> String? = { key in
-        ProcessInfo.processInfo.environment[key]
-    }
-    public func env(_ key: String) -> String? {
-        env(key)
-    }
-
-    public var exit: (Int32) -> Void = { Darwin.exit($0) }
 }
 
 public struct Files {
@@ -223,9 +99,9 @@ public struct Files {
         try createDirectory(url, createIntermediates, attributes)
     }
 
-    public var installedXcodes = XcodesKit.installedXcodes
+    public var installedXcodes = _installedXcodes
 }
-private func installedXcodes(destination: Path) -> [InstalledXcode] {
+private func _installedXcodes(destination: Path) -> [InstalledXcode] {
     ((try? destination.ls()) ?? [])
         .filter { $0.isAppBundle && $0.infoPlist?.bundleID == "com.apple.dt.Xcode" }
         .map { $0.path }

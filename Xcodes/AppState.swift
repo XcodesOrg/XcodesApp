@@ -3,50 +3,20 @@ import AppleAPI
 import Combine
 import Path
 import PromiseKit
-import XcodesKit
+import LegibleError
 
 class AppState: ObservableObject {
     private let list = XcodeList()
-    private lazy var installer = XcodeInstaller(configuration: Configuration(), xcodeList: list)
-    
-    struct XcodeVersion: Identifiable {
-        let title: String
-        let installState: InstallState
-        let selected: Bool
-        let path: String?
-        var id: String { title }
-        var installed: Bool { installState == .installed }
-    }
-    enum InstallState: Equatable {
-        case notInstalled
-        case installing(Progress)
-        case installed
-    }
+    private let client = AppleAPI.Client()
+    private var cancellables = Set<AnyCancellable>()
     
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var allVersions: [XcodeVersion] = []
-    
-    struct AlertContent: Identifiable {
-        var title: String
-        var message: String
-        var id: String { title + message }
-    }
     @Published var error: AlertContent?
-    
     @Published var presentingSignInAlert = false
     @Published var secondFactorData: SecondFactorData?
-    
-    struct SecondFactorData {
-        let option: TwoFactorOption
-        let authOptions: AuthOptionsResponse
-        let sessionData: AppleSessionData
-    }
-    
-    private var cancellables = Set<AnyCancellable>()
-    let client = AppleAPI.Client()
 
     func load() {
-//        if list.shouldUpdate {
         // Treat this implementation as a placeholder that can be thrown away.
         // It's only here to make it easy to see that auth works.
             update()
@@ -242,15 +212,7 @@ class AppState: ObservableObject {
     }
     
     func uninstall(id: String) {
-        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version.xcodeDescription == id }) else { return }
-        // TODO: would be nice to have a version of this method that just took the InstalledXcode
-        installer.uninstallXcode(installedXcode.version.xcodeDescription, destination: Path.root/"Applications")
-            .done {
-                
-            }
-            .catch { error in
-            
-            }
+        // TODO:
     }
     
     func reveal(id: String) {
@@ -261,5 +223,34 @@ class AppState: ObservableObject {
 
     func select(id: String) {
         // TODO:
+    }
+
+    // MARK: - Nested Types
+    
+    struct XcodeVersion: Identifiable {
+        let title: String
+        let installState: InstallState
+        let selected: Bool
+        let path: String?
+        var id: String { title }
+        var installed: Bool { installState == .installed }
+    }
+
+    enum InstallState: Equatable {
+        case notInstalled
+        case installing(Progress)
+        case installed
+    }
+
+    struct AlertContent: Identifiable {
+        var title: String
+        var message: String
+        var id: String { title + message }
+    }
+
+    struct SecondFactorData {
+        let option: TwoFactorOption
+        let authOptions: AuthOptionsResponse
+        let sessionData: AppleSessionData
     }
 }
