@@ -72,7 +72,7 @@ struct ContentView: View {
                         SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
                             .environmentObject(appState)
                     }
-                Button(action: { self.appState.load() }) {
+                Button(action: appState.update) {
                     Image(systemName: "arrow.clockwise")
                 }
                 .keyboardShortcut(KeyEquivalent("r"))
@@ -94,7 +94,7 @@ struct ContentView: View {
         }
         .navigationSubtitle(Text("Updated \(Date().addingTimeInterval(-600), style: .relative) ago"))
         .frame(minWidth: 200, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
-        .onAppear(perform: appState.load)
+        .onAppear(perform: appState.update)
         .alert(item: $appState.error) { error in
             Alert(title: Text(error.title), 
                   message: Text(verbatim: error.message), 

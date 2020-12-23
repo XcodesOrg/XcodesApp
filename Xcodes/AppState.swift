@@ -15,60 +15,6 @@ class AppState: ObservableObject {
     @Published var error: AlertContent?
     @Published var presentingSignInAlert = false
     @Published var secondFactorData: SecondFactorData?
-
-    func load() {
-        // Treat this implementation as a placeholder that can be thrown away.
-        // It's only here to make it easy to see that auth works.
-            update()
-                .sink(
-                    receiveCompletion: { completion in
-                        dump(completion)
-                    },
-                    receiveValue: { xcodes in
-                        let installedXcodes = Current.files.installedXcodes(Path.root/"Applications")
-                        var allXcodeVersions = xcodes.map { $0.version }
-                        for installedXcode in installedXcodes {
-                            // If an installed version isn't listed online, add the installed version
-                            if !allXcodeVersions.contains(where: { version in
-                                version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version)
-                            }) {
-                                allXcodeVersions.append(installedXcode.version)
-                            }
-                            // If an installed version is the same as one that's listed online which doesn't have build metadata, replace it with the installed version with build metadata
-                            else if let index = allXcodeVersions.firstIndex(where: { version in
-                                version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version) &&
-                                version.buildMetadataIdentifiers.isEmpty
-                            }) {
-                                allXcodeVersions[index] = installedXcode.version
-                            }
-                        }
-
-                        self.allVersions = allXcodeVersions
-                            .sorted(by: >)
-                            .map { xcodeVersion in
-                                let installedXcode = installedXcodes.first(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) })
-                                return XcodeVersion(
-                                    title: xcodeVersion.xcodeDescription, 
-                                    installState: installedXcodes.contains(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) }) ? .installed : .notInstalled,
-                                    selected: installedXcode?.path.string.contains("12.2") == true, 
-                                    path: installedXcode?.path.string
-                                )
-                            }
-                    }
-                )
-                .store(in: &cancellables)
-//                .done { _ in
-//                    self.updateAllVersions()
-//                }
-//                .catch { error in
-//                    self.error = AlertContent(title: "Error", 
-//                                              message: error.localizedDescription)
-//                }
-////        }
-//        else {
-//            updateAllVersions()
-//        }        
-    }
     
     // MARK: - Authentication
     
@@ -155,15 +101,18 @@ class AppState: ObservableObject {
         }
     }
     
-    // MARK: -
+    // MARK: - Load Xcode Versions
+    
+    func update() {
+        // Treat this implementation as a placeholder that can be thrown away.
+        // It's only here to make it easy to see that auth works.
+        update()
+            .sink(receiveCompletion: { _ in },
+                  receiveValue: { _ in })
+            .store(in: &cancellables)     
+    }
     
     public func update() -> AnyPublisher<[Xcode], Error> {
-//        return firstly { () -> Promise<Void> in
-//            validateSession()
-//        }
-//        .then { () -> Promise<[Xcode]> in
-//            self.list.update()
-//        }
         // Wrap the Promise API in a Publisher for now
         return Deferred {
             Future { promise in
@@ -172,12 +121,15 @@ class AppState: ObservableObject {
                     .catch { promise(.failure($0)) }                
             }
         }
+        .handleEvents(receiveOutput: { [unowned self] xcodes in
+            self.updateAllVersions(xcodes)
+        })
         .eraseToAnyPublisher()
     }
     
-    private func updateAllVersions() {
+    private func updateAllVersions(_ xcodes: [Xcode]) {
         let installedXcodes = Current.files.installedXcodes(Path.root/"Applications")
-        var allXcodeVersions = list.availableXcodes.map { $0.version }
+        var allXcodeVersions = xcodes.map { $0.version }
         for installedXcode in installedXcodes {
             // If an installed version isn't listed online, add the installed version
             if !allXcodeVersions.contains(where: { version in
@@ -201,7 +153,7 @@ class AppState: ObservableObject {
                 return XcodeVersion(
                     title: xcodeVersion.xcodeDescription, 
                     installState: installedXcodes.contains(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) }) ? .installed : .notInstalled,
-                    selected: installedXcode?.path.string.contains("11.4.1") == true, 
+                    selected: false, 
                     path: installedXcode?.path.string
                 )
             }
