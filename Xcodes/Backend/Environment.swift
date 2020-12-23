@@ -135,7 +135,7 @@ public struct Logging {
 }
 
 public struct Keychain {
-    private static let keychain = KeychainAccess.Keychain(service: "com.robotsandpencils.xcodes")
+    private static let keychain = KeychainAccess.Keychain(service: "com.robotsandpencils.XcodesApp")
 
     public var getString: (String) throws -> String? = keychain.getString(_:)
     public func getString(_ key: String) throws -> String? {
