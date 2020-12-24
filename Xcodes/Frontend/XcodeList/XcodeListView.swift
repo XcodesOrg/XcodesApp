@@ -79,9 +79,16 @@ struct XcodeListView: View {
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: appState.update) {
-                    Image(systemName: "arrow.clockwise")
+                    Label("Refresh", systemImage: "arrow.clockwise")
                 }
                 .keyboardShortcut(KeyEquivalent("r"))
+                .disabled(appState.isUpdating)
+                .isHidden(appState.isUpdating)
+                .overlay(
+                    ProgressView()
+                        .scaleEffect(0.5, anchor: .center)
+                        .isHidden(!appState.isUpdating)
+                )
             }
             ToolbarItem(placement: .principal) {
                 Picker("", selection: $category) {

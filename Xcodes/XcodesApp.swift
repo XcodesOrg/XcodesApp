@@ -17,6 +17,13 @@ struct XcodesApp: App {
                     appDelegate.showAboutWindow()
                 }
             }
+            CommandGroup(after: CommandGroupPlacement.newItem) {
+                Button("Refresh") {
+                    appState.update()
+                }
+                .keyboardShortcut(KeyEquivalent("r"))
+                .disabled(appState.isUpdating)
+            }
         }
 
         Settings {

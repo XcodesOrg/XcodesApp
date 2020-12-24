@@ -12,6 +12,8 @@ class AppState: ObservableObject {
     
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var allVersions: [XcodeVersion] = []
+    @Published var updatePublisher: AnyCancellable?
+    var isUpdating: Bool { updatePublisher != nil }
     @Published var error: AlertContent?
     @Published var authError: AlertContent?
     @Published var presentingSignInAlert = false
@@ -161,15 +163,17 @@ class AppState: ObservableObject {
     // MARK: - Load Xcode Versions
     
     func update() {
-        update()
+        guard !isUpdating else { return }
+        updatePublisher = update()
             .sink(
-                receiveCompletion: { _ in },
+                receiveCompletion: { [unowned self] _ in
+                    self.updatePublisher = nil
+                },
                 receiveValue: { _ in }
             )
-            .store(in: &cancellables)     
     }
     
-    public func update() -> AnyPublisher<[Xcode], Never> {
+    private func update() -> AnyPublisher<[Xcode], Never> {
         signInIfNeeded()
             .flatMap {
                 self.list.update()
