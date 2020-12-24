@@ -4,12 +4,21 @@ import AppKit
 @main
 struct XcodesApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate: AppDelegate
+    @SwiftUI.Environment(\.scenePhase) private var scenePhase: ScenePhase
     @StateObject private var appState = AppState()
     
     var body: some Scene {
         WindowGroup("Xcodes") {
             XcodeListView()
                 .environmentObject(appState)
+                // This is intentionally used on a View, and not on a WindowGroup, 
+                // so that it's triggered when an individual window's phase changes instead of all window phases.
+                // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup. 
+                .onChange(of: scenePhase) { newScenePhase in
+                    if case .active = newScenePhase {
+                        appState.updateIfNeeded()
+                    }
+                }
         }
         .commands {
             CommandGroup(replacing: .appInfo) {

@@ -167,10 +167,20 @@ class AppState: ObservableObject {
         updatePublisher = update()
             .sink(
                 receiveCompletion: { [unowned self] _ in
+                    Current.defaults.setDate(Current.date(), forKey: "lastUpdated")
                     self.updatePublisher = nil
                 },
                 receiveValue: { _ in }
             )
+    }
+    
+    func updateIfNeeded() {
+        guard
+            let lastUpdated = Current.defaults.date(forKey: "lastUpdated"),
+            // This is bad date math but for this use case it doesn't need to be exact
+            lastUpdated < Current.date().addingTimeInterval(-60 * 60 * 24) 
+        else { return }
+        update() as Void
     }
     
     private func update() -> AnyPublisher<[Xcode], Never> {

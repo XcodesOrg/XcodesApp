@@ -106,7 +106,6 @@ struct XcodeListView: View {
         }
         .navigationSubtitle(Text("Updated \(Date().addingTimeInterval(-600), style: .relative) ago"))
         .frame(minWidth: 200, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
-        .onAppear(perform: appState.update)
         .alert(item: $appState.error) { error in
             Alert(title: Text(error.title), 
                   message: Text(verbatim: error.message), 

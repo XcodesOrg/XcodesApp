@@ -19,6 +19,7 @@ public struct Environment {
     public var logging = Logging()
     public var keychain = Keychain()
     public var defaults = Defaults()
+    public var date: () -> Date = Date.init
 }
 
 public var Current = Environment()
@@ -151,6 +152,16 @@ public struct Defaults {
     public var string: (String) -> String? = { UserDefaults.standard.string(forKey: $0) }
     public func string(forKey key: String) -> String? {
         string(key)
+    }
+    
+    public var date: (String) -> Date? = { Date(timeIntervalSince1970: UserDefaults.standard.double(forKey: $0)) }
+    public func date(forKey key: String) -> Date? {
+        date(key)
+    }
+    
+    public var setDate: (Date?, String) -> Void = { UserDefaults.standard.set($0?.timeIntervalSince1970, forKey: $1) }
+    public func setDate(_ value: Date?, forKey key: String) {
+        setDate(value, key)
     }
     
     public var set: (Any?, String) -> Void = { UserDefaults.standard.set($0, forKey: $1) }
