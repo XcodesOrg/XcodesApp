@@ -18,6 +18,7 @@ public struct Environment {
     public var network = Network()
     public var logging = Logging()
     public var keychain = Keychain()
+    public var defaults = Defaults()
 }
 
 public var Current = Environment()
@@ -121,13 +122,6 @@ public struct Network {
     public func downloadTask(with convertible: URLRequestConvertible, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, promise: Promise<(saveLocation: URL, response: URLResponse)>) {
         return downloadTask(convertible, saveLocation, resumeData)
     }
-
-//    public var validateSession: () -> Promise<Void> = client.validateSession
-//
-//    public var login: (String, String) -> Promise<Void> = { client.login(accountName: $0, password: $1) }
-//    public func login(accountName: String, password: String) -> Promise<Void> {
-//        login(accountName, password)
-//    }
 }
 
 public struct Logging {
@@ -150,5 +144,22 @@ public struct Keychain {
     public var remove: (String) throws -> Void = keychain.remove(_:)
     public func remove(_ key: String) throws -> Void {
         try remove(key)
+    }
+}
+
+public struct Defaults {
+    public var string: (String) -> String? = { UserDefaults.standard.string(forKey: $0) }
+    public func string(forKey key: String) -> String? {
+        string(key)
+    }
+    
+    public var set: (Any?, String) -> Void = { UserDefaults.standard.set($0, forKey: $1) }
+    public func set(_ value: Any?, forKey key: String) {
+        set(value, key)
+    }
+    
+    public var removeObject: (String) -> Void = { UserDefaults.standard.removeObject(forKey: $0) }
+    public func removeObject(forKey key: String) {
+        removeObject(key)
     }
 }
