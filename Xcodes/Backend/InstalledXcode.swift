@@ -1,7 +1,8 @@
 import Foundation
-import Path
 import Version
+import Path
 
+/// A version of Xcode that's already installed
 public struct InstalledXcode: Equatable {
     public let path: Path
     /// Composed of the bundle short version from Info.plist and the product build version from version.plist
@@ -39,34 +40,6 @@ public struct InstalledXcode: Equatable {
     }
 }
 
-public struct Xcode: Codable {
-    public let version: Version
-    public let url: URL
-    public let filename: String
-    public let releaseDate: Date?
-
-    public init(version: Version, url: URL, filename: String, releaseDate: Date?) {
-        self.version =  version
-        self.url = url
-        self.filename = filename
-        self.releaseDate = releaseDate
-    }
-}
-
-struct Downloads: Codable {
-    let downloads: [Download]
-}
-
-public struct Download: Codable {
-    public let name: String
-    public let files: [File]
-    public let dateModified: Date
-
-    public struct File: Codable {
-        public let remotePath: String
-    }
-}
-
 public struct InfoPlist: Decodable {
     public let bundleID: String?
     public let bundleShortVersion: String?
@@ -86,4 +59,3 @@ public struct VersionPlist: Decodable {
         case productBuildVersion = "ProductBuildVersion"
     }
 }
-
