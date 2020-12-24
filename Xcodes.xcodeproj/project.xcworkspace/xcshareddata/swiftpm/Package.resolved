@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "XcodeReleases",
+        "repositoryURL": "https://github.com/xcodereleases/data",
+        "state": {
+          "branch": null,
+          "revision": "b47228c688b608e34b3b84079ab6052a24c7a981",
+          "version": null
+        }
+      },
+      {
         "package": "PMKFoundation",
         "repositoryURL": "https://github.com/PromiseKit/Foundation",
         "state": {

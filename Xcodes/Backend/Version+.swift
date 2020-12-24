@@ -19,13 +19,13 @@ public extension Version {
                 return major == installed.major &&
                        minor == installed.minor &&
                        patch == installed.patch &&
-                       prereleaseIdentifiers == installed.prereleaseIdentifiers
+                       prereleaseIdentifiers.map { $0.lowercased() } == installed.prereleaseIdentifiers.map { $0.lowercased() }
             }
             else {
                 return major == installed.major &&
                        minor == installed.minor &&
                        patch == installed.patch &&
-                       prereleaseIdentifiers == installed.prereleaseIdentifiers &&
+                       prereleaseIdentifiers.map { $0.lowercased() } == installed.prereleaseIdentifiers.map { $0.lowercased() } &&
                        buildMetadataIdentifiers.map { $0.lowercased() } == installed.buildMetadataIdentifiers.map { $0.lowercased() }
             }
         }

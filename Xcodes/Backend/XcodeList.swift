@@ -3,6 +3,7 @@ import Foundation
 import Path
 import Version
 import SwiftSoup
+import struct XCModel.Xcode
 
 /// Provides lists of available Xcodes
 public final class XcodeList {
@@ -12,26 +13,34 @@ public final class XcodeList {
 
     public private(set) var availableXcodes: [Xcode] = []
 
-    public var shouldUpdate: Bool {
-        return availableXcodes.isEmpty
-    }
-
-    public func update() -> AnyPublisher<[Xcode], Error> {
-        releasedXcodes().combineLatest(prereleaseXcodes())
-            .receive(on: DispatchQueue.main)
-            .map { releasedXcodes, prereleaseXcodes in
-                // Starting with Xcode 11 beta 6, developer.apple.com/download and developer.apple.com/download/more both list some pre-release versions of Xcode.
-                // Previously pre-release versions only appeared on developer.apple.com/download.
-                // /download/more doesn't include build numbers, so we trust that if the version number and prerelease identifiers are the same that they're the same build.
-                // If an Xcode version is listed on both sites then prefer the one on /download because the build metadata is used to compare against installed Xcodes.
-                let xcodes = releasedXcodes.filter { releasedXcode in
-                    prereleaseXcodes.contains { $0.version.isEqualWithoutBuildMetadataIdentifiers(to: releasedXcode.version) } == false
-                } + prereleaseXcodes
-                self.availableXcodes = xcodes
-                try? self.cacheAvailableXcodes(xcodes)
-                return xcodes
-            }
-            .eraseToAnyPublisher()
+    public func update(dataSource: DataSource) -> AnyPublisher<[Xcode], Error> {
+        switch dataSource {
+        case .apple:
+            return releasedXcodes().combineLatest(prereleaseXcodes())
+                .receive(on: DispatchQueue.main)
+                .map { releasedXcodes, prereleaseXcodes in
+                    // Starting with Xcode 11 beta 6, developer.apple.com/download and developer.apple.com/download/more both list some pre-release versions of Xcode.
+                    // Previously pre-release versions only appeared on developer.apple.com/download.
+                    // /download/more doesn't include build numbers, so we trust that if the version number and prerelease identifiers are the same that they're the same build.
+                    // If an Xcode version is listed on both sites then prefer the one on /download because the build metadata is used to compare against installed Xcodes.
+                    let xcodes = releasedXcodes.filter { releasedXcode in
+                        prereleaseXcodes.contains { $0.version.isEqualWithoutBuildMetadataIdentifiers(to: releasedXcode.version) } == false
+                    } + prereleaseXcodes
+                    self.availableXcodes = xcodes
+                    try? self.cacheAvailableXcodes(xcodes)
+                    return xcodes
+                }
+                .eraseToAnyPublisher()
+        case .xcodeReleases:
+            return xcodeReleases()
+                .receive(on: DispatchQueue.main)
+                .handleEvents(
+                    receiveOutput: { xcodes in
+                        try? self.cacheAvailableXcodes(xcodes)    
+                    }
+                )
+                .eraseToAnyPublisher()
+        }
     }
 }
 
@@ -51,6 +60,8 @@ extension XcodeList {
 }
 
 extension XcodeList {
+    // MARK: Apple
+    
     private func releasedXcodes() -> AnyPublisher<[Xcode], Error> {
         Current.network.dataTask(with: URLRequest.downloads)
             .map(\.data)
@@ -84,7 +95,7 @@ extension XcodeList {
             .eraseToAnyPublisher()
     }
 
-    func parsePrereleaseXcodes(from data: Data) throws -> [Xcode] {
+    private func parsePrereleaseXcodes(from data: Data) throws -> [Xcode] {
         let body = String(data: data, encoding: .utf8)!
         let document = try SwiftSoup.parse(body)
 
@@ -100,5 +111,38 @@ extension XcodeList {
         let filename = String(path.suffix(fromLast: "/"))
 
         return [Xcode(version: version, url: url, filename: filename, releaseDate: DateFormatter.downloadsReleaseDate.date(from: releaseDateString))]
+    }
+}
+
+extension XcodeList {
+    // MARK: XcodeReleases
+    
+    private func xcodeReleases() -> AnyPublisher<[Xcode], Error> {
+        Current.network.dataTask(with: URLRequest(url: URL(string: "https://xcodereleases.com/data.json")!))
+            .map(\.data)
+            .decode(type: [XCModel.Xcode].self, decoder: JSONDecoder())
+            .map { xcReleasesXcodes in  
+                let xcodes = xcReleasesXcodes.compactMap { xcReleasesXcode -> Xcode? in
+                    guard
+                        let downloadURL = xcReleasesXcode.links?.download?.url,
+                        let version = Version(xcReleasesXcode: xcReleasesXcode)
+                    else { return nil }
+                    
+                    let releaseDate = Calendar(identifier: .gregorian).date(from: DateComponents(
+                        year: xcReleasesXcode.date.year,
+                        month: xcReleasesXcode.date.month,
+                        day: xcReleasesXcode.date.day
+                    ))
+                    
+                    return Xcode(
+                        version: version,
+                        url: downloadURL,
+                        filename: String(downloadURL.path.suffix(fromLast: "/")),
+                        releaseDate: releaseDate
+                    )
+                }
+                return xcodes
+            }
+            .eraseToAnyPublisher()
     }
 }

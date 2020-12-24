@@ -4,6 +4,7 @@ import Combine
 import Path
 import LegibleError
 import KeychainAccess
+import SwiftUI
 
 class AppState: ObservableObject {
     private let list = XcodeList()
@@ -19,6 +20,10 @@ class AppState: ObservableObject {
     @Published var presentingSignInAlert = false
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
+    
+    private var dataSource: DataSource {
+        Current.defaults.string(forKey: "dataSource").flatMap(DataSource.init(rawValue:)) ?? .default
+    }
     
     // MARK: - Authentication
     
@@ -185,8 +190,8 @@ class AppState: ObservableObject {
     
     private func update() -> AnyPublisher<[Xcode], Never> {
         signInIfNeeded()
-            .flatMap {
-                self.list.update()
+            .flatMap { [unowned self] in
+                self.list.update(dataSource: self.dataSource)
             }
             .handleEvents(
                 receiveCompletion: { completion in
