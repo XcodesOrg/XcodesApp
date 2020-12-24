@@ -7,12 +7,16 @@ import KeychainAccess
 import SwiftUI
 
 class AppState: ObservableObject {
-    private let list = XcodeList()
     private let client = AppleAPI.Client()
     private var cancellables = Set<AnyCancellable>()
     
     @Published var authenticationState: AuthenticationState = .unauthenticated
-    @Published var allVersions: [XcodeVersion] = []
+    @Published var availableXcodes: [AvailableXcode] = [] {
+        willSet {
+            updateAllVersions(newValue)
+        }
+    }
+    var allVersions: [XcodeVersion] = []
     @Published var updatePublisher: AnyCancellable?
     var isUpdating: Bool { updatePublisher != nil }
     @Published var error: AlertContent?
@@ -21,8 +25,8 @@ class AppState: ObservableObject {
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
     
-    private var dataSource: DataSource {
-        Current.defaults.string(forKey: "dataSource").flatMap(DataSource.init(rawValue:)) ?? .default
+    init() {
+        try? loadCachedAvailableXcodes()
     }
     
     // MARK: - Authentication
@@ -165,53 +169,29 @@ class AppState: ObservableObject {
         authenticationState = .unauthenticated
     }
     
-    // MARK: - Load Xcode Versions
+    // MARK: -
     
-    func update() {
-        guard !isUpdating else { return }
-        updatePublisher = update()
-            .sink(
-                receiveCompletion: { [unowned self] _ in
-                    Current.defaults.setDate(Current.date(), forKey: "lastUpdated")
-                    self.updatePublisher = nil
-                },
-                receiveValue: { _ in }
-            )
+    func install(id: String) {
+        // TODO:
     }
     
-    func updateIfNeeded() {
-        guard
-            let lastUpdated = Current.defaults.date(forKey: "lastUpdated"),
-            // This is bad date math but for this use case it doesn't need to be exact
-            lastUpdated < Current.date().addingTimeInterval(-60 * 60 * 24) 
-        else { return }
-        update() as Void
+    func uninstall(id: String) {
+        // TODO:
     }
     
-    private func update() -> AnyPublisher<[Xcode], Never> {
-        signInIfNeeded()
-            .flatMap { [unowned self] in
-                self.list.update(dataSource: self.dataSource)
-            }
-            .handleEvents(
-                receiveCompletion: { completion in
-                    if case let .failure(error) = completion {
-                        self.error = AlertContent(title: "Update Error", message: error.legibleLocalizedDescription)
-                    }
-                }
-            )
-            .catch { _ in
-                Just(self.list.availableXcodes)
-            }
-            .handleEvents(
-                receiveOutput: { [unowned self] xcodes in
-                    self.updateAllVersions(xcodes)
-                }
-            )
-            .eraseToAnyPublisher()
+    func reveal(id: String) {
+        // TODO: show error if not
+        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version.xcodeDescription == id }) else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([installedXcode.path.url])
+    }
+
+    func select(id: String) {
+        // TODO:
     }
     
-    private func updateAllVersions(_ xcodes: [Xcode]) {
+    // MARK: - Private
+    
+    private func updateAllVersions(_ xcodes: [AvailableXcode]) {
         let installedXcodes = Current.files.installedXcodes(Path.root/"Applications")
         var allXcodeVersions = xcodes.map { $0.version }
         for installedXcode in installedXcodes {
@@ -243,26 +223,10 @@ class AppState: ObservableObject {
             }
     }
     
-    func install(id: String) {
-        // TODO:
-    }
-    
-    func uninstall(id: String) {
-        // TODO:
-    }
-    
-    func reveal(id: String) {
-        // TODO: show error if not
-        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version.xcodeDescription == id }) else { return }
-        NSWorkspace.shared.activateFileViewerSelecting([installedXcode.path.url])
-    }
-
-    func select(id: String) {
-        // TODO:
-    }
 
     // MARK: - Nested Types
     
+    /// A merging of AvailableXcode and InstalledXcode prepared for display
     struct XcodeVersion: Identifiable {
         let title: String
         let installState: InstallState

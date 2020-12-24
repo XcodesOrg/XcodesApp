@@ -37,7 +37,7 @@
 		CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B82592EEEA00380FEE /* FileManager+.swift */; };
 		CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B22592EEEA00380FEE /* Entry+.swift */; };
 		CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */; };
-		CABFA9CA2592EEEA00380FEE /* XcodeList.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A72592EEE900380FEE /* XcodeList.swift */; };
+		CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A72592EEE900380FEE /* AppState+Update.swift */; };
 		CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AE2592EEE900380FEE /* Path+.swift */; };
 		CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AC2592EEE900380FEE /* Foundation.swift */; };
 		CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A62592EEE900380FEE /* Version+Xcode.swift */; };
@@ -99,7 +99,7 @@
 		CABFA9A12592EAFB00380FEE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		CABFA9A32592ED5700380FEE /* Apple.paw */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple.paw; path = ../xcodes/Apple.paw; sourceTree = "<group>"; };
 		CABFA9A62592EEE900380FEE /* Version+Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Version+Xcode.swift"; sourceTree = "<group>"; };
-		CABFA9A72592EEE900380FEE /* XcodeList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeList.swift; sourceTree = "<group>"; };
+		CABFA9A72592EEE900380FEE /* AppState+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState+Update.swift"; sourceTree = "<group>"; };
 		CABFA9A82592EEE900380FEE /* Version+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Version+.swift"; sourceTree = "<group>"; };
 		CABFA9A92592EEE900380FEE /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Apple.swift"; sourceTree = "<group>"; };
@@ -209,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				CA378F982466567600A58CE0 /* AppState.swift */,
+				CABFA9A72592EEE900380FEE /* AppState+Update.swift */,
 				CA9FF88025955C7000E47BAF /* AvailableXcode.swift */,
 				CABFAA2B2592FBFC00380FEE /* Configure.swift */,
 				CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */,
@@ -228,7 +229,6 @@
 				CABFA9A82592EEE900380FEE /* Version+.swift */,
 				CA9FF876259528CC00E47BAF /* Version+XcodeReleases.swift */,
 				CABFA9A62592EEE900380FEE /* Version+Xcode.swift */,
-				CABFA9A72592EEE900380FEE /* XcodeList.swift */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -461,7 +461,7 @@
 				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
-				CABFA9CA2592EEEA00380FEE /* XcodeList.swift in Sources */,
+				CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */,
 				CA44901F2463AD34003D8213 /* Tag.swift in Sources */,
 				CABFA9BF2592EEEA00380FEE /* URLSession+Promise.swift in Sources */,
 				CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */,

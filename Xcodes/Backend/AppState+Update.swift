@@ -5,15 +5,47 @@ import Version
 import SwiftSoup
 import struct XCModel.Xcode
 
-/// Provides lists of available Xcodes
-public final class XcodeList {
-    public init() {
-        try? loadCachedAvailableXcodes()
+extension AppState {
+    private var dataSource: DataSource {
+        Current.defaults.string(forKey: "dataSource").flatMap(DataSource.init(rawValue:)) ?? .default
+    }
+    
+    func updateIfNeeded() {
+        guard
+            let lastUpdated = Current.defaults.date(forKey: "lastUpdated"),
+            // This is bad date math but for this use case it doesn't need to be exact
+            lastUpdated < Current.date().addingTimeInterval(-60 * 60 * 24) 
+        else { return }
+        update() as Void
     }
 
-    public private(set) var availableXcodes: [Xcode] = []
+    func update() {
+        guard !isUpdating else { return }
+        updatePublisher = update()
+            .sink(
+                receiveCompletion: { [unowned self] completion in
+                    switch completion {
+                    case let .failure(error):
+                        self.error = AlertContent(title: "Update Error", message: error.legibleLocalizedDescription)
+                    case .finished:
+                        Current.defaults.setDate(Current.date(), forKey: "lastUpdated")
+                    }
 
-    public func update(dataSource: DataSource) -> AnyPublisher<[Xcode], Error> {
+                    self.updatePublisher = nil
+                },
+                receiveValue: { _ in }
+            )
+    }
+    
+    private func update() -> AnyPublisher<[AvailableXcode], Error> {
+        signInIfNeeded()
+            .flatMap { [unowned self] in
+                self.updateAvailableXcodes(from: self.dataSource)
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    private func updateAvailableXcodes(from dataSource: DataSource) -> AnyPublisher<[AvailableXcode], Error> {
         switch dataSource {
         case .apple:
             return releasedXcodes().combineLatest(prereleaseXcodes())
@@ -26,16 +58,21 @@ public final class XcodeList {
                     let xcodes = releasedXcodes.filter { releasedXcode in
                         prereleaseXcodes.contains { $0.version.isEqualWithoutBuildMetadataIdentifiers(to: releasedXcode.version) } == false
                     } + prereleaseXcodes
-                    self.availableXcodes = xcodes
-                    try? self.cacheAvailableXcodes(xcodes)
                     return xcodes
                 }
+                .handleEvents(
+                    receiveOutput: { xcodes in
+                        self.availableXcodes = xcodes
+                        try? self.cacheAvailableXcodes(xcodes)
+                    }
+                )
                 .eraseToAnyPublisher()
         case .xcodeReleases:
             return xcodeReleases()
                 .receive(on: DispatchQueue.main)
                 .handleEvents(
                     receiveOutput: { xcodes in
+                        self.availableXcodes = xcodes
                         try? self.cacheAvailableXcodes(xcodes)    
                     }
                 )
@@ -44,14 +81,16 @@ public final class XcodeList {
     }
 }
 
-extension XcodeList {
-    private func loadCachedAvailableXcodes() throws {
+extension AppState {
+    // MARK: - Available Xcode Cache
+
+    func loadCachedAvailableXcodes() throws {
         guard let data = Current.files.contents(atPath: Path.cacheFile.string) else { return }
-        let xcodes = try JSONDecoder().decode([Xcode].self, from: data)
+        let xcodes = try JSONDecoder().decode([AvailableXcode].self, from: data)
         self.availableXcodes = xcodes
     }
 
-    private func cacheAvailableXcodes(_ xcodes: [Xcode]) throws {
+    func cacheAvailableXcodes(_ xcodes: [AvailableXcode]) throws {
         let data = try JSONEncoder().encode(xcodes)
         try FileManager.default.createDirectory(at: Path.cacheFile.url.deletingLastPathComponent(),
                                                 withIntermediateDirectories: true)
@@ -59,20 +98,20 @@ extension XcodeList {
     }
 }
 
-extension XcodeList {
-    // MARK: Apple
+extension AppState {
+    // MARK: - Apple
     
-    private func releasedXcodes() -> AnyPublisher<[Xcode], Error> {
+    private func releasedXcodes() -> AnyPublisher<[AvailableXcode], Error> {
         Current.network.dataTask(with: URLRequest.downloads)
             .map(\.data)
             .decode(type: Downloads.self, decoder: configure(JSONDecoder()) {
                 $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
             })
-            .map { downloads -> [Xcode] in
+            .map { downloads -> [AvailableXcode] in
                 let xcodes = downloads
                     .downloads
                     .filter { $0.name.range(of: "^Xcode [0-9]", options: .regularExpression) != nil }
-                    .compactMap { download -> Xcode? in
+                    .compactMap { download -> AvailableXcode? in
                         let urlPrefix = URL(string: "https://download.developer.apple.com/")!
                         guard 
                             let xcodeFile = download.files.first(where: { $0.remotePath.hasSuffix("dmg") || $0.remotePath.hasSuffix("xip") }),
@@ -80,22 +119,22 @@ extension XcodeList {
                         else { return nil }
 
                         let url = urlPrefix.appendingPathComponent(xcodeFile.remotePath)
-                        return Xcode(version: version, url: url, filename: String(xcodeFile.remotePath.suffix(fromLast: "/")), releaseDate: download.dateModified)
+                        return AvailableXcode(version: version, url: url, filename: String(xcodeFile.remotePath.suffix(fromLast: "/")), releaseDate: download.dateModified)
                     }
                 return xcodes
             }
             .eraseToAnyPublisher()
     }
 
-    private func prereleaseXcodes() -> AnyPublisher<[Xcode], Error> {
+    private func prereleaseXcodes() -> AnyPublisher<[AvailableXcode], Error> {
         Current.network.dataTask(with: URLRequest.download)
-            .tryMap { (data, _) -> [Xcode] in
+            .tryMap { (data, _) -> [AvailableXcode] in
                 try self.parsePrereleaseXcodes(from: data)
             }
             .eraseToAnyPublisher()
     }
 
-    private func parsePrereleaseXcodes(from data: Data) throws -> [Xcode] {
+    private func parsePrereleaseXcodes(from data: Data) throws -> [AvailableXcode] {
         let body = String(data: data, encoding: .utf8)!
         let document = try SwiftSoup.parse(body)
 
@@ -110,19 +149,19 @@ extension XcodeList {
 
         let filename = String(path.suffix(fromLast: "/"))
 
-        return [Xcode(version: version, url: url, filename: filename, releaseDate: DateFormatter.downloadsReleaseDate.date(from: releaseDateString))]
+        return [AvailableXcode(version: version, url: url, filename: filename, releaseDate: DateFormatter.downloadsReleaseDate.date(from: releaseDateString))]
     }
 }
 
-extension XcodeList {
-    // MARK: XcodeReleases
+extension AppState {
+    // MARK: - XcodeReleases
     
-    private func xcodeReleases() -> AnyPublisher<[Xcode], Error> {
+    private func xcodeReleases() -> AnyPublisher<[AvailableXcode], Error> {
         Current.network.dataTask(with: URLRequest(url: URL(string: "https://xcodereleases.com/data.json")!))
             .map(\.data)
             .decode(type: [XCModel.Xcode].self, decoder: JSONDecoder())
             .map { xcReleasesXcodes in  
-                let xcodes = xcReleasesXcodes.compactMap { xcReleasesXcode -> Xcode? in
+                let xcodes = xcReleasesXcodes.compactMap { xcReleasesXcode -> AvailableXcode? in
                     guard
                         let downloadURL = xcReleasesXcode.links?.download?.url,
                         let version = Version(xcReleasesXcode: xcReleasesXcode)
@@ -134,7 +173,7 @@ extension XcodeList {
                         day: xcReleasesXcode.date.day
                     ))
                     
-                    return Xcode(
+                    return AvailableXcode(
                         version: version,
                         url: downloadURL,
                         filename: String(downloadURL.path.suffix(fromLast: "/")),
