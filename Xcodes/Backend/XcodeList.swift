@@ -1,10 +1,10 @@
+import Combine
 import Foundation
 import Path
 import Version
-import PromiseKit
 import SwiftSoup
 
-/// Provides lists of available and installed Xcodes
+/// Provides lists of available Xcodes
 public final class XcodeList {
     public init() {
         try? loadCachedAvailableXcodes()
@@ -16,8 +16,9 @@ public final class XcodeList {
         return availableXcodes.isEmpty
     }
 
-    public func update() -> Promise<[Xcode]> {
-        return when(fulfilled: releasedXcodes(), prereleaseXcodes())
+    public func update() -> AnyPublisher<[Xcode], Error> {
+        releasedXcodes().combineLatest(prereleaseXcodes())
+            .receive(on: DispatchQueue.main)
             .map { releasedXcodes, prereleaseXcodes in
                 // Starting with Xcode 11 beta 6, developer.apple.com/download and developer.apple.com/download/more both list some pre-release versions of Xcode.
                 // Previously pre-release versions only appeared on developer.apple.com/download.
@@ -30,6 +31,7 @@ public final class XcodeList {
                 try? self.cacheAvailableXcodes(xcodes)
                 return xcodes
             }
+            .eraseToAnyPublisher()
     }
 }
 
@@ -49,38 +51,37 @@ extension XcodeList {
 }
 
 extension XcodeList {
-    private func releasedXcodes() -> Promise<[Xcode]> {
-        return firstly { () -> Promise<(data: Data, response: URLResponse)> in
-            Current.network.dataTask(with: URLRequest.downloads)
-        }
-        .map { (data, response) -> [Xcode] in
-            let decoder = JSONDecoder()
-            decoder.dateDecodingStrategy = .formatted(.downloadsDateModified)
-            let downloads = try decoder.decode(Downloads.self, from: data)
-            let xcodes = downloads
-                .downloads
-                .filter { $0.name.range(of: "^Xcode [0-9]", options: .regularExpression) != nil }
-                .compactMap { download -> Xcode? in
-                    let urlPrefix = URL(string: "https://download.developer.apple.com/")!
-                    guard 
-                        let xcodeFile = download.files.first(where: { $0.remotePath.hasSuffix("dmg") || $0.remotePath.hasSuffix("xip") }),
-                        let version = Version(xcodeVersion: download.name)
-                    else { return nil }
+    private func releasedXcodes() -> AnyPublisher<[Xcode], Error> {
+        Current.network.dataTask(with: URLRequest.downloads)
+            .map(\.data)
+            .decode(type: Downloads.self, decoder: configure(JSONDecoder()) {
+                $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
+            })
+            .map { downloads -> [Xcode] in
+                let xcodes = downloads
+                    .downloads
+                    .filter { $0.name.range(of: "^Xcode [0-9]", options: .regularExpression) != nil }
+                    .compactMap { download -> Xcode? in
+                        let urlPrefix = URL(string: "https://download.developer.apple.com/")!
+                        guard 
+                            let xcodeFile = download.files.first(where: { $0.remotePath.hasSuffix("dmg") || $0.remotePath.hasSuffix("xip") }),
+                            let version = Version(xcodeVersion: download.name)
+                        else { return nil }
 
-                    let url = urlPrefix.appendingPathComponent(xcodeFile.remotePath)
-                    return Xcode(version: version, url: url, filename: String(xcodeFile.remotePath.suffix(fromLast: "/")), releaseDate: download.dateModified)
-                }
-            return xcodes
-        }
+                        let url = urlPrefix.appendingPathComponent(xcodeFile.remotePath)
+                        return Xcode(version: version, url: url, filename: String(xcodeFile.remotePath.suffix(fromLast: "/")), releaseDate: download.dateModified)
+                    }
+                return xcodes
+            }
+            .eraseToAnyPublisher()
     }
 
-    private func prereleaseXcodes() -> Promise<[Xcode]> {
-        return firstly { () -> Promise<(data: Data, response: URLResponse)> in
-            Current.network.dataTask(with: URLRequest.download)
-        }
-        .map { (data, _) -> [Xcode] in
-            try self.parsePrereleaseXcodes(from: data)
-        }
+    private func prereleaseXcodes() -> AnyPublisher<[Xcode], Error> {
+        Current.network.dataTask(with: URLRequest.download)
+            .tryMap { (data, _) -> [Xcode] in
+                try self.parsePrereleaseXcodes(from: data)
+            }
+            .eraseToAnyPublisher()
     }
 
     func parsePrereleaseXcodes(from data: Data) throws -> [Xcode] {

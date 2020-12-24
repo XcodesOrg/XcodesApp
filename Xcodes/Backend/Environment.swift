@@ -111,10 +111,10 @@ private func _installedXcodes(destination: Path) -> [InstalledXcode] {
 
 public struct Network {
     private static let client = AppleAPI.Client()
-
-    public var dataTask: (URLRequestConvertible) -> Promise<(data: Data, response: URLResponse)> = { AppleAPI.Current.network.session.dataTask(.promise, with: $0) }
-    public func dataTask(with convertible: URLRequestConvertible) -> Promise<(data: Data, response: URLResponse)> {
-        dataTask(convertible)
+    
+    public var dataTask: (URLRequest) -> URLSession.DataTaskPublisher = { AppleAPI.Current.network.session.dataTaskPublisher(for: $0) }
+    public func dataTask(with request: URLRequest) -> URLSession.DataTaskPublisher {
+        dataTask(request)
     }
 
     public var downloadTask: (URLRequestConvertible, URL, Data?) -> (Progress, Promise<(saveLocation: URL, response: URLResponse)>) = { AppleAPI.Current.network.session.downloadTask(with: $0, to: $1, resumingWith: $2) }

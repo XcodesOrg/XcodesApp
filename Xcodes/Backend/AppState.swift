@@ -2,7 +2,6 @@ import AppKit
 import AppleAPI
 import Combine
 import Path
-import PromiseKit
 import LegibleError
 import KeychainAccess
 
@@ -173,22 +172,15 @@ class AppState: ObservableObject {
     public func update() -> AnyPublisher<[Xcode], Never> {
         signInIfNeeded()
             .flatMap {
-                // Wrap the Promise API in a Publisher for now
-                Deferred {
-                    Future { promise in
-                        self.list.update()
-                            .done { promise(.success($0)) }
-                            .catch { promise(.failure($0)) }                
+                self.list.update()
+            }
+            .handleEvents(
+                receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        self.error = AlertContent(title: "Update Error", message: error.legibleLocalizedDescription)
                     }
                 }
-                .handleEvents(
-                    receiveCompletion: { completion in
-                        if case let .failure(error) = completion {
-                            self.error = AlertContent(title: "Update Error", message: error.legibleLocalizedDescription)
-                        }
-                    }
-                )
-            }
+            )
             .catch { _ in
                 Just(self.list.availableXcodes)
             }
