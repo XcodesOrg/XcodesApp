@@ -27,9 +27,9 @@ struct PinCodeTextField: NSViewRepresentable {
 
 struct PinCodeTextField_Previews: PreviewProvider {
     struct PreviewContainer: View {
-        @State private var code = "123"
+        @State private var code = "1234567890"
         var body: some View {
-            PinCodeTextField(code: $code, numberOfDigits: 6)
+            PinCodeTextField(code: $code, numberOfDigits: 11)
                 .padding()
         }
     }
@@ -215,7 +215,7 @@ class PinCodeCharacterTextField: NSTextField {
         )
         .size()
         // I guess the cell should probably be doing this sizing in order to take into account everything outside of simply the text's frame, but for some reason I can't find a way to do that which works...
-        size.width += 8
+        size.width += 16
         size.height += 8
         return size
     }
