@@ -9,7 +9,9 @@ import Version
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
+    private let helperClient = HelperClient()
     private var cancellables = Set<AnyCancellable>()
+    private var selectPublisher: AnyCancellable?
     
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
@@ -30,9 +32,11 @@ class AppState: ObservableObject {
     // but we need it here instead so that it can be a focusedValue at the top level in XcodesApp instead of in a list row. The latter seems more like how the focusedValue API is supposed to work, but currently doesn't. 
     @Published var selectedXcodeID: Xcode.ID?
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
+    @Published var helperInstallState: HelperInstallState = .notInstalled
     
     init() {
         try? loadCachedAvailableXcodes()
+        checkIfHelperIsInstalled()
     }
     
     // MARK: - Authentication
@@ -175,6 +179,26 @@ class AppState: ObservableObject {
         authenticationState = .unauthenticated
     }
     
+    // MARK: - Helper
+    
+    func installHelper() {
+        HelperInstaller.install()
+        checkIfHelperIsInstalled()
+    }
+    
+    private func checkIfHelperIsInstalled() {
+        helperInstallState = .unknown
+
+        helperClient.checkIfLatestHelperIsInstalled()
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveValue: { installed in
+                    self.helperInstallState = installed ? .installed : .notInstalled
+                }
+            )
+            .store(in: &cancellables)
+    }
+    
     // MARK: -
     
     func install(id: Xcode.ID) {
@@ -192,7 +216,25 @@ class AppState: ObservableObject {
     }
 
     func select(id: Xcode.ID) {
-        // TODO:
+        if helperInstallState == .notInstalled {
+            installHelper()
+        }
+
+        guard 
+            let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
+            selectPublisher == nil
+        else { return }
+        
+        selectPublisher = HelperClient().switchXcodePath(installedXcode.path.string)
+            .sink(
+                receiveCompletion: { [unowned self] completion in
+                    if case let .failure(error) = completion {
+                        self.error = AlertContent(title: "Error selecting Xcode", message: error.legibleLocalizedDescription)
+                    }
+                    self.selectPublisher = nil
+                },
+                receiveValue: { _ in }
+            )
     }
     
     func launch(id: Xcode.ID) {
@@ -244,6 +286,12 @@ class AppState: ObservableObject {
     
 
     // MARK: - Nested Types
+
+    enum HelperInstallState: Equatable {
+        case unknown
+        case notInstalled
+        case installed
+    }
 
     struct AlertContent: Identifiable {
         var title: String

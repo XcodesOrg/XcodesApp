@@ -38,6 +38,28 @@ struct SettingsView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
+            
+            GroupBox(label: Text("Privileged Helper")) {
+                VStack(alignment: .leading, spacing: 8) {
+                    switch appState.helperInstallState {
+                    case .unknown:
+                        ProgressView()
+                            .scaleEffect(0.5, anchor: .center)
+                    case .installed:
+                        Text("Helper is installed")
+                    case .notInstalled:
+                        HStack {
+                            Text("Helper is not installed")
+                            Button("Install helper") {
+                                appState.installHelper()
+                            }
+                        }
+                    }
+                    
+                    Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.")
+                        .font(.footnote)
+                }
+            }
             Spacer()
         }
         .padding()
