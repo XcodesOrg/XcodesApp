@@ -28,17 +28,12 @@ struct SignInPhoneListView: View {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
                 Spacer()
-
-                if appState.isProcessingRequest {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle())
-                        .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
-                        .padding(.trailing, 22)
-                } else {
-                    Button("Continue", action: { appState.requestSMS(to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!, authOptions: authOptions, sessionData: sessionData) })
-                        .keyboardShortcut(.defaultAction)
-                        .disabled(selectedPhoneNumberID == nil)
+                ProgressButton(isInProgress: appState.isProcessingAuthRequest,
+                               action: { appState.requestSMS(to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!, authOptions: authOptions, sessionData: sessionData) }) {
+                    Text("Continue")
                 }
+                .keyboardShortcut(.defaultAction)
+                .disabled(selectedPhoneNumberID == nil)
             }
             .frame(height: 25)
         }
