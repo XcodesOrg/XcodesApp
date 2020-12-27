@@ -25,6 +25,7 @@ class AppState: ObservableObject {
     @Published var presentingSignInAlert = false
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
+    @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     
     init() {
         try? loadCachedAvailableXcodes()

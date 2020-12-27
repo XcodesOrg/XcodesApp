@@ -4,8 +4,7 @@ import PromiseKit
 
 struct XcodeListView: View {
     @EnvironmentObject var appState: AppState
-    @State private var selection = Set<Version>()
-    @State private var xcodeBeingConfirmedForUninstallation: Xcode?
+    @State private var selection: Xcode.ID?
     @State private var searchText: String = ""
     @AppStorage("lastUpdated") private var lastUpdated: Double?
     @AppStorage("xcodeListCategory") private var category: Category = .all
@@ -55,15 +54,15 @@ struct XcodeListView: View {
                         print("Installing...")
                     }
                     .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
-                                                     highlighted: self.selection.contains(xcode.id)))
+                                                     highlighted: selection == xcode.id))
                     .disabled(xcode.installed)
                 }
                 Text(verbatim: xcode.path ?? "")
                     .font(.caption)
-                    .foregroundColor(self.selection.contains(xcode.id) ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
+                    .foregroundColor(selection == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
             }
             .contextMenu {
-                Button(action: { xcode.installed ? self.xcodeBeingConfirmedForUninstallation = xcode : self.appState.install(id: xcode.id) }) { 
+                Button(action: { xcode.installed ? appState.xcodeBeingConfirmedForUninstallation = xcode : self.appState.install(id: xcode.id) }) { 
                     Text(xcode.installed ? "Uninstall" : "Install") 
                 }
                 if xcode.installed {
@@ -113,10 +112,10 @@ struct XcodeListView: View {
         }
         /*
          Removing this for now, because it's overriding the error alert that's being worked on above.
-         .alert(item: self.$rowBeingConfirmedForUninstallation) { row in
-             Alert(title: Text("Uninstall Xcode \(row.title)?"), 
+         .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
+             Alert(title: Text("Uninstall Xcode \(xcode.description)?"), 
                    message: Text("It will be moved to the Trash, but won't be emptied."), 
-                   primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: row.id) }), 
+                   primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: xcode.id) }), 
                    secondaryButton: .cancel(Text("Cancel")))
          }
          **/
