@@ -188,6 +188,7 @@
 		CAD2E7B92449575100113D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedXcode.swift; sourceTree = "<group>"; };
 		CAFBDB942598FE96003DCC5A /* FocusedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedValues.swift; sourceTree = "<group>"; };
+		CAFBDBA525990C76003DCC5A /* SimpleXPCApp.LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimpleXPCApp.LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +262,7 @@
 				CA9FF8C22595988B00E47BAF /* Info.plist */,
 				CA9FF8C32595989800E47BAF /* launchd.plist */,
 				CA9FF9052595A28400E47BAF /* com.robotsandpencils.XcodesApp.HelperTest.entitlements */,
+				CAFBDBA525990C76003DCC5A /* SimpleXPCApp.LICENSE */,
 			);
 			path = com.robotsandpencils.XcodesApp.Helper;
 			sourceTree = "<group>";

@@ -73,7 +73,7 @@ guard let currentProject = projects.first(where: ({ $0.workspacePath == projectP
 let checkouts = currentProject.url.deletingLastPathComponent().appendingPathComponent("SourcePackages/checkouts")
 let checkedDependencies = try fileManager.contentsOfDirectory(at: checkouts, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
 
-let licences: [Xcode.Project.License] = checkedDependencies.compactMap {
+let spmLicences: [Xcode.Project.License] = checkedDependencies.compactMap {
     let supportedFilenames = ["LICENSE", "LICENSE.txt", "LICENSE.md"]
     for filename in supportedFilenames {
         let licenseURL = $0.appendingPathComponent(filename)
@@ -83,6 +83,19 @@ let licences: [Xcode.Project.License] = checkedDependencies.compactMap {
     }
     return nil
 }
+
+var manualLicenses: [Xcode.Project.License] = []
+let enumerator = fileManager.enumerator(at: projectURL.deletingLastPathComponent(), includingPropertiesForKeys: [URLResourceKey.nameKey], options: .skipsHiddenFiles)!
+for case let url as URL in enumerator where url.lastPathComponent.hasSuffix(".LICENSE") {
+    manualLicenses.append(
+        Xcode.Project.License(
+            url: url, 
+            name: url.lastPathComponent.replacingOccurrences(of: ".LICENSE", with: "")
+        )
+    )
+}
+
+let licences = spmLicences + manualLicenses
 
 let acknowledgementsAttributedString = NSMutableAttributedString()
 for licence in licences {
