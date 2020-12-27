@@ -26,7 +26,7 @@ struct SignIn2FAView: View {
                 Spacer()
                 Button("Continue", action: { appState.submitSecurityCode(.device(code: code), sessionData: sessionData) })
                     .keyboardShortcut(.defaultAction)
-                    .disabled(code.count != authOptions.securityCode.length)
+                    .disabled(code.count != authOptions.securityCode.length || appState.isProcessingRequest)
             }
         }
         .padding()

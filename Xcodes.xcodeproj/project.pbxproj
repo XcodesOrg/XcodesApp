@@ -164,9 +164,9 @@
 			children = (
 				CA735108257BF96D00EA9CF8 /* AttributedText.swift */,
 				CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */,
+				CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */,
 				CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */,
 				CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */,
-				CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */,
 				CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */,
 				CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */,
 			);

@@ -30,7 +30,7 @@ struct SignInPhoneListView: View {
                 Spacer()
                 Button("Continue", action: { appState.requestSMS(to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!, authOptions: authOptions, sessionData: sessionData) })
                     .keyboardShortcut(.defaultAction)
-                    .disabled(selectedPhoneNumberID == nil)
+                    .disabled(selectedPhoneNumberID == nil || appState.isProcessingRequest)
             }
         }
         .padding()

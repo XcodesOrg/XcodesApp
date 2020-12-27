@@ -15,6 +15,7 @@ class AppState: ObservableObject {
     @Published var allVersions: [XcodeVersion] = []
     @Published var error: AlertContent?
     @Published var presentingSignInAlert = false
+    @Published var isProcessingRequest = false
     @Published var secondFactorData: SecondFactorData?
     
     // MARK: - Authentication
@@ -62,11 +63,13 @@ class AppState: ObservableObject {
         try? Current.keychain.set(password, key: username)
         Current.defaults.set(username, forKey: "username")
         
+        isProcessingRequest = true
         return client.login(accountName: username, password: password)
             .receive(on: DispatchQueue.main)
             .handleEvents(
                 receiveOutput: { authenticationState in 
                     self.authenticationState = authenticationState
+                    self.isProcessingRequest = false
                 },
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
@@ -85,10 +88,12 @@ class AppState: ObservableObject {
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
+        isProcessingRequest = true
         client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
             .sink(
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
+                    self.isProcessingRequest = false
                 }, 
                 receiveValue: { authenticationState in 
                     self.authenticationState = authenticationState
@@ -105,11 +110,13 @@ class AppState: ObservableObject {
     }
     
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
+        isProcessingRequest = true
         client.submitSecurityCode(code, sessionData: sessionData)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
+                    self.isProcessingRequest = false
                 },
                 receiveValue: { authenticationState in
                     self.authenticationState = authenticationState

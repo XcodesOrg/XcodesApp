@@ -29,7 +29,7 @@ struct SignInCredentialsView: View {
                 Button("Cancel") { isPresented = false }
                     .keyboardShortcut(.cancelAction)
                 Button("Next") { appState.signIn(username: username, password: password) }
-                    .disabled(username.isEmpty)
+                    .disabled(username.isEmpty || appState.isProcessingRequest)
                     .keyboardShortcut(.defaultAction)
             }
         }

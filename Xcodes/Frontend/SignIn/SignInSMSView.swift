@@ -26,7 +26,7 @@ struct SignInSMSView: View {
                 Spacer()
                 Button("Continue", action: { appState.submitSecurityCode(.sms(code: code, phoneNumberId: trustedPhoneNumber.id), sessionData: sessionData) })
                     .keyboardShortcut(.defaultAction)
-                    .disabled(code.count != authOptions.securityCode.length)
+                    .disabled(code.count != authOptions.securityCode.length || appState.isProcessingRequest)
             }
         }
         .padding()
