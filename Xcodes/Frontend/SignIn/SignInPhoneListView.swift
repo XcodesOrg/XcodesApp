@@ -16,12 +16,12 @@ struct SignInPhoneListView: View {
                 List(phoneNumbers, selection: $selectedPhoneNumberID) {
                     Text($0.numberWithDialCode)
                 }
-                .frame(height: 200)
             } else {
                 AttributedText(
-                    NSAttributedString(string: "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication. See https://support.apple.com/en-ca/HT204915.")
+                    NSAttributedString(string: "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication.\n\nSee https://support.apple.com/en-ca/HT204915.")
                         .convertingURLsToLinkAttributes()
                 )
+                Spacer()
             }
             
             HStack {
@@ -42,6 +42,7 @@ struct SignInPhoneListView: View {
             }
             .frame(height: 25)
         }
+        .frame(width: 400, height: 200)
         .padding()
     }
 }
@@ -57,7 +58,8 @@ struct SignInPhoneListView_Previews: PreviewProvider {
                     securityCode: .init(length: 6)),
                 sessionData: AppleSessionData(serviceKey: "", sessionID: "", scnt: "")
             )
-            
+            .environmentObject(AppState())
+
             SignInPhoneListView(
                 isPresented: .constant(true),
                 authOptions: AuthOptionsResponse(
@@ -66,6 +68,7 @@ struct SignInPhoneListView_Previews: PreviewProvider {
                     securityCode: .init(length: 6)),
                 sessionData: AppleSessionData(serviceKey: "", sessionID: "", scnt: "")
             )
+            .environmentObject(AppState())
         }
     }
 }
