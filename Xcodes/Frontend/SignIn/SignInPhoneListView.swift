@@ -42,8 +42,13 @@ struct SignInPhoneListView: View {
             }
             .frame(height: 25)
         }
-        .frame(width: 400, height: 200)
         .padding()
+        .frame(width: 400, height: 200)
+        .alert(item: $appState.authError) { error in
+            Alert(title: Text(error.title),
+                  message: Text(verbatim: error.message),
+                  dismissButton: .default(Text("OK")))
+        }
     }
 }
 

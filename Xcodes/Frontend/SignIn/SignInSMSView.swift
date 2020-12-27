@@ -38,6 +38,11 @@ struct SignInSMSView: View {
             .frame(height: 25)
         }
         .padding()
+        .alert(item: $appState.authError) { error in
+            Alert(title: Text(error.title),
+                  message: Text(verbatim: error.message),
+                  dismissButton: .default(Text("OK")))
+        }
     }
 }
 

@@ -14,6 +14,7 @@ class AppState: ObservableObject {
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var allVersions: [XcodeVersion] = []
     @Published var error: AlertContent?
+    @Published var authError: AlertContent?
     @Published var presentingSignInAlert = false
     @Published var isProcessingRequest = false
     @Published var secondFactorData: SecondFactorData?
@@ -134,8 +135,9 @@ class AppState: ObservableObject {
                 // remove any keychain password if we fail to log with an invalid username or password so it doesn't try again.
                 try? Current.keychain.remove(username)
             }
-            
-            self.error = AlertContent(title: "Error signing in", message: error.legibleLocalizedDescription)
+
+            // This error message is not user friendly... need to extract some meaningful data in the different cases
+            self.authError = AlertContent(title: "Error signing in", message: error.legibleLocalizedDescription)
         case .finished:
             switch self.authenticationState {
             case .authenticated, .unauthenticated:
