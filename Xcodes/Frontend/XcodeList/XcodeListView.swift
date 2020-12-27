@@ -6,8 +6,9 @@ struct XcodeListView: View {
     @EnvironmentObject var appState: AppState
     @State private var selection = Set<String>()
     @State private var rowBeingConfirmedForUninstallation: AppState.XcodeVersion?
-    @State private var category: Category = .all
     @State private var searchText: String = ""
+    
+    @AppStorage("xcodeListCategory") private var category: Category = .all
     
     var visibleVersions: [AppState.XcodeVersion] {
         var versions: [AppState.XcodeVersion]
@@ -25,8 +26,18 @@ struct XcodeListView: View {
         return versions
     }
     
-    enum Category {
-        case all, installed
+    enum Category: String, CaseIterable, Identifiable, CustomStringConvertible {
+        case all
+        case installed
+        
+        var id: Self { self }
+        
+        var description: String {
+            switch self {
+                case .all: return "All"
+                case .installed: return "Installed"
+            }
+        }
     }
     
     var body: some View {
@@ -74,10 +85,9 @@ struct XcodeListView: View {
             }
             ToolbarItem(placement: .principal) {
                 Picker("", selection: $category) {
-                    Text("All")
-                        .tag(Category.all)
-                    Text("Installed")
-                        .tag(Category.installed)
+                    ForEach(Category.allCases, id: \.self) {
+                        Text($0.description).tag($0)
+                    }
                 }
                 .pickerStyle(SegmentedPickerStyle())
             }
