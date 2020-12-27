@@ -13,6 +13,9 @@
 		CA5D781E257365D6008EDE9D /* PinCodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */; };
 		CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA735108257BF96D00EA9CF8 /* AttributedText.swift */; };
 		CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */; };
+		CA9FF83F2594FBC000E47BAF /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CA9FF83E2594FBC000E47BAF /* Licenses.rtf */; };
+		CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF84D2595079F00E47BAF /* ScrollingTextView.swift */; };
+		CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */; };
 		CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA1CB2C255A5262003FD669 /* AppleAPI */; };
 		CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */; };
 		CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */; };
@@ -41,11 +44,12 @@
 		CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9FC2592F13300380FEE /* LegibleError */; };
 		CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2A2592FBFC00380FEE /* SettingsView.swift */; };
 		CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2B2592FBFC00380FEE /* Configure.swift */; };
+		CABFAA432593104F00380FEE /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA422593104F00380FEE /* AboutView.swift */; };
+		CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */; };
 		CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A12449574E00113D76 /* XcodesApp.swift */; };
 		CAD2E7A42449574E00113D76 /* XcodeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A32449574E00113D76 /* XcodeListView.swift */; };
 		CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A52449575000113D76 /* Assets.xcassets */; };
 		CAD2E7A92449575000113D76 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A82449575000113D76 /* Preview Assets.xcassets */; };
-		CAD2E7AC2449575000113D76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7AA2449575000113D76 /* Main.storyboard */; };
 		CAD2E7B82449575100113D76 /* XcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7B72449575100113D76 /* XcodesTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -70,6 +74,10 @@
 		CA8FB5F8256E0F9400469DA5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		CA8FB61C256E115700469DA5 /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .github; sourceTree = "<group>"; };
 		CA8FB64D256E17B100469DA5 /* XcodesTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XcodesTest.entitlements; sourceTree = "<group>"; };
+		CA9FF8242594F10700E47BAF /* AcknowledgementsGenerator */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AcknowledgementsGenerator; path = Xcodes/AcknowledgementsGenerator; sourceTree = "<group>"; };
+		CA9FF83E2594FBC000E47BAF /* Licenses.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
+		CA9FF84D2595079F00E47BAF /* ScrollingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTextView.swift; sourceTree = "<group>"; };
+		CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsView.swift; sourceTree = "<group>"; };
 		CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCredentialsView.swift; sourceTree = "<group>"; };
 		CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn2FAView.swift; sourceTree = "<group>"; };
 		CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSMSView.swift; sourceTree = "<group>"; };
@@ -94,12 +102,13 @@
 		CABFA9D42592EF6300380FEE /* DECISIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DECISIONS.md; sourceTree = "<group>"; };
 		CABFAA2A2592FBFC00380FEE /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Xcodes/SettingsView.swift; sourceTree = SOURCE_ROOT; };
 		CABFAA2B2592FBFC00380FEE /* Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configure.swift; path = Xcodes/Backend/Configure.swift; sourceTree = SOURCE_ROOT; };
+		CABFAA422593104F00380FEE /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+InfoPlistValues.swift"; sourceTree = "<group>"; };
 		CAD2E79E2449574E00113D76 /* Xcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD2E7A12449574E00113D76 /* XcodesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesApp.swift; sourceTree = "<group>"; };
 		CAD2E7A32449574E00113D76 /* XcodeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListView.swift; sourceTree = "<group>"; };
 		CAD2E7A52449575000113D76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CAD2E7A82449575000113D76 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		CAD2E7AB2449575000113D76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		CAD2E7AD2449575000113D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAD2E7AE2449575000113D76 /* Xcodes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Xcodes.entitlements; sourceTree = "<group>"; };
 		CAD2E7B32449575100113D76 /* XcodesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +149,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		CA9FF8552595082000E47BAF /* About */ = {
+			isa = PBXGroup;
+			children = (
+				CABFAA422593104F00380FEE /* AboutView.swift */,
+				CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */,
+				CA9FF84D2595079F00E47BAF /* ScrollingTextView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
 		CAA1CB50255A5D16003FD669 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -169,6 +188,7 @@
 			children = (
 				CA378F982466567600A58CE0 /* AppState.swift */,
 				CABFAA2B2592FBFC00380FEE /* Configure.swift */,
+				CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */,
 				CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */,
 				CABFA9B22592EEEA00380FEE /* Entry+.swift */,
 				CABFA9A92592EEE900380FEE /* Environment.swift */,
@@ -190,6 +210,7 @@
 		CABFAA1A2592F7D900380FEE /* Frontend */ = {
 			isa = PBXGroup;
 			children = (
+				CA9FF8552595082000E47BAF /* About */,
 				CAA1CB50255A5D16003FD669 /* SignIn */,
 				CABFAA142592F73000380FEE /* XcodeList */,
 				CABFAA2A2592FBFC00380FEE /* SettingsView.swift */,
@@ -201,8 +222,8 @@
 			isa = PBXGroup;
 			children = (
 				CAD2E7A52449575000113D76 /* Assets.xcassets */,
-				CAD2E7AA2449575000113D76 /* Main.storyboard */,
 				CAD2E7AD2449575000113D76 /* Info.plist */,
+				CA9FF83E2594FBC000E47BAF /* Licenses.rtf */,
 				CAD2E7AE2449575000113D76 /* Xcodes.entitlements */,
 				CA8FB64D256E17B100469DA5 /* XcodesTest.entitlements */,
 			);
@@ -218,6 +239,7 @@
 				CABFA9A32592ED5700380FEE /* Apple.paw */,
 				CABFA9A12592EAFB00380FEE /* LICENSE */,
 				CA8FB61C256E115700469DA5 /* .github */,
+				CA9FF8242594F10700E47BAF /* AcknowledgementsGenerator */,
 				CA538A0C255A4F1A00E64DD7 /* AppleAPI */,
 				CAD2E7A02449574E00113D76 /* Xcodes */,
 				CAD2E7B62449575100113D76 /* XcodesTests */,
@@ -273,6 +295,7 @@
 			buildPhases = (
 				CAD2E79A2449574E00113D76 /* Sources */,
 				CAD2E79B2449574E00113D76 /* Frameworks */,
+				CA9FF8292594F33200E47BAF /* Generate Acknowledgements */,
 				CAD2E79C2449574E00113D76 /* Resources */,
 			);
 			buildRules = (
@@ -364,8 +387,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAD2E7AC2449575000113D76 /* Main.storyboard in Resources */,
 				CAD2E7A92449575000113D76 /* Preview Assets.xcassets in Resources */,
+				CA9FF83F2594FBC000E47BAF /* Licenses.rtf in Resources */,
 				CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -379,12 +402,34 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		CA9FF8292594F33200E47BAF /* Generate Acknowledgements */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Generate Acknowledgements";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "cd \"${SRCROOT}/Xcodes/AcknowledgementsGenerator\"\nxcrun -sdk macosx swift run AcknowledgementsGenerator \\\n    -p \"${SRCROOT}/Xcodes.xcodeproj\" \\\n    -o \"${SRCROOT}/Xcodes/Resources/Licenses.rtf\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		CAD2E79A2449574E00113D76 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
+				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CABFA9CA2592EEEA00380FEE /* XcodeList.swift in Sources */,
 				CA44901F2463AD34003D8213 /* Tag.swift in Sources */,
 				CABFA9BF2592EEEA00380FEE /* URLSession+Promise.swift in Sources */,
@@ -396,7 +441,9 @@
 				CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */,
 				CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */,
 				CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */,
+				CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */,
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
+				CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */,
 				CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */,
 				CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */,
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
@@ -408,6 +455,7 @@
 				CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */,
 				CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */,
 				CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */,
+				CABFAA432593104F00380FEE /* AboutView.swift in Sources */,
 				CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */,
 				CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */,
 				CA5D781E257365D6008EDE9D /* PinCodeTextView.swift in Sources */,
@@ -432,17 +480,6 @@
 			targetProxy = CAD2E7B42449575100113D76 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		CAD2E7AA2449575000113D76 /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				CAD2E7AB2449575000113D76 /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		CA8FB635256E154800469DA5 /* Test */ = {
@@ -509,7 +546,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = Xcodes/ResourcesXcodesTest.entitlements;
+				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/XcodesTest.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
