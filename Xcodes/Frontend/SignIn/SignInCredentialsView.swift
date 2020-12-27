@@ -28,10 +28,18 @@ struct SignInCredentialsView: View {
                 Spacer()
                 Button("Cancel") { isPresented = false }
                     .keyboardShortcut(.cancelAction)
-                Button("Next") { appState.signIn(username: username, password: password) }
-                    .disabled(username.isEmpty || appState.isProcessingRequest)
-                    .keyboardShortcut(.defaultAction)
+                if appState.isProcessingRequest {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle())
+                        .scaleEffect(x: 0.5, y: 0.5, anchor: .center)
+                        .padding(.horizontal, 8)
+                } else {
+                    Button("Next") { appState.signIn(username: username, password: password) }
+                        .disabled(username.isEmpty)
+                        .keyboardShortcut(.defaultAction)
+                }
             }
+            .frame(height: 25)
         }
         .padding()
     }
