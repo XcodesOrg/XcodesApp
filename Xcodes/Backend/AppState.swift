@@ -16,7 +16,7 @@ class AppState: ObservableObject {
     @Published var error: AlertContent?
     @Published var authError: AlertContent?
     @Published var presentingSignInAlert = false
-    @Published var isProcessingRequest = false
+    @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
     
     // MARK: - Authentication
@@ -64,16 +64,16 @@ class AppState: ObservableObject {
         try? Current.keychain.set(password, key: username)
         Current.defaults.set(username, forKey: "username")
         
-        isProcessingRequest = true
+        isProcessingAuthRequest = true
         return client.login(accountName: username, password: password)
             .receive(on: DispatchQueue.main)
             .handleEvents(
                 receiveOutput: { authenticationState in 
                     self.authenticationState = authenticationState
-                    self.isProcessingRequest = false
                 },
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
+                    self.isProcessingAuthRequest = false
                 }
             )
             .eraseToAnyPublisher()
@@ -89,13 +89,13 @@ class AppState: ObservableObject {
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
-        isProcessingRequest = true
+        isProcessingAuthRequest = true
         client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingRequest = false
+                    self.isProcessingAuthRequest = false
                 }, 
                 receiveValue: { authenticationState in 
                     self.authenticationState = authenticationState
@@ -112,13 +112,13 @@ class AppState: ObservableObject {
     }
     
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
-        isProcessingRequest = true
+        isProcessingAuthRequest = true
         client.submitSecurityCode(code, sessionData: sessionData)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingRequest = false
+                    self.isProcessingAuthRequest = false
                 },
                 receiveValue: { authenticationState in
                     self.authenticationState = authenticationState
