@@ -191,6 +191,18 @@ class AppState: ObservableObject {
         // TODO:
     }
     
+    func launch(id: Xcode.ID) {
+        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
+        NSWorkspace.shared.openApplication(at: installedXcode.path.url, configuration: .init())
+    }
+    
+    func copyPath(id: Xcode.ID) {
+        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
+        NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
+        NSPasteboard.general.writeObjects([installedXcode.path.url as NSURL])
+        NSPasteboard.general.setString(installedXcode.path.string, forType: .string)
+    }
+    
     // MARK: - Private
     
     private func updateAllXcodes(_ xcodes: [AvailableXcode]) {

@@ -65,12 +65,19 @@ struct XcodeListView: View {
                 Button(action: { xcode.installed ? appState.xcodeBeingConfirmedForUninstallation = xcode : self.appState.install(id: xcode.id) }) { 
                     Text(xcode.installed ? "Uninstall" : "Install") 
                 }
+                Divider()
                 if xcode.installed {
+                    Button(action: { self.appState.select(id: xcode.id) }) {
+                        Text("Select") 
+                    }
+                    Button(action: { self.appState.launch(id: xcode.id) }) {
+                        Text("Launch") 
+                    }
                     Button(action: { self.appState.reveal(id: xcode.id) }) {
                         Text("Reveal in Finder") 
                     }
-                    Button(action: { self.appState.select(id: xcode.id) }) {
-                        Text("Select") 
+                    Button(action: { self.appState.copyPath(id: xcode.id) }) {
+                        Text("Copy Path") 
                     }
                 }
             }
