@@ -90,6 +90,7 @@ class AppState: ObservableObject {
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
         isProcessingRequest = true
         client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
+            .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
