@@ -40,7 +40,7 @@ struct XcodeListView: View {
     }
     
     var body: some View {
-        List(visibleXcodes, selection: $selection) { xcode in
+        List(visibleXcodes, selection: $appState.selectedXcodeID) { xcode in
             VStack(alignment: .leading) {
                 HStack {
                     Text(xcode.description)
@@ -54,31 +54,23 @@ struct XcodeListView: View {
                         print("Installing...")
                     }
                     .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
-                                                     highlighted: selection == xcode.id))
+                                                     highlighted: appState.selectedXcodeID == xcode.id))
                     .disabled(xcode.installed)
                 }
                 Text(verbatim: xcode.path ?? "")
                     .font(.caption)
-                    .foregroundColor(selection == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
+                    .foregroundColor(appState.selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
             }
             .contextMenu {
-                Button(action: { xcode.installed ? appState.xcodeBeingConfirmedForUninstallation = xcode : self.appState.install(id: xcode.id) }) { 
-                    Text(xcode.installed ? "Uninstall" : "Install") 
-                }
+                InstallButton(xcode: xcode)
+
                 Divider()
+
                 if xcode.installed {
-                    Button(action: { self.appState.select(id: xcode.id) }) {
-                        Text("Select") 
-                    }
-                    Button(action: { self.appState.launch(id: xcode.id) }) {
-                        Text("Launch") 
-                    }
-                    Button(action: { self.appState.reveal(id: xcode.id) }) {
-                        Text("Reveal in Finder") 
-                    }
-                    Button(action: { self.appState.copyPath(id: xcode.id) }) {
-                        Text("Copy Path") 
-                    }
+                    SelectButton(xcode: xcode)
+                    LaunchButton(xcode: xcode)
+                    RevealButton(xcode: xcode)
+                    CopyPathButton(xcode: xcode)
                 }
             }
         }

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		63EAA4EB259944450046AB8F /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA4EA259944450046AB8F /* ProgressButton.swift */; };
+		CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */; };
 		CA378F992466567600A58CE0 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA378F982466567600A58CE0 /* AppState.swift */; };
 		CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */; };
 		CA44901F2463AD34003D8213 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA44901E2463AD34003D8213 /* Tag.swift */; };
@@ -59,6 +60,8 @@
 		CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A52449575000113D76 /* Assets.xcassets */; };
 		CAD2E7A92449575000113D76 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A82449575000113D76 /* Preview Assets.xcassets */; };
 		CAD2E7B82449575100113D76 /* XcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7B72449575100113D76 /* XcodesTests.swift */; };
+		CAFBDB912598FE80003DCC5A /* SelectedXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */; };
+		CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDB942598FE96003DCC5A /* FocusedValues.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,7 @@
 
 /* Begin PBXFileReference section */
 		63EAA4EA259944450046AB8F /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
+		CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommands.swift; sourceTree = "<group>"; };
 		CA378F982466567600A58CE0 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
 		CA44901E2463AD34003D8213 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
@@ -129,6 +133,8 @@
 		CAD2E7B32449575100113D76 /* XcodesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD2E7B72449575100113D76 /* XcodesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesTests.swift; sourceTree = "<group>"; };
 		CAD2E7B92449575100113D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedXcode.swift; sourceTree = "<group>"; };
+		CAFBDB942598FE96003DCC5A /* FocusedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedValues.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,17 +227,20 @@
 				CABFA9B22592EEEA00380FEE /* Entry+.swift */,
 				CABFA9A92592EEE900380FEE /* Environment.swift */,
 				CABFA9B82592EEEA00380FEE /* FileManager+.swift */,
+				CAFBDB942598FE96003DCC5A /* FocusedValues.swift */,
 				CABFA9AC2592EEE900380FEE /* Foundation.swift */,
 				CA9FF8862595607900E47BAF /* InstalledXcode.swift */,
 				CABFA9AE2592EEE900380FEE /* Path+.swift */,
 				CABFA9B42592EEEA00380FEE /* Process.swift */,
 				CABFA9B02592EEEA00380FEE /* Promise+.swift */,
+				CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */,
 				CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */,
 				CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */,
 				CABFA9A82592EEE900380FEE /* Version+.swift */,
 				CA9FF876259528CC00E47BAF /* Version+XcodeReleases.swift */,
 				CABFA9A62592EEE900380FEE /* Version+Xcode.swift */,
 				CA61A6DF259835580008926E /* Xcode.swift */,
+				CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -462,6 +471,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
+				CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */,
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
 				CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */,
@@ -481,11 +491,13 @@
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
 				CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */,
 				CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */,
+				CAFBDB912598FE80003DCC5A /* SelectedXcode.swift in Sources */,
 				CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */,
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
 				CA9FF877259528CC00E47BAF /* Version+XcodeReleases.swift in Sources */,
 				CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
+				CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */,
 				CABFA9C22592EEEA00380FEE /* Promise+.swift in Sources */,
 				CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */,
 				CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */,

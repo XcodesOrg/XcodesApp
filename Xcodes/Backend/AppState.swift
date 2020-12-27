@@ -25,6 +25,10 @@ class AppState: ObservableObject {
     @Published var presentingSignInAlert = false
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
+    // Selected in the Xcode list, not in the xcode-select sense
+    // This probably belongs as private @State in XcodeListView,
+    // but we need it here instead so that it can be a focusedValue at the top level in XcodesApp instead of in a list row. The latter seems more like how the focusedValue API is supposed to work, but currently doesn't. 
+    @Published var selectedXcodeID: Xcode.ID?
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     
     init() {
