@@ -4,27 +4,25 @@ import PromiseKit
 
 struct XcodeListView: View {
     @EnvironmentObject var appState: AppState
-    @State private var selection = Set<String>()
-    @State private var rowBeingConfirmedForUninstallation: AppState.XcodeVersion?
+    @State private var selection: Xcode.ID?
     @State private var searchText: String = ""
     @AppStorage("lastUpdated") private var lastUpdated: Double?
-    
     @AppStorage("xcodeListCategory") private var category: Category = .all
     
-    var visibleVersions: [AppState.XcodeVersion] {
-        var versions: [AppState.XcodeVersion]
+    var visibleXcodes: [Xcode] {
+        var xcodes: [Xcode]
         switch category {
         case .all:
-            versions = appState.allVersions
+            xcodes = appState.allXcodes
         case .installed:
-            versions = appState.allVersions.filter { $0.installed }
+            xcodes = appState.allXcodes.filter { $0.installed }
         }
         
         if !searchText.isEmpty {
-            versions = versions.filter { $0.title.contains(searchText) }
+            xcodes = xcodes.filter { $0.description.contains(searchText) }
         }
         
-        return versions
+        return xcodes
     }
     
     enum Category: String, CaseIterable, Identifiable, CustomStringConvertible {
@@ -42,38 +40,43 @@ struct XcodeListView: View {
     }
     
     var body: some View {
-        List(visibleVersions, selection: $selection) { row in
-            VStack(alignment: .leading) {
-                HStack {
-                    Text(row.title)
+        List(visibleXcodes, selection: $appState.selectedXcodeID) { xcode in
+            HStack {
+                appIconView(for: xcode)
+                
+                VStack(alignment: .leading) {    
+                    Text(xcode.description)
                         .font(.body)
-                    if row.selected {
-                        Tag(text: "SELECTED")
-                            .foregroundColor(.green)
-                    }
-                    Spacer()
-                    Button(row.installed ? "INSTALLED" : "INSTALL") {
-                        print("Installing...")
-                    }
-                    .buttonStyle(AppStoreButtonStyle(installed: row.installed,
-                                                     highlighted: self.selection.contains(row.id)))
-                    .disabled(row.installed)
+                    
+                    Text(verbatim: xcode.path ?? "")
+                        .font(.caption)
+                        .foregroundColor(appState.selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
                 }
-                Text(verbatim: row.path ?? "")
-                    .font(.caption)
-                    .foregroundColor(self.selection.contains(row.id) ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
+                
+                if xcode.selected {
+                    Tag(text: "SELECTED")
+                        .foregroundColor(.green)
+                }
+                
+                Spacer()
+                
+                Button(xcode.installed ? "INSTALLED" : "INSTALL") {
+                    print("Installing...")
+                }
+                .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
+                                                 highlighted: appState.selectedXcodeID == xcode.id))
+                .disabled(xcode.installed)                
             }
             .contextMenu {
-                Button(action: { row.installed ? self.rowBeingConfirmedForUninstallation = row : self.appState.install(id: row.id) }) { 
-                    Text(row.installed ? "Uninstall" : "Install") 
-                }
-                if row.installed {
-                    Button(action: { self.appState.reveal(id: row.id) }) {
-                        Text("Reveal in Finder") 
-                    }
-                    Button(action: { self.appState.select(id: row.id) }) {
-                        Text("Select") 
-                    }
+                InstallButton(xcode: xcode)
+
+                Divider()
+
+                if xcode.installed {
+                    SelectButton(xcode: xcode)
+                    LaunchButton(xcode: xcode)
+                    RevealButton(xcode: xcode)
+                    CopyPathButton(xcode: xcode)
                 }
             }
         }
@@ -114,10 +117,10 @@ struct XcodeListView: View {
         }
         /*
          Removing this for now, because it's overriding the error alert that's being worked on above.
-         .alert(item: self.$rowBeingConfirmedForUninstallation) { row in
-             Alert(title: Text("Uninstall Xcode \(row.title)?"), 
+         .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
+             Alert(title: Text("Uninstall Xcode \(xcode.description)?"), 
                    message: Text("It will be moved to the Trash, but won't be emptied."), 
-                   primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: row.id) }), 
+                   primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: xcode.id) }), 
                    secondaryButton: .cancel(Text("Cancel")))
          }
          **/
@@ -146,6 +149,17 @@ struct XcodeListView: View {
             return Text("")
         }
     }
+
+    @ViewBuilder
+    func appIconView(for xcode: Xcode) -> some View {
+        if let icon = xcode.icon {
+            Image(nsImage: icon)
+        } else {
+            Color.clear
+                .frame(width: 32, height: 32)
+                .foregroundColor(.secondary)
+        }
+    }
 }
 
 struct XcodeListView_Previews: PreviewProvider {
@@ -154,11 +168,11 @@ struct XcodeListView_Previews: PreviewProvider {
             XcodeListView()
                 .environmentObject({ () -> AppState in
                     let a = AppState()
-                    a.allVersions = [
-                        AppState.XcodeVersion(title: "12.3", installState: .installed, selected: true, path: nil),
-                        AppState.XcodeVersion(title: "12.2", installState: .notInstalled, selected: false, path: nil),
-                        AppState.XcodeVersion(title: "12.1", installState: .notInstalled, selected: false, path: nil),
-                        AppState.XcodeVersion(title: "12.0", installState: .installed, selected: false, path: nil),
+                    a.allXcodes = [
+                        Xcode(version: Version("12.3.0")!, installState: .installed, selected: true, path: nil, icon: nil),
+                        Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
+                        Xcode(version: Version("12.1.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
+                        Xcode(version: Version("12.0.0")!, installState: .installed, selected: false, path: nil, icon: nil),
                     ]
                     return a
                 }())

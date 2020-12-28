@@ -5,6 +5,7 @@ import Path
 import LegibleError
 import KeychainAccess
 import SwiftUI
+import Version
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
@@ -13,10 +14,10 @@ class AppState: ObservableObject {
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
-            updateAllVersions(newValue)
+            updateAllXcodes(newValue)
         }
     }
-    var allVersions: [XcodeVersion] = []
+    var allXcodes: [Xcode] = []
     @Published var updatePublisher: AnyCancellable?
     var isUpdating: Bool { updatePublisher != nil }
     @Published var error: AlertContent?
@@ -24,6 +25,11 @@ class AppState: ObservableObject {
     @Published var presentingSignInAlert = false
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
+    // Selected in the Xcode list, not in the xcode-select sense
+    // This probably belongs as private @State in XcodeListView,
+    // but we need it here instead so that it can be a focusedValue at the top level in XcodesApp instead of in a list row. The latter seems more like how the focusedValue API is supposed to work, but currently doesn't. 
+    @Published var selectedXcodeID: Xcode.ID?
+    @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     
     init() {
         try? loadCachedAvailableXcodes()
@@ -171,27 +177,39 @@ class AppState: ObservableObject {
     
     // MARK: -
     
-    func install(id: String) {
+    func install(id: Xcode.ID) {
         // TODO:
     }
     
-    func uninstall(id: String) {
+    func uninstall(id: Xcode.ID) {
         // TODO:
     }
     
-    func reveal(id: String) {
+    func reveal(id: Xcode.ID) {
         // TODO: show error if not
-        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version.xcodeDescription == id }) else { return }
+        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
         NSWorkspace.shared.activateFileViewerSelecting([installedXcode.path.url])
     }
 
-    func select(id: String) {
+    func select(id: Xcode.ID) {
         // TODO:
+    }
+    
+    func launch(id: Xcode.ID) {
+        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
+        NSWorkspace.shared.openApplication(at: installedXcode.path.url, configuration: .init())
+    }
+    
+    func copyPath(id: Xcode.ID) {
+        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
+        NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
+        NSPasteboard.general.writeObjects([installedXcode.path.url as NSURL])
+        NSPasteboard.general.setString(installedXcode.path.string, forType: .string)
     }
     
     // MARK: - Private
     
-    private func updateAllVersions(_ xcodes: [AvailableXcode]) {
+    private func updateAllXcodes(_ xcodes: [AvailableXcode]) {
         let installedXcodes = Current.files.installedXcodes(Path.root/"Applications")
         var allXcodeVersions = xcodes.map { $0.version }
         for installedXcode in installedXcodes {
@@ -210,37 +228,22 @@ class AppState: ObservableObject {
             }
         }
 
-        allVersions = allXcodeVersions
+        allXcodes = allXcodeVersions
             .sorted(by: >)
             .map { xcodeVersion in
                 let installedXcode = installedXcodes.first(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) })
-                return XcodeVersion(
-                    title: xcodeVersion.xcodeDescription, 
+                return Xcode(
+                    version: xcodeVersion,
                     installState: installedXcodes.contains(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) }) ? .installed : .notInstalled,
                     selected: false, 
-                    path: installedXcode?.path.string
+                    path: installedXcode?.path.string,
+                    icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:))
                 )
             }
     }
     
 
     // MARK: - Nested Types
-    
-    /// A merging of AvailableXcode and InstalledXcode prepared for display
-    struct XcodeVersion: Identifiable {
-        let title: String
-        let installState: InstallState
-        let selected: Bool
-        let path: String?
-        var id: String { title }
-        var installed: Bool { installState == .installed }
-    }
-
-    enum InstallState: Equatable {
-        case notInstalled
-        case installing(Progress)
-        case installed
-    }
 
     struct AlertContent: Identifiable {
         var title: String
