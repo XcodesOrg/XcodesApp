@@ -170,7 +170,11 @@ extension AppState {
                         version: version,
                         url: downloadURL,
                         filename: String(downloadURL.path.suffix(fromLast: "/")),
-                        releaseDate: releaseDate
+                        releaseDate: releaseDate,
+                        requiredMacOSVersion: xcReleasesXcode.requires,
+                        releaseNotesURL: xcReleasesXcode.links?.notes?.url,
+                        sdks: xcReleasesXcode.sdks,
+                        compilers: xcReleasesXcode.compilers
                     )
                 }
                 return xcodes
