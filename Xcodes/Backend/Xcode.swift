@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import Version
 
@@ -6,6 +7,7 @@ struct Xcode: Identifiable, CustomStringConvertible {
     let installState: XcodeInstallState
     let selected: Bool
     let path: String?
+    let icon: NSImage?
     
     var id: Version { version }
     var installed: Bool { installState == .installed }

@@ -236,7 +236,8 @@ class AppState: ObservableObject {
                     version: xcodeVersion,
                     installState: installedXcodes.contains(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) }) ? .installed : .notInstalled,
                     selected: false, 
-                    path: installedXcode?.path.string
+                    path: installedXcode?.path.string,
+                    icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:))
                 )
             }
     }

@@ -41,25 +41,31 @@ struct XcodeListView: View {
     
     var body: some View {
         List(visibleXcodes, selection: $appState.selectedXcodeID) { xcode in
-            VStack(alignment: .leading) {
-                HStack {
+            HStack {
+                appIconView(for: xcode)
+                
+                VStack(alignment: .leading) {    
                     Text(xcode.description)
                         .font(.body)
-                    if xcode.selected {
-                        Tag(text: "SELECTED")
-                            .foregroundColor(.green)
-                    }
-                    Spacer()
-                    Button(xcode.installed ? "INSTALLED" : "INSTALL") {
-                        print("Installing...")
-                    }
-                    .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
-                                                     highlighted: appState.selectedXcodeID == xcode.id))
-                    .disabled(xcode.installed)
+                    
+                    Text(verbatim: xcode.path ?? "")
+                        .font(.caption)
+                        .foregroundColor(appState.selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
                 }
-                Text(verbatim: xcode.path ?? "")
-                    .font(.caption)
-                    .foregroundColor(appState.selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
+                
+                if xcode.selected {
+                    Tag(text: "SELECTED")
+                        .foregroundColor(.green)
+                }
+                
+                Spacer()
+                
+                Button(xcode.installed ? "INSTALLED" : "INSTALL") {
+                    print("Installing...")
+                }
+                .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
+                                                 highlighted: appState.selectedXcodeID == xcode.id))
+                .disabled(xcode.installed)                
             }
             .contextMenu {
                 InstallButton(xcode: xcode)
@@ -143,6 +149,17 @@ struct XcodeListView: View {
             return Text("")
         }
     }
+
+    @ViewBuilder
+    func appIconView(for xcode: Xcode) -> some View {
+        if let icon = xcode.icon {
+            Image(nsImage: icon)
+        } else {
+            Color.clear
+                .frame(width: 32, height: 32)
+                .foregroundColor(.secondary)
+        }
+    }
 }
 
 struct XcodeListView_Previews: PreviewProvider {
@@ -152,10 +169,10 @@ struct XcodeListView_Previews: PreviewProvider {
                 .environmentObject({ () -> AppState in
                     let a = AppState()
                     a.allXcodes = [
-                        Xcode(version: Version("12.3.0")!, installState: .installed, selected: true, path: nil),
-                        Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, path: nil),
-                        Xcode(version: Version("12.1.0")!, installState: .notInstalled, selected: false, path: nil),
-                        Xcode(version: Version("12.0.0")!, installState: .installed, selected: false, path: nil),
+                        Xcode(version: Version("12.3.0")!, installState: .installed, selected: true, path: nil, icon: nil),
+                        Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
+                        Xcode(version: Version("12.1.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
+                        Xcode(version: Version("12.0.0")!, installState: .installed, selected: false, path: nil, icon: nil),
                     ]
                     return a
                 }())
