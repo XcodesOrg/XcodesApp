@@ -582,6 +582,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
+				"$(SRCROOT)/Xcodes/Resources/Licenses.rtf",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
