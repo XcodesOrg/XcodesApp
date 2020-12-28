@@ -237,7 +237,7 @@ class AppState: ObservableObject {
             )
     }
     
-    func launch(id: Xcode.ID) {
+    func open(id: Xcode.ID) {
         guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
         NSWorkspace.shared.openApplication(at: installedXcode.path.url, configuration: .init())
     }

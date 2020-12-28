@@ -36,7 +36,7 @@ struct InspectorPane: View {
                                     SelectButton(xcode: xcode)
                                 }
                                 
-                                LaunchButton(xcode: xcode)
+                                OpenButton(xcode: xcode)
                             }
                         } else {
                             InstallButton(xcode: xcode)

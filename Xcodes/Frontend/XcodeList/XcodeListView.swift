@@ -76,7 +76,7 @@ struct XcodeListView: View {
                     
                     if xcode.installed {
                         SelectButton(xcode: xcode)
-                        LaunchButton(xcode: xcode)
+                        OpenButton(xcode: xcode)
                         RevealButton(xcode: xcode)
                         CopyPathButton(xcode: xcode)
                     }

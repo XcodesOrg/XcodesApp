@@ -14,7 +14,7 @@ struct XcodeCommands: Commands {
                 Divider()
                 
                 SelectCommand()
-                LaunchCommand()
+                OpenCommand()
                 RevealCommand()
                 CopyPathCommand()
             }
@@ -66,19 +66,19 @@ struct SelectButton: View {
     }
 }
 
-struct LaunchButton: View {
+struct OpenButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
     
     var body: some View {
-        Button(action: launch) {
-            Text("Launch")
+        Button(action: open) {
+            Text("Open")
         }
     }
     
-    private func launch() {
+    private func open() {
         guard let xcode = xcode else { return }
-        appState.launch(id: xcode.id)
+        appState.open(id: xcode.id)
     }
 }
 
@@ -138,12 +138,12 @@ struct SelectCommand: View {
     }
 }
 
-struct LaunchCommand: View {
+struct OpenCommand: View {
     @EnvironmentObject var appState: AppState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {
-        LaunchButton(xcode: selectedXcode.unwrapped)
+        OpenButton(xcode: selectedXcode.unwrapped)
             .keyboardShortcut(KeyboardShortcut(.downArrow, modifiers: .command))
             .disabled(selectedXcode.unwrapped?.installed != true)
     }
