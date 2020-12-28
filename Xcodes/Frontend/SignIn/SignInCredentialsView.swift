@@ -28,12 +28,21 @@ struct SignInCredentialsView: View {
                 Spacer()
                 Button("Cancel") { isPresented = false }
                     .keyboardShortcut(.cancelAction)
-                Button("Next") { appState.signIn(username: username, password: password) }
-                    .disabled(username.isEmpty)
-                    .keyboardShortcut(.defaultAction)
+                ProgressButton(isInProgress: appState.isProcessingAuthRequest,
+                               action: { appState.signIn(username: username, password: password) }) {
+                    Text("Next")
+                }
+                .disabled(username.isEmpty || password.isEmpty)
+                .keyboardShortcut(.defaultAction)
             }
+            .frame(height: 25)
         }
         .padding()
+        .alert(item: $appState.authError) { error in
+            Alert(title: Text(error.title),
+                  message: Text(verbatim: error.message),
+                  dismissButton: .default(Text("OK")))
+        }
     }
 }
 

@@ -24,12 +24,21 @@ struct SignInSMSView: View {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
                 Spacer()
-                Button("Continue", action: { appState.submitSecurityCode(.sms(code: code, phoneNumberId: trustedPhoneNumber.id), sessionData: sessionData) })
-                    .keyboardShortcut(.defaultAction)
-                    .disabled(code.count != authOptions.securityCode.length)
+                ProgressButton(isInProgress: appState.isProcessingAuthRequest,
+                               action: { appState.submitSecurityCode(.sms(code: code, phoneNumberId: trustedPhoneNumber.id), sessionData: sessionData) }) {
+                    Text("Continue")
+                }
+                .keyboardShortcut(.defaultAction)
+                .disabled(code.count != authOptions.securityCode.length)
             }
+            .frame(height: 25)
         }
         .padding()
+        .alert(item: $appState.authError) { error in
+            Alert(title: Text(error.title),
+                  message: Text(verbatim: error.message),
+                  dismissButton: .default(Text("OK")))
+        }
     }
 }
 

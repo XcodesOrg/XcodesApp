@@ -14,7 +14,9 @@ class AppState: ObservableObject {
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var allVersions: [XcodeVersion] = []
     @Published var error: AlertContent?
+    @Published var authError: AlertContent?
     @Published var presentingSignInAlert = false
+    @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
     
     // MARK: - Authentication
@@ -62,6 +64,7 @@ class AppState: ObservableObject {
         try? Current.keychain.set(password, key: username)
         Current.defaults.set(username, forKey: "username")
         
+        isProcessingAuthRequest = true
         return client.login(accountName: username, password: password)
             .receive(on: DispatchQueue.main)
             .handleEvents(
@@ -70,6 +73,7 @@ class AppState: ObservableObject {
                 },
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
+                    self.isProcessingAuthRequest = false
                 }
             )
             .eraseToAnyPublisher()
@@ -85,10 +89,13 @@ class AppState: ObservableObject {
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
+        isProcessingAuthRequest = true
         client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
+            .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
+                    self.isProcessingAuthRequest = false
                 }, 
                 receiveValue: { authenticationState in 
                     self.authenticationState = authenticationState
@@ -105,11 +112,13 @@ class AppState: ObservableObject {
     }
     
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
+        isProcessingAuthRequest = true
         client.submitSecurityCode(code, sessionData: sessionData)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { completion in
                     self.handleAuthenticationFlowCompletion(completion)
+                    self.isProcessingAuthRequest = false
                 },
                 receiveValue: { authenticationState in
                     self.authenticationState = authenticationState
@@ -126,8 +135,9 @@ class AppState: ObservableObject {
                 // remove any keychain password if we fail to log with an invalid username or password so it doesn't try again.
                 try? Current.keychain.remove(username)
             }
-            
-            self.error = AlertContent(title: "Error signing in", message: error.legibleLocalizedDescription)
+
+            // This error message is not user friendly... need to extract some meaningful data in the different cases
+            self.authError = AlertContent(title: "Error signing in", message: error.legibleLocalizedDescription)
         case .finished:
             switch self.authenticationState {
             case .authenticated, .unauthenticated:

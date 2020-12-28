@@ -24,12 +24,21 @@ struct SignIn2FAView: View {
                     .keyboardShortcut(.cancelAction)
                 Button("Send SMS", action: { appState.choosePhoneNumberForSMS(authOptions: authOptions, sessionData: sessionData) })
                 Spacer()
-                Button("Continue", action: { appState.submitSecurityCode(.device(code: code), sessionData: sessionData) })
-                    .keyboardShortcut(.defaultAction)
-                    .disabled(code.count != authOptions.securityCode.length)
+                ProgressButton(isInProgress: appState.isProcessingAuthRequest,
+                               action: { appState.submitSecurityCode(.device(code: code), sessionData: sessionData) }) {
+                    Text("Continue")
+                }
+                .keyboardShortcut(.defaultAction)
+                .disabled(code.count != authOptions.securityCode.length)
             }
+            .frame(height: 25)
         }
         .padding()
+        .alert(item: $appState.authError) { error in
+            Alert(title: Text(error.title),
+                  message: Text(verbatim: error.message),
+                  dismissButton: .default(Text("OK")))
+        }
     }
 }
 
