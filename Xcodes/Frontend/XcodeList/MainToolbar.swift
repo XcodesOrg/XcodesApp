@@ -20,6 +20,7 @@ struct MainToolbarModifier: ViewModifier {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }
             .keyboardShortcut(KeyEquivalent("r"))
+            .help("Refresh")
             
             Button(action: {
                 switch category {
@@ -35,7 +36,8 @@ struct MainToolbarModifier: ViewModifier {
                         .foregroundColor(.accentColor)
                 }
             }
-
+            .help("Filter Installed Versions")
+            
             Button(action: { isShowingInfoPane.toggle() }) {
                 if isShowingInfoPane {
                     Label("Inspector", systemImage: "info.circle.fill")
@@ -45,10 +47,12 @@ struct MainToolbarModifier: ViewModifier {
                 }
             }
             .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
+            .help("Info Pane")
 
             TextField("Search...", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 200)
+                .help("Search List")
         }
     }
 }
