@@ -274,12 +274,17 @@ class AppState: ObservableObject {
             .sorted(by: >)
             .map { xcodeVersion in
                 let installedXcode = installedXcodes.first(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) })
+                let availableXcode = xcodes.first { $0.version == xcodeVersion }
                 return Xcode(
                     version: xcodeVersion,
                     installState: installedXcodes.contains(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) }) ? .installed : .notInstalled,
                     selected: false, 
                     path: installedXcode?.path.string,
-                    icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:))
+                    icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),
+                    requiredMacOSVersion: availableXcode?.requiredMacOSVersion,
+                    releaseNotesURL: availableXcode?.releaseNotesURL,
+                    sdks: availableXcode?.sdks,
+                    compilers: availableXcode?.compilers
                 )
             }
     }

@@ -3,6 +3,7 @@ import SwiftUI
 struct MainToolbarModifier: ViewModifier {
     @EnvironmentObject var appState: AppState
     @Binding var category: XcodeListView.Category
+    @Binding var isShowingInfoPane: Bool
     @Binding var searchText: String
     
     func body(content: Content) -> some View {
@@ -35,6 +36,16 @@ struct MainToolbarModifier: ViewModifier {
                 }
             }
 
+            Button(action: { isShowingInfoPane.toggle() }) {
+                if isShowingInfoPane {
+                    Label("Inspector", systemImage: "info.circle.fill")
+                        .foregroundColor(.accentColor)
+                } else {
+                    Label("Inspector", systemImage: "info.circle")
+                }
+            }
+            .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
+
             TextField("Search...", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 200)
@@ -44,9 +55,16 @@ struct MainToolbarModifier: ViewModifier {
 
 extension View {
     func mainToolbar(
-        category: Binding<XcodeListView.Category>, 
+        category: Binding<XcodeListView.Category>,
+        isShowingInfoPane: Binding<Bool>,
         searchText: Binding<String>
     ) -> some View {
-        self.modifier(MainToolbarModifier(category: category, searchText: searchText))
+        self.modifier(
+            MainToolbarModifier(
+                category: category,
+                isShowingInfoPane: isShowingInfoPane,
+                searchText: searchText
+            )
+        )
     }
 }

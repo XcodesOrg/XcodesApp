@@ -7,7 +7,8 @@ struct XcodeListView: View {
     @State private var selection: Xcode.ID?
     @State private var searchText: String = ""
     @AppStorage("lastUpdated") private var lastUpdated: Double?
-    @AppStorage("xcodeListCategory") private var category: Category = .all
+    @SceneStorage("isShowingInfoPane") private var isShowingInfoPane = false 
+    @SceneStorage("xcodeListCategory") private var category: Category = .all
     
     var visibleXcodes: [Xcode] {
         var xcodes: [Xcode]
@@ -40,47 +41,60 @@ struct XcodeListView: View {
     }
     
     var body: some View {
-        List(visibleXcodes, selection: $appState.selectedXcodeID) { xcode in
-            HStack {
-                appIconView(for: xcode)
-                
-                VStack(alignment: .leading) {    
-                    Text(xcode.description)
-                        .font(.body)
+        HSplitView {
+            List(visibleXcodes, selection: $appState.selectedXcodeID) { xcode in
+                HStack {
+                    appIconView(for: xcode)
                     
-                    Text(verbatim: xcode.path ?? "")
-                        .font(.caption)
-                        .foregroundColor(appState.selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
+                    VStack(alignment: .leading) {    
+                        Text(xcode.description)
+                            .font(.body)
+                        
+                        Text(verbatim: xcode.path ?? "")
+                            .font(.caption)
+                            .foregroundColor(appState.selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
+                    }
+                    
+                    if xcode.selected {
+                        Tag(text: "SELECTED")
+                            .foregroundColor(.green)
+                    }
+                    
+                    Spacer()
+                    
+                    Button(xcode.installed ? "INSTALLED" : "INSTALL") {
+                        print("Installing...")
+                    }
+                    .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
+                                                     highlighted: appState.selectedXcodeID == xcode.id))
+                    .disabled(xcode.installed)                
                 }
-                
-                if xcode.selected {
-                    Tag(text: "SELECTED")
-                        .foregroundColor(.green)
+                .contextMenu {
+                    InstallButton(xcode: xcode)
+                    
+                    Divider()
+                    
+                    if xcode.installed {
+                        SelectButton(xcode: xcode)
+                        LaunchButton(xcode: xcode)
+                        RevealButton(xcode: xcode)
+                        CopyPathButton(xcode: xcode)
+                    }
                 }
-                
-                Spacer()
-                
-                Button(xcode.installed ? "INSTALLED" : "INSTALL") {
-                    print("Installing...")
-                }
-                .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
-                                                 highlighted: appState.selectedXcodeID == xcode.id))
-                .disabled(xcode.installed)                
             }
-            .contextMenu {
-                InstallButton(xcode: xcode)
-
-                Divider()
-
-                if xcode.installed {
-                    SelectButton(xcode: xcode)
-                    LaunchButton(xcode: xcode)
-                    RevealButton(xcode: xcode)
-                    CopyPathButton(xcode: xcode)
-                }
-            }
+            .frame(minWidth: 300)
+            .layoutPriority(1)
+            
+            InspectorPane()
+                .frame(minWidth: 300, maxWidth: .infinity)
+                .frame(width: isShowingInfoPane ? nil : 0)
+                .isHidden(!isShowingInfoPane)
         }
-        .mainToolbar(category: $category, searchText: $searchText)
+        .mainToolbar(
+            category: $category,
+            isShowingInfoPane: $isShowingInfoPane,
+            searchText: $searchText
+        )
         .navigationSubtitle(subtitleText)
         .frame(minWidth: 200, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
         .alert(item: $appState.error) { error in

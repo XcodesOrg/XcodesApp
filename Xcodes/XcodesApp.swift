@@ -10,6 +10,7 @@ struct XcodesApp: App {
     var body: some Scene {
         WindowGroup("Xcodes") {
             XcodeListView()
+                .frame(minWidth: 600)
                 .environmentObject(appState)
                 // This is intentionally used on a View, and not on a WindowGroup, 
                 // so that it's triggered when an individual window's phase changes instead of all window phases.
