@@ -30,7 +30,7 @@ struct AboutView: View {
                     .buttonStyle(LinkButtonStyle())
                 }
                 
-                Text("Copyright © 2020 Robots and Pencils")
+                Text(Bundle.main.humanReadableCopyright!)
                     .font(.footnote)
             }
         }

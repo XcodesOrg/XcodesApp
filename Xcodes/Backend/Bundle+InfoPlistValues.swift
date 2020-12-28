@@ -12,4 +12,8 @@ extension Bundle {
     var version: String? {
         infoDictionary?["CFBundleVersion"] as? String
     }
+    
+    var humanReadableCopyright: String? {
+        infoDictionary?["NSHumanReadableCopyright"] as? String
+    }
 }

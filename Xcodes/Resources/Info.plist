@@ -17,18 +17,25 @@
 	<key>CFBundlePackageType</key>
 	<string>$(PRODUCT_BUNDLE_PACKAGE_TYPE)</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020 Robots and Pencils. All rights reserved.</string>
+	<string>Copyright © 2020 Robots and Pencils.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticTermination</key>
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>SMPrivilegedExecutables</key>
+	<dict>
+		<key>com.robotsandpencils.XcodesApp.Helper</key>
+		<string>identifier &quot;com.robotsandpencils.XcodesApp.Helper&quot; and info [CFBundleShortVersionString] &gt;= &quot;1.0.0&quot; and anchor apple generic and certificate leaf[subject.OU] = &quot;$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)&quot;</string>
+	</dict>
+	<key>CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT</key>
+	<string>$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)</string>
 </dict>
 </plist>

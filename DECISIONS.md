@@ -29,3 +29,23 @@ xcodes used Point Free's Environment type, and I'm happy with how that turned ou
 ## State Management
 
 While I'm curious and eager to try Point Free's [Composable Architecture](https://github.com/pointfreeco/swift-composable-architecture), I'm going to avoid it at first in favour of a simpler AppState ObservableObject. My motivation for this is to try to have something more familiar to a contributor that was also new to SwiftUI, so that the codebase doesn't have too many new or unfamiliar things. If we run into performance or correctness issues in the future I think TCA should be a candidate to reconsider.
+
+## Privilege Escalation
+
+Unlike [xcodes](https://github.com/RobotsAndPencils/xcodes/blob/master/DECISIONS.md#privilege-escalation), there is a better option than running sudo in a Process when we need to escalate privileges in Xcodes.app, namely a privileged helper.
+
+A separate, bundle executable is installed as a privileged helper using SMJobBless and communicates with the main app (the client) over XPC. This helper performs the post-install and xcode-select tasks that would require sudo from the command line. The helper and main app validate each other's bundle ID, version and code signing certificate chain. Validation of the connection is done using the private audit token API. An alternative is to validate the code signature of the client based on the PID from a first "handshake" message. DTS [seems to say](https://developer.apple.com/forums/thread/72881#420409022) that this would also be safe against an attacker PID-wrapping. Because the SMJobBless + XPC examples I found online all use the audit token instead, I decided to go with that. The tradeoff is that this is private API.
+
+Uninstallation is not provided yet. I had this partially implemented (one attempt was based on [DoNotDisturb's approach](https://github.com/objective-see/DoNotDisturb/blob/237b19800fa356f830d1c02715a9a75be08b8924/configure/Helper/HelperInterface.m#L123)) but an issue that I kept hitting was that despite the helper not being installed or running I was able to get a remote object proxy over the connection. Adding a timeout to getVersion might be sufficient as a workaround, as it should return the string immediately.
+
+- [Apple Developer: Creating XPC Services](https://developer.apple.com/library/archive/documentation/MacOSX/Conceptual/BPSystemStartup/Chapters/CreatingXPCServices.html)
+- [Objective Development: The Story Behind CVE-2019-13013](https://blog.obdev.at/what-we-have-learned-from-a-vulnerability/)
+- [Apple Developer Forums: How to and When to uninstall a privileged helper](https://developer.apple.com/forums/thread/66821)
+- [Apple Developer Forums: XPC restricted to processes with the same code signing?](https://developer.apple.com/forums/thread/72881#419817)
+- [Wojciech Reguła: Learn XPC exploitation - Part 1: Broken cryptography](https://wojciechregula.blog/post/learn-xpc-exploitation-part-1-broken-cryptography/)
+- [Wojciech Reguła: Learn XPC exploitation - Part 2: Say no to the PID!](https://wojciechregula.blog/post/learn-xpc-exploitation-part-2-say-no-to-the-pid/)
+- [Wojciech Reguła: Learn XPC exploitation - Part 3: Code injections](https://wojciechregula.blog/post/learn-xpc-exploitation-part-3-code-injections/)
+- [Apple Developer: EvenBetterAuthorizationSample](https://developer.apple.com/library/archive/samplecode/EvenBetterAuthorizationSample/Introduction/Intro.html)
+- [erikberglund/SwiftPrivilegedHelper](https://github.com/erikberglund/SwiftPrivilegedHelper)
+- [aronskaya/smjobbless](https://github.com/aronskaya/smjobbless)
+- [securing/SimpleXPCApp](https://github.com/securing/SimpleXPCApp)

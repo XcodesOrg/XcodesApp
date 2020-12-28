@@ -25,6 +25,15 @@
 		CA9FF87B2595293E00E47BAF /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF87A2595293E00E47BAF /* DataSource.swift */; };
 		CA9FF88125955C7000E47BAF /* AvailableXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF88025955C7000E47BAF /* AvailableXcode.swift */; };
 		CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8862595607900E47BAF /* InstalledXcode.swift */; };
+		CA9FF8B12595967A00E47BAF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8B02595967A00E47BAF /* main.swift */; };
+		CA9FF8BC259596CB00E47BAF /* com.robotsandpencils.XcodesApp.Helper in Copy Helper */ = {isa = PBXBuildFile; fileRef = CA9FF8AE2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CA9FF8CF25959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
+		CA9FF8D025959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
+		CA9FF8DB25959B4000E47BAF /* XPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8DA25959B4000E47BAF /* XPCDelegate.swift */; };
+		CA9FF8E025959BAA00E47BAF /* ConnectionVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8DF25959BAA00E47BAF /* ConnectionVerifier.swift */; };
+		CA9FF8E625959BB800E47BAF /* AuditTokenHack.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */; };
+		CA9FF8F525959CE000E47BAF /* HelperInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8F425959CE000E47BAF /* HelperInstaller.swift */; };
+		CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF9352595B44700E47BAF /* HelperClient.swift */; };
 		CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA1CB2C255A5262003FD669 /* AppleAPI */; };
 		CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */; };
 		CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */; };
@@ -65,6 +74,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		CA9FF8B9259596A000E47BAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CAD2E7962449574E00113D76 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CA9FF8AD2595967A00E47BAF;
+			remoteInfo = com.robotsandpencils.XcodesApp.Helper;
+		};
 		CAD2E7B42449575100113D76 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CAD2E7962449574E00113D76 /* Project object */;
@@ -73,6 +89,29 @@
 			remoteInfo = XcodesMac;
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		CA9FF8AC2595967A00E47BAF /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+		CA9FF8BB259596B500E47BAF /* Copy Helper */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Contents/Library/LaunchServices;
+			dstSubfolderSpec = 1;
+			files = (
+				CA9FF8BC259596CB00E47BAF /* com.robotsandpencils.XcodesApp.Helper in Copy Helper */,
+			);
+			name = "Copy Helper";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		63EAA4EA259944450046AB8F /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
@@ -97,6 +136,20 @@
 		CA9FF87A2595293E00E47BAF /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		CA9FF88025955C7000E47BAF /* AvailableXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableXcode.swift; sourceTree = "<group>"; };
 		CA9FF8862595607900E47BAF /* InstalledXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledXcode.swift; sourceTree = "<group>"; };
+		CA9FF8AE2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.robotsandpencils.XcodesApp.Helper; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA9FF8B02595967A00E47BAF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		CA9FF8C22595988B00E47BAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CA9FF8C32595989800E47BAF /* launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = launchd.plist; sourceTree = "<group>"; };
+		CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperXPCShared.swift; sourceTree = "<group>"; };
+		CA9FF8DA25959B4000E47BAF /* XPCDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XPCDelegate.swift; sourceTree = "<group>"; };
+		CA9FF8DF25959BAA00E47BAF /* ConnectionVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionVerifier.swift; sourceTree = "<group>"; };
+		CA9FF8E425959BB800E47BAF /* AuditTokenHack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuditTokenHack.h; sourceTree = "<group>"; };
+		CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuditTokenHack.m; sourceTree = "<group>"; };
+		CA9FF8EA25959BDD00E47BAF /* com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h"; sourceTree = "<group>"; };
+		CA9FF8F425959CE000E47BAF /* HelperInstaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperInstaller.swift; sourceTree = "<group>"; };
+		CA9FF9052595A28400E47BAF /* com.robotsandpencils.XcodesApp.HelperTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = com.robotsandpencils.XcodesApp.HelperTest.entitlements; sourceTree = "<group>"; };
+		CA9FF9252595A7EB00E47BAF /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
+		CA9FF9352595B44700E47BAF /* HelperClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperClient.swift; sourceTree = "<group>"; };
 		CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCredentialsView.swift; sourceTree = "<group>"; };
 		CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn2FAView.swift; sourceTree = "<group>"; };
 		CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSMSView.swift; sourceTree = "<group>"; };
@@ -135,9 +188,17 @@
 		CAD2E7B92449575100113D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedXcode.swift; sourceTree = "<group>"; };
 		CAFBDB942598FE96003DCC5A /* FocusedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedValues.swift; sourceTree = "<group>"; };
+		CAFBDBA525990C76003DCC5A /* SimpleXPCApp.LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimpleXPCApp.LICENSE; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		CA9FF8AB2595967A00E47BAF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CAD2E79B2449574E00113D76 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -189,6 +250,31 @@
 			path = About;
 			sourceTree = "<group>";
 		};
+		CA9FF8AF2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */ = {
+			isa = PBXGroup;
+			children = (
+				CA9FF8E425959BB800E47BAF /* AuditTokenHack.h */,
+				CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */,
+				CA9FF8EA25959BDD00E47BAF /* com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h */,
+				CA9FF8DF25959BAA00E47BAF /* ConnectionVerifier.swift */,
+				CA9FF8B02595967A00E47BAF /* main.swift */,
+				CA9FF8DA25959B4000E47BAF /* XPCDelegate.swift */,
+				CA9FF8C22595988B00E47BAF /* Info.plist */,
+				CA9FF8C32595989800E47BAF /* launchd.plist */,
+				CA9FF9052595A28400E47BAF /* com.robotsandpencils.XcodesApp.HelperTest.entitlements */,
+				CAFBDBA525990C76003DCC5A /* SimpleXPCApp.LICENSE */,
+			);
+			path = com.robotsandpencils.XcodesApp.Helper;
+			sourceTree = "<group>";
+		};
+		CA9FF8CD25959A7600E47BAF /* HelperXPCShared */ = {
+			isa = PBXGroup;
+			children = (
+				CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */,
+			);
+			path = HelperXPCShared;
+			sourceTree = "<group>";
+		};
 		CAA1CB50255A5D16003FD669 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
@@ -229,6 +315,8 @@
 				CABFA9B82592EEEA00380FEE /* FileManager+.swift */,
 				CAFBDB942598FE96003DCC5A /* FocusedValues.swift */,
 				CABFA9AC2592EEE900380FEE /* Foundation.swift */,
+				CA9FF8F425959CE000E47BAF /* HelperInstaller.swift */,
+				CA9FF9352595B44700E47BAF /* HelperClient.swift */,
 				CA9FF8862595607900E47BAF /* InstalledXcode.swift */,
 				CABFA9AE2592EEE900380FEE /* Path+.swift */,
 				CABFA9B42592EEEA00380FEE /* Process.swift */,
@@ -279,10 +367,13 @@
 				CABFA9A32592ED5700380FEE /* Apple.paw */,
 				CABFA9A12592EAFB00380FEE /* LICENSE */,
 				CA8FB61C256E115700469DA5 /* .github */,
+				CA9FF9252595A7EB00E47BAF /* Scripts */,
 				CA9FF8242594F10700E47BAF /* AcknowledgementsGenerator */,
 				CA538A0C255A4F1A00E64DD7 /* AppleAPI */,
 				CAD2E7A02449574E00113D76 /* Xcodes */,
 				CAD2E7B62449575100113D76 /* XcodesTests */,
+				CA9FF8AF2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */,
+				CA9FF8CD25959A7600E47BAF /* HelperXPCShared */,
 				CAD2E79F2449574E00113D76 /* Products */,
 				CA538A12255A4F7C00E64DD7 /* Frameworks */,
 			);
@@ -293,6 +384,7 @@
 			children = (
 				CAD2E79E2449574E00113D76 /* Xcodes.app */,
 				CAD2E7B32449575100113D76 /* XcodesTests.xctest */,
+				CA9FF8AE2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -329,6 +421,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		CA9FF8AD2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CA9FF8B52595967A00E47BAF /* Build configuration list for PBXNativeTarget "com.robotsandpencils.XcodesApp.Helper" */;
+			buildPhases = (
+				CA9FF8AA2595967A00E47BAF /* Sources */,
+				CA9FF8AB2595967A00E47BAF /* Frameworks */,
+				CA9FF8AC2595967A00E47BAF /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = com.robotsandpencils.XcodesApp.Helper;
+			productName = com.robotsandpencils.XcodesApp.Helper;
+			productReference = CA9FF8AE2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */;
+			productType = "com.apple.product-type.tool";
+		};
 		CAD2E79D2449574E00113D76 /* Xcodes */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CAD2E7BC2449575100113D76 /* Build configuration list for PBXNativeTarget "Xcodes" */;
@@ -337,10 +446,12 @@
 				CAD2E79B2449574E00113D76 /* Frameworks */,
 				CA9FF8292594F33200E47BAF /* Generate Acknowledgements */,
 				CAD2E79C2449574E00113D76 /* Resources */,
+				CA9FF8BB259596B500E47BAF /* Copy Helper */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				CA9FF8BA259596A000E47BAF /* PBXTargetDependency */,
 			);
 			name = Xcodes;
 			packageProductDependencies = (
@@ -382,10 +493,13 @@
 		CAD2E7962449574E00113D76 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1140;
 				ORGANIZATIONNAME = "Robots and Pencils";
 				TargetAttributes = {
+					CA9FF8AD2595967A00E47BAF = {
+						CreatedOnToolsVersion = 12.2;
+					};
 					CAD2E79D2449574E00113D76 = {
 						CreatedOnToolsVersion = 11.4;
 					};
@@ -420,6 +534,7 @@
 			targets = (
 				CAD2E79D2449574E00113D76 /* Xcodes */,
 				CAD2E7B22449575100113D76 /* XcodesTests */,
+				CA9FF8AD2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */,
 			);
 		};
 /* End PBXProject section */
@@ -466,14 +581,28 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		CA9FF8AA2595967A00E47BAF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA9FF8D025959A9700E47BAF /* HelperXPCShared.swift in Sources */,
+				CA9FF8DB25959B4000E47BAF /* XPCDelegate.swift in Sources */,
+				CA9FF8E625959BB800E47BAF /* AuditTokenHack.m in Sources */,
+				CA9FF8B12595967A00E47BAF /* main.swift in Sources */,
+				CA9FF8E025959BAA00E47BAF /* ConnectionVerifier.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		CAD2E79A2449574E00113D76 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA9FF8CF25959A9700E47BAF /* HelperXPCShared.swift in Sources */,
 				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
 				CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */,
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
+				CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */,
 				CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */,
 				CA44901F2463AD34003D8213 /* Tag.swift in Sources */,
 				CABFA9BF2592EEEA00380FEE /* URLSession+Promise.swift in Sources */,
@@ -496,6 +625,7 @@
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
 				CA9FF877259528CC00E47BAF /* Version+XcodeReleases.swift in Sources */,
 				CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */,
+				CA9FF8F525959CE000E47BAF /* HelperInstaller.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
 				CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */,
 				CABFA9C22592EEEA00380FEE /* Promise+.swift in Sources */,
@@ -526,6 +656,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		CA9FF8BA259596A000E47BAF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CA9FF8AD2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */;
+			targetProxy = CA9FF8B9259596A000E47BAF /* PBXContainerItemProxy */;
+		};
 		CAD2E7B52449575100113D76 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CAD2E79D2449574E00113D76 /* Xcodes */;
@@ -566,6 +701,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = PBH8V487HB;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -641,6 +777,74 @@
 			};
 			name = Test;
 		};
+		CA9FF8B22595967A00E47BAF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				DEVELOPMENT_TEAM = PBH8V487HB;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"$(SRCROOT)/${TARGET_NAME}/launchd.plist",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp.Helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "com.robotsandpencils.XcodesApp.Helper/com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CA9FF8B32595967A00E47BAF /* Test */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_ENTITLEMENTS = com.robotsandpencils.XcodesApp.Helper/com.robotsandpencils.XcodesApp.HelperTest.entitlements;
+				CODE_SIGN_STYLE = Manual;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = NO;
+				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"$(SRCROOT)/${TARGET_NAME}/launchd.plist",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp.Helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "com.robotsandpencils.XcodesApp.Helper/com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Test;
+		};
+		CA9FF8B42595967A00E47BAF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
+				DEVELOPMENT_TEAM = PBH8V487HB;
+				ENABLE_HARDENED_RUNTIME = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
+				OTHER_LDFLAGS = (
+					"-sectcreate",
+					__TEXT,
+					__launchd_plist,
+					"$(SRCROOT)/${TARGET_NAME}/launchd.plist",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp.Helper;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "com.robotsandpencils.XcodesApp.Helper/com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
 		CAD2E7BA2449575100113D76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -673,6 +877,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = PBH8V487HB;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -733,6 +938,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = PBH8V487HB;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -843,6 +1049,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		CA9FF8B52595967A00E47BAF /* Build configuration list for PBXNativeTarget "com.robotsandpencils.XcodesApp.Helper" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CA9FF8B22595967A00E47BAF /* Debug */,
+				CA9FF8B32595967A00E47BAF /* Test */,
+				CA9FF8B42595967A00E47BAF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		CAD2E7992449574E00113D76 /* Build configuration list for PBXProject "Xcodes" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
