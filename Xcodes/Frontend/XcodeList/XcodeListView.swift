@@ -80,34 +80,7 @@ struct XcodeListView: View {
                 }
             }
         }
-        .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
-                Button(action: appState.update) {
-                    Label("Refresh", systemImage: "arrow.clockwise")
-                }
-                .keyboardShortcut(KeyEquivalent("r"))
-                .disabled(appState.isUpdating)
-                .isHidden(appState.isUpdating)
-                .overlay(
-                    ProgressView()
-                        .scaleEffect(0.5, anchor: .center)
-                        .isHidden(!appState.isUpdating)
-                )
-            }
-            ToolbarItem(placement: .principal) {
-                Picker("", selection: $category) {
-                    ForEach(Category.allCases, id: \.self) {
-                        Text($0.description).tag($0)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-            }
-            ToolbarItem {
-                TextField("Search...", text: $searchText)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .frame(width: 200)
-            }
-        }
+        .mainToolbar(category: $category, searchText: $searchText)
         .navigationSubtitle(subtitleText)
         .frame(minWidth: 200, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
         .alert(item: $appState.error) { error in
