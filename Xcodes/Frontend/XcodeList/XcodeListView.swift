@@ -42,12 +42,13 @@ struct XcodeListView: View {
                         .foregroundColor(appState.selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
                 }
                 
+                
+                Spacer()
+                
                 if xcode.selected {
                     Tag(text: "SELECTED")
                         .foregroundColor(.green)
                 }
-                
-                Spacer()
                 
                 Button(xcode.installed ? "INSTALLED" : "INSTALL") {
                     print("Installing...")
@@ -90,10 +91,10 @@ struct XcodeListView_Previews: PreviewProvider {
                 .environmentObject({ () -> AppState in
                     let a = AppState()
                     a.allXcodes = [
-                        Xcode(version: Version("12.3.0")!, installState: .installed, selected: true, path: nil, icon: nil),
+                        Xcode(version: Version("12.3.0")!, installState: .installed, selected: true, path: "/Applications/Xcode-12.3.0.app", icon: nil),
                         Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
                         Xcode(version: Version("12.1.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
-                        Xcode(version: Version("12.0.0")!, installState: .installed, selected: false, path: nil, icon: nil),
+                        Xcode(version: Version("12.0.0")!, installState: .installed, selected: false, path: "/Applications/Xcode-12.3.0.app", icon: nil),
                     ]
                     return a
                 }())

@@ -16,10 +16,15 @@ class AppState: ObservableObject {
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
-            updateAllXcodes(newValue)
+            updateAllXcodes(availableXcodes: newValue, selectedXcodePath: selectedXcodePath)
         }
     }
     var allXcodes: [Xcode] = []
+    @Published var selectedXcodePath: String? {
+        willSet {
+            updateAllXcodes(availableXcodes: availableXcodes, selectedXcodePath: newValue)
+        }
+    }
     @Published var updatePublisher: AnyCancellable?
     var isUpdating: Bool { updatePublisher != nil }
     @Published var error: AlertContent?
@@ -226,6 +231,9 @@ class AppState: ObservableObject {
         else { return }
         
         selectPublisher = HelperClient().switchXcodePath(installedXcode.path.string)
+            .flatMap { [unowned self] _ in
+                self.updateSelectedXcodePath()
+            }
             .sink(
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
@@ -251,9 +259,9 @@ class AppState: ObservableObject {
     
     // MARK: - Private
     
-    private func updateAllXcodes(_ xcodes: [AvailableXcode]) {
+    private func updateAllXcodes(availableXcodes: [AvailableXcode], selectedXcodePath: String?) {
         let installedXcodes = Current.files.installedXcodes(Path.root/"Applications")
-        var allXcodeVersions = xcodes.map { $0.version }
+        var allXcodeVersions = availableXcodes.map { $0.version }
         for installedXcode in installedXcodes {
             // If an installed version isn't listed online, add the installed version
             if !allXcodeVersions.contains(where: { version in
@@ -274,11 +282,11 @@ class AppState: ObservableObject {
             .sorted(by: >)
             .map { xcodeVersion in
                 let installedXcode = installedXcodes.first(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) })
-                let availableXcode = xcodes.first { $0.version == xcodeVersion }
+                let availableXcode = availableXcodes.first { $0.version == xcodeVersion }
                 return Xcode(
                     version: xcodeVersion,
-                    installState: installedXcodes.contains(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) }) ? .installed : .notInstalled,
-                    selected: false, 
+                    installState: installedXcode != nil ? .installed : .notInstalled,
+                    selected: installedXcode != nil && selectedXcodePath?.hasPrefix(installedXcode!.path.string) == true, 
                     path: installedXcode?.path.string,
                     icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),
                     requiredMacOSVersion: availableXcode?.requiredMacOSVersion,
