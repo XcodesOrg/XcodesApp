@@ -12,17 +12,13 @@ struct MainToolbarModifier: ViewModifier {
 
     private var toolbar: some ToolbarContent {
         ToolbarItemGroup(placement: .status) {
-            Button(action: appState.update) {
+            ProgressButton(
+                isInProgress: appState.isUpdating, 
+                action: appState.update
+            ) {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }
             .keyboardShortcut(KeyEquivalent("r"))
-            .disabled(appState.isUpdating)
-            .isHidden(appState.isUpdating)
-            .overlay(
-                ProgressView()
-                    .scaleEffect(0.5, anchor: .center)
-                    .isHidden(!appState.isUpdating)
-            )
             
             Button(action: {
                 switch category {
