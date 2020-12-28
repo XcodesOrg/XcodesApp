@@ -21,7 +21,7 @@ extension AppState {
 
     func update() {
         guard !isUpdating else { return }
-        updatePublisher = update()
+        updatePublisher = updateAvailableXcodes(from: self.dataSource)
             .sink(
                 receiveCompletion: { [unowned self] completion in
                     switch completion {
@@ -36,19 +36,12 @@ extension AppState {
                 receiveValue: { _ in }
             )
     }
-    
-    private func update() -> AnyPublisher<[AvailableXcode], Error> {
-        signInIfNeeded()
-            .flatMap { [unowned self] in
-                self.updateAvailableXcodes(from: self.dataSource)
-            }
-            .eraseToAnyPublisher()
-    }
-    
+
     private func updateAvailableXcodes(from dataSource: DataSource) -> AnyPublisher<[AvailableXcode], Error> {
         switch dataSource {
         case .apple:
-            return releasedXcodes().combineLatest(prereleaseXcodes())
+            return signInIfNeeded() 
+                .flatMap { [unowned self] in self.releasedXcodes().combineLatest(self.prereleaseXcodes()) }
                 .receive(on: DispatchQueue.main)
                 .map { releasedXcodes, prereleaseXcodes in
                     // Starting with Xcode 11 beta 6, developer.apple.com/download and developer.apple.com/download/more both list some pre-release versions of Xcode.
