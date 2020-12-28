@@ -7,6 +7,7 @@ struct XcodeListView: View {
     @State private var selection = Set<String>()
     @State private var rowBeingConfirmedForUninstallation: AppState.XcodeVersion?
     @State private var searchText: String = ""
+    @AppStorage("lastUpdated") private var lastUpdated: Double?
     
     @AppStorage("xcodeListCategory") private var category: Category = .all
     
@@ -79,9 +80,16 @@ struct XcodeListView: View {
         .toolbar {
             ToolbarItemGroup(placement: .primaryAction) {
                 Button(action: appState.update) {
-                    Image(systemName: "arrow.clockwise")
+                    Label("Refresh", systemImage: "arrow.clockwise")
                 }
                 .keyboardShortcut(KeyEquivalent("r"))
+                .disabled(appState.isUpdating)
+                .isHidden(appState.isUpdating)
+                .overlay(
+                    ProgressView()
+                        .scaleEffect(0.5, anchor: .center)
+                        .isHidden(!appState.isUpdating)
+                )
             }
             ToolbarItem(placement: .principal) {
                 Picker("", selection: $category) {
@@ -97,9 +105,8 @@ struct XcodeListView: View {
                     .frame(width: 200)
             }
         }
-        .navigationSubtitle(Text("Updated \(Date().addingTimeInterval(-600), style: .relative) ago"))
+        .navigationSubtitle(subtitleText)
         .frame(minWidth: 200, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
-        .onAppear(perform: appState.update)
         .alert(item: $appState.error) { error in
             Alert(title: Text(error.title), 
                   message: Text(verbatim: error.message), 
@@ -129,6 +136,14 @@ struct XcodeListView: View {
             SignInSMSView(isPresented: $appState.secondFactorData.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsPendingChoice:
             SignInPhoneListView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+        }
+    }
+    
+    private var subtitleText: Text {
+        if let lastUpdated = lastUpdated.map(Date.init(timeIntervalSince1970:)) {
+            return Text("Updated at \(lastUpdated, style: .date) \(lastUpdated, style: .time)")
+        } else {
+            return Text("")
         }
     }
 }

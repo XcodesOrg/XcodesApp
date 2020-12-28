@@ -19,6 +19,7 @@ public struct Environment {
     public var logging = Logging()
     public var keychain = Keychain()
     public var defaults = Defaults()
+    public var date: () -> Date = Date.init
 }
 
 public var Current = Environment()
@@ -111,10 +112,10 @@ private func _installedXcodes(destination: Path) -> [InstalledXcode] {
 
 public struct Network {
     private static let client = AppleAPI.Client()
-
-    public var dataTask: (URLRequestConvertible) -> Promise<(data: Data, response: URLResponse)> = { AppleAPI.Current.network.session.dataTask(.promise, with: $0) }
-    public func dataTask(with convertible: URLRequestConvertible) -> Promise<(data: Data, response: URLResponse)> {
-        dataTask(convertible)
+    
+    public var dataTask: (URLRequest) -> URLSession.DataTaskPublisher = { AppleAPI.Current.network.session.dataTaskPublisher(for: $0) }
+    public func dataTask(with request: URLRequest) -> URLSession.DataTaskPublisher {
+        dataTask(request)
     }
 
     public var downloadTask: (URLRequestConvertible, URL, Data?) -> (Progress, Promise<(saveLocation: URL, response: URLResponse)>) = { AppleAPI.Current.network.session.downloadTask(with: $0, to: $1, resumingWith: $2) }
@@ -151,6 +152,16 @@ public struct Defaults {
     public var string: (String) -> String? = { UserDefaults.standard.string(forKey: $0) }
     public func string(forKey key: String) -> String? {
         string(key)
+    }
+    
+    public var date: (String) -> Date? = { Date(timeIntervalSince1970: UserDefaults.standard.double(forKey: $0)) }
+    public func date(forKey key: String) -> Date? {
+        date(key)
+    }
+    
+    public var setDate: (Date?, String) -> Void = { UserDefaults.standard.set($0?.timeIntervalSince1970, forKey: $1) }
+    public func setDate(_ value: Date?, forKey key: String) {
+        setDate(value, key)
     }
     
     public var set: (Any?, String) -> Void = { UserDefaults.standard.set($0, forKey: $1) }

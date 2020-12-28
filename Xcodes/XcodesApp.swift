@@ -4,18 +4,35 @@ import AppKit
 @main
 struct XcodesApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate: AppDelegate
+    @SwiftUI.Environment(\.scenePhase) private var scenePhase: ScenePhase
     @StateObject private var appState = AppState()
     
     var body: some Scene {
         WindowGroup("Xcodes") {
             XcodeListView()
                 .environmentObject(appState)
+                // This is intentionally used on a View, and not on a WindowGroup, 
+                // so that it's triggered when an individual window's phase changes instead of all window phases.
+                // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup. 
+                // FB8954581 ScenePhase read from App doesn't return a value on launch
+                .onChange(of: scenePhase) { newScenePhase in
+                    if case .active = newScenePhase {
+                        appState.updateIfNeeded()
+                    }
+                }
         }
         .commands {
             CommandGroup(replacing: .appInfo) {
                 Button("About Xcodes") {
                     appDelegate.showAboutWindow()
                 }
+            }
+            CommandGroup(after: CommandGroupPlacement.newItem) {
+                Button("Refresh") {
+                    appState.update()
+                }
+                .keyboardShortcut(KeyEquivalent("r"))
+                .disabled(appState.isUpdating)
             }
         }
 
@@ -53,6 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// WindowGroup lets the user open more than one window right now, which is a little strange for an About window.
     /// (It's also weird that the main Xcode list window can be opened more than once, there should only be one.)
     /// To work around this, an AppDelegate holds onto a single instance of an NSWindow that is shown here.  
+    /// FB8954588 Scene / WindowGroup is missing API to limit the number of windows that can be created
     func showAboutWindow() {
         aboutWindow.center()
         aboutWindow.makeKeyAndOrderFront(nil)
