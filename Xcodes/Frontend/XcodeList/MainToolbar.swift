@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MainToolbarModifier: ViewModifier {
     @EnvironmentObject var appState: AppState
-    @Binding var category: XcodeListView.Category
+    @Binding var category: XcodeListCategory
     @Binding var isShowingInfoPane: Bool
     @Binding var searchText: String
     
@@ -55,7 +55,7 @@ struct MainToolbarModifier: ViewModifier {
 
 extension View {
     func mainToolbar(
-        category: Binding<XcodeListView.Category>,
+        category: Binding<XcodeListCategory>,
         isShowingInfoPane: Binding<Bool>,
         searchText: Binding<String>
     ) -> some View {
