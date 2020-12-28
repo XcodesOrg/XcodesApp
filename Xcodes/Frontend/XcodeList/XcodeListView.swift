@@ -81,7 +81,7 @@ struct XcodeListView: View {
             }
         }
         .toolbar {
-            ToolbarItemGroup(placement: .primaryAction) {
+            ToolbarItemGroup(placement: .status) {
                 Button(action: appState.update) {
                     Label("Refresh", systemImage: "arrow.clockwise")
                 }
@@ -93,16 +93,22 @@ struct XcodeListView: View {
                         .scaleEffect(0.5, anchor: .center)
                         .isHidden(!appState.isUpdating)
                 )
-            }
-            ToolbarItem(placement: .principal) {
-                Picker("", selection: $category) {
-                    ForEach(Category.allCases, id: \.self) {
-                        Text($0.description).tag($0)
+                
+                Button(action: {
+                    switch category {
+                    case .all: category = .installed
+                    case .installed: category = .all
+                    }
+                }) {
+                    switch category {
+                    case .all:
+                        Label("Filter", systemImage: "line.horizontal.3.decrease.circle")
+                    case .installed:
+                        Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .foregroundColor(.accentColor)
                     }
                 }
-                .pickerStyle(SegmentedPickerStyle())
-            }
-            ToolbarItem {
+
                 TextField("Search...", text: $searchText)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .frame(width: 200)
