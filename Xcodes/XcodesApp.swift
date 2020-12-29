@@ -20,9 +20,6 @@ struct XcodesApp: App {
                         appState.updateIfNeeded()
                     }
                 }
-                // I'm expecting to be able to use this modifier on a List row, but using it at the top level here is the only way that has made XcodeCommands work so far.
-                // FB8954571 focusedValue(_:_:) on List row doesn't propagate value to @FocusedValue
-                .focusedValue(\.selectedXcode, SelectedXcode(appState.allXcodes.first { $0.id == appState.selectedXcodeID }))
         }
         .commands {
             CommandGroup(replacing: .appInfo) {

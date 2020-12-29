@@ -6,11 +6,12 @@ import struct XCModel.Compilers
 
 struct InspectorPane: View {
     @EnvironmentObject var appState: AppState
+    let selectedXcodeID: Xcode.ID?
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     
     var body: some View {
         Group {
-            if let xcode = appState.allXcodes.first(where: { $0.id == appState.selectedXcodeID }) {
+            if let xcode = appState.allXcodes.first(where: { $0.id == selectedXcodeID }) {
                 VStack(spacing: 16) {
                     icon(for: xcode)
                     
@@ -169,7 +170,7 @@ struct InspectorPane: View {
 struct InspectorPane_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            InspectorPane()
+            InspectorPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
                         .init(
@@ -194,11 +195,10 @@ struct InspectorPane_Previews: PreviewProvider {
                                 swift: .init(number: "5.3.2")
                             ))
                     ]
-                    $0.selectedXcodeID = Version(major: 12, minor: 3, patch: 0)
                 })
                 .previewDisplayName("Populated, Installed, Selected")
             
-            InspectorPane()
+            InspectorPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
                         .init(
@@ -221,11 +221,10 @@ struct InspectorPane_Previews: PreviewProvider {
                                 swift: .init(number: "5.3.2")
                             ))
                     ]
-                    $0.selectedXcodeID = Version(major: 12, minor: 3, patch: 0)
                 })
                 .previewDisplayName("Populated, Installed, Unselected")
             
-            InspectorPane()
+            InspectorPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
                         .init(
@@ -248,15 +247,13 @@ struct InspectorPane_Previews: PreviewProvider {
                                 swift: .init(number: "5.3.2")
                             ))
                     ]
-                    $0.selectedXcodeID = Version(major: 12, minor: 3, patch: 0)
                 })
                 .previewDisplayName("Populated, Uninstalled")
             
-            InspectorPane()
+            InspectorPane(selectedXcodeID: nil)
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
                     ]
-                    $0.selectedXcodeID = nil
                 })
                 .previewDisplayName("Empty")
         }
