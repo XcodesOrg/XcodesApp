@@ -15,13 +15,25 @@ extension AppState {
             let lastUpdated = Current.defaults.date(forKey: "lastUpdated"),
             // This is bad date math but for this use case it doesn't need to be exact
             lastUpdated < Current.date().addingTimeInterval(-60 * 60 * 24) 
-        else { return }
+        else { 
+            updatePublisher = updateSelectedXcodePath()
+                .sink(
+                    receiveCompletion: { _ in 
+                        self.updatePublisher = nil
+                    },
+                    receiveValue: { _ in }
+                )
+            return
+        }
         update() as Void
     }
 
     func update() {
         guard !isUpdating else { return }
-        updatePublisher = updateAvailableXcodes(from: self.dataSource)
+        updatePublisher = updateSelectedXcodePath()
+            .flatMap { _ in 
+                self.updateAvailableXcodes(from: self.dataSource)
+            }
             .sink(
                 receiveCompletion: { [unowned self] completion in
                     switch completion {
@@ -35,6 +47,15 @@ extension AppState {
                 },
                 receiveValue: { _ in }
             )
+    }
+    
+    func updateSelectedXcodePath() -> AnyPublisher<Void, Never> {
+        Current.shell.xcodeSelectPrintPath()
+            .handleEvents(receiveOutput: { output in self.selectedXcodePath = output.out })
+            // Ignore xcode-select failures
+            .map { _ in Void() }
+            .catch { _ in Just(()) }
+            .eraseToAnyPublisher()
     }
 
     private func updateAvailableXcodes(from dataSource: DataSource) -> AnyPublisher<[AvailableXcode], Error> {

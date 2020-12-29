@@ -58,6 +58,7 @@ struct SelectButton: View {
         Button(action: select) {
             Text("Select")
         }
+        .disabled(xcode?.selected != false)
     }
     
     private func select() {

@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import PromiseKit
 import PMKFoundation
@@ -50,11 +51,7 @@ public struct Shell {
         authenticateSudoerIfNecessary(passwordInput)
     }
 
-    public var xcodeSelectPrintPath: () -> Promise<ProcessOutput> = { Process.run(Path.root.usr.bin.join("xcode-select"), "-p") }
-    public var xcodeSelectSwitch: (String?, String) -> Promise<ProcessOutput> = { Process.sudo(password: $0, Path.root.usr.bin.join("xcode-select"), "-s", $1) }
-    public func xcodeSelectSwitch(password: String?, path: String) -> Promise<ProcessOutput> {
-        xcodeSelectSwitch(password, path)
-    }
+    public var xcodeSelectPrintPath: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.join("xcode-select"), "-p") }
 }
 
 public struct Files {
