@@ -4,10 +4,12 @@ import PromiseKit
 
 struct XcodeListView: View {
     @EnvironmentObject var appState: AppState
+    @Binding var selectedXcodeID: Xcode.ID?
     private let searchText: String
     private let category: XcodeListCategory
     
-    init(searchText: String, category: XcodeListCategory) {
+    init(selectedXcodeID: Binding<Xcode.ID?>, searchText: String, category: XcodeListCategory) {
+        self._selectedXcodeID = selectedXcodeID
         self.searchText = searchText
         self.category = category
     }
@@ -29,7 +31,7 @@ struct XcodeListView: View {
     }
     
     var body: some View {
-        List(visibleXcodes, selection: $appState.selectedXcodeID) { xcode in
+        List(visibleXcodes, selection: $selectedXcodeID) { xcode in
             HStack {
                 appIconView(for: xcode)
                 
@@ -87,7 +89,7 @@ struct XcodeListView: View {
 struct XcodeListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            XcodeListView(searchText: "", category: .all)
+            XcodeListView(selectedXcodeID: .constant(nil), searchText: "", category: .all)
                 .environmentObject({ () -> AppState in
                     let a = AppState()
                     a.allXcodes = [
