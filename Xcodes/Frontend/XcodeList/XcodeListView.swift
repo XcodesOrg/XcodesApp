@@ -41,7 +41,7 @@ struct XcodeListView: View {
                     
                     Text(verbatim: xcode.path ?? "")
                         .font(.caption)
-                        .foregroundColor(appState.selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
+                        .foregroundColor(selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
                 }
                 
                 
@@ -56,8 +56,8 @@ struct XcodeListView: View {
                     print("Installing...")
                 }
                 .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
-                                                 highlighted: appState.selectedXcodeID == xcode.id))
-                .disabled(xcode.installed)                
+                                                 highlighted: selectedXcodeID == xcode.id))
+                .disabled(xcode.installed)
             }
             .contextMenu {
                 InstallButton(xcode: xcode)
