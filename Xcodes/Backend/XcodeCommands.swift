@@ -111,7 +111,7 @@ struct CopyPathButton: View {
         Button(action: copyPath) {
             Text("Copy Path")
         }
-        .help("Copy Path")
+        .help("Copy path")
     }
     
     private func copyPath() {

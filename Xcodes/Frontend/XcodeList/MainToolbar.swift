@@ -36,7 +36,7 @@ struct MainToolbarModifier: ViewModifier {
                         .foregroundColor(.accentColor)
                 }
             }
-            .help("Filter Installed Versions")
+            .help("Filter installed versions")
             
             Button(action: { isShowingInfoPane.toggle() }) {
                 if isShowingInfoPane {
@@ -47,12 +47,12 @@ struct MainToolbarModifier: ViewModifier {
                 }
             }
             .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
-            .help("Info Pane")
+            .help("Show or hide the info pane")
 
             TextField("Search...", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 200)
-                .help("Search List")
+                .help("Search list")
         }
     }
 }
