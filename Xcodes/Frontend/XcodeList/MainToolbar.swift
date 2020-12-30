@@ -40,10 +40,10 @@ struct MainToolbarModifier: ViewModifier {
             
             Button(action: { isShowingInfoPane.toggle() }) {
                 if isShowingInfoPane {
-                    Label("Inspector", systemImage: "info.circle.fill")
+                    Label("Info", systemImage: "info.circle.fill")
                         .foregroundColor(.accentColor)
                 } else {
-                    Label("Inspector", systemImage: "info.circle")
+                    Label("Info", systemImage: "info.circle")
                 }
             }
             .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))

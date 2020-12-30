@@ -75,7 +75,7 @@
 		CAFBDB912598FE80003DCC5A /* SelectedXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */; };
 		CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDB942598FE96003DCC5A /* FocusedValues.swift */; };
 		CAFBDC4E2599B33D003DCC5A /* MainToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC4D2599B33D003DCC5A /* MainToolbar.swift */; };
-		CAFBDC68259A308B003DCC5A /* InspectorPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC67259A308B003DCC5A /* InspectorPane.swift */; };
+		CAFBDC68259A308B003DCC5A /* InfoPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC67259A308B003DCC5A /* InfoPane.swift */; };
 		CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC6B259A3098003DCC5A /* View+Conditional.swift */; };
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
 /* End PBXBuildFile section */
@@ -200,7 +200,7 @@
 		CAFBDB942598FE96003DCC5A /* FocusedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedValues.swift; sourceTree = "<group>"; };
 		CAFBDBA525990C76003DCC5A /* SimpleXPCApp.LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = SimpleXPCApp.LICENSE; sourceTree = "<group>"; };
 		CAFBDC4D2599B33D003DCC5A /* MainToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbar.swift; sourceTree = "<group>"; };
-		CAFBDC67259A308B003DCC5A /* InspectorPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorPane.swift; sourceTree = "<group>"; };
+		CAFBDC67259A308B003DCC5A /* InfoPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPane.swift; sourceTree = "<group>"; };
 		CAFBDC6B259A3098003DCC5A /* View+Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Conditional.swift"; sourceTree = "<group>"; };
 		CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListViewRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -307,7 +307,7 @@
 			isa = PBXGroup;
 			children = (
 				CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */,
-				CAFBDC67259A308B003DCC5A /* InspectorPane.swift */,
+				CAFBDC67259A308B003DCC5A /* InfoPane.swift */,
 				CAFBDC4D2599B33D003DCC5A /* MainToolbar.swift */,
 				CA44901E2463AD34003D8213 /* Tag.swift */,
 				CAE42486259A68A300B8B246 /* XcodeListCategory.swift */,
@@ -654,7 +654,7 @@
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
 				CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */,
 				CABFA9C22592EEEA00380FEE /* Promise+.swift in Sources */,
-				CAFBDC68259A308B003DCC5A /* InspectorPane.swift in Sources */,
+				CAFBDC68259A308B003DCC5A /* InfoPane.swift in Sources */,
 				CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */,
 				CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */,
 				CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */,
