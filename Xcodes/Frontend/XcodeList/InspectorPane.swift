@@ -31,15 +31,12 @@ struct InspectorPane: View {
                             }
                             
                             HStack {
-                                if xcode.selected {
-                                    Button("Selected", action: {})
-                                        .disabled(true)
-                                        .help("Selected")
-                                } else {
-                                    SelectButton(xcode: xcode)
-                                }
+                                SelectButton(xcode: xcode)
+                                    .disabled(xcode.selected)
+                                    .help("Selected")
                                 
                                 OpenButton(xcode: xcode)
+                                    .help("Open")
                             }
                         } else {
                             InstallButton(xcode: xcode)
