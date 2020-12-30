@@ -32,73 +32,7 @@ struct XcodeListView: View {
     
     var body: some View {
         List(visibleXcodes, selection: $selectedXcodeID) { xcode in
-            HStack {
-                appIconView(for: xcode)
-                
-                VStack(alignment: .leading) {    
-                    Text(xcode.description)
-                        .font(.body)
-                    
-                    Text(verbatim: xcode.path ?? "")
-                        .font(.caption)
-                        .foregroundColor(.secondary)
-                }
-                
-                Spacer()
-                
-                selectControl(for: xcode)
-                installControl(for: xcode)
-            }
-            .contextMenu {
-                InstallButton(xcode: xcode)
-                
-                Divider()
-                
-                if xcode.installed {
-                    SelectButton(xcode: xcode)
-                    OpenButton(xcode: xcode)
-                    RevealButton(xcode: xcode)
-                    CopyPathButton(xcode: xcode)
-                }
-            }
-        }
-    }
-    
-    @ViewBuilder
-    func appIconView(for xcode: Xcode) -> some View {
-        if let icon = xcode.icon {
-            Image(nsImage: icon)
-        } else {
-            Color.clear
-                .frame(width: 32, height: 32)
-                .foregroundColor(.secondary)
-        }
-    }
-    
-    @ViewBuilder
-    private func selectControl(for xcode: Xcode) -> some View {
-        if xcode.selected {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(.green)
-                .help("This version is selected as the default")
-        }
-    }
-    
-    @ViewBuilder
-    private func installControl(for xcode: Xcode) -> some View {
-        if xcode.selected {
-            Button("DEFAULT") { appState.select(id: xcode.id) }
-                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selectedXcodeID == xcode.id))
-                .disabled(true)
-                .help("This version is selected as the default")
-        } else if xcode.installed {
-            Button("SELECT") { appState.select(id: xcode.id) }
-                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selectedXcodeID == xcode.id))
-                .help("Select this version as the default")
-        } else {
-            Button("INSTALL") { print("Installing...") }
-                .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selectedXcodeID == xcode.id))
-                .help("Install this version")
+            XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id)
         }
     }
 }

@@ -77,6 +77,7 @@
 		CAFBDC4E2599B33D003DCC5A /* MainToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC4D2599B33D003DCC5A /* MainToolbar.swift */; };
 		CAFBDC68259A308B003DCC5A /* InspectorPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC67259A308B003DCC5A /* InspectorPane.swift */; };
 		CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC6B259A3098003DCC5A /* View+Conditional.swift */; };
+		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -201,6 +202,7 @@
 		CAFBDC4D2599B33D003DCC5A /* MainToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbar.swift; sourceTree = "<group>"; };
 		CAFBDC67259A308B003DCC5A /* InspectorPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InspectorPane.swift; sourceTree = "<group>"; };
 		CAFBDC6B259A3098003DCC5A /* View+Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Conditional.swift"; sourceTree = "<group>"; };
+		CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListViewRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +312,7 @@
 				CA44901E2463AD34003D8213 /* Tag.swift */,
 				CAE42486259A68A300B8B246 /* XcodeListCategory.swift */,
 				CAD2E7A32449574E00113D76 /* XcodeListView.swift */,
+				CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */,
 			);
 			path = XcodeList;
 			sourceTree = "<group>";
@@ -655,6 +658,7 @@
 				CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */,
 				CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */,
 				CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */,
+				CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */,
 				CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */,
 				CAE42487259A68A300B8B246 /* XcodeListCategory.swift in Sources */,
 				CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */,
