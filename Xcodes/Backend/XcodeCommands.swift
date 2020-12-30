@@ -34,8 +34,10 @@ struct InstallButton: View {
         Button(action: uninstallOrInstall) {
             if let xcode = xcode {
                 Text(xcode.installed == true ? "Uninstall" : "Install")
+                    .help(xcode.installed == true ? "Uninstall" : "Install")
             } else {
                 Text("Install")
+                    .help("Install")
             }
         }
     }
@@ -59,6 +61,7 @@ struct SelectButton: View {
             Text("Select")
         }
         .disabled(xcode?.selected != false)
+        .help("Select")
     }
     
     private func select() {
@@ -75,6 +78,7 @@ struct OpenButton: View {
         Button(action: open) {
             Text("Open")
         }
+        .help("Open")
     }
     
     private func open() {
@@ -91,6 +95,7 @@ struct RevealButton: View {
         Button(action: reveal) {
             Text("Reveal in Finder")
         }
+        .help("Reveal in Finder")
     }
     
     private func reveal() {
@@ -107,6 +112,7 @@ struct CopyPathButton: View {
         Button(action: copyPath) {
             Text("Copy Path")
         }
+        .help("Copy path")
     }
     
     private func copyPath() {

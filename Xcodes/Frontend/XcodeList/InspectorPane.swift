@@ -27,12 +27,14 @@ struct InspectorPane: View {
                                     Image(systemName: "arrow.right.circle.fill")
                                 }
                                 .buttonStyle(PlainButtonStyle())
+                                .help("Reveal in Finder")
                             }
                             
                             HStack {
                                 if xcode.selected {
                                     Button("Selected", action: {})
                                         .disabled(true)
+                                        .help("Selected")
                                 } else {
                                     SelectButton(xcode: xcode)
                                 }
@@ -81,6 +83,7 @@ struct InspectorPane: View {
             }
             .buttonStyle(LinkButtonStyle())
             .frame(maxWidth: .infinity, alignment: .leading)
+            .help("View Release Notes")
         } else {
             EmptyView()
         }
