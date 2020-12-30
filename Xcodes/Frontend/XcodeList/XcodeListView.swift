@@ -4,10 +4,12 @@ import PromiseKit
 
 struct XcodeListView: View {
     @EnvironmentObject var appState: AppState
+    @Binding var selectedXcodeID: Xcode.ID?
     private let searchText: String
     private let category: XcodeListCategory
     
-    init(searchText: String, category: XcodeListCategory) {
+    init(selectedXcodeID: Binding<Xcode.ID?>, searchText: String, category: XcodeListCategory) {
+        self._selectedXcodeID = selectedXcodeID
         self.searchText = searchText
         self.category = category
     }
@@ -29,7 +31,7 @@ struct XcodeListView: View {
     }
     
     var body: some View {
-        List(visibleXcodes, selection: $appState.selectedXcodeID) { xcode in
+        List(visibleXcodes, selection: $selectedXcodeID) { xcode in
             HStack {
                 appIconView(for: xcode)
                 
@@ -39,22 +41,23 @@ struct XcodeListView: View {
                     
                     Text(verbatim: xcode.path ?? "")
                         .font(.caption)
-                        .foregroundColor(appState.selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
+                        .foregroundColor(selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
                 }
+                
+                
+                Spacer()
                 
                 if xcode.selected {
                     Tag(text: "SELECTED")
                         .foregroundColor(.green)
                 }
                 
-                Spacer()
-                
                 Button(xcode.installed ? "INSTALLED" : "INSTALL") {
                     print("Installing...")
                 }
                 .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
-                                                 highlighted: appState.selectedXcodeID == xcode.id))
-                .disabled(xcode.installed)                
+                                                 highlighted: selectedXcodeID == xcode.id))
+                .disabled(xcode.installed)
             }
             .contextMenu {
                 InstallButton(xcode: xcode)
@@ -86,14 +89,14 @@ struct XcodeListView: View {
 struct XcodeListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            XcodeListView(searchText: "", category: .all)
+            XcodeListView(selectedXcodeID: .constant(nil), searchText: "", category: .all)
                 .environmentObject({ () -> AppState in
                     let a = AppState()
                     a.allXcodes = [
-                        Xcode(version: Version("12.3.0")!, installState: .installed, selected: true, path: nil, icon: nil),
+                        Xcode(version: Version("12.3.0")!, installState: .installed, selected: true, path: "/Applications/Xcode-12.3.0.app", icon: nil),
                         Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
                         Xcode(version: Version("12.1.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
-                        Xcode(version: Version("12.0.0")!, installState: .installed, selected: false, path: nil, icon: nil),
+                        Xcode(version: Version("12.0.0")!, installState: .installed, selected: false, path: "/Applications/Xcode-12.3.0.app", icon: nil),
                     ]
                     return a
                 }())

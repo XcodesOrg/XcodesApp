@@ -2,7 +2,7 @@ import SwiftUI
 
 struct MainWindow: View {
     @EnvironmentObject var appState: AppState
-    @State private var selection: Xcode.ID?
+    @State private var selectedXcodeID: Xcode.ID?
     @State private var searchText: String = ""
     @AppStorage("lastUpdated") private var lastUpdated: Double?
     @SceneStorage("isShowingInfoPane") private var isShowingInfoPane = false
@@ -10,11 +10,11 @@ struct MainWindow: View {
 
     var body: some View {
         HSplitView {
-            XcodeListView(searchText: searchText, category: category)
+            XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category)
                 .frame(minWidth: 300)
                 .layoutPriority(1)
             
-            InspectorPane()
+            InspectorPane(selectedXcodeID: selectedXcodeID)
                 .frame(minWidth: 300, maxWidth: .infinity)
                 .frame(width: isShowingInfoPane ? nil : 0)
                 .isHidden(!isShowingInfoPane)
@@ -44,6 +44,9 @@ struct MainWindow: View {
             secondFactorView(appState.secondFactorData!)
                 .environmentObject(appState)
         }
+        // I'm expecting to be able to use this modifier on a List row, but using it at the top level here is the only way that has made XcodeCommands work so far.
+        // FB8954571 focusedValue(_:_:) on List row doesn't propagate value to @FocusedValue
+        .focusedValue(\.selectedXcode, SelectedXcode(appState.allXcodes.first { $0.id == selectedXcodeID }))
     }
     
     private var subtitleText: Text {
