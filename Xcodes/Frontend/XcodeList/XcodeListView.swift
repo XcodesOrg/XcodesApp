@@ -88,16 +88,16 @@ struct XcodeListView: View {
     private func installControl(for xcode: Xcode) -> some View {
         if xcode.selected {
             Button("DEFAULT") { appState.select(id: xcode.id) }
-                .buttonStyle(AppStoreButtonStyle(installed: false, highlighted: selectedXcodeID == xcode.id))
+                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selectedXcodeID == xcode.id))
                 .disabled(true)
                 .help("This version is selected as the default")
         } else if xcode.installed {
             Button("SELECT") { appState.select(id: xcode.id) }
-                .buttonStyle(AppStoreButtonStyle(installed: false, highlighted: selectedXcodeID == xcode.id))
+                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selectedXcodeID == xcode.id))
                 .help("Select this version as the default")
         } else {
             Button("INSTALL") { print("Installing...") }
-                .buttonStyle(AppStoreButtonStyle(installed: true, highlighted: selectedXcodeID == xcode.id))
+                .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selectedXcodeID == xcode.id))
                 .help("Install this version")
         }
     }
