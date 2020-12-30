@@ -22,6 +22,7 @@ struct XcodeListViewRow: View {
             Spacer()
             
             selectControl(for: xcode)
+                .padding(.trailing, 16)
             installControl(for: xcode)
         }
         .contextMenu {
@@ -51,25 +52,34 @@ struct XcodeListViewRow: View {
     
     @ViewBuilder
     private func selectControl(for xcode: Xcode) -> some View {
-        if xcode.selected {
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(.green)
-                .help("This version is selected as the default")
+        if xcode.installed {
+            if xcode.selected {
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.green)
+                    .help("This is the active version")
+            } else {
+                Button(action: { appState.select(id: xcode.id) }) {
+                    Image(systemName: "checkmark.circle")
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(PlainButtonStyle())
+                .help("Make this the active version")
+            }
+        } else {
+            EmptyView()
         }
     }
     
     @ViewBuilder
     private func installControl(for xcode: Xcode) -> some View {
-        if xcode.selected {
-            Button("DEFAULT") { appState.select(id: xcode.id) }
-                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selected))
-                .disabled(true)
-        } else if xcode.installed {
-            Button("SELECT") { appState.select(id: xcode.id) }
-                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selected))
+        if xcode.installed {
+            Button("OPEN") { appState.open(id: xcode.id) }
+                .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))
+                .help("Open this version")
         } else {
             Button("INSTALL") { print("Installing...") }
-                .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))   
+                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selected))
+                .help("Install this version")
         }
     }
 }
