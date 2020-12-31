@@ -9,9 +9,8 @@ import Version
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
-    private var cancellables = Set<AnyCancellable>()
-    private var selectPublisher: AnyCancellable?
-    private var uninstallPublisher: AnyCancellable?
+    
+    // MARK: - Published Properties
     
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
@@ -19,7 +18,7 @@ class AppState: ObservableObject {
             updateAllXcodes(availableXcodes: newValue, selectedXcodePath: selectedXcodePath)
         }
     }
-    var allXcodes: [Xcode] = []
+    @Published var allXcodes: [Xcode] = []
     @Published var selectedXcodePath: String? {
         willSet {
             updateAllXcodes(availableXcodes: availableXcodes, selectedXcodePath: newValue)
@@ -38,7 +37,17 @@ class AppState: ObservableObject {
     @Published var error: Error?
     @Published var authError: Error?
     
+    // MARK: - Publisher Cancellables
+    
+    private var cancellables = Set<AnyCancellable>()
+    private var installationPublishers: [Version: AnyCancellable] = [:]
+    private var selectPublisher: AnyCancellable?
+    private var uninstallPublisher: AnyCancellable?
+    
+    // MARK: - Init
+    
     init() {
+        guard NSClassFromString("XCTestCase") == nil else { return }
         try? loadCachedAvailableXcodes()
         checkIfHelperIsInstalled()
     }
@@ -206,7 +215,59 @@ class AppState: ObservableObject {
     // MARK: - Install
     
     func install(id: Xcode.ID) {
-        // TODO:
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+        installationPublishers[id] = signInIfNeeded()
+            .flatMap { [unowned self] in
+                // signInIfNeeded might finish before the user actually authenticates if UI is involved. 
+                // This publisher will wait for the @Published authentication state to change to authenticated or unauthenticated before finishing,
+                // indicating that the user finished what they were doing in the UI.
+                self.$authenticationState
+                    .filter { state in
+                        switch state {
+                        case .authenticated, .unauthenticated: return true
+                        case .waitingForSecondFactor: return false
+                        }
+                    }
+                    .prefix(1)
+                    .tryMap { state in
+                        if state == .unauthenticated {
+                            throw AuthenticationError.invalidSession
+                        }
+                        return Void()
+                    }
+            }
+            .flatMap {
+                // This request would've already been made if the Apple data source were being used.
+                // That's not the case for the Xcode Releases data source.
+                // We need the cookies from its response in order to download Xcodes though,
+                // so perform it here first just to be sure.
+                Current.network.dataTask(with: URLRequest.downloads)
+                    .receive(on: DispatchQueue.main)
+                    .map { _ in Void() }
+                    .mapError { $0 as Error }
+            }
+            .flatMap { [unowned self] in
+                self.install(.version(availableXcode), downloader: .urlSession)
+            }
+            .sink(
+                receiveCompletion: { [unowned self] completion in 
+                    self.installationPublishers[id] = nil
+                    if case let .failure(error) = completion {
+                        self.error = error
+                        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) { 
+                            self.allXcodes[index].installState = .notInstalled
+                        }
+                    }
+                },
+                receiveValue: { _ in }
+            )
+    }
+    
+    func cancelInstall(id: Xcode.ID) {
+        installationPublishers[id] = nil
+        if let index = allXcodes.firstIndex(where: { $0.id == id }) { 
+            allXcodes[index].installState = .notInstalled
+        }
     }
     
     // MARK: - Uninstall

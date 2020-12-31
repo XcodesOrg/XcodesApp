@@ -4,7 +4,7 @@ import Path
 
 public typealias ProcessOutput = (status: Int32, out: String, err: String)
 
-extension Process {   
+extension Process {
     @discardableResult
     static func run(_ executable: Path, workingDirectory: URL? = nil, input: String? = nil, _ arguments: String...) -> AnyPublisher<ProcessOutput, Error> {
         return run(executable.url, workingDirectory: workingDirectory, input: input, arguments)

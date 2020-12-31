@@ -17,8 +17,9 @@ extension URLSession {
         resumingWith resumeData: Data?
     ) -> (progress: Progress, publisher: AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) {
         var progress: Progress!
+        var task: URLSessionDownloadTask!
 
-        // Intentionally not wrapping in Deferred because we need to return the Progress! immediately.
+        // Intentionally not wrapping in Deferred because we need to return the Progress and URLSessionDownloadTask immediately.
         // Probably a sign that this should be implemented differently...
         let promise = Future<(saveLocation: URL, response: URLResponse), Error> { promise in
             let completionHandler = { (temporaryURL: URL?, response: URLResponse?, error: Error?) in
@@ -35,8 +36,7 @@ extension URLSession {
                     fatalError("Expecting either a temporary URL and a response, or an error, but got neither.")
                 }
             }
-            
-            let task: URLSessionDownloadTask
+
             if let resumeData = resumeData {
                 task = self.downloadTask(withResumeData: resumeData, completionHandler: completionHandler)
             }
@@ -46,6 +46,7 @@ extension URLSession {
             progress = task.progress
             task.resume()
         }
+        .handleEvents(receiveCancel: task.cancel)
         .eraseToAnyPublisher()
 
         return (progress, promise)

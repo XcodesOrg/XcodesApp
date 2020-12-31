@@ -43,6 +43,7 @@ struct InfoPane: View {
                             }
                         } else {
                             InstallButton(xcode: xcode)
+                                .disabled(xcode.installState != .notInstalled)
                         }
                     }
                     

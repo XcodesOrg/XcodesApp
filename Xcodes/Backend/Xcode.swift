@@ -6,7 +6,7 @@ import struct XCModel.Compilers
 
 struct Xcode: Identifiable, CustomStringConvertible {
     let version: Version
-    let installState: XcodeInstallState
+    var installState: XcodeInstallState
     let selected: Bool
     let path: String?
     let icon: NSImage?

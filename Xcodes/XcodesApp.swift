@@ -16,6 +16,7 @@ struct XcodesApp: App {
                 // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup. 
                 // FB8954581 ScenePhase read from App doesn't return a value on launch
                 .onChange(of: scenePhase) { newScenePhase in
+                    guard NSClassFromString("XCTestCase") == nil else { return }
                     if case .active = newScenePhase {
                         appState.updateIfNeeded()
                     }
