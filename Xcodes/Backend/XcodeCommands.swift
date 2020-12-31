@@ -58,7 +58,11 @@ struct SelectButton: View {
     
     var body: some View {
         Button(action: select) {
-            Text("Select")
+            if xcode?.selected == true {
+                Text("Active")
+            } else {
+                Text("Make active")
+            }
         }
         .disabled(xcode?.selected != false)
         .help("Select")

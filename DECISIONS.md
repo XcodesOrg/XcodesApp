@@ -49,3 +49,18 @@ Uninstallation is not provided yet. I had this partially implemented (one attemp
 - [erikberglund/SwiftPrivilegedHelper](https://github.com/erikberglund/SwiftPrivilegedHelper)
 - [aronskaya/smjobbless](https://github.com/aronskaya/smjobbless)
 - [securing/SimpleXPCApp](https://github.com/securing/SimpleXPCApp)
+
+## Selecting the active version of Xcode
+
+This isn't a technical decision, but we spent enough time talking about this that it's probably worth sharing. When a user has more than one version of Xcode installed, a specific version of the developer tools can be selected with the `xcode-select` tool. The selected version of tools like xcodebuild or xcrun will be used unless the DEVELOPER_DIR environment variable has been set to a different path. You can read more about this in the `xcode-select` man pages. Notably, the man pages and [some notarization documentation](https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution) use the term "active" to indicate the Xcode version that's been selected. [This](https://developer.apple.com/library/archive/technotes/tn2339/_index.html#//apple_ref/doc/uid/DTS40014588-CH1-HOW_DO_I_SELECT_THE_DEFAULT_VERSION_OF_XCODE_TO_USE_FOR_MY_COMMAND_LINE_TOOLS_) older tech note uses the term "default". And of course, the `xcode-select` tool has the term "select" in its name. xcodes used the terms "select" and "selected" for this functionality, intending to match the xcode-select tool.
+
+Here are the descriptions of these terms from [Apple's Style Guide](https://books.apple.com/ca/book/apple-style-guide/id1161855204):
+
+> active: Use to refer to the app or window currently being used. Preferred to in front.
+> default: OK to use to describe the state of settings before the user changes them. See also preset
+> preset: Use to refer to a group of customized settings an app provides or the user saves for reuse.
+> select: Use select, not choose, to refer to the action users perform when they select among multiple objects
+
+Xcodes.app has this same functionality as xcodes, which still uses `xcode-select` under the hood, but because the main UI is a list of selectable rows, there _may_ be some ambiguity about the meaning of "selected". "Default" has a less clear connection to `xcode-select`'s name, but does accurately describe the behaviour that results. In Xcode 11 Launch Services also uses the selected Xcode version when opening a (GUI) developer tool bundled with Xcode, like Instruments. We could also try to follow Apple's lead by using the term "active" from the `xcode-select` man pages and notarization documentation. According to the style guide "active" already has a clear meaning in a GUI context.
+
+Ultimately, we've decided to align with Apple's usage of "active" and "make active" in this specific context, despite possible confusion with the definition in the style guide. 

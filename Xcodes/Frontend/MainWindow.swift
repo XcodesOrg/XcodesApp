@@ -14,7 +14,7 @@ struct MainWindow: View {
                 .frame(minWidth: 300)
                 .layoutPriority(1)
             
-            InspectorPane(selectedXcodeID: selectedXcodeID)
+            InfoPane(selectedXcodeID: selectedXcodeID)
                 .frame(minWidth: 300, maxWidth: .infinity)
                 .frame(width: isShowingInfoPane ? nil : 0)
                 .isHidden(!isShowingInfoPane)

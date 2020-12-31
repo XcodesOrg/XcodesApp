@@ -32,56 +32,7 @@ struct XcodeListView: View {
     
     var body: some View {
         List(visibleXcodes, selection: $selectedXcodeID) { xcode in
-            HStack {
-                appIconView(for: xcode)
-                
-                VStack(alignment: .leading) {    
-                    Text(xcode.description)
-                        .font(.body)
-                    
-                    Text(verbatim: xcode.path ?? "")
-                        .font(.caption)
-                        .foregroundColor(selectedXcodeID == xcode.id ? Color(NSColor.selectedMenuItemTextColor) : Color(NSColor.secondaryLabelColor))
-                }
-                
-                
-                Spacer()
-                
-                if xcode.selected {
-                    Tag(text: "SELECTED")
-                        .foregroundColor(.green)
-                }
-                
-                Button(xcode.installed ? "INSTALLED" : "INSTALL") {
-                    print("Installing...")
-                }
-                .buttonStyle(AppStoreButtonStyle(installed: xcode.installed,
-                                                 highlighted: selectedXcodeID == xcode.id))
-                .disabled(xcode.installed)
-            }
-            .contextMenu {
-                InstallButton(xcode: xcode)
-                
-                Divider()
-                
-                if xcode.installed {
-                    SelectButton(xcode: xcode)
-                    OpenButton(xcode: xcode)
-                    RevealButton(xcode: xcode)
-                    CopyPathButton(xcode: xcode)
-                }
-            }
-        }
-    }
-
-    @ViewBuilder
-    func appIconView(for xcode: Xcode) -> some View {
-        if let icon = xcode.icon {
-            Image(nsImage: icon)
-        } else {
-            Color.clear
-                .frame(width: 32, height: 32)
-                .foregroundColor(.secondary)
+            XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id)
         }
     }
 }

@@ -4,7 +4,7 @@ import Version
 import struct XCModel.SDKs
 import struct XCModel.Compilers
 
-struct InspectorPane: View {
+struct InfoPane: View {
     @EnvironmentObject var appState: AppState
     let selectedXcodeID: Xcode.ID?
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
@@ -31,15 +31,12 @@ struct InspectorPane: View {
                             }
                             
                             HStack {
-                                if xcode.selected {
-                                    Button("Selected", action: {})
-                                        .disabled(true)
-                                        .help("Selected")
-                                } else {
-                                    SelectButton(xcode: xcode)
-                                }
+                                SelectButton(xcode: xcode)
+                                    .disabled(xcode.selected)
+                                    .help("Selected")
                                 
                                 OpenButton(xcode: xcode)
+                                    .help("Open")
                             }
                         } else {
                             InstallButton(xcode: xcode)
@@ -170,10 +167,10 @@ struct InspectorPane: View {
     }
 }
 
-struct InspectorPane_Previews: PreviewProvider {
+struct InfoPane_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            InspectorPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
+            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
                         .init(
@@ -201,7 +198,7 @@ struct InspectorPane_Previews: PreviewProvider {
                 })
                 .previewDisplayName("Populated, Installed, Selected")
             
-            InspectorPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
+            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
                         .init(
@@ -227,7 +224,7 @@ struct InspectorPane_Previews: PreviewProvider {
                 })
                 .previewDisplayName("Populated, Installed, Unselected")
             
-            InspectorPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
+            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
                         .init(
@@ -253,7 +250,7 @@ struct InspectorPane_Previews: PreviewProvider {
                 })
                 .previewDisplayName("Populated, Uninstalled")
             
-            InspectorPane(selectedXcodeID: nil)
+            InfoPane(selectedXcodeID: nil)
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
                     ]
