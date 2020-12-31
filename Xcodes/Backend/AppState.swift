@@ -12,6 +12,7 @@ class AppState: ObservableObject {
     private let helperClient = HelperClient()
     private var cancellables = Set<AnyCancellable>()
     private var selectPublisher: AnyCancellable?
+    private var uninstallPublisher: AnyCancellable?
     
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
@@ -32,7 +33,6 @@ class AppState: ObservableObject {
     @Published var presentingSignInAlert = false
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
-    @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var helperInstallState: HelperInstallState = .notInstalled
     
     init() {
@@ -200,14 +200,36 @@ class AppState: ObservableObject {
             .store(in: &cancellables)
     }
     
-    // MARK: -
+    // MARK: - Install
     
     func install(id: Xcode.ID) {
         // TODO:
     }
     
+    // MARK: - Uninstall
     func uninstall(id: Xcode.ID) {
-        // TODO:
+        if helperInstallState == .notInstalled {
+            installHelper()
+        }
+        
+        guard
+            let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
+            uninstallPublisher == nil
+        else { return }
+        
+        uninstallPublisher = HelperClient().uninstallXcode(installedXcode.path)
+            .flatMap { [unowned self] _ in
+                self.updateSelectedXcodePath()
+            }
+            .sink(
+                receiveCompletion: { [unowned self] completion in
+                    if case let .failure(error) = completion {
+                        self.error = AlertContent(title: "Error uninstalling Xcode", message: error.legibleLocalizedDescription)
+                    }
+                    self.uninstallPublisher = nil
+                },
+                receiveValue: { _ in }
+        )
     }
     
     func reveal(id: Xcode.ID) {

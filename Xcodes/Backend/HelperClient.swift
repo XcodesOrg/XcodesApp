@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import Path
 
 final class HelperClient {
     private var connection: NSXPCConnection?
@@ -92,6 +93,29 @@ final class HelperClient {
                         promise(.success(()))
                     }
                 })                
+            }
+        }
+        // Take values, but fail when connectionErrorSubject fails
+        .zip(
+            connectionErrorSubject
+                .prepend("")
+                .map { _ in Void() }
+        )
+        .map { $0.0 }
+        .eraseToAnyPublisher()
+    }
+    
+    func uninstallXcode(_ path: Path) -> AnyPublisher<Void, Error> {
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+        
+        return Deferred {
+            Future { promise in
+                do {
+                    try Current.files.trashItem(at: path.url)
+                    promise(.success(()))
+                } catch {
+                    promise(.failure(error))
+                }
             }
         }
         // Take values, but fail when connectionErrorSubject fails
