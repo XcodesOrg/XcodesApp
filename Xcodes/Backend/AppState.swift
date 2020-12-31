@@ -4,7 +4,7 @@ import Combine
 import Path
 import LegibleError
 import KeychainAccess
-import SwiftUI
+import Path
 import Version
 
 class AppState: ObservableObject {
@@ -33,6 +33,7 @@ class AppState: ObservableObject {
     @Published var presentingSignInAlert = false
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
+    @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var helperInstallState: HelperInstallState = .notInstalled
     
     init() {
@@ -217,7 +218,7 @@ class AppState: ObservableObject {
             uninstallPublisher == nil
         else { return }
         
-        uninstallPublisher = HelperClient().uninstallXcode(installedXcode.path)
+        uninstallPublisher = uninstallXcode(path: installedXcode.path)
             .flatMap { [unowned self] _ in
                 self.updateSelectedXcodePath()
             }
@@ -315,6 +316,29 @@ class AppState: ObservableObject {
             }
     }
     
+    
+    private func uninstallXcode(path: Path) -> AnyPublisher<Void, Error> {
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+        
+        return Deferred {
+            Future { promise in
+                do {
+                    try Current.files.trashItem(at: path.url)
+                    promise(.success(()))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+        // Take values, but fail when connectionErrorSubject fails
+        .zip(
+            connectionErrorSubject
+                .prepend("")
+                .map { _ in Void() }
+        )
+        .map { $0.0 }
+        .eraseToAnyPublisher()
+    }
 
     // MARK: - Nested Types
 

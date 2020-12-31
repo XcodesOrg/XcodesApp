@@ -37,6 +37,9 @@ struct InfoPane: View {
                                 
                                 OpenButton(xcode: xcode)
                                     .help("Open")
+                                
+                                Spacer()
+                                UninstallButton(xcode: xcode)
                             }
                         } else {
                             InstallButton(xcode: xcode)
@@ -49,12 +52,7 @@ struct InfoPane: View {
                     compatibility(for: xcode)
                     sdks(for: xcode)
                     compilers(for: xcode)
-                    
-                    if xcode.path != nil {
-                        VStack(alignment: .leading) {
-                            UninstallButton(xcode: xcode)
-                        }
-                    }
+                  
                     Spacer()
                 }
             } else {

@@ -18,6 +18,9 @@ struct XcodeCommands: Commands {
                 OpenCommand()
                 RevealCommand()
                 CopyPathCommand()
+                
+                Divider()
+                
                 UninstallCommand()
             }
             .environmentObject(appState)
@@ -88,23 +91,14 @@ struct UninstallButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
     
-    @State private var showingAlert = false
-    var alert: Alert {
-        Alert(title: Text("Uninstall Xcode \(xcode!.description)?"),
-              message: Text("It will be moved to the Trash, but won't be emptied."),
-              primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: xcode!.id) }),
-              secondaryButton: .cancel(Text("Cancel")))
-    }
-    
     var body: some View {
         Button(action: {
-            self.showingAlert = true
+            appState.xcodeBeingConfirmedForUninstallation = xcode
         }) {
             Text("Uninstall")
         }
         .foregroundColor(.red)
         .help("Uninstall")
-        .alert(isPresented:$showingAlert, content: { self.alert })
     }
 }
 
