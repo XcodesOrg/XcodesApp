@@ -55,9 +55,7 @@
 		CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B42592EEEA00380FEE /* Process.swift */; };
 		CABFA9DF2592F07A00380FEE /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9DE2592F07A00380FEE /* Path */; };
 		CABFA9E42592F08E00380FEE /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9E32592F08E00380FEE /* Version */; };
-		CABFA9E92592F0B400380FEE /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9E82592F0B400380FEE /* PromiseKit */; };
 		CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9ED2592F0CC00380FEE /* SwiftSoup */; };
-		CABFA9F32592F0E400380FEE /* PMKFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F22592F0E400380FEE /* PMKFoundation */; };
 		CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F72592F0F900380FEE /* KeychainAccess */; };
 		CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9FC2592F13300380FEE /* LegibleError */; };
 		CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2A2592FBFC00380FEE /* SettingsView.swift */; };
@@ -218,11 +216,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
-				CABFA9E92592F0B400380FEE /* PromiseKit in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
-				CABFA9F32592F0E400380FEE /* PMKFoundation in Frameworks */,
 				CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */,
 				CABFA9DF2592F07A00380FEE /* Path in Frameworks */,
 				CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */,
@@ -479,9 +475,7 @@
 				CAA1CB2C255A5262003FD669 /* AppleAPI */,
 				CABFA9DE2592F07A00380FEE /* Path */,
 				CABFA9E32592F08E00380FEE /* Version */,
-				CABFA9E82592F0B400380FEE /* PromiseKit */,
 				CABFA9ED2592F0CC00380FEE /* SwiftSoup */,
-				CABFA9F22592F0E400380FEE /* PMKFoundation */,
 				CABFA9F72592F0F900380FEE /* KeychainAccess */,
 				CABFA9FC2592F13300380FEE /* LegibleError */,
 				CA9FF86C25951C6E00E47BAF /* XCModel */,
@@ -542,9 +536,7 @@
 			packageReferences = (
 				CABFA9DD2592F07A00380FEE /* XCRemoteSwiftPackageReference "Path" */,
 				CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */,
-				CABFA9E72592F0B400380FEE /* XCRemoteSwiftPackageReference "PromiseKit" */,
 				CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
-				CABFA9F12592F0E400380FEE /* XCRemoteSwiftPackageReference "Foundation" */,
 				CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */,
 				CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */,
@@ -589,6 +581,8 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/Xcodes.xcodeproj",
+				"$(SRCROOT)/**/*.LICENSE",
 			);
 			name = "Generate Acknowledgements";
 			outputFileListPaths = (
@@ -1145,28 +1139,12 @@
 				minimumVersion = 1.0.3;
 			};
 		};
-		CABFA9E72592F0B400380FEE /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mxcl/PromiseKit";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 6.8.3;
-			};
-		};
 		CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 2.0.0;
-			};
-		};
-		CABFA9F12592F0E400380FEE /* XCRemoteSwiftPackageReference "Foundation" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/PromiseKit/Foundation";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 3.3.1;
 			};
 		};
 		CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
@@ -1207,20 +1185,10 @@
 			package = CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */;
 			productName = Version;
 		};
-		CABFA9E82592F0B400380FEE /* PromiseKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CABFA9E72592F0B400380FEE /* XCRemoteSwiftPackageReference "PromiseKit" */;
-			productName = PromiseKit;
-		};
 		CABFA9ED2592F0CC00380FEE /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
-		};
-		CABFA9F22592F0E400380FEE /* PMKFoundation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CABFA9F12592F0E400380FEE /* XCRemoteSwiftPackageReference "Foundation" */;
-			productName = PMKFoundation;
 		};
 		CABFA9F72592F0F900380FEE /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;

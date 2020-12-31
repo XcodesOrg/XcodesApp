@@ -1,7 +1,5 @@
 import Combine
 import Foundation
-import PromiseKit
-import PMKFoundation
 import Path
 
 public typealias ProcessOutput = (status: Int32, out: String, err: String)
@@ -71,6 +69,10 @@ extension Process {
 
                     let output = String(data: stdout.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
                     let error = String(data: stderr.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
+                    
+                    guard process.terminationReason == .exit, process.terminationStatus == 0 else {                        
+                        return promise(.failure(ProcessExecutionError(process: process, standardOutput: output, standardError: error)))
+                    }
                 
                     promise(.success((process.terminationStatus, output, error)))
                 } catch {
@@ -82,4 +84,10 @@ extension Process {
         .receive(on: DispatchQueue.main)
         .eraseToAnyPublisher()
     }
+}
+
+struct ProcessExecutionError: Error {
+    let process: Process
+    let standardOutput: String
+    let standardError: String
 }

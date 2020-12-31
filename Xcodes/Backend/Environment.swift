@@ -1,7 +1,5 @@
 import Combine
 import Foundation
-import PromiseKit
-import PMKFoundation
 import Path
 import AppleAPI
 import KeychainAccess
