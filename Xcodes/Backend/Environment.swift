@@ -19,6 +19,7 @@ public struct Environment {
     public var keychain = Keychain()
     public var defaults = Defaults()
     public var date: () -> Date = Date.init
+    public var helper = Helper()
 }
 
 public var Current = Environment()
@@ -151,4 +152,12 @@ public struct Defaults {
     public func removeObject(forKey key: String) {
         removeObject(key)
     }
+}
+
+private let helperClient = HelperClient()
+public struct Helper {
+    var install: () -> Void = HelperInstaller.install
+    var checkIfLatestHelperIsInstalled: () -> AnyPublisher<Bool, Never> = helperClient.checkIfLatestHelperIsInstalled
+    var getVersion: () -> AnyPublisher<String, Error> = helperClient.getVersion
+    var switchXcodePath: (_ absolutePath: String) -> AnyPublisher<Void, Error> = helperClient.switchXcodePath
 }
