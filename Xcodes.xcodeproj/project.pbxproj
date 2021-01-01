@@ -41,7 +41,7 @@
 		CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */; };
 		CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */; };
 		CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A92592EEE900380FEE /* Environment.swift */; };
-		CABFA9BF2592EEEA00380FEE /* URLSession+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */; };
+		CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */; };
 		CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A82592EEE900380FEE /* Version+.swift */; };
 		CABFA9C22592EEEA00380FEE /* Promise+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B02592EEEA00380FEE /* Promise+.swift */; };
 		CABFA9C32592EEEA00380FEE /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B92592EEEA00380FEE /* Downloads.swift */; };
@@ -171,7 +171,7 @@
 		CABFA9AE2592EEE900380FEE /* Path+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Path+.swift"; sourceTree = "<group>"; };
 		CABFA9B02592EEEA00380FEE /* Promise+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+.swift"; sourceTree = "<group>"; };
 		CABFA9B22592EEEA00380FEE /* Entry+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+.swift"; sourceTree = "<group>"; };
-		CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Promise.swift"; sourceTree = "<group>"; };
+		CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+DownloadTaskPublisher.swift"; sourceTree = "<group>"; };
 		CABFA9B42592EEEA00380FEE /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		CABFA9B82592EEEA00380FEE /* FileManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+.swift"; sourceTree = "<group>"; };
 		CABFA9B92592EEEA00380FEE /* Downloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloads.swift; sourceTree = "<group>"; };
@@ -338,7 +338,7 @@
 				CABFA9B02592EEEA00380FEE /* Promise+.swift */,
 				CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */,
 				CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */,
-				CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */,
+				CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */,
 				CABFA9A82592EEE900380FEE /* Version+.swift */,
 				CA9FF876259528CC00E47BAF /* Version+XcodeReleases.swift */,
 				CABFA9A62592EEE900380FEE /* Version+Xcode.swift */,
@@ -623,7 +623,7 @@
 				CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */,
 				CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */,
 				CA44901F2463AD34003D8213 /* Tag.swift in Sources */,
-				CABFA9BF2592EEEA00380FEE /* URLSession+Promise.swift in Sources */,
+				CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */,
 				CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */,
 				CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */,
 				CABFA9C32592EEEA00380FEE /* Downloads.swift in Sources */,
