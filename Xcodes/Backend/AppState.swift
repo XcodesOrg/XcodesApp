@@ -209,10 +209,6 @@ class AppState: ObservableObject {
     
     // MARK: - Uninstall
     func uninstall(id: Xcode.ID) {
-        if helperInstallState == .notInstalled {
-            installHelper()
-        }
-        
         guard
             let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
             uninstallPublisher == nil
@@ -318,8 +314,6 @@ class AppState: ObservableObject {
     
     
     private func uninstallXcode(path: Path) -> AnyPublisher<Void, Error> {
-        let connectionErrorSubject = PassthroughSubject<String, Error>()
-        
         return Deferred {
             Future { promise in
                 do {
@@ -330,13 +324,6 @@ class AppState: ObservableObject {
                 }
             }
         }
-        // Take values, but fail when connectionErrorSubject fails
-        .zip(
-            connectionErrorSubject
-                .prepend("")
-                .map { _ in Void() }
-        )
-        .map { $0.0 }
         .eraseToAnyPublisher()
     }
 
