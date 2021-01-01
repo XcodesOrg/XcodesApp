@@ -67,6 +67,7 @@
 		CAC281C8259F97E100B8AB0B /* InstallationStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281C7259F97E100B8AB0B /* InstallationStepView.swift */; };
 		CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */; };
 		CAC281DA259F985100B8AB0B /* InstallationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281D9259F985100B8AB0B /* InstallationStep.swift */; };
+		CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */; };
 		CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */; };
 		CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A12449574E00113D76 /* XcodesApp.swift */; };
 		CAD2E7A42449574E00113D76 /* XcodeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A32449574E00113D76 /* XcodeListView.swift */; };
@@ -192,6 +193,7 @@
 		CAC281C7259F97E100B8AB0B /* InstallationStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepView.swift; sourceTree = "<group>"; };
 		CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservingProgressIndicator.swift; sourceTree = "<group>"; };
 		CAC281D9259F985100B8AB0B /* InstallationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStep.swift; sourceTree = "<group>"; };
+		CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+XcodesTests.swift"; sourceTree = "<group>"; };
 		CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Environment+Mock.swift"; sourceTree = "<group>"; };
 		CAD2E79E2449574E00113D76 /* Xcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD2E7A12449574E00113D76 /* XcodesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesApp.swift; sourceTree = "<group>"; };
@@ -454,6 +456,7 @@
 			isa = PBXGroup;
 			children = (
 				CA452BBD259FDDBF0072DFA4 /* Fixtures */,
+				CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */,
 				CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */,
 				CAD2E7B72449575100113D76 /* XcodesTests.swift */,
 				CAD2E7B92449575100113D76 /* Info.plist */,
@@ -705,6 +708,7 @@
 			files = (
 				CAD2E7B82449575100113D76 /* XcodesTests.swift in Sources */,
 				CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */,
+				CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
