@@ -4,7 +4,7 @@ import Combine
 import Path
 import LegibleError
 import KeychainAccess
-import SwiftUI
+import Path
 import Version
 
 class AppState: ObservableObject {
@@ -12,6 +12,7 @@ class AppState: ObservableObject {
     private let helperClient = HelperClient()
     private var cancellables = Set<AnyCancellable>()
     private var selectPublisher: AnyCancellable?
+    private var uninstallPublisher: AnyCancellable?
     
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
@@ -200,14 +201,32 @@ class AppState: ObservableObject {
             .store(in: &cancellables)
     }
     
-    // MARK: -
+    // MARK: - Install
     
     func install(id: Xcode.ID) {
         // TODO:
     }
     
+    // MARK: - Uninstall
     func uninstall(id: Xcode.ID) {
-        // TODO:
+        guard
+            let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
+            uninstallPublisher == nil
+        else { return }
+        
+        uninstallPublisher = uninstallXcode(path: installedXcode.path)
+            .flatMap { [unowned self] _ in
+                self.updateSelectedXcodePath()
+            }
+            .sink(
+                receiveCompletion: { [unowned self] completion in
+                    if case let .failure(error) = completion {
+                        self.error = AlertContent(title: "Error uninstalling Xcode", message: error.legibleLocalizedDescription)
+                    }
+                    self.uninstallPublisher = nil
+                },
+                receiveValue: { _ in }
+        )
     }
     
     func reveal(id: Xcode.ID) {
@@ -293,6 +312,20 @@ class AppState: ObservableObject {
             }
     }
     
+    
+    private func uninstallXcode(path: Path) -> AnyPublisher<Void, Error> {
+        return Deferred {
+            Future { promise in
+                do {
+                    try Current.files.trashItem(at: path.url)
+                    promise(.success(()))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
 
     // MARK: - Nested Types
 

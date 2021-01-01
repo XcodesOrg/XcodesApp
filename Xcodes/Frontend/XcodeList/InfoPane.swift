@@ -37,6 +37,9 @@ struct InfoPane: View {
                                 
                                 OpenButton(xcode: xcode)
                                     .help("Open")
+                                
+                                Spacer()
+                                UninstallButton(xcode: xcode)
                             }
                         } else {
                             InstallButton(xcode: xcode)
@@ -49,7 +52,7 @@ struct InfoPane: View {
                     compatibility(for: xcode)
                     sdks(for: xcode)
                     compilers(for: xcode)
-                    
+                  
                     Spacer()
                 }
             } else {
@@ -249,6 +252,21 @@ struct InfoPane_Previews: PreviewProvider {
                     ]
                 })
                 .previewDisplayName("Populated, Uninstalled")
+            
+            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
+                .environmentObject(configure(AppState()) {
+                    $0.allXcodes = [
+                        .init(
+                            version: Version(major: 12, minor: 3, patch: 0),
+                            installState: .installed,
+                            selected: false,
+                            path: "/Applications/Xcode-12.3.0.app",
+                            icon: nil,
+                            sdks: nil,
+                            compilers: nil)
+                    ]
+                })
+                .previewDisplayName("Basic, installed")
             
             InfoPane(selectedXcodeID: nil)
                 .environmentObject(configure(AppState()) {

@@ -7,13 +7,18 @@ struct MainWindow: View {
     @AppStorage("lastUpdated") private var lastUpdated: Double?
     @SceneStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @SceneStorage("xcodeListCategory") private var category: XcodeListCategory = .all
-
+  
     var body: some View {
         HSplitView {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category)
                 .frame(minWidth: 300)
                 .layoutPriority(1)
-            
+                .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
+                    Alert(title: Text("Uninstall Xcode \(xcode.description)?"),
+                          message: Text("It will be moved to the Trash, but won't be emptied."),
+                          primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: xcode.id) }),
+                          secondaryButton: .cancel(Text("Cancel")))
+                }
             InfoPane(selectedXcodeID: selectedXcodeID)
                 .frame(minWidth: 300, maxWidth: .infinity)
                 .frame(width: isShowingInfoPane ? nil : 0)
@@ -31,15 +36,6 @@ struct MainWindow: View {
                   message: Text(verbatim: error.message), 
                   dismissButton: .default(Text("OK")))
         }
-        /*
-         Removing this for now, because it's overriding the error alert that's being worked on above.
-         .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
-             Alert(title: Text("Uninstall Xcode \(xcode.description)?"), 
-                   message: Text("It will be moved to the Trash, but won't be emptied."), 
-                   primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: xcode.id) }), 
-                   secondaryButton: .cancel(Text("Cancel")))
-         }
-         **/
         .sheet(isPresented: $appState.secondFactorData.isNotNil) {
             secondFactorView(appState.secondFactorData!)
                 .environmentObject(appState)

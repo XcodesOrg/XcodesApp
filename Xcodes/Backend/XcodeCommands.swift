@@ -9,6 +9,7 @@ struct XcodeCommands: Commands {
     var body: some Commands {
         CommandMenu("Xcode") {
             Group {
+                
                 InstallCommand()
                 
                 Divider()
@@ -17,6 +18,10 @@ struct XcodeCommands: Commands {
                 OpenCommand()
                 RevealCommand()
                 CopyPathCommand()
+                
+                Divider()
+                
+                UninstallCommand()
             }
             .environmentObject(appState)
         }
@@ -31,24 +36,15 @@ struct InstallButton: View {
     let xcode: Xcode?
     
     var body: some View {
-        Button(action: uninstallOrInstall) {
-            if let xcode = xcode {
-                Text(xcode.installed == true ? "Uninstall" : "Install")
-                    .help(xcode.installed == true ? "Uninstall" : "Install")
-            } else {
-                Text("Install")
-                    .help("Install")
-            }
+        Button(action: install) {
+            Text("Install")
+                .help("Install")
         }
     }
     
-    private func uninstallOrInstall() {
+    private func install() {
         guard let xcode = xcode else { return }
-        if xcode.installed {
-            appState.xcodeBeingConfirmedForUninstallation = xcode 
-        } else {
-            appState.install(id: xcode.id)
-        }
+        appState.install(id: xcode.id)
     }
 }
 
@@ -88,6 +84,21 @@ struct OpenButton: View {
     private func open() {
         guard let xcode = xcode else { return }
         appState.open(id: xcode.id)
+    }
+}
+
+struct UninstallButton: View {
+    @EnvironmentObject var appState: AppState
+    let xcode: Xcode?
+    
+    var body: some View {
+        Button(action: {
+            appState.xcodeBeingConfirmedForUninstallation = xcode
+        }) {
+            Text("Uninstall")
+        }
+        .foregroundColor(.red)
+        .help("Uninstall")
     }
 }
 
@@ -133,8 +144,8 @@ struct InstallCommand: View {
 
     var body: some View {
         InstallButton(xcode: selectedXcode.unwrapped)
-            .keyboardShortcut(selectedXcode.unwrapped?.installed == true ? "u" : "i", modifiers: [.command, .option])
-            .disabled(selectedXcode.unwrapped == nil)
+            .keyboardShortcut("i", modifiers: [.command, .option])
+            .disabled(selectedXcode.unwrapped?.installed == true)
     }
 }
 
@@ -178,6 +189,17 @@ struct CopyPathCommand: View {
     var body: some View {
         CopyPathButton(xcode: selectedXcode.unwrapped)
             .keyboardShortcut("c", modifiers: [.command, .option])
+            .disabled(selectedXcode.unwrapped?.installed != true)
+    }
+}
+
+struct UninstallCommand: View {
+    @EnvironmentObject var appState: AppState
+    @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
+    
+    var body: some View {
+        UninstallButton(xcode: selectedXcode.unwrapped)
+            .keyboardShortcut("u", modifiers: [.command, .option])
             .disabled(selectedXcode.unwrapped?.installed != true)
     }
 }

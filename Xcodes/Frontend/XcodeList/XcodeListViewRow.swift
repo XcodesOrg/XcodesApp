@@ -26,15 +26,15 @@ struct XcodeListViewRow: View {
             installControl(for: xcode)
         }
         .contextMenu {
-            InstallButton(xcode: xcode)
-            
-            Divider()
-            
             if xcode.installed {
                 SelectButton(xcode: xcode)
                 OpenButton(xcode: xcode)
                 RevealButton(xcode: xcode)
                 CopyPathButton(xcode: xcode)
+                Divider()
+                UninstallButton(xcode: xcode)
+            } else {
+                InstallButton(xcode: xcode)
             }
         }
     }
