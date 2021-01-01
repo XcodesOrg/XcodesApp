@@ -13,6 +13,8 @@
 		CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */; };
 		CA44901F2463AD34003D8213 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA44901E2463AD34003D8213 /* Tag.swift */; };
 		CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */; };
+		CA452BC0259FDDFE0072DFA4 /* Stub-0.0.0.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA452BBE259FDDFE0072DFA4 /* Stub-0.0.0.plist */; };
+		CA452BC1259FDDFE0072DFA4 /* Stub-version.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA452BBF259FDDFE0072DFA4 /* Stub-version.plist */; };
 		CA5D781E257365D6008EDE9D /* PinCodeTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */; };
 		CA61A6E0259835580008926E /* Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA61A6DF259835580008926E /* Xcode.swift */; };
 		CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA735108257BF96D00EA9CF8 /* AttributedText.swift */; };
@@ -65,6 +67,7 @@
 		CAC281C8259F97E100B8AB0B /* InstallationStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281C7259F97E100B8AB0B /* InstallationStepView.swift */; };
 		CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */; };
 		CAC281DA259F985100B8AB0B /* InstallationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281D9259F985100B8AB0B /* InstallationStep.swift */; };
+		CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */; };
 		CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A12449574E00113D76 /* XcodesApp.swift */; };
 		CAD2E7A42449574E00113D76 /* XcodeListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A32449574E00113D76 /* XcodeListView.swift */; };
 		CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CAD2E7A52449575000113D76 /* Assets.xcassets */; };
@@ -128,6 +131,8 @@
 		CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
 		CA44901E2463AD34003D8213 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
+		CA452BBE259FDDFE0072DFA4 /* Stub-0.0.0.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Stub-0.0.0.plist"; sourceTree = "<group>"; };
+		CA452BBF259FDDFE0072DFA4 /* Stub-version.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Stub-version.plist"; sourceTree = "<group>"; };
 		CA538A0C255A4F1A00E64DD7 /* AppleAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppleAPI; path = Xcodes/AppleAPI; sourceTree = "<group>"; };
 		CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeTextView.swift; sourceTree = "<group>"; };
 		CA61A6DF259835580008926E /* Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode.swift; sourceTree = "<group>"; };
@@ -187,6 +192,7 @@
 		CAC281C7259F97E100B8AB0B /* InstallationStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepView.swift; sourceTree = "<group>"; };
 		CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservingProgressIndicator.swift; sourceTree = "<group>"; };
 		CAC281D9259F985100B8AB0B /* InstallationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStep.swift; sourceTree = "<group>"; };
+		CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Environment+Mock.swift"; sourceTree = "<group>"; };
 		CAD2E79E2449574E00113D76 /* Xcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD2E7A12449574E00113D76 /* XcodesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesApp.swift; sourceTree = "<group>"; };
 		CAD2E7A32449574E00113D76 /* XcodeListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListView.swift; sourceTree = "<group>"; };
@@ -249,6 +255,15 @@
 				CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		CA452BBD259FDDBF0072DFA4 /* Fixtures */ = {
+			isa = PBXGroup;
+			children = (
+				CA452BBE259FDDFE0072DFA4 /* Stub-0.0.0.plist */,
+				CA452BBF259FDDFE0072DFA4 /* Stub-version.plist */,
+			);
+			path = Fixtures;
 			sourceTree = "<group>";
 		};
 		CA538A12255A4F7C00E64DD7 /* Frameworks */ = {
@@ -438,6 +453,8 @@
 		CAD2E7B62449575100113D76 /* XcodesTests */ = {
 			isa = PBXGroup;
 			children = (
+				CA452BBD259FDDBF0072DFA4 /* Fixtures */,
+				CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */,
 				CAD2E7B72449575100113D76 /* XcodesTests.swift */,
 				CAD2E7B92449575100113D76 /* Info.plist */,
 			);
@@ -576,6 +593,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CA452BC0259FDDFE0072DFA4 /* Stub-0.0.0.plist in Resources */,
+				CA452BC1259FDDFE0072DFA4 /* Stub-version.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -685,6 +704,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAD2E7B82449575100113D76 /* XcodesTests.swift in Sources */,
+				CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
