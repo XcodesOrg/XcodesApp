@@ -1,6 +1,5 @@
 import SwiftUI
 import Version
-import PromiseKit
 
 struct XcodeListView: View {
     @EnvironmentObject var appState: AppState

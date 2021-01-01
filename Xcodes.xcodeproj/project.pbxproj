@@ -41,9 +41,8 @@
 		CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */; };
 		CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */; };
 		CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A92592EEE900380FEE /* Environment.swift */; };
-		CABFA9BF2592EEEA00380FEE /* URLSession+Promise.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */; };
+		CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */; };
 		CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A82592EEE900380FEE /* Version+.swift */; };
-		CABFA9C22592EEEA00380FEE /* Promise+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B02592EEEA00380FEE /* Promise+.swift */; };
 		CABFA9C32592EEEA00380FEE /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B92592EEEA00380FEE /* Downloads.swift */; };
 		CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B82592EEEA00380FEE /* FileManager+.swift */; };
 		CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B22592EEEA00380FEE /* Entry+.swift */; };
@@ -55,9 +54,7 @@
 		CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B42592EEEA00380FEE /* Process.swift */; };
 		CABFA9DF2592F07A00380FEE /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9DE2592F07A00380FEE /* Path */; };
 		CABFA9E42592F08E00380FEE /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9E32592F08E00380FEE /* Version */; };
-		CABFA9E92592F0B400380FEE /* PromiseKit in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9E82592F0B400380FEE /* PromiseKit */; };
 		CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9ED2592F0CC00380FEE /* SwiftSoup */; };
-		CABFA9F32592F0E400380FEE /* PMKFoundation in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F22592F0E400380FEE /* PMKFoundation */; };
 		CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F72592F0F900380FEE /* KeychainAccess */; };
 		CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9FC2592F13300380FEE /* LegibleError */; };
 		CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2A2592FBFC00380FEE /* SettingsView.swift */; };
@@ -171,9 +168,8 @@
 		CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Apple.swift"; sourceTree = "<group>"; };
 		CABFA9AC2592EEE900380FEE /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
 		CABFA9AE2592EEE900380FEE /* Path+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Path+.swift"; sourceTree = "<group>"; };
-		CABFA9B02592EEEA00380FEE /* Promise+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Promise+.swift"; sourceTree = "<group>"; };
 		CABFA9B22592EEEA00380FEE /* Entry+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+.swift"; sourceTree = "<group>"; };
-		CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+Promise.swift"; sourceTree = "<group>"; };
+		CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+DownloadTaskPublisher.swift"; sourceTree = "<group>"; };
 		CABFA9B42592EEEA00380FEE /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		CABFA9B82592EEEA00380FEE /* FileManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+.swift"; sourceTree = "<group>"; };
 		CABFA9B92592EEEA00380FEE /* Downloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloads.swift; sourceTree = "<group>"; };
@@ -218,11 +214,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
-				CABFA9E92592F0B400380FEE /* PromiseKit in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
-				CABFA9F32592F0E400380FEE /* PMKFoundation in Frameworks */,
 				CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */,
 				CABFA9DF2592F07A00380FEE /* Path in Frameworks */,
 				CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */,
@@ -339,10 +333,9 @@
 				CAE4248B259A68B800B8B246 /* Optional+IsNotNil.swift */,
 				CABFA9AE2592EEE900380FEE /* Path+.swift */,
 				CABFA9B42592EEEA00380FEE /* Process.swift */,
-				CABFA9B02592EEEA00380FEE /* Promise+.swift */,
 				CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */,
 				CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */,
-				CABFA9B32592EEEA00380FEE /* URLSession+Promise.swift */,
+				CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */,
 				CABFA9A82592EEE900380FEE /* Version+.swift */,
 				CA9FF876259528CC00E47BAF /* Version+XcodeReleases.swift */,
 				CABFA9A62592EEE900380FEE /* Version+Xcode.swift */,
@@ -479,9 +472,7 @@
 				CAA1CB2C255A5262003FD669 /* AppleAPI */,
 				CABFA9DE2592F07A00380FEE /* Path */,
 				CABFA9E32592F08E00380FEE /* Version */,
-				CABFA9E82592F0B400380FEE /* PromiseKit */,
 				CABFA9ED2592F0CC00380FEE /* SwiftSoup */,
-				CABFA9F22592F0E400380FEE /* PMKFoundation */,
 				CABFA9F72592F0F900380FEE /* KeychainAccess */,
 				CABFA9FC2592F13300380FEE /* LegibleError */,
 				CA9FF86C25951C6E00E47BAF /* XCModel */,
@@ -542,9 +533,7 @@
 			packageReferences = (
 				CABFA9DD2592F07A00380FEE /* XCRemoteSwiftPackageReference "Path" */,
 				CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */,
-				CABFA9E72592F0B400380FEE /* XCRemoteSwiftPackageReference "PromiseKit" */,
 				CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
-				CABFA9F12592F0E400380FEE /* XCRemoteSwiftPackageReference "Foundation" */,
 				CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */,
 				CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */,
@@ -589,6 +578,8 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(SRCROOT)/Xcodes.xcodeproj",
+				"$(SRCROOT)/**/*.LICENSE",
 			);
 			name = "Generate Acknowledgements";
 			outputFileListPaths = (
@@ -629,7 +620,7 @@
 				CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */,
 				CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */,
 				CA44901F2463AD34003D8213 /* Tag.swift in Sources */,
-				CABFA9BF2592EEEA00380FEE /* URLSession+Promise.swift in Sources */,
+				CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */,
 				CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */,
 				CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */,
 				CABFA9C32592EEEA00380FEE /* Downloads.swift in Sources */,
@@ -653,7 +644,6 @@
 				CA9FF8F525959CE000E47BAF /* HelperInstaller.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
 				CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */,
-				CABFA9C22592EEEA00380FEE /* Promise+.swift in Sources */,
 				CAFBDC68259A308B003DCC5A /* InfoPane.swift in Sources */,
 				CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */,
 				CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */,
@@ -1145,28 +1135,12 @@
 				minimumVersion = 1.0.3;
 			};
 		};
-		CABFA9E72592F0B400380FEE /* XCRemoteSwiftPackageReference "PromiseKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mxcl/PromiseKit";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 6.8.3;
-			};
-		};
 		CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 2.0.0;
-			};
-		};
-		CABFA9F12592F0E400380FEE /* XCRemoteSwiftPackageReference "Foundation" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/PromiseKit/Foundation";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 3.3.1;
 			};
 		};
 		CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
@@ -1207,20 +1181,10 @@
 			package = CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */;
 			productName = Version;
 		};
-		CABFA9E82592F0B400380FEE /* PromiseKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CABFA9E72592F0B400380FEE /* XCRemoteSwiftPackageReference "PromiseKit" */;
-			productName = PromiseKit;
-		};
 		CABFA9ED2592F0CC00380FEE /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
-		};
-		CABFA9F22592F0E400380FEE /* PMKFoundation */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CABFA9F12592F0E400380FEE /* XCRemoteSwiftPackageReference "Foundation" */;
-			productName = PMKFoundation;
 		};
 		CABFA9F72592F0F900380FEE /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
