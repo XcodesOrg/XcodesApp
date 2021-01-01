@@ -47,6 +47,6 @@ struct Xcode: Identifiable, CustomStringConvertible {
 
 enum XcodeInstallState: Equatable {
     case notInstalled
-    case installing(Progress)
+    case installing(InstallationStep)
     case installed
 }

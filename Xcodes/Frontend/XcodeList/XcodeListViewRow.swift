@@ -72,14 +72,17 @@ struct XcodeListViewRow: View {
     
     @ViewBuilder
     private func installControl(for xcode: Xcode) -> some View {
-        if xcode.installed {
+        switch xcode.installState {
+        case .installed:
             Button("OPEN") { appState.open(id: xcode.id) }
                 .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))
                 .help("Open this version")
-        } else {
-            Button("INSTALL") { print("Installing...") }
+        case .notInstalled:
+            Button("INSTALL") { appState.install(id: xcode.id) }
                 .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selected))
                 .help("Install this version")
+        case let .installing(installationStep):
+            InstallationStepView(installationStep: installationStep, highlighted: selected, cancel: {})
         }
     }
 }
@@ -98,7 +101,7 @@ struct XcodeListViewRow_Previews: PreviewProvider {
             )
             
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.1.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
+                xcode: Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, path: nil, icon: nil),
                 selected: false
             )
             
