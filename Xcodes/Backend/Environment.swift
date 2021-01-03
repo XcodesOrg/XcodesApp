@@ -19,6 +19,7 @@ public struct Environment {
     public var keychain = Keychain()
     public var defaults = Defaults()
     public var date: () -> Date = Date.init
+    public var helper = Helper()
 }
 
 public var Current = Environment()
@@ -91,8 +92,12 @@ private func _installedXcodes(destination: Path) -> [InstalledXcode] {
 public struct Network {
     private static let client = AppleAPI.Client()
     
-    public var dataTask: (URLRequest) -> URLSession.DataTaskPublisher = { AppleAPI.Current.network.session.dataTaskPublisher(for: $0) }
-    public func dataTask(with request: URLRequest) -> URLSession.DataTaskPublisher {
+    public var dataTask: (URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> = { 
+        AppleAPI.Current.network.session.dataTaskPublisher(for: $0)
+            .mapError { $0 as Error }
+            .eraseToAnyPublisher() 
+    }
+    public func dataTask(with request: URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
         dataTask(request)
     }
 
@@ -151,4 +156,12 @@ public struct Defaults {
     public func removeObject(forKey key: String) {
         removeObject(key)
     }
+}
+
+private let helperClient = HelperClient()
+public struct Helper {
+    var install: () -> Void = HelperInstaller.install
+    var checkIfLatestHelperIsInstalled: () -> AnyPublisher<Bool, Never> = helperClient.checkIfLatestHelperIsInstalled
+    var getVersion: () -> AnyPublisher<String, Error> = helperClient.getVersion
+    var switchXcodePath: (_ absolutePath: String) -> AnyPublisher<Void, Error> = helperClient.switchXcodePath
 }

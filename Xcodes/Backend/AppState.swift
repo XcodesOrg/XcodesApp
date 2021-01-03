@@ -9,7 +9,6 @@ import Version
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
-    private let helperClient = HelperClient()
     private var cancellables = Set<AnyCancellable>()
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
@@ -184,14 +183,14 @@ class AppState: ObservableObject {
     // MARK: - Helper
     
     func installHelper() {
-        HelperInstaller.install()
+        Current.helper.install()
         checkIfHelperIsInstalled()
     }
     
     private func checkIfHelperIsInstalled() {
         helperInstallState = .unknown
 
-        helperClient.checkIfLatestHelperIsInstalled()
+        Current.helper.checkIfLatestHelperIsInstalled()
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveValue: { installed in
