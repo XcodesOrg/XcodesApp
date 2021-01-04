@@ -27,13 +27,16 @@ class AppState: ObservableObject {
     }
     @Published var updatePublisher: AnyCancellable?
     var isUpdating: Bool { updatePublisher != nil }
-    @Published var error: AlertContent?
-    @Published var authError: AlertContent?
     @Published var presentingSignInAlert = false
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var helperInstallState: HelperInstallState = .notInstalled
+
+    // MARK: - Errors
+
+    @Published var error: Error?
+    @Published var authError: Error?
     
     init() {
         try? loadCachedAvailableXcodes()
@@ -158,7 +161,7 @@ class AppState: ObservableObject {
             }
 
             // This error message is not user friendly... need to extract some meaningful data in the different cases
-            self.authError = AlertContent(title: "Error signing in", message: error.legibleLocalizedDescription)
+            self.authError = error
         case .finished:
             switch self.authenticationState {
             case .authenticated, .unauthenticated:
@@ -220,7 +223,7 @@ class AppState: ObservableObject {
             .sink(
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
-                        self.error = AlertContent(title: "Error uninstalling Xcode", message: error.legibleLocalizedDescription)
+                        self.error = error
                     }
                     self.uninstallPublisher = nil
                 },
@@ -251,7 +254,7 @@ class AppState: ObservableObject {
             .sink(
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
-                        self.error = AlertContent(title: "Error selecting Xcode", message: error.legibleLocalizedDescription)
+                        self.error = error
                     }
                     self.selectPublisher = nil
                 },

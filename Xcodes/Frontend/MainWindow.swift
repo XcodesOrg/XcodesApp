@@ -1,3 +1,4 @@
+import ErrorHandling
 import SwiftUI
 
 struct MainWindow: View {
@@ -31,11 +32,7 @@ struct MainWindow: View {
         )
         .navigationSubtitle(subtitleText)
         .frame(minWidth: 600, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
-        .alert(item: $appState.error) { error in
-            Alert(title: Text(error.title), 
-                  message: Text(verbatim: error.message), 
-                  dismissButton: .default(Text("OK")))
-        }
+        .emittingError($appState.error, recoveryHandler: { _ in })
         .sheet(isPresented: $appState.secondFactorData.isNotNil) {
             secondFactorView(appState.secondFactorData!)
                 .environmentObject(appState)
