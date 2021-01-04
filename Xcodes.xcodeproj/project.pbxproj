@@ -48,6 +48,7 @@
 		CAA8589325A2B77E00ACF8C0 /* aria2c in Copy aria2c */ = {isa = PBXBuildFile; fileRef = CAA8588025A2B63A00ACF8C0 /* aria2c */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */; };
 		CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */; };
+		CAA858C425A2BE4E00ACF8C0 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */; };
 		CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */; };
 		CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A92592EEE900380FEE /* Environment.swift */; };
 		CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */; };
@@ -194,6 +195,7 @@
 		CAA8588A25A2B69300ACF8C0 /* aria2c.LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aria2c.LICENSE; sourceTree = "<group>"; };
 		CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aria2CError.swift; sourceTree = "<group>"; };
 		CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "aria2-release-1.35.0.tar.gz"; sourceTree = "<group>"; };
+		CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		CABFA9A02592EAF500380FEE /* R&PLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "R&PLogo.png"; sourceTree = "<group>"; };
 		CABFA9A12592EAFB00380FEE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		CABFA9A32592ED5700380FEE /* Apple.paw */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple.paw; path = ../xcodes/Apple.paw; sourceTree = "<group>"; };
@@ -394,6 +396,7 @@
 				CA9FF87A2595293E00E47BAF /* DataSource.swift */,
 				CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */,
 				CABFA9B92592EEEA00380FEE /* Downloads.swift */,
+				CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */,
 				CABFA9B22592EEEA00380FEE /* Entry+.swift */,
 				CABFA9A92592EEE900380FEE /* Environment.swift */,
 				CABFA9B82592EEEA00380FEE /* FileManager+.swift */,
@@ -753,6 +756,7 @@
 				CAE424B4259A764700B8B246 /* AppState+Install.swift in Sources */,
 				CAE42487259A68A300B8B246 /* XcodeListCategory.swift in Sources */,
 				CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */,
+				CAA858C425A2BE4E00ACF8C0 /* Downloader.swift in Sources */,
 				CA9FF87B2595293E00E47BAF /* DataSource.swift in Sources */,
 				CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */,
 				CABFAA432593104F00380FEE /* AboutView.swift in Sources */,

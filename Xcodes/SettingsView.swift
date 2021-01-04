@@ -4,6 +4,7 @@ import SwiftUI
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
     @AppStorage("dataSource") var dataSource: DataSource = .xcodeReleases
+    @AppStorage("downloader") var downloader: Downloader = .aria2
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -34,7 +35,21 @@ struct SettingsView: View {
                     .labelsHidden()
                     
                     AttributedText(dataSourceFootnote)
-                        .font(.footnote)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            
+            GroupBox(label: Text("Downloader")) {
+                VStack(alignment: .leading) {
+                    Picker("Downloader", selection: $downloader) {
+                        ForEach(Downloader.allCases) { downloader in
+                            Text(downloader.description)
+                                .tag(downloader)
+                        }
+                    }
+                    .labelsHidden()
+                    
+                    AttributedText(downloaderFootnote)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -64,8 +79,8 @@ struct SettingsView: View {
         }
         .padding()
         .navigationTitle("Settings")
-        .frame(width: 300)
-        .frame(minHeight: 300)
+        .frame(width: 400)
+        .frame(minHeight: 500)
     }
     
     private var dataSourceFootnote: NSAttributedString {
@@ -82,6 +97,23 @@ struct SettingsView: View {
             ]
         )
         attributedString.addAttribute(.link, value: URL(string: "https://xcodereleases.com")!, range: NSRange(string.range(of: "Xcode Releases")!, in: string))
+        return attributedString
+    }
+    
+    private var downloaderFootnote: NSAttributedString {
+        let string = """
+        aria2 uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.
+
+        URLSession is the default Apple API for making URL requests.
+        """
+        let attributedString = NSMutableAttributedString(
+            string: string, 
+            attributes: [
+                .font: NSFont.preferredFont(forTextStyle: .footnote, options: [:]),
+                .foregroundColor: NSColor.labelColor
+            ]
+        )
+        attributedString.addAttribute(.link, value: URL(string: "https://github.com/aria2/aria2")!, range: NSRange(string.range(of: "aria2")!, in: string))
         return attributedString
     }
 }

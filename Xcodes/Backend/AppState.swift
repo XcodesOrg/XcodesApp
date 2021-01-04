@@ -256,7 +256,7 @@ class AppState: ObservableObject {
                     .mapError { $0 as Error }
             }
             .flatMap { [unowned self] in
-                self.install(.version(availableXcode), downloader: .aria2(Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!))
+                self.install(.version(availableXcode), downloader: .aria2)
             }
             .sink(
                 receiveCompletion: { [unowned self] completion in 

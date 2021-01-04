@@ -90,7 +90,8 @@ extension AppState {
         else {
             let destination = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).\(availableXcode.filename.suffix(fromLast: "."))"
             switch downloader {
-            case .aria2(let aria2Path):
+            case .aria2:
+                let aria2Path = Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!
                 return downloadXcodeWithAria2(
                     availableXcode,
                     to: destination,
@@ -428,11 +429,6 @@ public enum InstallationError: LocalizedError, Equatable {
 
 public enum InstallationType {
     case version(AvailableXcode)
-}
-
-public enum Downloader {
-    case urlSession
-    case aria2(Path)
 }
 
 let XcodeTeamIdentifier = "59GAB85EFG"
