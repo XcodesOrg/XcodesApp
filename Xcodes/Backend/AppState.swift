@@ -47,7 +47,7 @@ class AppState: ObservableObject {
     // MARK: - Init
     
     init() {
-        guard NSClassFromString("XCTestCase") == nil else { return }
+        guard !isTesting else { return }
         try? loadCachedAvailableXcodes()
         checkIfHelperIsInstalled()
     }
