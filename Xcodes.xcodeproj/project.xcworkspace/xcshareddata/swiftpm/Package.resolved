@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "ErrorHandling",
+        "repositoryURL": "https://github.com/RobotsAndPencils/ErrorHandling",
+        "state": {
+          "branch": null,
+          "revision": "7be837fcb515447c0776805c3288fb7d5181ec68",
+          "version": "0.1.0"
+        }
+      },
+      {
         "package": "KeychainAccess",
         "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
         "state": {
