@@ -45,6 +45,9 @@
 		CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */; };
 		CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */ = {isa = PBXBuildFile; productRef = CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */; };
 		CAA8587C25A2B37900ACF8C0 /* IsTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */; };
+		CAA8589325A2B77E00ACF8C0 /* aria2c in Copy aria2c */ = {isa = PBXBuildFile; fileRef = CAA8588025A2B63A00ACF8C0 /* aria2c */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */; };
+		CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */; };
 		CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */; };
 		CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A92592EEE900380FEE /* Environment.swift */; };
 		CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */; };
@@ -128,6 +131,17 @@
 			name = "Copy Helper";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		CAA8589225A2B76F00ACF8C0 /* Copy aria2c */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				CAA8589325A2B77E00ACF8C0 /* aria2c in Copy aria2c */,
+			);
+			name = "Copy aria2c";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
@@ -176,6 +190,10 @@
 		CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSMSView.swift; sourceTree = "<group>"; };
 		CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPhoneListView.swift; sourceTree = "<group>"; };
 		CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsTesting.swift; sourceTree = "<group>"; };
+		CAA8588025A2B63A00ACF8C0 /* aria2c */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = aria2c; sourceTree = "<group>"; };
+		CAA8588A25A2B69300ACF8C0 /* aria2c.LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aria2c.LICENSE; sourceTree = "<group>"; };
+		CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aria2CError.swift; sourceTree = "<group>"; };
+		CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "aria2-release-1.35.0.tar.gz"; sourceTree = "<group>"; };
 		CABFA9A02592EAF500380FEE /* R&PLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "R&PLogo.png"; sourceTree = "<group>"; };
 		CABFA9A12592EAFB00380FEE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		CABFA9A32592ED5700380FEE /* Apple.paw */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple.paw; path = ../xcodes/Apple.paw; sourceTree = "<group>"; };
@@ -369,6 +387,7 @@
 				CA378F982466567600A58CE0 /* AppState.swift */,
 				CAE424B3259A764700B8B246 /* AppState+Install.swift */,
 				CABFA9A72592EEE900380FEE /* AppState+Update.swift */,
+				CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */,
 				CA9FF88025955C7000E47BAF /* AvailableXcode.swift */,
 				CABFAA2B2592FBFC00380FEE /* Configure.swift */,
 				CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */,
@@ -419,6 +438,9 @@
 		CABFAA1D2592F7F200380FEE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */,
+				CAA8588025A2B63A00ACF8C0 /* aria2c */,
+				CAA8588A25A2B69300ACF8C0 /* aria2c.LICENSE */,
 				CAD2E7A52449575000113D76 /* Assets.xcassets */,
 				CAD2E7AD2449575000113D76 /* Info.plist */,
 				CA9FF83E2594FBC000E47BAF /* Licenses.rtf */,
@@ -522,6 +544,7 @@
 				CA9FF8292594F33200E47BAF /* Generate Acknowledgements */,
 				CAD2E79C2449574E00113D76 /* Resources */,
 				CA9FF8BB259596B500E47BAF /* Copy Helper */,
+				CAA8589225A2B76F00ACF8C0 /* Copy aria2c */,
 			);
 			buildRules = (
 			);
@@ -623,6 +646,7 @@
 			files = (
 				CAD2E7A92449575000113D76 /* Preview Assets.xcassets in Resources */,
 				CA9FF83F2594FBC000E47BAF /* Licenses.rtf in Resources */,
+				CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */,
 				CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -683,6 +707,7 @@
 				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
 				CAFBDC4E2599B33D003DCC5A /* MainToolbar.swift in Sources */,
 				CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */,
+				CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */,
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
 				CAE4248C259A68B800B8B246 /* Optional+IsNotNil.swift in Sources */,

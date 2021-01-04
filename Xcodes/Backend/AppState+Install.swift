@@ -76,12 +76,12 @@ extension AppState {
         // Check to see if the archive is in the expected path in case it was downloaded but failed to install
         let expectedArchivePath = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).\(availableXcode.filename.suffix(fromLast: "."))"
         // aria2 downloads directly to the destination (instead of into /tmp first) so we need to make sure that the download isn't incomplete
-//        let aria2DownloadMetadataPath = expectedArchivePath.parent/(expectedArchivePath.basename() + ".aria2")
-//        var aria2DownloadIsIncomplete = false
-//        if case .aria2 = downloader, aria2DownloadMetadataPath.exists {
-//            aria2DownloadIsIncomplete = true
-//        }
-        if Current.files.fileExistsAtPath(expectedArchivePath.string) {//}, aria2DownloadIsIncomplete == false {
+        let aria2DownloadMetadataPath = expectedArchivePath.parent/(expectedArchivePath.basename() + ".aria2")
+        var aria2DownloadIsIncomplete = false
+        if case .aria2 = downloader, aria2DownloadMetadataPath.exists {
+            aria2DownloadIsIncomplete = true
+        }
+        if Current.files.fileExistsAtPath(expectedArchivePath.string), aria2DownloadIsIncomplete == false {
             Current.logging.log("(1/6) Found existing archive that will be used for installation at \(expectedArchivePath).")
             return Just(expectedArchivePath.url)
                 .setFailureType(to: Error.self)
@@ -90,13 +90,13 @@ extension AppState {
         else {
             let destination = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).\(availableXcode.filename.suffix(fromLast: "."))"
             switch downloader {
-//            case .aria2(let aria2Path):
-//                return downloadXcodeWithAria2(
-//                    availableXcode,
-//                    to: destination,
-//                    aria2Path: aria2Path,
-//                    progressChanged: progressChanged
-//                )
+            case .aria2(let aria2Path):
+                return downloadXcodeWithAria2(
+                    availableXcode,
+                    to: destination,
+                    aria2Path: aria2Path,
+                    progressChanged: progressChanged
+                )
             case .urlSession:
                 return downloadXcodeWithURLSession(
                     availableXcode,
@@ -107,20 +107,20 @@ extension AppState {
         }
     }
     
-//    public func downloadXcodeWithAria2(_ availableXcode: AvailableXcode, to destination: Path, aria2Path: Path, progressChanged: @escaping (Progress) -> Void) -> Promise<URL> {
-//        let cookies = AppleAPI.Current.network.session.configuration.httpCookieStorage?.cookies(for: availableXcode.url) ?? []
-//    
-//        return attemptRetryableTask(maximumRetryCount: 3) {
-//            let (progress, promise) = Current.shell.downloadWithAria2(
-//                aria2Path, 
-//                availableXcode.url,
-//                destination,
-//                cookies
-//            )
-//            progressChanged(progress)
-//            return promise.map { _ in destination.url }
-//        }
-//    }
+    public func downloadXcodeWithAria2(_ availableXcode: AvailableXcode, to destination: Path, aria2Path: Path, progressChanged: @escaping (Progress) -> Void) -> AnyPublisher<URL, Error> {
+        let cookies = AppleAPI.Current.network.session.configuration.httpCookieStorage?.cookies(for: availableXcode.url) ?? []
+    
+        let (progress, publisher) = Current.shell.downloadWithAria2(
+            aria2Path, 
+            availableXcode.url,
+            destination,
+            cookies
+        )
+        progressChanged(progress)
+        return publisher
+            .map { _ in destination.url }
+            .eraseToAnyPublisher()
+    }
 
     public func downloadXcodeWithURLSession(_ availableXcode: AvailableXcode, to destination: Path, progressChanged: @escaping (Progress) -> Void) -> AnyPublisher<URL, Error> {
         let resumeDataPath = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).resumedata"
@@ -432,7 +432,7 @@ public enum InstallationType {
 
 public enum Downloader {
     case urlSession
-    // case aria2(Path)
+    case aria2(Path)
 }
 
 let XcodeTeamIdentifier = "59GAB85EFG"

@@ -256,7 +256,7 @@ class AppState: ObservableObject {
                     .mapError { $0 as Error }
             }
             .flatMap { [unowned self] in
-                self.install(.version(availableXcode), downloader: .urlSession)
+                self.install(.version(availableXcode), downloader: .aria2(Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!))
             }
             .sink(
                 receiveCompletion: { [unowned self] completion in 
@@ -273,7 +273,18 @@ class AppState: ObservableObject {
     }
     
     func cancelInstall(id: Xcode.ID) {
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+
+        // Cancel the publisher
         installationPublishers[id] = nil
+                
+        // If the download is cancelled by the user, clean up the download files that aria2 creates.
+        // This isn't done as part of the publisher with handleEvents(receiveCancel:) because it shouldn't happen when e.g. the app quits.
+        let expectedArchivePath = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).\(availableXcode.filename.suffix(fromLast: "."))"
+        let aria2DownloadMetadataPath = expectedArchivePath.parent/(expectedArchivePath.basename() + ".aria2")
+        try? Current.files.removeItem(at: expectedArchivePath.url)
+        try? Current.files.removeItem(at: aria2DownloadMetadataPath.url)
+        
         if let index = allXcodes.firstIndex(where: { $0.id == id }) { 
             allXcodes[index].installState = .notInstalled
         }
