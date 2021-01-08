@@ -24,6 +24,15 @@ struct MainWindow: View {
                 .frame(minWidth: 300, maxWidth: .infinity)
                 .frame(width: isShowingInfoPane ? nil : 0)
                 .isHidden(!isShowingInfoPane)
+                // This alert isn't intentionally placed here, 
+                // just trying to put it in a unique part of the hierarchy 
+                // since you can't have more than one in the same spot.
+                .alert(item: $appState.xcodeBeingConfirmedForInstallCancellation) { xcode in
+                    Alert(title: Text("Are you sure you want to stop the installation of Xcode \(xcode.description)?"),
+                          message: Text("Any progress will be discarded."),
+                          primaryButton: .destructive(Text("Stop Installation"), action: { self.appState.cancelInstall(id: xcode.id) }),
+                          secondaryButton: .cancel(Text("Cancel")))
+                }
         }
         .mainToolbar(
             category: $category,

@@ -31,7 +31,7 @@ struct InstallationStepView: View {
             }
             .buttonStyle(PlainButtonStyle())
             .foregroundColor(highlighted ? .white : .secondary)
-            .help("Cancel installation")
+            .help("Stop installation")
         }
         .frame(minWidth: 80)
     }

@@ -55,13 +55,13 @@ struct CancelInstallButton: View {
     var body: some View {
         Button(action: cancelInstall) {
             Text("Cancel")
-                .help("Cancel installation")
+                .help("Stop installation")
         }
     }
     
     private func cancelInstall() {
         guard let xcode = xcode else { return }
-        appState.cancelInstall(id: xcode.id)
+        appState.xcodeBeingConfirmedForInstallCancellation = xcode
     }
 }
 
@@ -160,9 +160,14 @@ struct InstallCommand: View {
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {
-        InstallButton(xcode: selectedXcode.unwrapped)
-            .keyboardShortcut("i", modifiers: [.command, .option])
-            .disabled(selectedXcode.unwrapped?.installed == true)
+        if selectedXcode.unwrapped?.installing == true {
+            CancelInstallButton(xcode: selectedXcode.unwrapped)
+                .keyboardShortcut(".", modifiers: [.command])            
+        } else {
+            InstallButton(xcode: selectedXcode.unwrapped)
+                .keyboardShortcut("i", modifiers: [.command, .option])
+                .disabled(selectedXcode.unwrapped?.installState != .notInstalled)
+        }
     }
 }
 

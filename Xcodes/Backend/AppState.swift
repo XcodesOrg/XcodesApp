@@ -30,6 +30,7 @@ class AppState: ObservableObject {
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
+    @Published var xcodeBeingConfirmedForInstallCancellation: Xcode?
     @Published var helperInstallState: HelperInstallState = .notInstalled
 
     // MARK: - Errors

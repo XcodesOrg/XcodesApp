@@ -39,6 +39,12 @@ struct Xcode: Identifiable, CustomStringConvertible {
     
     var id: Version { version }
     var installed: Bool { installState == .installed }
+    var installing: Bool { 
+        switch installState {
+        case .installing: return true
+        default: return false
+        }
+    }
     
     var description: String {
         version.xcodeDescription
