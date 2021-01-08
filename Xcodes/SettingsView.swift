@@ -9,8 +9,8 @@ struct SettingsView: View {
         VStack(alignment: .leading) {
             GroupBox(label: Text("Apple ID")) {
                 VStack(alignment: .leading) {
-                    if let username = Current.defaults.string(forKey: "username") {
-                        Text(username)
+                    if appState.authenticationState == .authenticated {
+                        Text(Current.defaults.string(forKey: "username") ?? "-")
                         Button("Sign Out", action: appState.signOut)
                     } else {
                         Button("Sign In", action: { self.appState.presentingSignInAlert = true })
