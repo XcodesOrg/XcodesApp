@@ -26,15 +26,18 @@ struct XcodeListViewRow: View {
             installControl(for: xcode)
         }
         .contextMenu {
-            if xcode.installed {
+            switch xcode.installState {
+            case .notInstalled:
+                InstallButton(xcode: xcode)
+            case .installing:
+                CancelInstallButton(xcode: xcode)
+            case .installed:
                 SelectButton(xcode: xcode)
                 OpenButton(xcode: xcode)
                 RevealButton(xcode: xcode)
                 CopyPathButton(xcode: xcode)
                 Divider()
                 UninstallButton(xcode: xcode)
-            } else {
-                InstallButton(xcode: xcode)
             }
         }
     }

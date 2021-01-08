@@ -20,30 +20,34 @@ struct InfoPane: View {
                             .font(.title)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
-                        if let path = xcode.path {
-                            HStack {
-                                Text(path)
-                                Button(action: { appState.reveal(id: xcode.id) }) {
-                                    Image(systemName: "arrow.right.circle.fill")
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .help("Reveal in Finder")
-                            }
-                            
-                            HStack {
-                                SelectButton(xcode: xcode)
-                                    .disabled(xcode.selected)
-                                    .help("Selected")
-                                
-                                OpenButton(xcode: xcode)
-                                    .help("Open")
-                                
-                                Spacer()
-                                UninstallButton(xcode: xcode)
-                            }
-                        } else {
+                        switch xcode.installState {
+                        case .notInstalled:
                             InstallButton(xcode: xcode)
-                                .disabled(xcode.installState != .notInstalled)
+                        case .installing:
+                            CancelInstallButton(xcode: xcode)
+                        case .installed:
+                            if let path = xcode.path {
+                                HStack {
+                                    Text(path)
+                                    Button(action: { appState.reveal(id: xcode.id) }) {
+                                        Image(systemName: "arrow.right.circle.fill")
+                                    }
+                                    .buttonStyle(PlainButtonStyle())
+                                    .help("Reveal in Finder")
+                                }
+                                
+                                HStack {
+                                    SelectButton(xcode: xcode)
+                                        .disabled(xcode.selected)
+                                        .help("Selected")
+                                    
+                                    OpenButton(xcode: xcode)
+                                        .help("Open")
+                                    
+                                    Spacer()
+                                    UninstallButton(xcode: xcode)
+                                }
+                            }
                         }
                     }
                     

@@ -48,6 +48,23 @@ struct InstallButton: View {
     }
 }
 
+struct CancelInstallButton: View {
+    @EnvironmentObject var appState: AppState
+    let xcode: Xcode?
+    
+    var body: some View {
+        Button(action: cancelInstall) {
+            Text("Cancel")
+                .help("Cancel installation")
+        }
+    }
+    
+    private func cancelInstall() {
+        guard let xcode = xcode else { return }
+        appState.cancelInstall(id: xcode.id)
+    }
+}
+
 struct SelectButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
