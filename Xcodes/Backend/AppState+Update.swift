@@ -38,7 +38,7 @@ extension AppState {
                 receiveCompletion: { [unowned self] completion in
                     switch completion {
                     case let .failure(error):
-                        self.error = AlertContent(title: "Update Error", message: error.legibleLocalizedDescription)
+                        self.error = error
                     case .finished:
                         Current.defaults.setDate(Current.date(), forKey: "lastUpdated")
                     }

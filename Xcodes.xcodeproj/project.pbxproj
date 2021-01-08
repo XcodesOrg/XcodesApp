@@ -42,6 +42,7 @@
 		CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */; };
 		CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */; };
 		CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */; };
+		CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */ = {isa = PBXBuildFile; productRef = CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */; };
 		CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */; };
 		CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A92592EEE900380FEE /* Environment.swift */; };
 		CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */; };
@@ -233,6 +234,7 @@
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
+				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
 				CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */,
 				CABFA9DF2592F07A00380FEE /* Path in Frameworks */,
 				CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */,
@@ -508,6 +510,7 @@
 				CABFA9F72592F0F900380FEE /* KeychainAccess */,
 				CABFA9FC2592F13300380FEE /* LegibleError */,
 				CA9FF86C25951C6E00E47BAF /* XCModel */,
+				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -569,6 +572,7 @@
 				CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */,
 				CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */,
+				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -1162,6 +1166,14 @@
 				revision = b47228c688b608e34b3b84079ab6052a24c7a981;
 			};
 		};
+		CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RobotsAndPencils/ErrorHandling";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.1.0;
+			};
+		};
 		CABFA9DD2592F07A00380FEE /* XCRemoteSwiftPackageReference "Path" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Path.swift";
@@ -1213,6 +1225,11 @@
 		CAA1CB2C255A5262003FD669 /* AppleAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppleAPI;
+		};
+		CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */;
+			productName = ErrorHandling;
 		};
 		CABFA9DE2592F07A00380FEE /* Path */ = {
 			isa = XCSwiftPackageProductDependency;
