@@ -14,13 +14,13 @@ struct SettingsView: View {
                         Button("Sign Out", action: appState.signOut)
                     } else {
                         Button("Sign In", action: { self.appState.presentingSignInAlert = true })
-                            .sheet(isPresented: $appState.presentingSignInAlert) {
-                                SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
-                                    .environmentObject(appState)
-                            }
                     }
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
+                .sheet(isPresented: $appState.presentingSignInAlert) {
+                    SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
+                        .environmentObject(appState)
+                }
             }
             
             GroupBox(label: Text("Data Source")) {
