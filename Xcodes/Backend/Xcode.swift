@@ -8,7 +8,6 @@ struct Xcode: Identifiable, CustomStringConvertible {
     let version: Version
     var installState: XcodeInstallState
     let selected: Bool
-    let path: String?
     let icon: NSImage?
     let requiredMacOSVersion: String?
     let releaseNotesURL: URL?
@@ -19,7 +18,6 @@ struct Xcode: Identifiable, CustomStringConvertible {
         version: Version,
         installState: XcodeInstallState,
         selected: Bool,
-        path: String?,
         icon: NSImage?,
         requiredMacOSVersion: String? = nil,
         releaseNotesURL: URL? = nil,
@@ -29,7 +27,6 @@ struct Xcode: Identifiable, CustomStringConvertible {
         self.version = version
         self.installState = installState
         self.selected = selected
-        self.path = path
         self.icon = icon
         self.requiredMacOSVersion = requiredMacOSVersion
         self.releaseNotesURL = releaseNotesURL
@@ -38,21 +35,8 @@ struct Xcode: Identifiable, CustomStringConvertible {
     }
     
     var id: Version { version }
-    var installed: Bool { installState == .installed }
-    var installing: Bool { 
-        switch installState {
-        case .installing: return true
-        default: return false
-        }
-    }
     
     var description: String {
         version.xcodeDescription
     }
-}
-
-enum XcodeInstallState: Equatable {
-    case notInstalled
-    case installing(InstallationStep)
-    case installed
 }

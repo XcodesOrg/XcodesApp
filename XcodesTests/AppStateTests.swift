@@ -67,9 +67,9 @@ class AppStateTests: XCTestCase {
     func test_Install_FullHappyPath_Apple() throws {
         // Available xcode doesn't necessarily have build identifier
         subject.allXcodes = [
-            .init(version: Version("0.0.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
-            .init(version: Version("0.0.0-Beta.1")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
-            .init(version: Version("0.0.0-Beta.2")!, installState: .notInstalled, selected: false, path: nil, icon: nil)
+            .init(version: Version("0.0.0")!, installState: .notInstalled, selected: false, icon: nil),
+            .init(version: Version("0.0.0-Beta.1")!, installState: .notInstalled, selected: false, icon: nil),
+            .init(version: Version("0.0.0-Beta.2")!, installState: .notInstalled, selected: false, icon: nil),
         ]
         
         // It hasn't been downloaded
@@ -175,9 +175,9 @@ class AppStateTests: XCTestCase {
     func test_Install_FullHappyPath_XcodeReleases() throws {
         // Available xcode has build identifier
         subject.allXcodes = [
-            .init(version: Version("0.0.0+ABC123")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
-            .init(version: Version("0.0.0-Beta.1+DEF456")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
-            .init(version: Version("0.0.0-Beta.2+GHI789")!, installState: .notInstalled, selected: false, path: nil, icon: nil)
+            .init(version: Version("0.0.0+ABC123")!, installState: .notInstalled, selected: false, icon: nil),
+            .init(version: Version("0.0.0-Beta.1+DEF456")!, installState: .notInstalled, selected: false, icon: nil),
+            .init(version: Version("0.0.0-Beta.2+GHI789")!, installState: .notInstalled, selected: false, icon: nil)
         ]
         
         // It hasn't been downloaded

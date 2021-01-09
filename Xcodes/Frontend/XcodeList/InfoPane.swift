@@ -1,4 +1,5 @@
 import AppKit
+import Path
 import SwiftUI
 import Version
 import struct XCModel.SDKs
@@ -25,28 +26,26 @@ struct InfoPane: View {
                             InstallButton(xcode: xcode)
                         case .installing:
                             CancelInstallButton(xcode: xcode)
-                        case .installed:
-                            if let path = xcode.path {
-                                HStack {
-                                    Text(path)
-                                    Button(action: { appState.reveal(id: xcode.id) }) {
-                                        Image(systemName: "arrow.right.circle.fill")
-                                    }
-                                    .buttonStyle(PlainButtonStyle())
-                                    .help("Reveal in Finder")
+                        case let .installed(path):
+                            HStack {
+                                Text(path.string)
+                                Button(action: { appState.reveal(id: xcode.id) }) {
+                                    Image(systemName: "arrow.right.circle.fill")
                                 }
+                                .buttonStyle(PlainButtonStyle())
+                                .help("Reveal in Finder")
+                            }
+                            
+                            HStack {
+                                SelectButton(xcode: xcode)
+                                    .disabled(xcode.selected)
+                                    .help("Selected")
                                 
-                                HStack {
-                                    SelectButton(xcode: xcode)
-                                        .disabled(xcode.selected)
-                                        .help("Selected")
-                                    
-                                    OpenButton(xcode: xcode)
-                                        .help("Open")
-                                    
-                                    Spacer()
-                                    UninstallButton(xcode: xcode)
-                                }
+                                OpenButton(xcode: xcode)
+                                    .help("Open")
+                                
+                                Spacer()
+                                UninstallButton(xcode: xcode)
                             }
                         }
                     }
@@ -70,8 +69,8 @@ struct InfoPane: View {
     
     @ViewBuilder
     private func icon(for xcode: Xcode) -> some View {
-        if let path = xcode.path {
-            Image(nsImage: NSWorkspace.shared.icon(forFile: path))
+        if case let .installed(path) = xcode.installState {
+            Image(nsImage: NSWorkspace.shared.icon(forFile: path.string))
         } else {
             Image(systemName: "app.fill")
                 .resizable()
@@ -183,9 +182,8 @@ struct InfoPane_Previews: PreviewProvider {
                     $0.allXcodes = [
                         .init(
                             version: Version(major: 12, minor: 3, patch: 0),
-                            installState: .installed,
+                            installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
                             selected: true,
-                            path: "/Applications/Xcode-12.3.0.app",
                             icon: NSWorkspace.shared.icon(forFile: "/Applications/Xcode-12.3.0.app"),
                             requiredMacOSVersion: "10.15.4",
                             releaseNotesURL: URL(string: "https://developer.apple.com/documentation/xcode-release-notes/xcode-12_3-release-notes/")!,
@@ -211,9 +209,8 @@ struct InfoPane_Previews: PreviewProvider {
                     $0.allXcodes = [
                         .init(
                             version: Version(major: 12, minor: 3, patch: 0),
-                            installState: .installed,
+                            installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
                             selected: false,
-                            path: "/Applications/Xcode-12.3.0.app",
                             icon: NSWorkspace.shared.icon(forFile: "/Applications/Xcode-12.3.0.app"),
                             sdks: SDKs(
                                 macOS: .init(number: "11.1"),
@@ -239,7 +236,6 @@ struct InfoPane_Previews: PreviewProvider {
                             version: Version(major: 12, minor: 3, patch: 0),
                             installState: .notInstalled,
                             selected: false,
-                            path: nil,
                             icon: nil,
                             sdks: SDKs(
                                 macOS: .init(number: "11.1"),
@@ -263,9 +259,8 @@ struct InfoPane_Previews: PreviewProvider {
                     $0.allXcodes = [
                         .init(
                             version: Version(major: 12, minor: 3, patch: 0),
-                            installState: .installed,
+                            installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
                             selected: false,
-                            path: "/Applications/Xcode-12.3.0.app",
                             icon: nil,
                             sdks: nil,
                             compilers: nil)

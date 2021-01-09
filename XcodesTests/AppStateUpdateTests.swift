@@ -13,7 +13,7 @@ class AppStateUpdateTests: XCTestCase {
 
     func testDoesNotReplaceInstallState() throws {
         subject.allXcodes = [
-            Xcode(version: Version("0.0.0")!, installState: .installing(.unarchiving), selected: false, path: nil, icon: nil)
+            Xcode(version: Version("0.0.0")!, installState: .installing(.unarchiving), selected: false, icon: nil)
         ]
         
         subject.updateAllXcodes(
@@ -30,7 +30,7 @@ class AppStateUpdateTests: XCTestCase {
     
     func testRemovesUninstalledVersion() throws {
         subject.allXcodes = [
-            Xcode(version: Version("0.0.0")!, installState: .installed, selected: true, path: "/Applications/Xcode-0.0.0.app", icon: NSImage(systemSymbolName: "app.fill", accessibilityDescription: nil))
+            Xcode(version: Version("0.0.0")!, installState: .installed(Path("/Applications/Xcode-0.0.0.app")!), selected: true, icon: NSImage(systemSymbolName: "app.fill", accessibilityDescription: nil))
         ]
         
         subject.updateAllXcodes(
@@ -61,9 +61,8 @@ class AppStateUpdateTests: XCTestCase {
         )
         
         XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123")!) 
-        XCTAssertEqual(subject.allXcodes[0].installState, .installed)
+        XCTAssertEqual(subject.allXcodes[0].installState, .installed(Path("/Applications/Xcode-0.0.0.app")!))
         XCTAssertEqual(subject.allXcodes[0].selected, false)
-        XCTAssertEqual(subject.allXcodes[0].path, "/Applications/Xcode-0.0.0.app")
     }
     
     func testAdjustedVersionsAreUsedToLookupAvailableXcode() throws {
@@ -82,9 +81,8 @@ class AppStateUpdateTests: XCTestCase {
         )
         
         XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123")!) 
-        XCTAssertEqual(subject.allXcodes[0].installState, .installed)
+        XCTAssertEqual(subject.allXcodes[0].installState, .installed(Path("/Applications/Xcode-0.0.0.app")!))
         XCTAssertEqual(subject.allXcodes[0].selected, false)
-        XCTAssertEqual(subject.allXcodes[0].path, "/Applications/Xcode-0.0.0.app")
         // XCModel types aren't equatable, so just check for non-nil for now
         XCTAssertNotNil(subject.allXcodes[0].sdks)
     }

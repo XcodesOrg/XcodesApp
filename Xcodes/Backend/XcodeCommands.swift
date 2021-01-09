@@ -160,7 +160,7 @@ struct InstallCommand: View {
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {
-        if selectedXcode.unwrapped?.installing == true {
+        if selectedXcode.unwrapped?.installState.installing == true {
             CancelInstallButton(xcode: selectedXcode.unwrapped)
                 .keyboardShortcut(".", modifiers: [.command])            
         } else {
@@ -178,7 +178,7 @@ struct SelectCommand: View {
     var body: some View {
         SelectButton(xcode: selectedXcode.unwrapped)
             .keyboardShortcut("s", modifiers: [.command, .option])
-            .disabled(selectedXcode.unwrapped?.installed != true)
+            .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
 
@@ -189,7 +189,7 @@ struct OpenCommand: View {
     var body: some View {
         OpenButton(xcode: selectedXcode.unwrapped)
             .keyboardShortcut(KeyboardShortcut(.downArrow, modifiers: .command))
-            .disabled(selectedXcode.unwrapped?.installed != true)
+            .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
 
@@ -200,7 +200,7 @@ struct RevealCommand: View {
     var body: some View {
         RevealButton(xcode: selectedXcode.unwrapped)
             .keyboardShortcut("r", modifiers: [.command, .option])
-            .disabled(selectedXcode.unwrapped?.installed != true)
+            .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
 
@@ -211,7 +211,7 @@ struct CopyPathCommand: View {
     var body: some View {
         CopyPathButton(xcode: selectedXcode.unwrapped)
             .keyboardShortcut("c", modifiers: [.command, .option])
-            .disabled(selectedXcode.unwrapped?.installed != true)
+            .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
 
@@ -222,6 +222,6 @@ struct UninstallCommand: View {
     var body: some View {
         UninstallButton(xcode: selectedXcode.unwrapped)
             .keyboardShortcut("u", modifiers: [.command, .option])
-            .disabled(selectedXcode.unwrapped?.installed != true)
+            .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
