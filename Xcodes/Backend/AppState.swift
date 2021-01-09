@@ -384,16 +384,15 @@ class AppState: ObservableObject {
         }
 
         // Map all of the available versions into Xcode values that join available and installed Xcode data for display.
-        allXcodes = allAvailableXcodeVersions
-            .sorted(by: >)
-            .map { availableXcodeVersion in
+        allXcodes = zip(allAvailableXcodeVersions, availableXcodes)
+            .sorted(by: { $0.0 > $1.0 })
+            .map { availableXcodeVersion, availableXcode in
                 let installedXcode = installedXcodes.first(where: { installedXcode in
                     // Checking equality for Xcode Releases version
                     availableXcodeVersion == installedXcode.version ||
                         // Check more carefully for Apple version
                         availableXcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version) 
                 })
-                let availableXcode = availableXcodes.first { $0.version == availableXcodeVersion }
                 
                 // If the existing install state is "installing", keep it 
                 let existingXcodeInstallState = allXcodes.first { $0.version == availableXcodeVersion && $0.installing }?.installState
@@ -406,10 +405,10 @@ class AppState: ObservableObject {
                     selected: installedXcode != nil && selectedXcodePath?.hasPrefix(installedXcode!.path.string) == true, 
                     path: installedXcode?.path.string,
                     icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),
-                    requiredMacOSVersion: availableXcode?.requiredMacOSVersion,
-                    releaseNotesURL: availableXcode?.releaseNotesURL,
-                    sdks: availableXcode?.sdks,
-                    compilers: availableXcode?.compilers
+                    requiredMacOSVersion: availableXcode.requiredMacOSVersion,
+                    releaseNotesURL: availableXcode.releaseNotesURL,
+                    sdks: availableXcode.sdks,
+                    compilers: availableXcode.compilers
                 )
             }
     }
