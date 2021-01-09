@@ -25,13 +25,13 @@ struct InstallationStepView: View {
             Text("Step \(installationStep.stepNumber) of \(installationStep.stepCount): \(installationStep.message)")
                 .font(.footnote)
             
-            Button(action: { }) {
+            Button(action: cancel) {
                 Label("Cancel", systemImage: "xmark.circle.fill")
                     .labelStyle(IconOnlyLabelStyle())
             }
             .buttonStyle(PlainButtonStyle())
             .foregroundColor(highlighted ? .white : .secondary)
-            .help("Cancel installation")
+            .help("Stop installation")
         }
         .frame(minWidth: 80)
     }

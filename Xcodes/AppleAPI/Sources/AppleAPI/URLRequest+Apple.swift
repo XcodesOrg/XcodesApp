@@ -1,6 +1,6 @@
 import Foundation
 
-extension URL {
+public extension URL {
     static let itcServiceKey = URL(string: "https://appstoreconnect.apple.com/olympus/v1/app/config?hostname=itunesconnect.apple.com")!
     static let signIn = URL(string: "https://idmsa.apple.com/appleauth/auth/signin")!
     static let authOptions = URL(string: "https://idmsa.apple.com/appleauth/auth")!
@@ -10,7 +10,7 @@ extension URL {
     static let olympusSession = URL(string: "https://appstoreconnect.apple.com/olympus/v1/session")!
 }
 
-extension URLRequest {
+public extension URLRequest {
     static var itcServiceKey: URLRequest {
         return URLRequest(url: .itcServiceKey)
     }

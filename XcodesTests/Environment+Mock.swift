@@ -40,7 +40,7 @@ extension Files {
                 return try? Data(contentsOf: url)
             }
             else if path.contains("version.plist") {
-                let url = Bundle.xcodesTests.url(forResource: "Stub.version", withExtension: "plist")!
+                let url = Bundle.xcodesTests.url(forResource: "Stub-version", withExtension: "plist")!
                 return try? Data(contentsOf: url)
             }
             else {
@@ -106,6 +106,10 @@ extension Helper {
         install: { },
         checkIfLatestHelperIsInstalled: { Just(false).eraseToAnyPublisher() },
         getVersion: { Just("").setFailureType(to: Error.self).eraseToAnyPublisher() },
-        switchXcodePath: { _ in Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() }
+        switchXcodePath: { _ in Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() },
+        devToolsSecurityEnable: { Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() },
+        addStaffToDevelopersGroup: { Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() },
+        acceptXcodeLicense: { _ in Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() },
+        runFirstLaunch: { _ in Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() }
     )
 }

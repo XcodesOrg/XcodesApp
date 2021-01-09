@@ -102,7 +102,7 @@ public struct Network {
     }
 
     public var downloadTask: (URL, URL, Data?) -> (Progress, AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) = { AppleAPI.Current.network.session.downloadTask(with: $0, to: $1, resumingWith: $2) }
-    
+
     public func downloadTask(with url: URL, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, publisher: AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) {
         return downloadTask(url, saveLocation, resumeData)
     }
@@ -164,4 +164,8 @@ public struct Helper {
     var checkIfLatestHelperIsInstalled: () -> AnyPublisher<Bool, Never> = helperClient.checkIfLatestHelperIsInstalled
     var getVersion: () -> AnyPublisher<String, Error> = helperClient.getVersion
     var switchXcodePath: (_ absolutePath: String) -> AnyPublisher<Void, Error> = helperClient.switchXcodePath
+    var devToolsSecurityEnable: () -> AnyPublisher<Void, Error> = helperClient.devToolsSecurityEnable
+    var addStaffToDevelopersGroup: () -> AnyPublisher<Void, Error> = helperClient.addStaffToDevelopersGroup
+    var acceptXcodeLicense: (_ absoluteXcodePath: String) ->  AnyPublisher<Void, Error> = helperClient.acceptXcodeLicense
+    var runFirstLaunch: (_ absoluteXcodePath: String) -> AnyPublisher<Void, Error> = helperClient.runFirstLaunch
 }

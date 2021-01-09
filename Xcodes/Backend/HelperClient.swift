@@ -4,7 +4,7 @@ import Foundation
 final class HelperClient {
     private var connection: NSXPCConnection?
     
-    func currentConnection() -> NSXPCConnection? {
+    private func currentConnection() -> NSXPCConnection? {
         guard self.connection == nil else {
             return self.connection
         }
@@ -24,7 +24,7 @@ final class HelperClient {
         return self.connection
     }
     
-    func helper(errorSubject: PassthroughSubject<String, Error>) -> HelperXPCProtocol? {
+    private func helper(errorSubject: PassthroughSubject<String, Error>) -> HelperXPCProtocol? {
         guard 
             let helper = self.currentConnection()?.remoteObjectProxyWithErrorHandler({ error in
                 errorSubject.send(completion: .failure(error))
@@ -103,4 +103,124 @@ final class HelperClient {
         .map { $0.0 }
         .eraseToAnyPublisher()
     }
+    
+    func devToolsSecurityEnable() -> AnyPublisher<Void, Error> {
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+        guard 
+            let helper = self.helper(errorSubject: connectionErrorSubject)
+        else {
+            return Fail(error: NSError())
+                .eraseToAnyPublisher()
+        }
+        
+        return Deferred {
+            Future { promise in
+                helper.devToolsSecurityEnable(completion: { (possibleError) in
+                    if let error = possibleError {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                })                
+            }
+        }
+        // Take values, but fail when connectionErrorSubject fails
+        .zip(
+            connectionErrorSubject
+                .prepend("")
+                .map { _ in Void() }
+        )
+        .map { $0.0 }
+        .eraseToAnyPublisher()
+    }
+    
+    func addStaffToDevelopersGroup() -> AnyPublisher<Void, Error> {
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+        guard 
+            let helper = self.helper(errorSubject: connectionErrorSubject)
+        else {
+            return Fail(error: NSError())
+                .eraseToAnyPublisher()
+        }
+        
+        return Deferred {
+            Future { promise in
+                helper.addStaffToDevelopersGroup(completion: { (possibleError) in
+                    if let error = possibleError {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                })                
+            }
+        }
+        // Take values, but fail when connectionErrorSubject fails
+        .zip(
+            connectionErrorSubject
+                .prepend("")
+                .map { _ in Void() }
+        )
+        .map { $0.0 }
+        .eraseToAnyPublisher()
+    }
+    
+    func acceptXcodeLicense(absoluteXcodePath: String) -> AnyPublisher<Void, Error> {
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+        guard 
+            let helper = self.helper(errorSubject: connectionErrorSubject)
+        else {
+            return Fail(error: NSError())
+                .eraseToAnyPublisher()
+        }
+        
+        return Deferred {
+            Future { promise in
+                helper.acceptXcodeLicense(absoluteXcodePath: absoluteXcodePath, completion: { (possibleError) in
+                    if let error = possibleError {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                })                
+            }
+        }
+        // Take values, but fail when connectionErrorSubject fails
+        .zip(
+            connectionErrorSubject
+                .prepend("")
+                .map { _ in Void() }
+        )
+        .map { $0.0 }
+        .eraseToAnyPublisher()
+    }
+    
+    func runFirstLaunch(absoluteXcodePath: String) -> AnyPublisher<Void, Error> {
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+        guard 
+            let helper = self.helper(errorSubject: connectionErrorSubject)
+        else {
+            return Fail(error: NSError())
+                .eraseToAnyPublisher()
+        }
+        
+        return Deferred {
+            Future { promise in
+                helper.runFirstLaunch(absoluteXcodePath: absoluteXcodePath, completion: { (possibleError) in
+                    if let error = possibleError {
+                        promise(.failure(error))
+                    } else {
+                        promise(.success(()))
+                    }
+                })                
+            }
+        }
+        // Take values, but fail when connectionErrorSubject fails
+        .zip(
+            connectionErrorSubject
+                .prepend("")
+                .map { _ in Void() }
+        )
+        .map { $0.0 }
+        .eraseToAnyPublisher()
+    }    
 }

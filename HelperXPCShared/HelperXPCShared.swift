@@ -8,4 +8,8 @@ let subjectOrganizationalUnit = Bundle.main.infoDictionary!["CODE_SIGNING_SUBJEC
 protocol HelperXPCProtocol {
     func getVersion(completion: @escaping (String) -> Void)
     func xcodeSelect(absolutePath: String, completion: @escaping (Error?) -> Void)
+    func devToolsSecurityEnable(completion: @escaping (Error?) -> Void)
+    func addStaffToDevelopersGroup(completion: @escaping (Error?) -> Void)
+    func acceptXcodeLicense(absoluteXcodePath: String, completion: @escaping (Error?) -> Void)
+    func runFirstLaunch(absoluteXcodePath: String, completion: @escaping (Error?) -> Void)
 }

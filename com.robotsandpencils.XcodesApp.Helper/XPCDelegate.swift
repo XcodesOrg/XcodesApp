@@ -34,6 +34,22 @@ class XPCDelegate: NSObject, NSXPCListenerDelegate, HelperXPCProtocol {
             completion: completion
         )
     }
+
+    func devToolsSecurityEnable(completion: @escaping (Error?) -> Void) {
+        run(url: URL(fileURLWithPath: "/usr/sbin/DevToolsSecurity"), arguments: ["-enable"], completion: completion)
+    }
+    
+    func addStaffToDevelopersGroup(completion: @escaping (Error?) -> Void) {
+        run(url: URL(fileURLWithPath: "/usr/sbin/dseditgroup"), arguments: ["-o", "edit", "-t", "group", "-a", "staff", "_developer"], completion: completion)
+    }
+    
+    func acceptXcodeLicense(absoluteXcodePath: String, completion: @escaping (Error?) -> Void) {
+        run(url: URL(fileURLWithPath: absoluteXcodePath + "/Contents/Developer/usr/bin/xcodebuild"), arguments: ["-license", "accept"], completion: completion)
+    }
+    
+    func runFirstLaunch(absoluteXcodePath: String, completion: @escaping (Error?) -> Void) {
+        run(url: URL(fileURLWithPath: absoluteXcodePath + "/Contents/Developer/usr/bin/xcodebuild"), arguments: ["-runFirstLaunch"], completion: completion)
+    }
 }
 
 // MARK: - Run

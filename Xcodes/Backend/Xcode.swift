@@ -6,7 +6,7 @@ import struct XCModel.Compilers
 
 struct Xcode: Identifiable, CustomStringConvertible {
     let version: Version
-    let installState: XcodeInstallState
+    var installState: XcodeInstallState
     let selected: Bool
     let path: String?
     let icon: NSImage?
@@ -39,6 +39,12 @@ struct Xcode: Identifiable, CustomStringConvertible {
     
     var id: Version { version }
     var installed: Bool { installState == .installed }
+    var installing: Bool { 
+        switch installState {
+        case .installing: return true
+        default: return false
+        }
+    }
     
     var description: String {
         version.xcodeDescription
