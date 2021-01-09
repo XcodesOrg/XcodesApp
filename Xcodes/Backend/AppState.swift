@@ -378,13 +378,15 @@ class AppState: ObservableObject {
             .map { xcodeVersion in
                 let installedXcode = installedXcodes.first(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) })
                 let availableXcode = availableXcodes.first { $0.version == xcodeVersion }
-                let existingXcode = allXcodes.first { $0.version == xcodeVersion }
                 
-                let defaultInstallState: XcodeInstallState = installedXcode != nil ? .installed : .notInstalled
+                // If the existing install state is "installing", keep it 
+                let existingXcodeInstallState = allXcodes.first { $0.version == xcodeVersion && $0.installing }?.installState
+                // Otherwise, determine it from whether there's an installed Xcode
+                let defaultXcodeInstallState: XcodeInstallState = installedXcode != nil ? .installed : .notInstalled
                 
                 return Xcode(
                     version: xcodeVersion,
-                    installState: existingXcode?.installState ?? defaultInstallState,
+                    installState: existingXcodeInstallState ?? defaultXcodeInstallState,
                     selected: installedXcode != nil && selectedXcodePath?.hasPrefix(installedXcode!.path.string) == true, 
                     path: installedXcode?.path.string,
                     icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),

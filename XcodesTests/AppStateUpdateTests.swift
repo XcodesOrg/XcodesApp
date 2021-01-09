@@ -27,4 +27,21 @@ class AppStateUpdateTests: XCTestCase {
         
         XCTAssertEqual(subject.allXcodes[0].installState, .installing(.unarchiving))
     }
+    
+    func testRemovesUninstalledVersion() throws {
+        subject.allXcodes = [
+            Xcode(version: Version("0.0.0")!, installState: .installed, selected: true, path: "/Applications/Xcode-0.0.0.app", icon: NSImage(systemSymbolName: "app.fill", accessibilityDescription: nil))
+        ]
+        
+        subject.updateAllXcodes(
+            availableXcodes: [
+                AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+            ], 
+            installedXcodes: [
+            ], 
+            selectedXcodePath: nil
+        )
+        
+        XCTAssertEqual(subject.allXcodes[0].installState, .notInstalled)
+    }
 }
