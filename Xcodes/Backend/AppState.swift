@@ -356,36 +356,52 @@ class AppState: ObservableObject {
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {
-        var allXcodeVersions = availableXcodes.map { $0.version }
+        // First, adjust all of the available Xcode versions so that available and installed versions line up and the second part of this function works properly.
+        var allAvailableXcodeVersions = availableXcodes.map { $0.version }
         for installedXcode in installedXcodes {
+            // We can trust that build metadata identifiers are unique for each version of Xcode, so if we have it then it's all we need.
+            // If build metadata matches exactly, replace the available version with the installed version.
+            // This should handle both Xcode Releases versions which can have different prerelease identifiers and Apple versions which rarely have build metadata identifiers. 
+            if let index = allAvailableXcodeVersions.firstIndex(where: { $0.buildMetadataIdentifiers == installedXcode.version.buildMetadataIdentifiers }) {
+                allAvailableXcodeVersions[index] = installedXcode.version
+            }
             // If an installed version isn't listed online, add the installed version
-            if !allXcodeVersions.contains(where: { version in
+            // Xcode Releases should have all versions
+            // Apple didn't used to keep all prerelease versions around but has started to recently
+            else if !allAvailableXcodeVersions.contains(where: { version in
                 version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version)
             }) {
-                allXcodeVersions.append(installedXcode.version)
+                allAvailableXcodeVersions.append(installedXcode.version)
             }
-            // If an installed version is the same as one that's listed online which doesn't have build metadata, replace it with the installed version with build metadata
-            else if let index = allXcodeVersions.firstIndex(where: { version in
+            // If an installed version is the same as one that's listed online which doesn't have build metadata, replace it with the installed version
+            // This was originally added for Apple versions
+            else if let index = allAvailableXcodeVersions.firstIndex(where: { version in
                 version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version) &&
-                version.buildMetadataIdentifiers.isEmpty
+                    version.buildMetadataIdentifiers.isEmpty
             }) {
-                allXcodeVersions[index] = installedXcode.version
+                allAvailableXcodeVersions[index] = installedXcode.version
             }
         }
 
-        allXcodes = allXcodeVersions
+        // Map all of the available versions into Xcode values that join available and installed Xcode data for display.
+        allXcodes = allAvailableXcodeVersions
             .sorted(by: >)
-            .map { xcodeVersion in
-                let installedXcode = installedXcodes.first(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) })
-                let availableXcode = availableXcodes.first { $0.version == xcodeVersion }
+            .map { availableXcodeVersion in
+                let installedXcode = installedXcodes.first(where: { installedXcode in
+                    // Checking equality for Xcode Releases version
+                    availableXcodeVersion == installedXcode.version ||
+                        // Check more carefully for Apple version
+                        availableXcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version) 
+                })
+                let availableXcode = availableXcodes.first { $0.version == availableXcodeVersion }
                 
                 // If the existing install state is "installing", keep it 
-                let existingXcodeInstallState = allXcodes.first { $0.version == xcodeVersion && $0.installing }?.installState
+                let existingXcodeInstallState = allXcodes.first { $0.version == availableXcodeVersion && $0.installing }?.installState
                 // Otherwise, determine it from whether there's an installed Xcode
                 let defaultXcodeInstallState: XcodeInstallState = installedXcode != nil ? .installed : .notInstalled
                 
                 return Xcode(
-                    version: xcodeVersion,
+                    version: availableXcodeVersion,
                     installState: existingXcodeInstallState ?? defaultXcodeInstallState,
                     selected: installedXcode != nil && selectedXcodePath?.hasPrefix(installedXcode!.path.string) == true, 
                     path: installedXcode?.path.string,
