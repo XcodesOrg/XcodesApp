@@ -34,6 +34,87 @@ public struct Shell {
     public var touchInstallCheck: (String, String, String) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin/"touch", "\($0)com.apple.dt.Xcode.InstallCheckCache_\($1)_\($2)") }
 
     public var xcodeSelectPrintPath: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.join("xcode-select"), "-p") }
+    
+    public var downloadWithAria2: (Path, URL, Path, [HTTPCookie]) -> (Progress, AnyPublisher<Void, Error>) = { aria2Path, url, destination, cookies in
+        let process = Process()
+        process.executableURL = aria2Path.url
+        process.arguments = [
+            "--header=Cookie: \(cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; "))",     
+            "--max-connection-per-server=16",
+            "--split=16",
+            "--summary-interval=1",
+            "--dir=\(destination.parent.string)",
+            "--out=\(destination.basename())",
+            url.absoluteString,
+        ]
+        let stdOutPipe = Pipe()
+        process.standardOutput = stdOutPipe
+        let stdErrPipe = Pipe()
+        process.standardError = stdErrPipe
+        
+        var progress = Progress(totalUnitCount: 100)
+
+        let observer = NotificationCenter.default.addObserver(
+            forName: .NSFileHandleDataAvailable, 
+            object: nil, 
+            queue: OperationQueue.main
+        ) { note in
+            guard
+                // This should always be the case for Notification.Name.NSFileHandleDataAvailable
+                let handle = note.object as? FileHandle,
+                handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
+            else { return }
+
+            defer { handle.waitForDataInBackgroundAndNotify() }
+
+            let string = String(decoding: handle.availableData, as: UTF8.self)
+            let regex = try! NSRegularExpression(pattern: #"((?<percent>\d+)%\))"#)
+            let range = NSRange(location: 0, length: string.utf16.count)
+
+            guard
+                let match = regex.firstMatch(in: string, options: [], range: range),
+                let matchRange = Range(match.range(withName: "percent"), in: string),
+                let percentCompleted = Int64(string[matchRange])
+            else { return }
+
+            progress.completedUnitCount = percentCompleted
+        }
+
+        stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        
+        do {
+            try process.run()
+        } catch {
+            return (progress, Fail(error: error).eraseToAnyPublisher())
+        }
+
+        let publisher = Deferred {
+            Future<Void, Error> { promise in
+                DispatchQueue.global(qos: .default).async {
+                    process.waitUntilExit()
+                    
+                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                    
+                    guard process.terminationReason == .exit, process.terminationStatus == 0 else {
+                        if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
+                            return promise(.failure(aria2cError))
+                        } else {
+                            return promise(.failure(ProcessExecutionError(process: process, standardOutput: "", standardError: "")))
+                        }
+                    }
+                    promise(.success(()))
+                }
+            }
+        }
+        .handleEvents(receiveCancel: {
+            process.terminate()
+            NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+        })
+        .eraseToAnyPublisher()
+        
+        return (progress, publisher)
+    }
 }
 
 public struct Files {
