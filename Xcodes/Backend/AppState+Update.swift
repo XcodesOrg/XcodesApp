@@ -70,7 +70,7 @@ extension AppState {
                     // /download/more doesn't include build numbers, so we trust that if the version number and prerelease identifiers are the same that they're the same build.
                     // If an Xcode version is listed on both sites then prefer the one on /download because the build metadata is used to compare against installed Xcodes.
                     let xcodes = releasedXcodes.filter { releasedXcode in
-                        prereleaseXcodes.contains { $0.version.isEqualWithoutBuildMetadataIdentifiers(to: releasedXcode.version) } == false
+                        prereleaseXcodes.contains { $0.version.isEquivalent(to: releasedXcode.version) } == false
                     } + prereleaseXcodes
                     return xcodes
                 }

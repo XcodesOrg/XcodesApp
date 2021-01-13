@@ -369,14 +369,14 @@ class AppState: ObservableObject {
             // Xcode Releases should have all versions
             // Apple didn't used to keep all prerelease versions around but has started to recently
             else if !allAvailableXcodeVersions.contains(where: { version in
-                version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version)
+                version.isEquivalent(to: installedXcode.version)
             }) {
                 allAvailableXcodeVersions.append(installedXcode.version)
             }
             // If an installed version is the same as one that's listed online which doesn't have build metadata, replace it with the installed version
             // This was originally added for Apple versions
             else if let index = allAvailableXcodeVersions.firstIndex(where: { version in
-                version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version) &&
+                version.isEquivalent(to: installedXcode.version) &&
                     version.buildMetadataIdentifiers.isEmpty
             }) {
                 allAvailableXcodeVersions[index] = installedXcode.version
@@ -388,10 +388,7 @@ class AppState: ObservableObject {
             .sorted(by: { $0.0 > $1.0 })
             .map { availableXcodeVersion, availableXcode in
                 let installedXcode = installedXcodes.first(where: { installedXcode in
-                    // Checking equality for Xcode Releases version
-                    availableXcodeVersion == installedXcode.version ||
-                        // Check more carefully for Apple version
-                        availableXcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version) 
+                    availableXcodeVersion.isEquivalent(to: installedXcode.version) 
                 })
                 
                 // If the existing install state is "installing", keep it 

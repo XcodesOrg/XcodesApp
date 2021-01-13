@@ -1,41 +1,24 @@
 import Version
 
 public extension Version {
-    func isEqualWithoutBuildMetadataIdentifiers(to other: Version) -> Bool {
-        return major == other.major && 
-               minor == other.minor &&
-               patch == other.patch &&
-               prereleaseIdentifiers == other.prereleaseIdentifiers
-    }
-
-    /// If release versions, don't compare build metadata because that's not provided in the /downloads/more list
-    /// if beta versions, compare build metadata because it's available in versions.plist
-    func isEquivalentForDeterminingIfInstalled(toInstalled installed: Version) -> Bool {
-        let isBeta = !prereleaseIdentifiers.isEmpty
-        let otherIsBeta = !installed.prereleaseIdentifiers.isEmpty
-
-        if isBeta && otherIsBeta {
-            if buildMetadataIdentifiers.isEmpty {
-                return major == installed.major &&
-                       minor == installed.minor &&
-                       patch == installed.patch &&
-                       prereleaseIdentifiers.map { $0.lowercased() } == installed.prereleaseIdentifiers.map { $0.lowercased() }
-            }
-            else {
-                return major == installed.major &&
-                       minor == installed.minor &&
-                       patch == installed.patch &&
-                       prereleaseIdentifiers.map { $0.lowercased() } == installed.prereleaseIdentifiers.map { $0.lowercased() } &&
-                       buildMetadataIdentifiers.map { $0.lowercased() } == installed.buildMetadataIdentifiers.map { $0.lowercased() }
-            }
+    /// Determines if two Xcode versions should be treated equivalently. This is not the same as equality.
+    /// 
+    /// We need a way to determine if two Xcode versions are the same without always having full information, and supporting different data sources.
+    /// For example, the Apple data source often doesn't have build metadata identifiers.  
+    func isEquivalent(to other: Version) -> Bool {
+        // If we don't have build metadata identifiers for both Versions, compare major, minor, patch and prerelease identifiers.
+        if buildMetadataIdentifiers.isEmpty || other.buildMetadataIdentifiers.isEmpty {
+            return major == other.major &&
+                   minor == other.minor &&
+                   patch == other.patch &&
+                   prereleaseIdentifiers.map { $0.lowercased() } == other.prereleaseIdentifiers.map { $0.lowercased() }
+        // If we have build metadata identifiers for both, we can ignore the prerelease identifiers.
+        } else {
+            return major == other.major &&
+                   minor == other.minor &&
+                   patch == other.patch && 
+                   buildMetadataIdentifiers.map { $0.lowercased() } == other.buildMetadataIdentifiers.map { $0.lowercased() }
         }
-        else if !isBeta && !otherIsBeta {
-            return major == installed.major && 
-                   minor == installed.minor &&
-                   patch == installed.patch
-        }
-
-        return false
     }
 
     var descriptionWithoutBuildMetadata: String {
