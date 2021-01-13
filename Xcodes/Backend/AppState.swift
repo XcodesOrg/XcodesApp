@@ -258,6 +258,7 @@ class AppState: ObservableObject {
             .flatMap { [unowned self] in
                 self.install(.version(availableXcode), downloader: .aria2)
             }
+            .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { [unowned self] completion in 
                     self.installationPublishers[id] = nil
