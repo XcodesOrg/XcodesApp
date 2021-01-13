@@ -15,7 +15,6 @@ public struct Environment {
     public var shell = Shell()
     public var files = Files()
     public var network = Network()
-    public var logging = Logging()
     public var keychain = Keychain()
     public var defaults = Defaults()
     public var date: () -> Date = Date.init
@@ -188,10 +187,6 @@ public struct Network {
     public func downloadTask(with url: URL, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, publisher: AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) {
         return downloadTask(url, saveLocation, resumeData)
     }
-}
-
-public struct Logging {
-    public var log: (String) -> Void = { print($0) }
 }
 
 public struct Keychain {

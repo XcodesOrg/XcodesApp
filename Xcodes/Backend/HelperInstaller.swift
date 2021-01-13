@@ -1,6 +1,7 @@
 // From https://github.com/securing/SimpleXPCApp/
 
 import Foundation
+import os.log
 import ServiceManagement
 
 enum HelperAuthorizationError: Error {
@@ -35,8 +36,9 @@ class HelperInstaller {
             let authRef = try authorizationRef(&authRights, nil, [.interactionAllowed, .extendRights, .preAuthorize])
             var cfError: Unmanaged<CFError>?
             SMJobBless(kSMDomainSystemLaunchd, machServiceName as CFString, authRef, &cfError)
-        } catch let err {
-            print("Error in installing the helper -> \(err.localizedDescription)")
+            if let error = cfError?.takeRetainedValue() { throw error }
+        } catch {
+            Logger.helperInstaller.error("\(error.localizedDescription)")
         }
     }
 }

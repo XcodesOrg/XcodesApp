@@ -1,6 +1,7 @@
 // From https://github.com/securing/SimpleXPCApp/
 
 import Foundation
+import os.log
 
 class ConnectionVerifier {
     
@@ -12,19 +13,19 @@ class ConnectionVerifier {
         ]
         
         if SecCodeCopyGuestWithAttributes(nil, attributesDictrionary as CFDictionary, SecCSFlags(rawValue: 0), &secCodeOptional) != errSecSuccess {
-            NSLog("Couldn't get SecCode with the audit token")
+            Logger.connectionVerifier.error("Couldn't get SecCode with the audit token")
             return false
         }
         
         guard let secCode = secCodeOptional else {
-            NSLog("Couldn't unwrap the secCode")
+            Logger.connectionVerifier.error("Couldn't unwrap the secCode")
             return false
         }
         
         SecCodeCopyStaticCode(secCode, SecCSFlags(rawValue: 0), &secStaticCodeOptional)
         
         guard let _ = secStaticCodeOptional else {
-            NSLog("Couldn't unwrap the secStaticCode")
+            Logger.connectionVerifier.error("Couldn't unwrap the secStaticCode")
             return false
         }
         
@@ -34,7 +35,7 @@ class ConnectionVerifier {
     private static func verifyHardenedRuntimeAndProblematicEntitlements(secStaticCode: SecStaticCode) -> Bool {
         var signingInformationOptional: CFDictionary? = nil
         if SecCodeCopySigningInformation(secStaticCode, SecCSFlags(rawValue: kSecCSDynamicInformation), &signingInformationOptional) != errSecSuccess {
-            NSLog("Couldn't obtain signing information")
+            Logger.connectionVerifier.error("Couldn't obtain signing information")
             return false
         }
         
@@ -49,7 +50,7 @@ class ConnectionVerifier {
         if let signingFlags = signingFlagsOptional {
             let hardenedRuntimeFlag: UInt32 = 0x10000
             if (signingFlags & hardenedRuntimeFlag) != hardenedRuntimeFlag {
-                NSLog("Hardened runtime is not set for the sender")
+                Logger.connectionVerifier.error("Hardened runtime is not set for the sender")
                 return false
             }
         } else {
@@ -60,7 +61,7 @@ class ConnectionVerifier {
         guard let entitlements = entitlementsOptional else {
             return false
         }
-        NSLog("Entitlements are \(entitlements)")
+        Logger.connectionVerifier.info("Entitlements are \(entitlements)")
         let problematicEntitlements = [
             "com.apple.security.get-task-allow",
             "com.apple.security.cs.disable-library-validation",
@@ -72,7 +73,7 @@ class ConnectionVerifier {
         for problematicEntitlement in problematicEntitlements {
             if let presentEntitlement = entitlements.object(forKey: problematicEntitlement) {
                 if presentEntitlement as! Int == 1 {
-                    NSLog("The sender has \(problematicEntitlement) entitlement set to true")
+                    Logger.connectionVerifier.error("The sender has \(problematicEntitlement) entitlement set to true")
                     return false
                 }
             }
@@ -89,12 +90,12 @@ class ConnectionVerifier {
          
         var secRequirement: SecRequirement? = nil
         if SecRequirementCreateWithString(requirementString as CFString, SecCSFlags(rawValue: 0), &secRequirement) != errSecSuccess {
-            NSLog("Couldn't create the requirement string")
+            Logger.connectionVerifier.error("Couldn't create the requirement string")
             return false
         }
          
         if SecCodeCheckValidity(secCode, SecCSFlags(rawValue: 0), secRequirement) != errSecSuccess {
-            NSLog("NSXPC client does not meet the requirements")
+            Logger.connectionVerifier.error("NSXPC client does not meet the requirements")
             return false
         }
         

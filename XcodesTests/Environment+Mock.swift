@@ -7,7 +7,6 @@ extension Environment {
         shell: .mock,
         files: .mock,
         network: .mock,
-        logging: .mock,
         keychain: .mock,
         defaults: .mock,
         date: Date.mock,
@@ -70,12 +69,6 @@ extension Network {
                     .eraseToAnyPublisher()
             ) 
         }
-    )
-}
-
-extension Logging {
-    static var mock = Logging(
-        log: { print($0) }
     )
 }
 
