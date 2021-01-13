@@ -43,6 +43,7 @@ public struct Shell {
             "--max-connection-per-server=16",
             "--split=16",
             "--summary-interval=1",
+            "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)",
             "--dir=\(destination.parent.string)",
             "--out=\(destination.basename())",
             url.absoluteString,
