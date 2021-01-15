@@ -1,10 +1,19 @@
-# Xcodes.app
+<h1><img src="icon.png" align="center" width=50 height=50 /> Xcodes.app</h1>
 
 The easiest way to install and switch between multiple versions of Xcode.
 
 _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](https://github.com/RobotsAndPencils/xcodes)._
 
 ![CI](https://github.com/RobotsAndPencils/Xcodes.app/workflows/CI/badge.svg)
+
+![](screenshot.png)
+
+## Features
+
+- List all available Xcode versions from [Xcode Releases'](https://xcodereleases.com) data or the Apple Developer website.
+- Install any Xcode version, fully automated from start to finish. Xcodes uses [`aria2`](https://aria2.github.io), which uses up to 16 connections to download 3-5x faster than URLSession.
+- Just click a button to make a version active with `xcode-select`.
+- View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
 
 ## Installation
 
