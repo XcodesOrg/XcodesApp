@@ -411,7 +411,7 @@ public enum InstallationError: LocalizedError, Equatable {
         case .missingSudoerPassword:
             return "Missing password. Please try again."
         case let .unavailableVersion(version):
-            return "Could not find version \(version.xcodeDescription)."
+            return "Could not find version \(version.appleDescription)."
         case .noNonPrereleaseVersionAvailable:
             return "No non-prerelease versions available."
         case .noPrereleaseVersionAvailable:
@@ -419,11 +419,11 @@ public enum InstallationError: LocalizedError, Equatable {
         case .missingUsernameOrPassword:
             return "Missing username or a password. Please try again."
         case let .versionAlreadyInstalled(installedXcode):
-            return "\(installedXcode.version.xcodeDescription) is already installed at \(installedXcode.path)"
+            return "\(installedXcode.version.appleDescription) is already installed at \(installedXcode.path)"
         case let .invalidVersion(version):
             return "\(version) is not a valid version number."
         case let .versionNotInstalled(version):
-            return "\(version.xcodeDescription) is not installed."
+            return "\(version.appleDescription) is not installed."
         }
     }
 }

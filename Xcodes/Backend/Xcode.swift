@@ -37,6 +37,6 @@ struct Xcode: Identifiable, CustomStringConvertible {
     var id: Version { version }
     
     var description: String {
-        version.xcodeDescription
+        version.appleDescription
     }
 }
