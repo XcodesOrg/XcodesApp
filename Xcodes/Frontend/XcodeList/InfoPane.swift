@@ -17,7 +17,7 @@ struct InfoPane: View {
                     icon(for: xcode)
                     
                     VStack(alignment: .leading) {
-                        Text("Xcode \(xcode.description)")
+                        Text(verbatim: "Xcode \(xcode.description) (\(xcode.version.buildMetadataIdentifiers.joined(separator: " ")))")
                             .font(.title)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         

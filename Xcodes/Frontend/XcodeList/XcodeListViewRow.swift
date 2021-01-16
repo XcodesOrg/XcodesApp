@@ -11,8 +11,8 @@ struct XcodeListViewRow: View {
         HStack {
             appIconView(for: xcode)
             
-            VStack(alignment: .leading) {    
-                Text(xcode.description)
+            VStack(alignment: .leading) {
+                Text(verbatim: "\(xcode.description) (\(xcode.version.buildMetadataIdentifiers.joined(separator: " ")))")
                     .font(.body)
                 
                 if case let .installed(path) = xcode.installState {
