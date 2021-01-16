@@ -106,4 +106,14 @@ class AppStateUpdateTests: XCTestCase {
         
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("1.2.3")!, Version("0.0.0+ABC123")!]) 
     }
+    
+    func testFilterReleasesThatMatchPrereleases() {
+        let result = subject.filterPrereleasesThatMatchReleaseBuildMetadataIdentifiers(
+            [
+                AvailableXcode(version: Version("12.3.0+12C33")!, url: URL(string: "https://apple.com")!, filename: "Xcode_12.3.xip", releaseDate: nil),
+                AvailableXcode(version: Version("12.3.0-RC+12C33")!, url: URL(string: "https://apple.com")!, filename: "Xcode_12.3_RC_1.xip", releaseDate: nil),
+            ]
+        )
+        XCTAssertEqual(result.map(\.version), [Version("12.3.0+12C33")])
+    }
 }
