@@ -1,3 +1,4 @@
+import Path
 import SwiftUI
 import Version
 
@@ -19,7 +20,7 @@ struct XcodeListView: View {
         case .all:
             xcodes = appState.allXcodes
         case .installed:
-            xcodes = appState.allXcodes.filter { $0.installed }
+            xcodes = appState.allXcodes.filter { $0.installState.installed }
         }
         
         if !searchText.isEmpty {
@@ -43,10 +44,10 @@ struct XcodeListView_Previews: PreviewProvider {
                 .environmentObject({ () -> AppState in
                     let a = AppState()
                     a.allXcodes = [
-                        Xcode(version: Version("12.3.0")!, installState: .installed, selected: true, path: "/Applications/Xcode-12.3.0.app", icon: nil),
-                        Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
-                        Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, path: nil, icon: nil),
-                        Xcode(version: Version("12.0.0")!, installState: .installed, selected: false, path: "/Applications/Xcode-12.3.0.app", icon: nil),
+                        Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil),
+                        Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, icon: nil),
+                        Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, icon: nil),
+                        Xcode(version: Version("12.0.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
                     ]
                     return a
                 }())

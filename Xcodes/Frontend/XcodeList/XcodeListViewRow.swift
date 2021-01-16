@@ -1,3 +1,4 @@
+import Path
 import SwiftUI
 import Version
 
@@ -14,9 +15,14 @@ struct XcodeListViewRow: View {
                 Text(xcode.description)
                     .font(.body)
                 
-                Text(verbatim: xcode.path ?? "")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                if case let .installed(path) = xcode.installState {
+                    Text(verbatim: path.string)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                } else {
+                    Text(verbatim: "")
+                        .font(.caption)
+                }
             }
             
             Spacer()
@@ -55,7 +61,7 @@ struct XcodeListViewRow: View {
     
     @ViewBuilder
     private func selectControl(for xcode: Xcode) -> some View {
-        if xcode.installed {
+        if xcode.installState.installed {
             if xcode.selected {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.green)
@@ -98,22 +104,22 @@ struct XcodeListViewRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.3.0")!, installState: .installed, selected: true, path: "/Applications/Xcode-12.3.0.app", icon: nil),
+                xcode: Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil),
                 selected: false
             )
             
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, path: nil, icon: nil),
+                xcode: Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, icon: nil),
                 selected: false
             )
             
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, path: nil, icon: nil),
+                xcode: Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, icon: nil),
                 selected: false
             )
             
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.0.0")!, installState: .installed, selected: false, path: "/Applications/Xcode-12.3.0.app", icon: nil),
+                xcode: Xcode(version: Version("12.0.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
                 selected: false
             )
         }

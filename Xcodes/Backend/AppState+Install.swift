@@ -45,7 +45,7 @@ extension AppState {
             .handleEvents(receiveOutput: { installedXcode in
                 DispatchQueue.main.async {
                     guard let index = self.allXcodes.firstIndex(where: { $0.version.isEquivalent(to: installedXcode.version) }) else { return }
-                    self.allXcodes[index].installState = .installed
+                    self.allXcodes[index].installState = .installed(installedXcode.path)
                 }
             })
             .eraseToAnyPublisher()
