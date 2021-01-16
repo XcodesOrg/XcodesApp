@@ -258,6 +258,7 @@ class AppState: ObservableObject {
             .flatMap { [unowned self] in
                 self.install(.version(availableXcode), downloader: .aria2)
             }
+            .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { [unowned self] completion in 
                     self.installationPublishers[id] = nil
@@ -356,44 +357,69 @@ class AppState: ObservableObject {
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {
-        var allXcodeVersions = availableXcodes.map { $0.version }
+        var adjustedAvailableXcodes = availableXcodes
+        
+        // First, adjust all of the available Xcodes so that available and installed versions line up and the second part of this function works properly.
         for installedXcode in installedXcodes {
-            // If an installed version isn't listed online, add the installed version
-            if !allXcodeVersions.contains(where: { version in
-                version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version)
-            }) {
-                allXcodeVersions.append(installedXcode.version)
+            // We can trust that build metadata identifiers are unique for each version of Xcode, so if we have it then it's all we need.
+            // If build metadata matches exactly, replace the available version with the installed version.
+            // This should handle both Xcode Releases versions which can have different prerelease identifiers and Apple versions which rarely have build metadata identifiers. 
+            if let index = adjustedAvailableXcodes.map(\.version).firstIndex(where: { $0.buildMetadataIdentifiers == installedXcode.version.buildMetadataIdentifiers }) {
+                adjustedAvailableXcodes[index].version = installedXcode.version
             }
-            // If an installed version is the same as one that's listed online which doesn't have build metadata, replace it with the installed version with build metadata
-            else if let index = allXcodeVersions.firstIndex(where: { version in
-                version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version) &&
-                version.buildMetadataIdentifiers.isEmpty
+            // If an installed version is the same as one that's listed online which doesn't have build metadata, replace it with the installed version
+            // Not all prerelease Apple versions available online include build metadata
+            else if let index = adjustedAvailableXcodes.firstIndex(where: { availableXcode in
+                availableXcode.version.isEquivalent(to: installedXcode.version) &&
+                    availableXcode.version.buildMetadataIdentifiers.isEmpty
             }) {
-                allXcodeVersions[index] = installedXcode.version
+                adjustedAvailableXcodes[index].version = installedXcode.version
             }
         }
 
-        allXcodes = allXcodeVersions
-            .sorted(by: >)
-            .map { xcodeVersion in
-                let installedXcode = installedXcodes.first(where: { xcodeVersion.isEquivalentForDeterminingIfInstalled(toInstalled: $0.version) })
-                let availableXcode = availableXcodes.first { $0.version == xcodeVersion }
-                let existingXcode = allXcodes.first { $0.version == xcodeVersion }
+        // Map all of the available versions into Xcode values that join available and installed Xcode data for display.
+        var newAllXcodes = adjustedAvailableXcodes
+            .map { availableXcode -> Xcode in
+                let installedXcode = installedXcodes.first(where: { installedXcode in
+                    availableXcode.version.isEquivalent(to: installedXcode.version) 
+                })
                 
-                let defaultInstallState: XcodeInstallState = installedXcode != nil ? .installed : .notInstalled
+                // If the existing install state is "installing", keep it 
+                let existingXcodeInstallState = allXcodes.first { $0.version == availableXcode.version && $0.installing }?.installState
+                // Otherwise, determine it from whether there's an installed Xcode
+                let defaultXcodeInstallState: XcodeInstallState = installedXcode != nil ? .installed : .notInstalled
                 
                 return Xcode(
-                    version: xcodeVersion,
-                    installState: existingXcode?.installState ?? defaultInstallState,
+                    version: availableXcode.version,
+                    installState: existingXcodeInstallState ?? defaultXcodeInstallState,
                     selected: installedXcode != nil && selectedXcodePath?.hasPrefix(installedXcode!.path.string) == true, 
                     path: installedXcode?.path.string,
                     icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),
-                    requiredMacOSVersion: availableXcode?.requiredMacOSVersion,
-                    releaseNotesURL: availableXcode?.releaseNotesURL,
-                    sdks: availableXcode?.sdks,
-                    compilers: availableXcode?.compilers
+                    requiredMacOSVersion: availableXcode.requiredMacOSVersion,
+                    releaseNotesURL: availableXcode.releaseNotesURL,
+                    sdks: availableXcode.sdks,
+                    compilers: availableXcode.compilers
                 )
             }
+        
+        // If an installed version isn't listed in the available versions, add the installed version
+        // Xcode Releases should have all versions
+        // Apple didn't used to keep all prerelease versions around but has started to recently
+        for installedXcode in installedXcodes {
+            if !newAllXcodes.contains(where: { xcode in xcode.version.isEquivalent(to: installedXcode.version) }) {
+                newAllXcodes.append(
+                    Xcode(
+                        version: installedXcode.version, 
+                        installState: .installed, 
+                        selected: selectedXcodePath?.hasPrefix(installedXcode.path.string) == true, 
+                        path: installedXcode.path.string, 
+                        icon: NSWorkspace.shared.icon(forFile: installedXcode.path.string)
+                    )
+                )
+            }
+        }
+        
+        self.allXcodes = newAllXcodes.sorted { $0.version > $1.version }
     }
     
     // MARK: - Private

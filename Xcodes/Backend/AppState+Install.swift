@@ -44,7 +44,7 @@ extension AppState {
             }
             .handleEvents(receiveOutput: { installedXcode in
                 DispatchQueue.main.async {
-                    guard let index = self.allXcodes.firstIndex(where: { $0.version == installedXcode.version || $0.version.isEquivalentForDeterminingIfInstalled(toInstalled: installedXcode.version) }) else { return }
+                    guard let index = self.allXcodes.firstIndex(where: { $0.version.isEquivalent(to: installedXcode.version) }) else { return }
                     self.allXcodes[index].installState = .installed
                 }
             })
@@ -54,7 +54,7 @@ extension AppState {
     private func getXcodeArchive(_ installationType: InstallationType, downloader: Downloader) -> AnyPublisher<(AvailableXcode, URL), Error> {
         switch installationType {
         case .version(let availableXcode):
-            if let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version.isEqualWithoutBuildMetadataIdentifiers(to: availableXcode.version) }) {
+            if let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version.isEquivalent(to: availableXcode.version) }) {
                 return Fail(error: InstallationError.versionAlreadyInstalled(installedXcode))
                     .eraseToAnyPublisher()
             }
@@ -344,7 +344,7 @@ extension AppState {
     
     func setInstallationStep(of version: Version, to step: InstallationStep) {
         DispatchQueue.main.async {
-            guard let index = self.allXcodes.firstIndex(where: { $0.version.buildMetadataIdentifiers == version.buildMetadataIdentifiers || $0.version.isEquivalentForDeterminingIfInstalled(toInstalled: version) }) else { return }
+            guard let index = self.allXcodes.firstIndex(where: { $0.version.isEquivalent(to: version) }) else { return }
             self.allXcodes[index].installState = .installing(step)
         }
     }
