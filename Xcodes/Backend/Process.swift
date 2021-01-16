@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import os.log
 import Path
 
 public typealias ProcessOutput = (status: Int32, out: String, err: String)
@@ -32,16 +33,19 @@ extension Process {
                     }
                     
                     do {
-                        print("Process.run \(executable), \(input), \(arguments.joined(separator: " "))")
+                        Logger.subprocess.info("Process.run executable: \(executable), input: \(input ?? ""), arguments: \(arguments.joined(separator: ", "))")
+
                         try process.run()
                         process.waitUntilExit()
                         
                         let output = String(data: stdout.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
                         let error = String(data: stderr.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
                         
-                        dump(process)
-                        print(output)
-                        print(error)
+                        Logger.subprocess.info("Process.run output: \(output)")
+                        if !error.isEmpty {
+                            Logger.subprocess.error("Process.run error: \(error)")
+                        }
+
                         guard process.terminationReason == .exit, process.terminationStatus == 0 else {  
                             DispatchQueue.main.async {
                                 promise(.failure(ProcessExecutionError(process: process, standardOutput: output, standardError: error)))

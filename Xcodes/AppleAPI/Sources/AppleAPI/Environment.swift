@@ -10,7 +10,6 @@ import Combine
  */
 public struct Environment {
     public var network = Network()
-    public var logging = Logging()
 }
 
 public var Current = Environment()
@@ -22,8 +21,4 @@ public struct Network {
     public func dataTask(with request: URLRequest) -> URLSession.DataTaskPublisher {
         dataTask(request)
     }
-}
-
-public struct Logging {
-    public var log: (String) -> Void = { print($0) }
 }

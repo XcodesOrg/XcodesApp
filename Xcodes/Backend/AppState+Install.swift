@@ -4,6 +4,7 @@ import Path
 import AppleAPI
 import Version
 import LegibleError
+import os.log
 
 /// Downloads and installs Xcodes
 extension AppState {
@@ -27,8 +28,8 @@ extension AppState {
                     case .version:
                         // If the XIP was just downloaded, remove it and try to recover.
                         do {
-                            Current.logging.log(error.legibleLocalizedDescription)
-                            Current.logging.log("Removing damaged XIP and re-attempting installation.\n")
+                            Logger.appState.error("\(error.legibleLocalizedDescription)")
+                            Logger.appState.info("Removing damaged XIP and re-attempting installation.")
                             try Current.files.removeItem(at: damagedXIPURL)
                             return self.install(installationType, downloader: downloader, attemptNumber: attemptNumber + 1)
                                 .eraseToAnyPublisher()
@@ -82,7 +83,7 @@ extension AppState {
             aria2DownloadIsIncomplete = true
         }
         if Current.files.fileExistsAtPath(expectedArchivePath.string), aria2DownloadIsIncomplete == false {
-            Current.logging.log("(1/6) Found existing archive that will be used for installation at \(expectedArchivePath).")
+            Logger.appState.info("Found existing archive that will be used for installation at \(expectedArchivePath).")
             return Just(expectedArchivePath.url)
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()

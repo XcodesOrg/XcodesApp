@@ -1,4 +1,5 @@
 import Foundation
+import os.log
 
 class XPCDelegate: NSObject, NSXPCListenerDelegate, HelperXPCProtocol {
 
@@ -16,12 +17,12 @@ class XPCDelegate: NSObject, NSXPCListenerDelegate, HelperXPCProtocol {
     // MARK: - HelperXPCProtocol
     
     func getVersion(completion: @escaping (String) -> Void) {
-        NSLog("XPCDelegate: \(#function)")
+        Logger.xpcDelegate.info("\(#function)")
         completion(Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String)
     }
     
     func xcodeSelect(absolutePath: String, completion: @escaping (Error?) -> Void) {
-        NSLog("XPCDelegate: \(#function)")
+        Logger.xpcDelegate.info("\(#function)")
 
         guard URL(fileURLWithPath: absolutePath).hasDirectoryPath else {
             completion(XPCDelegateError(.invalidXcodePath))
@@ -55,7 +56,7 @@ class XPCDelegate: NSObject, NSXPCListenerDelegate, HelperXPCProtocol {
 // MARK: - Run
 
 private func run(url: URL, arguments: [String], completion: @escaping (Error?) -> Void) {
-    NSLog("XPCDelegate: run \(url) \(arguments)")
+    Logger.xpcDelegate.info("Run executable: \(url), arguments: \(arguments.joined(separator: ", "))")
     
     let process = Process()
     process.executableURL = url

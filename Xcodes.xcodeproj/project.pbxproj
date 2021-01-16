@@ -13,6 +13,8 @@
 		CA25192A25A9644800F08414 /* XcodeInstallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA25192925A9644800F08414 /* XcodeInstallState.swift */; };
 		CA378F992466567600A58CE0 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA378F982466567600A58CE0 /* AppState.swift */; };
 		CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */; };
+		CA42DD6E25AEA8B200BC0B0C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA42DD6D25AEA8B200BC0B0C /* Logger.swift */; };
+		CA42DD7325AEB04300BC0B0C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA42DD7225AEB04300BC0B0C /* Logger.swift */; };
 		CA44901F2463AD34003D8213 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA44901E2463AD34003D8213 /* Tag.swift */; };
 		CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */; };
 		CA452BC1259FDDFE0072DFA4 /* Stub-version.plist in Resources */ = {isa = PBXBuildFile; fileRef = CA452BBF259FDDFE0072DFA4 /* Stub-version.plist */; };
@@ -153,6 +155,8 @@
 		CA25192925A9644800F08414 /* XcodeInstallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeInstallState.swift; sourceTree = "<group>"; };
 		CA378F982466567600A58CE0 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
+		CA42DD6D25AEA8B200BC0B0C /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		CA42DD7225AEB04300BC0B0C /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		CA44901E2463AD34003D8213 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
 		CA452BBF259FDDFE0072DFA4 /* Stub-version.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Stub-version.plist"; sourceTree = "<group>"; };
@@ -337,6 +341,7 @@
 				CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */,
 				CA9FF8EA25959BDD00E47BAF /* com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h */,
 				CA9FF8DF25959BAA00E47BAF /* ConnectionVerifier.swift */,
+				CA42DD7225AEB04300BC0B0C /* Logger.swift */,
 				CA9FF8B02595967A00E47BAF /* main.swift */,
 				CA9FF8DA25959B4000E47BAF /* XPCDelegate.swift */,
 				CA9FF8C22595988B00E47BAF /* Info.plist */,
@@ -409,6 +414,7 @@
 				CAC281D9259F985100B8AB0B /* InstallationStep.swift */,
 				CA9FF8862595607900E47BAF /* InstalledXcode.swift */,
 				CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */,
+				CA42DD6D25AEA8B200BC0B0C /* Logger.swift */,
 				CAE4248B259A68B800B8B246 /* Optional+IsNotNil.swift */,
 				CABFA9AE2592EEE900380FEE /* Path+.swift */,
 				CABFA9B42592EEEA00380FEE /* Process.swift */,
@@ -698,6 +704,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CA9FF8D025959A9700E47BAF /* HelperXPCShared.swift in Sources */,
+				CA42DD7325AEB04300BC0B0C /* Logger.swift in Sources */,
 				CA9FF8DB25959B4000E47BAF /* XPCDelegate.swift in Sources */,
 				CA9FF8E625959BB800E47BAF /* AuditTokenHack.m in Sources */,
 				CA9FF8B12595967A00E47BAF /* main.swift in Sources */,
@@ -732,6 +739,7 @@
 				CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */,
 				CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */,
 				CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */,
+				CA42DD6E25AEA8B200BC0B0C /* Logger.swift in Sources */,
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,
 				CAE4247F259A666100B8B246 /* MainWindow.swift in Sources */,
 				CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */,
