@@ -5,7 +5,7 @@ import struct XCModel.Compilers
 
 /// A version of Xcode that's available for installation
 public struct AvailableXcode: Codable {
-    public let version: Version
+    public var version: Version
     public let url: URL
     public let filename: String
     public let releaseDate: Date?
