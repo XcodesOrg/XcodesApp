@@ -55,7 +55,7 @@ final class HelperClient {
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
-            return Fail(error: NSError())
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
                 .eraseToAnyPublisher()
         }
         
@@ -81,7 +81,7 @@ final class HelperClient {
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
-            return Fail(error: NSError())
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
                 .eraseToAnyPublisher()
         }
         
@@ -111,7 +111,7 @@ final class HelperClient {
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
-            return Fail(error: NSError())
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
                 .eraseToAnyPublisher()
         }
         
@@ -141,7 +141,7 @@ final class HelperClient {
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
-            return Fail(error: NSError())
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
                 .eraseToAnyPublisher()
         }
         
@@ -171,7 +171,7 @@ final class HelperClient {
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
-            return Fail(error: NSError())
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
                 .eraseToAnyPublisher()
         }
         
@@ -201,7 +201,7 @@ final class HelperClient {
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
-            return Fail(error: NSError())
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
                 .eraseToAnyPublisher()
         }
         
@@ -266,6 +266,16 @@ final class HelperClient {
     }
 }
 
-enum HelperClientError: Error {
+enum HelperClientError: LocalizedError {
+    case failedToCreateRemoteObjectProxy
     case message(String)
+    
+    var errorDescription: String? {
+        switch self {
+        case .failedToCreateRemoteObjectProxy:
+            return "Unable to communicate with privileged helper."
+        case let .message(message):
+            return message
+        }
+    }
 }
