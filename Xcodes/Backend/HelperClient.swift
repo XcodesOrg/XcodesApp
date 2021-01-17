@@ -36,26 +36,35 @@ final class HelperClient {
     }
     
     func checkIfLatestHelperIsInstalled() -> AnyPublisher<Bool, Never> {
+        Logger.helperClient.info(#function)
+
         let helperURL = Bundle.main.bundleURL.appendingPathComponent("Contents/Library/LaunchServices/" + machServiceName)
         guard
             let helperBundleInfo = CFBundleCopyInfoDictionaryForURL(helperURL as CFURL) as? [String: Any],
             let bundledHelperVersion = helperBundleInfo["CFBundleShortVersionString"] as? String
         else {
-            return Just(false).eraseToAnyPublisher()
+            return Just(false)
+                .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") })
+                .eraseToAnyPublisher()
         }
         
         return getVersion()
             .map { installedHelperVersion in installedHelperVersion == bundledHelperVersion }
             .catch { _ in Just(false) }
+            // Failure is Never, so don't bother logging completion
+            .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0), privacy: .public)") })
             .eraseToAnyPublisher()
     }
     
     func getVersion() -> AnyPublisher<String, Error> {
+        Logger.helperClient.info(#function)
+
         let connectionErrorSubject = PassthroughSubject<String, Error>()
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
             return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
                 .eraseToAnyPublisher()
         }
         
@@ -73,15 +82,27 @@ final class HelperClient {
                 .map { _ in Void() }
         )
         .map { $0.0 }
+        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0), privacy: .public)") },
+                      receiveCompletion: { completion in
+                        switch completion {
+                        case .finished:
+                            Logger.helperClient.info("\(#function): finished") 
+                        case let .failure(error):
+                            Logger.helperClient.error("\(#function): \(String(describing: error))")
+                        }
+                      })
         .eraseToAnyPublisher()
     }
     
     func switchXcodePath(_ absolutePath: String) -> AnyPublisher<Void, Error> {
+        Logger.helperClient.info("\(#function): \(absolutePath, privacy: .private(mask: .hash))")
+
         let connectionErrorSubject = PassthroughSubject<String, Error>()
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
             return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
                 .eraseToAnyPublisher()
         }
         
@@ -103,15 +124,27 @@ final class HelperClient {
                 .map { _ in Void() }
         )
         .map { $0.0 }
+        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
+                      receiveCompletion: { completion in
+                        switch completion {
+                        case .finished:
+                            Logger.helperClient.info("\(#function): finished") 
+                        case let .failure(error):
+                            Logger.helperClient.error("\(#function): \(String(describing: error))")
+                        }
+                      })
         .eraseToAnyPublisher()
     }
     
     func devToolsSecurityEnable() -> AnyPublisher<Void, Error> {
+        Logger.helperClient.info(#function)
+
         let connectionErrorSubject = PassthroughSubject<String, Error>()
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
             return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
                 .eraseToAnyPublisher()
         }
         
@@ -133,15 +166,27 @@ final class HelperClient {
                 .map { _ in Void() }
         )
         .map { $0.0 }
+        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
+                      receiveCompletion: { completion in
+                        switch completion {
+                        case .finished:
+                            Logger.helperClient.info("\(#function): finished") 
+                        case let .failure(error):
+                            Logger.helperClient.error("\(#function): \(String(describing: error))")
+                        }
+                      })
         .eraseToAnyPublisher()
     }
     
     func addStaffToDevelopersGroup() -> AnyPublisher<Void, Error> {
+        Logger.helperClient.info(#function)
+
         let connectionErrorSubject = PassthroughSubject<String, Error>()
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
             return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
                 .eraseToAnyPublisher()
         }
         
@@ -163,15 +208,27 @@ final class HelperClient {
                 .map { _ in Void() }
         )
         .map { $0.0 }
+        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
+                      receiveCompletion: { completion in
+                        switch completion {
+                        case .finished:
+                            Logger.helperClient.info("\(#function): finished") 
+                        case let .failure(error):
+                            Logger.helperClient.error("\(#function): \(String(describing: error))")
+                        }
+                      })
         .eraseToAnyPublisher()
     }
     
     func acceptXcodeLicense(absoluteXcodePath: String) -> AnyPublisher<Void, Error> {
+        Logger.helperClient.info("\(#function): \(absoluteXcodePath, privacy: .private(mask: .hash))")
+
         let connectionErrorSubject = PassthroughSubject<String, Error>()
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
             return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
                 .eraseToAnyPublisher()
         }
         
@@ -193,15 +250,27 @@ final class HelperClient {
                 .map { _ in Void() }
         )
         .map { $0.0 }
+        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
+                      receiveCompletion: { completion in
+                        switch completion {
+                        case .finished:
+                            Logger.helperClient.info("\(#function): finished") 
+                        case let .failure(error):
+                            Logger.helperClient.error("\(#function): \(String(describing: error))")
+                        }
+                      })
         .eraseToAnyPublisher()
     }
     
     func runFirstLaunch(absoluteXcodePath: String) -> AnyPublisher<Void, Error> {
+        Logger.helperClient.info("\(#function): \(absoluteXcodePath, privacy: .private(mask: .hash))")
+
         let connectionErrorSubject = PassthroughSubject<String, Error>()
         guard 
             let helper = self.helper(errorSubject: connectionErrorSubject)
         else {
             return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
                 .eraseToAnyPublisher()
         }
         
@@ -223,6 +292,15 @@ final class HelperClient {
                 .map { _ in Void() }
         )
         .map { $0.0 }
+        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
+                      receiveCompletion: { completion in
+                        switch completion {
+                        case .finished:
+                            Logger.helperClient.info("\(#function): finished") 
+                        case let .failure(error):
+                            Logger.helperClient.error("\(#function): \(String(describing: error))")
+                        }
+                      })
         .eraseToAnyPublisher()
     }    
     
@@ -230,6 +308,8 @@ final class HelperClient {
     // From https://github.com/securing/SimpleXPCApp/
     
     func install() {
+        Logger.helperClient.info(#function)
+
         var authItem = kSMRightBlessPrivilegedHelper.withCString { name in
             AuthorizationItem(name: name, valueLength: 0, value:UnsafeMutableRawPointer(bitPattern: 0), flags: 0)
         }
@@ -245,8 +325,10 @@ final class HelperClient {
 
             self.connection?.invalidate()
             self.connection = nil
+            
+            Logger.helperClient.info("\(#function): Finished installation")
         } catch {
-            Logger.helperClient.error("\(error.localizedDescription)")
+            Logger.helperClient.error("\(#function): \(error.localizedDescription)")
         }
     }
     
