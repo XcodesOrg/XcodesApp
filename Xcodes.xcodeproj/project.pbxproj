@@ -39,7 +39,6 @@
 		CA9FF8DB25959B4000E47BAF /* XPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8DA25959B4000E47BAF /* XPCDelegate.swift */; };
 		CA9FF8E025959BAA00E47BAF /* ConnectionVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8DF25959BAA00E47BAF /* ConnectionVerifier.swift */; };
 		CA9FF8E625959BB800E47BAF /* AuditTokenHack.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */; };
-		CA9FF8F525959CE000E47BAF /* HelperInstaller.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8F425959CE000E47BAF /* HelperInstaller.swift */; };
 		CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF9352595B44700E47BAF /* HelperClient.swift */; };
 		CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA1CB2C255A5262003FD669 /* AppleAPI */; };
 		CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */; };
@@ -188,7 +187,6 @@
 		CA9FF8E425959BB800E47BAF /* AuditTokenHack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuditTokenHack.h; sourceTree = "<group>"; };
 		CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuditTokenHack.m; sourceTree = "<group>"; };
 		CA9FF8EA25959BDD00E47BAF /* com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h"; sourceTree = "<group>"; };
-		CA9FF8F425959CE000E47BAF /* HelperInstaller.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelperInstaller.swift; sourceTree = "<group>"; };
 		CA9FF9052595A28400E47BAF /* com.robotsandpencils.XcodesApp.HelperTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = com.robotsandpencils.XcodesApp.HelperTest.entitlements; sourceTree = "<group>"; };
 		CA9FF9252595A7EB00E47BAF /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		CA9FF9352595B44700E47BAF /* HelperClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperClient.swift; sourceTree = "<group>"; };
@@ -409,7 +407,6 @@
 				CABFA9B82592EEEA00380FEE /* FileManager+.swift */,
 				CAFBDB942598FE96003DCC5A /* FocusedValues.swift */,
 				CABFA9AC2592EEE900380FEE /* Foundation.swift */,
-				CA9FF8F425959CE000E47BAF /* HelperInstaller.swift */,
 				CA9FF9352595B44700E47BAF /* HelperClient.swift */,
 				CAC281D9259F985100B8AB0B /* InstallationStep.swift */,
 				CA9FF8862595607900E47BAF /* InstalledXcode.swift */,
@@ -754,7 +751,6 @@
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
 				CA9FF877259528CC00E47BAF /* Version+XcodeReleases.swift in Sources */,
 				CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */,
-				CA9FF8F525959CE000E47BAF /* HelperInstaller.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
 				CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */,
 				CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */,

@@ -1,5 +1,7 @@
 import Combine
 import Foundation
+import os.log
+import ServiceManagement
 
 final class HelperClient {
     private var connection: NSXPCConnection?
@@ -223,4 +225,47 @@ final class HelperClient {
         .map { $0.0 }
         .eraseToAnyPublisher()
     }    
+    
+    // MARK: - Install
+    // From https://github.com/securing/SimpleXPCApp/
+    
+    func install() {
+        var authItem = kSMRightBlessPrivilegedHelper.withCString { name in
+            AuthorizationItem(name: name, valueLength: 0, value:UnsafeMutableRawPointer(bitPattern: 0), flags: 0)
+        }
+        var authRights = withUnsafeMutablePointer(to: &authItem) { authItem in
+            AuthorizationRights(count: 1, items: authItem)
+        }
+
+        do {
+            let authRef = try authorizationRef(&authRights, nil, [.interactionAllowed, .extendRights, .preAuthorize])
+            var cfError: Unmanaged<CFError>?
+            SMJobBless(kSMDomainSystemLaunchd, machServiceName as CFString, authRef, &cfError)
+            if let error = cfError?.takeRetainedValue() { throw error }
+
+            self.connection?.invalidate()
+            self.connection = nil
+        } catch {
+            Logger.helperClient.error("\(error.localizedDescription)")
+        }
+    }
+    
+    private func executeAuthorizationFunction(_ authorizationFunction: () -> (OSStatus) ) throws {
+        let osStatus = authorizationFunction()
+        guard osStatus == errAuthorizationSuccess else {
+            throw HelperClientError.message(String(describing: SecCopyErrorMessageString(osStatus, nil)))
+        }
+    }
+    
+    func authorizationRef(_ rights: UnsafePointer<AuthorizationRights>?,
+                                 _ environment: UnsafePointer<AuthorizationEnvironment>?,
+                                 _ flags: AuthorizationFlags) throws -> AuthorizationRef? {
+        var authRef: AuthorizationRef?
+        try executeAuthorizationFunction { AuthorizationCreate(rights, environment, flags, &authRef) }
+        return authRef
+    }
+}
+
+enum HelperClientError: Error {
+    case message(String)
 }
