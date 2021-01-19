@@ -54,7 +54,7 @@ git push --follow-tags
 scripts/package_release.sh
 
 # Notarize the app
-...
+scripts/notarize.sh "test@example.com" "@keychain:altool" MyOrg Product/Xcodes.zip
 
 # Go to https://github.com/RobotsAndPencils/XcodesApp/releases
 # Edit the latest draft release
