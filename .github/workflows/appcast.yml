@@ -1,0 +1,27 @@
+name: Build and publish a new appcast file
+
+on:
+  workflow_dispatch:
+  release:
+
+jobs:
+  jekyll:
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v2
+
+    - uses: actions/cache@v2
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-v1.0-${{ hashFiles('AppCast/Gemfile') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+
+    - uses: helaili/jekyll-action@v2
+      env:
+        JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        gem_src: 'AppCast'
+        jekyll_src: 'AppCast'
+        target_branch: 'gh-pages'
