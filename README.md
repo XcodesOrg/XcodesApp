@@ -29,6 +29,42 @@ Notable design decisions are recorded in [DECISIONS.md](./DECISIONS.md). The App
 
 [`xcode-install`](https://github.com/xcpretty/xcode-install) and [fastlane/spaceship](https://github.com/fastlane/fastlane/tree/master/spaceship) both deserve credit for figuring out the hard parts of what makes this possible.
 
+## Releasing a new version
+
+Follow the steps below to build and release a new version of Xcodes.app. For any of the git steps, you can use your preferred tool, but please sign the tag.
+
+```sh
+# Update the version number in Xcode and commit the change, if necessary
+
+# Increment the build number
+scripts/increment_build_number.sh
+
+# Commit the change
+git add Xcodes/Resources/Info.plist
+git commit -asm "Increment build number"
+
+# Tag the latest commit
+# Replace $VERSION and $BUILD below with the latest real values
+git tag -asm "v$VERSION.b$BUILD" "v$VERSION.b$BUILD"
+
+# Push to origin
+git push --follow-tags
+
+# Build the app
+scripts/package_release.sh
+
+# Notarize the app
+...
+
+# Go to https://github.com/RobotsAndPencils/XcodesApp/releases
+# Edit the latest draft release
+# Set its tag to the tag you just pushed
+# Set its title to a string with the format "$VERSION ($BUILD)"
+# Polish the draft release notes, if necessary
+# Attach the zip that was created in the Product directory to the release
+# Publish the release
+```
+
 ## Contact
 
 <a href="http://www.robotsandpencils.com"><img src="R&PLogo.png" width="153" height="74" /></a>
