@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
-	<string>20210103001</string>
+	<string>1</string>
 	<key>CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT</key>
 	<string>$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)</string>
 	<key>LSMinimumSystemVersion</key>

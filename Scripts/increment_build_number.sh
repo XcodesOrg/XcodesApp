@@ -1,18 +1,20 @@
 #!/bin/sh
-PROJECT_DIR=$(pwd)/Xcodes/Resources
-INFOPLIST_FILE="Info.plist"
-buildString=$(/usr/libexec/PlistBuddy -c "Print CFBundleVersion" "${PROJECT_DIR}/${INFOPLIST_FILE}")
-buildDate=$(echo $buildString | cut -c 1-8)
-buildNumber=$(echo $buildString | cut -c 9-11)
-today=$(date +'%Y%m%d')
+#
+# Increment build number
+#
+# This will get the latest build number from git tags, add 1, then set it in the Info.plist.
+# Assumes that build numbers are monotonically increasing positive integers, across version numbers.
+# Tags must be named v$version_numberb$build_number, e.g. v1.2.3b456
 
-if [[ $buildDate = $today ]]
-then
-buildNumber=$(($buildNumber + 1))
-else
-buildNumber=1
-fi
+infoplist_file="$(pwd)/Xcodes/Resources/Info.plist"
 
-buildString=$(printf '%s%03u' $today $buildNumber)
+# Get latest tag hash matching pattern
+hash=$(git rev-list --tags="v" --max-count=1)
+# Get latest tag at hash that matches the same pattern as a prefix in order to support commits with multiple tags
+last_tag=$(git describe --tags --match "v*" "$hash")
+# Get build number from last component of tag name
+last_build_number=$(echo "$last_tag" | grep -o "b.*" | cut -c 2-)
 
-/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $buildString" "${PROJECT_DIR}/${INFOPLIST_FILE}"
+build_number=$(($last_build_number + 1))
+
+/usr/libexec/PlistBuddy -c "Set :CFBundleVersion $build_number" "${infoplist_file}"
