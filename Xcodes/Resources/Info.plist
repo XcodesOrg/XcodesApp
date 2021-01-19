@@ -20,6 +20,8 @@
 	<string>1.0.0</string>
 	<key>CFBundleVersion</key>
 	<string>1</string>
+	<key>CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT</key>
+	<string>$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
@@ -33,9 +35,7 @@
 	<key>SMPrivilegedExecutables</key>
 	<dict>
 		<key>com.robotsandpencils.XcodesApp.Helper</key>
-		<string>identifier &quot;com.robotsandpencils.XcodesApp.Helper&quot; and info [CFBundleShortVersionString] &gt;= &quot;1.0.0&quot; and anchor apple generic and certificate leaf[subject.OU] = &quot;$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)&quot;</string>
+		<string>identifier "com.robotsandpencils.XcodesApp.Helper" and info [CFBundleShortVersionString] &gt;= "1.0.0" and anchor apple generic and certificate leaf[subject.OU] = "$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)"</string>
 	</dict>
-	<key>CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT</key>
-	<string>$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)</string>
 </dict>
 </plist>
