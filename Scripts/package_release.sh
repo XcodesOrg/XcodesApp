@@ -18,7 +18,7 @@ xcodebuild clean -project $PROJECT_NAME.xcodeproj -configuration Release -alltar
 # Archive the app and export for release distribution
 xcodebuild archive -project $PROJECT_NAME.xcodeproj -scheme $PROJECT_NAME -archivePath Archive/$PROJECT_NAME.xcarchive
 xcodebuild -archivePath Archive/$PROJECT_NAME.xcarchive -exportArchive -exportPath Product/$PROJECT_NAME -exportOptionsPlist "${SCRIPTS_DIR}/export_options.plist"
-cp -r "Product/$PROJECT_NAME/$PROJECT_NAME.app" "Product/$PROJECT_NAME.app"
+cp -a "Product/$PROJECT_NAME/$PROJECT_NAME.app" "Product/$PROJECT_NAME.app"
 
 # Create a ZIP archive suitable for altool.
 /usr/bin/ditto -c -k --keepParent "Product/$PROJECT_NAME.app" "Product/$PROJECT_NAME.zip"
