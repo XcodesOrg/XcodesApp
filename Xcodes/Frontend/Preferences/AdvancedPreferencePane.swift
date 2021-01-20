@@ -1,30 +1,19 @@
 import AppleAPI
+import Preferences
 import SwiftUI
 
-struct SettingsView: View {
+extension Preferences.PaneIdentifier {
+    static let advanced = Self("advanced")
+}
+
+struct AdvancedPreferencePane: View {
     @EnvironmentObject var appState: AppState
     @AppStorage("dataSource") var dataSource: DataSource = .xcodeReleases
     @AppStorage("downloader") var downloader: Downloader = .aria2
     
     var body: some View {
-        VStack(alignment: .leading) {
-            GroupBox(label: Text("Apple ID")) {
-                VStack(alignment: .leading) {
-                    if appState.authenticationState == .authenticated {
-                        Text(Current.defaults.string(forKey: "username") ?? "-")
-                        Button("Sign Out", action: appState.signOut)
-                    } else {
-                        Button("Sign In", action: { self.appState.presentingSignInAlert = true })
-                    }
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .sheet(isPresented: $appState.presentingSignInAlert) {
-                    SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
-                        .environmentObject(appState)
-                }
-            }
-            
-            GroupBox(label: Text("Data Source")) {
+        Preferences.Container(contentWidth: 400.0) {
+            Preferences.Section(title: "Data Source") {
                 VStack(alignment: .leading) {
                     Picker("Data Source", selection: $dataSource) {
                         ForEach(DataSource.allCases) { dataSource in
@@ -39,7 +28,7 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            GroupBox(label: Text("Downloader")) {
+            Preferences.Section(title: "Downloader") {
                 VStack(alignment: .leading) {
                     Picker("Downloader", selection: $downloader) {
                         ForEach(Downloader.allCases) { downloader in
@@ -54,7 +43,7 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             
-            GroupBox(label: Text("Privileged Helper")) {
+            Preferences.Section(title: "Privileged Helper") {
                 VStack(alignment: .leading, spacing: 8) {
                     switch appState.helperInstallState {
                     case .unknown:
@@ -73,14 +62,12 @@ struct SettingsView: View {
                     
                     Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.")
                         .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                    
+                    Spacer()
                 }
             }
-            Spacer()
         }
-        .padding()
-        .navigationTitle("Settings")
-        .frame(width: 400)
-        .frame(minHeight: 500)
     }
     
     private var dataSourceFootnote: NSAttributedString {
@@ -118,10 +105,10 @@ struct SettingsView: View {
     }
 }
 
-struct SettingsView_Previews: PreviewProvider {
+struct AdvancedPreferencePane_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            SettingsView()
+            AdvancedPreferencePane()
                 .environmentObject(AppState())
         }
     }
