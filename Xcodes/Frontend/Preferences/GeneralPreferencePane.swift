@@ -29,6 +29,7 @@ struct GeneralPreferencePane: View {
                 }
             }
         }
+        .padding(.trailing)
     }
 }
 

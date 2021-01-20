@@ -68,6 +68,7 @@ struct AdvancedPreferencePane: View {
                 }
             }
         }
+        .padding(.trailing)
     }
     
     private var dataSourceFootnote: NSAttributedString {

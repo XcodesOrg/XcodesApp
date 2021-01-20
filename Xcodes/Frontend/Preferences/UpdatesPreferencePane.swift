@@ -34,6 +34,7 @@ struct UpdatesPreferencePane: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
+        .padding(.trailing)
     }
     
     private var lastUpdatedString: String {
