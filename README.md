@@ -45,7 +45,7 @@ git commit -asm "Increment build number"
 
 # Tag the latest commit
 # Replace $VERSION and $BUILD below with the latest real values
-git tag -asm "v$VERSION.b$BUILD" "v$VERSION.b$BUILD"
+git tag -asm "v$VERSIONb$BUILD" "v$VERSIONb$BUILD"
 
 # Push to origin
 git push --follow-tags
