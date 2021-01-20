@@ -22,6 +22,8 @@
                         <pubDate>Wed, 20 Jan 2021 05:36:33 +0000</pubDate>
                         
                             
+
+                            
                             
                                 
                                 
@@ -30,6 +32,7 @@
                                     url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.1b2/Xcodes.zip"
                                     sparkle:version="2"
                                     sparkle:shortVersionString="1.0.1"
+                                    sparkle:edSignature="0sFDBZVFN1QNfXYDocYG0KUCsXkHUbrBGuugsqEo5XWpQa6MIdKRN8agry9UeUdStTk2iH45XfNiA+lzuj1xBA=="
                                     length="8361777"
                                     type="application/octet-stream" />
                             
@@ -49,6 +52,8 @@
                         <pubDate>Tue, 19 Jan 2021 03:35:06 +0000</pubDate>
                         
                             
+
+                            
                             
                                 
                                 
@@ -57,6 +62,7 @@
                                     url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.0b1/Xcodes.zip"
                                     sparkle:version="1"
                                     sparkle:shortVersionString="1.0.0"
+                                    sparkle:edSignature="ELrJn0LYxAlaAUbO4FNcEXtQDAMV1md0eWbtRfsCwBRwa6em+RrVB0Bcm3KlIGW1L6zTTqdsWmf7isyJwRs4CQ=="
                                     length="8361125"
                                     type="application/octet-stream" />
                             
