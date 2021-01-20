@@ -1,5 +1,7 @@
-import SwiftUI
 import AppKit
+import Preferences
+import Sparkle
+import SwiftUI
 
 @main
 struct XcodesApp: App {
@@ -28,6 +30,18 @@ struct XcodesApp: App {
                     appDelegate.showAboutWindow()
                 }
             }
+            CommandGroup(after: .appInfo) {
+                Button("Check for Updates...") {
+                    appDelegate.checkForUpdates()
+                }
+            }
+            CommandGroup(replacing: .appSettings) {
+                Button("Preferences...") {
+                    showPreferencesWindow()
+                }
+                .keyboardShortcut(KeyEquivalent(","), modifiers: .command)
+            }
+            
             CommandGroup(after: CommandGroupPlacement.newItem) {
                 Button("Refresh") {
                     appState.update()
@@ -38,11 +52,37 @@ struct XcodesApp: App {
 
             XcodeCommands(appState: appState)
         }
-
-        Settings {
-            SettingsView()
-                .environmentObject(appState)
-        }
+    }
+    
+    private func showPreferencesWindow() {
+        PreferencesWindowController(
+            panes: [
+                Preferences.Pane(
+                    identifier: .general,
+                    title: "General",
+                    toolbarIcon: NSImage(systemSymbolName: "gearshape", accessibilityDescription: "General")!
+                ) {
+                    GeneralPreferencePane()
+                        .environmentObject(appState)
+                },
+                Preferences.Pane(
+                    identifier: .updates,
+                    title: "Updates",
+                    toolbarIcon: NSImage(systemSymbolName: "arrow.triangle.2.circlepath.circle", accessibilityDescription: "Updates")!
+                ) {
+                    UpdatesPreferencePane()
+                },
+                Preferences.Pane(
+                    identifier: .advanced,
+                    title: "Advanced",
+                    toolbarIcon: NSImage(systemSymbolName: "gearshape.2", accessibilityDescription: "Advanced")!
+                ) {
+                    AdvancedPreferencePane()
+                        .environmentObject(appState)
+                },
+            ]
+        )
+        .show()
     }
 }
 
@@ -82,5 +122,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func showAcknowledgementsWindow() {
         acknowledgementsWindow.center()
         acknowledgementsWindow.makeKeyAndOrderFront(nil)
+    }
+    
+    func checkForUpdates() {
+        SUUpdater.shared()?.checkForUpdates(self)
+    }
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // Initialize manually
+        SUUpdater.shared()
     }
 }

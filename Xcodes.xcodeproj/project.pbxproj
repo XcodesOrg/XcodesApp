@@ -70,7 +70,6 @@
 		CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9ED2592F0CC00380FEE /* SwiftSoup */; };
 		CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F72592F0F900380FEE /* KeychainAccess */; };
 		CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9FC2592F13300380FEE /* LegibleError */; };
-		CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2A2592FBFC00380FEE /* SettingsView.swift */; };
 		CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2B2592FBFC00380FEE /* Configure.swift */; };
 		CABFAA432593104F00380FEE /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA422593104F00380FEE /* AboutView.swift */; };
 		CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */; };
@@ -93,6 +92,11 @@
 		CAFBDC4E2599B33D003DCC5A /* MainToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC4D2599B33D003DCC5A /* MainToolbar.swift */; };
 		CAFBDC68259A308B003DCC5A /* InfoPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC67259A308B003DCC5A /* InfoPane.swift */; };
 		CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC6B259A3098003DCC5A /* View+Conditional.swift */; };
+		CAFE4A9A25B7C7A30064FE51 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = CAFE4A9925B7C7A30064FE51 /* Sparkle */; };
+		CAFE4AA325B7CF960064FE51 /* Preferences in Frameworks */ = {isa = PBXBuildFile; productRef = CAFE4AA225B7CF960064FE51 /* Preferences */; };
+		CAFE4AAC25B7D2C70064FE51 /* GeneralPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AAB25B7D2C70064FE51 /* GeneralPreferencePane.swift */; };
+		CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */; };
+		CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */; };
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
 /* End PBXBuildFile section */
 
@@ -218,7 +222,6 @@
 		CABFA9B92592EEEA00380FEE /* Downloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloads.swift; sourceTree = "<group>"; };
 		CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
 		CABFA9D42592EF6300380FEE /* DECISIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DECISIONS.md; sourceTree = "<group>"; };
-		CABFAA2A2592FBFC00380FEE /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = Xcodes/SettingsView.swift; sourceTree = SOURCE_ROOT; };
 		CABFAA2B2592FBFC00380FEE /* Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configure.swift; path = Xcodes/Backend/Configure.swift; sourceTree = SOURCE_ROOT; };
 		CABFAA422593104F00380FEE /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+InfoPlistValues.swift"; sourceTree = "<group>"; };
@@ -249,6 +252,9 @@
 		CAFBDC4D2599B33D003DCC5A /* MainToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainToolbar.swift; sourceTree = "<group>"; };
 		CAFBDC67259A308B003DCC5A /* InfoPane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPane.swift; sourceTree = "<group>"; };
 		CAFBDC6B259A3098003DCC5A /* View+Conditional.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Conditional.swift"; sourceTree = "<group>"; };
+		CAFE4AAB25B7D2C70064FE51 /* GeneralPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralPreferencePane.swift; sourceTree = "<group>"; };
+		CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdvancedPreferencePane.swift; sourceTree = "<group>"; };
+		CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatesPreferencePane.swift; sourceTree = "<group>"; };
 		CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListViewRow.swift; sourceTree = "<group>"; };
 		CAFFFEEE259CEAC400903F81 /* RingProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingProgressViewStyle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -265,6 +271,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CAFE4A9A25B7C7A30064FE51 /* Sparkle in Frameworks */,
+				CAFE4AA325B7CF960064FE51 /* Preferences in Frameworks */,
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
@@ -434,10 +442,10 @@
 			children = (
 				63EAA4E9259944340046AB8F /* Common */,
 				CA9FF8552595082000E47BAF /* About */,
+				CAFE4AAA25B7D29B0064FE51 /* Preferences */,
 				CAA1CB50255A5D16003FD669 /* SignIn */,
 				CABFAA142592F73000380FEE /* XcodeList */,
 				CAE4247E259A666100B8B246 /* MainWindow.swift */,
-				CABFAA2A2592FBFC00380FEE /* SettingsView.swift */,
 				CAFBDC6B259A3098003DCC5A /* View+Conditional.swift */,
 				CA9FF8652595130600E47BAF /* View+IsHidden.swift */,
 			);
@@ -524,6 +532,16 @@
 			path = XcodesTests;
 			sourceTree = "<group>";
 		};
+		CAFE4AAA25B7D29B0064FE51 /* Preferences */ = {
+			isa = PBXGroup;
+			children = (
+				CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */,
+				CAFE4AAB25B7D2C70064FE51 /* GeneralPreferencePane.swift */,
+				CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */,
+			);
+			path = Preferences;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -570,6 +588,8 @@
 				CABFA9FC2592F13300380FEE /* LegibleError */,
 				CA9FF86C25951C6E00E47BAF /* XCModel */,
 				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
+				CAFE4A9925B7C7A30064FE51 /* Sparkle */,
+				CAFE4AA225B7CF960064FE51 /* Preferences */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -636,6 +656,8 @@
 				CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */,
 				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
 				CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */,
+				CAFE4A9825B7C7A30064FE51 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				CAFE4AA125B7CF960064FE51 /* XCRemoteSwiftPackageReference "Preferences" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -726,7 +748,9 @@
 				CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */,
 				CA44901F2463AD34003D8213 /* Tag.swift in Sources */,
 				CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */,
+				CAFE4AAC25B7D2C70064FE51 /* GeneralPreferencePane.swift in Sources */,
 				CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */,
+				CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */,
 				CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */,
 				CABFA9C32592EEEA00380FEE /* Downloads.swift in Sources */,
 				CAC281DA259F985100B8AB0B /* InstallationStep.swift in Sources */,
@@ -740,6 +764,7 @@
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,
 				CAE4247F259A666100B8B246 /* MainWindow.swift in Sources */,
 				CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */,
+				CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */,
 				CAC281C8259F97E100B8AB0B /* InstallationStepView.swift in Sources */,
 				CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */,
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
@@ -763,7 +788,6 @@
 				CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */,
 				CAE424B4259A764700B8B246 /* AppState+Install.swift in Sources */,
 				CAE42487259A68A300B8B246 /* XcodeListCategory.swift in Sources */,
-				CABFAA2C2592FBFC00380FEE /* SettingsView.swift in Sources */,
 				CAA858C425A2BE4E00ACF8C0 /* Downloader.swift in Sources */,
 				CA9FF87B2595293E00E47BAF /* DataSource.swift in Sources */,
 				CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */,
@@ -1299,6 +1323,22 @@
 				minimumVersion = 0.6.0;
 			};
 		};
+		CAFE4A9825B7C7A30064FE51 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle/";
+			requirement = {
+				kind = exactVersion;
+				version = "1.24.0-spm";
+			};
+		};
+		CAFE4AA125B7CF960064FE51 /* XCRemoteSwiftPackageReference "Preferences" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Preferences";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 2.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1345,6 +1385,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */;
 			productName = CombineExpectations;
+		};
+		CAFE4A9925B7C7A30064FE51 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAFE4A9825B7C7A30064FE51 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
+		CAFE4AA225B7CF960064FE51 /* Preferences */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CAFE4AA125B7CF960064FE51 /* XCRemoteSwiftPackageReference "Preferences" */;
+			productName = Preferences;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

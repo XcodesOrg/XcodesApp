@@ -56,6 +56,24 @@
         }
       },
       {
+        "package": "Preferences",
+        "repositoryURL": "https://github.com/sindresorhus/Preferences",
+        "state": {
+          "branch": null,
+          "revision": "4802a493acef50c814e4eb63e9a44e0941ec8883",
+          "version": "2.2.0"
+        }
+      },
+      {
+        "package": "Sparkle",
+        "repositoryURL": "https://github.com/sparkle-project/Sparkle/",
+        "state": {
+          "branch": null,
+          "revision": "891afd44c7075e699924ed9b81d8dc94a5111dfd",
+          "version": "1.24.0-spm"
+        }
+      },
+      {
         "package": "SwiftSoup",
         "repositoryURL": "https://github.com/scinfu/SwiftSoup",
         "state": {

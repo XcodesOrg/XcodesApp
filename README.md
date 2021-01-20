@@ -54,13 +54,21 @@ git push --follow-tags
 scripts/package_release.sh
 
 # Notarize the app
-scripts/notarize.sh "test@example.com" "@keychain:altool" MyOrg Product/Xcodes.zip
+# Do this from the Product directory so the app is zipped without being nested inside Product 
+pushd Product
+../scripts/notarize.sh "test@example.com" "@keychain:altool" MyOrg Xcodes.zip
+
+# Sign the .zip for Sparkle, note the signature in the output for later
+../scripts/sign_update Xcodes.zip
+popd
 
 # Go to https://github.com/RobotsAndPencils/XcodesApp/releases
 # Edit the latest draft release
 # Set its tag to the tag you just pushed
 # Set its title to a string with the format "$VERSION ($BUILD)"
 # Polish the draft release notes, if necessary
+# Add the signature to the bottom of the release notes in a comment, like:
+<!-- sparkle:edSignature=$SIGNATURE -->
 # Attach the zip that was created in the Product directory to the release
 # Publish the release
 ```

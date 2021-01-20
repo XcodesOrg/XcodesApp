@@ -66,4 +66,4 @@ app_path="$(basename -s ".zip" "$file").app"
 xcrun stapler staple "$app_path"
 
 # Zip the stapled app for distribution
-zip -r "$file" "$app_path"
+ditto -c -k --sequesterRsrc --keepParent "$file" "$app_path"
