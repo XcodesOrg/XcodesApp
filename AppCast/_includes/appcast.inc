@@ -12,6 +12,8 @@
                         <description><![CDATA[{{ release.body | markdownify }}]]></description>
                         <pubDate>{{ release.published_at | date_to_rfc822 }}</pubDate>
                         {% for asset in release.assets limit:1 %}
+                            {% assign signature = release.body | sparkle_signature %}
+
                             {% assign build_nums = release.tag_name | replace_first:'v','' | replace_first:'b',',' | split:',' %}
                             {% if build_nums.size == 2 %}
                                 {% assign version_number = build_nums[0] %}
@@ -21,6 +23,7 @@
                                     url="{{ asset.browser_download_url }}"
                                     sparkle:version="{{ build_number }}"
                                     sparkle:shortVersionString="{{ version_number }}"
+                                    sparkle:edSignature="{{ signature }}"
                                     length="{{ asset.size }}"
                                     type="application/octet-stream" />
                             {% else %}
@@ -29,6 +32,7 @@
                                 <enclosure
                                     url="{{ asset.browser_download_url }}"
                                     sparkle:version="{{ version }}"
+                                    sparkle:edSignature="{{ signature }}"
                                     length="{{ asset.size }}"
                                     type="application/octet-stream" />
                             {% endif %}
