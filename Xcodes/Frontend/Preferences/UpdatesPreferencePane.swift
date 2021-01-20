@@ -18,6 +18,11 @@ struct UpdatesPreferencePane: View {
                         "Automatically check for updates", 
                         isOn: $updater.automaticallyChecksForUpdates
                     )
+                    
+                    Toggle(
+                        "Include prerelease versions", 
+                        isOn: $updater.includePrereleaseVersions
+                    )
                                         
                     Button("Check Now") {
                         SUUpdater.shared()?.checkForUpdates(nil)
@@ -54,7 +59,17 @@ class ObservableUpdater: ObservableObject {
     private var automaticallyChecksForUpdatesObservation: NSKeyValueObservation?
     @Published var lastUpdateCheckDate: Date?
     private var lastUpdateCheckDateObservation: NSKeyValueObservation?
-    
+    @Published var includePrereleaseVersions = false {
+        didSet {
+            UserDefaults.standard.setValue(includePrereleaseVersions, forKey: "includePrereleaseVersions")
+
+            if includePrereleaseVersions {
+                SUUpdater.shared()?.feedURL = .prereleaseAppcast
+            } else {
+                SUUpdater.shared()?.feedURL = .appcast
+            }
+        }
+    }
     
     init() {
         automaticallyChecksForUpdatesObservation = SUUpdater.shared()?.observe(
@@ -72,7 +87,13 @@ class ObservableUpdater: ObservableObject {
                 self.lastUpdateCheckDate = updater.lastUpdateCheckDate
             }
         )
+        includePrereleaseVersions = UserDefaults.standard.bool(forKey: "includePrereleaseVersions")
     }
+}
+
+extension URL {
+    static let appcast = URL(string: "https://robotsandpencils.github.io/XcodesApp/appcast.xml")!
+    static let prereleaseAppcast = URL(string: "https://robotsandpencils.github.io/XcodesApp/appcast_pre.xml")!
 }
 
 struct UpdatesPreferencePane_Previews: PreviewProvider {
