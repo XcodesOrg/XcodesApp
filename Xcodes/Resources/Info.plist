@@ -39,5 +39,7 @@
 	</dict>
 	<key>SUFeedURL</key>
 	<string>https://robotsandpencils.github.io/XcodesApp/appcast.xml</string>
+	<key>SUPublicEDKey</key>
+	<string>SEcz0vgUSeBTOoAXYe+64zea95G6lIf5NgzFs3InYJQ=</string>
 </dict>
 </plist>
