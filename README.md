@@ -17,7 +17,9 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 
 ## Installation
 
-Xcodes.app is currently only provided as source code that must be built using Xcode.
+Xcodes.app runs on macOS Big Sur 11.0 or later.
+
+You can download the latest version of Xcodes [here](https://github.com/RobotsAndPencils/XcodesApp/releases/latest) using the Xcodes.zip asset. These releases are already Developer ID-signed and notarized.
 
 ## Development
 
