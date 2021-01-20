@@ -29,7 +29,8 @@ Notable design decisions are recorded in [DECISIONS.md](./DECISIONS.md). The App
 
 [`xcode-install`](https://github.com/xcpretty/xcode-install) and [fastlane/spaceship](https://github.com/fastlane/fastlane/tree/master/spaceship) both deserve credit for figuring out the hard parts of what makes this possible.
 
-## Releasing a new version
+<details>
+<summary>Releasing a new version</summary>
 
 Follow the steps below to build and release a new version of Xcodes.app. For any of the git steps, you can use your preferred tool, but please sign the tag.
 
@@ -72,6 +73,7 @@ popd
 # Attach the zip that was created in the Product directory to the release
 # Publish the release
 ```
+</details>
 
 ## Contact
 
