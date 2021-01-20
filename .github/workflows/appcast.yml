@@ -6,22 +6,45 @@ on:
 
 jobs:
   jekyll:
-    runs-on: ubuntu-16.04
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-
-    - uses: actions/cache@v2
+    - name: Checkout 🛎
+      uses: actions/checkout@v2
       with:
-        path: vendor/bundle
+        # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        persist-credentials: false
+
+    - name: Cache 📦
+      uses: actions/cache@v2
+      with:
+        path: AppCast/vendor/bundle
         key: ${{ runner.os }}-gems-v1.0-${{ hashFiles('AppCast/Gemfile') }}
         restore-keys: |
           ${{ runner.os }}-gems-
-
-    - uses: helaili/jekyll-action@v2
-      env:
-        JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+    - name: Ruby ♦️
+      uses: actions/setup-ruby@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        gem_src: 'AppCast'
-        jekyll_src: 'AppCast'
-        target_branch: 'gh-pages'
+        ruby-version: '2.7'
+
+    - name: Bundler 💎
+      working-directory: AppCast
+      env:
+        BUNDLE_PATH: vendor/bundle
+      run: |
+        gem install bundler
+        bundle install
+
+    - name: Build 🛠
+      working-directory: AppCast
+      env:
+        BUNDLE_PATH: vendor/bundle
+        JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: bundle exec jekyll build
+      
+    - name: Publish 🚀
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: AppCast/_site
