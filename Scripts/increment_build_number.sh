@@ -9,7 +9,7 @@
 infoplist_file="$(pwd)/Xcodes/Resources/Info.plist"
 
 # Get latest tag hash matching pattern
-hash=$(git rev-list --tags="v" --max-count=1)
+hash=$(git rev-list --tags="v*" --max-count=1)
 # Get latest tag at hash that matches the same pattern as a prefix in order to support commits with multiple tags
 last_tag=$(git describe --tags --match "v*" "$hash")
 # Get build number from last component of tag name
