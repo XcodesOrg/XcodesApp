@@ -8,6 +8,40 @@
             
                 
                     <item>
+                        <title>1.0.2 (3)</title>
+                        <description><![CDATA[<h2 id="changes">Changes</h2>
+
+<ul>
+  <li>Add Sparkle for software updates (#62) @interstateone</li>
+</ul>
+
+<!-- sparkle:edSignature=Z4orm82DLqUB0q5B+9PsVWgm8FYEqije7umuylooLZM8+XaiX9IEH2OoNoHWIGh8e+PRekMJ5DfL0iTmqz2eBQ== -->
+]]></description>
+                        <pubDate>Wed, 20 Jan 2021 18:12:04 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.2b3/Xcodes.zip"
+                                    sparkle:version="3"
+                                    sparkle:shortVersionString="1.0.2"
+                                    sparkle:edSignature="Z4orm82DLqUB0q5B+9PsVWgm8FYEqije7umuylooLZM8+XaiX9IEH2OoNoHWIGh8e+PRekMJ5DfL0iTmqz2eBQ=="
+                                    length="10441281"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>1.0.1 (2)</title>
                         <description><![CDATA[<h2 id="changes">Changes</h2>
 
