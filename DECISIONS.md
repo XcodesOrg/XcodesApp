@@ -56,10 +56,10 @@ This isn't a technical decision, but we spent enough time talking about this tha
 
 Here are the descriptions of these terms from [Apple's Style Guide](https://books.apple.com/ca/book/apple-style-guide/id1161855204):
 
-> active: Use to refer to the app or window currently being used. Preferred to in front.
-> default: OK to use to describe the state of settings before the user changes them. See also preset
-> preset: Use to refer to a group of customized settings an app provides or the user saves for reuse.
-> select: Use select, not choose, to refer to the action users perform when they select among multiple objects
+> active: Use to refer to the app or window currently being used. Preferred to in front.  
+> default: OK to use to describe the state of settings before the user changes them. See also preset.  
+> preset: Use to refer to a group of customized settings an app provides or the user saves for reuse.  
+> select: Use select, not choose, to refer to the action users perform when they select among multiple objects.  
 
 Xcodes.app has this same functionality as xcodes, which still uses `xcode-select` under the hood, but because the main UI is a list of selectable rows, there _may_ be some ambiguity about the meaning of "selected". "Default" has a less clear connection to `xcode-select`'s name, but does accurately describe the behaviour that results. In Xcode 11 Launch Services also uses the selected Xcode version when opening a (GUI) developer tool bundled with Xcode, like Instruments. We could also try to follow Apple's lead by using the term "active" from the `xcode-select` man pages and notarization documentation. According to the style guide "active" already has a clear meaning in a GUI context.
 
