@@ -37,5 +37,7 @@
 		<key>com.robotsandpencils.XcodesApp.Helper</key>
 		<string>identifier "com.robotsandpencils.XcodesApp.Helper" and info [CFBundleShortVersionString] &gt;= "1.0.0" and anchor apple generic and certificate leaf[subject.OU] = "$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)"</string>
 	</dict>
+	<key>SUFeedURL</key>
+	<string>https://robotsandpencils.github.io/XcodesApp/appcast.xml</string>
 </dict>
 </plist>

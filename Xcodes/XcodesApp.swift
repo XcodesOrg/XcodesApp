@@ -1,5 +1,6 @@
-import SwiftUI
 import AppKit
+import Sparkle
+import SwiftUI
 
 @main
 struct XcodesApp: App {
@@ -26,6 +27,11 @@ struct XcodesApp: App {
             CommandGroup(replacing: .appInfo) {
                 Button("About Xcodes") {
                     appDelegate.showAboutWindow()
+                }
+            }
+            CommandGroup(after: .appInfo) {
+                Button("Check for Updates...") {
+                    appDelegate.checkForUpdates()
                 }
             }
             CommandGroup(after: CommandGroupPlacement.newItem) {
@@ -82,5 +88,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func showAcknowledgementsWindow() {
         acknowledgementsWindow.center()
         acknowledgementsWindow.makeKeyAndOrderFront(nil)
+    }
+    
+    func checkForUpdates() {
+        SUUpdater.shared()?.checkForUpdates(self)
+    }
+    
+    func applicationDidFinishLaunching(_ notification: Notification) {
+        // Initialize manually
+        SUUpdater.shared()
     }
 }
