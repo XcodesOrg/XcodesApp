@@ -64,3 +64,13 @@ Here are the descriptions of these terms from [Apple's Style Guide](https://book
 Xcodes.app has this same functionality as xcodes, which still uses `xcode-select` under the hood, but because the main UI is a list of selectable rows, there _may_ be some ambiguity about the meaning of "selected". "Default" has a less clear connection to `xcode-select`'s name, but does accurately describe the behaviour that results. In Xcode 11 Launch Services also uses the selected Xcode version when opening a (GUI) developer tool bundled with Xcode, like Instruments. We could also try to follow Apple's lead by using the term "active" from the `xcode-select` man pages and notarization documentation. According to the style guide "active" already has a clear meaning in a GUI context.
 
 Ultimately, we've decided to align with Apple's usage of "active" and "make active" in this specific context, despite possible confusion with the definition in the style guide. 
+
+## Software Updates
+
+We're familiar with using GitHub releases to distribute pre-built, code signed and notarized versions of `xcodes` via direct download and Homebrew. Ideally we could use GitHub releases here too with an update mechanism more suitable for an app bundle. For distribution outside the Mac App Store, the most popular choice for updates is [Sparkle](https://sparkle-project.org). The v2 branch has been in beta for a long time, but since Xcodes.app isn't (currently) sandboxed, we can use the production-ready v1 releases.
+
+Based on [this blog post](https://yiqiu.me/2015/11/19/sparkle-update-on-github/), we can use GitHub Pages to generate the appcast for Sparkle to point at releases in our repo. We've made a few changes, like putting the source for the Jekyll site on the main branch, and including the EdDSA signature in the appcast. Generating the appcast file manually would be more straightforward, but we can always edit the files on the gh_pages branch manually if we need to, and it's one less step for a release manager to perform when they're already creating the release in the repo.
+
+We're deliberately not capturing system profile data with Sparkle right now, because we don't want it and because it would require additional infrastructure.
+
+We also considered https://github.com/mxcl/AppUpdater, but decided aganist it because it seemed less battle-tested than Sparkle and currently lacks an open source license.
