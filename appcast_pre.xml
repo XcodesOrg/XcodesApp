@@ -18,13 +18,17 @@
                         <pubDate>Tue, 19 Jan 2021 03:35:06 +0000</pubDate>
                         
                             
+
                             
+                            
+                                
                                 
 
                                 <enclosure
                                     url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.0b1/Xcodes.zip"
-                                    sparkle:version="1.0.0b1"
-                                    sparkle:edSignature="ELrJn0LYxAlaAUO4FNcEXtQDAMV1md0eWbtRfsCwBRwa6em+RrVB0Bcm3KlIGW1L6zTTqdsWmf7isyJwRs4CQ=="
+                                    sparkle:version="1"
+                                    sparkle:shortVersionString="1.0.0"
+                                    sparkle:edSignature="ELrJn0LYxAlaAUbO4FNcEXtQDAMV1md0eWbtRfsCwBRwa6em+RrVB0Bcm3KlIGW1L6zTTqdsWmf7isyJwRs4CQ=="
                                     length="8361125"
                                     type="application/octet-stream" />
                             
