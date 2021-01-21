@@ -12,7 +12,7 @@ struct XcodeListViewRow: View {
             appIconView(for: xcode)
             
             VStack(alignment: .leading) {
-                Text(verbatim: "\(xcode.description) (\(xcode.version.buildMetadataIdentifiers.joined(separator: " ")))")
+                Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                     .font(.body)
                 
                 if case let .installed(path) = xcode.installState {
@@ -120,6 +120,11 @@ struct XcodeListViewRow_Previews: PreviewProvider {
             
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.0.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                selected: false
+            )
+            
+            XcodeListViewRow(
+                xcode: Xcode(version: Version("12.0.0+1234A")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
                 selected: false
             )
         }

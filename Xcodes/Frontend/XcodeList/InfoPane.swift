@@ -17,7 +17,7 @@ struct InfoPane: View {
                     icon(for: xcode)
                     
                     VStack(alignment: .leading) {
-                        Text(verbatim: "Xcode \(xcode.description) (\(xcode.version.buildMetadataIdentifiers.joined(separator: " ")))")
+                        Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                             .font(.title)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         
@@ -254,11 +254,11 @@ struct InfoPane_Previews: PreviewProvider {
                 })
                 .previewDisplayName("Populated, Uninstalled")
             
-            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
+            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
                         .init(
-                            version: Version(major: 12, minor: 3, patch: 0),
+                            version: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]),
                             installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
                             selected: false,
                             icon: nil,

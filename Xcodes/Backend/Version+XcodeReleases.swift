@@ -47,5 +47,9 @@ extension Version {
         
         self.init(versionString)
     }
+    
+    var buildMetadataIdentifiersDisplay: String {
+        return !buildMetadataIdentifiers.isEmpty ? "(\(buildMetadataIdentifiers.joined(separator: " ")))" : ""
+    }
 }
 
