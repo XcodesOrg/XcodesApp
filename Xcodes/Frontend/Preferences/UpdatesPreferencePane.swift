@@ -15,12 +15,12 @@ struct UpdatesPreferencePane: View {
             Preferences.Section(title: "Updates") {
                 VStack(alignment: .leading) {
                     Toggle(
-                        "Automatically check for updates", 
+                        "Automatically check for app updates",
                         isOn: $updater.automaticallyChecksForUpdates
                     )
                     
                     Toggle(
-                        "Include prerelease versions", 
+                        "Include prerelease app versions",
                         isOn: $updater.includePrereleaseVersions
                     )
                                         
