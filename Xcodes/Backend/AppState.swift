@@ -496,12 +496,6 @@ class AppState: ObservableObject {
 
     // MARK: - Nested Types
 
-    enum HelperInstallState: Equatable {
-        case unknown
-        case notInstalled
-        case installed
-    }
-
     struct AlertContent: Identifiable {
         var title: String
         var message: String
