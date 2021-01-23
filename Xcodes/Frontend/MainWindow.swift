@@ -6,6 +6,10 @@ struct MainWindow: View {
     @State private var selectedXcodeID: Xcode.ID?
     @State private var searchText: String = ""
     @AppStorage("lastUpdated") private var lastUpdated: Double?
+    // These two properties should be per-scene state managed by @SceneStorage property wrappers.
+    // There's currently a bug with @SceneStorage on macOS, though, where quitting the app will discard the values, which removes a lot of its utility.
+    // In the meantime, we're using @AppStorage so that persistence and state restoration works, even though it's not per-scene.
+    // FB8979533 SceneStorage doesn't restore value after app is quit by user
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
   
