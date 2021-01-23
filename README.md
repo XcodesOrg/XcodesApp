@@ -19,8 +19,9 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 
 Xcodes.app runs on macOS Big Sur 11.0 or later.
 
-You can download the latest version of Xcodes [here](https://github.com/RobotsAndPencils/XcodesApp/releases/latest) using the Xcodes.zip asset. These releases are already Developer ID-signed and notarized.
-
+1. Download the latest version [here](https://github.com/RobotsAndPencils/XcodesApp/releases/latest) using the **Xcodes.zip** asset. These releases are already Developer ID-signed and notarized.
+2. Move the unzipped `Xcodes.app` to your `/Applications` directory
+ 
 ## Development
 
 You'll need macOS 11 Big Sur and Xcode 12 in order to build and run Xcodes.app.
@@ -57,7 +58,7 @@ git push --follow-tags
 scripts/package_release.sh
 
 # Notarize the app
-# Do this from the Product directory so the app is zipped without being nested inside Product 
+# Do this from the Product directory so the app is zipped without being nested inside Product
 pushd Product
 ../scripts/notarize.sh "test@example.com" "@keychain:altool" MyOrg Xcodes.zip
 
