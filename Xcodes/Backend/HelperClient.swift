@@ -337,7 +337,11 @@ final class HelperClient {
     private func executeAuthorizationFunction(_ authorizationFunction: () -> (OSStatus) ) throws {
         let osStatus = authorizationFunction()
         guard osStatus == errAuthorizationSuccess else {
-            throw HelperClientError.message(String(describing: SecCopyErrorMessageString(osStatus, nil)))
+            if let message = SecCopyErrorMessageString(osStatus, nil) {
+                throw HelperClientError.message(String(message as NSString))
+            } else {
+                throw HelperClientError.message("Unknown error")
+            }
         }
     }
     
