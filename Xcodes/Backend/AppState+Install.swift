@@ -308,11 +308,10 @@ extension AppState {
     }
 
     func enableDeveloperMode() -> AnyPublisher<Void, Error> {
-        if helperInstallState == .notInstalled {
-            installHelper()
-        }
-
-        return Current.helper.devToolsSecurityEnable()
+        installHelperIfNecessary()
+            .flatMap {
+                Current.helper.devToolsSecurityEnable()
+            }
             .flatMap {
                 Current.helper.addStaffToDevelopersGroup()
             }
@@ -320,20 +319,18 @@ extension AppState {
     }
 
     func approveLicense(for xcode: InstalledXcode) -> AnyPublisher<Void, Error> {
-        if helperInstallState == .notInstalled {
-            installHelper()
-        }
-
-        return Current.helper.acceptXcodeLicense(xcode.path.string)
+        installHelperIfNecessary()
+            .flatMap {
+                Current.helper.acceptXcodeLicense(xcode.path.string)
+            }
             .eraseToAnyPublisher()
     }
 
     func installComponents(for xcode: InstalledXcode) -> AnyPublisher<Void, Swift.Error> {
-        if helperInstallState == .notInstalled {
-            installHelper()
-        }
-
-        return Current.helper.runFirstLaunch(xcode.path.string)
+        installHelperIfNecessary()
+            .flatMap {
+                Current.helper.runFirstLaunch(xcode.path.string)
+            }
             .flatMap {
                 Current.shell.getUserCacheDir().map { $0.out }
                     .combineLatest(

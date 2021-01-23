@@ -55,7 +55,7 @@ struct AdvancedPreferencePane: View {
                         HStack {
                             Text("Helper is not installed")
                             Button("Install helper") {
-                                appState.installHelper()
+                                appState.installHelperIfNecessary()
                             }
                         }
                     }

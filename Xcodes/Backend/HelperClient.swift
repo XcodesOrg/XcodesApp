@@ -307,7 +307,7 @@ final class HelperClient {
     // MARK: - Install
     // From https://github.com/securing/SimpleXPCApp/
     
-    func install() {
+    func install() throws {
         Logger.helperClient.info(#function)
 
         var authItem = kSMRightBlessPrivilegedHelper.withCString { name in
@@ -329,13 +329,19 @@ final class HelperClient {
             Logger.helperClient.info("\(#function): Finished installation")
         } catch {
             Logger.helperClient.error("\(#function): \(error.localizedDescription)")
+            
+            throw error
         }
     }
     
     private func executeAuthorizationFunction(_ authorizationFunction: () -> (OSStatus) ) throws {
         let osStatus = authorizationFunction()
         guard osStatus == errAuthorizationSuccess else {
-            throw HelperClientError.message(String(describing: SecCopyErrorMessageString(osStatus, nil)))
+            if let message = SecCopyErrorMessageString(osStatus, nil) {
+                throw HelperClientError.message(String(message as NSString))
+            } else {
+                throw HelperClientError.message("Unknown error")
+            }
         }
     }
     

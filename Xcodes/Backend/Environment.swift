@@ -237,7 +237,7 @@ public struct Defaults {
 
 private let helperClient = HelperClient()
 public struct Helper {
-    var install: () -> Void = helperClient.install
+    var install: () throws -> Void = helperClient.install
     var checkIfLatestHelperIsInstalled: () -> AnyPublisher<Bool, Never> = helperClient.checkIfLatestHelperIsInstalled
     var getVersion: () -> AnyPublisher<String, Error> = helperClient.getVersion
     var switchXcodePath: (_ absolutePath: String) -> AnyPublisher<Void, Error> = helperClient.switchXcodePath
