@@ -206,10 +206,15 @@ extension AppState {
 
         return Current.shell.unxip(source)
             .catch { error -> AnyPublisher<ProcessOutput, Swift.Error> in
-                if let executionError = error as? ProcessExecutionError,
-                   executionError.standardError.contains("damaged and can’t be expanded") {
+                if let executionError = error as? ProcessExecutionError {
+                   if executionError.standardError.contains("damaged and can’t be expanded") {
                     return Fail(error: InstallationError.damagedXIP(url: source))
                         .eraseToAnyPublisher()
+                   } else if executionError.standardError.contains("can’t be expanded because the selected volume doesn’t have enough free space.") {
+                    return Fail(error: InstallationError.notEnoughFreeSpaceToExpandArchive(archivePath: Path(url: source)!,
+                                                                                           version: availableXcode.version))
+                        .eraseToAnyPublisher()
+                   }
                 }
                 return Fail(error: error)
                     .eraseToAnyPublisher()
@@ -365,6 +370,7 @@ extension AppState {
 
 public enum InstallationError: LocalizedError, Equatable {
     case damagedXIP(url: URL)
+    case notEnoughFreeSpaceToExpandArchive(archivePath: Path, version: Version)
     case failedToMoveXcodeToApplications
     case failedSecurityAssessment(xcode: InstalledXcode, output: String)
     case codesignVerifyFailed(output: String)
@@ -383,6 +389,12 @@ public enum InstallationError: LocalizedError, Equatable {
         switch self {
         case .damagedXIP(let url):
             return "The archive \"\(url.lastPathComponent)\" is damaged and can't be expanded."
+        case let .notEnoughFreeSpaceToExpandArchive(archivePath, version):
+            return """
+                   The archive “\(archivePath.basename())” can’t be expanded because the current volume doesn’t have enough free space.
+
+                   Make more space available to expand the archive and then install Xcode \(version.appleDescription) again to start installation from where it left off.
+                   """
         case .failedToMoveXcodeToApplications:
             return "Failed to move Xcode to the /Applications directory."
         case .failedSecurityAssessment(let xcode, let output):
