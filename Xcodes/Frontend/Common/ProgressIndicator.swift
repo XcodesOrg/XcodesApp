@@ -23,7 +23,6 @@ struct ProgressIndicator: NSViewRepresentable {
         nsView.controlSize = controlSize
         nsView.isIndeterminate = isIndeterminate
         nsView.style = style
-        nsView.toolTip = "Dowloading: \(Int(doubleValue * 100.0))% complete"
     }
 }
 
