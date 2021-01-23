@@ -167,7 +167,7 @@ class AppStateTests: XCTestCase {
                 [.installing(.trashingArchive), .notInstalled, .notInstalled],
                 [.installing(.checkingSecurity), .notInstalled, .notInstalled],
                 [.installing(.finishing), .notInstalled, .notInstalled],
-                [.installed, .notInstalled, .notInstalled]
+                [.installed(Path("/Applications/Xcode-0.0.0.app")!), .notInstalled, .notInstalled]
             ]
         )
     }
@@ -275,9 +275,44 @@ class AppStateTests: XCTestCase {
                 [.installing(.trashingArchive), .notInstalled, .notInstalled],
                 [.installing(.checkingSecurity), .notInstalled, .notInstalled],
                 [.installing(.finishing), .notInstalled, .notInstalled],
-                [.installed, .notInstalled, .notInstalled]
+                [.installed(Path("/Applications/Xcode-0.0.0.app")!), .notInstalled, .notInstalled]
             ]
         )
     }
 
+    func test_Install_NotEnoughFreeSpace() throws {
+        Current.shell.unxip = { _ in
+            Fail(error: ProcessExecutionError(
+                    process: Process(),
+                    standardOutput: "xip: signing certificate was \"Development Update\" (validation not attempted)", 
+                    standardError: "xip: error: The archive “Xcode-12.4.0-Release.Candidate+12D4e.xip” can’t be expanded because the selected volume doesn’t have enough free space."
+            ))
+            .eraseToAnyPublisher()
+        }
+        let archiveURL = URL(fileURLWithPath: "/Users/user/Library/Application Support/Xcode-0.0.0.xip")
+        
+        let recorder = subject.unarchiveAndMoveXIP(
+            availableXcode: AvailableXcode(
+                version: Version("0.0.0")!,
+                url: URL(string: "https://developer.apple.com")!, 
+                filename: "Xcode-0.0.0.xip", 
+                releaseDate: nil
+            ),
+            at: archiveURL,
+            to: URL(string: "/Applications/Xcode-0.0.0.app")!
+        ).record()
+        
+        let completion = try wait(for: recorder.completion, timeout: 1, description: "Completion")
+
+        if case let .failure(error as InstallationError) = completion { 
+            XCTAssertEqual(
+                error,
+                InstallationError.notEnoughFreeSpaceToExpandArchive(archivePath: Path(url: archiveURL)!, 
+                                                                    version: Version("0.0.0")!)
+            )
+        }
+        else {
+            XCTFail() 
+        }        
+    }
 }
