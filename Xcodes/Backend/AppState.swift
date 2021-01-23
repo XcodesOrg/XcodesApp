@@ -40,6 +40,9 @@ class AppState: ObservableObject {
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var xcodeBeingConfirmedForInstallCancellation: Xcode?
     @Published var helperInstallState: HelperInstallState = .notInstalled
+    /// Whether the user is being prepared for the helper installation alert with an explanation.
+    /// This closure will be performed after the user consents.
+    @Published var isPreparingUserForActionRequiringHelper: (() -> Void)?
 
     // MARK: - Errors
 
@@ -203,7 +206,24 @@ class AppState: ObservableObject {
     
     // MARK: - Helper
     
-    func installHelperIfNecessary() {
+    /// Install the privileged helper if it isn't already installed.
+    ///
+    /// The way this is done is a little roundabout, because it requires user interaction in an alert before installation should be attempted.
+    /// The first time this method is invoked should be with `shouldPrepareUserForHelperInstallation` set to true.
+    /// If the helper is already installed, then nothing will happen.
+    /// If the helper is not already installed, the user will be prepared for installation and this method will return early.
+    /// If they consent to installing the helper then this method will be invoked again with  `shouldPrepareUserForHelperInstallation` set to false.
+    /// This will install the helper.
+    ///
+    /// - Parameter shouldPrepareUserForHelperInstallation: Whether the user should be presented with an alert preparing them for helper installation.
+    func installHelperIfNecessary(shouldPrepareUserForHelperInstallation: Bool = true) {
+        guard helperInstallState == .installed || shouldPrepareUserForHelperInstallation == false else {
+            isPreparingUserForActionRequiringHelper = { [unowned self] in self.installHelperIfNecessary(shouldPrepareUserForHelperInstallation: false) }
+            return
+        }
+        
+        isPreparingUserForActionRequiringHelper = nil
+        
         installHelperIfNecessary()
             .sink(
                 receiveCompletion: { [unowned self] completion in
@@ -339,7 +359,26 @@ class AppState: ObservableObject {
         NSWorkspace.shared.activateFileViewerSelecting([installedXcode.path.url])
     }
 
-    func select(id: Xcode.ID) {
+    /// Make an Xcode active, a.k.a select it, in the `xcode-select` sense.
+    ///
+    /// The underlying work is done by the privileged helper, so we need to make sure that it's installed first.
+    /// The way this is done is a little roundabout, because it requires user interaction in an alert before the `selectPublisher` is subscribed to.
+    /// The first time this method is invoked should be with `shouldPrepareUserForHelperInstallation` set to true.
+    /// If the helper is already installed, the Xcode will be made active immediately.
+    /// If the helper is not already installed, the user will be prepared for installation and this method will return early.
+    /// If they consent to installing the helper then this method will be invoked again with  `shouldPrepareUserForHelperInstallation` set to false.
+    /// This will install the helper and make the Xcode active.
+    ///
+    /// - Parameter id: The identifier of the Xcode to make active.
+    /// - Parameter shouldPrepareUserForHelperInstallation: Whether the user should be presented with an alert preparing them for helper installation before making the Xcode version active.
+    func select(id: Xcode.ID, shouldPrepareUserForHelperInstallation: Bool = true) {
+        guard helperInstallState == .installed || shouldPrepareUserForHelperInstallation == false else {
+            isPreparingUserForActionRequiringHelper = { [unowned self] in self.select(id: id, shouldPrepareUserForHelperInstallation: false) }
+            return
+        }
+
+        isPreparingUserForActionRequiringHelper = nil
+
         guard 
             let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
             selectPublisher == nil
