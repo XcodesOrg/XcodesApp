@@ -6,8 +6,8 @@ struct MainWindow: View {
     @State private var selectedXcodeID: Xcode.ID?
     @State private var searchText: String = ""
     @AppStorage("lastUpdated") private var lastUpdated: Double?
-    @SceneStorage("isShowingInfoPane") private var isShowingInfoPane = false
-    @SceneStorage("xcodeListCategory") private var category: XcodeListCategory = .all
+    @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
+    @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
   
     var body: some View {
         HSplitView {
