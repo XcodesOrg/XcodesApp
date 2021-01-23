@@ -203,9 +203,29 @@ class AppState: ObservableObject {
     
     // MARK: - Helper
     
-    func installHelper() {
-        Current.helper.install()
-        checkIfHelperIsInstalled()
+    func installHelperIfNecessary() {
+        installHelperIfNecessary()
+            .sink(
+                receiveCompletion: { [unowned self] completion in
+                    if case let .failure(error) = completion {
+                        self.error = error
+                    }
+                }, 
+                receiveValue: {}
+            )
+            .store(in: &cancellables)
+    }
+    
+    func installHelperIfNecessary() -> AnyPublisher<Void, Error> {
+        Result {
+            if helperInstallState == .notInstalled {
+                try Current.helper.install()
+                checkIfHelperIsInstalled()
+            }
+        }
+        .publisher
+        .subscribe(on: DispatchQueue.main)
+        .eraseToAnyPublisher()
     }
     
     private func checkIfHelperIsInstalled() {
@@ -320,16 +340,15 @@ class AppState: ObservableObject {
     }
 
     func select(id: Xcode.ID) {
-        if helperInstallState == .notInstalled {
-            installHelper()
-        }
-
         guard 
             let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
             selectPublisher == nil
         else { return }
         
-        selectPublisher = HelperClient().switchXcodePath(installedXcode.path.string)
+        selectPublisher = installHelperIfNecessary()
+            .flatMap {
+                Current.helper.switchXcodePath(installedXcode.path.string)
+            }
             .flatMap { [unowned self] _ in
                 self.updateSelectedXcodePath()
             }
