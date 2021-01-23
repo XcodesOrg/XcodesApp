@@ -167,7 +167,7 @@ class AppStateTests: XCTestCase {
                 [.installing(.trashingArchive), .notInstalled, .notInstalled],
                 [.installing(.checkingSecurity), .notInstalled, .notInstalled],
                 [.installing(.finishing), .notInstalled, .notInstalled],
-                [.installed, .notInstalled, .notInstalled]
+                [.installed(Path("/Applications/Xcode-0.0.0.app")!), .notInstalled, .notInstalled]
             ]
         )
     }
@@ -275,7 +275,7 @@ class AppStateTests: XCTestCase {
                 [.installing(.trashingArchive), .notInstalled, .notInstalled],
                 [.installing(.checkingSecurity), .notInstalled, .notInstalled],
                 [.installing(.finishing), .notInstalled, .notInstalled],
-                [.installed, .notInstalled, .notInstalled]
+                [.installed(Path("/Applications/Xcode-0.0.0.app")!), .notInstalled, .notInstalled]
             ]
         )
     }
