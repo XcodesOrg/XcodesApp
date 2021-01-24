@@ -41,8 +41,8 @@ class AppState: ObservableObject {
     @Published var xcodeBeingConfirmedForInstallCancellation: Xcode?
     @Published var helperInstallState: HelperInstallState = .notInstalled
     /// Whether the user is being prepared for the helper installation alert with an explanation.
-    /// This closure will be performed after the user consents.
-    @Published var isPreparingUserForActionRequiringHelper: (() -> Void)?
+    /// This closure will be performed after the user chooses whether or not to proceed.
+    @Published var isPreparingUserForActionRequiringHelper: ((Bool) -> Void)?
 
     // MARK: - Errors
 
@@ -51,7 +51,7 @@ class AppState: ObservableObject {
     
     // MARK: - Publisher Cancellables
     
-    private var cancellables = Set<AnyCancellable>()
+    var cancellables = Set<AnyCancellable>()
     private var installationPublishers: [Version: AnyCancellable] = [:]
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
@@ -218,11 +218,12 @@ class AppState: ObservableObject {
     /// - Parameter shouldPrepareUserForHelperInstallation: Whether the user should be presented with an alert preparing them for helper installation.
     func installHelperIfNecessary(shouldPrepareUserForHelperInstallation: Bool = true) {
         guard helperInstallState == .installed || shouldPrepareUserForHelperInstallation == false else {
-            isPreparingUserForActionRequiringHelper = { [unowned self] in self.installHelperIfNecessary(shouldPrepareUserForHelperInstallation: false) }
+            isPreparingUserForActionRequiringHelper = { [unowned self] userConsented in
+                guard userConsented else { return }
+                self.installHelperIfNecessary(shouldPrepareUserForHelperInstallation: false) 
+            }
             return
         }
-        
-        isPreparingUserForActionRequiringHelper = nil
         
         installHelperIfNecessary()
             .sink(
@@ -373,11 +374,12 @@ class AppState: ObservableObject {
     /// - Parameter shouldPrepareUserForHelperInstallation: Whether the user should be presented with an alert preparing them for helper installation before making the Xcode version active.
     func select(id: Xcode.ID, shouldPrepareUserForHelperInstallation: Bool = true) {
         guard helperInstallState == .installed || shouldPrepareUserForHelperInstallation == false else {
-            isPreparingUserForActionRequiringHelper = { [unowned self] in self.select(id: id, shouldPrepareUserForHelperInstallation: false) }
+            isPreparingUserForActionRequiringHelper = { [unowned self] userConsented in
+                guard userConsented else { return }
+                self.select(id: id, shouldPrepareUserForHelperInstallation: false) 
+            }
             return
         }
-
-        isPreparingUserForActionRequiringHelper = nil
 
         guard 
             let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),

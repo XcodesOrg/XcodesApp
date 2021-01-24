@@ -148,6 +148,8 @@ class AppStateTests: XCTestCase {
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
         }
+        // Helper is already installed
+        subject.helperInstallState = .installed
 
         let allXcodesRecorder = subject.$allXcodes.record()
         let installRecorder = subject.install(
@@ -256,6 +258,8 @@ class AppStateTests: XCTestCase {
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
         }
+        // Helper is already installed
+        subject.helperInstallState = .installed
 
         let allXcodesRecorder = subject.$allXcodes.record()
         let installRecorder = subject.install(

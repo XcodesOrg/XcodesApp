@@ -58,9 +58,29 @@ struct MainWindow: View {
                         title: Text("Privileged Helper"), 
                         message: Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it."), 
                         primaryButton: .default(Text("Install"), action: {
-                            DispatchQueue.main.async(execute: appState.isPreparingUserForActionRequiringHelper!)
+                            // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
+                            // We need to capture it to be invoked after that happens.
+                            let helperAction = appState.isPreparingUserForActionRequiringHelper
+                            DispatchQueue.main.async { 
+                                // This really shouldn't be nil, but sometimes this alert is being shown twice and I don't know why.
+                                // There are some DispatchQueue.main.async's scattered around which make this better but in some situations it's still happening.
+                                // When that happens, the second time the user clicks an alert button isPreparingUserForActionRequiringHelper will be nil.
+                                // To at least not crash, we're using ?
+                                helperAction?(true) 
+                            }
                         }), 
-                        secondaryButton: .cancel()
+                        secondaryButton: .cancel {
+                            // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
+                            // We need to capture it to be invoked after that happens.
+                            let helperAction = appState.isPreparingUserForActionRequiringHelper
+                            DispatchQueue.main.async {
+                                // This really shouldn't be nil, but sometimes this alert is being shown twice and I don't know why.
+                                // There are some DispatchQueue.main.async's scattered around which make this better but in some situations it's still happening.
+                                // When that happens, the second time the user clicks an alert button isPreparingUserForActionRequiringHelper will be nil.
+                                // To at least not crash, we're using ?
+                                helperAction?(false) 
+                            }
+                        }
                     )
                 }
         )

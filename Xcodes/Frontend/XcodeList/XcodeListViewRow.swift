@@ -37,13 +37,20 @@ struct XcodeListViewRow: View {
                 InstallButton(xcode: xcode)
             case .installing:
                 CancelInstallButton(xcode: xcode)
-            case .installed:
+            case let .installed(path):
                 SelectButton(xcode: xcode)
                 OpenButton(xcode: xcode)
                 RevealButton(xcode: xcode)
                 CopyPathButton(xcode: xcode)
                 Divider()
                 UninstallButton(xcode: xcode)
+                
+                #if DEBUG
+                Divider()
+                Button("Perform post-install steps") {
+                    appState.performPostInstallSteps(for: InstalledXcode(path: path)!) as Void
+                }
+                #endif
             }
         }
     }
