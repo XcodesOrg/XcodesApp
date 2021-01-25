@@ -7,6 +7,7 @@ import KeychainAccess
 import Path
 import Version
 import os.log
+import DockProgress
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
@@ -489,6 +490,9 @@ class AppState: ObservableObject {
 
         // Cancel the publisher
         installationPublishers[id] = nil
+        
+        // Remove dock icon progress indicator
+        DockProgress.progress = 1 // Only way to completely remove overlay with DockProgress is setting progress to complete
                 
         // If the download is cancelled by the user, clean up the download files that aria2 creates.
         // This isn't done as part of the publisher with handleEvents(receiveCancel:) because it shouldn't happen when e.g. the app quits.
