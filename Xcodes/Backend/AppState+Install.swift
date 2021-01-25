@@ -5,6 +5,7 @@ import AppleAPI
 import Version
 import LegibleError
 import os.log
+import DockProgress
 
 /// Downloads and installs Xcodes
 extension AppState {
@@ -119,6 +120,7 @@ extension AppState {
             cookies
         )
         progressChanged(progress)
+        updateDockIcon(withProgress: progress)
         return publisher
             .map { _ in destination.url }
             .eraseToAnyPublisher()
@@ -128,11 +130,12 @@ extension AppState {
         let resumeDataPath = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).resumedata"
         let persistedResumeData = Current.files.contents(atPath: resumeDataPath.string)
         
-        return attemptResumableTask(maximumRetryCount: 3) { resumeData -> AnyPublisher<URL, Error> in
+        return attemptResumableTask(maximumRetryCount: 3) { [weak self] resumeData -> AnyPublisher<URL, Error> in
             let (progress, publisher) = Current.network.downloadTask(with: availableXcode.url,
                                                                    to: destination.url,
                                                                    resumingWith: resumeData ?? persistedResumeData)
             progressChanged(progress)
+            self?.updateDockIcon(withProgress: progress)
             return publisher
                 .map { $0.saveLocation }
                 .eraseToAnyPublisher()
@@ -141,6 +144,11 @@ extension AppState {
             self.persistOrCleanUpResumeData(at: resumeDataPath, for: completion)
         })
         .eraseToAnyPublisher()
+    }
+    
+    private func updateDockIcon(withProgress progress: Progress) {
+        DockProgress.style = .bar
+        DockProgress.progressInstance = progress
     }
 
     public func installArchivedXcode(_ availableXcode: AvailableXcode, at archiveURL: URL) -> AnyPublisher<InstalledXcode, Error> {
