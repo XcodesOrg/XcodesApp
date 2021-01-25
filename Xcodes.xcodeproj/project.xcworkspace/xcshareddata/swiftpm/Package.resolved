@@ -20,6 +20,15 @@
         }
       },
       {
+        "package": "DockProgress",
+        "repositoryURL": "https://github.com/sindresorhus/DockProgress",
+        "state": {
+          "branch": null,
+          "revision": "7100b68571e2dafe3a06ad5905b80fc3b0107b4b",
+          "version": "3.2.0"
+        }
+      },
+      {
         "package": "ErrorHandling",
         "repositoryURL": "https://github.com/RobotsAndPencils/ErrorHandling",
         "state": {
