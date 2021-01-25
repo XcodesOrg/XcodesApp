@@ -17,7 +17,7 @@ struct InstallationStepView: View {
                     controlSize: .small,
                     style: .spinning
                 )
-                .help("Dowloading: \(Int((progress.fractionCompleted * 100)))% complete")
+                .help("Downloading: \(Int((progress.fractionCompleted * 100)))% complete")
             case .unarchiving, .moving, .trashingArchive, .checkingSecurity, .finishing:
                 ProgressView()
                     .scaleEffect(0.5)
