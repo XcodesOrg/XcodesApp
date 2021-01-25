@@ -99,6 +99,7 @@
 		CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */; };
 		CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */; };
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
+		E689540325BE8C64000EBCEA /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = E689540225BE8C64000EBCEA /* DockProgress */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -276,6 +277,7 @@
 				CAFE4AA325B7CF960064FE51 /* Preferences in Frameworks */,
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
+				E689540325BE8C64000EBCEA /* DockProgress in Frameworks */,
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
 				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
@@ -591,6 +593,7 @@
 				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
 				CAFE4A9925B7C7A30064FE51 /* Sparkle */,
 				CAFE4AA225B7CF960064FE51 /* Preferences */,
+				E689540225BE8C64000EBCEA /* DockProgress */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -659,6 +662,7 @@
 				CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */,
 				CAFE4A9825B7C7A30064FE51 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				CAFE4AA125B7CF960064FE51 /* XCRemoteSwiftPackageReference "Preferences" */,
+				E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -1341,6 +1345,14 @@
 				minimumVersion = 2.2.0;
 			};
 		};
+		E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/DockProgress";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.2.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1397,6 +1409,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CAFE4AA125B7CF960064FE51 /* XCRemoteSwiftPackageReference "Preferences" */;
 			productName = Preferences;
+		};
+		E689540225BE8C64000EBCEA /* DockProgress */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */;
+			productName = DockProgress;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
