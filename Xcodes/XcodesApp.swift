@@ -7,6 +7,7 @@ import SwiftUI
 struct XcodesApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate: AppDelegate
     @SwiftUI.Environment(\.scenePhase) private var scenePhase: ScenePhase
+    @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     @StateObject private var appState = AppState()
     
     var body: some Scene {
@@ -51,6 +52,25 @@ struct XcodesApp: App {
             }
 
             XcodeCommands(appState: appState)
+            
+            CommandGroup(replacing: CommandGroupPlacement.help) {
+                Button("Xcodes GitHub Repo") {
+                    let xcodesRepoURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!
+                    openURL(xcodesRepoURL)
+                }
+                
+                Divider()
+                
+                Button("Report a Bug") {
+                    let bugReportURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/issues/new?assignees=&labels=bug&template=bug_report.md&title=")!
+                    openURL(bugReportURL)
+                }
+                
+                Button("Request a New Feature") {
+                    let featureRequestURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=")!
+                    openURL(featureRequestURL)
+                }
+            }
         }
     }
     
