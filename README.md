@@ -63,10 +63,12 @@ pushd Product
 ../scripts/notarize.sh "test@example.com" "@keychain:altool" MyOrg Xcodes.zip
 
 # Sign the .zip for Sparkle, note the signature in the output for later
+# If you're warned about the signing key not being found, see the Xcodes 1Password vault for the key and installation instructions.
 ../scripts/sign_update Xcodes.zip
 popd
 
 # Go to https://github.com/RobotsAndPencils/XcodesApp/releases
+# If there are uncategorized PRs, add the appropriate label and run the Release Drafter action manually
 # Edit the latest draft release
 # Set its tag to the tag you just pushed
 # Set its title to a string with the format "$VERSION ($BUILD)"
