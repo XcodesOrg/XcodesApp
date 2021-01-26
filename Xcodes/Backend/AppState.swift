@@ -180,6 +180,7 @@ class AppState: ObservableObject {
                let username = Current.defaults.string(forKey: "username") {
                 // remove any keychain password if we fail to log with an invalid username or password so it doesn't try again.
                 try? Current.keychain.remove(username)
+                Current.defaults.removeObject(forKey: "username")
             }
 
             Logger.appState.error("Authentication error: \(error.legibleDescription)")
