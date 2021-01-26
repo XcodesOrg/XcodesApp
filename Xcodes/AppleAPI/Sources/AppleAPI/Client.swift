@@ -126,7 +126,7 @@ public class Client {
                     switch urlResponse.statusCode {
                     case 200..<300:
                         return (data, urlResponse)
-                    case 401:
+                    case 400, 401:
                         throw AuthenticationError.incorrectSecurityCode
                     case let code:
                         throw AuthenticationError.badStatusCode(code, data, urlResponse)
