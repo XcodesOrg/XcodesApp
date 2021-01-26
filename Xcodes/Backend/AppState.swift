@@ -6,6 +6,7 @@ import LegibleError
 import KeychainAccess
 import Path
 import Version
+import os.log
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
@@ -181,7 +182,7 @@ class AppState: ObservableObject {
                 try? Current.keychain.remove(username)
             }
 
-            // This error message is not user friendly... need to extract some meaningful data in the different cases
+            Logger.appState.error("Authentication error: \(error.legibleDescription)")
             self.authError = error
         case .finished:
             switch self.authenticationState {
