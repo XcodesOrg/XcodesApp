@@ -8,6 +8,62 @@
             
                 
                     <item>
+                        <title>1.0.3 (4)</title>
+                        <description><![CDATA[<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Add tooltip with percent complete to download progress indicator (#81) @MattKiazyk</li>
+  <li>Prepare user for helper installation before attempting to install (#84) @interstateone</li>
+  <li>Handle helper installation errors (#80) @interstateone</li>
+  <li>Catch and reword xip “not enough free space” error (#79) @interstateone</li>
+  <li>Show stored username in General preference pane even when we don’t have a valid session (#87) @interstateone</li>
+  <li>Change the Updates preference pane copy to make it more clear its for app updates (#74) @MattKiazyk</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Improve authentication error messages that are shown to users (#86) @interstateone</li>
+  <li>Persist filter and info pane state across app launches (#78) @MattKiazyk</li>
+  <li>Don’t show parentheses when buildMetadataIdentifiers is empty (#73) @MattKiazyk</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Add instructions to move app to /Applications to README (#82) @MattKiazyk</li>
+  <li>Add GitHub issue templates (#75) @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=kZt1uUbQR9BLjX9r0DjlajGlz20k7hRuRBNPnI71f1k/DdtFKJnlvd+eotBI9/kIhvbMyv4QpLsCkzRPZGOcCg== -->
+]]></description>
+                        <pubDate>Tue, 26 Jan 2021 16:21:01 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.3b4/Xcodes.zip"
+                                    sparkle:version="4"
+                                    sparkle:shortVersionString="1.0.3"
+                                    sparkle:edSignature="kZt1uUbQR9BLjX9r0DjlajGlz20k7hRuRBNPnI71f1k/DdtFKJnlvd+eotBI9/kIhvbMyv4QpLsCkzRPZGOcCg=="
+                                    length="10460282"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>1.0.2 (3)</title>
                         <description><![CDATA[<h2 id="changes">Changes</h2>
 
