@@ -13,8 +13,13 @@ struct GeneralPreferencePane: View {
         Preferences.Container(contentWidth: 400.0) {
             Preferences.Section(title: "Apple ID") {
                 VStack(alignment: .leading) {
-                    if appState.authenticationState == .authenticated {
-                        Text(Current.defaults.string(forKey: "username") ?? "-")
+                    // If we have saved a username then we will show it here,
+                    // even if we don't have a valid session right now,
+                    // because we should be able to get a valid session if needed with the password in the keychain 
+                    // and a 2FA code from the user.
+                    // Note that AppState.authenticationState is not necessarily .authenticated in this case, though.
+                    if let username = Current.defaults.string(forKey: "username") {
+                        Text(username)
                         Button("Sign Out", action: appState.signOut)
                     } else {
                         Button("Sign In", action: { self.appState.presentingSignInAlert = true })
