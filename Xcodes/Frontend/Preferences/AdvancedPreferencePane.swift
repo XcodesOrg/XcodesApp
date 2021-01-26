@@ -60,7 +60,7 @@ struct AdvancedPreferencePane: View {
                         }
                     }
                     
-                    Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.")
+                    Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it.")
                         .font(.footnote)
                         .fixedSize(horizontal: false, vertical: true)
                     

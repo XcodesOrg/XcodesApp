@@ -175,18 +175,19 @@ extension AppState {
                     .flatMap { installedXcode -> AnyPublisher<InstalledXcode, Error> in
                         self.setInstallationStep(of: availableXcode.version, to: .finishing)
 
-                        return self.enableDeveloperMode()
+                        return self.performPostInstallSteps(for: installedXcode)
                             .map { installedXcode }
-                            .eraseToAnyPublisher()
-                    }
-                    .flatMap { installedXcode -> AnyPublisher<InstalledXcode, Error> in
-                        self.approveLicense(for: installedXcode)
-                            .map { installedXcode }
-                            .eraseToAnyPublisher()
-                    }
-                    .flatMap { installedXcode -> AnyPublisher<InstalledXcode, Error> in
-                        self.installComponents(for: installedXcode)
-                            .map { installedXcode }
+                            // Show post-install errors but don't fail because of them
+                            .handleEvents(receiveCompletion: { [unowned self] completion in
+                                if case let .failure(error) = completion {
+                                    self.error = error
+                                }
+                            })
+                            .catch { _ in
+                                Just(installedXcode)
+                                    .setFailureType(to: Error.self)
+                                    .eraseToAnyPublisher()
+                            }
                             .eraseToAnyPublisher()
                     }
                     .eraseToAnyPublisher()
@@ -306,31 +307,95 @@ extension AppState {
 
         return info
     }
-
-    func enableDeveloperMode() -> AnyPublisher<Void, Error> {
-        installHelperIfNecessary()
-            .flatMap {
-                Current.helper.devToolsSecurityEnable()
+    
+    // MARK: - Post-Install
+    
+    /// Attemps to install the helper once, then performs all post-install steps
+    public func performPostInstallSteps(for xcode: InstalledXcode) {
+        performPostInstallSteps(for: xcode)
+            .sink(
+                receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        self.error = error
+                    }
+                }, 
+                receiveValue: {}
+            )
+            .store(in: &cancellables)
+    }
+    
+    /// Attemps to install the helper once, then performs all post-install steps
+    public func performPostInstallSteps(for xcode: InstalledXcode) -> AnyPublisher<Void, Error> {
+        let postInstallPublisher: AnyPublisher<Void, Error> =
+            Deferred { [unowned self] in
+                self.installHelperIfNecessary()
             }
+            .flatMap { [unowned self] in
+                self.enableDeveloperMode()
+            }
+            .flatMap { [unowned self] in
+                self.approveLicense(for: xcode)
+            }
+            .flatMap { [unowned self] in
+                self.installComponents(for: xcode)
+            }
+            .mapError { [unowned self] error in
+                Logger.appState.error("Performing post-install steps failed: \(error.legibleLocalizedDescription)")
+                return InstallationError.postInstallStepsNotPerformed(version: xcode.version, helperInstallState: self.helperInstallState)
+            }
+            .eraseToAnyPublisher()
+
+        guard helperInstallState == .installed else {
+            // If the helper isn't installed yet then we need to prepare the user for the install prompt,
+            // and then actually perform the installation,
+            // and the post-install steps need to wait until that is complete.
+            // This subject, which completes upon isPreparingUserForActionRequiringHelper being invoked, is used to achieve that.
+            // This is not the most straightforward code I've ever written...
+            let helperInstallConsentSubject = PassthroughSubject<Void, Error>()
+
+            // Need to dispatch this to avoid duplicate alerts, 
+            // the second of which will crash when force-unwrapping isPreparingUserForActionRequiringHelper 
+            DispatchQueue.main.async {
+                self.isPreparingUserForActionRequiringHelper = { [unowned self] userConsented in
+                    if userConsented {
+                        helperInstallConsentSubject.send()
+                    } else {
+                        Logger.appState.info("User did not consent to installing helper during post-install steps.")
+
+                        helperInstallConsentSubject.send(
+                            completion: .failure(
+                                InstallationError.postInstallStepsNotPerformed(version: xcode.version, helperInstallState: self.helperInstallState)
+                            )
+                        )
+                    }
+                }
+            }
+
+            return helperInstallConsentSubject
+                .flatMap { 
+                    postInstallPublisher 
+                }
+                .eraseToAnyPublisher()
+        }
+        
+        return postInstallPublisher
+    }
+
+    private func enableDeveloperMode() -> AnyPublisher<Void, Error> {
+        Current.helper.devToolsSecurityEnable()
             .flatMap {
                 Current.helper.addStaffToDevelopersGroup()
             }
             .eraseToAnyPublisher()
     }
 
-    func approveLicense(for xcode: InstalledXcode) -> AnyPublisher<Void, Error> {
-        installHelperIfNecessary()
-            .flatMap {
-                Current.helper.acceptXcodeLicense(xcode.path.string)
-            }
+    private func approveLicense(for xcode: InstalledXcode) -> AnyPublisher<Void, Error> {
+        Current.helper.acceptXcodeLicense(xcode.path.string)
             .eraseToAnyPublisher()
     }
 
-    func installComponents(for xcode: InstalledXcode) -> AnyPublisher<Void, Swift.Error> {
-        installHelperIfNecessary()
-            .flatMap {
-                Current.helper.runFirstLaunch(xcode.path.string)
-            }
+    private func installComponents(for xcode: InstalledXcode) -> AnyPublisher<Void, Swift.Error> {
+        Current.helper.runFirstLaunch(xcode.path.string)
             .flatMap {
                 Current.shell.getUserCacheDir().map { $0.out }
                     .combineLatest(
@@ -344,6 +409,8 @@ extension AppState {
             .map { _ in Void() }
             .eraseToAnyPublisher()
     }
+    
+    // MARK: - 
     
     func setInstallationStep(of version: Version, to step: InstallationStep) {
         DispatchQueue.main.async {
@@ -381,6 +448,7 @@ public enum InstallationError: LocalizedError, Equatable {
     case versionAlreadyInstalled(InstalledXcode)
     case invalidVersion(String)
     case versionNotInstalled(Version)
+    case postInstallStepsNotPerformed(version: Version, helperInstallState: HelperInstallState)
 
     public var errorDescription: String? {
         switch self {
@@ -433,6 +501,13 @@ public enum InstallationError: LocalizedError, Equatable {
             return "\(version) is not a valid version number."
         case let .versionNotInstalled(version):
             return "\(version.appleDescription) is not installed."
+        case let .postInstallStepsNotPerformed(version, helperInstallState):
+            switch helperInstallState {
+            case .installed:
+                return "Installation was completed, but some post-install steps weren't performed automatically. These will be performed when you first launch Xcode \(version.appleDescription)."
+            case .notInstalled, .unknown:
+                return "Installation was completed, but some post-install steps weren't performed automatically. Xcodes performs these steps with a privileged helper, which appears to not be installed. You can install it from Preferences > Advanced.\n\nThese steps will be performed when you first launch Xcode \(version.appleDescription)."
+            }
         }
     }
 }
