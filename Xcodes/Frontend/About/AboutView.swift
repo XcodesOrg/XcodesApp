@@ -2,6 +2,7 @@ import SwiftUI
 
 struct AboutView: View {
     let showAcknowledgementsWindow: () -> Void
+    @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     
     var body: some View {
         HStack {
@@ -18,7 +19,7 @@ struct AboutView: View {
                 
                 HStack(spacing: 32) {
                     Button(action: {
-                        NSWorkspace.shared.open(URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!)
+                        openURL(URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!)
                     }) {
                         Label("GitHub Repo", systemImage: "link")
                     }
