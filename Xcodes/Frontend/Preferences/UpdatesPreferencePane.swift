@@ -3,10 +3,6 @@ import Preferences
 import Sparkle
 import SwiftUI
 
-extension Preferences.PaneIdentifier {
-    static let updates = Self("updates")
-}
-
 struct UpdatesPreferencePane: View {
     @StateObject var updater = ObservableUpdater()
     

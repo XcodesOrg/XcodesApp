@@ -2,13 +2,9 @@ import AppleAPI
 import Preferences
 import SwiftUI
 
-extension Preferences.PaneIdentifier {
-    static let general = Self("general")
-}
-
 struct GeneralPreferencePane: View {
     @EnvironmentObject var appState: AppState
-    
+   
     var body: some View {
         Preferences.Container(contentWidth: 400.0) {
             Preferences.Section(title: "Apple ID") {

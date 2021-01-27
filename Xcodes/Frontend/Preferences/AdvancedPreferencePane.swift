@@ -2,10 +2,6 @@ import AppleAPI
 import Preferences
 import SwiftUI
 
-extension Preferences.PaneIdentifier {
-    static let advanced = Self("advanced")
-}
-
 struct AdvancedPreferencePane: View {
     @EnvironmentObject var appState: AppState
     @AppStorage("dataSource") var dataSource: DataSource = .xcodeReleases
