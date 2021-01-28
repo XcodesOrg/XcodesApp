@@ -1,5 +1,4 @@
 import AppKit
-import Preferences
 import Sparkle
 import SwiftUI
 

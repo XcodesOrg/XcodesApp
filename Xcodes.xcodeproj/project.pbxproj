@@ -95,7 +95,6 @@
 		CAFBDC68259A308B003DCC5A /* InfoPane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC67259A308B003DCC5A /* InfoPane.swift */; };
 		CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBDC6B259A3098003DCC5A /* View+Conditional.swift */; };
 		CAFE4A9A25B7C7A30064FE51 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = CAFE4A9925B7C7A30064FE51 /* Sparkle */; };
-		CAFE4AA325B7CF960064FE51 /* Preferences in Frameworks */ = {isa = PBXBuildFile; productRef = CAFE4AA225B7CF960064FE51 /* Preferences */; };
 		CAFE4AAC25B7D2C70064FE51 /* GeneralPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AAB25B7D2C70064FE51 /* GeneralPreferencePane.swift */; };
 		CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */; };
 		CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */; };
@@ -277,7 +276,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAFE4A9A25B7C7A30064FE51 /* Sparkle in Frameworks */,
-				CAFE4AA325B7CF960064FE51 /* Preferences in Frameworks */,
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
@@ -596,7 +594,6 @@
 				CA9FF86C25951C6E00E47BAF /* XCModel */,
 				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
 				CAFE4A9925B7C7A30064FE51 /* Sparkle */,
-				CAFE4AA225B7CF960064FE51 /* Preferences */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -664,7 +661,6 @@
 				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
 				CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */,
 				CAFE4A9825B7C7A30064FE51 /* XCRemoteSwiftPackageReference "Sparkle" */,
-				CAFE4AA125B7CF960064FE51 /* XCRemoteSwiftPackageReference "Preferences" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -1341,14 +1337,6 @@
 				version = "1.24.0-spm";
 			};
 		};
-		CAFE4AA125B7CF960064FE51 /* XCRemoteSwiftPackageReference "Preferences" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sindresorhus/Preferences";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 2.2.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1400,11 +1388,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CAFE4A9825B7C7A30064FE51 /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
-		};
-		CAFE4AA225B7CF960064FE51 /* Preferences */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CAFE4AA125B7CF960064FE51 /* XCRemoteSwiftPackageReference "Preferences" */;
-			productName = Preferences;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

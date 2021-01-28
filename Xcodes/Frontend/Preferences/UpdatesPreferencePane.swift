@@ -1,5 +1,4 @@
 import AppleAPI
-import Preferences
 import Sparkle
 import SwiftUI
 
@@ -7,30 +6,30 @@ struct UpdatesPreferencePane: View {
     @StateObject var updater = ObservableUpdater()
     
     var body: some View {
-        Preferences.Container(contentWidth: 400.0) {
-            Preferences.Section(title: "Updates") {
-                VStack(alignment: .leading) {
-                    Toggle(
-                        "Automatically check for app updates",
-                        isOn: $updater.automaticallyChecksForUpdates
-                    )
-                    
-                    Toggle(
-                        "Include prerelease app versions",
-                        isOn: $updater.includePrereleaseVersions
-                    )
-                                        
-                    Button("Check Now") {
-                        SUUpdater.shared()?.checkForUpdates(nil)
-                    }
-
-                    Text("Last checked: \(lastUpdatedString)")
-                        .font(.footnote)
+        GroupBox(label: Text("Updates")) {
+            VStack(alignment: .leading) {
+                Toggle(
+                    "Automatically check for app updates",
+                    isOn: $updater.automaticallyChecksForUpdates
+                )
+                
+                Toggle(
+                    "Include prerelease app versions",
+                    isOn: $updater.includePrereleaseVersions
+                )
+                                    
+                Button("Check Now") {
+                    SUUpdater.shared()?.checkForUpdates(nil)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text("Last checked: \(lastUpdatedString)")
+                    .font(.footnote)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .padding(.trailing)
+        .groupBoxStyle(PreferencesGroupBoxStyle())
+        .padding()
+        .frame(width: 500)
     }
     
     private var lastUpdatedString: String {

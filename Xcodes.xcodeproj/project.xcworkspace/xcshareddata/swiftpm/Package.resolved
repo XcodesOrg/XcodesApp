@@ -56,15 +56,6 @@
         }
       },
       {
-        "package": "Preferences",
-        "repositoryURL": "https://github.com/sindresorhus/Preferences",
-        "state": {
-          "branch": null,
-          "revision": "4802a493acef50c814e4eb63e9a44e0941ec8883",
-          "version": "2.2.0"
-        }
-      },
-      {
         "package": "Sparkle",
         "repositoryURL": "https://github.com/sparkle-project/Sparkle/",
         "state": {
