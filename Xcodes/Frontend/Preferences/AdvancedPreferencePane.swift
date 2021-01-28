@@ -8,7 +8,7 @@ struct AdvancedPreferencePane: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            GroupBox(label: Text("DataSource")) {
+            GroupBox(label: Text("Data Source")) {
                 VStack(alignment: .leading) {
                     Picker("Data Source", selection: $dataSource) {
                         ForEach(DataSource.allCases) { dataSource in
@@ -66,8 +66,7 @@ struct AdvancedPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .padding()
-        .frame(width: 500)
+        .frame(width: 400)
     }
     
     private var dataSourceFootnote: NSAttributedString {

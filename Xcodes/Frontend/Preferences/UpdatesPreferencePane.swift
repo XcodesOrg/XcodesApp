@@ -28,8 +28,7 @@ struct UpdatesPreferencePane: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .groupBoxStyle(PreferencesGroupBoxStyle())
-        .padding()
-        .frame(width: 500)
+        .frame(width: 400)
     }
     
     private var lastUpdatedString: String {

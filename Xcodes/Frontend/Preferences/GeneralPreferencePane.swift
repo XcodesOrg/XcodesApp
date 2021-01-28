@@ -29,8 +29,7 @@ struct GeneralPreferencePane: View {
                     .environmentObject(appState)
             }
         }
-        .padding()
-        .frame(width: 500)
+        .frame(width: 400)
     }
 }
 
