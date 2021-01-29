@@ -1,10 +1,5 @@
 import AppleAPI
-import Preferences
 import SwiftUI
-
-extension Preferences.PaneIdentifier {
-    static let advanced = Self("advanced")
-}
 
 struct AdvancedPreferencePane: View {
     @EnvironmentObject var appState: AppState
@@ -12,8 +7,8 @@ struct AdvancedPreferencePane: View {
     @AppStorage("downloader") var downloader: Downloader = .aria2
     
     var body: some View {
-        Preferences.Container(contentWidth: 400.0) {
-            Preferences.Section(title: "Data Source") {
+        VStack(alignment: .leading, spacing: 20) {
+            GroupBox(label: Text("Data Source")) {
                 VStack(alignment: .leading) {
                     Picker("Data Source", selection: $dataSource) {
                         ForEach(DataSource.allCases) { dataSource in
@@ -25,10 +20,11 @@ struct AdvancedPreferencePane: View {
                     
                     AttributedText(dataSourceFootnote)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+              
             }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
             
-            Preferences.Section(title: "Downloader") {
+            GroupBox(label: Text("Downloader")) {
                 VStack(alignment: .leading) {
                     Picker("Downloader", selection: $downloader) {
                         ForEach(Downloader.allCases) { downloader in
@@ -40,10 +36,11 @@ struct AdvancedPreferencePane: View {
                     
                     AttributedText(downloaderFootnote)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                
             }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
             
-            Preferences.Section(title: "Privileged Helper") {
+            GroupBox(label: Text("Privileged Helper")) {
                 VStack(alignment: .leading, spacing: 8) {
                     switch appState.helperInstallState {
                     case .unknown:
@@ -67,8 +64,9 @@ struct AdvancedPreferencePane: View {
                     Spacer()
                 }
             }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .padding(.trailing)
+        .frame(width: 400)
     }
     
     private var dataSourceFootnote: NSAttributedString {
@@ -111,6 +109,23 @@ struct AdvancedPreferencePane_Previews: PreviewProvider {
         Group {
             AdvancedPreferencePane()
                 .environmentObject(AppState())
+        }
+    }
+}
+
+// A group style for the preferences
+struct PreferencesGroupBoxStyle: GroupBoxStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        HStack(alignment: .top, spacing: 20) {
+            HStack {
+                Spacer()
+                configuration.label
+            }
+            .frame(width: 120)
+            
+            VStack(alignment: .leading) {
+                configuration.content
+            }
         }
     }
 }
