@@ -19,9 +19,19 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 
 Xcodes.app runs on macOS Big Sur 11.0 or later.
 
-1. Download the latest version [here](https://github.com/RobotsAndPencils/XcodesApp/releases/latest) using the **Xcodes.zip** asset. These releases are already Developer ID-signed and notarized.
+### Homebrew Cask
+
+```sh
+brew install --cask xcodes
+
+# These are Developer ID-signed and notarized release builds and don't require Xcode to already be installed in order to use.
+```
+
+### Download a release
+
+1. Download the latest version [here](https://github.com/RobotsAndPencils/XcodesApp/releases/latest) using the **Xcodes.zip** asset. These are Developer ID-signed and notarized release builds and don't require Xcode to already be installed in order to use.
 2. Move the unzipped `Xcodes.app` to your `/Applications` directory
- 
+
 ## Development
 
 You'll need macOS 11 Big Sur and Xcode 12 in order to build and run Xcodes.app.
@@ -77,6 +87,8 @@ popd
 <!-- sparkle:edSignature=$SIGNATURE -->
 # Attach the zip that was created in the Product directory to the release
 # Publish the release
+
+# Update the [Homebrew Cask](https://github.com/RobotsAndPencils/homebrew-cask/blob/master/Casks/xcodes.rb).
 ```
 </details>
 
