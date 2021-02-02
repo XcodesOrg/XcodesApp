@@ -56,7 +56,8 @@ struct InfoPane: View {
                     compatibility(for: xcode)
                     sdks(for: xcode)
                     compilers(for: xcode)
-                  
+                    downloadFileSize(for: xcode)
+                    
                     Spacer()
                 }
             } else {
@@ -163,6 +164,24 @@ struct InfoPane: View {
     }
     
     @ViewBuilder
+    private func downloadFileSize(for xcode: Xcode) -> some View {
+        // if we've downloaded it no need to show the download size
+        if let downloadFileSize = xcode.downloadFileSizeString, case .notInstalled = xcode.installState {
+            VStack(alignment: .leading) {
+                Text("Download Size")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text("\(downloadFileSize)")
+                    .font(.subheadline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
+        } else {
+            EmptyView()
+        }
+    }
+    
+    
+    @ViewBuilder
     private var empty: some View {
         VStack {
             Spacer()
@@ -199,7 +218,9 @@ struct InfoPane_Previews: PreviewProvider {
                                 llvm: .init(number: "2.3"),
                                 clang: .init(number: "7.3"),
                                 swift: .init(number: "5.3.2")
-                            ))
+                            ),
+                            downloadFileSize: 242342424
+                            )
                     ]
                 })
                 .previewDisplayName("Populated, Installed, Selected")

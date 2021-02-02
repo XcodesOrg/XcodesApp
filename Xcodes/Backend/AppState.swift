@@ -459,7 +459,8 @@ class AppState: ObservableObject {
                     requiredMacOSVersion: availableXcode.requiredMacOSVersion,
                     releaseNotesURL: availableXcode.releaseNotesURL,
                     sdks: availableXcode.sdks,
-                    compilers: availableXcode.compilers
+                    compilers: availableXcode.compilers,
+                    downloadFileSize: availableXcode.fileSize
                 )
             }
         

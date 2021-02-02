@@ -13,5 +13,6 @@ public struct Download: Codable {
 
     public struct File: Codable {
         public let remotePath: String
+        public let fileSize: Double
     }
 }
