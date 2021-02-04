@@ -245,7 +245,8 @@ struct InfoPane_Previews: PreviewProvider {
                                 llvm: .init(number: "2.3"),
                                 clang: .init(number: "7.3"),
                                 swift: .init(number: "5.3.2")
-                            ))
+                            ),
+                            downloadFileSize: 242342424)
                     ]
                 })
                 .previewDisplayName("Populated, Installed, Unselected")
@@ -270,7 +271,8 @@ struct InfoPane_Previews: PreviewProvider {
                                 llvm: .init(number: "2.3"),
                                 clang: .init(number: "7.3"),
                                 swift: .init(number: "5.3.2")
-                            ))
+                            ),
+                            downloadFileSize: 242342424)
                     ]
                 })
                 .previewDisplayName("Populated, Uninstalled")

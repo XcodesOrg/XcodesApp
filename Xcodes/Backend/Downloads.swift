@@ -6,6 +6,9 @@ struct Downloads: Codable {
     let downloads: [Download]
 }
 
+// Set to Int64 as ByteCountFormatter uses it.
+public typealias ByteCount = Int64
+
 public struct Download: Codable {
     public let name: String
     public let files: [File]
@@ -13,6 +16,6 @@ public struct Download: Codable {
 
     public struct File: Codable {
         public let remotePath: String
-        public let fileSize: Double
+        public let fileSize: ByteCount
     }
 }

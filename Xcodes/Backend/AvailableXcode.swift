@@ -13,7 +13,7 @@ public struct AvailableXcode: Codable {
     public let releaseNotesURL: URL?
     public let sdks: SDKs?
     public let compilers: Compilers?
-    public let fileSize: Double?
+    public let fileSize: Int64?
 
     public init(
         version: Version,
@@ -24,7 +24,7 @@ public struct AvailableXcode: Codable {
         releaseNotesURL: URL? = nil,
         sdks: SDKs? = nil,
         compilers: Compilers? = nil,
-        fileSize: Double? = nil
+        fileSize: Int64? = nil
     ) {
         self.version =  version
         self.url = url
