@@ -12,8 +12,19 @@ struct XcodeListViewRow: View {
             appIconView(for: xcode)
             
             VStack(alignment: .leading) {
-                Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
-                    .font(.body)
+                HStack {
+                    Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
+                        .font(.body)
+                    
+                    if !xcode.identicalBuilds.isEmpty {
+                        Image(systemName: "square.fill.on.square.fill")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .accessibility(label: Text("Identical Builds"))
+                            .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
+                            .help("Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together.")
+                    }
+                }
                 
                 if case let .installed(path) = xcode.installState {
                     Text(verbatim: path.string)
