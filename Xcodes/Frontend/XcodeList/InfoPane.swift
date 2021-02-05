@@ -53,6 +53,7 @@ struct InfoPane: View {
                     Divider()
                     
                     releaseNotes(for: xcode)
+                    identicalBuilds(for: xcode)
                     compatibility(for: xcode)
                     sdks(for: xcode)
                     compilers(for: xcode)
@@ -77,6 +78,34 @@ struct InfoPane: View {
                 .resizable()
                 .frame(width: 32, height: 32)
                 .foregroundColor(.secondary)
+        }
+    }
+    
+    @ViewBuilder
+    private func identicalBuilds(for xcode: Xcode) -> some View {
+        if !xcode.identicalBuilds.isEmpty {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text("Identical Builds")
+                    Image(systemName: "square.fill.on.square.fill")
+                        .foregroundColor(.secondary)
+                        .accessibility(hidden: true)
+                        .help("Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together.")
+                }
+                .font(.headline)
+                
+                ForEach(xcode.identicalBuilds, id: \.description) { version in
+                    Text("• \(version.appleDescription)")
+                        .font(.subheadline)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .accessibilityElement()
+            .accessibility(label: Text("Identical Builds"))
+            .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
+            .accessibility(hint: Text("Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together."))
+        } else {
+            EmptyView()
         }
     }
     
