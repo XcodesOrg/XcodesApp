@@ -3,9 +3,9 @@ import SwiftUI
 import Version
 
 struct XcodeListViewRow: View {
-    @EnvironmentObject var appState: AppState
     let xcode: Xcode
     let selected: Bool
+    let appState: AppState
     
     var body: some View {
         HStack {
@@ -112,29 +112,39 @@ struct XcodeListViewRow_Previews: PreviewProvider {
         Group {
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
             )
             
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
             )
             
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
             )
             
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.0.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
             )
             
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.0.0+1234A")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
+            )
+            
+            XcodeListViewRow(
+                xcode: Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [Version("12.0.0-RC+1234A")!], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                selected: false,
+                appState: AppState()
             )
         }
-        .environmentObject(AppState())
     }
 }

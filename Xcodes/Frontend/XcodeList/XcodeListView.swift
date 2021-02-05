@@ -32,7 +32,7 @@ struct XcodeListView: View {
     
     var body: some View {
         List(visibleXcodes, selection: $selectedXcodeID) { xcode in
-            XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id)
+            XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
         }
     }
 }
