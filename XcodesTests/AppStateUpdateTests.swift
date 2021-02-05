@@ -145,6 +145,7 @@ class AppStateUpdateTests: XCTestCase {
         )
         
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
+        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[Version("12.4.0+12D4e")!, Version("12.4.0-RC+12D4e")!]])
     }
     
     func testIdenticalBuilds_KeepsReleaseVersion_WithPrereleaseInstalled() {
@@ -203,15 +204,6 @@ class AppStateUpdateTests: XCTestCase {
         )
         
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
-    }
-    
-    func testFilterReleasesThatMatchPrereleases() {
-        let result = subject.filterPrereleasesThatMatchReleaseBuildMetadataIdentifiers(
-            [
-                AvailableXcode(version: Version("12.3.0+12C33")!, url: URL(string: "https://apple.com")!, filename: "Xcode_12.3.xip", releaseDate: nil),
-                AvailableXcode(version: Version("12.3.0-RC+12C33")!, url: URL(string: "https://apple.com")!, filename: "Xcode_12.3_RC_1.xip", releaseDate: nil),
-            ]
-        )
-        XCTAssertEqual(result.map(\.version), [Version("12.3.0+12C33")])
+        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[Version("12.4.0+12D4e")!, Version("12.4.0-RC+12D4e")!]])
     }
 }

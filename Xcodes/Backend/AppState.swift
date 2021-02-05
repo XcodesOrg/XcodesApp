@@ -425,7 +425,7 @@ class AppState: ObservableObject {
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {
-        var adjustedAvailableXcodes = filterPrereleasesThatMatchReleaseBuildMetadataIdentifiers(availableXcodes)
+        var adjustedAvailableXcodes = availableXcodes
         
         // First, adjust all of the available Xcodes so that available and installed versions line up and the second part of this function works properly.
         if dataSource == .apple {
@@ -449,10 +449,28 @@ class AppState: ObservableObject {
 
         // Map all of the available versions into Xcode values that join available and installed Xcode data for display.
         var newAllXcodes = adjustedAvailableXcodes
+            .filter { availableXcode in
+                let availableXcodesWithIdenticalBuildIdentifiers = availableXcodes
+                    .filter({ $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers })
+                
+                // Include this version if there's only one with this build identifier
+                return availableXcodesWithIdenticalBuildIdentifiers.count == 1 ||
+                    // Or if there's more than one with this build identifier and this is the release version
+                    availableXcodesWithIdenticalBuildIdentifiers.count > 1 && availableXcode.version.prereleaseIdentifiers.isEmpty
+            }            
             .map { availableXcode -> Xcode in
                 let installedXcode = installedXcodes.first(where: { installedXcode in
                     availableXcode.version.isEquivalent(to: installedXcode.version) 
                 })
+
+                let identicalBuilds: [Version]
+                let availableXcodesWithIdenticalBuildIdentifiers = availableXcodes
+                    .filter({ $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers })
+                if availableXcodesWithIdenticalBuildIdentifiers.count > 1, availableXcode.version.prereleaseIdentifiers.isEmpty {
+                    identicalBuilds = availableXcodesWithIdenticalBuildIdentifiers.map(\.version)
+                } else {
+                    identicalBuilds = []
+                }
                 
                 // If the existing install state is "installing", keep it 
                 let existingXcodeInstallState = allXcodes.first { $0.version == availableXcode.version && $0.installState.installing }?.installState
@@ -461,7 +479,7 @@ class AppState: ObservableObject {
                 
                 return Xcode(
                     version: availableXcode.version,
-                    identicalBuilds: [],
+                    identicalBuilds: identicalBuilds,
                     installState: existingXcodeInstallState ?? defaultXcodeInstallState,
                     selected: installedXcode != nil && selectedXcodePath?.hasPrefix(installedXcode!.path.string) == true, 
                     icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),
@@ -491,30 +509,6 @@ class AppState: ObservableObject {
         
         self.allXcodes = newAllXcodes.sorted { $0.version > $1.version }
     }
-    
-    /// Xcode Releases may have multiple releases with the same build metadata when a build doesn't change between candidate and final releases.
-    /// For example, 12.3 RC and 12.3 are both build 12C33
-    /// We don't care about that difference, so only keep the final release (GM or Release, in XCModel terms).
-    /// The downside of this is that a user could technically have both releases installed, and so they won't both be shown in the list, but I think most users wouldn't do this.
-    func filterPrereleasesThatMatchReleaseBuildMetadataIdentifiers(_ availableXcodes: [AvailableXcode]) -> [AvailableXcode] {
-        var filteredAvailableXcodes: [AvailableXcode] = []
-        for availableXcode in availableXcodes {
-            if availableXcode.version.buildMetadataIdentifiers.isEmpty {
-                filteredAvailableXcodes.append(availableXcode)
-                continue
-            }
-            
-            let availableXcodesWithSameBuildMetadataIdentifiers = availableXcodes
-                .filter({ $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers })
-            if availableXcodesWithSameBuildMetadataIdentifiers.count > 1,
-               availableXcode.version.prereleaseIdentifiers.isEmpty || availableXcode.version.prereleaseIdentifiers == ["GM"] {
-                filteredAvailableXcodes.append(availableXcode)
-            } else if availableXcodesWithSameBuildMetadataIdentifiers.count == 1 {
-                filteredAvailableXcodes.append(availableXcode)
-            }
-        }
-        return filteredAvailableXcodes
-    } 
     
     // MARK: - Private
     
