@@ -464,10 +464,13 @@ class AppState: ObservableObject {
                 })
 
                 let identicalBuilds: [Version]
-                let availableXcodesWithIdenticalBuildIdentifiers = availableXcodes
-                    .filter({ $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers })
-                if availableXcodesWithIdenticalBuildIdentifiers.count > 1, availableXcode.version.prereleaseIdentifiers.isEmpty {
-                    identicalBuilds = availableXcodesWithIdenticalBuildIdentifiers.map(\.version)
+                let prereleaseAvailableXcodesWithIdenticalBuildIdentifiers = availableXcodes
+                    .filter {
+                        $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers && !$0.version.prereleaseIdentifiers.isEmpty
+                    }
+                // If this is the release version, add the identical builds to it
+                if !prereleaseAvailableXcodesWithIdenticalBuildIdentifiers.isEmpty, availableXcode.version.prereleaseIdentifiers.isEmpty {
+                    identicalBuilds = [availableXcode.version] + prereleaseAvailableXcodesWithIdenticalBuildIdentifiers.map(\.version)
                 } else {
                     identicalBuilds = []
                 }

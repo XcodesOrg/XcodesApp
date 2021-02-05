@@ -148,6 +148,32 @@ class AppStateUpdateTests: XCTestCase {
         XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[Version("12.4.0+12D4e")!, Version("12.4.0-RC+12D4e")!]])
     }
     
+    func testIdenticalBuilds_DoNotMergeReleaseVersions() {
+        Current.defaults.string = { key in
+            if key == "dataSource" {
+                return "xcodeReleases" 
+            } else {
+                return nil
+            }
+        }
+
+        subject.allXcodes = [
+        ]
+        
+        subject.updateAllXcodes(
+            availableXcodes: [
+                AvailableXcode(version: Version("3.2.3+10M2262")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
+                AvailableXcode(version: Version("3.2.3+10M2262")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
+            ], 
+            installedXcodes: [
+            ], 
+            selectedXcodePath: nil
+        )
+        
+        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("3.2.3+10M2262")!, Version("3.2.3+10M2262")!])
+        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[], []])
+    }
+    
     func testIdenticalBuilds_KeepsReleaseVersion_WithPrereleaseInstalled() {
         Current.defaults.string = { key in
             if key == "dataSource" {
