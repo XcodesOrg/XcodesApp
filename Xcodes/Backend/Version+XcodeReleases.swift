@@ -25,7 +25,7 @@ extension Version {
                 versionString += ".\(dp)"
             }
         case .gm:
-            versionString += "-GM"
+            break
         case let .gmSeed(gmSeed):
             versionString += "-GM.Seed"
             if gmSeed > 1 {
