@@ -15,7 +15,8 @@ extension AppState {
     }
     
     private func install(_ installationType: InstallationType, downloader: Downloader, attemptNumber: Int) -> AnyPublisher<InstalledXcode, Error> {
-        getXcodeArchive(installationType, downloader: downloader)
+        Logger.appState.info("Using \(downloader) downloader")
+        return getXcodeArchive(installationType, downloader: downloader)
             .flatMap { xcode, url -> AnyPublisher<InstalledXcode, Swift.Error> in
                 self.installArchivedXcode(xcode, at: url)
             }
