@@ -13,6 +13,7 @@ struct Xcode: Identifiable, CustomStringConvertible {
     let releaseNotesURL: URL?
     let sdks: SDKs?
     let compilers: Compilers?
+    let downloadFileSize: Int64?
     
     init(
         version: Version,
@@ -22,7 +23,8 @@ struct Xcode: Identifiable, CustomStringConvertible {
         requiredMacOSVersion: String? = nil,
         releaseNotesURL: URL? = nil,
         sdks: SDKs? = nil,
-        compilers: Compilers? = nil
+        compilers: Compilers? = nil,
+        downloadFileSize: Int64? = nil
     ) {
         self.version = version
         self.installState = installState
@@ -32,11 +34,20 @@ struct Xcode: Identifiable, CustomStringConvertible {
         self.releaseNotesURL = releaseNotesURL
         self.sdks = sdks
         self.compilers = compilers
+        self.downloadFileSize = downloadFileSize
     }
     
     var id: Version { version }
     
     var description: String {
         version.appleDescription
+    }
+    
+    var downloadFileSizeString: String? {
+        if let downloadFileSize = downloadFileSize {
+            return ByteCountFormatter.string(fromByteCount: downloadFileSize, countStyle: .file)
+        } else {
+            return nil
+        }
     }
 }

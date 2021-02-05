@@ -133,7 +133,7 @@ extension AppState {
                         else { return nil }
 
                         let url = urlPrefix.appendingPathComponent(xcodeFile.remotePath)
-                        return AvailableXcode(version: version, url: url, filename: String(xcodeFile.remotePath.suffix(fromLast: "/")), releaseDate: download.dateModified)
+                        return AvailableXcode(version: version, url: url, filename: String(xcodeFile.remotePath.suffix(fromLast: "/")), releaseDate: download.dateModified, fileSize: xcodeFile.fileSize)
                     }
                 return xcodes
             }
