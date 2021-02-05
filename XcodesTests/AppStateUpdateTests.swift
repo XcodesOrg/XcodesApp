@@ -46,6 +46,14 @@ class AppStateUpdateTests: XCTestCase {
     }
     
     func testDeterminesIfInstalledByBuildMetadataAlone() throws {
+        Current.defaults.string = { key in
+            if key == "dataSource" {
+                return "apple" 
+            } else {
+                return nil
+            }
+        }
+        
         subject.allXcodes = [
         ]
         
@@ -66,6 +74,14 @@ class AppStateUpdateTests: XCTestCase {
     }
     
     func testAdjustedVersionsAreUsedToLookupAvailableXcode() throws {
+        Current.defaults.string = { key in
+            if key == "dataSource" {
+                return "apple" 
+            } else {
+                return nil
+            }
+        }
+
         subject.allXcodes = [
         ]
         
@@ -103,6 +119,90 @@ class AppStateUpdateTests: XCTestCase {
         )
         
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("1.2.3")!, Version("0.0.0+ABC123")!]) 
+    }
+    
+    
+    func testIdenticalBuilds_KeepsReleaseVersion_WithNeitherInstalled() {
+        Current.defaults.string = { key in
+            if key == "dataSource" {
+                return "xcodeReleases" 
+            } else {
+                return nil
+            }
+        }
+
+        subject.allXcodes = [
+        ]
+        
+        subject.updateAllXcodes(
+            availableXcodes: [
+                AvailableXcode(version: Version("12.4.0+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
+                AvailableXcode(version: Version("12.4.0-RC+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
+            ], 
+            installedXcodes: [
+            ], 
+            selectedXcodePath: nil
+        )
+        
+        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
+    }
+    
+    func testIdenticalBuilds_KeepsReleaseVersion_WithPrereleaseInstalled() {
+        Current.defaults.string = { key in
+            if key == "dataSource" {
+                return "xcodeReleases" 
+            } else {
+                return nil
+            }
+        }
+
+        subject.allXcodes = [
+        ]
+        
+        Current.files.contentsAtPath = { path in
+            if path.contains("Info.plist") {
+                return """
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                    <plist version="1.0">
+                    <dict>
+                        <key>CFBundleIdentifier</key>
+                        <string>com.apple.dt.Xcode</string>
+                        <key>CFBundleShortVersionString</key>
+                        <string>12.4.0</string>
+                    </dict>
+                    </plist>
+                    """.data(using: .utf8)
+            }
+            else if path.contains("version.plist") {
+                return """
+                    <?xml version="1.0" encoding="UTF-8"?>
+                    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                    <plist version="1.0">
+                    <dict>
+                        <key>ProductBuildVersion</key>
+                        <string>12D4e</string>
+                    </dict>
+                    </plist>
+                    """.data(using: .utf8)
+            }
+            else {
+                return nil
+            }
+        }
+        
+        subject.updateAllXcodes(
+            availableXcodes: [
+                AvailableXcode(version: Version("12.4.0+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
+                AvailableXcode(version: Version("12.4.0-RC+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
+            ], 
+            installedXcodes: [
+                InstalledXcode(path: Path("/Applications/Xcode-12.4.0-RC.app")!)!
+            ], 
+            selectedXcodePath: nil
+        )
+        
+        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
     }
     
     func testFilterReleasesThatMatchPrereleases() {
