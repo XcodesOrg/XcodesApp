@@ -450,6 +450,9 @@ class AppState: ObservableObject {
         // Map all of the available versions into Xcode values that join available and installed Xcode data for display.
         var newAllXcodes = adjustedAvailableXcodes
             .filter { availableXcode in
+                // If we don't have the build identifier, don't attempt to filter prerelease versions with identical build identifiers
+                guard !availableXcode.version.buildMetadataIdentifiers.isEmpty else { return true }
+
                 let availableXcodesWithIdenticalBuildIdentifiers = availableXcodes
                     .filter({ $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers })
                 
@@ -466,7 +469,10 @@ class AppState: ObservableObject {
                 let identicalBuilds: [Version]
                 let prereleaseAvailableXcodesWithIdenticalBuildIdentifiers = availableXcodes
                     .filter {
-                        $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers && !$0.version.prereleaseIdentifiers.isEmpty
+                        return $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers &&
+                            !$0.version.prereleaseIdentifiers.isEmpty &&
+                            // If we don't have the build identifier, don't consider this as a potential identical build
+                            !$0.version.buildMetadataIdentifiers.isEmpty
                     }
                 // If this is the release version, add the identical builds to it
                 if !prereleaseAvailableXcodesWithIdenticalBuildIdentifiers.isEmpty, availableXcode.version.prereleaseIdentifiers.isEmpty {
