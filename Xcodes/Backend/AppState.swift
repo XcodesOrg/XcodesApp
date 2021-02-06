@@ -299,7 +299,7 @@ class AppState: ObservableObject {
                     .mapError { $0 as Error }
             }
             .flatMap { [unowned self] in
-                self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "urlSession") ?? .urlSession)
+                self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2)
             }
             .receive(on: DispatchQueue.main)
             .sink(
