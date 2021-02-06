@@ -11,8 +11,8 @@ struct InfoPane: View {
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     
     var body: some View {
-        Group {
-            if let xcode = appState.allXcodes.first(where: { $0.id == selectedXcodeID }) {
+        if let xcode = appState.allXcodes.first(where: { $0.id == selectedXcodeID }) {
+            ScrollView {
                 VStack(spacing: 16) {
                     icon(for: xcode)
                     
@@ -61,12 +61,13 @@ struct InfoPane: View {
                     
                     Spacer()
                 }
-            } else {
-                empty
+                .padding()
             }
+            .frame(minWidth: 200, maxWidth: .infinity)
+        } else {
+            empty
+                .frame(minWidth: 200, maxWidth: .infinity)
         }
-        .padding()
-        .frame(minWidth: 200, maxWidth: .infinity)
     }
     
     @ViewBuilder
@@ -212,13 +213,11 @@ struct InfoPane: View {
     
     @ViewBuilder
     private var empty: some View {
-        VStack {
-            Spacer()
-            Text("No Xcode Selected")
-                .font(.title)
-                .foregroundColor(.secondary)
-            Spacer()
-        }
+        Text("No Xcode Selected")
+            .font(.title)
+            .foregroundColor(.secondary)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .padding()
     }
 }
 
