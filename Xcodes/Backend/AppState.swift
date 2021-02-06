@@ -49,7 +49,7 @@ class AppState: ObservableObject {
 
     @Published var error: Error?
     @Published var authError: Error?
-    
+
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
@@ -299,7 +299,7 @@ class AppState: ObservableObject {
                     .mapError { $0 as Error }
             }
             .flatMap { [unowned self] in
-                self.install(.version(availableXcode), downloader: .aria2)
+                self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2)
             }
             .receive(on: DispatchQueue.main)
             .sink(
