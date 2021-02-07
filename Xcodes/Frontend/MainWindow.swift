@@ -24,19 +24,11 @@ struct MainWindow: View {
                           primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: xcode.id) }),
                           secondaryButton: .cancel(Text("Cancel")))
                 }
-            InfoPane(selectedXcodeID: selectedXcodeID)
-                .frame(minWidth: 300, maxWidth: .infinity)
-                .frame(width: isShowingInfoPane ? nil : 0)
-                .isHidden(!isShowingInfoPane)
-                // This alert isn't intentionally placed here, 
-                // just trying to put it in a unique part of the hierarchy 
-                // since you can't have more than one in the same spot.
-                .alert(item: $appState.xcodeBeingConfirmedForInstallCancellation) { xcode in
-                    Alert(title: Text("Are you sure you want to stop the installation of Xcode \(xcode.description)?"),
-                          message: Text("Any progress will be discarded."),
-                          primaryButton: .destructive(Text("Stop Installation"), action: { self.appState.cancelInstall(id: xcode.id) }),
-                          secondaryButton: .cancel(Text("Cancel")))
-                }
+            
+            if isShowingInfoPane {
+                InfoPane(selectedXcodeID: selectedXcodeID)
+                    .frame(minWidth: 300, maxWidth: .infinity)
+            }
         }
         .mainToolbar(
             category: $category,
@@ -50,6 +42,17 @@ struct MainWindow: View {
             secondFactorView(appState.secondFactorData!)
                 .environmentObject(appState)
         }
+        // This overlay is only here to work around the one-alert-per-view limitation
+        .overlay(
+            Color.clear
+                // This particular alert could be added specifically to InstallationStepView and CancelInstallButton _except_ for when CancelInstallButton is used in the Xcode CommandMenu, so it's here for now. 
+                .alert(item: $appState.xcodeBeingConfirmedForInstallCancellation) { xcode in
+                    Alert(title: Text("Are you sure you want to stop the installation of Xcode \(xcode.description)?"),
+                          message: Text("Any progress will be discarded."),
+                          primaryButton: .destructive(Text("Stop Installation"), action: { self.appState.cancelInstall(id: xcode.id) }),
+                          secondaryButton: .cancel(Text("Cancel")))
+                }
+        )
         // This overlay is only here to work around the one-alert-per-view limitation
         .overlay(
             Color.clear
