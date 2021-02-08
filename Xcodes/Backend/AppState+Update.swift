@@ -6,10 +6,6 @@ import SwiftSoup
 import struct XCModel.Xcode
 
 extension AppState {
-    private var dataSource: DataSource {
-        Current.defaults.string(forKey: "dataSource").flatMap(DataSource.init(rawValue:)) ?? .default
-    }
-    
     func updateIfNeeded() {
         guard
             let lastUpdated = Current.defaults.date(forKey: "lastUpdated"),
@@ -200,31 +196,6 @@ extension AppState {
                 }
                 return xcodes
             }
-            .map(filterPrereleasesThatMatchReleaseBuildMetadataIdentifiers)
             .eraseToAnyPublisher()
     }
-    
-    /// Xcode Releases may have multiple releases with the same build metadata when a build doesn't change between candidate and final releases.
-    /// For example, 12.3 RC and 12.3 are both build 12C33
-    /// We don't care about that difference, so only keep the final release (GM or Release, in XCModel terms).
-    /// The downside of this is that a user could technically have both releases installed, and so they won't both be shown in the list, but I think most users wouldn't do this.
-    func filterPrereleasesThatMatchReleaseBuildMetadataIdentifiers(_ availableXcodes: [AvailableXcode]) -> [AvailableXcode] {
-        var filteredAvailableXcodes: [AvailableXcode] = []
-        for availableXcode in availableXcodes {
-            if availableXcode.version.buildMetadataIdentifiers.isEmpty {
-                filteredAvailableXcodes.append(availableXcode)
-                continue
-            }
-            
-            let availableXcodesWithSameBuildMetadataIdentifiers = availableXcodes
-                .filter({ $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers })
-            if availableXcodesWithSameBuildMetadataIdentifiers.count > 1,
-               availableXcode.version.prereleaseIdentifiers.isEmpty || availableXcode.version.prereleaseIdentifiers == ["GM"] {
-                filteredAvailableXcodes.append(availableXcode)
-            } else if availableXcodesWithSameBuildMetadataIdentifiers.count == 1 {
-                filteredAvailableXcodes.append(availableXcode)
-            }
-        }
-        return filteredAvailableXcodes
-    } 
 }

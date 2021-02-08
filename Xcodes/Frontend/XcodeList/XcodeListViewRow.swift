@@ -3,17 +3,28 @@ import SwiftUI
 import Version
 
 struct XcodeListViewRow: View {
-    @EnvironmentObject var appState: AppState
     let xcode: Xcode
     let selected: Bool
+    let appState: AppState
     
     var body: some View {
         HStack {
             appIconView(for: xcode)
             
             VStack(alignment: .leading) {
-                Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
-                    .font(.body)
+                HStack {
+                    Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
+                        .font(.body)
+                    
+                    if !xcode.identicalBuilds.isEmpty {
+                        Image(systemName: "square.fill.on.square.fill")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .accessibility(label: Text("Identical Builds"))
+                            .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
+                            .help("Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together.")
+                    }
+                }
                 
                 if case let .installed(path) = xcode.installState {
                     Text(verbatim: path.string)
@@ -112,29 +123,39 @@ struct XcodeListViewRow_Previews: PreviewProvider {
         Group {
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
             )
             
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
             )
             
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
             )
             
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.0.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
             )
             
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.0.0+1234A")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
-                selected: false
+                selected: false,
+                appState: AppState()
+            )
+            
+            XcodeListViewRow(
+                xcode: Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [Version("12.0.0-RC+1234A")!], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                selected: false,
+                appState: AppState()
             )
         }
-        .environmentObject(AppState())
     }
 }

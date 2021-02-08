@@ -50,7 +50,13 @@ public extension Version {
         }
         if !prereleaseIdentifiers.isEmpty {
             base += " " + prereleaseIdentifiers
-                .map { $0.replacingOccurrences(of: "-", with: " ").capitalized.replacingOccurrences(of: "Gm", with: "GM") }
+                .map { identifiers in
+                    identifiers
+                        .replacingOccurrences(of: "-", with: " ")
+                        .capitalized
+                        .replacingOccurrences(of: "Gm", with: "GM")
+                        .replacingOccurrences(of: "Rc", with: "RC")
+                }
                 .joined(separator: " ")
         }
         return base

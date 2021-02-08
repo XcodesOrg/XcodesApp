@@ -6,6 +6,8 @@ import struct XCModel.Compilers
 
 struct Xcode: Identifiable, CustomStringConvertible {
     let version: Version
+    /// Other Xcode versions that have the same build identifier
+    let identicalBuilds: [Version]
     var installState: XcodeInstallState
     let selected: Bool
     let icon: NSImage?
@@ -17,6 +19,7 @@ struct Xcode: Identifiable, CustomStringConvertible {
     
     init(
         version: Version,
+        identicalBuilds: [Version] = [],
         installState: XcodeInstallState,
         selected: Bool,
         icon: NSImage?,
@@ -27,6 +30,7 @@ struct Xcode: Identifiable, CustomStringConvertible {
         downloadFileSize: Int64? = nil
     ) {
         self.version = version
+        self.identicalBuilds = identicalBuilds
         self.installState = installState
         self.selected = selected
         self.icon = icon
