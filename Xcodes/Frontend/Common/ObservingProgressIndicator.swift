@@ -42,6 +42,7 @@ public struct ObservingProgressIndicator: View {
             isIndeterminate: progress.progress.isIndeterminate,
             style: style
         )
+        .help("Downloading: \(Int((progress.progress.fractionCompleted * 100)))% complete")
     }
 }
 
