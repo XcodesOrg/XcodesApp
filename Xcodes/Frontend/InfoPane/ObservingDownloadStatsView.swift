@@ -1,11 +1,12 @@
+
 import Combine
 import SwiftUI
 
 /// A ProgressIndicator that reflects the state of a Progress object.
-/// This functionality is already built in to ProgressView, 
+/// This functionality is already built in to ProgressView,
 /// but this implementation ensures that changes are received on the main thread.
 @available(iOS 14.0, macOS 11.0, *)
-public struct ObservingProgressIndicator: View {
+public struct ObservingDownloadStatsView: View {
     let controlSize: NSControl.ControlSize
     let style: NSProgressIndicator.Style
     @StateObject private var progress: ProgressWrapper
@@ -34,23 +35,36 @@ public struct ObservingProgressIndicator: View {
     }
     
     public var body: some View {
-        ProgressIndicator(
-            minValue: 0.0,
-            maxValue: 1.0,
-            doubleValue: progress.progress.fractionCompleted, 
-            controlSize: controlSize,
-            isIndeterminate: progress.progress.isIndeterminate,
-            style: style
-        )
-        .help("Downloading: \(Int((progress.progress.fractionCompleted * 100)))% complete")
+        
+        VStack{
+            ProgressIndicator(
+                minValue: 0.0,
+                maxValue: 1.0,
+                doubleValue: progress.progress.fractionCompleted,
+                controlSize: controlSize,
+                isIndeterminate: progress.progress.isIndeterminate,
+                style: style
+            )
+            .help("Downloading: \(Int((progress.progress.fractionCompleted * 100)))% complete")
+            HStack {
+                if let fileCompletedCount = progress.progress.fileCompletedCount, let fileTotalCount = progress.progress.fileTotalCount {
+                    Text("\(ByteCountFormatter.string(fromByteCount: Int64(fileCompletedCount), countStyle: .file)) of \(ByteCountFormatter.string(fromByteCount: Int64(fileTotalCount), countStyle: .file))")
+                }
+                if let throughput = progress.progress.throughput {
+                    Text(" at \(ByteCountFormatter.string(fromByteCount: Int64(throughput), countStyle: .binary))/sec")
+                }
+            }
+        }
+        
+        
     }
 }
 
 @available(iOS 14.0, macOS 11.0, *)
-struct ObservingProgressBar_Previews: PreviewProvider {
+struct ObservingDownloadStats_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ObservingProgressIndicator(
+            ObservingDownloadStatsView(
                 configure(Progress(totalUnitCount: 100)) {
                     $0.completedUnitCount = 40
                 },

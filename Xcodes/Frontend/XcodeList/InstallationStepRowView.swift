@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct InstallationStepView: View {
+struct InstallationStepRowView: View {
     let installationStep: InstallationStep
     let highlighted: Bool
     let cancel: () -> Void
@@ -42,7 +42,7 @@ struct InstallView_Previews: PreviewProvider {
         Group {
             ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
                 Group {
-                    InstallationStepView(
+                    InstallationStepRowView(
                         installationStep: .downloading(
                             progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 }
                         ),
@@ -50,31 +50,31 @@ struct InstallView_Previews: PreviewProvider {
                         cancel: {}
                     )
                     
-                    InstallationStepView(
+                    InstallationStepRowView(
                         installationStep: .unarchiving,
                         highlighted: false,
                         cancel: {}
                     )
                     
-                    InstallationStepView(
+                    InstallationStepRowView(
                         installationStep: .moving(destination: "/Applications"),
                         highlighted: false,
                         cancel: {}
                     )
                     
-                    InstallationStepView(
+                    InstallationStepRowView(
                         installationStep: .trashingArchive,
                         highlighted: false,
                         cancel: {}
                     )
                     
-                    InstallationStepView(
+                    InstallationStepRowView(
                         installationStep: .checkingSecurity,
                         highlighted: false,
                         cancel: {}
                     )
                     
-                    InstallationStepView(
+                    InstallationStepRowView(
                         installationStep: .finishing,
                         highlighted: false,
                         cancel: {}
@@ -87,7 +87,7 @@ struct InstallView_Previews: PreviewProvider {
             
             ForEach(ColorScheme.allCases, id: \.self) { colorScheme in
                 Group {
-                    InstallationStepView(
+                    InstallationStepRowView(
                         installationStep: .downloading(
                             progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 }
                         ),

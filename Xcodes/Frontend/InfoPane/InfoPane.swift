@@ -51,13 +51,17 @@ struct InfoPane: View {
                     }
                     
                     Divider()
-                    
-                    releaseNotes(for: xcode)
-                    identicalBuilds(for: xcode)
-                    compatibility(for: xcode)
-                    sdks(for: xcode)
-                    compilers(for: xcode)
-                    downloadFileSize(for: xcode)
+                    Group{
+                        releaseNotes(for: xcode)
+                        identicalBuilds(for: xcode)
+                        compatibility(for: xcode)
+                        sdks(for: xcode)
+                        compilers(for: xcode)
+                    }
+                    Group {
+                        downloadFileSize(for: xcode)
+                        downloadStats(for: xcode)
+                    }
                     
                     Spacer()
                 }
@@ -210,6 +214,19 @@ struct InfoPane: View {
         }
     }
     
+    @ViewBuilder
+    private func downloadStats(for xcode: Xcode) -> some View {
+        switch xcode.installState {
+            case let .installing(installationStep):
+                Divider()
+                InstallationStepDetailView(
+                    installationStep: installationStep
+                )
+            default:
+                EmptyView()
+        }
+        
+    }
     
     @ViewBuilder
     private var empty: some View {
@@ -252,7 +269,7 @@ struct InfoPane_Previews: PreviewProvider {
                     ]
                 })
                 .previewDisplayName("Populated, Installed, Selected")
-            
+
             InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
@@ -278,7 +295,7 @@ struct InfoPane_Previews: PreviewProvider {
                     ]
                 })
                 .previewDisplayName("Populated, Installed, Unselected")
-            
+
             InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
@@ -304,7 +321,7 @@ struct InfoPane_Previews: PreviewProvider {
                     ]
                 })
                 .previewDisplayName("Populated, Uninstalled")
-            
+
             InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
@@ -318,6 +335,20 @@ struct InfoPane_Previews: PreviewProvider {
                     ]
                 })
                 .previewDisplayName("Basic, installed")
+
+            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]))
+                .environmentObject(configure(AppState()) {
+                    $0.allXcodes = [
+                        .init(
+                            version: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]),
+                            installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40; $0.throughput = 232323232; $0.fileCompletedCount = 2323004; $0.fileTotalCount = 1193939393 })),
+                            selected: false,
+                            icon: nil,
+                            sdks: nil,
+                            compilers: nil)
+                    ]
+                })
+                .previewDisplayName("Basic, installing")
             
             InfoPane(selectedXcodeID: nil)
                 .environmentObject(configure(AppState()) {
