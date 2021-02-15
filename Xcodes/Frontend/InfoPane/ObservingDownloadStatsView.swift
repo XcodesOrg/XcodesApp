@@ -37,15 +37,18 @@ public struct ObservingDownloadStatsView: View {
     public var body: some View {
         
         VStack{
-            ProgressIndicator(
-                minValue: 0.0,
-                maxValue: 1.0,
-                doubleValue: progress.progress.fractionCompleted,
-                controlSize: controlSize,
-                isIndeterminate: progress.progress.isIndeterminate,
-                style: style
-            )
-            .help("Downloading: \(Int((progress.progress.fractionCompleted * 100)))% complete")
+            HStack {
+                ProgressIndicator(
+                    minValue: 0.0,
+                    maxValue: 1.0,
+                    doubleValue: progress.progress.fractionCompleted,
+                    controlSize: controlSize,
+                    isIndeterminate: progress.progress.isIndeterminate,
+                    style: style
+                )
+                .help("Downloading: \(Int((progress.progress.fractionCompleted * 100)))% complete")
+                Text("\(Int((progress.progress.fractionCompleted * 100)))%")
+            }
             HStack {
                 if let fileCompletedCount = progress.progress.fileCompletedCount, let fileTotalCount = progress.progress.fileTotalCount {
                     Text("\(ByteCountFormatter.string(fromByteCount: Int64(fileCompletedCount), countStyle: .file)) of \(ByteCountFormatter.string(fromByteCount: Int64(fileTotalCount), countStyle: .file))")
@@ -66,10 +69,10 @@ struct ObservingDownloadStats_Previews: PreviewProvider {
         Group {
             ObservingDownloadStatsView(
                 configure(Progress(totalUnitCount: 100)) {
-                    $0.completedUnitCount = 40
+                    $0.completedUnitCount = 40; $0.throughput = 9211681; $0.fileCompletedCount = 84844492; $0.fileTotalCount = 11944848484
                 },
                 controlSize: .small,
-                style: .spinning
+                style: .bar
             )
         }
         .previewLayout(.sizeThatFits)
