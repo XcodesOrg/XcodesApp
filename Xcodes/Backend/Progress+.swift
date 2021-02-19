@@ -43,15 +43,10 @@ extension Progress {
         }
         
         // MARK: Estimated Time Remaining
-        let regexETA = try! NSRegularExpression(pattern: #"(?<=ETA:)(?<days>\d*d)?(?<hours>\d*h)?(?<minutes>\d*m)?(?<seconds>\d*s)?"#)
+        let regexETA = try! NSRegularExpression(pattern: #"(?<=ETA:)(?<hours>\d*h)?(?<minutes>\d*m)?(?<seconds>\d*s)?"#)
         
         if let match = regexETA.firstMatch(in: string, options: [], range: range) {
             var seconds: Int = 0
-            
-            if let matchRange = Range(match.range(withName: "days"), in: string),
-               let days = Int(string[matchRange].replacingOccurrences(of: "d", with: "")) {
-                seconds += (days * 60 * 60 * 24)
-            }
             
             if let matchRange = Range(match.range(withName: "hours"), in: string),
                let hours = Int(string[matchRange].replacingOccurrences(of: "h", with: "")) {
