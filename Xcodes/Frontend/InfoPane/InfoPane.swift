@@ -13,54 +13,52 @@ struct InfoPane: View {
     var body: some View {
         if let xcode = appState.allXcodes.first(where: { $0.id == selectedXcodeID }) {
             ScrollView {
-                VStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 16) {
                     icon(for: xcode)
+                        .frame(maxWidth: .infinity, alignment: .center)
+
+                    Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
+                        .font(.title)
                     
-                    VStack(alignment: .leading) {
-                        Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
-                            .font(.title)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                    switch xcode.installState {
+                    case .notInstalled:
+                        InstallButton(xcode: xcode)
+                        downloadFileSize(for: xcode)
+                    case .installing(let installationStep):
+                        InstallationStepDetailView(installationStep: installationStep)
+                            .fixedSize(horizontal: false, vertical: true)
+                        CancelInstallButton(xcode: xcode)
+                    case let .installed(path):
+                        HStack {
+                            Text(path.string)
+                            Button(action: { appState.reveal(id: xcode.id) }) {
+                                Image(systemName: "arrow.right.circle.fill")
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .help("Reveal in Finder")
+                        }
                         
-                        switch xcode.installState {
-                        case .notInstalled:
-                            InstallButton(xcode: xcode)
-                        case .installing:
-                            CancelInstallButton(xcode: xcode)
-                        case let .installed(path):
-                            HStack {
-                                Text(path.string)
-                                Button(action: { appState.reveal(id: xcode.id) }) {
-                                    Image(systemName: "arrow.right.circle.fill")
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .help("Reveal in Finder")
-                            }
+                        HStack {
+                            SelectButton(xcode: xcode)
+                                .disabled(xcode.selected)
+                                .help("Selected")
                             
-                            HStack {
-                                SelectButton(xcode: xcode)
-                                    .disabled(xcode.selected)
-                                    .help("Selected")
-                                
-                                OpenButton(xcode: xcode)
-                                    .help("Open")
-                                
-                                Spacer()
-                                UninstallButton(xcode: xcode)
-                            }
+                            OpenButton(xcode: xcode)
+                                .help("Open")
+                            
+                            Spacer()
+                            UninstallButton(xcode: xcode)
                         }
                     }
                     
                     Divider()
+
                     Group{
                         releaseNotes(for: xcode)
                         identicalBuilds(for: xcode)
                         compatibility(for: xcode)
                         sdks(for: xcode)
                         compilers(for: xcode)
-                    }
-                    Group {
-                        downloadFileSize(for: xcode)
-                        downloadStats(for: xcode)
                     }
                     
                     Spacer()
@@ -212,20 +210,6 @@ struct InfoPane: View {
         } else {
             EmptyView()
         }
-    }
-    
-    @ViewBuilder
-    private func downloadStats(for xcode: Xcode) -> some View {
-        switch xcode.installState {
-            case let .installing(installationStep):
-                Divider()
-                InstallationStepDetailView(
-                    installationStep: installationStep
-                )
-            default:
-                EmptyView()
-        }
-        
     }
     
     @ViewBuilder
