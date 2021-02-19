@@ -1,4 +1,4 @@
-
+import os.log
 import Foundation
 
 extension Progress {
@@ -39,7 +39,7 @@ extension Progress {
            let speed = Int(string[matchRange].replacingOccurrences(of: "B", with: "")) {
             self.throughput = speed
         } else {
-            print("Could not find speed")
+            Logger.appState.debug("Could not parse throughput from aria2 download output")
         }
         
         // MARK: Estimated Time Remaining
