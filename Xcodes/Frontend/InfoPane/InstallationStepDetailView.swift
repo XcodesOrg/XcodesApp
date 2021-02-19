@@ -4,11 +4,11 @@ struct InstallationStepDetailView: View {
     let installationStep: InstallationStep
    
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 0) {
+            Text("Step \(installationStep.stepNumber) of \(installationStep.stepCount): \(installationStep.message)")
+
             switch installationStep {
                 case let .downloading(progress):
-                    Text("Step \(installationStep.stepNumber) of \(installationStep.stepCount): \(installationStep.message)")
-                        .font(.title2)
                     ObservingProgressIndicator(
                         progress,
                         controlSize: .regular,
@@ -21,16 +21,28 @@ struct InstallationStepDetailView: View {
                         .scaleEffect(0.5)
             }
         }
-        .frame(minWidth: 80)
     }
 }
 
 struct InstallDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        InstallationStepDetailView(
-            installationStep: .downloading(
-                progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40; $0.throughput = 9211681; $0.fileCompletedCount = 84844492; $0.fileTotalCount = 11944848484 }
+        Group {
+            InstallationStepDetailView(
+                installationStep: .downloading(
+                    progress: configure(Progress()) {
+                        $0.kind = .file
+                        $0.fileOperationKind = .downloading
+                        $0.estimatedTimeRemaining = 123
+                        $0.totalUnitCount = 11944848484
+                        $0.completedUnitCount = 848444920
+                        $0.throughput = 9211681
+                    }
+                )
             )
-        )
+            
+            InstallationStepDetailView(
+                installationStep: .unarchiving
+            )
+        }
     }
 }
