@@ -109,7 +109,7 @@ struct XcodeListViewRow: View {
                 .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selected))
                 .help("Install this version")
         case let .installing(installationStep):
-            InstallationStepView(
+            InstallationStepRowView(
                 installationStep: installationStep,
                 highlighted: selected,
                 cancel: { appState.xcodeBeingConfirmedForInstallCancellation = xcode }

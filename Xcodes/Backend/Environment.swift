@@ -45,6 +45,7 @@ public struct Shell {
             "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)",
             "--dir=\(destination.parent.string)",
             "--out=\(destination.basename())",
+            "--human-readable=false", // sets the output to use bytes instead of formatting
             url.absoluteString,
         ]
         let stdOutPipe = Pipe()
@@ -52,8 +53,10 @@ public struct Shell {
         let stdErrPipe = Pipe()
         process.standardError = stdErrPipe
         
-        var progress = Progress(totalUnitCount: 100)
-
+        var progress = Progress()
+        progress.kind = .file
+        progress.fileOperationKind = .downloading
+        
         let observer = NotificationCenter.default.addObserver(
             forName: .NSFileHandleDataAvailable, 
             object: nil, 
@@ -68,16 +71,8 @@ public struct Shell {
             defer { handle.waitForDataInBackgroundAndNotify() }
 
             let string = String(decoding: handle.availableData, as: UTF8.self)
-            let regex = try! NSRegularExpression(pattern: #"((?<percent>\d+)%\))"#)
-            let range = NSRange(location: 0, length: string.utf16.count)
-
-            guard
-                let match = regex.firstMatch(in: string, options: [], range: range),
-                let matchRange = Range(match.range(withName: "percent"), in: string),
-                let percentCompleted = Int64(string[matchRange])
-            else { return }
-
-            progress.completedUnitCount = percentCompleted
+            
+            progress.updateFromAria2(string: string)
         }
 
         stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()

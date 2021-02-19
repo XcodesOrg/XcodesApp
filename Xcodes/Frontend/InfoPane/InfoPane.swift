@@ -13,51 +13,53 @@ struct InfoPane: View {
     var body: some View {
         if let xcode = appState.allXcodes.first(where: { $0.id == selectedXcodeID }) {
             ScrollView {
-                VStack(spacing: 16) {
+                VStack(alignment: .leading, spacing: 16) {
                     icon(for: xcode)
+                        .frame(maxWidth: .infinity, alignment: .center)
+
+                    Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
+                        .font(.title)
                     
-                    VStack(alignment: .leading) {
-                        Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
-                            .font(.title)
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                    switch xcode.installState {
+                    case .notInstalled:
+                        InstallButton(xcode: xcode)
+                        downloadFileSize(for: xcode)
+                    case .installing(let installationStep):
+                        InstallationStepDetailView(installationStep: installationStep)
+                            .fixedSize(horizontal: false, vertical: true)
+                        CancelInstallButton(xcode: xcode)
+                    case let .installed(path):
+                        HStack {
+                            Text(path.string)
+                            Button(action: { appState.reveal(id: xcode.id) }) {
+                                Image(systemName: "arrow.right.circle.fill")
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .help("Reveal in Finder")
+                        }
                         
-                        switch xcode.installState {
-                        case .notInstalled:
-                            InstallButton(xcode: xcode)
-                        case .installing:
-                            CancelInstallButton(xcode: xcode)
-                        case let .installed(path):
-                            HStack {
-                                Text(path.string)
-                                Button(action: { appState.reveal(id: xcode.id) }) {
-                                    Image(systemName: "arrow.right.circle.fill")
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                .help("Reveal in Finder")
-                            }
+                        HStack {
+                            SelectButton(xcode: xcode)
+                                .disabled(xcode.selected)
+                                .help("Selected")
                             
-                            HStack {
-                                SelectButton(xcode: xcode)
-                                    .disabled(xcode.selected)
-                                    .help("Selected")
-                                
-                                OpenButton(xcode: xcode)
-                                    .help("Open")
-                                
-                                Spacer()
-                                UninstallButton(xcode: xcode)
-                            }
+                            OpenButton(xcode: xcode)
+                                .help("Open")
+                            
+                            Spacer()
+                            UninstallButton(xcode: xcode)
                         }
                     }
                     
                     Divider()
-                    
-                    releaseNotes(for: xcode)
-                    identicalBuilds(for: xcode)
-                    compatibility(for: xcode)
-                    sdks(for: xcode)
-                    compilers(for: xcode)
-                    downloadFileSize(for: xcode)
+
+                    Group{
+                        releaseNotes(for: xcode)
+                        identicalBuilds(for: xcode)
+                        compatibility(for: xcode)
+                        sdks(for: xcode)
+                        compilers(for: xcode)
+                    }
                     
                     Spacer()
                 }
@@ -210,7 +212,6 @@ struct InfoPane: View {
         }
     }
     
-    
     @ViewBuilder
     private var empty: some View {
         Text("No Xcode Selected")
@@ -252,7 +253,7 @@ struct InfoPane_Previews: PreviewProvider {
                     ]
                 })
                 .previewDisplayName("Populated, Installed, Selected")
-            
+
             InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
@@ -278,7 +279,7 @@ struct InfoPane_Previews: PreviewProvider {
                     ]
                 })
                 .previewDisplayName("Populated, Installed, Unselected")
-            
+
             InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
@@ -304,7 +305,7 @@ struct InfoPane_Previews: PreviewProvider {
                     ]
                 })
                 .previewDisplayName("Populated, Uninstalled")
-            
+
             InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]))
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
@@ -318,6 +319,20 @@ struct InfoPane_Previews: PreviewProvider {
                     ]
                 })
                 .previewDisplayName("Basic, installed")
+
+            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]))
+                .environmentObject(configure(AppState()) {
+                    $0.allXcodes = [
+                        .init(
+                            version: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]),
+                            installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40; $0.throughput = 232323232; $0.fileCompletedCount = 2323004; $0.fileTotalCount = 1193939393 })),
+                            selected: false,
+                            icon: nil,
+                            sdks: nil,
+                            compilers: nil)
+                    ]
+                })
+                .previewDisplayName("Basic, installing")
             
             InfoPane(selectedXcodeID: nil)
                 .environmentObject(configure(AppState()) {

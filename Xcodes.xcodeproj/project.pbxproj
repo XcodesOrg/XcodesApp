@@ -75,7 +75,6 @@
 		CABFAA432593104F00380FEE /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA422593104F00380FEE /* AboutView.swift */; };
 		CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */; };
 		CAC28188259EE27200B8AB0B /* CombineExpectations in Frameworks */ = {isa = PBXBuildFile; productRef = CAC28187259EE27200B8AB0B /* CombineExpectations */; };
-		CAC281C8259F97E100B8AB0B /* InstallationStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281C7259F97E100B8AB0B /* InstallationStepView.swift */; };
 		CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */; };
 		CAC281DA259F985100B8AB0B /* InstallationStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281D9259F985100B8AB0B /* InstallationStep.swift */; };
 		CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */; };
@@ -99,7 +98,10 @@
 		CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */; };
 		CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */; };
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
+		E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DD6EA25D053FA00D86808 /* Progress+.swift */; };
 		E8977EA325C11E1500835F80 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8977EA225C11E1500835F80 /* PreferencesView.swift */; };
+		E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */; };
+		E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -227,7 +229,6 @@
 		CABFAA2B2592FBFC00380FEE /* Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configure.swift; path = Xcodes/Backend/Configure.swift; sourceTree = SOURCE_ROOT; };
 		CABFAA422593104F00380FEE /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+InfoPlistValues.swift"; sourceTree = "<group>"; };
-		CAC281C7259F97E100B8AB0B /* InstallationStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepView.swift; sourceTree = "<group>"; };
 		CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservingProgressIndicator.swift; sourceTree = "<group>"; };
 		CAC281D9259F985100B8AB0B /* InstallationStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStep.swift; sourceTree = "<group>"; };
 		CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+XcodesTests.swift"; sourceTree = "<group>"; };
@@ -247,7 +248,7 @@
 		CAE42486259A68A300B8B246 /* XcodeListCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListCategory.swift; sourceTree = "<group>"; };
 		CAE4248B259A68B800B8B246 /* Optional+IsNotNil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+IsNotNil.swift"; sourceTree = "<group>"; };
 		CAE424B3259A764700B8B246 /* AppState+Install.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AppState+Install.swift"; sourceTree = "<group>"; };
-		CAFBC3FF259AC17F00E2A3D8 /* InstallationStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepView.swift; sourceTree = "<group>"; };
+		CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepRowView.swift; sourceTree = "<group>"; };
 		CAFBC421259ACF8000E2A3D8 /* ObservingProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservingProgressView.swift; sourceTree = "<group>"; };
 		CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedXcode.swift; sourceTree = "<group>"; };
 		CAFBDB942598FE96003DCC5A /* FocusedValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FocusedValues.swift; sourceTree = "<group>"; };
@@ -260,7 +261,9 @@
 		CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatesPreferencePane.swift; sourceTree = "<group>"; };
 		CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListViewRow.swift; sourceTree = "<group>"; };
 		CAFFFEEE259CEAC400903F81 /* RingProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingProgressViewStyle.swift; sourceTree = "<group>"; };
+		E87DD6EA25D053FA00D86808 /* Progress+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+.swift"; sourceTree = "<group>"; };
 		E8977EA225C11E1500835F80 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -387,14 +390,12 @@
 			isa = PBXGroup;
 			children = (
 				CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */,
-				CAFBDC67259A308B003DCC5A /* InfoPane.swift */,
-				CAFBC3FF259AC17F00E2A3D8 /* InstallationStepView.swift */,
+				CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */,
 				CAFBDC4D2599B33D003DCC5A /* MainToolbar.swift */,
 				CA44901E2463AD34003D8213 /* Tag.swift */,
 				CAE42486259A68A300B8B246 /* XcodeListCategory.swift */,
 				CAD2E7A32449574E00113D76 /* XcodeListView.swift */,
 				CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */,
-				CAC281C7259F97E100B8AB0B /* InstallationStepView.swift */,
 			);
 			path = XcodeList;
 			sourceTree = "<group>";
@@ -437,6 +438,7 @@
 				CA61A6DF259835580008926E /* Xcode.swift */,
 				CA25192925A9644800F08414 /* XcodeInstallState.swift */,
 				CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */,
+				E87DD6EA25D053FA00D86808 /* Progress+.swift */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -444,6 +446,7 @@
 		CABFAA1A2592F7D900380FEE /* Frontend */ = {
 			isa = PBXGroup;
 			children = (
+				E8E98A9425D863B100EC89A0 /* InfoPane */,
 				63EAA4E9259944340046AB8F /* Common */,
 				CA9FF8552595082000E47BAF /* About */,
 				CAFE4AAA25B7D29B0064FE51 /* Preferences */,
@@ -545,6 +548,15 @@
 				E8977EA225C11E1500835F80 /* PreferencesView.swift */,
 			);
 			path = Preferences;
+			sourceTree = "<group>";
+		};
+		E8E98A9425D863B100EC89A0 /* InfoPane */ = {
+			isa = PBXGroup;
+			children = (
+				CAFBDC67259A308B003DCC5A /* InfoPane.swift */,
+				E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */,
+			);
+			path = InfoPane;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -757,6 +769,7 @@
 				CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */,
 				CABFA9C32592EEEA00380FEE /* Downloads.swift in Sources */,
 				CAC281DA259F985100B8AB0B /* InstallationStep.swift in Sources */,
+				E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */,
 				CA378F992466567600A58CE0 /* AppState.swift in Sources */,
 				CAD2E7A42449574E00113D76 /* XcodeListView.swift in Sources */,
 				CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */,
@@ -768,7 +781,6 @@
 				CAE4247F259A666100B8B246 /* MainWindow.swift in Sources */,
 				CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */,
 				CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */,
-				CAC281C8259F97E100B8AB0B /* InstallationStepView.swift in Sources */,
 				CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */,
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
 				CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */,
@@ -782,6 +794,7 @@
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
 				CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */,
 				CAC9F92D25BCDA4400B4965F /* HelperInstallState.swift in Sources */,
+				E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */,
 				CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */,
 				CABFA9C22592EEEA00380FEE /* Publisher+Resumable.swift in Sources */,
 				CAFBDC68259A308B003DCC5A /* InfoPane.swift in Sources */,
@@ -797,6 +810,7 @@
 				CA9FF87B2595293E00E47BAF /* DataSource.swift in Sources */,
 				CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */,
 				CABFAA432593104F00380FEE /* AboutView.swift in Sources */,
+				E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */,
 				CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */,
 				CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */,
 				63EAA4EB259944450046AB8F /* ProgressButton.swift in Sources */,
