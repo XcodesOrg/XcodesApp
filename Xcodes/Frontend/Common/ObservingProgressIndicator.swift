@@ -8,16 +8,19 @@ import SwiftUI
 public struct ObservingProgressIndicator: View {
     let controlSize: NSControl.ControlSize
     let style: NSProgressIndicator.Style
+    let showsAdditionalDescription: Bool
     @StateObject private var progress: ProgressWrapper
     
     public init(
         _ progress: Progress,
         controlSize: NSControl.ControlSize,
-        style: NSProgressIndicator.Style
+        style: NSProgressIndicator.Style,
+        showsAdditionalDescription: Bool = false
     ) {
         _progress = StateObject(wrappedValue: ProgressWrapper(progress: progress))
         self.controlSize = controlSize
         self.style = style
+        self.showsAdditionalDescription = showsAdditionalDescription
     }
     
     class ProgressWrapper: ObservableObject {
@@ -26,23 +29,31 @@ public struct ObservingProgressIndicator: View {
         
         init(progress: Progress) {
             self.progress = progress
-            cancellable = progress
-                .publisher(for: \.completedUnitCount)
-                .receive(on: RunLoop.main)
+            cancellable = progress.publisher(for: \.fractionCompleted)
+                .combineLatest(progress.publisher(for: \.localizedAdditionalDescription))
+                .throttle(for: 1.0, scheduler: DispatchQueue.main, latest: true)
                 .sink { [weak self] _ in self?.objectWillChange.send() }
         }
     }
     
     public var body: some View {
-        ProgressIndicator(
-            minValue: 0.0,
-            maxValue: 1.0,
-            doubleValue: progress.progress.fractionCompleted, 
-            controlSize: controlSize,
-            isIndeterminate: progress.progress.isIndeterminate,
-            style: style
-        )
-        .help("Downloading: \(Int((progress.progress.fractionCompleted * 100)))% complete")
+        VStack(alignment: .leading, spacing: 0) {
+            ProgressIndicator(
+                minValue: 0.0,
+                maxValue: 1.0,
+                doubleValue: progress.progress.fractionCompleted, 
+                controlSize: controlSize,
+                isIndeterminate: progress.progress.isIndeterminate,
+                style: style
+            )
+            .help("Downloading: \(Int((progress.progress.fractionCompleted * 100)))% complete")
+            
+            if showsAdditionalDescription, progress.progress.localizedAdditionalDescription.isEmpty == false { 
+                Text(progress.progress.localizedAdditionalDescription)
+                    .font(.subheadline)
+                    .foregroundColor(.secondary)
+            }
+        }
     }
 }
 
@@ -56,6 +67,20 @@ struct ObservingProgressBar_Previews: PreviewProvider {
                 },
                 controlSize: .small,
                 style: .spinning
+            )
+            
+            ObservingProgressIndicator(
+                configure(Progress()) {
+                    $0.kind = .file
+                    $0.fileOperationKind = .downloading
+                    $0.estimatedTimeRemaining = 123
+                    $0.totalUnitCount = 11944848484
+                    $0.completedUnitCount = 848444920
+                    $0.throughput = 9211681
+                },
+                controlSize: .regular,
+                style: .bar,
+                showsAdditionalDescription: true
             )
         }
         .previewLayout(.sizeThatFits)

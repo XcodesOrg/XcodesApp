@@ -9,10 +9,11 @@ struct InstallationStepDetailView: View {
                 case let .downloading(progress):
                     Text("Step \(installationStep.stepNumber) of \(installationStep.stepCount): \(installationStep.message)")
                         .font(.title2)
-                    ObservingDownloadStatsView(
+                    ObservingProgressIndicator(
                         progress,
                         controlSize: .regular,
-                        style: .bar
+                        style: .bar,
+                        showsAdditionalDescription: true
                     )
 
                 case .unarchiving, .moving, .trashingArchive, .checkingSecurity, .finishing:
