@@ -12,7 +12,6 @@ extension Progress {
         if let match = regexTotalDownloaded.firstMatch(in: string, options: [], range: range),
             let matchRange = Range(match.range(at: 0), in: string),
             let totalDownloaded = Int(string[matchRange].replacingOccurrences(of: "B", with: "")) {
-                self.fileCompletedCount = totalDownloaded
             self.completedUnitCount = Int64(totalDownloaded)
         }
         
@@ -24,7 +23,6 @@ extension Progress {
            let totalFileSize = Int(string[matchRange].replacingOccurrences(of: "B", with: "")) {
                 
             if totalFileSize > 0 {
-                self.fileTotalCount = totalFileSize
                 self.totalUnitCount = Int64(totalFileSize)
             }
         }

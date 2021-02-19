@@ -53,7 +53,9 @@ public struct Shell {
         let stdErrPipe = Pipe()
         process.standardError = stdErrPipe
         
-        var progress = Progress(totalUnitCount: 100)
+        var progress = Progress()
+        progress.kind = .file
+        progress.fileOperationKind = .downloading
         
         let observer = NotificationCenter.default.addObserver(
             forName: .NSFileHandleDataAvailable, 
