@@ -8,6 +8,60 @@
             
                 
                     <item>
+                        <title>1.0.4 (5)</title>
+                        <description><![CDATA[<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Display installation steps with download stats in info pane (#107) @MattKiazyk</li>
+  <li>Adds a DownloadFileSize when using Apple Data Source (#98) @MattKiazyk</li>
+  <li>Updates PreferencesView To use built in Settings Scene (#89) @MattKiazyk</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Moves the .help for the ProgressIndicator so it refreshes with the fraction change (#104) @MattKiazyk</li>
+  <li>Remove info pane from split view instead of hiding it (#103) @interstateone</li>
+  <li>Improve how identical builds are represented in the UI (#100) @interstateone</li>
+  <li>When downloading, use the downloader from userdefaults (#102) @MattKiazyk</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Bump actions/cache from v2 to v2.1.4 (#105) @dependabot</li>
+  <li>Add Homebrew Cask install instructions (#95) @interstateone</li>
+</ul>
+
+<!-- sparkle:edSignature=M/e+bFPmNSwUI2P4UaucSXsqMdT4woH5mkhwDR0rJ5OBbaJ9FY+8+9Dk5eOg4QabMa5juFXZHuQf7UW8k/HZCg== -->
+]]></description>
+                        <pubDate>Mon, 22 Feb 2021 21:50:31 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.4b5/Xcodes.zip"
+                                    sparkle:version="5"
+                                    sparkle:shortVersionString="1.0.4"
+                                    sparkle:edSignature="M/e+bFPmNSwUI2P4UaucSXsqMdT4woH5mkhwDR0rJ5OBbaJ9FY+8+9Dk5eOg4QabMa5juFXZHuQf7UW8k/HZCg=="
+                                    length="10421990"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>1.0.3 (4)</title>
                         <description><![CDATA[<h2 id="changes">Changes</h2>
 
