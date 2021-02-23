@@ -11,6 +11,9 @@ categories:
       - 'documentation'
       - 'dependencies'
 template: |
+  Install Xcodes using one of the methods listed [here](https://github.com/RobotsAndPencils/XcodesApp#installation).
+  Update Xcodes by selecting Check for Updates... in the Xcodes menu in the menu bar.
+
   ## Changes
 
   $CHANGES
