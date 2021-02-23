@@ -15,17 +15,17 @@
 
 <ul>
   <li>Display installation steps with download stats in info pane (#107) @MattKiazyk</li>
-  <li>Adds a DownloadFileSize when using Apple Data Source (#98) @MattKiazyk</li>
-  <li>Updates PreferencesView To use built in Settings Scene (#89) @MattKiazyk</li>
+  <li>Display the download file size when using Apple data source (#98) @MattKiazyk</li>
+  <li>Change PreferencesView to use SwiftUI’s built-in Settings scene (#89) @MattKiazyk</li>
 </ul>
 
 <h2 id="-bug-fixes">🐛 Bug Fixes</h2>
 
 <ul>
-  <li>Moves the .help for the ProgressIndicator so it refreshes with the fraction change (#104) @MattKiazyk</li>
-  <li>Remove info pane from split view instead of hiding it (#103) @interstateone</li>
   <li>Improve how identical builds are represented in the UI (#100) @interstateone</li>
-  <li>When downloading, use the downloader from userdefaults (#102) @MattKiazyk</li>
+  <li>When downloading, use the downloader specified in preferences (#102) @MattKiazyk</li>
+  <li>Remove info pane from split view instead of hiding it (#103) @interstateone</li>
+  <li>Move the .help for the ProgressIndicator so it refreshes with the fraction change (#104) @MattKiazyk</li>
 </ul>
 
 <h2 id="-maintenance">🧰 Maintenance</h2>
