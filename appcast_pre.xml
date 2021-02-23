@@ -9,7 +9,10 @@
                 
                     <item>
                         <title>1.0.4 (5)</title>
-                        <description><![CDATA[<h2 id="changes">Changes</h2>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
 
 <h2 id="-enhancements">🚀 Enhancements</h2>
 
