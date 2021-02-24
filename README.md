@@ -50,6 +50,12 @@ Follow the steps below to build and release a new version of Xcodes.app. For any
 ```sh
 # Update the version number in Xcode and commit the change, if necessary
 
+# Question: Did anything in XPCHelper change? 
+# - com.robotsandpencils.XcodesApp.Helper folder and HelperXPCShared
+# - if so, bump the version number in com.robotsandpencils.XcodesApp.Helper target. 
+# Note: you do not have to bump the version number if nothing has changed.
+# Note2: If you do bump the version, the end user, must re-install the XPCHelper and give permission again.
+
 # Increment the build number
 scripts/increment_build_number.sh
 
@@ -65,12 +71,16 @@ git tag -asm "v$VERSIONb$BUILD" "v$VERSIONb$BUILD"
 git push --follow-tags
 
 # Build the app
+# Make sure you have the Xcode Selected you want to build with
 scripts/package_release.sh
 
 # Notarize the app
 # Do this from the Product directory so the app is zipped without being nested inside Product
+# Create a app specific password on appleid.apple.com if you haven't already
+# % xcrun altool --store-password-in-keychain-item "AC_PASSWORD" -u "<appleiduseremail>" -p <app_specific_secret>
+
 pushd Product
-../scripts/notarize.sh "test@example.com" "@keychain:altool" MyOrg Xcodes.zip
+../scripts/notarize.sh "test@example.com" "@keychain:AC_PASSWORD" <MyOrg> Xcodes.zip
 
 # Sign the .zip for Sparkle, note the signature in the output for later
 # If you're warned about the signing key not being found, see the Xcodes 1Password vault for the key and installation instructions.
