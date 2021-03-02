@@ -6,11 +6,20 @@ import SwiftSoup
 import struct XCModel.Xcode
 
 extension AppState {
+    
+    var isReadyForUpdate: Bool {
+        guard let lastUpdated = Current.defaults.date(forKey: "lastUpdated"),
+          // This is bad date math but for this use case it doesn't need to be exact
+          lastUpdated < Current.date().addingTimeInterval(-60 * 60 * 5)
+        else {
+            return false
+       }
+        return true
+    }
+    
     func updateIfNeeded() {
         guard
-            let lastUpdated = Current.defaults.date(forKey: "lastUpdated"),
-            // This is bad date math but for this use case it doesn't need to be exact
-            lastUpdated < Current.date().addingTimeInterval(-60 * 60 * 24) 
+            isReadyForUpdate
         else { 
             updatePublisher = updateSelectedXcodePath()
                 .sink(

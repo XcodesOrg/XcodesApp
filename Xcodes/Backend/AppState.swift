@@ -22,6 +22,9 @@ class AppState: ObservableObject {
                 selectedXcodePath: selectedXcodePath
             )
         }
+        didSet {
+            autoInstallIfNeeded()
+        }
     }
     @Published var allXcodes: [Xcode] = []
     @Published var selectedXcodePath: String? {
@@ -56,7 +59,7 @@ class AppState: ObservableObject {
     private var installationPublishers: [Version: AnyCancellable] = [:]
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
-    
+    private var autoInstallTimer: Timer?
     // MARK: - 
     
     var dataSource: DataSource {
@@ -69,8 +72,20 @@ class AppState: ObservableObject {
         guard !isTesting else { return }
         try? loadCachedAvailableXcodes()
         checkIfHelperIsInstalled()
+        setupAutoInstallTimer()
     }
     
+    // MARK: Timer
+    /// Runs a timer every 6 hours when app is open to check if it needs to auto install any xcodes
+    func setupAutoInstallTimer() {
+        guard let storageValue = UserDefaults.standard.object(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
+        
+        if autoInstallType == .none { return }
+        
+        autoInstallTimer = Timer.scheduledTimer(withTimeInterval: 60*60*6, repeats: true) { [weak self] _ in
+            self?.updateIfNeeded()
+        }
+    }
     // MARK: - Authentication
     
     func validateSession() -> AnyPublisher<Void, Error> {
