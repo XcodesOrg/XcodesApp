@@ -2,6 +2,9 @@ import os.log
 import Foundation
 
 extension Progress {
+    var xcodesLocalizedDescription: String {
+        return localizedAdditionalDescription.replacingOccurrences(of: " — ", with: "\n")
+    }
     func updateFromAria2(string: String) {
             
         let range = NSRange(location: 0, length: string.utf16.count)
