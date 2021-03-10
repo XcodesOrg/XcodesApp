@@ -8,6 +8,31 @@ import os.log
 
 /// Downloads and installs Xcodes
 extension AppState {
+    
+    // check to see if we should auto install for the user
+    public func autoInstallIfNeeded() {
+        guard let storageValue = UserDefaults.standard.object(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
+        
+        if autoInstallType == .none { return }
+        
+        // get newest xcode version
+        guard let newestXcode = allXcodes.first, newestXcode.installState == .notInstalled else {
+            Logger.appState.info("User has latest Xcode already installed")
+            return
+        }
+        
+        if autoInstallType == .newestBeta {
+            Logger.appState.info("Auto installing newest Xcode Beta")
+            // install it, as user doesn't have it installed and it's either latest beta or latest release
+            install(id: newestXcode.id)
+        } else if autoInstallType == .newestVersion && newestXcode.version.isNotPrerelease {
+            Logger.appState.info("Auto installing newest Xcode")
+            install(id: newestXcode.id)
+        } else {
+            Logger.appState.info("No new Xcodes version found to auto install")
+        }
+    }
+    
     public func install(_ installationType: InstallationType, downloader: Downloader) -> AnyPublisher<Void, Error> {
         install(installationType, downloader: downloader, attemptNumber: 0)
             .map { _ in Void() }
@@ -515,6 +540,31 @@ public enum InstallationError: LocalizedError, Equatable {
 
 public enum InstallationType {
     case version(AvailableXcode)
+}
+
+public enum AutoInstallationType: Int, Identifiable {
+    case none = 0
+    case newestVersion
+    case newestBeta
+    
+    public var id: Self { self }
+    
+    public var isAutoInstalling: Bool {
+        get {
+            return self != .none
+        }
+        set {
+            self = newValue ? .newestVersion : .none
+        }
+    }
+    public var isAutoInstallingBeta: Bool {
+        get {
+            return self == .newestBeta
+        }
+        set {
+            self = newValue ? .newestBeta : (isAutoInstalling ? .newestVersion : .none)
+        }
+    }
 }
 
 let XcodeTeamIdentifier = "59GAB85EFG"

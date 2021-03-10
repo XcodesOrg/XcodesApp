@@ -5,29 +5,51 @@ import SwiftUI
 struct UpdatesPreferencePane: View {
     @StateObject var updater = ObservableUpdater()
     
+    @AppStorage("autoInstallation") var autoInstallationType: AutoInstallationType = .none
+    
     var body: some View {
-        GroupBox(label: Text("Updates")) {
-            VStack(alignment: .leading) {
-                Toggle(
-                    "Automatically check for app updates",
-                    isOn: $updater.automaticallyChecksForUpdates
-                )
-                
-                Toggle(
-                    "Include prerelease app versions",
-                    isOn: $updater.includePrereleaseVersions
-                )
-                                    
-                Button("Check Now") {
-                    SUUpdater.shared()?.checkForUpdates(nil)
+        VStack(alignment: .leading, spacing: 20) {
+            GroupBox(label: Text("Versions")) {
+                VStack(alignment: .leading) {
+                    Toggle(
+                        "Automatically install new versions of Xcode",
+                        isOn: $autoInstallationType.isAutoInstalling
+                    )
+                    
+                    Toggle(
+                        "Include prerelease/beta versions",
+                        isOn: $autoInstallationType.isAutoInstallingBeta
+                    )
                 }
-
-                Text("Last checked: \(lastUpdatedString)")
-                    .font(.footnote)
+                .fixedSize(horizontal: false, vertical: true)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
+            .groupBoxStyle(PreferencesGroupBoxStyle())
+            
+            Divider()
+            
+            GroupBox(label: Text("Xcodes.app Updates")) {
+                VStack(alignment: .leading) {
+                    Toggle(
+                        "Automatically check for app updates",
+                        isOn: $updater.automaticallyChecksForUpdates
+                    )
+                    
+                    Toggle(
+                        "Include prerelease app versions",
+                        isOn: $updater.includePrereleaseVersions
+                    )
+                    
+                    Button("Check Now") {
+                        SUUpdater.shared()?.checkForUpdates(nil)
+                    }
+                    
+                    Text("Last checked: \(lastUpdatedString)")
+                        .font(.footnote)
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .groupBoxStyle(PreferencesGroupBoxStyle())
         .frame(width: 400)
     }
     
