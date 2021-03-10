@@ -48,8 +48,8 @@ public struct ObservingProgressIndicator: View {
             )
             .help("Downloading: \(Int((progress.progress.fractionCompleted * 100)))% complete")
             
-            if showsAdditionalDescription, progress.progress.localizedAdditionalDescription.isEmpty == false { 
-                Text(progress.progress.localizedAdditionalDescription)
+            if showsAdditionalDescription, progress.progress.xcodesLocalizedDescription.isEmpty == false {
+                Text(progress.progress.xcodesLocalizedDescription)
                     .font(.subheadline)
                     .foregroundColor(.secondary)
             }
