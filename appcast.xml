@@ -8,6 +8,52 @@
             
                 
                     <item>
+                        <title>1.0.5 (6)</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Updates estimated time on info pane to 2 lines for better readability (#115) @MattKiazyk</li>
+  <li>Auto Install Xcode if wanted (#114) @MattKiazyk</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Add install and update instructions to release notes (#111) @interstateone</li>
+</ul>
+
+<!-- sparkle:edSignature=o68WXbj/QpF+uMivHgPdRV1cafP/EuYQycCVXAEl+TqNgI2eKbu5jUuelP1ZmLwQIVADOyPUA4E2hq4Wz+kJCQ== -->
+]]></description>
+                        <pubDate>Thu, 11 Mar 2021 01:07:43 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.5b6/Xcodes.zip"
+                                    sparkle:version="6"
+                                    sparkle:shortVersionString="1.0.5"
+                                    sparkle:edSignature="o68WXbj/QpF+uMivHgPdRV1cafP/EuYQycCVXAEl+TqNgI2eKbu5jUuelP1ZmLwQIVADOyPUA4E2hq4Wz+kJCQ=="
+                                    length="10430337"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>1.0.4 (5)</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
