@@ -105,9 +105,11 @@ extension AppState {
         // aria2 downloads directly to the destination (instead of into /tmp first) so we need to make sure that the download isn't incomplete
         let aria2DownloadMetadataPath = expectedArchivePath.parent/(expectedArchivePath.basename() + ".aria2")
         var aria2DownloadIsIncomplete = false
+        #if arch(x86_64)
         if case .aria2 = downloader, aria2DownloadMetadataPath.exists {
             aria2DownloadIsIncomplete = true
         }
+        #endif
         if Current.files.fileExistsAtPath(expectedArchivePath.string), aria2DownloadIsIncomplete == false {
             Logger.appState.info("Found existing archive that will be used for installation at \(expectedArchivePath).")
             return Just(expectedArchivePath.url)
@@ -117,6 +119,7 @@ extension AppState {
         else {
             let destination = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).\(availableXcode.filename.suffix(fromLast: "."))"
             switch downloader {
+            #if arch(x86_64)
             case .aria2:
                 let aria2Path = Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!
                 return downloadXcodeWithAria2(
@@ -125,6 +128,7 @@ extension AppState {
                     aria2Path: aria2Path,
                     progressChanged: progressChanged
                 )
+            #endif
             case .urlSession:
                 return downloadXcodeWithURLSession(
                     availableXcode,

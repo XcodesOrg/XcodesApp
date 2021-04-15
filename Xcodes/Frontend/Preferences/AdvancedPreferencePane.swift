@@ -4,7 +4,13 @@ import SwiftUI
 struct AdvancedPreferencePane: View {
     @EnvironmentObject var appState: AppState
     @AppStorage("dataSource") var dataSource: DataSource = .xcodeReleases
+    #if arch(arm64)
+    // aria2 is not yet compatible on M1 silicon
+    @AppStorage("downloader") var downloader: Downloader = .urlSession
+    #elseif arch(x86_64)
     @AppStorage("downloader") var downloader: Downloader = .aria2
+    #endif
+    
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
@@ -87,11 +93,19 @@ struct AdvancedPreferencePane: View {
     }
     
     private var downloaderFootnote: NSAttributedString {
+        #if arch(arm64)
+        let string = """
+        URLSession is the default Apple API for making URL requests.
+
+        aria2 is also offered as an option on Intel Macs, but is not yet compatible with M1 silicon.
+        """
+        #elseif arch(x86_64)
         let string = """
         aria2 uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.
 
         URLSession is the default Apple API for making URL requests.
         """
+        #endif
         let attributedString = NSMutableAttributedString(
             string: string, 
             attributes: [

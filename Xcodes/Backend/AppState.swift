@@ -66,6 +66,15 @@ class AppState: ObservableObject {
         Current.defaults.string(forKey: "dataSource").flatMap(DataSource.init(rawValue:)) ?? .default
     }
     
+    private var preferredDownloader: Downloader {
+        #if arch(arm64)
+        // aria2 is not yet compatible on M1 silicon
+        return Downloader.urlSession
+        #elseif arch(x86_64)
+        return Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2
+        #endif
+    }
+    
     // MARK: - Init
     
     init() {
@@ -320,7 +329,7 @@ class AppState: ObservableObject {
                     .mapError { $0 as Error }
             }
             .flatMap { [unowned self] in
-                self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2)
+                self.install(.version(availableXcode), downloader: preferredDownloader)
             }
             .receive(on: DispatchQueue.main)
             .sink(
