@@ -118,7 +118,12 @@ extension AppState {
             let destination = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).\(availableXcode.filename.suffix(fromLast: "."))"
             switch downloader {
             case .aria2:
-                let aria2Path = Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!
+                #if arch(arm64)
+                let binaryName = "aria2c-arm64"
+                #elseif arch(x86_64)
+                let binaryName = "aria2c"
+                #endif
+                let aria2Path = Path(url: Bundle.main.url(forAuxiliaryExecutable: binaryName)!)!
                 return downloadXcodeWithAria2(
                     availableXcode,
                     to: destination,
