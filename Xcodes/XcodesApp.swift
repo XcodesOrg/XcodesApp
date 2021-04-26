@@ -1,4 +1,5 @@
 import AppKit
+import Cocoa
 import Sparkle
 import SwiftUI
 
@@ -75,6 +76,8 @@ struct XcodesApp: App {
 }
 
 class AppDelegate: NSObject, NSApplicationDelegate {
+    var popover: NSPopover!
+    var statusBarItem: NSStatusItem!
     private lazy var aboutWindow = configure(NSWindow(
         contentRect: .zero,
         styleMask: [.closable, .resizable, .miniaturizable, .titled],
@@ -119,5 +122,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Initialize manually
         SUUpdater.shared()
+        
+        // Create popover
+        let popover = NSPopover()
+        popover.contentSize = NSSize(width: 600, height: 300)
+        popover.behavior = .transient
+        popover.contentViewController = NSHostingController(rootView: MainWindow())
+        self.popover = popover
+        
+        // Create status item
+        self.statusBarItem = NSStatusBar.system.statusItem(withLength: CGFloat(NSStatusItem.variableLength))
+        
+        if let button = self.statusBarItem.button {
+            button.image = NSImage(systemSymbolName: "hammer", accessibilityDescription: "hammer")
+            button.action = #selector(togglePopover(_:))
+        }
     }
+    
+    @objc func togglePopover(_ sender: AnyObject?) {
+            let popover = NSPopover()
+            popover.contentSize = NSSize(width: 600, height: 300)
+            popover.behavior = .transient
+            popover.contentViewController = NSHostingController(rootView:MainWindow().environmentObject(AppState()))
+            popover.show(relativeTo: sender!.bounds, of: sender as! NSView, preferredEdge: NSRectEdge.minY)
+        }
 }
