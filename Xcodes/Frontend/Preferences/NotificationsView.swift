@@ -11,8 +11,11 @@ struct NotificationsView: View {
                     Text("Access Granted. You will receive notifications from Xcodes.")
                         .fixedSize(horizontal: false, vertical: true)
                 case .shownAndDenied:
-                    Text("⚠️ Access Denied ⚠️\n\nPlease open your Notification Settings if you wish to allow access.")
+                    Text("⚠️ Access Denied ⚠️\n\nPlease open your Notification Settings and select Xcodes if you wish to allow access.")
                         .fixedSize(horizontal: false, vertical: true)
+                    Button("Notification Settings", action: {
+                        NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.notifications")!)
+                    })
                  
                 default:
                     Button("Enable Notifications", action: {
