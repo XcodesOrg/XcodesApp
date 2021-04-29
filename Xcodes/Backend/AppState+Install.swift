@@ -41,6 +41,7 @@ extension AppState {
     
     private func install(_ installationType: InstallationType, downloader: Downloader, attemptNumber: Int) -> AnyPublisher<InstalledXcode, Error> {
         Logger.appState.info("Using \(downloader) downloader")
+        
         return getXcodeArchive(installationType, downloader: downloader)
             .flatMap { xcode, url -> AnyPublisher<InstalledXcode, Swift.Error> in
                 self.installArchivedXcode(xcode, at: url)
@@ -442,6 +443,9 @@ extension AppState {
         DispatchQueue.main.async {
             guard let index = self.allXcodes.firstIndex(where: { $0.version.isEquivalent(to: version) }) else { return }
             self.allXcodes[index].installState = .installing(step)
+            
+            let xcode = self.allXcodes[index]
+            Current.notificationManager.scheduleNotification(title: xcode.id.appleDescription, body: step.description, category: .normal)
         }
     }
 }

@@ -19,6 +19,7 @@ public struct Environment {
     public var defaults = Defaults()
     public var date: () -> Date = Date.init
     public var helper = Helper()
+    public var notificationManager = NotificationManager()
 }
 
 public var Current = Environment()
@@ -227,6 +228,11 @@ public struct Defaults {
     public var removeObject: (String) -> Void = { UserDefaults.standard.removeObject(forKey: $0) }
     public func removeObject(forKey key: String) {
         removeObject(key)
+    }
+    
+    public var get: (String) -> Any? = { UserDefaults.standard.value(forKey: $0) }
+    public func get(forKey key: String) -> Any? {
+        get(key)
     }
 }
 

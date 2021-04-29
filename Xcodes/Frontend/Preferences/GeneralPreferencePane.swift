@@ -28,6 +28,13 @@ struct GeneralPreferencePane: View {
                 SignInCredentialsView(isPresented: $appState.presentingSignInAlert)
                     .environmentObject(appState)
             }
+            
+            Divider()
+            
+            GroupBox(label: Text("Notifications")) {
+                NotificationsView().environmentObject(appState)
+            }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
         }
         .frame(width: 400)
     }

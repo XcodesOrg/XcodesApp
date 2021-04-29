@@ -16,6 +16,9 @@ class AppState: ObservableObject {
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
+            if newValue.count > availableXcodes.count && availableXcodes.count != 0 {
+                Current.notificationManager.scheduleNotification(title: "New Xcode versions", body: "New Xcode versions are available to download.", category: .normal)
+            }
             updateAllXcodes(
                 availableXcodes: newValue, 
                 installedXcodes: Current.files.installedXcodes(Path.root/"Applications"), 
@@ -289,6 +292,7 @@ class AppState: ObservableObject {
     
     func install(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+
         installationPublishers[id] = signInIfNeeded()
             .flatMap { [unowned self] in
                 // signInIfNeeded might finish before the user actually authenticates if UI is involved. 
