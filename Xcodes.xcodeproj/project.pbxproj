@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD1263C94DE00026CE0 /* SignedInView.swift */; };
+		536CFDD4263C9A8000026CE0 /* XcodesSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */; };
 		63EAA4EB259944450046AB8F /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA4EA259944450046AB8F /* ProgressButton.swift */; };
 		CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */; };
 		CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */; };
@@ -156,6 +158,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		536CFDD1263C94DE00026CE0 /* SignedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedInView.swift; sourceTree = "<group>"; };
+		536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesSheet.swift; sourceTree = "<group>"; };
 		63EAA4EA259944450046AB8F /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommands.swift; sourceTree = "<group>"; };
 		CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateUpdateTests.swift; sourceTree = "<group>"; };
@@ -307,6 +311,7 @@
 				CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */,
 				63EAA4EA259944450046AB8F /* ProgressButton.swift */,
 				CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */,
+				536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -382,6 +387,7 @@
 				CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */,
 				CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */,
 				CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */,
+				536CFDD1263C94DE00026CE0 /* SignedInView.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
@@ -755,6 +761,7 @@
 				CAFBDC4E2599B33D003DCC5A /* MainToolbar.swift in Sources */,
 				CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */,
 				CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */,
+				536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */,
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
 				CAE4248C259A68B800B8B246 /* Optional+IsNotNil.swift in Sources */,
@@ -814,6 +821,7 @@
 				CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */,
 				CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */,
 				63EAA4EB259944450046AB8F /* ProgressButton.swift in Sources */,
+				536CFDD4263C9A8000026CE0 /* XcodesSheet.swift in Sources */,
 				CA5D781E257365D6008EDE9D /* PinCodeTextView.swift in Sources */,
 				CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */,
 				CA9FF88125955C7000E47BAF /* AvailableXcode.swift in Sources */,

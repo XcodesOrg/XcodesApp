@@ -2,7 +2,6 @@ import SwiftUI
 
 struct SignInCredentialsView: View {
     @EnvironmentObject var appState: AppState
-    @Binding var isPresented: Bool
     @State private var username: String = ""
     @State private var password: String = ""
     
@@ -26,7 +25,7 @@ struct SignInCredentialsView: View {
             
             HStack {
                 Spacer()
-                Button("Cancel") { isPresented = false }
+                Button("Cancel") { appState.presentedSheet = nil }
                     .keyboardShortcut(.cancelAction)
                 ProgressButton(isInProgress: appState.isProcessingAuthRequest,
                                action: { appState.signIn(username: username, password: password) }) {
@@ -44,7 +43,7 @@ struct SignInCredentialsView: View {
 
 struct SignInCredentialsView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInCredentialsView(isPresented: .constant(true))
+        SignInCredentialsView()
             .environmentObject(AppState())
     }
 }
