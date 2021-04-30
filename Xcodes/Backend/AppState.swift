@@ -155,12 +155,12 @@ class AppState: ObservableObject {
     }
     
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
-        self.presentedSheet = .twoFactor
         self.secondFactorData = SecondFactorData(
             option: option,
             authOptions: authOptions,
             sessionData: AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
         )
+        self.presentedSheet = .twoFactor
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
