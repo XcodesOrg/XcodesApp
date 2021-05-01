@@ -120,7 +120,7 @@ struct MainWindow: View {
 
     @ViewBuilder
     private func signInView() -> some View {
-        if appState.hasSavedUsername {
+        if appState.authenticationState == .authenticated {
             VStack {
                 SignedInView()
                     .padding(32)
