@@ -112,7 +112,7 @@ class AppState: ObservableObject {
         validateSession()
             .catch { (error) -> AnyPublisher<Void, Error> in
                 guard
-                    let username = savedUsername,
+                    let username = self.savedUsername,
                     let password = try? Current.keychain.getString(username)
                 else {
                     return Fail(error: error) 

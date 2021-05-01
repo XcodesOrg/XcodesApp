@@ -19,13 +19,6 @@ struct GeneralPreferencePane: View {
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
-            Divider()
-            
-            GroupBox(label: Text("Notifications")) {
-                NotificationsView().environmentObject(appState)
-            }
-            .groupBoxStyle(PreferencesGroupBoxStyle())
         }
         .frame(width: 400)
     }
