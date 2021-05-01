@@ -42,7 +42,7 @@ class AppState: ObservableObject {
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
-    @Published var xcodeBeingConfirmedForInstallCancellation: Xcode?
+    @Published var presentedAlert: XcodesAlert?
     @Published var helperInstallState: HelperInstallState = .notInstalled
     /// Whether the user is being prepared for the helper installation alert with an explanation.
     /// This closure will be performed after the user chooses whether or not to proceed.
@@ -253,6 +253,7 @@ class AppState: ObservableObject {
                 guard userConsented else { return }
                 self.installHelperIfNecessary(shouldPrepareUserForHelperInstallation: false) 
             }
+            presentedAlert = .privilegedHelper
             return
         }
         
@@ -261,6 +262,7 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
                         self.error = error
+                        self.presentedAlert = .generic(title: "Unable to install helper", message: error.legibleLocalizedDescription)
                     }
                 }, 
                 receiveValue: {}
@@ -338,6 +340,7 @@ class AppState: ObservableObject {
                         // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
                         if error as? AuthenticationError != .invalidSession {
                             self.error = error
+                            self.presentedAlert = .generic(title: "Unable to install Xcode", message: error.legibleLocalizedDescription)
                         }
                         if let index = self.allXcodes.firstIndex(where: { $0.id == id }) { 
                             self.allXcodes[index].installState = .notInstalled
@@ -381,6 +384,7 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
                         self.error = error
+                        self.presentedAlert = .generic(title: "Unable to uninstall Xcode", message: error.legibleLocalizedDescription)
                     }
                     self.uninstallPublisher = nil
                 },
@@ -412,6 +416,7 @@ class AppState: ObservableObject {
                 guard userConsented else { return }
                 self.select(id: id, shouldPrepareUserForHelperInstallation: false) 
             }
+            presentedAlert = .privilegedHelper
             return
         }
 
@@ -431,6 +436,7 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
                         self.error = error
+                        self.presentedAlert = .generic(title: "Unable to select Xcode", message: error.legibleLocalizedDescription)
                     }
                     self.selectPublisher = nil
                 },

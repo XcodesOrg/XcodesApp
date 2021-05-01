@@ -44,6 +44,7 @@ extension AppState {
                     switch completion {
                     case let .failure(error):
                         self.error = error
+                        self.presentedAlert = .generic(title: "Unable to update selected Xcode", message: error.legibleLocalizedDescription)
                     case .finished:
                         Current.defaults.setDate(Current.date(), forKey: "lastUpdated")
                     }

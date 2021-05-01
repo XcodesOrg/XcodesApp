@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD1263C94DE00026CE0 /* SignedInView.swift */; };
 		536CFDD4263C9A8000026CE0 /* XcodesSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */; };
+		53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CBAB2B263DCC9100410495 /* XcodesAlert.swift */; };
 		63EAA4EB259944450046AB8F /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA4EA259944450046AB8F /* ProgressButton.swift */; };
 		CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */; };
 		CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */; };
@@ -160,6 +161,7 @@
 /* Begin PBXFileReference section */
 		536CFDD1263C94DE00026CE0 /* SignedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedInView.swift; sourceTree = "<group>"; };
 		536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesSheet.swift; sourceTree = "<group>"; };
+		53CBAB2B263DCC9100410495 /* XcodesAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesAlert.swift; sourceTree = "<group>"; };
 		63EAA4EA259944450046AB8F /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommands.swift; sourceTree = "<group>"; };
 		CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateUpdateTests.swift; sourceTree = "<group>"; };
@@ -312,6 +314,7 @@
 				63EAA4EA259944450046AB8F /* ProgressButton.swift */,
 				CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */,
 				536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */,
+				53CBAB2B263DCC9100410495 /* XcodesAlert.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -783,6 +786,7 @@
 				CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */,
 				CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */,
 				CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */,
+				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
 				CA42DD6E25AEA8B200BC0B0C /* Logger.swift in Sources */,
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,
 				CAE4247F259A666100B8B246 /* MainWindow.swift in Sources */,

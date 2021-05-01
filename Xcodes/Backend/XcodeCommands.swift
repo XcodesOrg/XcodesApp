@@ -61,7 +61,7 @@ struct CancelInstallButton: View {
     
     private func cancelInstall() {
         guard let xcode = xcode else { return }
-        appState.xcodeBeingConfirmedForInstallCancellation = xcode
+        appState.presentedAlert = .cancelInstall(xcode: xcode)
     }
 }
 
