@@ -133,6 +133,7 @@ struct MainWindow: View {
             .padding()
         } else {
             SignInCredentialsView()
+                .frame(width: 400)
         }
     }
 }
