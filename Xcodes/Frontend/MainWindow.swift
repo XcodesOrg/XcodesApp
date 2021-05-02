@@ -38,9 +38,15 @@ struct MainWindow: View {
         .navigationSubtitle(subtitleText)
         .frame(minWidth: 600, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
         .emittingError($appState.error, recoveryHandler: { _ in })
-        .sheet(isPresented: $appState.secondFactorData.isNotNil) {
-            secondFactorView(appState.secondFactorData!)
-                .environmentObject(appState)
+        .sheet(item: $appState.presentedSheet) { sheet in
+            switch sheet {
+            case .signIn:
+                signInView()
+                    .environmentObject(appState)
+            case .twoFactor:
+                secondFactorView(appState.secondFactorData!)
+                    .environmentObject(appState)
+            }
         }
         // This overlay is only here to work around the one-alert-per-view limitation
         .overlay(
@@ -109,6 +115,25 @@ struct MainWindow: View {
             SignInSMSView(isPresented: $appState.secondFactorData.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsPendingChoice:
             SignInPhoneListView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+        }
+    }
+
+    @ViewBuilder
+    private func signInView() -> some View {
+        if appState.authenticationState == .authenticated {
+            VStack {
+                SignedInView()
+                    .padding(32)
+                HStack {
+                    Spacer()
+                    Button("Close") { appState.presentedSheet = nil }
+                        .keyboardShortcut(.cancelAction)
+                }
+            }
+            .padding()
+        } else {
+            SignInCredentialsView()
+                .frame(width: 400)
         }
     }
 }

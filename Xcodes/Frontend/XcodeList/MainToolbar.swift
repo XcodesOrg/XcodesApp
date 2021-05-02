@@ -13,6 +13,11 @@ struct MainToolbarModifier: ViewModifier {
 
     private var toolbar: some ToolbarContent {
         ToolbarItemGroup(placement: .status) {
+            Button(action: { appState.presentedSheet = .signIn }, label: {
+                Label("Login", systemImage: "person.circle")
+            })
+            .help("Login")
+
             ProgressButton(
                 isInProgress: appState.isUpdating, 
                 action: appState.update

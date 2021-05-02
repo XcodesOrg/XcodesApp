@@ -38,7 +38,7 @@ class AppState: ObservableObject {
     }
     @Published var updatePublisher: AnyCancellable?
     var isUpdating: Bool { updatePublisher != nil }
-    @Published var presentingSignInAlert = false
+    @Published var presentedSheet: XcodesSheet? = nil
     @Published var isProcessingAuthRequest = false
     @Published var secondFactorData: SecondFactorData?
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
@@ -64,6 +64,14 @@ class AppState: ObservableObject {
     
     var dataSource: DataSource {
         Current.defaults.string(forKey: "dataSource").flatMap(DataSource.init(rawValue:)) ?? .default
+    }
+
+    var savedUsername: String? {
+        Current.defaults.string(forKey: "username")
+    }
+
+    var hasSavedUsername: Bool {
+        savedUsername != nil
     }
     
     // MARK: - Init
@@ -94,7 +102,7 @@ class AppState: ObservableObject {
             .handleEvents(receiveCompletion: { completion in 
                 if case .failure = completion {
                     self.authenticationState = .unauthenticated
-                    self.presentingSignInAlert = true
+                    self.presentedSheet = .signIn
                 }
             })
             .eraseToAnyPublisher()
@@ -104,7 +112,7 @@ class AppState: ObservableObject {
         validateSession()
             .catch { (error) -> AnyPublisher<Void, Error> in
                 guard
-                    let username = Current.defaults.string(forKey: "username"),
+                    let username = self.savedUsername,
                     let password = try? Current.keychain.getString(username)
                 else {
                     return Fail(error: error) 
@@ -119,6 +127,7 @@ class AppState: ObservableObject {
     }
     
     func signIn(username: String, password: String) {
+        authError = nil
         signIn(username: username, password: password)
             .sink(
                 receiveCompletion: { _ in }, 
@@ -147,12 +156,12 @@ class AppState: ObservableObject {
     }
     
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
-        self.presentingSignInAlert = false
         self.secondFactorData = SecondFactorData(
             option: option,
             authOptions: authOptions,
             sessionData: AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
         )
+        self.presentedSheet = .twoFactor
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
@@ -198,7 +207,7 @@ class AppState: ObservableObject {
         switch completion {
         case let .failure(error):
             if case .invalidUsernameOrPassword = error as? AuthenticationError,
-               let username = Current.defaults.string(forKey: "username") {
+               let username = savedUsername {
                 // remove any keychain password if we fail to log with an invalid username or password so it doesn't try again.
                 try? Current.keychain.remove(username)
                 Current.defaults.removeObject(forKey: "username")
@@ -209,7 +218,7 @@ class AppState: ObservableObject {
         case .finished:
             switch self.authenticationState {
             case .authenticated, .unauthenticated:
-                self.presentingSignInAlert = false
+                self.presentedSheet = nil
                 self.secondFactorData = nil
             case let .waitingForSecondFactor(option, authOptions, sessionData):
                 self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
@@ -218,11 +227,10 @@ class AppState: ObservableObject {
     }
     
     func signOut() {
-        let username = Current.defaults.string(forKey: "username")
-        Current.defaults.removeObject(forKey: "username")
-        if let username = username {
+        if let username = savedUsername {
             try? Current.keychain.remove(username)
         }
+        Current.defaults.removeObject(forKey: "username")
         AppleAPI.Current.network.session.configuration.httpCookieStorage?.removeCookies(since: .distantPast)
         authenticationState = .unauthenticated
     }
@@ -327,7 +335,10 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in 
                     self.installationPublishers[id] = nil
                     if case let .failure(error) = completion {
-                        self.error = error
+                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
+                        if error as? AuthenticationError != .invalidSession {
+                            self.error = error
+                        }
                         if let index = self.allXcodes.firstIndex(where: { $0.id == id }) { 
                             self.allXcodes[index].installState = .notInstalled
                         }
