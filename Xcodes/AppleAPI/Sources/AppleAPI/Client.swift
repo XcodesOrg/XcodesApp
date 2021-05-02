@@ -36,6 +36,10 @@ public class Client {
                         case 401:
                             return Fail(error: AuthenticationError.invalidUsernameOrPassword(username: accountName))
                                 .eraseToAnyPublisher()
+                        case 403:
+                            let errorMessage = responseBody.serviceErrors?.first?.description.replacingOccurrences(of: "-20209: ", with: "") ?? ""
+                            return Fail(error: AuthenticationError.accountLocked(errorMessage))
+                                .eraseToAnyPublisher()
                         case 409:
                             return self.handleTwoStepOrFactor(data: data, response: response, serviceKey: serviceKey)
                         case 412 where Client.authTypes.contains(responseBody.authType ?? ""):
@@ -180,6 +184,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case appleIDAndPrivacyAcknowledgementRequired
     case accountUsesTwoStepAuthentication
     case accountUsesUnknownAuthenticationKind(String?)
+    case accountLocked(String)
     case badStatusCode(statusCode: Int, data: Data, response: HTTPURLResponse)
 
     public var errorDescription: String? {
@@ -203,6 +208,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             return "Received a response from Apple that indicates this account has two-step authentication enabled. xcodes currently only supports the newer two-factor authentication, though. Please consider upgrading to two-factor authentication, or explain why this isn't an option for you by making a new feature request in the Help menu."
         case .accountUsesUnknownAuthenticationKind:
             return "Received a response from Apple that indicates this account has two-step or two-factor authentication enabled, but xcodes is unsure how to handle this response. If you continue to have problems, please submit a bug report in the Help menu."
+        case let .accountLocked(message):
+            return message
         case let .badStatusCode(statusCode, _, _):
             return "Received an unexpected status code: \(statusCode). If you continue to have problems, please submit a bug report in the Help menu."
         }
