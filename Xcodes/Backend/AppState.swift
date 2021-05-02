@@ -130,7 +130,7 @@ class AppState: ObservableObject {
         authError = nil
         signIn(username: username, password: password)
             .sink(
-                receiveCompletion: { _ in }, 
+                receiveCompletion: { _ in },
                 receiveValue: { _ in }
             )
             .store(in: &cancellables)
@@ -206,13 +206,8 @@ class AppState: ObservableObject {
     private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
         switch completion {
         case let .failure(error):
-            if case .invalidUsernameOrPassword = error as? AuthenticationError,
-               let username = savedUsername {
-                // remove any keychain password if we fail to log with an invalid username or password so it doesn't try again.
-                try? Current.keychain.remove(username)
-                Current.defaults.removeObject(forKey: "username")
-            }
-
+            // remove saved username and any stored keychain password if authentication fails so it doesn't try again.
+            clearLoginCredentials()
             Logger.appState.error("Authentication error: \(error.legibleDescription)")
             self.authError = error
         case .finished:
@@ -227,10 +222,7 @@ class AppState: ObservableObject {
     }
     
     func signOut() {
-        if let username = savedUsername {
-            try? Current.keychain.remove(username)
-        }
-        Current.defaults.removeObject(forKey: "username")
+        clearLoginCredentials()
         AppleAPI.Current.network.session.configuration.httpCookieStorage?.removeCookies(since: .distantPast)
         authenticationState = .unauthenticated
     }
@@ -565,6 +557,15 @@ class AppState: ObservableObject {
             }
         }
         .eraseToAnyPublisher()
+    }
+
+    /// removes saved username and credentials stored in keychain
+    private func clearLoginCredentials() {
+        if let username = savedUsername {
+            try? Current.keychain.remove(username)
+        }
+        Current.defaults.removeObject(forKey: "username")
+
     }
 
     // MARK: - Nested Types
