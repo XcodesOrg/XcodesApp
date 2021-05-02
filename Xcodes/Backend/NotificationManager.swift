@@ -24,7 +24,7 @@ public enum XcodesNotificationType: String, Identifiable, CaseIterable, CustomSt
             case .newVersionAvailable:
                 return "New version is available"
             case .finishedInstalling:
-                return "Finished Installing"
+                return "Finished installing"
         }
     }
 }

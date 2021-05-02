@@ -1,0 +1,88 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "CombineExpectations",
+        "repositoryURL": "https://github.com/groue/CombineExpectations",
+        "state": {
+          "branch": null,
+          "revision": "989a92221899929ab8347a5878aa2b16db8b81ca",
+          "version": "0.6.0"
+        }
+      },
+      {
+        "package": "XcodeReleases",
+        "repositoryURL": "https://github.com/xcodereleases/data",
+        "state": {
+          "branch": null,
+          "revision": "b47228c688b608e34b3b84079ab6052a24c7a981",
+          "version": null
+        }
+      },
+      {
+        "package": "ErrorHandling",
+        "repositoryURL": "https://github.com/RobotsAndPencils/ErrorHandling",
+        "state": {
+          "branch": null,
+          "revision": "7be837fcb515447c0776805c3288fb7d5181ec68",
+          "version": "0.1.0"
+        }
+      },
+      {
+        "package": "KeychainAccess",
+        "repositoryURL": "https://github.com/kishikawakatsumi/KeychainAccess",
+        "state": {
+          "branch": null,
+          "revision": "8d33ffd6f74b3bcfc99af759d4204c6395a3f918",
+          "version": "3.2.1"
+        }
+      },
+      {
+        "package": "LegibleError",
+        "repositoryURL": "https://github.com/mxcl/LegibleError",
+        "state": {
+          "branch": null,
+          "revision": "909e9bab3ded97350b28a5ab41dd745dd8aa9710",
+          "version": "1.0.4"
+        }
+      },
+      {
+        "package": "Path.swift",
+        "repositoryURL": "https://github.com/mxcl/Path.swift",
+        "state": {
+          "branch": null,
+          "revision": "dac007e907a4f4c565cfdc55a9ce148a761a11d5",
+          "version": "0.16.3"
+        }
+      },
+      {
+        "package": "Sparkle",
+        "repositoryURL": "https://github.com/sparkle-project/Sparkle/",
+        "state": {
+          "branch": null,
+          "revision": "891afd44c7075e699924ed9b81d8dc94a5111dfd",
+          "version": "1.24.0-spm"
+        }
+      },
+      {
+        "package": "SwiftSoup",
+        "repositoryURL": "https://github.com/scinfu/SwiftSoup",
+        "state": {
+          "branch": null,
+          "revision": "aeb5b4249c273d1783a5299e05be1b26e061ea81",
+          "version": "2.0.0"
+        }
+      },
+      {
+        "package": "Version",
+        "repositoryURL": "https://github.com/mxcl/Version",
+        "state": {
+          "branch": null,
+          "revision": "087c91fedc110f9f833b14ef4c32745dabca8913",
+          "version": "1.0.3"
+        }
+      }
+    ]
+  },
+  "version": 1
+}

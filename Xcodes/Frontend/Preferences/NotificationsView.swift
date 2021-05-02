@@ -20,8 +20,7 @@ struct NotificationsView: View {
                 default:
                     Button("Enable Notifications", action: {
                         Current.notificationManager.requestAccess()
-                    }
-                    )
+                    })
             }
         }
         .frame(maxWidth: .infinity, alignment: .leading)
