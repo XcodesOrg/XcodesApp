@@ -4,6 +4,7 @@ import Path
 import Version
 import SwiftSoup
 import struct XCModel.Xcode
+import AppleAPI
 
 extension AppState {
     
@@ -43,8 +44,11 @@ extension AppState {
                 receiveCompletion: { [unowned self] completion in
                     switch completion {
                     case let .failure(error):
-                        self.error = error
-                        self.presentedAlert = .generic(title: "Unable to update selected Xcode", message: error.legibleLocalizedDescription)
+                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
+                        if error as? AuthenticationError != .invalidSession {
+                            self.error = error
+                            self.presentedAlert = .generic(title: "Unable to update selected Xcode", message: error.legibleLocalizedDescription)
+                        }
                     case .finished:
                         Current.defaults.setDate(Current.date(), forKey: "lastUpdated")
                     }
