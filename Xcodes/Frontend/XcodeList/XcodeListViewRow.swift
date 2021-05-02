@@ -112,7 +112,7 @@ struct XcodeListViewRow: View {
             InstallationStepRowView(
                 installationStep: installationStep,
                 highlighted: selected,
-                cancel: { appState.xcodeBeingConfirmedForInstallCancellation = xcode }
+                cancel: { appState.presentedAlert = .cancelInstall(xcode: xcode) }
             )
         }
     }

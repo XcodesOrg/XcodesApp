@@ -48,51 +48,9 @@ struct MainWindow: View {
                     .environmentObject(appState)
             }
         }
-        // This overlay is only here to work around the one-alert-per-view limitation
-        .overlay(
-            Color.clear
-                // This particular alert could be added specifically to InstallationStepView and CancelInstallButton _except_ for when CancelInstallButton is used in the Xcode CommandMenu, so it's here for now. 
-                .alert(item: $appState.xcodeBeingConfirmedForInstallCancellation) { xcode in
-                    Alert(title: Text("Are you sure you want to stop the installation of Xcode \(xcode.description)?"),
-                          message: Text("Any progress will be discarded."),
-                          primaryButton: .destructive(Text("Stop Installation"), action: { self.appState.cancelInstall(id: xcode.id) }),
-                          secondaryButton: .cancel(Text("Cancel")))
-                }
-        )
-        // This overlay is only here to work around the one-alert-per-view limitation
-        .overlay(
-            Color.clear
-                .alert(isPresented: $appState.isPreparingUserForActionRequiringHelper.isNotNil) {
-                    Alert(
-                        title: Text("Privileged Helper"), 
-                        message: Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it."), 
-                        primaryButton: .default(Text("Install"), action: {
-                            // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
-                            // We need to capture it to be invoked after that happens.
-                            let helperAction = appState.isPreparingUserForActionRequiringHelper
-                            DispatchQueue.main.async { 
-                                // This really shouldn't be nil, but sometimes this alert is being shown twice and I don't know why.
-                                // There are some DispatchQueue.main.async's scattered around which make this better but in some situations it's still happening.
-                                // When that happens, the second time the user clicks an alert button isPreparingUserForActionRequiringHelper will be nil.
-                                // To at least not crash, we're using ?
-                                helperAction?(true) 
-                            }
-                        }), 
-                        secondaryButton: .cancel {
-                            // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
-                            // We need to capture it to be invoked after that happens.
-                            let helperAction = appState.isPreparingUserForActionRequiringHelper
-                            DispatchQueue.main.async {
-                                // This really shouldn't be nil, but sometimes this alert is being shown twice and I don't know why.
-                                // There are some DispatchQueue.main.async's scattered around which make this better but in some situations it's still happening.
-                                // When that happens, the second time the user clicks an alert button isPreparingUserForActionRequiringHelper will be nil.
-                                // To at least not crash, we're using ?
-                                helperAction?(false) 
-                            }
-                        }
-                    )
-                }
-        )
+        .alert(item: $appState.presentedAlert, content: { presentedAlert in
+            alert(for: presentedAlert)
+        })
         // I'm expecting to be able to use this modifier on a List row, but using it at the top level here is the only way that has made XcodeCommands work so far.
         // FB8954571 focusedValue(_:_:) on List row doesn't propagate value to @FocusedValue
         .focusedValue(\.selectedXcode, SelectedXcode(appState.allXcodes.first { $0.id == selectedXcodeID }))
@@ -134,6 +92,63 @@ struct MainWindow: View {
         } else {
             SignInCredentialsView()
                 .frame(width: 400)
+        }
+    }
+
+    private func alert(for alertType: XcodesAlert) -> Alert {
+        switch alertType {
+        case let .cancelInstall(xcode):
+            return Alert(
+                title: Text("Are you sure you want to stop the installation of Xcode \(xcode.description)?"),
+                  message: Text("Any progress will be discarded."),
+                  primaryButton: .destructive(
+                    Text("Stop Installation"),
+                    action: {
+                        self.appState.cancelInstall(id: xcode.id)
+                    }
+                  ),
+                  secondaryButton: .cancel(Text("Cancel"))
+            )
+        case .privilegedHelper:
+            return Alert(
+                title: Text("Privileged Helper"),
+                message: Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it."),
+                primaryButton: .default(Text("Install"), action: {
+                    // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
+                    // We need to capture it to be invoked after that happens.
+                    let helperAction = appState.isPreparingUserForActionRequiringHelper
+                    DispatchQueue.main.async {
+                        // This really shouldn't be nil, but sometimes this alert is being shown twice and I don't know why.
+                        // There are some DispatchQueue.main.async's scattered around which make this better but in some situations it's still happening.
+                        // When that happens, the second time the user clicks an alert button isPreparingUserForActionRequiringHelper will be nil.
+                        // To at least not crash, we're using ?
+                        helperAction?(true)
+                        appState.presentedAlert = nil
+                    }
+                }),
+                secondaryButton: .cancel {
+                    // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
+                    // We need to capture it to be invoked after that happens.
+                    let helperAction = appState.isPreparingUserForActionRequiringHelper
+                    DispatchQueue.main.async {
+                        // This really shouldn't be nil, but sometimes this alert is being shown twice and I don't know why.
+                        // There are some DispatchQueue.main.async's scattered around which make this better but in some situations it's still happening.
+                        // When that happens, the second time the user clicks an alert button isPreparingUserForActionRequiringHelper will be nil.
+                        // To at least not crash, we're using ?
+                        helperAction?(false)
+                        appState.presentedAlert = nil
+                    }
+                }
+            )
+        case let .generic(title, message):
+            return Alert(
+                title: Text(title),
+                message: Text(message),
+                dismissButton: .default(
+                    Text("Ok"),
+                    action: { appState.presentedAlert = nil }
+                )
+            )
         }
     }
 }

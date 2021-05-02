@@ -208,6 +208,7 @@ extension AppState {
                             .handleEvents(receiveCompletion: { [unowned self] completion in
                                 if case let .failure(error) = completion {
                                     self.error = error
+                                    self.presentedAlert = .generic(title: "Unable to install archived Xcode", message: error.legibleLocalizedDescription)
                                 }
                             })
                             .catch { _ in
@@ -344,6 +345,7 @@ extension AppState {
                 receiveCompletion: { completion in
                     if case let .failure(error) = completion {
                         self.error = error
+                        self.presentedAlert = .generic(title: "Unable to perform post install steps", message: error.legibleLocalizedDescription)
                     }
                 }, 
                 receiveValue: {}
@@ -396,6 +398,7 @@ extension AppState {
                         )
                     }
                 }
+                self.presentedAlert = .privilegedHelper
             }
 
             return helperInstallConsentSubject
