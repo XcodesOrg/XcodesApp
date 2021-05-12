@@ -23,7 +23,7 @@ jobs:
           ${{ runner.os }}-gems-
           
     - name: Ruby ♦️
-      uses: actions/setup-ruby@v1
+      uses: actions/setup-ruby@v1.1.3
       with:
         ruby-version: '2.7'
 
