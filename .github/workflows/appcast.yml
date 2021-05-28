@@ -15,7 +15,7 @@ jobs:
         persist-credentials: false
 
     - name: Cache 📦
-      uses: actions/cache@v2.1.5
+      uses: actions/cache@v2.1.6
       with:
         path: AppCast/vendor/bundle
         key: ${{ runner.os }}-gems-v1.0-${{ hashFiles('AppCast/Gemfile') }}
