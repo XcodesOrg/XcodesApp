@@ -42,7 +42,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
   <li>Bump kramdown from 2.3.0 to 2.3.1 in /AppCast (#118) @dependabot</li>
 </ul>
 
-<!-- sparkle:edSignature="cLGxQg5k3EVJzlvPTdnD3E8pwOcx9ZjVVBrcPdicLGyOANGs3Ase6UhlF5JO94Mi6NoQmXrj2T9JuVdBT5LABw==" -->
+<!-- sparkle:edSignature=cLGxQg5k3EVJzlvPTdnD3E8pwOcx9ZjVVBrcPdicLGyOANGs3Ase6UhlF5JO94Mi6NoQmXrj2T9JuVdBT5LABw== -->
 ]]></description>
                         <pubDate>Mon, 07 Jun 2021 16:31:35 +0000</pubDate>
                         
@@ -57,7 +57,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                     url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.1.0b7/Xcodes.zip"
                                     sparkle:version="7"
                                     sparkle:shortVersionString="1.1.0"
-                                    sparkle:edSignature=""cLGxQg5k3EVJzlvPTdnD3E8pwOcx9ZjVVBrcPdicLGyOANGs3Ase6UhlF5JO94Mi6NoQmXrj2T9JuVdBT5LABw==""
+                                    sparkle:edSignature="cLGxQg5k3EVJzlvPTdnD3E8pwOcx9ZjVVBrcPdicLGyOANGs3Ase6UhlF5JO94Mi6NoQmXrj2T9JuVdBT5LABw=="
                                     length="12329315"
                                     type="application/octet-stream" />
                             
