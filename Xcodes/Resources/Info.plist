@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>6</string>
+	<string>7</string>
 	<key>CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT</key>
 	<string>$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)</string>
 	<key>LSMinimumSystemVersion</key>
