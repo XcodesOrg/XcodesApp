@@ -22,13 +22,8 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <h2 id="-enhancements">🚀 Enhancements</h2>
 
 <ul>
-  <li>
-    <p>Adds MacOS notifications (#126) @MattKiazyk Turn on via Settings!
-<img src="https://user-images.githubusercontent.com/1119565/121055732-24625780-c783-11eb-86cc-f60f7ac81f08.png" alt="image" /></p>
-  </li>
-  <li>
-    <p>Show sign in errors inline on sign in view (#129) @aerickson14</p>
-  </li>
+  <li>Adds MacOS notifications (#126) @MattKiazyk Turn on via Settings!</li>
+  <li>Show sign in errors inline on sign in view (#129) @aerickson14</li>
 </ul>
 
 <h2 id="-bug-fixes">🐛 Bug Fixes</h2>
