@@ -252,6 +252,7 @@ struct InfoPane_Previews: PreviewProvider {
                             icon: NSWorkspace.shared.icon(forFile: "/Applications/Xcode-12.3.0.app"),
                             requiredMacOSVersion: "10.15.4",
                             releaseNotesURL: URL(string: "https://developer.apple.com/documentation/xcode-release-notes/xcode-12_3-release-notes/")!,
+                            releaseDate: Date(),
                             sdks: SDKs(
                                 macOS: .init(number: "11.1"),
                                 iOS: .init(number: "14.3"),
