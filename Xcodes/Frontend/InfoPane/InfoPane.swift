@@ -55,6 +55,7 @@ struct InfoPane: View {
 
                     Group{
                         releaseNotes(for: xcode)
+                        releaseDate(for: xcode)
                         identicalBuilds(for: xcode)
                         compatibility(for: xcode)
                         sdks(for: xcode)
@@ -107,6 +108,22 @@ struct InfoPane: View {
             .accessibility(label: Text("Identical Builds"))
             .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
             .accessibility(hint: Text("Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together."))
+        } else {
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private func releaseDate(for xcode: Xcode) -> some View {
+        if let releaseDate = xcode.releaseDate {
+            VStack(alignment: .leading) {
+                Text("Release Date")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                Text(DateFormatter.downloadsReleaseDate.string(from: releaseDate))
+                    .font(.subheadline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
         } else {
             EmptyView()
         }
@@ -235,6 +252,7 @@ struct InfoPane_Previews: PreviewProvider {
                             icon: NSWorkspace.shared.icon(forFile: "/Applications/Xcode-12.3.0.app"),
                             requiredMacOSVersion: "10.15.4",
                             releaseNotesURL: URL(string: "https://developer.apple.com/documentation/xcode-release-notes/xcode-12_3-release-notes/")!,
+                            releaseDate: Date(),
                             sdks: SDKs(
                                 macOS: .init(number: "11.1"),
                                 iOS: .init(number: "14.3"),

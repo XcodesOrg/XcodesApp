@@ -13,6 +13,7 @@ struct Xcode: Identifiable, CustomStringConvertible {
     let icon: NSImage?
     let requiredMacOSVersion: String?
     let releaseNotesURL: URL?
+    let releaseDate: Date?
     let sdks: SDKs?
     let compilers: Compilers?
     let downloadFileSize: Int64?
@@ -25,6 +26,7 @@ struct Xcode: Identifiable, CustomStringConvertible {
         icon: NSImage?,
         requiredMacOSVersion: String? = nil,
         releaseNotesURL: URL? = nil,
+        releaseDate: Date? = nil,
         sdks: SDKs? = nil,
         compilers: Compilers? = nil,
         downloadFileSize: Int64? = nil
@@ -36,6 +38,7 @@ struct Xcode: Identifiable, CustomStringConvertible {
         self.icon = icon
         self.requiredMacOSVersion = requiredMacOSVersion
         self.releaseNotesURL = releaseNotesURL
+        self.releaseDate = releaseDate
         self.sdks = sdks
         self.compilers = compilers
         self.downloadFileSize = downloadFileSize

@@ -522,6 +522,7 @@ class AppState: ObservableObject {
                     icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),
                     requiredMacOSVersion: availableXcode.requiredMacOSVersion,
                     releaseNotesURL: availableXcode.releaseNotesURL,
+                    releaseDate: availableXcode.releaseDate,
                     sdks: availableXcode.sdks,
                     compilers: availableXcode.compilers,
                     downloadFileSize: availableXcode.fileSize
