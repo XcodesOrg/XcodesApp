@@ -3,6 +3,7 @@ import SwiftUI
 struct MainToolbarModifier: ViewModifier {
     @EnvironmentObject var appState: AppState
     @Binding var category: XcodeListCategory
+    @Binding var isInstalledOnly: Bool
     @Binding var isShowingInfoPane: Bool
     @Binding var searchText: String
     
@@ -29,16 +30,47 @@ struct MainToolbarModifier: ViewModifier {
             
             Button(action: {
                 switch category {
-                case .all: category = .installed
-                case .installed: category = .all
+                case .all: category = .release
+                case .release: category = .beta
+                case .beta: category = .all
                 }
             }) {
                 switch category {
                 case .all:
-                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle")
-                case .installed:
-                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
+                    Label("All", systemImage: "line.horizontal.3.decrease.circle")
+                case .release:
+                    if #available(macOS 11.3, *) {
+                        Label("Release only", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleAndIconLabelStyle())
+                            .foregroundColor(.accentColor)
+                    } else {
+                        Label("Release only", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleOnlyLabelStyle())
+                            .foregroundColor(.accentColor)
+                    }
+                case .beta:
+                    if #available(macOS 11.3, *) {
+                        Label("Beta only", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleAndIconLabelStyle())
+                            .foregroundColor(.accentColor)
+                    } else {
+                        Label("Beta only", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleOnlyLabelStyle())
+                            .foregroundColor(.accentColor)
+                    }
+                }
+            }
+            .help("Filter available versions")
+            
+            Button(action: {
+                isInstalledOnly.toggle()
+            }) {
+                if isInstalledOnly {
+                    Label("Filter", systemImage: "arrow.down.app.fill")
                         .foregroundColor(.accentColor)
+                } else {
+                    Label("Filter", systemImage: "arrow.down.app")
+                        
                 }
             }
             .help("Filter installed versions")
@@ -65,12 +97,14 @@ struct MainToolbarModifier: ViewModifier {
 extension View {
     func mainToolbar(
         category: Binding<XcodeListCategory>,
+        isInstalledOnly: Binding<Bool>,
         isShowingInfoPane: Binding<Bool>,
         searchText: Binding<String>
     ) -> some View {
         self.modifier(
             MainToolbarModifier(
                 category: category,
+                isInstalledOnly: isInstalledOnly,
                 isShowingInfoPane: isShowingInfoPane,
                 searchText: searchText
             )
