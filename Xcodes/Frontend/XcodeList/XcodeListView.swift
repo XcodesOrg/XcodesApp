@@ -32,7 +32,7 @@ struct XcodeListView: View {
         }
         
         if isInstalledOnly {
-            xcodes = appState.allXcodes.filter { $0.installState.installed }
+            xcodes = xcodes.filter { $0.installState.installed }
         }
         
         return xcodes
