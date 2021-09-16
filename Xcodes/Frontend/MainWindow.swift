@@ -12,10 +12,11 @@ struct MainWindow: View {
     // FB8979533 SceneStorage doesn't restore value after app is quit by user
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
+    @AppStorage("isInstalledOnly") private var isInstalledOnly = false
   
     var body: some View {
         HSplitView {
-            XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category)
+            XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
                 .frame(minWidth: 300)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
@@ -32,6 +33,7 @@ struct MainWindow: View {
         }
         .mainToolbar(
             category: $category,
+            isInstalledOnly: $isInstalledOnly,
             isShowingInfoPane: $isShowingInfoPane,
             searchText: $searchText
         )

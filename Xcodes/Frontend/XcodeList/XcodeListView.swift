@@ -7,11 +7,13 @@ struct XcodeListView: View {
     @Binding var selectedXcodeID: Xcode.ID?
     private let searchText: String
     private let category: XcodeListCategory
+    private let isInstalledOnly: Bool
     
-    init(selectedXcodeID: Binding<Xcode.ID?>, searchText: String, category: XcodeListCategory) {
+    init(selectedXcodeID: Binding<Xcode.ID?>, searchText: String, category: XcodeListCategory, isInstalledOnly: Bool) {
         self._selectedXcodeID = selectedXcodeID
         self.searchText = searchText
         self.category = category
+        self.isInstalledOnly = isInstalledOnly
     }
     
     var visibleXcodes: [Xcode] {
@@ -19,12 +21,18 @@ struct XcodeListView: View {
         switch category {
         case .all:
             xcodes = appState.allXcodes
-        case .installed:
-            xcodes = appState.allXcodes.filter { $0.installState.installed }
+        case .release:
+            xcodes = appState.allXcodes.filter { $0.version.isNotPrerelease }
+        case .beta:
+            xcodes = appState.allXcodes.filter { $0.version.isPrerelease }
         }
         
         if !searchText.isEmpty {
             xcodes = xcodes.filter { $0.description.contains(searchText) }
+        }
+        
+        if isInstalledOnly {
+            xcodes = xcodes.filter { $0.installState.installed }
         }
         
         return xcodes
@@ -40,7 +48,7 @@ struct XcodeListView: View {
 struct XcodeListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            XcodeListView(selectedXcodeID: .constant(nil), searchText: "", category: .all)
+            XcodeListView(selectedXcodeID: .constant(nil), searchText: "", category: .all, isInstalledOnly: false)
                 .environmentObject({ () -> AppState in
                     let a = AppState()
                     a.allXcodes = [
