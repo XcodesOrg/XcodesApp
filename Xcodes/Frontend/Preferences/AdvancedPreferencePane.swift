@@ -1,13 +1,52 @@
 import AppleAPI
 import SwiftUI
+import Path
 
 struct AdvancedPreferencePane: View {
     @EnvironmentObject var appState: AppState
+   
     @AppStorage("dataSource") var dataSource: DataSource = .xcodeReleases
     @AppStorage("downloader") var downloader: Downloader = .aria2
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+            
+            GroupBox(label: Text("Local Cache Path")) {
+                VStack(alignment: .leading) {
+                    HStack(alignment: .top, spacing: 5) {
+                        Text(appState.localPath).font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(2)
+                        Button(action: { appState.reveal(path: appState.localPath) }) {
+                            Image(systemName: "arrow.right.circle.fill")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .help("Reveal in Finder")
+                        .fixedSize()
+                    }
+                    Button("Change") {
+                        let panel = NSOpenPanel()
+                        panel.allowsMultipleSelection = false
+                        panel.canChooseDirectories = true
+                        panel.canChooseFiles = false
+                        panel.canCreateDirectories = true
+                        panel.allowedContentTypes = [.folder]
+                        panel.directoryURL = URL(fileURLWithPath: appState.localPath)
+                        
+                        if panel.runModal() == .OK {
+                           
+                            guard let pathURL = panel.url, let path = Path(url: pathURL) else { return }
+                            self.appState.localPath = path.string
+                        }
+                    }
+                    Text("Xcodes caches available Xcode versions and temporary downloads new versions to a directory")
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                
+            }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
+            
             GroupBox(label: Text("Data Source")) {
                 VStack(alignment: .leading) {
                     Picker("Data Source", selection: $dataSource) {
@@ -66,7 +105,7 @@ struct AdvancedPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .frame(width: 400)
+        .frame(width: 500)
     }
     
     private var dataSourceFootnote: NSAttributedString {

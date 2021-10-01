@@ -50,7 +50,7 @@ struct UpdatesPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .frame(width: 400)
+        .frame(width: 500)
     }
     
     private var lastUpdatedString: String {
