@@ -368,11 +368,11 @@ class AppState: ObservableObject {
     // MARK: - Uninstall
     func uninstall(xcode: Xcode) {
         guard
-            let installedXcode = xcode.installPath,
+            let installedXcodePath = xcode.installedPath,
             uninstallPublisher == nil
         else { return }
         
-        uninstallPublisher = uninstallXcode(path: installedXcode)
+        uninstallPublisher = uninstallXcode(path: installedXcodePath)
             .flatMap { [unowned self] _ in
                 self.updateSelectedXcodePath()
             }
@@ -390,8 +390,8 @@ class AppState: ObservableObject {
     
     func reveal(xcode: Xcode) {
         // TODO: show error if not
-        guard let installedXcode = xcode.installPath else { return }
-        NSWorkspace.shared.activateFileViewerSelecting([installedXcode.url])
+        guard let installedXcodePath = xcode.installedPath else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([installedXcodePath.url])
     }
 
     /// Make an Xcode active, a.k.a select it, in the `xcode-select` sense.
@@ -417,13 +417,13 @@ class AppState: ObservableObject {
         }
 
         guard
-            let installedXcode = xcode.installPath,
-            uninstallPublisher == nil
+            let installedXcodePath = xcode.installedPath,
+            selectPublisher == nil
         else { return }
        
         selectPublisher = installHelperIfNecessary()
             .flatMap {
-                Current.helper.switchXcodePath(installedXcode.string)
+                Current.helper.switchXcodePath(installedXcodePath.string)
             }
             .flatMap { [unowned self] _ in
                 self.updateSelectedXcodePath()
@@ -451,11 +451,11 @@ class AppState: ObservableObject {
     }
     
     func copyPath(xcode: Xcode) {
-        guard let installedXcode = xcode.installPath else { return }
+        guard let installedXcodePath = xcode.installedPath else { return }
         
         NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
-        NSPasteboard.general.writeObjects([installedXcode.url as NSURL])
-        NSPasteboard.general.setString(installedXcode.string, forType: .string)
+        NSPasteboard.general.writeObjects([installedXcodePath.url as NSURL])
+        NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {

@@ -59,7 +59,7 @@ struct Xcode: Identifiable, CustomStringConvertible {
         }
     }
     
-    var installPath: Path? {
+    var installedPath: Path? {
         switch installState {
             case .installed(let path):
                 return path
