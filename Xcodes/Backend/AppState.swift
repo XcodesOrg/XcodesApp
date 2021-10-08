@@ -55,6 +55,13 @@ class AppState: ObservableObject {
 
     @Published var error: Error?
     @Published var authError: Error?
+    
+    // MARK: Advanced Preferences
+    @Published var localPath = "" {
+        didSet {
+            Current.defaults.set(localPath, forKey: "localPath")
+        }
+    }
 
     // MARK: - Publisher Cancellables
     
@@ -84,6 +91,11 @@ class AppState: ObservableObject {
         try? loadCachedAvailableXcodes()
         checkIfHelperIsInstalled()
         setupAutoInstallTimer()
+        setupDefaults()
+    }
+    
+    func setupDefaults() {
+        localPath = Current.defaults.string(forKey: "localPath") ?? Path.defaultXcodesApplicationSupport.string
     }
     
     // MARK: Timer
@@ -392,6 +404,11 @@ class AppState: ObservableObject {
         // TODO: show error if not
         guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
         NSWorkspace.shared.activateFileViewerSelecting([installedXcode.path.url])
+    }
+    
+    func reveal(path: String) {
+        let url = URL(fileURLWithPath: path)
+        NSWorkspace.shared.activateFileViewerSelecting([url])
     }
 
     /// Make an Xcode active, a.k.a select it, in the `xcode-select` sense.

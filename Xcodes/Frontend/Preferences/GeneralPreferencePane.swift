@@ -21,7 +21,7 @@ struct GeneralPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .frame(width: 400)
+        .frame(width: 500)
     }
 }
 
