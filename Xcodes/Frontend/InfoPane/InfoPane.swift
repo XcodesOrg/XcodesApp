@@ -31,7 +31,7 @@ struct InfoPane: View {
                     case let .installed(path):
                         HStack {
                             Text(path.string)
-                            Button(action: { appState.reveal(id: xcode.id) }) {
+                            Button(action: { appState.reveal(xcode: xcode) }) {
                                 Image(systemName: "arrow.right.circle.fill")
                             }
                             .buttonStyle(PlainButtonStyle())

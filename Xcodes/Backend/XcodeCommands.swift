@@ -83,7 +83,7 @@ struct SelectButton: View {
     
     private func select() {
         guard let xcode = xcode else { return }
-        appState.select(id: xcode.id)
+        appState.select(xcode: xcode)
     }
 }
 
@@ -100,7 +100,7 @@ struct OpenButton: View {
     
     private func open() {
         guard let xcode = xcode else { return }
-        appState.open(id: xcode.id)
+        appState.open(xcode: xcode)
     }
 }
 
@@ -132,7 +132,7 @@ struct RevealButton: View {
     
     private func reveal() {
         guard let xcode = xcode else { return }
-        appState.reveal(id: xcode.id)
+        appState.reveal(xcode: xcode)
     }
 }
 
@@ -149,7 +149,7 @@ struct CopyPathButton: View {
     
     private func copyPath() {
         guard let xcode = xcode else { return }
-        appState.copyPath(id: xcode.id)
+        appState.copyPath(xcode: xcode)
     }
 }
 

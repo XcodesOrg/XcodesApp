@@ -22,7 +22,7 @@ struct MainWindow: View {
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
                     Alert(title: Text("Uninstall Xcode \(xcode.description)?"),
                           message: Text("It will be moved to the Trash, but won't be emptied."),
-                          primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: xcode.id) }),
+                          primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(xcode: xcode) }),
                           secondaryButton: .cancel(Text("Cancel")))
                 }
             

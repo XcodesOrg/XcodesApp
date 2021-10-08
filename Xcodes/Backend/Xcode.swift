@@ -3,6 +3,7 @@ import Foundation
 import Version
 import struct XCModel.SDKs
 import struct XCModel.Compilers
+import Path
 
 struct Xcode: Identifiable, CustomStringConvertible {
     let version: Version
@@ -55,6 +56,15 @@ struct Xcode: Identifiable, CustomStringConvertible {
             return ByteCountFormatter.string(fromByteCount: downloadFileSize, countStyle: .file)
         } else {
             return nil
+        }
+    }
+    
+    var installPath: Path? {
+        switch installState {
+            case .installed(let path):
+                return path
+            default:
+                return nil
         }
     }
 }
