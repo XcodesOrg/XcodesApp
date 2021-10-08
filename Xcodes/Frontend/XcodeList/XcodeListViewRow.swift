@@ -85,7 +85,7 @@ struct XcodeListViewRow: View {
                     .foregroundColor(.green)
                     .help("This is the active version")
             } else {
-                Button(action: { appState.select(id: xcode.id) }) {
+                Button(action: { appState.select(xcode: xcode) }) {
                     Image(systemName: "checkmark.circle")
                         .foregroundColor(.secondary)
                 }
@@ -101,7 +101,7 @@ struct XcodeListViewRow: View {
     private func installControl(for xcode: Xcode) -> some View {
         switch xcode.installState {
         case .installed:
-            Button("OPEN") { appState.open(id: xcode.id) }
+            Button("OPEN") { appState.open(xcode: xcode) }
                 .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))
                 .help("Open this version")
         case .notInstalled:

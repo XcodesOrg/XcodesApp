@@ -378,13 +378,13 @@ class AppState: ObservableObject {
     }
     
     // MARK: - Uninstall
-    func uninstall(id: Xcode.ID) {
+    func uninstall(xcode: Xcode) {
         guard
-            let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
+            let installedXcodePath = xcode.installedPath,
             uninstallPublisher == nil
         else { return }
         
-        uninstallPublisher = uninstallXcode(path: installedXcode.path)
+        uninstallPublisher = uninstallXcode(path: installedXcodePath)
             .flatMap { [unowned self] _ in
                 self.updateSelectedXcodePath()
             }
@@ -400,10 +400,10 @@ class AppState: ObservableObject {
         )
     }
     
-    func reveal(id: Xcode.ID) {
+    func reveal(xcode: Xcode) {
         // TODO: show error if not
-        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
-        NSWorkspace.shared.activateFileViewerSelecting([installedXcode.path.url])
+        guard let installedXcodePath = xcode.installedPath else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([installedXcodePath.url])
     }
     
     func reveal(path: String) {
@@ -421,26 +421,26 @@ class AppState: ObservableObject {
     /// If they consent to installing the helper then this method will be invoked again with  `shouldPrepareUserForHelperInstallation` set to false.
     /// This will install the helper and make the Xcode active.
     ///
-    /// - Parameter id: The identifier of the Xcode to make active.
+    /// - Parameter xcode: The Xcode to make active.
     /// - Parameter shouldPrepareUserForHelperInstallation: Whether the user should be presented with an alert preparing them for helper installation before making the Xcode version active.
-    func select(id: Xcode.ID, shouldPrepareUserForHelperInstallation: Bool = true) {
+    func select(xcode: Xcode, shouldPrepareUserForHelperInstallation: Bool = true) {
         guard helperInstallState == .installed || shouldPrepareUserForHelperInstallation == false else {
             isPreparingUserForActionRequiringHelper = { [unowned self] userConsented in
                 guard userConsented else { return }
-                self.select(id: id, shouldPrepareUserForHelperInstallation: false) 
+                self.select(xcode: xcode, shouldPrepareUserForHelperInstallation: false)
             }
             presentedAlert = .privilegedHelper
             return
         }
 
-        guard 
-            let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
+        guard
+            let installedXcodePath = xcode.installedPath,
             selectPublisher == nil
         else { return }
-        
+       
         selectPublisher = installHelperIfNecessary()
             .flatMap {
-                Current.helper.switchXcodePath(installedXcode.path.string)
+                Current.helper.switchXcodePath(installedXcodePath.string)
             }
             .flatMap { [unowned self] _ in
                 self.updateSelectedXcodePath()
@@ -457,16 +457,22 @@ class AppState: ObservableObject {
             )
     }
     
-    func open(id: Xcode.ID) {
-        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
-        NSWorkspace.shared.openApplication(at: installedXcode.path.url, configuration: .init())
+    func open(xcode: Xcode) {
+        switch xcode.installState {
+            case let .installed(path):
+                NSWorkspace.shared.openApplication(at: path.url, configuration: .init())
+            default:
+                Logger.appState.error("\(xcode.id) is not installed")
+                return
+        }
     }
     
-    func copyPath(id: Xcode.ID) {
-        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
+    func copyPath(xcode: Xcode) {
+        guard let installedXcodePath = xcode.installedPath else { return }
+        
         NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
-        NSPasteboard.general.writeObjects([installedXcode.path.url as NSURL])
-        NSPasteboard.general.setString(installedXcode.path.string, forType: .string)
+        NSPasteboard.general.writeObjects([installedXcodePath.url as NSURL])
+        NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {
