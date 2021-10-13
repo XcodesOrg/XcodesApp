@@ -17,7 +17,7 @@ struct MainToolbarModifier: ViewModifier {
             Button(action: { appState.presentedSheet = .signIn }, label: {
                 Label("Login", systemImage: "person.circle")
             })
-            .help("Login")
+            .help("Open Login")
 
             ProgressButton(
                 isInProgress: appState.isUpdating, 
@@ -26,7 +26,7 @@ struct MainToolbarModifier: ViewModifier {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }
             .keyboardShortcut(KeyEquivalent("r"))
-            .help("Refresh")
+            .help("Refresh Xcode List")
             
             Button(action: {
                 switch category {
@@ -86,6 +86,11 @@ struct MainToolbarModifier: ViewModifier {
             .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
             .help("Show or hide the info pane")
 
+            Button(action: { NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil) }, label: {
+                Label("Preferences", systemImage: "gearshape")
+            })
+            .help("Open Preferences")
+            
             TextField("Search...", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 200)
