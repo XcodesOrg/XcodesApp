@@ -116,8 +116,9 @@ class AppState: ObservableObject {
             .receive(on: DispatchQueue.main)
             .handleEvents(receiveCompletion: { completion in 
                 if case .failure = completion {
-                    self.authenticationState = .unauthenticated
-                    self.presentedSheet = .signIn
+                    // this is causing some awkwardness with showing an alert with the error and also popping up the sign in view
+                    // self.authenticationState = .unauthenticated
+                    // self.presentedSheet = .signIn
                 }
             })
             .eraseToAnyPublisher()
@@ -227,7 +228,7 @@ class AppState: ObservableObject {
             self.authError = error
         case .finished:
             switch self.authenticationState {
-            case .authenticated, .unauthenticated:
+                case .authenticated, .unauthenticated, .notAppleDeveloper:
                 self.presentedSheet = nil
                 self.secondFactorData = nil
             case let .waitingForSecondFactor(option, authOptions, sessionData):
@@ -315,7 +316,7 @@ class AppState: ObservableObject {
                 self.$authenticationState
                     .filter { state in
                         switch state {
-                        case .authenticated, .unauthenticated: return true
+                            case .authenticated, .unauthenticated, .notAppleDeveloper: return true
                         case .waitingForSecondFactor: return false
                         }
                     }
@@ -323,6 +324,9 @@ class AppState: ObservableObject {
                     .tryMap { state in
                         if state == .unauthenticated {
                             throw AuthenticationError.invalidSession
+                        }
+                        if state == .notAppleDeveloper {
+                            throw AuthenticationError.notDeveloperAppleId
                         }
                         return Void()
                     }

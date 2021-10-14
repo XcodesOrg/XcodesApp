@@ -148,11 +148,12 @@ public class Client {
     /// Use the olympus session endpoint to see if the existing session is still valid
     public func validateSession() -> AnyPublisher<Void, Error> {
         return Current.network.dataTask(with: URLRequest.olympusSession)
-            .tryMap { (data, response) in
-                guard
-                    let jsonObject = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
-                    jsonObject["provider"] != nil
-                else { throw AuthenticationError.invalidSession }
+            .map(\.data)
+            .decode(type: AppleSession.self, decoder: JSONDecoder())
+            .tryMap { session in
+                if session.provider == nil {
+                    throw AuthenticationError.notDeveloperAppleId
+                }
             }
             .eraseToAnyPublisher()
     }
@@ -174,6 +175,7 @@ public enum AuthenticationState: Equatable {
     case unauthenticated
     case waitingForSecondFactor(TwoFactorOption, AuthOptionsResponse, AppleSessionData)
     case authenticated
+    case notAppleDeveloper
 }
 
 public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
@@ -186,7 +188,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case accountUsesUnknownAuthenticationKind(String?)
     case accountLocked(String)
     case badStatusCode(statusCode: Int, data: Data, response: HTTPURLResponse)
-
+    case notDeveloperAppleId
+    
     public var errorDescription: String? {
         switch self {
         case .invalidSession:
@@ -212,6 +215,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             return message
         case let .badStatusCode(statusCode, _, _):
             return "Received an unexpected status code: \(statusCode). If you continue to have problems, please submit a bug report in the Help menu."
+        case .notDeveloperAppleId:
+            return "You are not registered as an Apple Developer.  Please visit Apple Developer Registration. https://developer.apple.com/register/"
         }
     }
 }
@@ -361,4 +366,21 @@ public enum SecurityCode {
         case .sms: return "phone"
         }
     }
+}
+
+/// Object returned from olympus/v1/session
+/// Used to check Provider, and show name
+/// If Provider is nil, we can assume the Apple User is NOT an Apple Developer and can't download Xcode.
+public struct AppleSession: Decodable, Equatable {
+    public let user: AppleUser
+    public let provider: AppleProvider?
+}
+
+public struct AppleProvider: Decodable, Equatable {
+    public let providerId: Int
+    public let name: String
+}
+
+public struct AppleUser: Decodable, Equatable {
+    public let fullName: String
 }

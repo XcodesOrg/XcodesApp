@@ -71,7 +71,12 @@ extension AppState {
     private func updateAvailableXcodes(from dataSource: DataSource) -> AnyPublisher<[AvailableXcode], Error> {
         switch dataSource {
         case .apple:
-            return signInIfNeeded() 
+            return signInIfNeeded()
+                .flatMap { [unowned self] in
+                    // this will check to see if the Apple ID is a valid Apple Developer or not.
+                    // If it's not, we can't use the Apple source to get xcode info.
+                    self.validateSession()
+                }
                 .flatMap { [unowned self] in self.releasedXcodes().combineLatest(self.prereleaseXcodes()) }
                 .receive(on: DispatchQueue.main)
                 .map { releasedXcodes, prereleaseXcodes in
