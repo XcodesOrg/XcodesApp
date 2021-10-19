@@ -169,7 +169,7 @@ private func _installedXcodes(destination: Path) -> [InstalledXcode] {
 public struct Network {
     private static let client = AppleAPI.Client()
     
-    public var dataTask: (URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> = { 
+    public var dataTask: (URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> = {
         AppleAPI.Current.network.session.dataTaskPublisher(for: $0)
             .mapError { $0 as Error }
             .eraseToAnyPublisher() 
@@ -182,6 +182,10 @@ public struct Network {
 
     public func downloadTask(with url: URL, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, publisher: AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) {
         return downloadTask(url, saveLocation, resumeData)
+    }
+    
+    public var validateSession: () -> AnyPublisher<Void, Error> = {
+        return client.validateSession()
     }
 }
 

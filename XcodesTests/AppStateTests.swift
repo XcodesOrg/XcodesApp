@@ -81,6 +81,10 @@ class AppStateTests: XCTestCase {
                 return true
             }
         }
+        Xcodes.Current.network.validateSession = {
+            return Just(())
+                .setFailureType(to: Error.self).eraseToAnyPublisher()
+        }
         Xcodes.Current.network.dataTask = { urlRequest in
             // Don't have a valid session
             if urlRequest.url! == URLRequest.olympusSession.url! {

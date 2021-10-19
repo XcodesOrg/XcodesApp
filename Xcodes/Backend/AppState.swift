@@ -10,7 +10,7 @@ import os.log
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
-    
+   
     // MARK: - Published Properties
     
     @Published var authenticationState: AuthenticationState = .unauthenticated
@@ -112,7 +112,7 @@ class AppState: ObservableObject {
     // MARK: - Authentication
     
     func validateSession() -> AnyPublisher<Void, Error> {
-        return client.validateSession()
+        return Current.network.validateSession()
             .receive(on: DispatchQueue.main)
             .handleEvents(receiveCompletion: { completion in 
                 if case .failure = completion {
