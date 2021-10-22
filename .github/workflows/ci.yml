@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: 
+    branches:
       - main
   pull_request:
 
@@ -12,6 +12,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2.3.5
     - name: Run tests
-      env: 
-        DEVELOPER_DIR: /Applications/Xcode_12.5.app
+      env:
+        DEVELOPER_DIR: /Applications/Xcode_12.5.1.app
       run: xcodebuild test -scheme Xcodes
