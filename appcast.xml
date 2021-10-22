@@ -8,6 +8,68 @@
             
                 
                     <item>
+                        <title>v1.2.0</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Better handling of when AppleId is not a developer (#159) @MattKiazyk</li>
+  <li>Adds a quick toolbar option for opening preferences (#158) @MattKiazyk</li>
+  <li>Adds ability to switch the local cache directory (#155) @MattKiazyk</li>
+  <li>Add new filter for Release or Beta versions (#153) @Binlogo</li>
+  <li>Add Xcode release date to info pane in Xcodes.app (#147) @provTheodoreNewell</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Better handling of duplicate builds and buttons not working (#156) @MattKiazyk</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Xcodes.app now builds on Xcode 12.5.1 (previously 12.4.0)</li>
+  <li>Bump addressable from 2.7.0 to 2.8.0 in /AppCast (#161) @dependabot</li>
+  <li>Bump actions/checkout from 2.3.4 to 2.3.5 (#160) @dependabot</li>
+  <li>Bump rexml from 3.2.4 to 3.2.5 in /AppCast (#140) @dependabot</li>
+  <li>Bump actions/cache from 2.1.5 to 2.1.6 (#136) @dependabot</li>
+  <li>Updates developer dir on CI runs to xcode 12.5 (#150) @MattKiazyk</li>
+</ul>
+
+<p>We’re at 1.6k 🌟 on Github! Thank you for your support! Please spread the word! The more developers on Xcodes, the less pain in the world!</p>
+
+<!-- sparkle:edSignature=iXFkt6ZhiaTeAHQDVOwEzL4Oin+w+UtMlv4MeCmsI6xQc8+YOm2GTtnfhxhXnGWkgRwzSQC/+2Iw0r0nEqwKDA== -->
+]]></description>
+                        <pubDate>Fri, 22 Oct 2021 12:40:57 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.2.0b8/Xcodes.zip"
+                                    sparkle:version="8"
+                                    sparkle:shortVersionString="1.2.0"
+                                    sparkle:edSignature="iXFkt6ZhiaTeAHQDVOwEzL4Oin+w+UtMlv4MeCmsI6xQc8+YOm2GTtnfhxhXnGWkgRwzSQC/+2Iw0r0nEqwKDA=="
+                                    length="12338054"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>1.1.0 (7)</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
