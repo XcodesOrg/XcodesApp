@@ -151,9 +151,12 @@ public class Client {
             .map(\.data)
             .decode(type: AppleSession.self, decoder: JSONDecoder())
             .tryMap { session in
-                if session.provider == nil {
-                    throw AuthenticationError.notDeveloperAppleId
-                }
+                // A user that is a non-paid Apple Developer will have a provider == nil
+                // Those users can still download Xcode.
+                // Non Apple Developers will get caught in the download as invalid
+//                if session.provider == nil {
+//                    throw AuthenticationError.notDeveloperAppleId
+//                }
             }
             .eraseToAnyPublisher()
     }
