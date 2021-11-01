@@ -148,7 +148,14 @@ public class Client {
     /// Use the olympus session endpoint to see if the existing session is still valid
     public func validateSession() -> AnyPublisher<Void, Error> {
         return Current.network.dataTask(with: URLRequest.olympusSession)
-            .map(\.data)
+            .tryMap { result -> Data in
+                let httpResponse = result.response as! HTTPURLResponse
+                if httpResponse.statusCode == 401 {
+                    throw AuthenticationError.notAuthorized
+                }
+
+                return result.data
+            }
             .decode(type: AppleSession.self, decoder: JSONDecoder())
             .tryMap { session in
                 if session.provider == nil {
@@ -189,6 +196,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case accountLocked(String)
     case badStatusCode(statusCode: Int, data: Data, response: HTTPURLResponse)
     case notDeveloperAppleId
+    case notAuthorized
     
     public var errorDescription: String? {
         switch self {
@@ -217,6 +225,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             return "Received an unexpected status code: \(statusCode). If you continue to have problems, please submit a bug report in the Help menu."
         case .notDeveloperAppleId:
             return "You are not registered as an Apple Developer.  Please visit Apple Developer Registration. https://developer.apple.com/register/"
+        case .notAuthorized:
+            return "You are not authorized. Please Sign in with your Apple ID first."
         }
     }
 }
