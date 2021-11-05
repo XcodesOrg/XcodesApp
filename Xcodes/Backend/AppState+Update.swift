@@ -130,15 +130,20 @@ extension AppState {
 extension AppState {
     // MARK: - Apple
     
-    private func releasedXcodes() -> AnyPublisher<[AvailableXcode], Error> {
+    private func releasedXcodes() -> AnyPublisher<[AvailableXcode], Swift.Error> {
         Current.network.dataTask(with: URLRequest.downloads)
             .map(\.data)
             .decode(type: Downloads.self, decoder: configure(JSONDecoder()) {
                 $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
             })
-            .map { downloads -> [AvailableXcode] in
-                let xcodes = downloads
-                    .downloads
+            .tryMap { downloads -> [AvailableXcode] in
+                if downloads.hasError {
+                    throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
+                }
+                guard let downloadList = downloads.downloads else {
+                    throw AuthenticationError.invalidResult(resultString: "No download information found")
+                }
+                let xcodes = downloadList
                     .filter { $0.name.range(of: "^Xcode [0-9]", options: .regularExpression) != nil }
                     .compactMap { download -> AvailableXcode? in
                         let urlPrefix = URL(string: "https://download.developer.apple.com/")!

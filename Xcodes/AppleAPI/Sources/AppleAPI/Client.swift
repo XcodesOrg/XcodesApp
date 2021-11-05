@@ -200,6 +200,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case badStatusCode(statusCode: Int, data: Data, response: HTTPURLResponse)
     case notDeveloperAppleId
     case notAuthorized
+    case invalidResult(resultString: String?)
     
     public var errorDescription: String? {
         switch self {
@@ -230,6 +231,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             return "You are not registered as an Apple Developer.  Please visit Apple Developer Registration. https://developer.apple.com/register/"
         case .notAuthorized:
             return "You are not authorized. Please Sign in with your Apple ID first."
+        case let .invalidResult(resultString):
+            return resultString ?? "If you continue to have problems, please submit a bug report in the Help menu."
         }
     }
 }

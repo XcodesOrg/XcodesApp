@@ -93,7 +93,7 @@ class AppStateTests: XCTestCase {
             }
             // It's an available release version
             else if urlRequest.url! == URLRequest.downloads.url! {
-                let downloads = Downloads(downloads: [Download(name: "Xcode 0.0.0", files: [Download.File(remotePath: "https://apple.com/xcode.xip", fileSize: 9484444)], dateModified: Date())])
+                let downloads = Downloads(resultCode: 0, resultsString: nil, downloads: [Download(name: "Xcode 0.0.0", files: [Download.File(remotePath: "https://apple.com/xcode.xip", fileSize: 9484444)], dateModified: Date())])
                 let encoder = JSONEncoder()
                 encoder.dateEncodingStrategy = .formatted(.downloadsDateModified)
                 let downloadsData = try! encoder.encode(downloads)
@@ -203,7 +203,7 @@ class AppStateTests: XCTestCase {
             }
             // It's an available release version
             else if urlRequest.url! == URLRequest.downloads.url! {
-                let downloads = Downloads(downloads: [Download(name: "Xcode 0.0.0", files: [Download.File(remotePath: "https://apple.com/xcode.xip", fileSize: 9494944)], dateModified: Date())])
+                let downloads = Downloads(resultCode: 0, resultsString: nil, downloads: [Download(name: "Xcode 0.0.0", files: [Download.File(remotePath: "https://apple.com/xcode.xip", fileSize: 9494944)], dateModified: Date())])
                 let encoder = JSONEncoder()
                 encoder.dateEncodingStrategy = .formatted(.downloadsDateModified)
                 let downloadsData = try! encoder.encode(downloads)
