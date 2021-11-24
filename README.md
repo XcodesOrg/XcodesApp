@@ -6,14 +6,17 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 
 ![CI](https://github.com/RobotsAndPencils/Xcodes.app/workflows/CI/badge.svg)
 
-![](screenshot.png)
+![](screenshot_light.png#gh-light-mode-only)
+![](screenshot_dark.png#gh-dark-mode-only)
 
 ## Features
 
 - List all available Xcode versions from [Xcode Releases'](https://xcodereleases.com) data or the Apple Developer website.
 - Install any Xcode version, fully automated from start to finish. Xcodes uses [`aria2`](https://aria2.github.io), which uses up to 16 connections to download 3-5x faster than URLSession.
+- Automatically install new releases!
 - Just click a button to make a version active with `xcode-select`.
 - View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
+- Dark/Light Mode supported
 
 ## Installation
 
@@ -50,9 +53,9 @@ Follow the steps below to build and release a new version of Xcodes.app. For any
 ```sh
 # Update the version number in Xcode and commit the change, if necessary
 
-# Question: Did anything in XPCHelper change? 
+# Question: Did anything in XPCHelper change?
 # - com.robotsandpencils.XcodesApp.Helper folder and HelperXPCShared
-# - if so, bump the version number in com.robotsandpencils.XcodesApp.Helper target. 
+# - if so, bump the version number in com.robotsandpencils.XcodesApp.Helper target.
 # Note: you do not have to bump the version number if nothing has changed.
 # Note2: If you do bump the version, the end user, must re-install the XPCHelper and give permission again.
 
