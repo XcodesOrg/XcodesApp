@@ -337,8 +337,18 @@ class AppState: ObservableObject {
                 // We need the cookies from its response in order to download Xcodes though,
                 // so perform it here first just to be sure.
                 Current.network.dataTask(with: URLRequest.downloads)
-                    .receive(on: DispatchQueue.main)
-                    .map { _ in Void() }
+                    .map(\.data)
+                    .decode(type: Downloads.self, decoder: configure(JSONDecoder()) {
+                        $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
+                    })
+                    .tryMap { downloads -> Void in
+                        if downloads.hasError {
+                            throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
+                        }
+                       if downloads.downloads == nil {
+                            throw AuthenticationError.invalidResult(resultString: "No download information found")
+                        }
+                    }
                     .mapError { $0 as Error }
             }
             .flatMap { [unowned self] in
