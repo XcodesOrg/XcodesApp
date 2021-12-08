@@ -22,6 +22,12 @@
 	<string>8</string>
 	<key>CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT</key>
 	<string>$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)</string>
+	<key>INIntentsSupported</key>
+	<array>
+		<string>DownloadXcodeVersionIntent</string>
+	</array>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.utilities</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
@@ -32,6 +38,10 @@
 	<true/>
 	<key>NSSupportsSuddenTermination</key>
 	<true/>
+	<key>NSUserActivityTypes</key>
+	<array>
+		<string>DownloadXcodeVersionIntent</string>
+	</array>
 	<key>SMPrivilegedExecutables</key>
 	<dict>
 		<key>com.robotsandpencils.XcodesApp.Helper</key>

@@ -1,6 +1,7 @@
 import AppKit
 import Sparkle
 import SwiftUI
+import Intents
 
 @main
 struct XcodesApp: App {
@@ -120,4 +121,58 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Initialize manually
         SUUpdater.shared()
     }
+    
+    func application(_ application: NSApplication, handlerFor intent: INIntent) -> Any? {
+        if intent is DownloadXcodeVersionIntent {
+            return IntentHandler()
+        }
+        return nil
+    }
+}
+
+class IntentHandler: NSObject, DownloadXcodeVersionIntentHandling {
+    var appState: AppState = AppState()
+    
+    func provideVersionOptionsCollection(for intent: DownloadXcodeVersionIntent, searchTerm: String?, with completion: @escaping (INObjectCollection<XcodeVersion>?, Error?) -> Void) {
+        guard let searchTerm = searchTerm else {
+            return
+        }
+        
+        let xcodes = appState.allXcodes.filter { $0.description.contains(searchTerm) }
+        let versions: [XcodeVersion] = xcodes.map { XcodeVersion(identifier: $0.id.appleDescription, display: $0.description)}
+        completion(INObjectCollection(items: versions), nil)
+    }
+    
+    // check the version parameter
+    func resolveVersion(for intent: DownloadXcodeVersionIntent, with completion: @escaping (DownloadXcodeVersionVersionResolutionResult) -> Void) {
+        guard let version = intent.version else {
+            return completion(.needsValue())
+        }
+        
+        return completion(.success(with: version))
+    }
+    
+    func handle(intent: DownloadXcodeVersionIntent, completion: @escaping (DownloadXcodeVersionIntentResponse) -> Void) {
+        // do actual downloading 
+        
+        
+        let response = DownloadXcodeVersionIntentResponse(code: .success, userActivity: nil)
+        response.versionString = intent.version?.description
+        completion(response)
+    }
+   
+    
+
+    
+//    func provideVersionOptionsCollection(for intent: DownloadXcodeVersionIntent, searchTerm: String?, with completion: @escaping (INObjectCollection<Type>?, Error?) -> Void) {
+//        guard let searchTerm = searchTerm else {
+//            return
+//        }
+//
+//        let xcodes = appState.allXcodes.filter { $0.description.contains(searchTerm) }
+//        let versions: [NSString] = xcodes.map { $0.version.descriptionWithoutBuildMetadata }
+//        let xcodeVersions = INObjectCollection(items: xcodes)
+        
+//    }
+
 }
