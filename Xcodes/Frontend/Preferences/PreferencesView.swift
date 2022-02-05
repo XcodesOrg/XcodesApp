@@ -2,7 +2,7 @@ import SwiftUI
 
 struct PreferencesView: View {
     private enum Tabs: Hashable {
-        case general, updates, advanced
+        case general, updates, advanced, experiment
     }
     @EnvironmentObject var appState: AppState
     
@@ -25,6 +25,11 @@ struct PreferencesView: View {
                     Label("Advanced", systemImage: "gearshape.2")
                 }
                 .tag(Tabs.advanced)
+            ExperimentsPreferencePane()
+                .tabItem {
+                    Label("Experiments", systemImage: "testtube.2")
+                }
+                .tag(Tabs.experiment)
         }
         .padding(20)
     }

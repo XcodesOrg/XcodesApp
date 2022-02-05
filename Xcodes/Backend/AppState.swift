@@ -62,6 +62,12 @@ class AppState: ObservableObject {
             Current.defaults.set(localPath, forKey: "localPath")
         }
     }
+    
+    @Published var unxipExperiment = false {
+        didSet {
+            Current.defaults.set(unxipExperiment, forKey: "unxipExperiment")
+        }
+    }
 
     // MARK: - Publisher Cancellables
     
@@ -96,6 +102,7 @@ class AppState: ObservableObject {
     
     func setupDefaults() {
         localPath = Current.defaults.string(forKey: "localPath") ?? Path.defaultXcodesApplicationSupport.string
+        unxipExperiment = Current.defaults.bool(forKey: "unxipExperiment") ?? false
     }
     
     // MARK: Timer

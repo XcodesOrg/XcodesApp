@@ -18,6 +18,13 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 - View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
 - Dark/Light Mode supported
 
+## Experiments
+
+- Thanks to the wonderful work of [https://github.com/saagarjha/unxip](https://github.com/saagarjha/unxip), turn on the experiment to increase your unxipping time by up to 70%! More can be found on his repo, but bugs, high memory may occur if used. 
+
+![](experiment_light.png#gh-light-mode-only)
+![](experiment_dark.png#gh-dark-mode-only)
+
 ## Installation
 
 Xcodes.app runs on macOS Big Sur 11.0 or later.
@@ -80,7 +87,10 @@ scripts/package_release.sh
 # Notarize the app
 # Do this from the Product directory so the app is zipped without being nested inside Product
 # Create a app specific password on appleid.apple.com if you haven't already
-# % xcrun altool --store-password-in-keychain-item "AC_PASSWORD" -u "<appleiduseremail>" -p <app_specific_secret>
+# xcrun notarytool store-credentials "AC_PASSWORD" \
+#              --apple-id "test@example.com" \
+#              --team-id "teamid" \
+#               --password "app specific password"
 
 pushd Product
 ../scripts/notarize.sh "test@example.com" "@keychain:AC_PASSWORD" <MyOrg> Xcodes.zip

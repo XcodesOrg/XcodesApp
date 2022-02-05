@@ -238,8 +238,8 @@ extension AppState {
 
     func unarchiveAndMoveXIP(availableXcode: AvailableXcode, at source: URL, to destination: URL) -> AnyPublisher<URL, Swift.Error> {
         self.setInstallationStep(of: availableXcode.version, to: .unarchiving)
-
-        return Current.shell.unxip(source)
+        
+        return unxipOrUnxipExperiment(source)
             .catch { error -> AnyPublisher<ProcessOutput, Swift.Error> in
                 if let executionError = error as? ProcessExecutionError {
                    if executionError.standardError.contains("damaged and can’t be expanded") {
@@ -277,6 +277,16 @@ extension AppState {
             }
         })
         .eraseToAnyPublisher()
+    }
+    
+    func unxipOrUnxipExperiment(_ source: URL) -> AnyPublisher<ProcessOutput, Error> {
+        if unxipExperiment {
+            // All hard work done by https://github.com/saagarjha/unxip
+            // Compiled to binary with `swiftc -parse-as-library -O unxip.swift`
+            return Current.shell.unxipExperiment(source)
+        } else {
+            return Current.shell.unxip(source)
+        }
     }
 
     public func verifySecurityAssessment(of xcode: InstalledXcode) -> AnyPublisher<Void, Error> {

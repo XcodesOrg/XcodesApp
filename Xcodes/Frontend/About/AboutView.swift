@@ -14,9 +14,6 @@ struct AboutView: View {
                 
                 Text("Version \(Bundle.main.shortVersion!) (\(Bundle.main.version!))")
                 
-                Color.clear
-                    .frame(width: 300, height: 16)
-                
                 HStack(spacing: 32) {
                     Button(action: {
                         openURL(URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!)
@@ -27,6 +24,24 @@ struct AboutView: View {
                     
                     Button(action: showAcknowledgementsWindow) {
                         Label("Acknowledgements", systemImage: "doc")
+                    }
+                    .buttonStyle(LinkButtonStyle())
+                }
+                Color.clear
+                    .frame(width: 300, height: 0)
+                Label("Unxip Experiment", systemImage: "testtube.2")
+                HStack(spacing: 32) {
+                    Button(action: {
+                        openURL(URL(string: "https://github.com/saagarjha/unxip/")!)
+                    }) {
+                        Label("Github Repo", systemImage: "link")
+                    }
+                    .buttonStyle(LinkButtonStyle())
+                    
+                    Button(action: {
+                        openURL(URL(string: "https://github.com/saagarjha/unxip/blob/main/LICENSE")!)
+                    }) {
+                        Label("License", systemImage: "link")
                     }
                     .buttonStyle(LinkButtonStyle())
                 }
