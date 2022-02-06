@@ -111,6 +111,12 @@ public struct Shell {
         
         return (progress, publisher)
     }
+    
+    public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
+        let unxipPath = Path(url: Bundle.main.url(forAuxiliaryExecutable: "unxip")!)!
+        return Process.run(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
+    }
+    
 }
 
 public struct Files {
@@ -237,6 +243,11 @@ public struct Defaults {
     public var get: (String) -> Any? = { UserDefaults.standard.value(forKey: $0) }
     public func get(forKey key: String) -> Any? {
         get(key)
+    }
+    
+    public var bool: (String) -> Bool? = { UserDefaults.standard.bool(forKey: $0) }
+    public func bool(forKey key: String) -> Bool? {
+        bool(key)
     }
 }
 
