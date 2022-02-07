@@ -93,7 +93,7 @@ scripts/package_release.sh
 #               --password "app specific password"
 
 pushd Product
-../scripts/notarize.sh "test@example.com" "@keychain:AC_PASSWORD" <MyOrg> Xcodes.zip
+../scripts/notarize.sh Xcodes.zip <MYORG>
 
 # Sign the .zip for Sparkle, note the signature in the output for later
 # If you're warned about the signing key not being found, see the Xcodes 1Password vault for the key and installation instructions.
