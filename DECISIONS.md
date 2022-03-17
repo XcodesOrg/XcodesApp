@@ -73,4 +73,4 @@ Based on [this blog post](https://yiqiu.me/2015/11/19/sparkle-update-on-github/)
 
 We're deliberately not capturing system profile data with Sparkle right now, because we don't want it and because it would require additional infrastructure.
 
-We also considered https://github.com/mxcl/AppUpdater, but decided aganist it because it seemed less battle-tested than Sparkle and currently lacks an open source license.
+We also considered https://github.com/mxcl/AppUpdater, but decided against it because it seemed less battle-tested than Sparkle and currently lacks an open source license.
