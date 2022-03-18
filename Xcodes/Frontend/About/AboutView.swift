@@ -29,7 +29,7 @@ struct AboutView: View {
                 }
                 Color.clear
                     .frame(width: 300, height: 0)
-                Label("Unxip Experiment", systemImage: "testtube.2")
+                Label("Unxip Experiment", systemImage: "lightbulb")
                 HStack(spacing: 32) {
                     Button(action: {
                         openURL(URL(string: "https://github.com/saagarjha/unxip/")!)

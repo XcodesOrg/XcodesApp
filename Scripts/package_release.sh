@@ -10,6 +10,9 @@ PROJECT_DIR=$(pwd)/$PROJECT_NAME/Resources
 SCRIPTS_DIR=$(pwd)/Scripts
 INFOPLIST_FILE="Info.plist"
 
+# If needed ensure that the unxip binary is signed with a hardened runtime so we can notarize
+# codesign --force --options runtime --sign "Developer ID Application: Robots and Pencils Inc." $PROJECT_DIR/unxip 
+
 # Ensure a clean build
 rm -rf Archive/*
 rm -rf Product/*

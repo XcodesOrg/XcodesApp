@@ -27,7 +27,7 @@ struct PreferencesView: View {
                 .tag(Tabs.advanced)
             ExperimentsPreferencePane()
                 .tabItem {
-                    Label("Experiments", systemImage: "testtube.2")
+                    Label("Experiments", systemImage: "lightbulb")
                 }
                 .tag(Tabs.experiment)
         }
