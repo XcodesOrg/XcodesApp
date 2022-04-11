@@ -5,6 +5,7 @@ extension DateFormatter {
     static let downloadsDateModified: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yy HH:mm"
+        formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
 
