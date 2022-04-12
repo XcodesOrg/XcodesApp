@@ -151,6 +151,18 @@ struct MainWindow: View {
                     action: { appState.presentedAlert = nil }
                 )
             )
+        case let .checkMinSupportedVersion(xcode, deviceVersion):
+            return Alert(
+                title: Text("Minimum requirements not met"),
+                message: Text("Xcode \(xcode.version.descriptionWithoutBuildMetadata) requires MacOS \(xcode.requiredMacOSVersion ?? ""), but you are running MacOS \(deviceVersion), do you still want to install it?"),
+                  primaryButton: .default(
+                    Text("Install"),
+                    action: {
+                        self.appState.install(id: xcode.version)
+                    }
+                  ),
+                  secondaryButton: .cancel(Text("Cancel"))
+            )
         }
     }
 }
