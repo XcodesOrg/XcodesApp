@@ -16,4 +16,8 @@ extension Path {
     static var cacheFile: Path {
         return xcodesApplicationSupport/"available-xcodes.json"
     }
+    
+    static var installDirectory: Path {
+        return Path.root/"Applications"
+    }
 }

@@ -88,7 +88,7 @@ extension AppState {
     private func getXcodeArchive(_ installationType: InstallationType, downloader: Downloader) -> AnyPublisher<(AvailableXcode, URL), Error> {
         switch installationType {
         case .version(let availableXcode):
-            if let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version.isEquivalent(to: availableXcode.version) }) {
+            if let installedXcode = Current.files.installedXcodes(Path.installDirectory).first(where: { $0.version.isEquivalent(to: availableXcode.version) }) {
                 return Fail(error: InstallationError.versionAlreadyInstalled(installedXcode))
                     .eraseToAnyPublisher()
             }
@@ -178,7 +178,7 @@ extension AppState {
 
     public func installArchivedXcode(_ availableXcode: AvailableXcode, at archiveURL: URL) -> AnyPublisher<InstalledXcode, Error> {
         do {
-            let destinationURL = Path.root.join("Applications").join("Xcode-\(availableXcode.version.descriptionWithoutBuildMetadata).app").url
+            let destinationURL = Path.installDirectory.join("Xcode-\(availableXcode.version.descriptionWithoutBuildMetadata).app").url
             switch archiveURL.pathExtension {
             case "xip":
                 return unarchiveAndMoveXIP(availableXcode: availableXcode, at: archiveURL, to: destinationURL)
