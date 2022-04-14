@@ -8,6 +8,73 @@
             
                 
                     <item>
+                        <title>v1.4.0</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<p>Please follow us on Twitter at <a href="https://twitter.com/xcodesapp">@xcodesapp</a> to be notified when new releases happen!</p>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<p><strong>Remember to turn on the Unxip Experiment for faster unxipping!</strong></p>
+
+<h3 id="adds-option-to-create-symbolic-link-at-path-xcodeapp-198-mattkiazyk">Adds option to create symbolic link at Path Xcode.app (#198) @MattKiazyk</h3>
+<ul>
+  <li>Some 3rd party services and libraries check specifically for <code class="language-plaintext highlighter-rouge">Xcodes.app</code> which Xcodes doesn’t support as we separate the version numbers. This adds the ability to make a Symbolic Link called <code class="language-plaintext highlighter-rouge">Xcodes.app</code> that points to the xcode version you want.</li>
+</ul>
+
+<h3 id="add-preference-to-make-symbolic-link-automatic-on-xcode-select-200-mattkiazyk">Add Preference to make Symbolic Link Automatic on Xcode Select (#200) @MattKiazyk</h3>
+<ul>
+  <li>In addition to the above enhancement. Go to <code class="language-plaintext highlighter-rouge">Preferences &gt; Advanced</code> to automatically create the symbolic link to whichever Xcode version you make Active/Select.</li>
+  <li>Note this will not work if you are manually setting via Xcode or command line.</li>
+</ul>
+
+<h3 id="add-check-for-min-macos-version-when-installing-199-mattkiazyk">Add check for min MacOS version when installing (#199) @MattKiazyk</h3>
+<ul>
+  <li>Sometimes we don’t update our MacOS as quickly as Apple would like us to. When you install an Xcode version, we will now check it’s minimum supported MacOS version and prompt you as a warning.</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<h3 id="use-a-fixed-locale-for-api-response-date-parsing-196-aerickson14">Use a fixed locale for API response date parsing (#196) @aerickson14</h3>
+<ul>
+  <li>If your Mac was set to a date time preference not of North America, Xcodes had trouble decoding a DateTime string. Thanks to @SimonRice for the detail on fixing that.</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Bump actions/cache from 3.0.1 to 3.0.2 (#197) @dependabot</li>
+  <li>Bump actions/cache from 2.1.7 to 3.0.1 (#195) @dependabot</li>
+</ul>
+
+<!-- sparkle:edSignature=TVoWUrdazSWlLZtbe1RFrs9cKRUiZZls9fg8/QJ+kjnYefQ1AA0gN0AJn+2PkIOUS1cMXQJktfEULHdTcUhrBg== -->
+]]></description>
+                        <pubDate>Thu, 14 Apr 2022 20:38:10 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.4.0b12/Xcodes.zip"
+                                    sparkle:version="12"
+                                    sparkle:shortVersionString="1.4.0"
+                                    sparkle:edSignature="TVoWUrdazSWlLZtbe1RFrs9cKRUiZZls9fg8/QJ+kjnYefQ1AA0gN0AJn+2PkIOUS1cMXQJktfEULHdTcUhrBg=="
+                                    length="12504756"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v1.3.1</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
