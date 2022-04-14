@@ -20,7 +20,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 
 <h3 id="adds-option-to-create-symbolic-link-at-path-xcodeapp-198-mattkiazyk">Adds option to create symbolic link at Path Xcode.app (#198) @MattKiazyk</h3>
 <ul>
-  <li>Some 3rd party services and libraries check specifically for <code class="language-plaintext highlighter-rouge">Xcodes.app</code> which Xcodes doesn’t support as we separate the version numbers. This adds the ability to make a Symbolic Link called <code class="language-plaintext highlighter-rouge">Xcodes.app</code> that points to the xcode version you want.</li>
+  <li>Some 3rd party services and libraries check specifically for <code class="language-plaintext highlighter-rouge">Xcode.app</code> which Xcodes doesn’t support as we separate the version numbers. This adds the ability to make a Symbolic Link called <code class="language-plaintext highlighter-rouge">Xcode.app</code> that points to the xcode version you want.</li>
 </ul>
 
 <h3 id="add-preference-to-make-symbolic-link-automatic-on-xcode-select-200-mattkiazyk">Add Preference to make Symbolic Link Automatic on Xcode Select (#200) @MattKiazyk</h3>
