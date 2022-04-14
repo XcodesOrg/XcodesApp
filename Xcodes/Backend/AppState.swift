@@ -21,7 +21,7 @@ class AppState: ObservableObject {
             }
             updateAllXcodes(
                 availableXcodes: newValue, 
-                installedXcodes: Current.files.installedXcodes(Path.root/"Applications"), 
+                installedXcodes: Current.files.installedXcodes(Path.installDirectory), 
                 selectedXcodePath: selectedXcodePath
             )
         }
@@ -34,7 +34,7 @@ class AppState: ObservableObject {
         willSet {
             updateAllXcodes(
                 availableXcodes: availableXcodes,
-                installedXcodes: Current.files.installedXcodes(Path.root/"Applications"), 
+                installedXcodes: Current.files.installedXcodes(Path.installDirectory),
                 selectedXcodePath: newValue
             )
         }
@@ -494,6 +494,41 @@ class AppState: ObservableObject {
         NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
         NSPasteboard.general.writeObjects([installedXcodePath.url as NSURL])
         NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
+    }
+    
+    func createSymbolicLink(xcode: Xcode) {
+        guard let installedXcodePath = xcode.installedPath else { return }
+        
+        let destinationPath: Path = Path.installDirectory/"Xcode.app"
+        
+        // does an Xcode.app file exist?
+        if FileManager.default.fileExists(atPath: destinationPath.string) {
+            do {
+                // if it's not a symlink, error because we don't want to delete an actual xcode.app file
+                let attributes: [FileAttributeKey : Any]? = try? FileManager.default.attributesOfItem(atPath: destinationPath.string)
+                
+                if attributes?[.type] as? FileAttributeType == FileAttributeType.typeSymbolicLink {
+                    try FileManager.default.removeItem(atPath: destinationPath.string)
+                    Logger.appState.info("Successfully deleted old symlink")
+                } else {
+                    let message = "Xcode.app exists and is not a symbolic link"
+                    self.presentedAlert = .generic(title: "Unable to create symbolic Link", message: message)
+                    return
+                }
+            } catch {
+                self.presentedAlert = .generic(title: "Unable to create symbolic Link", message: error.localizedDescription)
+            }
+        }
+        
+        do {
+            try FileManager.default.createSymbolicLink(atPath: destinationPath.string, withDestinationPath: installedXcodePath.string)
+            Logger.appState.info("Successfully created symbolic link with Xcode.app")
+        } catch {
+            Logger.appState.error("Unable to create symbolic Link")
+            self.error = error
+            self.presentedAlert = .generic(title: "Unable to create symbolic Link", message: error.legibleLocalizedDescription)
+        }
+        
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {

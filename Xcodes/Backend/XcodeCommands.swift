@@ -18,6 +18,7 @@ struct XcodeCommands: Commands {
                 OpenCommand()
                 RevealCommand()
                 CopyPathCommand()
+                CreateSymbolicLinkCommand()
                 
                 Divider()
                 
@@ -153,6 +154,23 @@ struct CopyPathButton: View {
     }
 }
 
+struct CreateSymbolicLinkButton: View {
+    @EnvironmentObject var appState: AppState
+    let xcode: Xcode?
+    
+    var body: some View {
+        Button(action: createSymbolicLink) {
+            Text("Create SymLink as Xcode.app")
+        }
+        .help("Create SymLink as Xcode.app")
+    }
+    
+    private func createSymbolicLink() {
+        guard let xcode = xcode else { return }
+        appState.createSymbolicLink(xcode: xcode)
+    }
+}
+
 // MARK: - Commands
 
 struct InstallCommand: View {
@@ -225,3 +243,15 @@ struct UninstallCommand: View {
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
+
+struct CreateSymbolicLinkCommand: View {
+    @EnvironmentObject var appState: AppState
+    @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
+    
+    var body: some View {
+        CreateSymbolicLinkButton(xcode: selectedXcode.unwrapped)
+            .keyboardShortcut("s", modifiers: [.command, .option])
+            .disabled(selectedXcode.unwrapped?.installState.installed != true)
+    }
+}
+

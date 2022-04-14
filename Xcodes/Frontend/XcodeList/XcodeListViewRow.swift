@@ -53,6 +53,7 @@ struct XcodeListViewRow: View {
                 OpenButton(xcode: xcode)
                 RevealButton(xcode: xcode)
                 CopyPathButton(xcode: xcode)
+                CreateSymbolicLinkButton(xcode: xcode)
                 Divider()
                 UninstallButton(xcode: xcode)
                 
