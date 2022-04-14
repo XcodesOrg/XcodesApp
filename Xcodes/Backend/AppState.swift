@@ -68,7 +68,13 @@ class AppState: ObservableObject {
             Current.defaults.set(unxipExperiment, forKey: "unxipExperiment")
         }
     }
-
+    
+    @Published var createSymLinkOnSelect = false {
+        didSet {
+            Current.defaults.set(createSymLinkOnSelect, forKey: "createSymLinkOnSelect")
+        }
+    }
+    
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
@@ -489,6 +495,10 @@ class AppState: ObservableObject {
                     if case let .failure(error) = completion {
                         self.error = error
                         self.presentedAlert = .generic(title: "Unable to select Xcode", message: error.legibleLocalizedDescription)
+                    } else {
+                        if self.createSymLinkOnSelect {
+                            createSymbolicLink(xcode: xcode)
+                        }
                     }
                     self.selectPublisher = nil
                 },
