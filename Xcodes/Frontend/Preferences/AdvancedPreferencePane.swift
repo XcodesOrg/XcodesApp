@@ -43,7 +43,20 @@ struct AdvancedPreferencePane: View {
                         .font(.footnote)
                         .fixedSize(horizontal: false, vertical: true)
                 }
-                
+            }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
+            
+            GroupBox(label: Text("Active/Select")) {
+                VStack(alignment: .leading) {
+                    Toggle(
+                        "Automatically create symbolic link to Xcodes.app",
+                        isOn: $appState.createSymLinkOnSelect
+                    )
+                    Text("When making an Xcode version Active/Selected, try and create a symbolic link named Xcode.app in the installation directory")
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .fixedSize(horizontal: false, vertical: true)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             
