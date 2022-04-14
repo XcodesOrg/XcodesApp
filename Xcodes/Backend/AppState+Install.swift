@@ -24,10 +24,10 @@ extension AppState {
         if autoInstallType == .newestBeta {
             Logger.appState.info("Auto installing newest Xcode Beta")
             // install it, as user doesn't have it installed and it's either latest beta or latest release
-            install(id: newestXcode.id)
+            checkMinVersionAndInstall(id: newestXcode.id)
         } else if autoInstallType == .newestVersion && newestXcode.version.isNotPrerelease {
             Logger.appState.info("Auto installing newest Xcode")
-            install(id: newestXcode.id)
+            checkMinVersionAndInstall(id: newestXcode.id)
         } else {
             Logger.appState.info("No new Xcodes version found to auto install")
         }
@@ -92,6 +92,7 @@ extension AppState {
                 return Fail(error: InstallationError.versionAlreadyInstalled(installedXcode))
                     .eraseToAnyPublisher()
             }
+            
             return downloadXcode(availableXcode: availableXcode, downloader: downloader)
         }
     }

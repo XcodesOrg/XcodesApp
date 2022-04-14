@@ -45,7 +45,7 @@ struct InstallButton: View {
     
     private func install() {
         guard let xcode = xcode else { return }
-        appState.install(id: xcode.id)
+        appState.checkMinVersionAndInstall(id: xcode.id)
     }
 }
 

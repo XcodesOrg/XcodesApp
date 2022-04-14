@@ -312,6 +312,24 @@ class AppState: ObservableObject {
     
     // MARK: - Install
     
+    func checkMinVersionAndInstall(id: Xcode.ID) {
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+        
+        // Check to see if users MacOS is supported
+        if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
+            let split = requiredMacOSVersion.components(separatedBy: ".").compactMap { Int($0) }
+            let xcodeMinimumMacOSVersion = OperatingSystemVersion(majorVersion: split[safe: 0] ?? 0, minorVersion: split[safe: 1] ?? 0, patchVersion: split[safe: 2] ?? 0)
+            
+            if !ProcessInfo.processInfo.isOperatingSystemAtLeast(xcodeMinimumMacOSVersion) {
+                // prompt
+                self.presentedAlert = .checkMinSupportedVersion(xcode: availableXcode, macOS: ProcessInfo.processInfo.operatingSystemVersion.versionString())
+                return
+            }
+        }
+        
+        install(id: id)
+    }
+    
     func install(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
 
@@ -664,5 +682,11 @@ class AppState: ObservableObject {
         let option: TwoFactorOption
         let authOptions: AuthOptionsResponse
         let sessionData: AppleSessionData
+    }
+}
+
+extension OperatingSystemVersion {
+    func versionString() -> String {
+        return String(majorVersion) + "." + String(minorVersion) + "." + String(patchVersion)
     }
 }

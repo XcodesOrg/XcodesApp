@@ -106,7 +106,7 @@ struct XcodeListViewRow: View {
                 .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))
                 .help("Open this version")
         case .notInstalled:
-            Button("INSTALL") { appState.install(id: xcode.id) }
+            Button("INSTALL") { appState.checkMinVersionAndInstall(id: xcode.id) }
                 .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selected))
                 .help("Install this version")
         case let .installing(installationStep):
