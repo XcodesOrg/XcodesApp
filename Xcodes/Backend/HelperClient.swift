@@ -361,7 +361,7 @@ enum HelperClientError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .failedToCreateRemoteObjectProxy:
-            return "Unable to communicate with privileged helper."
+            return localizeString("HelperClient.error")
         case let .message(message):
             return message
         }

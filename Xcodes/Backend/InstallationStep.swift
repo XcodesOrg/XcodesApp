@@ -16,17 +16,17 @@ enum InstallationStep: Equatable, CustomStringConvertible {
     var message: String {
         switch self {
         case .downloading:
-            return "Downloading"
+            return localizeString("Downloading")
         case .unarchiving:
-            return "Unarchiving (This can take a while)"
+            return localizeString("Unarchiving")
         case .moving(let destination):
-            return "Moving to \(destination)"
+            return String(format: localizeString("Moving"), destination)
         case .trashingArchive:
-            return "Moving archive to the Trash"
+            return localizeString("TrashingArchive")
         case .checkingSecurity:
-            return "Security verification"
+            return localizeString("CheckingSecurity")
         case .finishing:
-            return "Finishing"
+            return localizeString("Finishing")
         }
     }
 

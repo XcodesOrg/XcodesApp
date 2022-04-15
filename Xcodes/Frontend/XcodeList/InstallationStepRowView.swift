@@ -22,7 +22,7 @@ struct InstallationStepRowView: View {
                     .scaleEffect(0.5)
             }
             
-            Text("Step \(installationStep.stepNumber) of \(installationStep.stepCount): \(installationStep.message)")
+            Text(String(format: localizeString("InstallationStepDescription"), installationStep.stepNumber, installationStep.stepCount, installationStep.message))
                 .font(.footnote)
             
             Button(action: cancel) {
@@ -31,7 +31,7 @@ struct InstallationStepRowView: View {
             }
             .buttonStyle(PlainButtonStyle())
             .foregroundColor(highlighted ? .white : .secondary)
-            .help("Stop installation")
+            .help("StopInstallation")
         }
         .frame(minWidth: 80)
     }

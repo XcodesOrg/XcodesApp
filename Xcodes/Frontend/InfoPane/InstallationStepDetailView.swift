@@ -5,7 +5,7 @@ struct InstallationStepDetailView: View {
    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Step \(installationStep.stepNumber) of \(installationStep.stepCount): \(installationStep.message)")
+            Text(String(format: localizeString("InstallationStepDescription"), installationStep.stepNumber, installationStep.stepCount, installationStep.message))
 
             switch installationStep {
                 case let .downloading(progress):

@@ -20,9 +20,9 @@ struct XcodeListViewRow: View {
                         Image(systemName: "square.fill.on.square.fill")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                            .accessibility(label: Text("Identical Builds"))
+                            .accessibility(label: Text("IdenticalBuilds"))
                             .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
-                            .help("Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together.")
+                            .help("IdenticalBuilds.help")
                     }
                 }
                 
@@ -84,14 +84,14 @@ struct XcodeListViewRow: View {
             if xcode.selected {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.green)
-                    .help("This is the active version")
+                    .help("ActiveVersionDescription")
             } else {
                 Button(action: { appState.select(xcode: xcode) }) {
                     Image(systemName: "checkmark.circle")
                         .foregroundColor(.secondary)
                 }
                 .buttonStyle(PlainButtonStyle())
-                .help("Make this the active version")
+                .help("MakeActiveVersionDescription")
             }
         } else {
             EmptyView()
@@ -102,13 +102,15 @@ struct XcodeListViewRow: View {
     private func installControl(for xcode: Xcode) -> some View {
         switch xcode.installState {
         case .installed:
-            Button("OPEN") { appState.open(xcode: xcode) }
+            Button("Open") { appState.open(xcode: xcode) }
+                .textCase(.uppercase)
                 .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))
-                .help("Open this version")
+                .help("OpenDescription")
         case .notInstalled:
-            Button("INSTALL") { appState.checkMinVersionAndInstall(id: xcode.id) }
+            Button("Install") { appState.checkMinVersionAndInstall(id: xcode.id) }
+                .textCase(.uppercase)
                 .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: selected))
-                .help("Install this version")
+                .help("InstallDescription")
         case let .installing(installationStep):
             InstallationStepRowView(
                 installationStep: installationStep,

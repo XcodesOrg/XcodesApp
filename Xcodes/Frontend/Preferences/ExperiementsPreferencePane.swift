@@ -7,10 +7,10 @@ struct ExperimentsPreferencePane: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            GroupBox(label: Text("Faster Unxip")) {
+            GroupBox(label: Text("FasterUnxip")) {
                 VStack(alignment: .leading) {
                     Toggle(
-                        "When unxipping, use experiment",
+                        "UseUnxipExperiment",
                         isOn: $appState.unxipExperiment
                     )
                     AttributedText(unxipFootnote)
@@ -25,13 +25,7 @@ struct ExperimentsPreferencePane: View {
     }
     
     private var unxipFootnote: NSAttributedString {
-        let string = """
-        Thanks to @_saagarjha, this experiment can increase unxipping
-        speed by up to 70% for some systems. 
-        
-        More information on how this is accomplished can be seen
-        on the unxip repo - https://github.com/saagarjha/unxip
-        """
+        let string = localizeString("FasterUnxipDescription")
         let attributedString = NSMutableAttributedString(
             string: string,
             attributes: [

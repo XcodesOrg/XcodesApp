@@ -9,9 +9,9 @@ enum XcodeListCategory: String, CaseIterable, Identifiable, CustomStringConverti
     
     var description: String {
         switch self {
-            case .all: return "All"
-            case .release: return "Release"
-            case .beta: return "Beta"
+            case .all: return localizeString("All")
+            case .release: return localizeString("Release")
+            case .beta: return localizeString("Beta")
         }
     }
 }

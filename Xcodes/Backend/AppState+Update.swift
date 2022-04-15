@@ -47,7 +47,7 @@ extension AppState {
                         // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
                         if error as? AuthenticationError != .invalidSession {
                             self.error = error
-                            self.presentedAlert = .generic(title: "Unable to update selected Xcode", message: error.legibleLocalizedDescription)
+                            self.presentedAlert = .generic(title: localizeString("Alert.Update.Error.Title"), message: error.legibleLocalizedDescription)
                         }
                     case .finished:
                         Current.defaults.setDate(Current.date(), forKey: "lastUpdated")
@@ -141,7 +141,7 @@ extension AppState {
                     throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
                 }
                 guard let downloadList = downloads.downloads else {
-                    throw AuthenticationError.invalidResult(resultString: "No download information found")
+                    throw AuthenticationError.invalidResult(resultString: localizeString("DownloadingError"))
                 }
                 let xcodes = downloadList
                     .filter { $0.name.range(of: "^Xcode [0-9]", options: .regularExpression) != nil }

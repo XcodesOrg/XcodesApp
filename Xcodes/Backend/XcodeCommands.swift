@@ -56,7 +56,7 @@ struct CancelInstallButton: View {
     var body: some View {
         Button(action: cancelInstall) {
             Text("Cancel")
-                .help("Stop installation")
+                .help(localizeString("StopInstallation"))
         }
     }
     
@@ -75,7 +75,7 @@ struct SelectButton: View {
             if xcode?.selected == true {
                 Text("Active")
             } else {
-                Text("Make active")
+                Text("MakeActive")
             }
         }
         .disabled(xcode?.selected != false)
@@ -126,9 +126,9 @@ struct RevealButton: View {
     
     var body: some View {
         Button(action: reveal) {
-            Text("Reveal in Finder")
+            Text("RevealInFinder")
         }
-        .help("Reveal in Finder")
+        .help("RevealInFinder")
     }
     
     private func reveal() {
@@ -143,9 +143,9 @@ struct CopyPathButton: View {
     
     var body: some View {
         Button(action: copyPath) {
-            Text("Copy Path")
+            Text("CopyPath")
         }
-        .help("Copy path")
+        .help("CopyPath")
     }
     
     private func copyPath() {
@@ -160,9 +160,9 @@ struct CreateSymbolicLinkButton: View {
     
     var body: some View {
         Button(action: createSymbolicLink) {
-            Text("Create SymLink as Xcode.app")
+            Text("CreateSymLink")
         }
-        .help("Create SymLink as Xcode.app")
+        .help("CreateSymLink")
     }
     
     private func createSymbolicLink() {
