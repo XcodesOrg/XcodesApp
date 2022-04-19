@@ -215,7 +215,7 @@ extension AppState {
                             .handleEvents(receiveCompletion: { [unowned self] completion in
                                 if case let .failure(error) = completion {
                                     self.error = error
-                                    self.presentedAlert = .generic(title: "Unable to install archived Xcode", message: error.legibleLocalizedDescription)
+                                    self.presentedAlert = .generic(title: localizeString("Alert.InstallArchive.Error.Title"), message: error.legibleLocalizedDescription)
                                 }
                             })
                             .catch { _ in
@@ -362,7 +362,7 @@ extension AppState {
                 receiveCompletion: { completion in
                     if case let .failure(error) = completion {
                         self.error = error
-                        self.presentedAlert = .generic(title: "Unable to perform post install steps", message: error.legibleLocalizedDescription)
+                        self.presentedAlert = .generic(title: localizeString("Alert.PostInstall.Title"), message: error.legibleLocalizedDescription)
                     }
                 }, 
                 receiveValue: {}
@@ -503,60 +503,41 @@ public enum InstallationError: LocalizedError, Equatable {
     public var errorDescription: String? {
         switch self {
         case .damagedXIP(let url):
-            return "The archive \"\(url.lastPathComponent)\" is damaged and can't be expanded."
+            return String(format: localizeString("InstallationError.DamagedXIP"), url.lastPathComponent)
         case let .notEnoughFreeSpaceToExpandArchive(archivePath, version):
-            return """
-                   The archive “\(archivePath.basename())” can’t be expanded because the current volume doesn’t have enough free space.
-
-                   Make more space available to expand the archive and then install Xcode \(version.appleDescription) again to start installation from where it left off.
-                   """
+            return String(format: localizeString("InstallationError.NotEnoughFreeSpaceToExpandArchive"), archivePath.basename(), version.appleDescription)
         case .failedToMoveXcodeToApplications:
-            return "Failed to move Xcode to the /Applications directory."
+            return String(format: localizeString("InstallationError.FailedToMoveXcodeToApplications"), Path.installDirectory.string)
         case .failedSecurityAssessment(let xcode, let output):
-            return """
-                   Xcode \(xcode.version) failed its security assessment with the following output:
-                   \(output)
-                   It remains installed at \(xcode.path) if you wish to use it anyways.
-                   """
+            return String(format: localizeString("InstallationError.FailedSecurityAssessment"), String(xcode.version), output, xcode.path.string)
         case .codesignVerifyFailed(let output):
-            return """
-                   The downloaded Xcode failed code signing verification with the following output:
-                   \(output)
-                   """
+            return String(format: localizeString("InstallationError.CodesignVerifyFailed"), output)
         case .unexpectedCodeSigningIdentity(let identity, let certificateAuthority):
-            return """
-                   The downloaded Xcode doesn't have the expected code signing identity.
-                   Got:
-                     \(identity)
-                     \(certificateAuthority)
-                   Expected:
-                     \(XcodeTeamIdentifier)
-                     \(XcodeCertificateAuthority)
-                   """
+            return String(format: localizeString("InstallationError.UnexpectedCodeSigningIdentity"), identity, certificateAuthority, XcodeTeamIdentifier, XcodeCertificateAuthority)
         case .unsupportedFileFormat(let fileExtension):
-            return "xcodes doesn't (yet) support installing Xcode from the \(fileExtension) file format."
+            return String(format: localizeString("InstallationError.UnsuppoawwrtedFileFormat"), fileExtension)
         case .missingSudoerPassword:
-            return "Missing password. Please try again."
+            return localizeString("InstallationError.MissingSudoerPassword")
         case let .unavailableVersion(version):
-            return "Could not find version \(version.appleDescription)."
+            return String(format: localizeString("InstallationError.UnavailableVersion"), version.appleDescription)
         case .noNonPrereleaseVersionAvailable:
-            return "No non-prerelease versions available."
+            return localizeString("InstallationError.NoNonPrereleaseVersionAvailable")
         case .noPrereleaseVersionAvailable:
-            return "No prerelease versions available."
+            return localizeString("InstallationError.NoPrereleaseVersionAvailable")
         case .missingUsernameOrPassword:
-            return "Missing username or a password. Please try again."
+            return localizeString("InstallationError.MissingUsernameOrPassword")
         case let .versionAlreadyInstalled(installedXcode):
-            return "\(installedXcode.version.appleDescription) is already installed at \(installedXcode.path)"
+            return String(format: localizeString("InstallationError.VersionAlreadyInstalled"), installedXcode.version.appleDescription, installedXcode.path.string)
         case let .invalidVersion(version):
-            return "\(version) is not a valid version number."
+            return String(format: localizeString("InstallationError.InvalidVersion"), version)
         case let .versionNotInstalled(version):
-            return "\(version.appleDescription) is not installed."
+            return String(format: localizeString("InstallationError.VersionNotInstalled"), version.appleDescription)
         case let .postInstallStepsNotPerformed(version, helperInstallState):
             switch helperInstallState {
             case .installed:
-                return "Installation was completed, but some post-install steps weren't performed automatically. These will be performed when you first launch Xcode \(version.appleDescription)."
+                return String(format: localizeString("InstallationError.PostInstallStepsNotPerformed.Installed"), version.appleDescription)
             case .notInstalled, .unknown:
-                return "Installation was completed, but some post-install steps weren't performed automatically. Xcodes performs these steps with a privileged helper, which appears to not be installed. You can install it from Preferences > Advanced.\n\nThese steps will be performed when you first launch Xcode \(version.appleDescription)."
+                return String(format: localizeString("InstallationError.PostInstallStepsNotPerformed.NotInstalled"), version.appleDescription)
             }
         }
     }

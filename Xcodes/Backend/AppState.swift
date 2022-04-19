@@ -17,7 +17,7 @@ class AppState: ObservableObject {
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
             if newValue.count > availableXcodes.count && availableXcodes.count != 0 {
-                Current.notificationManager.scheduleNotification(title: "New Xcode versions", body: "New Xcode versions are available to download.", category: .normal)
+                Current.notificationManager.scheduleNotification(title: localizeString("Notification.NewXcodeVersion.Title"), body: localizeString("Notification.NewXcodeVersion.Body"), category: .normal)
             }
             updateAllXcodes(
                 availableXcodes: newValue, 
@@ -284,7 +284,7 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
                         self.error = error
-                        self.presentedAlert = .generic(title: "Unable to install helper", message: error.legibleLocalizedDescription)
+                        self.presentedAlert = .generic(title: localizeString("Alert.PrivilegedHelper.Error.Title"), message: error.legibleLocalizedDescription)
                     }
                 }, 
                 receiveValue: {}
@@ -378,7 +378,7 @@ class AppState: ObservableObject {
                             throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
                         }
                        if downloads.downloads == nil {
-                            throw AuthenticationError.invalidResult(resultString: "No download information found")
+                            throw AuthenticationError.invalidResult(resultString: localizeString("DownloadingError"))
                         }
                     }
                     .mapError { $0 as Error }
@@ -394,7 +394,7 @@ class AppState: ObservableObject {
                         // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
                         if error as? AuthenticationError != .invalidSession {
                             self.error = error
-                            self.presentedAlert = .generic(title: "Unable to install Xcode", message: error.legibleLocalizedDescription)
+                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
                         }
                         if let index = self.allXcodes.firstIndex(where: { $0.id == id }) { 
                             self.allXcodes[index].installState = .notInstalled
@@ -438,7 +438,7 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
                         self.error = error
-                        self.presentedAlert = .generic(title: "Unable to uninstall Xcode", message: error.legibleLocalizedDescription)
+                        self.presentedAlert = .generic(title: localizeString("Alert.Uninstall.Error.Title"), message: error.legibleLocalizedDescription)
                     }
                     self.uninstallPublisher = nil
                 },
@@ -495,7 +495,7 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
                         self.error = error
-                        self.presentedAlert = .generic(title: "Unable to select Xcode", message: error.legibleLocalizedDescription)
+                        self.presentedAlert = .generic(title: localizeString("Alert.Select.Error.Title"), message: error.legibleLocalizedDescription)
                     } else {
                         if self.createSymLinkOnSelect {
                             createSymbolicLink(xcode: xcode)
@@ -540,12 +540,11 @@ class AppState: ObservableObject {
                     try FileManager.default.removeItem(atPath: destinationPath.string)
                     Logger.appState.info("Successfully deleted old symlink")
                 } else {
-                    let message = "Xcode.app exists and is not a symbolic link"
-                    self.presentedAlert = .generic(title: "Unable to create symbolic Link", message: message)
+                    self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: localizeString("Alert.SymLink.Message"))
                     return
                 }
             } catch {
-                self.presentedAlert = .generic(title: "Unable to create symbolic Link", message: error.localizedDescription)
+                self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.localizedDescription)
             }
         }
         
@@ -555,7 +554,7 @@ class AppState: ObservableObject {
         } catch {
             Logger.appState.error("Unable to create symbolic Link")
             self.error = error
-            self.presentedAlert = .generic(title: "Unable to create symbolic Link", message: error.legibleLocalizedDescription)
+            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
         }
         
     }

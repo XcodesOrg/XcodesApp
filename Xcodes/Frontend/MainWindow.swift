@@ -20,8 +20,8 @@ struct MainWindow: View {
                 .frame(minWidth: 300)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
-                    Alert(title: Text("Uninstall Xcode \(xcode.description)?"),
-                          message: Text("It will be moved to the Trash, but won't be emptied."),
+                    Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
+                          message: Text("Alert.Uninstall.Message"),
                           primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(xcode: xcode) }),
                           secondaryButton: .cancel(Text("Cancel")))
                 }
@@ -60,7 +60,7 @@ struct MainWindow: View {
     
     private var subtitleText: Text {
         if let lastUpdated = lastUpdated.map(Date.init(timeIntervalSince1970:)) {
-            return Text("Updated at \(lastUpdated, style: .date) \(lastUpdated, style: .time)")
+            return Text("\(localizeString("UpdatedAt")) \(lastUpdated, style: .date) \(lastUpdated, style: .time)")
         } else {
             return Text("")
         }
@@ -101,10 +101,10 @@ struct MainWindow: View {
         switch alertType {
         case let .cancelInstall(xcode):
             return Alert(
-                title: Text("Are you sure you want to stop the installation of Xcode \(xcode.description)?"),
-                  message: Text("Any progress will be discarded."),
+                title: Text(String(format: "Alert.CancelInstall.Title", xcode.description)),
+                  message: Text("Alert.CancelInstall.Message"),
                   primaryButton: .destructive(
-                    Text("Stop Installation"),
+                    Text("Alert.CancelInstall.PrimaryButton"),
                     action: {
                         self.appState.cancelInstall(id: xcode.id)
                     }
@@ -113,8 +113,8 @@ struct MainWindow: View {
             )
         case .privilegedHelper:
             return Alert(
-                title: Text("Privileged Helper"),
-                message: Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it."),
+                title: Text("Alert.PrivilegedHelper.Title"),
+                message: Text("Alert.PrivilegedHelper.Message"),
                 primaryButton: .default(Text("Install"), action: {
                     // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
                     // We need to capture it to be invoked after that happens.
@@ -153,8 +153,8 @@ struct MainWindow: View {
             )
         case let .checkMinSupportedVersion(xcode, deviceVersion):
             return Alert(
-                title: Text("Minimum requirements not met"),
-                message: Text("Xcode \(xcode.version.descriptionWithoutBuildMetadata) requires MacOS \(xcode.requiredMacOSVersion ?? ""), but you are running MacOS \(deviceVersion), do you still want to install it?"),
+                title: Text("Alert.MinSupported.Title"),
+                message: Text(String(format: "Alert.MinSupported.Message", xcode.version.descriptionWithoutBuildMetadata, xcode.requiredMacOSVersion ?? "", deviceVersion)),
                   primaryButton: .default(
                     Text("Install"),
                     action: {

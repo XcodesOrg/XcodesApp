@@ -12,13 +12,13 @@ struct AboutView: View {
                 Text(Bundle.main.bundleName!)
                     .font(.largeTitle)
                 
-                Text("Version \(Bundle.main.shortVersion!) (\(Bundle.main.version!))")
+                Text(String(format: localizeString("VersionWithBuild"), Bundle.main.shortVersion!, Bundle.main.version!))
                 
                 HStack(spacing: 32) {
                     Button(action: {
                         openURL(URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!)
                     }) {
-                        Label("GitHub Repo", systemImage: "link")
+                        Label("GitHubRepo", systemImage: "link")
                     }
                     .buttonStyle(LinkButtonStyle())
                     
@@ -29,12 +29,12 @@ struct AboutView: View {
                 }
                 Color.clear
                     .frame(width: 300, height: 0)
-                Label("Unxip Experiment", systemImage: "lightbulb")
+                Label("UnxipExperiment", systemImage: "lightbulb")
                 HStack(spacing: 32) {
                     Button(action: {
                         openURL(URL(string: "https://github.com/saagarjha/unxip/")!)
                     }) {
-                        Label("Github Repo", systemImage: "link")
+                        Label("GithubRepo", systemImage: "link")
                     }
                     .buttonStyle(LinkButtonStyle())
                     

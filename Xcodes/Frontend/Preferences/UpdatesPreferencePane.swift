@@ -12,12 +12,12 @@ struct UpdatesPreferencePane: View {
             GroupBox(label: Text("Versions")) {
                 VStack(alignment: .leading) {
                     Toggle(
-                        "Automatically install new versions of Xcode",
+                        "AutomaticInstallNewVersion",
                         isOn: $autoInstallationType.isAutoInstalling
                     )
                     
                     Toggle(
-                        "Include prerelease/beta versions",
+                        "IncludePreRelease",
                         isOn: $autoInstallationType.isAutoInstallingBeta
                     )
                 }
@@ -27,23 +27,23 @@ struct UpdatesPreferencePane: View {
             
             Divider()
             
-            GroupBox(label: Text("Xcodes.app Updates")) {
+            GroupBox(label: Text("AppUpdates")) {
                 VStack(alignment: .leading) {
                     Toggle(
-                        "Automatically check for app updates",
+                        "CheckForAppUpdates",
                         isOn: $updater.automaticallyChecksForUpdates
                     )
                     
                     Toggle(
-                        "Include prerelease app versions",
+                        "IncludePreRelease",
                         isOn: $updater.includePrereleaseVersions
                     )
                     
-                    Button("Check Now") {
+                    Button("CheckNow") {
                         SUUpdater.shared()?.checkForUpdates(nil)
                     }
                     
-                    Text("Last checked: \(lastUpdatedString)")
+                    Text(String(format: localizeString("LastChecked"), lastUpdatedString))
                         .font(.footnote)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -57,7 +57,7 @@ struct UpdatesPreferencePane: View {
         if let lastUpdatedDate = updater.lastUpdateCheckDate {
             return Self.formatter.string(from: lastUpdatedDate)
         } else {
-            return "Never"
+            return localizeString("Never")
         }
     }
     

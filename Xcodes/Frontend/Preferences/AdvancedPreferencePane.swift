@@ -11,7 +11,7 @@ struct AdvancedPreferencePane: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
             
-            GroupBox(label: Text("Local Cache Path")) {
+            GroupBox(label: Text("LocalCachePath")) {
                 VStack(alignment: .leading) {
                     HStack(alignment: .top, spacing: 5) {
                         Text(appState.localPath).font(.footnote)
@@ -39,7 +39,7 @@ struct AdvancedPreferencePane: View {
                             self.appState.localPath = path.string
                         }
                     }
-                    Text("Xcodes caches available Xcode versions and temporary downloads new versions to a directory")
+                    Text("LocalCachePathDescription")
                         .font(.footnote)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -49,10 +49,10 @@ struct AdvancedPreferencePane: View {
             GroupBox(label: Text("Active/Select")) {
                 VStack(alignment: .leading) {
                     Toggle(
-                        "Automatically create symbolic link to Xcodes.app",
+                        "AutomaticallyCreateSymbolicLink",
                         isOn: $appState.createSymLinkOnSelect
                     )
-                    Text("When making an Xcode version Active/Selected, try and create a symbolic link named Xcode.app in the installation directory")
+                    Text("AutomaticallyCreateSymbolicLinkDescription")
                         .font(.footnote)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -60,9 +60,9 @@ struct AdvancedPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             
-            GroupBox(label: Text("Data Source")) {
+            GroupBox(label: Text("DataSource")) {
                 VStack(alignment: .leading) {
-                    Picker("Data Source", selection: $dataSource) {
+                    Picker("DataSource", selection: $dataSource) {
                         ForEach(DataSource.allCases) { dataSource in
                             Text(dataSource.description)
                                 .tag(dataSource)
@@ -92,24 +92,24 @@ struct AdvancedPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             
-            GroupBox(label: Text("Privileged Helper")) {
+            GroupBox(label: Text("PrivilegedHelper")) {
                 VStack(alignment: .leading, spacing: 8) {
                     switch appState.helperInstallState {
                     case .unknown:
                         ProgressView()
                             .scaleEffect(0.5, anchor: .center)
                     case .installed:
-                        Text("Helper is installed")
+                        Text("HelperInstalled")
                     case .notInstalled:
                         HStack {
-                            Text("Helper is not installed")
-                            Button("Install helper") {
+                            Text("HelperNotInstalled")
+                            Button("InstallHelper") {
                                 appState.installHelperIfNecessary()
                             }
                         }
                     }
                     
-                    Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it.")
+                    Text("PrivilegedHelperDescription")
                         .font(.footnote)
                         .fixedSize(horizontal: false, vertical: true)
                     
@@ -122,11 +122,7 @@ struct AdvancedPreferencePane: View {
     }
     
     private var dataSourceFootnote: NSAttributedString {
-        let string = """
-        The Apple data source scrapes the Apple Developer website. It will always show the latest releases that are available, but is more fragile.
-
-        Xcode Releases is an unofficial list of Xcode releases. It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website.
-        """
+        let string = localizeString("DataSourceDescription")
         let attributedString = NSMutableAttributedString(
             string: string, 
             attributes: [
@@ -139,11 +135,7 @@ struct AdvancedPreferencePane: View {
     }
     
     private var downloaderFootnote: NSAttributedString {
-        let string = """
-        aria2 uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.
-
-        URLSession is the default Apple API for making URL requests.
-        """
+        let string = localizeString("DownloaderDescription")
         let attributedString = NSMutableAttributedString(
             string: string, 
             attributes: [

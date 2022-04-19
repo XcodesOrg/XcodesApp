@@ -17,7 +17,7 @@ struct MainToolbarModifier: ViewModifier {
             Button(action: { appState.presentedSheet = .signIn }, label: {
                 Label("Login", systemImage: "person.circle")
             })
-            .help("Open Login")
+            .help("LoginDescription")
 
             ProgressButton(
                 isInProgress: appState.isUpdating, 
@@ -26,7 +26,7 @@ struct MainToolbarModifier: ViewModifier {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }
             .keyboardShortcut(KeyEquivalent("r"))
-            .help("Refresh Xcode List")
+            .help("RefreshDescription")
             
             Button(action: {
                 switch category {
@@ -40,27 +40,27 @@ struct MainToolbarModifier: ViewModifier {
                     Label("All", systemImage: "line.horizontal.3.decrease.circle")
                 case .release:
                     if #available(macOS 11.3, *) {
-                        Label("Release only", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .labelStyle(TitleAndIconLabelStyle())
                             .foregroundColor(.accentColor)
                     } else {
-                        Label("Release only", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .labelStyle(TitleOnlyLabelStyle())
                             .foregroundColor(.accentColor)
                     }
                 case .beta:
                     if #available(macOS 11.3, *) {
-                        Label("Beta only", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .labelStyle(TitleAndIconLabelStyle())
                             .foregroundColor(.accentColor)
                     } else {
-                        Label("Beta only", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .labelStyle(TitleOnlyLabelStyle())
                             .foregroundColor(.accentColor)
                     }
                 }
             }
-            .help("Filter available versions")
+            .help("FilterAvailableDescription")
             
             Button(action: {
                 isInstalledOnly.toggle()
@@ -73,7 +73,7 @@ struct MainToolbarModifier: ViewModifier {
                         
                 }
             }
-            .help("Filter installed versions")
+            .help("FilterInstalledDescription")
             
             Button(action: { isShowingInfoPane.toggle() }) {
                 if isShowingInfoPane {
@@ -84,17 +84,17 @@ struct MainToolbarModifier: ViewModifier {
                 }
             }
             .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
-            .help("Show or hide the info pane")
+            .help("InfoDescription")
 
             Button(action: { NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil) }, label: {
                 Label("Preferences", systemImage: "gearshape")
             })
-            .help("Open Preferences")
+            .help("PreferencesDescription")
             
-            TextField("Search...", text: $searchText)
+            TextField("Search", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 200)
-                .help("Search list")
+                .help("SearchDescription")
         }
     }
 }

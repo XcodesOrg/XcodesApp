@@ -26,12 +26,12 @@ struct XcodesApp: App {
         }
         .commands {
             CommandGroup(replacing: .appInfo) {
-                Button("About Xcodes") {
+                Button("Menu.About") {
                     appDelegate.showAboutWindow()
                 }
             }
             CommandGroup(after: .appInfo) {
-                Button("Check for Updates...") {
+                Button("Menu.CheckForUpdates") {
                     appDelegate.checkForUpdates()
                 }
             }
@@ -47,19 +47,19 @@ struct XcodesApp: App {
             XcodeCommands(appState: appState)
             
             CommandGroup(replacing: CommandGroupPlacement.help) {
-                Button("Xcodes GitHub Repo") {
+                Button("Menu.GitHubRepo") {
                     let xcodesRepoURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!
                     openURL(xcodesRepoURL)
                 }
                 
                 Divider()
                 
-                Button("Report a Bug") {
+                Button("Menu.ReportABug") {
                     let bugReportURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/issues/new?assignees=&labels=bug&template=bug_report.md&title=")!
                     openURL(bugReportURL)
                 }
                 
-                Button("Request a New Feature") {
+                Button("Menu.RequestNewFeature") {
                     let featureRequestURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=")!
                     openURL(featureRequestURL)
                 }
@@ -81,7 +81,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         backing: .buffered,
         defer: false
     )) {
-        $0.title = "About Xcodes"
+        $0.title = localizeString("About")
         $0.contentView = NSHostingView(rootView: AboutView(showAcknowledgementsWindow: showAcknowledgementsWindow))
         $0.isReleasedWhenClosed = false
     }
@@ -92,7 +92,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         backing: .buffered,
         defer: false
     )) {
-        $0.title = "Xcodes Acknowledgements"
+        $0.title = localizeString("Acknowledgements")
         $0.contentView = NSHostingView(rootView: AcknowledgmentsView())
         $0.isReleasedWhenClosed = false
     }
@@ -120,4 +120,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Initialize manually
         SUUpdater.shared()
     }
+}
+
+func localizeString(_ key: String, comment: String = "") -> String {
+    if #available(macOS 12, *) {
+        return String(localized: String.LocalizationValue(key))
+    } else {
+        return NSLocalizedString(key, comment: comment)
+    }
+
 }

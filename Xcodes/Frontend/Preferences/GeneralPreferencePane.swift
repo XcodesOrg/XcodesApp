@@ -6,11 +6,11 @@ struct GeneralPreferencePane: View {
    
     var body: some View {
         VStack(alignment: .leading) {
-            GroupBox(label: Text("Apple ID")) {
+            GroupBox(label: Text("AppleID")) {
                 if appState.authenticationState == .authenticated {
                     SignedInView()
                 } else {
-                    Button("Sign In", action: { self.appState.presentedSheet = .signIn })
+                    Button("SignIn", action: { self.appState.presentedSheet = .signIn })
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())

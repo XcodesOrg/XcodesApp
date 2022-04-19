@@ -11,14 +11,14 @@ struct SignInPhoneListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             if let phoneNumbers = authOptions.trustedPhoneNumbers, !phoneNumbers.isEmpty {
-                Text("Select a trusted phone number to receive a \(authOptions.securityCode.length) digit code via SMS:")
+                Text(String(format: localizeString("SelectTrustedPhone"), authOptions.securityCode.length))
                 
                 List(phoneNumbers, selection: $selectedPhoneNumberID) {
                     Text($0.numberWithDialCode)
                 }
             } else {
                 AttributedText(
-                    NSAttributedString(string: "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication.\n\nSee https://support.apple.com/en-ca/HT204915.")
+                    NSAttributedString(string: localizeString("NoTrustedPhones"))
                         .convertingURLsToLinkAttributes()
                 )
                 Spacer()
