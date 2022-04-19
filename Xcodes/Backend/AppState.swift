@@ -109,6 +109,7 @@ class AppState: ObservableObject {
     func setupDefaults() {
         localPath = Current.defaults.string(forKey: "localPath") ?? Path.defaultXcodesApplicationSupport.string
         unxipExperiment = Current.defaults.bool(forKey: "unxipExperiment") ?? false
+        createSymLinkOnSelect = Current.defaults.bool(forKey: "createSymLinkOnSelect") ?? false
     }
     
     // MARK: Timer
