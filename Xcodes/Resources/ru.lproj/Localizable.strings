@@ -39,8 +39,8 @@
 "NoXcodeSelected" = "Xcode не выбран";
 
 // Installation Steps
-"InstallationStepDescription" = "Шаг %@ из %@: %@";
-"DownloadingPercentDescription" = "Скачивание: %@% завершено";
+"InstallationStepDescription" = "Шаг %d из %d: %@";
+"DownloadingPercentDescription" = "Скачивание: %d% завершено";
 "StopInstallation" = "Остановить установку";
 "DownloadingError" = "Информация о загрузке не найдена";
 
@@ -106,10 +106,10 @@
 "SignOut" = "Выход";
 
 // SMS/2FA
-"DigitCodeDescription" = "Введите %@ цифровой код с одного из ваших доверенных устройств:";
+"DigitCodeDescription" = "Введите %d цифровой код с одного из ваших доверенных устройств:";
 "SendSMS" = "Отправить смс";
-"EnterDigitCodeDescription" = "Введите %@ цифровой код, отправленный на %@: ";
-"SelectTrustedPhone" = "Выберите доверенный номер телефона для получения %@ цифрового кода по SMS:";
+"EnterDigitCodeDescription" = "Введите %d цифровой код, отправленный на %@: ";
+"SelectTrustedPhone" = "Выберите доверенный номер телефона для получения %d цифрового кода по SMS:";
 "NoTrustedPhones" = "В вашем аккаунтe нет доверенных телефонных номеров, но они необходимы для двухфакторной аутентификации.\n\nСм. https://support.apple.com/en-ca/HT204915.";
 
 // MainWindow
