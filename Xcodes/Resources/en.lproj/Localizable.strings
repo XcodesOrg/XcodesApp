@@ -23,6 +23,7 @@
 "Next" = "Next";
 "Continue" = "Continue";
 "Close" = "Close";
+"OK" = "OK";
 
 // Info Pane
 "IdenticalBuilds" = "Identical Builds";
@@ -39,8 +40,8 @@
 "NoXcodeSelected" = "No Xcode Selected";
 
 // Installation Steps
-"InstallationStepDescription" = "Step %@ of %@: %@";
-"DownloadingPercentDescription" = "Downloading: %@% complete";
+"InstallationStepDescription" = "Step %d of %d: %@";
+"DownloadingPercentDescription" = "Downloading: %d%% complete";
 "StopInstallation" = "Stop installation";
 "DownloadingError" = "No download information found";
 
@@ -106,10 +107,10 @@
 "SignOut" = "Sign Out";
 
 // SMS/2FA
-"DigitCodeDescription" = "Enter the %@ digit code from one of your trusted devices:";
+"DigitCodeDescription" = "Enter the %d digit code from one of your trusted devices:";
 "SendSMS" = "Send SMS";
-"EnterDigitCodeDescription" = "Enter the %@ digit code sent to %@: ";
-"SelectTrustedPhone" = "Select a trusted phone number to receive a %@ digit code via SMS:";
+"EnterDigitCodeDescription" = "Enter the %d digit code sent to %@: ";
+"SelectTrustedPhone" = "Select a trusted phone number to receive a %d digit code via SMS:";
 "NoTrustedPhones" = "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication.\n\nSee https://support.apple.com/en-ca/HT204915.";
 
 // MainWindow
