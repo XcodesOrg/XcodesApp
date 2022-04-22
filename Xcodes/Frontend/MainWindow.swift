@@ -147,7 +147,7 @@ struct MainWindow: View {
                 title: Text(title),
                 message: Text(message),
                 dismissButton: .default(
-                    Text("Ok"),
+                    Text("OK"),
                     action: { appState.presentedAlert = nil }
                 )
             )
