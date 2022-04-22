@@ -23,6 +23,7 @@
 "Next" = "Siguiente";
 "Continue" = "Continuar";
 "Close" = "Cerrar";
+"OK" = "Aceptar";
 
 // Info Pane
 "IdenticalBuilds" = "Compilaciones Idénticas";
