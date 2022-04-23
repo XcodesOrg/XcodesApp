@@ -33,6 +33,7 @@ struct UpdatesPreferencePane: View {
                         "CheckForAppUpdates",
                         isOn: $updater.automaticallyChecksForUpdates
                     )
+                    .fixedSize(horizontal: true, vertical: false)
                     
                     Toggle(
                         "IncludePreRelease",
