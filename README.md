@@ -22,9 +22,22 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 
 - Thanks to the wonderful work of [https://github.com/saagarjha/unxip](https://github.com/saagarjha/unxip), turn on the experiment to increase your unxipping time by up to 70%! More can be found on his repo, but bugs, high memory may occur if used. 
 
-![](experiment_light.png#gh-light-mode-only)
-![](experiment_dark.png#gh-dark-mode-only)
+![](experiment_light.jpg#gh-light-mode-only)
+![](experiment_dark.jpg#gh-dark-mode-only)
 
+## Localization
+
+Xcodes supports localization in several languages. 
+
+The following languages are supported because of the following community users!
+
+|||
+|-|-|
+|French|[@dompepin](https://github.com/dompepin)|
+|Spanish|[@cesartru88](https://github.com/cesartru88)|
+|Russian|[@alexmazlov](https://github.com/alexmazlov)|
+
+Want to add more languages? Simply create a PR with the updated strings file. 
 ## Installation
 
 Xcodes.app runs on macOS Big Sur 11.0 or later.
@@ -44,7 +57,7 @@ brew install --cask xcodes
 
 ## Development
 
-You'll need macOS 11 Big Sur and Xcode 12 in order to build and run Xcodes.app.
+You'll need macOS 12 Big Sur and Xcode 13 in order to build and run Xcodes.app.
 
 If you aren't a Robots and Pencils employee you'll need to change the CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT build setting to your Apple Developer team ID in order for code signing validation to succeed between the main app and the privileged helper.
 
