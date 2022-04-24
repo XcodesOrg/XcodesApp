@@ -11,6 +11,7 @@ struct SignIn2FAView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text(String(format: localizeString("DigitCodeDescription"), authOptions.securityCode.length))
+                .fixedSize(horizontal: true, vertical: false)
             
             HStack {
                 Spacer()
