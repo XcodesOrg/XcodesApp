@@ -21,7 +21,7 @@ struct AdvancedPreferencePane: View {
                             Image(systemName: "arrow.right.circle.fill")
                         }
                         .buttonStyle(PlainButtonStyle())
-                        .help("Reveal in Finder")
+                        .help("RevealInFinder")
                         .fixedSize()
                     }
                     Button("Change") {

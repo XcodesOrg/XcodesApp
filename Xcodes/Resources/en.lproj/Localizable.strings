@@ -23,6 +23,7 @@
 "Next" = "Next";
 "Continue" = "Continue";
 "Close" = "Close";
+"OK" = "OK";
 
 // Info Pane
 "IdenticalBuilds" = "Identical Builds";

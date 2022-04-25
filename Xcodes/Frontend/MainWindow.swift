@@ -101,7 +101,7 @@ struct MainWindow: View {
         switch alertType {
         case let .cancelInstall(xcode):
             return Alert(
-                title: Text(String(format: "Alert.CancelInstall.Title", xcode.description)),
+                title: Text(String(format: localizeString("Alert.CancelInstall.Title"), xcode.description)),
                   message: Text("Alert.CancelInstall.Message"),
                   primaryButton: .destructive(
                     Text("Alert.CancelInstall.PrimaryButton"),
@@ -147,7 +147,7 @@ struct MainWindow: View {
                 title: Text(title),
                 message: Text(message),
                 dismissButton: .default(
-                    Text("Ok"),
+                    Text("OK"),
                     action: { appState.presentedAlert = nil }
                 )
             )
