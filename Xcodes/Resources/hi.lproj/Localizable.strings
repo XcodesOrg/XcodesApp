@@ -1,0 +1,215 @@
+// Menu
+"Menu.About" = "एक्सकोड के बारे में";
+"Menu.CheckForUpdates" = "अद्यतनों के लिए जाँच करें...";
+"Menu.Acknowledgements" = "Xcodes स्वीकृति";
+"Menu.GitHubRepo" = "Xcodes GitHub रेपो";
+"Menu.ReportABug" = "किसी बग की रिपोर्ट करें";
+"Menu.RequestNewFeature" = "किसी नई सुविधा का अनुरोध करें";
+
+// Common
+"Install" = "स्थापित करे";
+"InstallDescription" = "इस संस्करण को स्थापित करें";
+"RevealInFinder" = "खोजक में प्रकट करें";
+"Active" = "सक्रिय";
+"MakeActive" = "सक्रिय बनाएँ";
+"Open" = "खोलना";
+"OpenDescription" = "इस संस्करण को खोलें";
+"CopyPath" = "पथ की कॉपी करे";
+"CreateSymLink" = "Xcode.app के रूप में सिमलिंक बनाएं";
+"Uninstall" = "असंस्थापित करे";
+"Selected" = "चयनित";
+"Select" = "चयन करे";
+"Cancel" = "रद्द करे";
+"Next" = "अगला";
+"Continue" = "जारी रखें";
+"Close" = "बंद करे";
+
+// Info Pane
+"IdenticalBuilds" = "Identical Builds";
+"IdenticalBuilds.help" = "कभी-कभी एक पूर्व-रिलीज़ और रिलीज़ संस्करण एक ही बिल्ड होते हैं। Xcodes स्वचालित रूप से इन संस्करणों को एक साथ प्रदर्शित करेगा।";
+
+"ReleaseDate" = "रिलीज़ दिनांक";
+"ReleaseNotes" = "रिलीज नोट्स";
+"ReleaseNotes.help" = "रिलीज़ नोट्स देखें";
+"Compatibility" = "अनुकूलता";
+"MacOSRequirement" = "macOS %@ या बाद के संस्करण की आवश्यकता है";
+"SDKs" = "SDKs";
+"Compilers" = "संकलनकर्ता";
+"DownloadSize" = "डाउनलोड आकार";
+"NoXcodeSelected" = "कोई Xcode चयनित नहीं";
+
+// Installation Steps
+"InstallationStepDescription" = "%d: %@ का चरण %d";
+"DownloadingPercentDescription" = "डाउनलोड: %d%% पूर्ण";
+"StopInstallation" = "स्थापना रोकें";
+"DownloadingError" = "कोई डाउनलोड जानकारी नहीं मिली";
+
+// About
+"VersionWithBuild" = "संस्करण %@ (%@)";
+"GithubRepo" = "GitHub रेपो";
+"Acknowledgements" = "स्वीकृति";
+"UnxipExperiment" = "अनज़िप प्रयोग";
+"License" = "लाइसेंस";
+
+// General Preference Pane
+"General" = "सामान्य";
+"AppleID" = "Apple ID";
+"SignIn" = "साइन इन करें";
+"Notifications" = "सूचनाएँ";
+
+// Updates Preference Pane
+"Updates" = "अपडेट";
+"Versions" = "संस्करण";
+"AutomaticInstallNewVersion" = "Xcode के नए संस्करण स्वचालित रूप से स्थापित करें";
+"IncludePreRelease" = "पूर्व-रिलीज़/बीटा संस्करण शामिल करें";
+"AppUpdates" = "Xcodes.app अपडेट";
+"CheckForAppUpdates" = "ऐप अपडेट के लिए स्वचालित रूप से जांचें";
+"CheckNow" = "अभी जाँचें";
+"LastChecked" = "पिछली बार चेक किया गया: %@";
+"Never" = "कभी नहीं";
+
+// Advanced Preference Pane
+"Advanced" = "उन्नत";
+"LocalCachePath" = "स्थानीय कैश पथ";
+"LocalCachePathDescription" = "Xcodes उपलब्ध Xcode संस्करणों को कैश करता है और एक निर्देशिका में अस्थायी रूप से नए संस्करण डाउनलोड करता है";
+"Change" = "परिवर्तन";
+"Active/Select" = "सक्रिय/चयन";
+"AutomaticallyCreateSymbolicLink" = "Xcodes.app के लिए स्वचालित रूप से प्रतीकात्मक लिंक बनाएं";
+"AutomaticallyCreateSymbolicLinkDescription" = "Xcode संस्करण को सक्रिय/चयनित बनाते समय, स्थापना निर्देशिका में Xcode.app नामक एक प्रतीकात्मक लिंक बनाने का प्रयास करें";
+"DataSource" = "डेटा स्रोत";
+"DataSourceDescription" = "Apple डेटा स्रोत Apple डेवलपर वेबसाइट को स्क्रैप करता है। यह हमेशा नवीनतम रिलीज दिखाएगा जो उपलब्ध हैं, लेकिन अधिक नाजुक है।\n\nXcode Releases Xcode रिलीज़ की एक अनौपचारिक सूची है। यह सुव्यवस्थित डेटा के रूप में प्रदान किया जाता है, इसमें अतिरिक्त जानकारी होती है जो Apple से आसानी से उपलब्ध नहीं होती है, और यदि Apple अपनी डेवलपर वेबसाइट को फिर से डिज़ाइन करता है तो इसके टूटने की संभावना कम होती है।";
+"Downloader" = "डाउनलोडर";
+"DownloaderDescription" = "aria2 uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.\n\nURLSession is the default Apple API for making URL requests.";
+"PrivilegedHelper" = "विशेषाधिकार प्राप्त सहायक";
+"PrivilegedHelperDescription" = "Xcodes कार्यों को रूट के रूप में करने के लिए एक अलग विशेषाधिकार प्राप्त सहायक का उपयोग करता है। ये ऐसी चीजें हैं जिनके लिए कमांड लाइन पर sudo की आवश्यकता होगी, जिसमें पोस्ट-इंस्टॉल चरण और xcode-select के साथ Xcode संस्करण स्विच करना शामिल है।\n\nइसे इंस्टॉल करने के लिए आपको अपने macOS अकाउंट पासवर्ड के लिए कहा जाएगा।";
+"HelperInstalled" = "सहायक स्थापित है";
+"HelperNotInstalled" = "सहायक स्थापित नहीं है";
+"InstallHelper" = "सहायक स्थापित करें";
+
+// Experiment Preference Pane
+"Experiments" = "परीक्षण";
+"FasterUnxip" = "Faster Unxip";
+"UseUnxipExperiment" = "When unxipping, use experiment";
+"FasterUnxipDescription" = "Thanks to @_saagarjha, this experiment can increase unxipping speed by up to 70% for some systems.\n\nMore information on how this is accomplished can be seen on the unxip repo - https://github.com/saagarjha/unxip";
+
+// Notifications
+"AccessGranted" = "प्रवेश करने की अनुमति है। आपको Xcodes से सूचनाएं प्राप्त होंगी।";
+"AccessDenied" = "⚠️ प्रवेश निषेध ⚠️\n\nकृपया अपनी सूचना सेटिंग्स खोलें और यदि आप प्रवेश की अनुमति देना चाहते हैं तो Xcodes का चयन करें.";
+"NotificationSettings" = "सूचना सेटिंग्स";
+"EnableNotifications" = "सूचनाएँ सक्षम करें";
+
+// SignIn
+"SignInWithApple" = "अपनी Apple ID से साइन इन करें.";
+"AppleID" = "AppleID:";
+"Password" = "पासवर्ड:";
+"Required" = "आवश्यक";
+"SignOut" = "साइन आउट करें";
+
+// SMS/2FA
+"DigitCodeDescription" = "अपने किसी विश्वसनीय डिवाइस से %d अंक कोड दर्ज करें:";
+"SendSMS" = "SMS भेजें";
+"EnterDigitCodeDescription" = "%@ को भेजा गया %d अंक कोड दर्ज करें: ";
+"SelectTrustedPhone" = "SMS के द्वारा %d अंक कोड प्राप्त करने के लिए विश्वसनीय फ़ोन नंबर चुनें:";
+"NoTrustedPhones" = "आपके खाते में कोई विश्वसनीय फ़ोन नंबर नहीं है, लेकिन वे दो-कारक प्रमाणीकरण के लिए आवश्यक हैं।\n\nhttps://support.apple.com/en-ca/HT204915 देखें।";
+
+// MainWindow
+"UpdatedAt" = "पर अपडेट किया गया";
+
+// ToolBar
+"Login" = "लॉग इन करें";
+"LoginDescription" = "लॉगिन खोलें";
+"Refresh" = "ताज़ा करें";
+"RefreshDescription" = "Xcode सूची ताज़ा करें";
+"All" = "सभी";
+"Release" = "रिलीज़";
+"ReleaseOnly" = "केवल रिलीज़ करें";
+"Beta" = "बीटा";
+"BetaOnly" = "केवल बीटा";
+"Filter" = "फ़िल्टर";
+"FilterAvailableDescription" = "उपलब्ध संस्करणों को फ़िल्टर करें";
+"FilterInstalledDescription" = "स्थापित संस्करणों को फ़िल्टर करें";
+"Info" = "जानकारी";
+"InfoDescription" = "जानकारी फलक दिखाएँ या छिपाएँ";
+"Preferences" = "प्राथमिकताएँ";
+"PreferencesDescription" = "प्राथमिकताएँ खोलें";
+"Search" = "खोज...";
+"SearchDescription" = "खोज सूची";
+
+// List
+"ActiveVersionDescription" = "यह सक्रिय संस्करण है";
+"MakeActiveVersionDescription" = "इसे सक्रिय संस्करण बनाएं";
+
+// Alerts
+// Uninstall
+"Alert.Uninstall.Title" = "Xcode %@ की स्थापना रद्द करें?";
+"Alert.Uninstall.Message" = "इसे ट्रैश में ले जाया जाएगा, लेकिन खाली नहीं किया जाएगा।";
+"Alert.Uninstall.Error.Title" = "Xcode की स्थापना रद्द करने में असमर्थ";
+
+// Cancel Install
+"Alert.CancelInstall.Title" = "क्या आप वाकई Xcode %@ की स्थापना को रोकना चाहते हैं?";
+"Alert.CancelInstall.Message" = "किसी भी प्रगति को छोड़ दिया जाएगा।";
+"Alert.CancelInstall.PrimaryButton" = "स्थापना रोकें";
+
+// Privileged Helper
+"Alert.PrivilegedHelper.Title" = "विशेषाधिकार प्राप्त सहायक";
+"Alert.PrivilegedHelper.Message" = "Xcodes कार्यों को रूट के रूप में करने के लिए एक अलग विशेषाधिकार प्राप्त सहायक का उपयोग करता है। ये ऐसी चीजें हैं जिनके लिए कमांड लाइन पर sudo की आवश्यकता होगी, जिसमें पोस्ट-इंस्टॉल चरण और xcode-select के साथ Xcode संस्करण स्विच करना शामिल है।\n\nआपको इसे स्थापित करने के लिए अपने macOS खाता पासवर्ड के लिए संकेत दिया जाएगा।";
+"Alert.PrivilegedHelper.Error.Title" = "हेल्पर स्थापित करने में असमर्थ";
+
+// Min MacOS Supported
+"Alert.MinSupported.Title" = "न्यूनतम आवश्यकताएं पूरी नहीं हुई";
+"Alert.MinSupported.Message" = "Xcode %@ को MacOS %@ की आवश्यकता है, लेकिन आप MacOS %@ चला रहे हैं, क्या आप अभी भी इसे स्थापित करना चाहते हैं?";
+
+// Install
+"Alert.Install.Error.Title" = "एक्सकोड स्थापित करने में असमर्थ";
+"Alert.InstallArchive.Error.Title" = "संग्रहीत Xcode स्थापित करने में असमर्थ";
+
+// Update
+"Alert.Update.Error.Title" = "चयनित Xcode को अपडेट करने में असमर्थ";
+
+// Active/Select
+"Alert.Select.Error.Title" = "एक्सकोड का चयन करने में असमर्थ";
+
+// Symbolic Links
+"Alert.SymLink.Title" = "प्रतीकात्मक लिंक बनाने में असमर्थ";
+"Alert.SymLink.Message" = "Xcode.app मौजूद है और एक प्रतीकात्मक लिंक नहीं है";
+
+// Post install
+"Alert.PostInstall.Title" = "स्थापना के बाद के चरण निष्पादित करने में असमर्थ";
+
+// InstallationErrors
+"InstallationError.DamagedXIP" = "संग्रह \"%@\" क्षतिग्रस्त है और इसे विस्तारित नहीं किया जा सकता है।";
+"InstallationError.NotEnoughFreeSpaceToExpandArchive" = "The archive \"%@\" can’t be expanded because the current volume doesn’t have enough free space.\n\nMake more space available to expand the archive and then install Xcode %@ again to start installation from where it left off.";
+"InstallationError.FailedToMoveXcodeToApplications" = "Xcode को %@ निर्देशिका में ले जाने में विफल।";
+"InstallationError.FailedSecurityAssessment" = "Xcode %@ failed its security assessment with the following output:\n%@\nIt remains installed at %@ if you wish to use it anyways.";
+"InstallationError.CodesignVerifyFailed" = "डाउनलोड किया गया Xcode निम्नलिखित आउटपुट के साथ कोड हस्ताक्षर सत्यापन में विफल रहा:\n%@";
+"InstallationError.UnexpectedCodeSigningIdentity" = "डाउनलोड किए गए Xcode में अपेक्षित कोड हस्ताक्षर पहचान नहीं है।\nमिला:\n%@\n%@\अपेक्षित:\n%@\n%@";
+"InstallationError.UnsupportedFileFormat" = "Xcodes (अभी तक) % @ फ़ाइल स्वरूप से Xcode स्थापित करने का समर्थन नहीं करता है।";
+"InstallationError.MissingSudoerPassword" = "पासवर्ड अनुपलब्ध है। कृपया पुन: प्रयास करें।";
+"InstallationError.UnavailableVersion" = "संस्करण %@ नहीं मिल सका।";
+"InstallationError.NoNonPrereleaseVersionAvailable" = "कोई गैर-पूर्व-रिलीज़ संस्करण उपलब्ध नहीं है।";
+"InstallationError.NoPrereleaseVersionAvailable" = "कोई पूर्व-रिलीज़ संस्करण उपलब्ध नहीं है।";
+"InstallationError.MissingUsernameOrPassword" = "उपयोगकर्ता नाम या पासवर्ड गुम है। कृपया पुन: प्रयास करें।";
+"InstallationError.VersionAlreadyInstalled" = "%@ पहले से ही %@ पर संस्थापित है";
+"InstallationError.InvalidVersion" = "%@ मान्य संस्करण संख्या नहीं है।";
+"InstallationError.VersionNotInstalled" = "%@ स्थापित नहीं किया गया।";
+"InstallationError.PostInstallStepsNotPerformed.Installed" = "स्थापना पूर्ण हो गई थी, लेकिन कुछ पोस्ट-इंस्टॉलेशन चरण स्वचालित रूप से निष्पादित नहीं किए गए थे। ये तब किए जाएंगे जब आप पहली बार Xcode %@ लॉन्च करेंगे।";
+"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "स्थापना पूर्ण हो गई थी, लेकिन कुछ पोस्ट-इंस्टॉलेशन चरण स्वचालित रूप से निष्पादित नहीं किए गए थे। Xcodes इन चरणों को एक विशेषाधिकार प्राप्त सहायक के साथ निष्पादित करता है, जो स्थापित नहीं प्रतीत होता है। आप इसे Preferences > Advanced(वरीयताएँ> उन्नत) से स्थापित कर सकते हैं।\n\nजब आप पहली बार Xcode %@ लॉन्च करेंगे तो ये चरण निष्पादित किए जाएंगे।";
+
+// Installation Steps
+"Downloading" = "डाउनलोड";
+"Unarchiving" = "Unarchiving (इसमें कुछ समय लग सकता है)";
+"Moving" = "%@ पर जा रहा है";
+"TrashingArchive" = "संग्रह को ट्रैश में ले जाया जा रहा है";
+"CheckingSecurity" = "सुरक्षा सत्यापन";
+"Finishing" = "परिष्करण";
+
+// Notifications
+"Notification.NewVersionAvailable" = "नया संस्करण उपलब्ध है";
+"Notification.FinishedInstalling" = "स्थापना समाप्त हो गई";
+
+
+"HelperClient.error" = "विशेषाधिकार प्राप्त सहायक के साथ संवाद करने में असमर्थ।";
+///++
+// Notifications
+"Notification.NewXcodeVersion.Title" = "नए Xcode संस्करण";
+"Notification.NewXcodeVersion.Body" = "नए Xcode संस्करण डाउनलोड करने के लिए उपलब्ध हैं।";
