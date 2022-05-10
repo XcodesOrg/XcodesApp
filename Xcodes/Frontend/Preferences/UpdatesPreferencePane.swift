@@ -3,7 +3,7 @@ import Sparkle
 import SwiftUI
 
 struct UpdatesPreferencePane: View {
-    @StateObject var updater = ObservableUpdater()
+    @EnvironmentObject var updater: ObservableUpdater
     
     @AppStorage("autoInstallation") var autoInstallationType: AutoInstallationType = .none
     
@@ -41,7 +41,7 @@ struct UpdatesPreferencePane: View {
                     )
                     
                     Button("CheckNow") {
-                        SUUpdater.shared()?.checkForUpdates(nil)
+                        updater.checkForUpdates()
                     }
                     
                     Text(String(format: localizeString("LastChecked"), lastUpdatedString))
@@ -69,9 +69,11 @@ struct UpdatesPreferencePane: View {
 }
 
 class ObservableUpdater: ObservableObject {
+    private let updater: SPUUpdater
+      
     @Published var automaticallyChecksForUpdates = false {
         didSet {
-            SUUpdater.shared()?.automaticallyChecksForUpdates = automaticallyChecksForUpdates
+            updater.automaticallyChecksForUpdates = automaticallyChecksForUpdates
         }
     }
     private var automaticallyChecksForUpdatesObservation: NSKeyValueObservation?
@@ -82,15 +84,17 @@ class ObservableUpdater: ObservableObject {
             UserDefaults.standard.setValue(includePrereleaseVersions, forKey: "includePrereleaseVersions")
 
             if includePrereleaseVersions {
-                SUUpdater.shared()?.feedURL = .prereleaseAppcast
+                updater.setFeedURL(.prereleaseAppcast)
             } else {
-                SUUpdater.shared()?.feedURL = .appcast
+                updater.setFeedURL(.appcast)
             }
         }
     }
     
     init() {
-        automaticallyChecksForUpdatesObservation = SUUpdater.shared()?.observe(
+        updater = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil).updater
+        
+        automaticallyChecksForUpdatesObservation = updater.observe(
             \.automaticallyChecksForUpdates, 
             options: [.initial, .new, .old],
             changeHandler: { [unowned self] updater, change in
@@ -98,7 +102,7 @@ class ObservableUpdater: ObservableObject {
                 self.automaticallyChecksForUpdates = updater.automaticallyChecksForUpdates
             }
         )
-        lastUpdateCheckDateObservation = SUUpdater.shared()?.observe(
+        lastUpdateCheckDateObservation = updater.observe(
             \.lastUpdateCheckDate, 
             options: [.initial, .new, .old],
             changeHandler: { [unowned self] updater, change in
@@ -106,6 +110,10 @@ class ObservableUpdater: ObservableObject {
             }
         )
         includePrereleaseVersions = UserDefaults.standard.bool(forKey: "includePrereleaseVersions")
+    }
+    
+    func checkForUpdates() {
+        updater.checkForUpdates()
     }
 }
 

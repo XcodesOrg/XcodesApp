@@ -8,11 +8,13 @@ struct XcodesApp: App {
     @SwiftUI.Environment(\.scenePhase) private var scenePhase: ScenePhase
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     @StateObject private var appState = AppState()
-    
+    @StateObject private var updater = ObservableUpdater()
+   
     var body: some Scene {
         WindowGroup("Xcodes") {
             MainWindow()
                 .environmentObject(appState)
+                .environmentObject(updater)
                 // This is intentionally used on a View, and not on a WindowGroup, 
                 // so that it's triggered when an individual window's phase changes instead of all window phases.
                 // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup. 
@@ -32,7 +34,7 @@ struct XcodesApp: App {
             }
             CommandGroup(after: .appInfo) {
                 Button("Menu.CheckForUpdates") {
-                    appDelegate.checkForUpdates()
+                    updater.checkForUpdates()
                 }
             }
         
@@ -69,6 +71,7 @@ struct XcodesApp: App {
         Settings {
             PreferencesView()
                 .environmentObject(appState)
+                .environmentObject(updater)
         }
         #endif
     }
@@ -112,13 +115,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         acknowledgementsWindow.makeKeyAndOrderFront(nil)
     }
     
-    func checkForUpdates() {
-        SUUpdater.shared()?.checkForUpdates(self)
-    }
-    
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Initialize manually
-        SUUpdater.shared()
+      
     }
 }
 
