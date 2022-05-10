@@ -39,6 +39,8 @@
 "NoXcodeSelected" = "कोई Xcode चयनित नहीं";
 
 // Installation Steps
+// When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
+// So if changing order, make sure the positional specficier is retained. ex: "%3$@: Step %1$d of %2$d"
 "InstallationStepDescription" = "%d: %@ का चरण %d";
 "DownloadingPercentDescription" = "डाउनलोड: %d%% पूर्ण";
 "StopInstallation" = "स्थापना रोकें";
