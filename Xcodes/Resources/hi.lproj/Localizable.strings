@@ -41,7 +41,7 @@
 // Installation Steps
 // When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
 // So if changing order, make sure the positional specficier is retained. ex: "%3$@: Step %1$d of %2$d"
-"InstallationStepDescription" = "स्टेप %d, %d में से: %@";
+"InstallationStepDescription" = "%2$d का स्टेप %1$d: %3$@";
 "DownloadingPercentDescription" = "डाउनलोड: %d%% पूर्ण";
 "StopInstallation" = "स्थापना रोकें";
 "DownloadingError" = "कोई डाउनलोड जानकारी नहीं मिली";
