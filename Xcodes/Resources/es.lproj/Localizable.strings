@@ -40,7 +40,9 @@
 "NoXcodeSelected" = "No se ha seleccionado un Xcode";
 
 // Installation Steps
-"InstallationStepDescription" = "Paso %d de %d: %@";
+// When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
+// So if changing order, make sure the positional specficier is retained. ex: "%3$@: Step %1$d of %2$d"
+"InstallationStepDescription" = "Paso %1$d de %2$d: %3$@";
 "DownloadingPercentDescription" = "Descargando: %d%% completado";
 "StopInstallation" = "Detener Instalación";
 "DownloadingError" = "No se encontró información de descarga";
