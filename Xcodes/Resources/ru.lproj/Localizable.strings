@@ -39,7 +39,9 @@
 "NoXcodeSelected" = "Xcode не выбран";
 
 // Installation Steps
-"InstallationStepDescription" = "Шаг %d из %d: %@";
+// When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
+// So if changing order, make sure the positional specficier is retained. ex: "%3$@: Step %1$d of %2$d"
+"InstallationStepDescription" = "Шаг %1$d из %2$d: %3$@";
 "DownloadingPercentDescription" = "Скачивание: %d% завершено";
 "StopInstallation" = "Остановить установку";
 "DownloadingError" = "Информация о загрузке не найдена";
