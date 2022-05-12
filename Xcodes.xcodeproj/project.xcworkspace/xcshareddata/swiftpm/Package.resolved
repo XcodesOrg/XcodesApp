@@ -60,8 +60,8 @@
         "repositoryURL": "https://github.com/sparkle-project/Sparkle/",
         "state": {
           "branch": null,
-          "revision": "891afd44c7075e699924ed9b81d8dc94a5111dfd",
-          "version": "1.24.0-spm"
+          "revision": "286edd1fa22505a9e54d170e9fd07d775ea233f2",
+          "version": "2.1.0"
         }
       },
       {

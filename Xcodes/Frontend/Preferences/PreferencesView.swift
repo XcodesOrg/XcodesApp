@@ -5,6 +5,7 @@ struct PreferencesView: View {
         case general, updates, advanced, experiment
     }
     @EnvironmentObject var appState: AppState
+    @EnvironmentObject var updater: ObservableUpdater
     
     var body: some View {
         TabView {
@@ -15,6 +16,7 @@ struct PreferencesView: View {
                 }
                 .tag(Tabs.general)
             UpdatesPreferencePane()
+                .environmentObject(updater)
                 .tabItem {
                     Label("Updates", systemImage: "arrow.triangle.2.circlepath.circle")
                 }
