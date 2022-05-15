@@ -68,7 +68,7 @@
 "AppUpdates" = "Xcodes.app Updates";
 "CheckForAppUpdates" = "自動檢查更新項目";
 "CheckNow" = "立即檢查";
-"LastChecked" = "上一次檢查：：%@";
+"LastChecked" = "上一次檢查：%@";
 "Never" = "從未使用";
 
 // Advanced Preference Pane
