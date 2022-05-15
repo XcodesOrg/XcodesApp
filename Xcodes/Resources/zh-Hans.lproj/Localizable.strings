@@ -84,7 +84,7 @@
 "Downloader" = "下载器";
 "DownloaderDescription" = "aria2使用最高16线程，能提供3至5倍的下载速度。它与它的源代码被一同打包在Xcodes中以符合GPLv2授权。\n\nURLSession是用于发起URL请求的默认Apple API。";
 "PrivilegedHelper" = "提权帮助程序";
-"PrivilegedHelperDescription" = "Xcodes使用一个独立的提权帮助程序来以root身份执行任务。就是那些需要在命令行中用sudo执行的命令。包括一些安装前置步骤以及用xcode-select切换 Xcode 版本。\n\n您需要提供当前用户的密码来安装它。";
+"PrivilegedHelperDescription" = "Xcodes使用一个独立的提权帮助程序来以root身份执行任务。就是那些需要在命令行中用sudo执行的命令。包括一些安装前置步骤以及用xcode-select切换Xcode版本。\n\n您需要提供当前用户的密码来安装它。";
 "HelperInstalled" = "帮助程序已安装";
 "HelperNotInstalled" = "帮助程序未安装";
 "InstallHelper" = "安装帮助程序";
@@ -111,7 +111,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "请输入从信任的设备接收到的%d位代码：";
 "SendSMS" = "发送短信";
-"EnterDigitCodeDescription" = "请输入发送到%@的%d位代码：";
+"EnterDigitCodeDescription" = "请输入%d位代码，已发送到%@：";
 "SelectTrustedPhone" = "请选择一个信任的手机号来从短信接收%d位代码：";
 "NoTrustedPhones" = "您的账户没有任何信任的手机号，但这是两步验证所必须的。\n\n请参阅 https://support.apple.com/en-ca/HT204915。";
 
@@ -185,7 +185,7 @@
 "InstallationError.FailedToMoveXcodeToApplications" = "无法将Xcode移动到目录%@。";
 "InstallationError.FailedSecurityAssessment" = "Xcode %@无法完成安全评估，并输出如下：\n%@\n但它依然被安装到了%@如果您依然想使用它的话。";
 "InstallationError.CodesignVerifyFailed" = "无法验证下载的Xcode版本的代码签名，并输出如下：\n%@";
-"InstallationError.UnexpectedCodeSigningIdentity" = "下载的Xcode版本不包含期望的代码签名身份。\n读取到：\n%@\n%@\期望是：\n%@\n%@";
+"InstallationError.UnexpectedCodeSigningIdentity" = "下载的Xcode版本不包含期望的代码签名身份。\n读取到：\n%@\n%@\n期望是：\n%@\n%@";
 "InstallationError.UnsupportedFileFormat" = "Xcodes尚未支持从%@格式安装。";
 "InstallationError.MissingSudoerPassword" = "缺少密码。请再试一次。";
 "InstallationError.UnavailableVersion" = "无法找到版本%@。";
