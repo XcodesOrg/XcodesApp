@@ -139,7 +139,15 @@ class PinCodeTextView: NSControl, NSTextFieldDelegate {
         else { return } 
         
         let newFieldText = field.stringValue
-        
+
+        // If we are focused on the first field and pasting a 6-digit string,
+        // treat it as pasting the entire code and focus on the last field
+        if code.isEmpty && newFieldText.count == numberOfDigits {
+            code = Array(newFieldText)
+            window?.makeFirstResponder(characterViews.last)
+            return
+        }
+
         let lastCharacter: Character?
         if newFieldText.isEmpty {
             lastCharacter = nil
