@@ -109,110 +109,110 @@
 "SignOut" = "退出登录";
 
 // SMS/2FA
-"DigitCodeDescription" = "Enter the %d digit code from one of your trusted devices:";
-"SendSMS" = "Send SMS";
-"EnterDigitCodeDescription" = "Enter the %d digit code sent to %@: ";
-"SelectTrustedPhone" = "Select a trusted phone number to receive a %d digit code via SMS:";
-"NoTrustedPhones" = "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication.\n\nSee https://support.apple.com/en-ca/HT204915.";
+"DigitCodeDescription" = "输入您信任设备中的 %d 位数字代码：";
+"SendSMS" = "发送短信";
+"EnterDigitCodeDescription" = "输入发送到 %@ 的 %d 位数字代码：";
+"SelectTrustedPhone" = "选择一个可信的电话号码，通过短信接收 %d 位数字代码：";
+"NoTrustedPhones" = "您的账户没有任何受信任的电话号码，但它们是双因子认证所必须的。\n\n见 https://support.apple.com/zh-cn/HT204915 。";
 
 // MainWindow
-"UpdatedAt" = "Updated at";
+"UpdatedAt" = "更新于";
 
 // ToolBar
-"Login" = "Login";
-"LoginDescription" = "Open Login";
-"Refresh" = "Refresh";
-"RefreshDescription" = "Refresh Xcode List";
-"All" = "All";
-"Release" = "Release";
-"ReleaseOnly" = "Release only";
+"Login" = "登录";
+"LoginDescription" = "开启登录";
+"Refresh" = "刷新";
+"RefreshDescription" = "刷新 Xcode 列表";
+"All" = "所有";
+"Release" = "发布";
+"ReleaseOnly" = "只显示发布版本";
 "Beta" = "Beta";
-"BetaOnly" = "Beta only";
-"Filter" = "Filter";
-"FilterAvailableDescription" = "Filter available versions";
-"FilterInstalledDescription" = "Filter installed versions";
-"Info" = "Info";
-"InfoDescription" = "Show or hide the info pane";
-"Preferences" = "Preferences";
-"PreferencesDescription" = "Open Preferences";
-"Search" = "Search...";
-"SearchDescription" = "Search list";
+"BetaOnly" = "只显示 Beta";
+"Filter" = "过滤";
+"FilterAvailableDescription" = "过滤可用版本";
+"FilterInstalledDescription" = "过滤已下载版本";
+"Info" = "详情";
+"InfoDescription" = "显示或隐藏详情信息";
+"Preferences" = "偏好设置";
+"PreferencesDescription" = "打开偏好设置";
+"Search" = "搜索...";
+"SearchDescription" = "搜索列表";
 
 // List
-"ActiveVersionDescription" = "This is the active version";
-"MakeActiveVersionDescription" = "Make this the active version";
+"ActiveVersionDescription" = "这是启用的版本";
+"MakeActiveVersionDescription" = "将此版本设置为启用版本";
 
 // Alerts
 // Uninstall
-"Alert.Uninstall.Title" = "Uninstall Xcode %@?";
-"Alert.Uninstall.Message" = "It will be moved to the Trash, but won't be emptied.";
-"Alert.Uninstall.Error.Title" = "Unable to uninstall Xcode";
+"Alert.Uninstall.Title" = "卸载 Xcode %@?";
+"Alert.Uninstall.Message" = "它会被移动到废纸篓，但不会被清除 but won't be emptied.";
+"Alert.Uninstall.Error.Title" = "无法卸载 Xcode";
 
 // Cancel Install
-"Alert.CancelInstall.Title" = "Are you sure you want to stop the installation of Xcode %@?";
-"Alert.CancelInstall.Message" = "Any progress will be discarded.";
-"Alert.CancelInstall.PrimaryButton" = "Stop Installation";
+"Alert.CancelInstall.Title" = "确定停止 Xcode %@ 的安装？";
+"Alert.CancelInstall.Message" = "所有进展会被取消。";
+"Alert.CancelInstall.PrimaryButton" = "停止安装";
 
 // Privileged Helper
-"Alert.PrivilegedHelper.Title" = "Privileged Helper";
-"Alert.PrivilegedHelper.Message" = "Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it.";
-"Alert.PrivilegedHelper.Error.Title" = "Unable to install helper";
+"Alert.PrivilegedHelper.Title" = "特权助手";
+"Alert.PrivilegedHelper.Message" = "Xcodes 用单独的一个特权助手来帮它以 root 身份执行任务。这些是在命令行上需要 sudo 的事情，包括安装和步骤和用 xcode-select 切换 Xcode 版本。\n\n您会被提示输入你的 macOS 账户密码来安装它。";
+"Alert.PrivilegedHelper.Error.Title" = "无法安装助手";
 
 // Min MacOS Supported
-"Alert.MinSupported.Title" = "Minimum requirements not met";
-"Alert.MinSupported.Message" = "Xcode %@ requires MacOS %@, but you are running MacOS %@, do you still want to install it?";
+"Alert.MinSupported.Title" = "为达到最低要求";
+"Alert.MinSupported.Message" = "Xcode %@ 要求 MacOS %@，但您在运行 MacOS %@，您还想安装它吗？";
 
 // Install
-"Alert.Install.Error.Title" = "Unable to install Xcode";
-"Alert.InstallArchive.Error.Title" = "Unable to install archived Xcode";
+"Alert.Install.Error.Title" = "无法安装 Xcode";
+"Alert.InstallArchive.Error.Title" = "无法安装归档的 Xcode";
 
 // Update
-"Alert.Update.Error.Title" = "Unable to update selected Xcode";
+"Alert.Update.Error.Title" = "无法更新选择的 Xcode";
 
 // Active/Select
-"Alert.Select.Error.Title" = "Unable to select Xcode";
+"Alert.Select.Error.Title" = "无法选择 Xcode";
 
 // Symbolic Links
-"Alert.SymLink.Title" = "Unable to create symbolic Link";
-"Alert.SymLink.Message" = "Xcode.app exists and is not a symbolic link";
+"Alert.SymLink.Title" = "无法创建符号链接";
+"Alert.SymLink.Message" = "Xcode.app 存在但不是符号链接";
 
 // Post install
-"Alert.PostInstall.Title" = "Unable to perform post install steps";
+"Alert.PostInstall.Title" = "无法执行安装后的步骤";
 
 // InstallationErrors
-"InstallationError.DamagedXIP" = "The archive \"%@\" is damaged and can't be expanded.";
-"InstallationError.NotEnoughFreeSpaceToExpandArchive" = "The archive \"%@\" can’t be expanded because the current volume doesn’t have enough free space.\n\nMake more space available to expand the archive and then install Xcode %@ again to start installation from where it left off.";
-"InstallationError.FailedToMoveXcodeToApplications" = "Failed to move Xcode to the %@ directory.";
-"InstallationError.FailedSecurityAssessment" = "Xcode %@ failed its security assessment with the following output:\n%@\nIt remains installed at %@ if you wish to use it anyways.";
-"InstallationError.CodesignVerifyFailed" = "The downloaded Xcode failed code signing verification with the following output:\n%@";
-"InstallationError.UnexpectedCodeSigningIdentity" = "The downloaded Xcode doesn't have the expected code signing identity.\nGot:\n%@\n%@\nExpected:\n%@\n%@";
-"InstallationError.UnsupportedFileFormat" = "Xcodes doesn't (yet) support installing Xcode from the %@ file format.";
-"InstallationError.MissingSudoerPassword" = "Missing password. Please try again.";
-"InstallationError.UnavailableVersion" = "Could not find version %@.";
-"InstallationError.NoNonPrereleaseVersionAvailable" = "No non-prerelease versions available.";
-"InstallationError.NoPrereleaseVersionAvailable" = "No prerelease versions available.";
-"InstallationError.MissingUsernameOrPassword" = "Missing username or a password. Please try again.";
-"InstallationError.VersionAlreadyInstalled" = "%@ is already installed at %@";
-"InstallationError.InvalidVersion" = "%@ is not a valid version number.";
-"InstallationError.VersionNotInstalled" = "%@ is not installed.";
-"InstallationError.PostInstallStepsNotPerformed.Installed" = "Installation was completed, but some post-install steps weren't performed automatically. These will be performed when you first launch Xcode %@.";
-"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "Installation was completed, but some post-install steps weren't performed automatically. Xcodes performs these steps with a privileged helper, which appears to not be installed. You can install it from Preferences > Advanced.\n\nThese steps will be performed when you first launch Xcode %@.";
+"InstallationError.DamagedXIP" = "归档文件 \"%@\" 已损坏而无法解开。";
+"InstallationError.NotEnoughFreeSpaceToExpandArchive" = "由于当前卷没有足够的可用空间因此无法解开归档文件 \"%@\"。\n\n腾出更多的可用空间来解开归档文件，然后从中断的地方再次安装 Xcode %@ 。";
+"InstallationError.FailedToMoveXcodeToApplications" = "未能将 Xcode 移动到 %@ 目录。";
+"InstallationError.FailedSecurityAssessment" = "Xcode %@ 未能通过它的安全评估输出结果如下：\n%@\n如果你想使用它，它仍然安装在 %@ 。";
+"InstallationError.CodesignVerifyFailed" = "已下载的 Xcode 未能通过代码签名验证失败，输出如下：\n%@";
+"InstallationError.UnexpectedCodeSigningIdentity" = "已下载的 Xcode 没有预期的代码签名身份。\n得到：\n%@\n%@\n预期：\n%@\n%@";
+"InstallationError.UnsupportedFileFormat" = "Xcodes（还）不支持从 %@ 文件格式安装 Xcode。";
+"InstallationError.MissingSudoerPassword" = "缺少密码。请再试一次。";
+"InstallationError.UnavailableVersion" = "无法找到 %@ 版本。";
+"InstallationError.NoNonPrereleaseVersionAvailable" = "没有可用的非预发布版本。";
+"InstallationError.NoPrereleaseVersionAvailable" = "没有可用的预发布版本。";
+"InstallationError.MissingUsernameOrPassword" = "缺少用户名或密码。请再试一次。";
+"InstallationError.VersionAlreadyInstalled" = "%@ 已安装在 %@";
+"InstallationError.InvalidVersion" = "%@ 不是一个有效的版本号。";
+"InstallationError.VersionNotInstalled" = "%@ 没被安装。";
+"InstallationError.PostInstallStepsNotPerformed.Installed" = "安装已完成，但一些安装后的步骤没有自动执行。这些将在您第一次启动 Xcode %@ 时执行。";
+"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "安装已完成，但一些安装后的步骤没有自动执行。Xcodes 用单独的特权助手来执行这些步骤。它似乎没有被安装。您可以从 偏好设置 > 高级 中安装它。\n\n这些步骤将在您第一次启动 Xcode %@ 时执行。";
 
 // Installation Steps
-"Downloading" = "Downloading";
-"Unarchiving" = "Unarchiving (This can take a while)";
-"Moving" = "Moving to %@";
-"TrashingArchive" = "Moving archive to the Trash";
-"CheckingSecurity" = "Security verification";
-"Finishing" = "Finishing";
+"Downloading" = "下载中";
+"Unarchiving" = "解开归档中（这可能需要一些时间）";
+"Moving" = "移动到 %@";
+"TrashingArchive" = "移动归档到废纸篓";
+"CheckingSecurity" = "安全验证";
+"Finishing" = "完成中";
 
 // Notifications
-"Notification.NewVersionAvailable" = "New version is available";
-"Notification.FinishedInstalling" = "Finished installing";
+"Notification.NewVersionAvailable" = "已有新版本";
+"Notification.FinishedInstalling" = "安装完毕";
 
 
-"HelperClient.error" = "Unable to communicate with privileged helper.";
+"HelperClient.error" = "无法与特权助手沟通。";
 ///++
 // Notifications
-"Notification.NewXcodeVersion.Title" = "New Xcode versions";
-"Notification.NewXcodeVersion.Body" = "New Xcode versions are available to download.";
+"Notification.NewXcodeVersion.Title" = "新 Xcode 版本";
+"Notification.NewXcodeVersion.Body" = "新 Xcode 版本可供下载。";
