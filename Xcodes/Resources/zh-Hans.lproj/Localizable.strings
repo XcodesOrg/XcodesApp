@@ -15,7 +15,7 @@
 "Open" = "打开";
 "OpenDescription" = "打开此版本";
 "CopyPath" = "复制路径";
-"CreateSymLink" = "为 Xcode.app 创建 Symlink";
+"CreateSymLink" = "为 Xcode.app 创建符号链接";
 "Uninstall" = "卸载";
 "Selected" = "选定的";
 "Select" = "选择";
@@ -76,37 +76,37 @@
 "LocalCachePath" = "本地缓存路径";
 "LocalCachePathDescription" = "Xcodes 缓存了可用的 Xcode 版本，并临时下载新版本到一个目录中";
 "Change" = "变更";
-"Active/Select" = "Active/Select";
-"AutomaticallyCreateSymbolicLink" = "Automatically create symbolic link to Xcodes.app";
-"AutomaticallyCreateSymbolicLinkDescription" = "When making an Xcode version Active/Selected, try and create a symbolic link named Xcode.app in the installation directory";
-"DataSource" = "Data Source";
-"DataSourceDescription" = "The Apple data source scrapes the Apple Developer website. It will always show the latest releases that are available, but is more fragile.\n\nXcode Releases is an unofficial list of Xcode releases. It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website.";
-"Downloader" = "Downloader";
-"DownloaderDescription" = "aria2 uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.\n\nURLSession is the default Apple API for making URL requests.";
-"PrivilegedHelper" = "Privileged Helper";
-"PrivilegedHelperDescription" = "Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it.";
-"HelperInstalled" = "Helper is installed";
-"HelperNotInstalled" = "Helper is not installed";
-"InstallHelper" = "Install helper";
+"Active/Select" = "启用/选择";
+"AutomaticallyCreateSymbolicLink" = "自动创建到 Xcodes.app 的符号链接";
+"AutomaticallyCreateSymbolicLinkDescription" = "当使一个 Xcode 版本成为活动/选择时，尝试在安装目录中创建一个名为Xcode.app的符号链接";
+"DataSource" = "数据源";
+"DataSourceDescription" = "Apple 的数据源是在苹果开发者网站上抓取的。它总是显示最新的可用版本，但比较脆弱。\n\nXcode Releases 是一个非官方的 Xcod e版本列表。它以良好的数据形式提供，包含了不容易从苹果公司获得的额外信息，而且如果苹果公司重新设计他们的开发者网站，它不会出现问题。";
+"Downloader" = "下载器";
+"DownloaderDescription" = "aria2 使用多达16个连接来下载 Xcode，比 URLSession 快3-5倍。它作为一个可执行文件与它的源代码一起捆绑在 Xcodes 中，以符合其 GPLv2 许可证。\n\nURLSession 是苹果公司的默认API，用于进行URL请求。";
+"PrivilegedHelper" = "特权助手";
+"PrivilegedHelperDescription" = "Xcodes 使用一个单独的特权助手，以 root 身份执行任务。这些是在命令行上需要 sudo 的事情，包括安装后的步骤和用 xcode-select 切换 Xcode 版本。\n\n你会被提示提供你的 macOS 账户密码来安装它。";
+"HelperInstalled" = "助手已安装";
+"HelperNotInstalled" = "没有安装助手";
+"InstallHelper" = "安装助手";
 
 // Experiment Preference Pane
-"Experiments" = "Experiments";
-"FasterUnxip" = "Faster Unxip";
-"UseUnxipExperiment" = "When unxipping, use experiment";
-"FasterUnxipDescription" = "Thanks to @_saagarjha, this experiment can increase unxipping speed by up to 70% for some systems.\n\nMore information on how this is accomplished can be seen on the unxip repo - https://github.com/saagarjha/unxip";
+"Experiments" = "实验";
+"FasterUnxip" = "更快的解压";
+"UseUnxipExperiment" = "当解压xip时，使用实验方式";
+"FasterUnxipDescription" = "感谢 @_saagarjha ，这个实验方式可以比系统的解压缩速度提高70%。\n\n更多关于如何达成的信息可以在 unxip repo 上看到 - https://github.com/saagarjha/unxip";
 
 // Notifications
-"AccessGranted" = "Access Granted. You will receive notifications from Xcodes.";
-"AccessDenied" = "⚠️ Access Denied ⚠️\n\nPlease open your Notification Settings and select Xcodes if you wish to allow access.";
-"NotificationSettings" = "Notification Settings";
-"EnableNotifications" = "Enable Notifications";
+"AccessGranted" = "准许访问。您将收到来自 Xcodes 的通知。";
+"AccessDenied" = "⚠️ 拒绝访问 ⚠️\n\n请打开你的通知设置，如果你希望允许访问，请选择 Xcodes。";
+"NotificationSettings" = "通知设置";
+"EnableNotifications" = "启用通知";
 
 // SignIn
-"SignInWithApple" = "Sign in with your Apple ID.";
+"SignInWithApple" = "用您的Apple ID登录。";
 "AppleID" = "AppleID:";
-"Password" = "Password:";
-"Required" = "Required";
-"SignOut" = "Sign Out";
+"Password" = "密码:";
+"Required" = "必须的";
+"SignOut" = "退出登录";
 
 // SMS/2FA
 "DigitCodeDescription" = "Enter the %d digit code from one of your trusted devices:";
