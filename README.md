@@ -36,6 +36,7 @@ The following languages are supported because of the following community users!
 |French|[@dompepin](https://github.com/dompepin)|
 |Spanish|[@cesartru88](https://github.com/cesartru88)|
 |Russian|[@alexmazlov](https://github.com/alexmazlov)|
+|Chinese-Simplified|[@hdcola](https://github.com/hdcola) [@Sichengthebest](https://github.com/Sichengthebest)|
 
 Want to add more languages? Simply create a PR with the updated strings file. 
 ## Installation
