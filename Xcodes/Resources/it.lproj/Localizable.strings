@@ -1,0 +1,218 @@
+// Menu
+"Menu.About" = "Informazioni di Xcodes";
+"Menu.CheckForUpdates" = "Controllo aggiornamenti...";
+"Menu.Acknowledgements" = "Ringraziamenti di Xcodes";
+"Menu.GitHubRepo" = "Xcodes Repository di Github";
+"Menu.ReportABug" = "Segnala un Bug";
+"Menu.RequestNewFeature" = "Richiedi una nuova Feature";
+
+// Common
+"Install" = "Installa";
+"InstallDescription" = "Installa questa versione";
+"RevealInFinder" = "Mostra in Finder";
+"Active" = "Attiva";
+"MakeActive" = "Rendi attiva";
+"Open" = "Apri";
+"OpenDescription" = "Apri questa versione";
+"CopyPath" = "Copia Percorso";
+"CreateSymLink" = "Crea Symlink come Xcode.app";
+"Uninstall" = "Disinstalla";
+"Selected" = "Selezionato";
+"Select" = "Seleziona";
+"Cancel" = "Annulla";
+"Next" = "Avanti";
+"Continue" = "Continua";
+"Close" = "Chiudi";
+"OK" = "OK";
+
+// Info Pane
+"IdenticalBuilds" = "Build Identiche";
+"IdenticalBuilds.help" = "A volte una versione di prerelease e release sono esattamente la stessa build. Xcodes mostrerà automatiamente queste versioni assieme.";
+
+"ReleaseDate" = "Data di Rilascio";
+"ReleaseNotes" = "Note di Rilascio";
+"ReleaseNotes.help" = "Vedi Note di Rilascio";
+"Compatibility" = "Compatibilità";
+"MacOSRequirement" = "Richiede macOS %@ o successivo";
+"SDKs" = "SDKs";
+"Compilers" = "Compilatore";
+"DownloadSize" = "Dimensione Download";
+"NoXcodeSelected" = "Nessun Xcode selezionato";
+
+// Installation Steps
+// When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
+// So if changing order, make sure the positional specficier is retained. ex: "%3$@: Step %1$d of %2$d"
+"InstallationStepDescription" = "Passo %1$d di %2$d: %3$@";
+"DownloadingPercentDescription" = "Download: %d%% completato";
+"StopInstallation" = "Ferma istallazione";
+"DownloadingError" = "Non trovo informazioni sul download";
+
+// About
+"VersionWithBuild" = "Versione %@ (%@)";
+"GithubRepo" = "GitHub Repo";
+"Acknowledgements" = "Ringraziamenti";
+"UnxipExperiment" = "Unxip Sperimentale";
+"License" = "Licenza";
+
+// General Preference Pane
+"General" = "Generale";
+"AppleID" = "Apple ID";
+"SignIn" = "Entra";
+"Notifications" = "Notifiche";
+
+// Updates Preference Pane
+"Updates" = "Aggiornamenti";
+"Versions" = "Versioni";
+"AutomaticInstallNewVersion" = "Installa automaticamente nuove versioni di Xcode";
+"IncludePreRelease" = "Includi versioni prerelease/beta";
+"AppUpdates" = "Xcodes.app Aggiornamenti";
+"CheckForAppUpdates" = "Controlla automaticamente per aggiornamenti";
+"CheckNow" = "Controlla Ora";
+"LastChecked" = "Ultimo controllo: %@";
+"Never" = "Mai";
+
+// Advanced Preference Pane
+"Advanced" = "Avanzate";
+"LocalCachePath" = "Percorso Cache Locale";
+"LocalCachePathDescription" = "Xcodes fa la cache delle versioni di Xcode disponibili e download temporanei in una directory.";
+"Change" = "Cambia";
+"Active/Select" = "Attivo/Seleziona";
+"AutomaticallyCreateSymbolicLink" = "Crea Automaticamente link simbolico a Xcodes.app";
+"AutomaticallyCreateSymbolicLinkDescription" = "Quando rendi una versione di Xcode Attiva/Selezionata, prova a fare un link simbolico chiamato nella directory di installazione.";
+"DataSource" = "Sorgente Dati";
+"DataSourceDescription" = "La sorgente dati Apple controlla il sito sviluppatori Apple. Mostra sempre le ultime versioni disponibili, ma è più fragile. Xcode Releases è una lista non ufficiale di versioni di Xcode. E' disponibile con un formato ben strutturato, contiene più in formazioni che non vengono rilasciate da Apple ed è più difficile che smetta di funzionare se Apple ristruttura il suo sito sviluppatori.";
+"Downloader" = "Scaricatore";
+"DownloaderDescription" = "aria2 usa fino a 16 connessioni per scaricar Xcode da 3 a 5 volte più veloce di URLSession. E' incluso come eseguibile assieme ai suoi sogenti dentro Xcodes per rispettare la sua licenza GPLv2. \n\nURLSession è l'API di default di Apple per fare richieste a URL remote.";
+"PrivilegedHelper" = "Aiutante Privilegiato";
+"PrivilegedHelperDescription" = "Xcodes usa un aiutante privilegiato per svolgere dei compiti come root. Si tratta di comandi che normalmente richiederebbero sudo da linea di comando, incluse fasi di post-install e modificare la versione di Xcode con xcode-select.\n\nTi verrà richiesta la password del tuo account di macOS per installarlo.";
+"HelperInstalled" = "Aiutante è installato";
+"HelperNotInstalled" = "Aiutante non è installato";
+"InstallHelper" = "Installa aiutante";
+
+// Experiment Preference Pane
+"Experiments" = "Sperimentale";
+"FasterUnxip" = "Unxip veloce";
+"UseUnxipExperiment" = "Quando fai unxipping, usa sperimentale";
+"FasterUnxipDescription" = "Grazie a @_saagarjha, questa versione sperimentale può incrementare la velocità di unxipping fino al 70% in certi sistemi.\n\nMaggiori informazioni su come questo è possibile sono disponibili nel repository unxip - https://github.com/saagarjha/unxip";
+
+// Notifications
+"AccessGranted" = "Accesso Garantito. Riceverai notifiche da Xcodes.";
+"AccessDenied" = "⚠️ Accesso Negato ⚠️\n\nApri le Impostazioni delle Notifiche e seleziona Xcodes se desideri garantirgli accesso.";
+"NotificationSettings" = "Impostazioni delle Notifiche";
+"EnableNotifications" = "Abilita Notifiche";
+
+// SignIn
+"SignInWithApple" = "Entra con il tuo Apple ID.";
+"AppleID" = "AppleID:";
+"Password" = "Password:";
+"Required" = "Obbligatorio";
+"SignOut" = "Esci";
+
+// SMS/2FA
+"DigitCodeDescription" = "Inserisci il codice di %d cifre in uno dei tuo dispositivi registrati:";
+"SendSMS" = "Manda SMS";
+"EnterDigitCodeDescription" = "Inserisci il codice di %d cifre inviato a %@: ";
+"SelectTrustedPhone" = "Seleziona un numero di telefono registrato per ricevere il codice di  %d cifre via SMS:";
+"NoTrustedPhones" = "Il tuo account non ha dispositivi registrati, ma è richiesto dall'autenticazione a due fattori.\n\Vedi https://support.apple.com/en-ca/HT204915.";
+
+// MainWindow
+"UpdatedAt" = "Aggiorna a";
+
+// ToolBar
+"Login" = "Login";
+"LoginDescription" = "Apri Login";
+"Refresh" = "Ricarica";
+"RefreshDescription" = "Ricarica Lista Xcode";
+"All" = "Tutti";
+"Release" = "Rilasci";
+"ReleaseOnly" = "Solo Rilasci";
+"Beta" = "Beta";
+"BetaOnly" = "Solo Beta";
+"Filter" = "Filtra";
+"FilterAvailableDescription" = "Filtra versioni disponibili";
+"FilterInstalledDescription" = "Filtra versioni installate";
+"Info" = "Info";
+"InfoDescription" = "Mostra o nascondi pannello informazioni";
+"Preferences" = "Preferenze";
+"PreferencesDescription" = "Apri Preferenze";
+"Search" = "Cerca...";
+"SearchDescription" = "Lista Ricerca";
+
+// List
+"ActiveVersionDescription" = "Questa è la versione attiva";
+"MakeActiveVersionDescription" = "Rendi questa versione attiva";
+
+// Alerts
+// Uninstall
+"Alert.Uninstall.Title" = "Disinstalla Xcode %@?";
+"Alert.Uninstall.Message" = "Sarà spostato nel cestino, ma non svuotato.";
+"Alert.Uninstall.Error.Title" = "Non riesco a disinstallare Xcode";
+
+// Cancel Install
+"Alert.CancelInstall.Title" = "Sei sicuro di voler interrompere l'installazione di Xcode %@?";
+"Alert.CancelInstall.Message" = "Perderai quanto fatto finora.";
+"Alert.CancelInstall.PrimaryButton" = "Ferma Installazione";
+
+// Privileged Helper
+"Alert.PrivilegedHelper.Title" = "Aiutante Privilegiato";
+"Alert.PrivilegedHelper.Message" = "Xcodes usa un aiutante privilegiato per svolgere dei compiti come root. Si tratta di comandi che normalmente richiederebbero sudo da linea di comando, incluse fasi di post-install e modificare la versione di Xcode con xcode-select.\n\nTi verrà richiesta la password del tuo account di macOS per installarlo.";
+"Alert.PrivilegedHelper.Error.Title" = "Non riesco a installare aiutante";
+
+// Min MacOS Supported
+"Alert.MinSupported.Title" = "Requisiti minimi non presenti";
+"Alert.MinSupported.Message" = "Xcode %@ richiede MacOS %@, ma la tua versione di MacOS è %@, vuoi installarlo comunque?";
+
+// Install
+"Alert.Install.Error.Title" = "Non riesco a installare Xcode";
+"Alert.InstallArchive.Error.Title" = "Non riesco a installare Xcode archiviato";
+
+// Update
+"Alert.Update.Error.Title" = "Non riesco ad aggiornare Xcode selezionato";
+
+// Active/Select
+"Alert.Select.Error.Title" = "Non riesco a selezionare Xcode";
+
+// Symbolic Links
+"Alert.SymLink.Title" = "Non riesco a creare il link simbolico";
+"Alert.SymLink.Message" = "Xcode.app esiste e non è un link simbolico";
+
+// Post install
+"Alert.PostInstall.Title" = "Non riesco ad eseguire i comandi post installazione";
+
+// InstallationErrors
+"InstallationError.DamagedXIP" = "L'archivio \"%@\" è danneggiato e non può essere espanso.";
+"InstallationError.NotEnoughFreeSpaceToExpandArchive" = "L'archivio \"%@\" non può essere espanso perché non c'è abbastanza spazio libero nel volume.\n\nAumenta lo spazio disponibile per poter espandere l'archivio e poi installa Xcode %@ nuovamente per riprendere da dove era arrivato.";
+"InstallationError.FailedToMoveXcodeToApplications" = "Non sono riuscito a spostare Xcode nella directory %@ .";
+"InstallationError.FailedSecurityAssessment" = "Xcode %@ ha fallito i check di sicurezza con il seguente errore:\n%@\nRimane installato in %@ se vuoi usarlo comunque.";
+"InstallationError.CodesignVerifyFailed" = "Xcode scaricato ha fallito le verifiche di firma con il seguente errore:\n%@";
+"InstallationError.UnexpectedCodeSigningIdentity" = "Xcode scaricato non ha l'identità di firma corretta.\nGot:\n%@\n%@\Ci aspettiamo:\n%@\n%@";
+"InstallationError.UnsupportedFileFormat" = "Xcodes non supporta (per ora) l'installazione di Xcode dal formato %@ .";
+"InstallationError.MissingSudoerPassword" = "Manca la password. Prova di nuovo.";
+"InstallationError.UnavailableVersion" = "Non trovo la versione %@.";
+"InstallationError.NoNonPrereleaseVersionAvailable" = "Non sono disponibili versioni non-prerelease.";
+"InstallationError.NoPrereleaseVersionAvailable" = "Non sono disponibili versioni prerelease.";
+"InstallationError.MissingUsernameOrPassword" = "Mancano username o password. Prova di nuovo";
+"InstallationError.VersionAlreadyInstalled" = "%@ è già installato in %@";
+"InstallationError.InvalidVersion" = "%@ non è una versione valida.";
+"InstallationError.VersionNotInstalled" = "%@ non è installato.";
+"InstallationError.PostInstallStepsNotPerformed.Installed" = "L'installazione è completata, ma alcuni comandi di post installazione non sono partiti automaticamente. Verranno lanciati quando aprirai Xcode %@ per la prima volta.";
+"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "L'installazione è completata, ma alcuni comandi di post installazione non sono partiti automaticamente. Xcodes lancia questi comandi con un aiutante privilegiato, che sembra non essere installato. Puoi instlalarlo da Preferenze > Avanzate.\n\nTVerranno lanciati quando aprirai Xcode %@ per la prima volta.";
+
+// Installation Steps
+"Downloading" = "Scaricando";
+"Unarchiving" = "Espandendo (Potrà metterci un po')";
+"Moving" = "Sposto in %@";
+"TrashingArchive" = "Sposto archivio nel Cestino";
+"CheckingSecurity" = "Verifica di sicurezza";
+"Finishing" = "Completando";
+
+// Notifications
+"Notification.NewVersionAvailable" = "Una nuova versione è disponibile";
+"Notification.FinishedInstalling" = "Ho terminato l'installazione";
+
+
+"HelperClient.error" = "Non riesco a comunicare con l'aiutante privilegiato.";
+///++
+// Notifications
+"Notification.NewXcodeVersion.Title" = "Nuove versioni di Xcode";
+"Notification.NewXcodeVersion.Body" = "Nuove versioni di Xcode disponibili per il download.";
