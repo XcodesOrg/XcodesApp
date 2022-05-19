@@ -9,7 +9,7 @@
 // Common
 "Install" = "安装";
 "InstallDescription" = "安装此版本";
-"RevealInFinder" = "在 Finder 中显示";
+"RevealInFinder" = "在访达中显示";
 "Active" = "启用的版本";
 "MakeActive" = "启用";
 "Open" = "打开";
