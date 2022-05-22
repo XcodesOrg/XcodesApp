@@ -1,0 +1,218 @@
+// Menu
+"Menu.About" = "Xcodes 정보";
+"Menu.CheckForUpdates" = "업데이트 확인...";
+"Menu.Acknowledgements" = "Xcodes 법적고지";
+"Menu.GitHubRepo" = "Xcodes GitHub 저장소";
+"Menu.ReportABug" = "버그 제보하기";
+"Menu.RequestNewFeature" = "새로운 기능 요청하기";
+
+// Common
+"Install" = "설치";
+"InstallDescription" = "이 버전 설치하기";
+"RevealInFinder" = "Finder에서 보기";
+"Active" = "기본 버전으로 사용 중";
+"MakeActive" = "기본 버전으로 만들기";
+"Open" = "열기";
+"OpenDescription" = "이 버전 열기";
+"CopyPath" = "경로 복사하기";
+"CreateSymLink" = "Xcode.app과 같은 Symlink 만들기";
+"Uninstall" = "제거";
+"Selected" = "선택됨";
+"Select" = "선택";
+"Cancel" = "취소";
+"Next" = "다음";
+"Continue" = "계속하기";
+"Close" = "닫기";
+"OK" = "확인";
+
+// Info Pane
+"IdenticalBuilds" = "동일한 빌드";
+"IdenticalBuilds.help" = "가끔 사전 출시 (prerelease) 버전과 출시 버전이 완전히 동일한 빌드인 경우가 있습니다. Xcodes는 자동으로 이 버전들을 함께 표시합니다.";
+
+"ReleaseDate" = "출시일";
+"ReleaseNotes" = "릴리즈 노트";
+"ReleaseNotes.help" = "릴리즈 노트 보기";
+"Compatibility" = "호환성";
+"MacOSRequirement" = "macOS %@ 또는 이후 버전";
+"SDKs" = "SDKs";
+"Compilers" = "컴파일러";
+"DownloadSize" = "다운로드 크기";
+"NoXcodeSelected" = "선택된 Xcode 없음";
+
+// Installation Steps
+// When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
+// So if changing order, make sure the positional specficier is retained. ex: "%3$@: Step %1$d of %2$d"
+"InstallationStepDescription" = "%1$d / %2$d 단계: %3$@";
+"DownloadingPercentDescription" = "다운로드 중: %d%% 완료";
+"StopInstallation" = "설치 중지";
+"DownloadingError" = "다운로드 정보를 찾을 수 없음";
+
+// About
+"VersionWithBuild" = "버전 %@ (%@)";
+"GithubRepo" = "GitHub 저장소";
+"Acknowledgements" = "Acknowledgements";
+"UnxipExperiment" = "Unxip 실험";
+"License" = "라이센스";
+
+// General Preference Pane
+"General" = "일반";
+"AppleID" = "Apple ID";
+"SignIn" = "로그인하기";
+"Notifications" = "알림";
+
+// Updates Preference Pane
+"Updates" = "업데이트";
+"Versions" = "버전";
+"AutomaticInstallNewVersion" = "새 Xcode 버전 자동으로 설치";
+"IncludePreRelease" = "사전 출시/베타 버전 포함";
+"AppUpdates" = "Xcodes.app 업데이트";
+"CheckForAppUpdates" = "업데이트 자동 확인";
+"CheckNow" = "지금 확인하기";
+"LastChecked" = "마지막 확인 시점: %@";
+"Never" = "확인하지 않음";
+
+// Advanced Preference Pane
+"Advanced" = "고급";
+"LocalCachePath" = "로컬 캐시 경로";
+"LocalCachePathDescription" = "Xcodes는 사용 가능한 Xcode 버전을 캐시하고 임시로 디렉토리에 새 버전을 다운로드 합니다.";
+"Change" = "변경";
+"Active/Select" = "기본 버전/선택";
+"AutomaticallyCreateSymbolicLink" = "Xcodes.app에 대한 심볼릭 링크 자동 생성";
+"AutomaticallyCreateSymbolicLinkDescription" = "Xcode 버전을 기본 버전(활성)/선택됨 상태로 만들 때 설치 디렉토리에 Xcode.app이라는 심볼릭 링크를 만들어 보세요.";
+"DataSource" = "데이터 소스";
+"DataSourceDescription" = "Apple 데이터 소스는 Apple Developer 웹사이트를 스크랩합니다. Apple Developer에는 항상 사용 가능한 최신 출시 버전이 표시되지만 취약한 면이 있습니다.\n\nXcode Releases는 비공식적인 Xcode 출시 버전 목록입니다. Xcode Releases에서는 정리된 데이터를 제공하며, Apple에서 쉽게 구할 수 없는 정보를 포함하며 Apple이 Apple Developer를 재설계할 경우에도 안전할 수 있습니다.";
+"Downloader" = "다운로더";
+"DownloaderDescription" = "aria2는 최대 16 개의 연결을 사용하여 URLSession보다 3~5배 더 빠르게 Xcode를 다운로드합니다. GPLv2 라이센스를 준수하기 위해 Xcodes 내 소스 코드와 함께 실행 파일 번들로 제공됩니다.\n\nURLSession은 URL 요청을 만들기 위한 기본 Apple API입니다.";
+"PrivilegedHelper" = "권한을 가진 도우미 (Privileged Helper)";
+"PrivilegedHelperDescription" = "Xcodes는 별도의 권한을 가진 도우미를 사용하여 작업을 루트로서 수행합니다. 설치 후 단계와 xcode-select로 Xcode 버전을 전환하는 것과 같이 커맨드 라인에서 sudo가 필요한 작업이 이에 해당합니다.\n\n설치하려면 macOS 계정 암호를 입력하라는 메시지가 표시됩니다.";
+"HelperInstalled" = "도우미 설치됨";
+"HelperNotInstalled" = "도우미 설치되지 않음";
+"InstallHelper" = "도우미 설치";
+
+// Experiment Preference Pane
+"Experiments" = "실험실";
+"FasterUnxip" = "더 빠른 Unxip";
+"UseUnxipExperiment" = "unxipping 시 실험 기능 사용";
+"FasterUnxipDescription" = "@_saagarjha님 덕분에 이 실험 기능을 이용하면 일부 시스템에서 압축 해제 속도를 최대 70%까지 향상시킬 수 있습니다.\n\n이를 수행하는 방법에 대한 자세한 내용은 unxip 저장소 (https://github.com/saagarjha/unxip)에서 확인할 수 있습니다.";
+
+// Notifications
+"AccessGranted" = "접근 권한이 부여되었습니다. Xcodes에서 알림을 받게 됩니다.";
+"AccessDenied" = "⚠️ 접근 권한이 부여되지 않았습니다 ⚠️\n\n 접근을 허용하려면 알림 설정을 열고 Xcodes를 선택하여 알림을 허용해주세요.";
+"NotificationSettings" = "알림 설정";
+"EnableNotifications" = "알림 활성화";
+
+// SignIn
+"SignInWithApple" = "Apple ID로 로그인하세요.";
+"AppleID" = "AppleID:";
+"Password" = "비밀번호:";
+"Required" = "필수 입력";
+"SignOut" = "로그아웃";
+
+// SMS/2FA
+"DigitCodeDescription" = "신뢰할 수 있는 장치 중 하나에서 %d 자리 코드를 입력하세요.";
+"SendSMS" = "SMS 보내기";
+"EnterDigitCodeDescription" = "%@(으)로 전송된 %d 자리 코드를 입력하세요.";
+"SelectTrustedPhone" = "SMS를 통해 %d 자리 코드를 수신하려면 신뢰할 수 있는 전화번호를 선택하세요.";
+"NoTrustedPhones" = "계정에 신뢰할 수 있는 전화번호가 없지만 이중 인증(2FA)에 필요합니다.\n\nhttps://support.apple.com/en-ca/HT204915를 참조하세요.";
+
+// MainWindow
+"UpdatedAt" = "마지막 업데이트 시점";
+
+// ToolBar
+"Login" = "로그인";
+"LoginDescription" = "로그인 창 열기";
+"Refresh" = "갱신";
+"RefreshDescription" = "Xcode 목록 갱신";
+"All" = "전체";
+"Release" = "출시 버전";
+"ReleaseOnly" = "출시 버전만";
+"Beta" = "베타";
+"BetaOnly" = "베타만";
+"Filter" = "필터";
+"FilterAvailableDescription" = "이용 가능한 버전만 보기";
+"FilterInstalledDescription" = "설치한 버전만 보기";
+"Info" = "정보";
+"InfoDescription" = "정보창 표시 또는 숨기기";
+"Preferences" = "환경설정";
+"PreferencesDescription" = "환경설정 열기";
+"Search" = "검색하기...";
+"SearchDescription" = "목록 검색하기";
+
+// List
+"ActiveVersionDescription" = "기본 버전으로 사용 중";
+"MakeActiveVersionDescription" = "기본 버전으로 만들기";
+
+// Alerts
+// Uninstall
+"Alert.Uninstall.Title" = "Xcode %@을 제거하시겠습니까?";
+"Alert.Uninstall.Message" = "휴지통으로 이동되지만 비워지지는 않습니다.";
+"Alert.Uninstall.Error.Title" = "Xcode를 제거할 수 없음";
+
+// Cancel Install
+"Alert.CancelInstall.Title" = "Xcode %@ 설치를 중지하시겠습니까?";
+"Alert.CancelInstall.Message" = "진행된 모든 사항은 삭제됩니다";
+"Alert.CancelInstall.PrimaryButton" = "설치 중지";
+
+// Privileged Helper
+"Alert.PrivilegedHelper.Title" = "권한을 가진 도우미 (Privileged Helper)";
+"Alert.PrivilegedHelper.Message" = "Xcodes는 별도의 권한을 가진 도우미를 사용하여 작업을 루트로서 수행합니다. 설치 후 단계와 xcode-select로 Xcode 버전을 전환하는 것과 같이 커맨드 라인에서 sudo가 필요한 작업이 이에 해당합니다.\n\n설치하려면 macOS 계정 암호를 입력하라는 메시지가 표시됩니다.";
+"Alert.PrivilegedHelper.Error.Title" = "도우미를 설치할 수 없음";
+
+// Min MacOS Supported
+"Alert.MinSupported.Title" = "최소 요건 충족되지 않음";
+"Alert.MinSupported.Message" = "Xcode %@는 MacOS %@이(가) 필요하지만 MacOS %@을(를) 실행 중입니다. 그래도 설치하시겠습니까?";
+
+// Install
+"Alert.Install.Error.Title" = "Xcode를 설치할 수 없음";
+"Alert.InstallArchive.Error.Title" = "아카이브된 Xcode를 설치할 수 없음";
+
+// Update
+"Alert.Update.Error.Title" = "선택된 Xcode를 업데이트할 수 없음";
+
+// Active/Select
+"Alert.Select.Error.Title" = "Xcode를 선택할 수 없음";
+
+// Symbolic Links
+"Alert.SymLink.Title" = "심볼릭 링크를 생성할 수 없음";
+"Alert.SymLink.Message" = "Xcode.app이 존재하며 심볼릭 링크가 아닙니다.";
+
+// Post install
+"Alert.PostInstall.Title" = "설치 후 단계를 수행할 수 없음";
+
+// InstallationErrors
+"InstallationError.DamagedXIP" = "아카이브 \"%@\"이(가) 손상되어 확장할 수 없습니다.";
+"InstallationError.NotEnoughFreeSpaceToExpandArchive" = "현재 볼륨에 여유 공간이 충분하지 않기 때문에 아카이브 \"%@\"을(를) 확장할 수 없습니다.\n\n아카이브를 확장하기 위해 더 많은 공간을 확보한 다음 Xcode %@을(를) 다시 설치하여 중단된 위치에서 설치를 시작하세요.";
+"InstallationError.FailedToMoveXcodeToApplications" = "Xcode를 %@ 디렉토리로 이동하지 못했습니다.";
+"InstallationError.FailedSecurityAssessment" = "Xcode %@이(가) 다음과 같이 보안 평가에 실패했습니다.\n%@\n그래도 사용하려는 경우 %@에 설치된 상태로 유지됩니다.";
+"InstallationError.CodesignVerifyFailed" = "다운로드한 Xcode가 다음과 같이 코드 서명 확인에 실패했습니다.\n%@";
+"InstallationError.UnexpectedCodeSigningIdentity" = "다운로드한 Xcode에 예상된 코드 서명 ID가 없습니다.\n받은 값:\n%@\n%@\n예상된 값:\n%@\n%@";
+"InstallationError.UnsupportedFileFormat" = "Xcodes는 (아직) %@ 파일 형식에서 Xcode 설치를 지원하지 않습니다.";
+"InstallationError.MissingSudoerPassword" = "비밀번호가 입력되지 않았습니다. 다시 시도해 주세요.";
+"InstallationError.UnavailableVersion" = "%@ 버전을 찾을 수 없습니다.";
+"InstallationError.NoNonPrereleaseVersionAvailable" = "사전 출시 버전 이외에 사용 가능한 버전이 없습니다.";
+"InstallationError.NoPrereleaseVersionAvailable" = "사용 가능한 사전 출시 버전이 없습니다.";
+"InstallationError.MissingUsernameOrPassword" = "사용자 이름 또는 비밀번호가 입력되지 않았습니다. 다시 시도해 주세요.";
+"InstallationError.VersionAlreadyInstalled" = "%@은(는) 이미 %@에 설치되어 있습니다.";
+"InstallationError.InvalidVersion" = "%@은(는) 유효한 버전 번호가 아닙니다.";
+"InstallationError.VersionNotInstalled" = "%@이(가) 설치되지 않았습니다.";
+"InstallationError.PostInstallStepsNotPerformed.Installed" = "설치가 완료되었지만 일부 설치 후 단계가 자동으로 수행되지 않았습니다. 이는 Xcode %@를 처음 실행할 때 수행됩니다.";
+"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "설치가 완료되었지만 일부 설치 후 단계가 자동으로 수행되지 않았습니다. Xcodes는 설치되지 않은 것으로 보이는 권한을 가진 도우미 (Privileged helper)를 사용하여 이러한 단계를 수행합니다. 권한을 가진 도우미는 환경설정 > 고급에서 설치할 수 있습니다.\n\n이 단계는 Xcode %@를 처음 실행할 때 수행됩니다.";
+
+// Installation Steps
+"Downloading" = "다운로드 중";
+"Unarchiving" = "언아카이빙 중 (시간이 좀 걸릴 수 있습니다)";
+"Moving" = "%@(으)로 이동 중";
+"TrashingArchive" = "아카이브를 휴지통으로 이동";
+"CheckingSecurity" = "보안 확인";
+"Finishing" = "마무리하는 중";
+
+// Notifications
+"Notification.NewVersionAvailable" = "새 버전을 사용할 수 있습니다";
+"Notification.FinishedInstalling" = "설치 완료";
+
+
+"HelperClient.error" = "권한을 가진 도우미 (Privileged helper)와의 통신할 수 없습니다.";
+///++
+// Notifications
+"Notification.NewXcodeVersion.Title" = "새 Xcode 버전";
+"Notification.NewXcodeVersion.Body" = "새로운 Xcode 버전을 다운로드 할 수 있습니다.";
