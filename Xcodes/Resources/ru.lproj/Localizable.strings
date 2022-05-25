@@ -1,8 +1,8 @@
 // Menu
 "Menu.About" = "О Xcodes";
 "Menu.CheckForUpdates" = "Проверить наличие обновлений...";
-"Menu.Acknowledgements" = "Благодарности Xcodes";
-"Menu.GitHubRepo" = "Репозиторий Xcodes GitHub";
+"Menu.Acknowledgements" = "Юридическая информация Xcodes";
+"Menu.GitHubRepo" = "GitHub-репозиторий Xcodes";
 "Menu.ReportABug" = "Сообщить об ошибке";
 "Menu.RequestNewFeature" = "Запросить новую функцию";
 
@@ -10,9 +10,9 @@
 "Install" = "Установить";
 "InstallDescription" = "Установить эту версию";
 "RevealInFinder" = "Показать в Finder";
-"Active" = "Активный";
-"MakeActive" = "Сделать активным";
-"Open" = "Открыты";
+"Active" = "Активно";
+"MakeActive" = "Активировать";
+"Open" = "Открыть";
 "OpenDescription" = "Открыть эту версию";
 "CopyPath" = "Копировать путь";
 "CreateSymLink" = "Создать Symlink к Xcode.app";
@@ -20,7 +20,7 @@
 "Selected" = "Выбрано";
 "Select" = "Выбрать";
 "Cancel" = "Отмена";
-"Next" = "Следующий";
+"Next" = "Далее";
 "Continue" = "Продолжить";
 "Close" = "Закрыть";
 
@@ -49,12 +49,12 @@
 // About
 "VersionWithBuild" = "Версия %@ (%@)";
 "GithubRepo" = "Репозиторий GitHub";
-"Acknowledgements" = "Благодарности";
-"UnxipExperiment" = "Unxip эксперимент";
+"Acknowledgements" = "Юридическая информация";
+"UnxipExperiment" = "Экспериментальный Unxip";
 "License" = "Лицензия";
 
 // General Preference Pane
-"General" = "Общий";
+"General" = "Общее";
 "AppleID" = "Apple ID";
 "SignIn" = "Войти";
 "Notifications" = "Уведомления";
@@ -66,14 +66,14 @@
 "IncludePreRelease" = "Включить предварительные/бета-версии";
 "AppUpdates" = "Обновления Xcodes.app";
 "CheckForAppUpdates" = "Автоматически проверять наличие обновлений приложения";
-"CheckNow" = "Проверь Cейчас";
+"CheckNow" = "Проверить сейчас";
 "LastChecked" = "Последняя проверка: %@";
 "Never" = "Никогда";
 
 // Advanced Preference Pane
-"Advanced" = "Дополнительные";
-"LocalCachePath" = "Путь к локальному кэшу";
-"LocalCachePathDescription" = "Xcodes кэширует доступные версии Xcode и временно загружает новые версии в директорию";
+"Advanced" = "Дополнительно";
+"LocalCachePath" = "Путь к локальному кешу";
+"LocalCachePathDescription" = "Xcodes кеширует доступные версии Xcode и временно загружает новые версии в директорию";
 "Change" = "Изменить";
 "Active/Select" = "Активировать/Выбрать";
 "AutomaticallyCreateSymbolicLink" = "Автоматически сосдавит символическую ссылку к Xcodes.app";
@@ -90,13 +90,13 @@
 
 // Experiment Preference Pane
 "Experiments" = "Эксперименты";
-"FasterUnxip" = "Быстрее Unxip";
-"UseUnxipExperiment" = "При unxip используйте эксперимент";
+"FasterUnxip" = "Быстрый Unxip";
+"UseUnxipExperiment" = "При unxip будет использован экспериментальный функционал";
 "FasterUnxipDescription" = "Благодаря @_saagarjha этот эксперимент может увеличить скорость распаковки до 70% для некоторых систем.\n\nДополнительную информацию о том, как это достигается, можно увидеть в репозитории unxip — https://github.com/saagarjha/unxip. ";
 
 // Notifications
 "AccessGranted" = "Доступ разрешен. Вы будете получать уведомления от Xcodes.";
-"AccessDenied" = "⚠️ Доступ Oтказан ⚠️\n\nПожалуйста, откройте настройки уведомлений и выберите Xcodes, если хотите разрешить доступ.";
+"AccessDenied" = "⚠️ Отказано в доступе ⚠️\n\nПожалуйста, откройте настройки уведомлений и выберите Xcodes, чтобы разрешить доступ.";
 "NotificationSettings" = "Настройки уведомлений";
 "EnableNotifications" = "Включить уведомления";
 
@@ -109,7 +109,7 @@
 
 // SMS/2FA
 "DigitCodeDescription" = "Введите %d цифровой код с одного из ваших доверенных устройств:";
-"SendSMS" = "Отправить смс";
+"SendSMS" = "Отправить SMS";
 "EnterDigitCodeDescription" = "Введите %d цифровой код, отправленный на %@: ";
 "SelectTrustedPhone" = "Выберите доверенный номер телефона для получения %d цифрового кода по SMS:";
 "NoTrustedPhones" = "В вашем аккаунтe нет доверенных телефонных номеров, но они необходимы для двухфакторной аутентификации.\n\nСм. https://support.apple.com/en-ca/HT204915.";
@@ -119,9 +119,9 @@
 
 // ToolBar
 "Login" = "Логин";
-"LoginDescription" = "Открыть Логин";
+"LoginDescription" = "Открыть окно логина";
 "Refresh" = "Обновить";
-"RefreshDescription" = "Обновить Cписок Xcode";
+"RefreshDescription" = "Обновить список Xcode";
 "All" = "Все";
 "Release" = "Pелиз";
 "ReleaseOnly" = "Только Pелиз";
@@ -135,16 +135,16 @@
 "Preferences" = "Hастройки";
 "PreferencesDescription" = "Открыть настройки";
 "Search" = "Поиск...";
-"SearchDescription" = "Список поиска";
+"SearchDescription" = "Поиск по списку";
 
 // List
 "ActiveVersionDescription" = "Это активная версия";
-"MakeActiveVersionDescription" = "Сделать это активной версией";
+"MakeActiveVersionDescription" = "Сделать эту версию активной";
 
 // Alerts
 // Uninstall
 "Alert.Uninstall.Title" = "Удалить Xcode %@?";
-"Alert.Uninstall.Message" = "Он будет перемещен в мусорное ведро, но не будет очищен.";
+"Alert.Uninstall.Message" = "Файлы будут перемещены в корзину, но не будут очищены из неё автоматически.";
 "Alert.Uninstall.Error.Title" = "Невозможно удалить Xcode";
 
 // Cancel Install
@@ -158,8 +158,8 @@
 "Alert.PrivilegedHelper.Error.Title" = "Невозможно установить помощник";
 
 // Min MacOS Supported
-"Alert.MinSupported.Title" = "Минимальные требования не соблюдены";
-"Alert.MinSupported.Message" = "Xcode %@ требует MacOS %@, но вы используете MacOS %@, вы все еще хотите установить?";
+"Alert.MinSupported.Title" = "Текущая macOS не соответствует минимальным требованиям";
+"Alert.MinSupported.Message" = "Xcode %@ требует macOS %@, но вы используете macOS %@, вы все еще хотите установить?";
 
 // Install
 "Alert.Install.Error.Title" = "Невозможно установить Xcode";
@@ -176,7 +176,7 @@
 "Alert.SymLink.Message" = "Xcode.app существует и не является символической ссылкой";
 
 // Post install
-"Alert.PostInstall.Title" = "Невозможно выполнить дальний шаги после установки";
+"Alert.PostInstall.Title" = "Невозможно выполнить дополнительные шаги после установки";
 
 // InstallationErrors
 "InstallationError.DamagedXIP" = "Архив \"%@\" поврежден и не может быть расширен.";
@@ -195,13 +195,13 @@
 "InstallationError.InvalidVersion" = "%@ не является допустимым номером версии.";
 "InstallationError.VersionNotInstalled" = "%@ не установлен.";
 "InstallationError.PostInstallStepsNotPerformed.Installed" = "Установка завершена, но некоторые шаги после установки не были выполнены автоматически. Они будут выполнены при первом запуске Xcode %@.";
-"InstallationError.PostInstallStepsNotPerformed.NotInstalled" = "Установка была завершена, но некоторые шаги после установки не были выполнены автоматически. Xcodes выполняет эти шаги с привилегированным помощником, который, похоже, не установлен. Вы можете установить его из Настройки > Дополнительные.\n\nЭти шаги будут выполнены при первом запуске Xcode %@.";
+"InstallationError.PostInstallStepsNotPerformed.NotInstalled" = "Установка была завершена, но некоторые шаги после установки не были выполнены автоматически. Xcodes выполняет эти шаги с привилегированным помощником, который, похоже, не установлен. Вы можете установить его из Настройки > Дополнительно.\n\nЭти шаги будут выполнены при первом запуске Xcode %@.";
 
 // Installation Steps
 "Downloading" = "Скачивание";
 "Unarchiving" = "Разархивирование (это может занять некоторое время)";
 "Moving" = "Перемещение в %@";
-"TrashingArchive" = "Перемещение архива в мусорную корзину";
+"TrashingArchive" = "Перемещение архива в корзину";
 "CheckingSecurity" = "Проверка безопасности";
 "Finishing" = "Завершение";
 
