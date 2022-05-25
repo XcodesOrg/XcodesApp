@@ -174,6 +174,7 @@
 		58F743C02810A34900EEC0F3 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63EAA4EA259944450046AB8F /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		9D3C3AF7282EBE3300CB0D37 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		AAB037D32839BD4700017680 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B648F22B2810C1130096781B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommands.swift; sourceTree = "<group>"; };
 		CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateUpdateTests.swift; sourceTree = "<group>"; };
@@ -699,6 +700,7 @@
 				ru,
 				es,
 				tr,
+				ko,
 			);
 			mainGroup = CAD2E7952449574E00113D76;
 			packageReferences = (
@@ -902,6 +904,7 @@
 				4A5AAA1D28118FAD00528958 /* ru */,
 				58F743C02810A34900EEC0F3 /* es */,
 				9D3C3AF7282EBE3300CB0D37 /* tr */,
+				AAB037D32839BD4700017680 /* ko */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
