@@ -1,0 +1,218 @@
+// Menu
+"Menu.About" = "Xcodes Hakkında";
+"Menu.CheckForUpdates" = "Güncellemeleri Denetle...";
+"Menu.Acknowledgements" = "Xcodes Teşekkür";
+"Menu.GitHubRepo" = "Xcodes GitHub Repo";
+"Menu.ReportABug" = "Bir Sorun Bildir";
+"Menu.RequestNewFeature" = "Yeni Özellik Talep Et";
+
+// Common
+"Install" = "Yükle";
+"InstallDescription" = "Bu sürümü indir";
+"RevealInFinder" = "Finder'da Görüntüle";
+"Active" = "Aktif";
+"MakeActive" = "Etkinleştir";
+"Open" = "Aç";
+"OpenDescription" = "Bu sürümü aç";
+"CopyPath" = "Yolu Kopyala";
+"CreateSymLink" = "Xcode.app olarak sembolik link yarat";
+"Uninstall" = "Kaldır";
+"Selected" = "Seçili";
+"Select" = "Seç";
+"Cancel" = "İptal Et";
+"Next" = "Sonraki";
+"Continue" = "Devam Et";
+"Close" = "Kapat";
+"OK" = "OK";
+
+// Info Pane
+"IdenticalBuilds" = "Benzer Yapılar";
+"IdenticalBuilds.help" = " Bazen prerelase ve release sürümleri aynı yapı üzerindedir. Xcodes bu sürümleri birarada gösterecektir.";
+
+"ReleaseDate" = "Yayınlanma Tarihi";
+"ReleaseNotes" = "Yayınlanma Notları";
+"ReleaseNotes.help" = "Yayınlanma Notlarını Görüntüle";
+"Compatibility" = "Uyumluluk";
+"MacOSRequirement" = "macOS %@ veya sonrasını gerektirir";
+"SDKs" = "SDKler";
+"Compilers" = "Derleyiciler";
+"DownloadSize" = "İndirme Boyutu";
+"NoXcodeSelected" = "Bir Xcode Seçilmedi";
+
+// Installation Steps
+// When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
+// So if changing order, make sure the positional specficier is retained. ex: "%3$@: Step %1$d of %2$d"
+"InstallationStepDescription" = "Adım %1$d/%2$d: %3$@";
+"DownloadingPercentDescription" = "İndirme: %d%% tamamlandı";
+"StopInstallation" = "İndirmeyi durdur";
+"DownloadingError" = "İndirme bilgisi bulunamadı";
+
+// About
+"VersionWithBuild" = "Sürüm %@ (%@)";
+"GithubRepo" = "GitHub Repo";
+"Acknowledgements" = "Teşekkür";
+"UnxipExperiment" = "Tecrübeyi çıkart";
+"License" = "Lisans";
+
+// General Preference Pane
+"General" = "Genel";
+"AppleID" = "Apple ID";
+"SignIn" = "Giriş Yap";
+"Notifications" = "Bildirimler";
+
+// Updates Preference Pane
+"Updates" = "Güncellemeler";
+"Versions" = "Sürümler";
+"AutomaticInstallNewVersion" = "Xcode'un yeni versiyonlarını otomatik yükle";
+"IncludePreRelease" = "prerelease/beta sürümlerini dahil et";
+"AppUpdates" = "Xcodes.app Güncellemeleri";
+"CheckForAppUpdates" = "Uygulama güncellemelerini otomatik kontrol et";
+"CheckNow" = "Kontrol Et";
+"LastChecked" = "Son kontrol: %@";
+"Never" = "Daha Yeni";
+
+// Advanced Preference Pane
+"Advanced" = "Gelişmiş";
+"LocalCachePath" = "Lokal Önbellek Konumu";
+"LocalCachePathDescription" = "Xcodes, uygun Xcode sürümlerini ve geçici yeni indirilenleri bir klasörde önbelleğe alır";
+"Change" = "Değiştir";
+"Active/Select" = "Aktif/Seç";
+"AutomaticallyCreateSymbolicLink" = "Xcodes.app'in sembolik linkini otomatik oluştur.";
+"AutomaticallyCreateSymbolicLinkDescription" = "Bir Xcode sürümünü Aktif/Seç yaparken Xcode.app ismindeki uygulamanın sembolik linkini yükleme klasörüne otomatik oluşturmayı dene";
+"DataSource" = "Veri Kaynağı";
+"DataSourceDescription" = "Apple veri kaynağı Apple'ın geliştirici sitesini inceliyor. Uygun olan en son sürümleri gösterir, ama biraz daha hassastır.\n\nXcode Releases, Xcode sürümlerinin bulunduğu resmi olmayan bir listedir. Data düzenli bir formata sahip bilgileri barındırır, Apple tarafında olmayan ek bilgileri içerir ve Apple'ın ileride sitesini değiştireceği için bozabileceği bir kaynak değildir.";
+"Downloader" = "Yükleyici";
+"DownloaderDescription" = "aria2 16ya kadar bağlantı kullanarak Xcode'u URLSession'a göre 3-5 kat daha hızlı indirir. Çalıştırılabilir bir dosya olarak Bundle'a dahildir ve kaynak dosyaları GPLv2 lisansıyla uyumlu olması açısından Xcode içerisinde yer alır.\n\nURLSession Apple'ın URL istekleri oluşturmak için sunduğu varsayılan API'dır.";
+"PrivilegedHelper" = "Ayrıcalıklı Yardımcı";
+"PrivilegedHelperDescription" ="Xcodes, root görevlerini yerine getirmek için bir Ayrıcalıklı yardımcı aracı kullanır. Bunlar komut satırındaki sudo gerektiren, yükleme sonrası adımlarını sağlayan ve Xcode sürümü değiştiren xcode-select gibi komutlardan ibarettir.\n\nBunu yüklemek için macOS hesap şifrenizi girmeniz istenecektir.";
+"HelperInstalled" = "Yardımcı yüklendi";
+"HelperNotInstalled" = "Yardımcı yüklenmedi";
+"InstallHelper" = "Yardımcıyı yükle";
+
+// Experiment Preference Pane
+"Experiments" = "Deneyler";
+"FasterUnxip" = "Daha Hızlı Unxip";
+"UseUnxipExperiment" = "Unxip yaparken dene";
+"FasterUnxipDescription" = "@_saagarjha sayesinde bu deney bazı sistemlerde unxip sürecini %70'e kadar hızlandırabilir.\n\nBu işlemin nasıl yapıldığına dair ayrıntılara unxip repo .- https://github.com/saagarjha/unxip adresinden bakabilirsiniz";
+
+// Notifications
+"AccessGranted" = "Erişim Tanımlandı. Xcodes'dan bildirimler alacaksınız.";
+"AccessDenied" = "⚠️ Erişim Reddedildi ⚠️\n\nEğer bildirimler için erişim vermek istiyorsanız lütfen bildirim ayarlarını açın ve Xcodes uygulamasını seçin.";
+"NotificationSettings" = "Bildirim Ayarları";
+"EnableNotifications" = "Bildirimleri Etkinleştir";
+
+// SignIn
+"SignInWithApple" = "Apple ID ile Giriş Yap.";
+"AppleID" = "AppleID:";
+"Password" = "Şifre:";
+"Required" = "Gerekli";
+"SignOut" = "Oturumu Kapat";
+
+// SMS/2FA
+"DigitCodeDescription" = "Güvenilir cihazından aldığın %d rakamlı kodu gir:";
+"SendSMS" = "SMS Gönder";
+"EnterDigitCodeDescription" = "%@ kaynağından gönderilen %d rakamlı kodu gir: ";
+"SelectTrustedPhone" = "%d rakamlı kodu SMS olarak almak için güvenilir telefon numarasını seç:";
+"NoTrustedPhones" = "Hesabına tanımlı güvenli bir telefon numarası yok, fakat iki aşamalı doğrulama için gerekmektedir.\n\nDaha fazlası için https://support.apple.com/tr-tr/HT204915 adresine bakın.";
+
+// MainWindow
+"UpdatedAt" = "Güncellenme Zamanı";
+
+// ToolBar
+"Login" = "Giriş";
+"LoginDescription" = "Girişi Aç";
+"Refresh" = "Yenile";
+"RefreshDescription" = "Xcode Listesini Yenile";
+"All" = "Tümü";
+"Release" = "Kararlı Sürüm";
+"ReleaseOnly" = "Yalnızca Kararlı Sürüm";
+"Beta" = "Beta";
+"BetaOnly" = "Yalnızca Beta";
+"Filter" = "Filtre";
+"FilterAvailableDescription" = "Uygun sürümleri filtrele";
+"FilterInstalledDescription" = "Yüklü sürümleri filtrele";
+"Info" = "Bilgi";
+"InfoDescription" = "Bilgi panelini göster ya da gizle";
+"Preferences" = "Tercihler";
+"PreferencesDescription" = "Tercihleri Aç";
+"Search" = "Ara...";
+"SearchDescription" = "Arama listesi";
+
+// List
+"ActiveVersionDescription" = "Bu aktif sürümdür";
+"MakeActiveVersionDescription" = "Bu sürümü aktif et";
+
+// Alerts
+// Uninstall
+"Alert.Uninstall.Title" = "Xcode %@ sürümünü Kaldır?";
+"Alert.Uninstall.Message" = "Uygulama Çöp Kutusuna taşınacaktır, fakat silinmeyecektir.";
+"Alert.Uninstall.Error.Title" = "Xcode Kaldırılamadı";
+
+// Cancel Install
+"Alert.CancelInstall.Title" = "Xcode %@ sürümünün yüklenmesini durdurmak istediğinize emin misiniz?";
+"Alert.CancelInstall.Message" = "Herhangi bir ilerleme göz ardı edilecektir.";
+"Alert.CancelInstall.PrimaryButton" = "Yüklemeyi Durdur";
+
+// Privileged Helper
+"Alert.PrivilegedHelper.Title" = "Ayrıcalıklı Yardımcı";
+"Alert.PrivilegedHelper.Message" = "Xcodes, root görevlerini yerine getirmek için bir Ayrıcalıklı yardımcı aracı kullanır. Bunlar komut satırındaki sudo gerektiren, yükleme sonrası adımlarını sağlayan ve Xcode sürümü değiştiren xcode-select gibi komutlardan ibarettir.\n\nBunu yüklemek için macOS hesap şifrenizi girmeniz istenecektir.";
+"Alert.PrivilegedHelper.Error.Title" = "Yardımcı yüklenemedi";
+
+// Min MacOS Supported
+"Alert.MinSupported.Title" = "Minimum gereksinimler karşılanamadı";
+"Alert.MinSupported.Message" = "Xcode %@ macOS %@ sürümünü gerektirir, fakat siz macOS %@ sürümünü kullanıyorsunuz, yine de indirmek istediğinize emin misiniz?";
+
+// Install
+"Alert.Install.Error.Title" = "Xcode yüklenemedi";
+"Alert.InstallArchive.Error.Title" = "Arşivlenmiş Xcode yüklenemedi.";
+
+// Update
+"Alert.Update.Error.Title" = "Seçili Xcode güncellenemedi";
+
+// Active/Select
+"Alert.Select.Error.Title" = "Xcode seçilemedi";
+
+// Symbolic Links
+"Alert.SymLink.Title" = "Uygulama sembolik linki oluşturulamadı";
+"Alert.SymLink.Message" = "Xcode.app zaten var ve bir sembolik link değil";
+
+// Post install
+"Alert.PostInstall.Title" = "Yükleme aşamaları çalıştırılamadı";
+
+// InstallationErrors
+"InstallationError.DamagedXIP" = "\"%@\" arşivi hasar görmüş ve açılamıyor.";
+"InstallationError.NotEnoughFreeSpaceToExpandArchive" = "\"%@\" arşivi açılamıyor çünkü diskte yeterli alan bulunmuyor.\n\nArşivi açmak için daha fazla alan aç ve ondan sonra kaldığın yerden devam ederek Xcode %@ sürümünü tekrar kur.";
+"InstallationError.FailedToMoveXcodeToApplications" = "Xcode %@ klasörüne taşınamadı.";
+"InstallationError.FailedSecurityAssessment" = "Xcode %@ güvenlik görevlerini gerçekleştirirken şu hatayı verdi:\n%@\nYine de devam etmek isterseniz uygulama %@ konumunda bulunmaya devam ediyor.";
+"InstallationError.CodesignVerifyFailed" = "İndirilmiş Xcode imza onayı işleminde şu hatayı verdi:\n%@";
+"InstallationError.UnexpectedCodeSigningIdentity" = "İndirilmiş Xcode beklenilen imza kimliğine sahip değil.\nEldeki:\n%@\n%@\nBeklenen:\n%@\n%@";
+"InstallationError.UnsupportedFileFormat" = "Xcodes henüz Xcodu %@ dosya formatında yüklemeye (henüz) izin vermiyor.";
+"InstallationError.MissingSudoerPassword" = "Eksik şifre. Lütfen tekrar deneyin";
+"InstallationError.UnavailableVersion" = "%@ sürümü bulunamadı.";
+"InstallationError.NoNonPrereleaseVersionAvailable" = "prerelease olmayan sürümler yok.";
+"InstallationError.NoPrereleaseVersionAvailable" = "prerelease sürümleri yok.";
+"InstallationError.MissingUsernameOrPassword" = "Eksik kullanıcı adı veya şifre. Lütfen tekrar deneyin.";
+"InstallationError.VersionAlreadyInstalled" = "%@ zaten %@ konumunda yüklü.";
+"InstallationError.InvalidVersion" = "%@ geçerli bir sürüm numarası değil.";
+"InstallationError.VersionNotInstalled" = "%@ yüklenmedi.";
+"InstallationError.PostInstallStepsNotPerformed.Installed" = "İndirme tamamlandı, fakat bazı indirme sonrası aşamaları tamamlanamadı. Bunlar Xcode %@ uygulamasını ilk açtığınızda gerçekleşecek.";
+"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "İndirme tamamlandı, fakat bazı indirme sonrası aşamaları otomatik tamamlanamadı. Xcodes bu aşamaları bir ayrıcalıklı yardımcı aracı ile gerçekleştirir, ama bu araç yüklenmemiş gözüküyor. Yüklemek için Tercihler > Gelişmiş yolunu kullanabilirsiniz. \n\nBunlar Xcode %@ uygulamasını ilk açtığınızda gerçekleşecek.";
+
+// Installation Steps
+"Downloading" = "İndiriliyor";
+"Unarchiving" = "Arşivden Çıkarılıyor (Bu biraz sürebilir)";
+"Moving" = "%@ Konumuna Taşınıyor";
+"TrashingArchive" = "Arşiv Çöp Kutusuna taşınıyor";
+"CheckingSecurity" = "Güvenlik doğrulaması";
+"Finishing" = "Tamamlanıyor";
+
+// Notifications
+"Notification.NewVersionAvailable" = "Yeni sürüm mevcut";
+"Notification.FinishedInstalling" = "İndirme tamamlandı";
+
+
+"HelperClient.error" = "Yardımcı araç ile iletişim kurulamadı.";
+///++
+// Notifications
+"Notification.NewXcodeVersion.Title" = "Yeni Xcode sürümü";
+"Notification.NewXcodeVersion.Body" = "Yeni Xcode sürümleri indirmek için mevcut.";
