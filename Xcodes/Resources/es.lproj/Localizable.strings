@@ -77,7 +77,7 @@
 "LocalCachePathDescription" = "Xcodes almacena en caché versiones de Xcode disponibles y descargas temporalmente las nuevas versiones en un directorio";
 "Change" = "Cambiar";
 "Active/Select" = "Activar/Seleccionar";
-"AutomaticallyCreateSymbolicLink" = "Crear automáticamente enlace simbólico a Xcodes.app";
+"AutomaticallyCreateSymbolicLink" = "Crear automáticamente enlace simbólico a Xcode.app";
 "AutomaticallyCreateSymbolicLinkDescription" = "Al activar/seleccionar una versión de Xcode, intentará crear un enlace simbólico llamado Xcode.app en el directorio de instalación.";
 "DataSource" = "Fuente de datos";
 "DataSourceDescription" = "La fuente de datos de Apple la extrae de el sitio web de Apple Developer. Siempre mostrará los últimos lanzamientos disponibles, pero es más frágil.\n\nXcode Releases es una lista no oficial de lanzamientos de Xcode. Se proporciona como datos bien estructurados, contiene información adicional que no está disponible fácilmente en Apple y es menos probable que se rompa si Apple rediseña su sitio web para desarrolladores.";

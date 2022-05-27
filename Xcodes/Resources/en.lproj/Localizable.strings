@@ -77,7 +77,7 @@
 "LocalCachePathDescription" = "Xcodes caches available Xcode versions and temporary downloads new versions to a directory";
 "Change" = "Change";
 "Active/Select" = "Active/Select";
-"AutomaticallyCreateSymbolicLink" = "Automatically create symbolic link to Xcodes.app";
+"AutomaticallyCreateSymbolicLink" = "Automatically create symbolic link to Xcode.app";
 "AutomaticallyCreateSymbolicLinkDescription" = "When making an Xcode version Active/Selected, try and create a symbolic link named Xcode.app in the installation directory";
 "DataSource" = "Data Source";
 "DataSourceDescription" = "The Apple data source scrapes the Apple Developer website. It will always show the latest releases that are available, but is more fragile.\n\nXcode Releases is an unofficial list of Xcode releases. It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website.";
