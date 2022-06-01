@@ -196,7 +196,7 @@
 "InstallationError.InvalidVersion" = "%@ non è una versione valida.";
 "InstallationError.VersionNotInstalled" = "%@ non è installato.";
 "InstallationError.PostInstallStepsNotPerformed.Installed" = "L'installazione è completata, ma alcuni comandi di post installazione non sono partiti automaticamente. Verranno lanciati quando aprirai Xcode %@ per la prima volta.";
-"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "L'installazione è completata, ma alcuni comandi di post installazione non sono partiti automaticamente. Xcodes lancia questi comandi con un aiutante privilegiato, che sembra non essere installato. Puoi instlalarlo da Preferenze > Avanzate.\n\nTVerranno lanciati quando aprirai Xcode %@ per la prima volta.";
+"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "L'installazione è completata, ma alcuni comandi di post installazione non sono partiti automaticamente. Xcodes lancia questi comandi con un aiutante privilegiato, che sembra non essere installato. Puoi instlalarlo da Preferenze > Avanzate.\n\nVerranno lanciati quando aprirai Xcode %@ per la prima volta.";
 
 // Installation Steps
 "Downloading" = "Scaricando";
