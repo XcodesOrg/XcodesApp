@@ -8,6 +8,61 @@
             
                 
                     <item>
+                        <title>v1.6.0</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<p>Please follow us on Twitter at <a href="https://twitter.com/xcodesapp">@xcodesapp</a> to be notified when new releases happen!</p>
+
+<h2 id="changes">Changes</h2>
+
+<h3 id="support-for-4-new-languages-thanks-to-all-the-1st-time-contributors---">Support for 4 new languages! Thanks to all the 1st time contributors!   🎉</h3>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Adding Italian localization 🇮🇹  (#229) @gualtierofrigerio</li>
+  <li>Adding Chinese-Simplified localizations. 🇨🇳  (#222) @megabitsenmzq</li>
+  <li>Add Korean Localization 🇰🇷  (#233) @ryan-son</li>
+  <li>Adding Turkish Language 🇹🇷  (#219) @egrimo</li>
+  <li>Update Localizable.strings for Russian language (#234) @duffpod</li>
+  <li>Added a new bottom status bar @MattKiazyk</li>
+  <li>Updated unxip binary to latest @MattKiazyk</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Bump actions/cache from 3.0.2 to 3.0.3 (#236) @dependabot</li>
+</ul>
+
+<!-- sparkle:edSignature=whzvbz/AK1Zv7laaOlBC+O5b2ra1stDa38FI30cA1+KxRExSIve/sf7d0JEBz18rbFBHxO1DpOpIiB5rwZRODQ== -->
+]]></description>
+                        <pubDate>Sun, 05 Jun 2022 02:55:33 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.6.0b14/Xcodes.zip"
+                                    sparkle:version="14"
+                                    sparkle:shortVersionString="1.6.0"
+                                    sparkle:edSignature="whzvbz/AK1Zv7laaOlBC+O5b2ra1stDa38FI30cA1+KxRExSIve/sf7d0JEBz18rbFBHxO1DpOpIiB5rwZRODQ=="
+                                    length="11856667"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v1.5.0</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
