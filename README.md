@@ -31,11 +31,12 @@ Xcodes supports localization in several languages.
 
 The following languages are supported because of the following community users!
 
-|||
-|-|-|
-|French|[@dompepin](https://github.com/dompepin)|
-|Spanish|[@cesartru88](https://github.com/cesartru88)|
-|Russian|[@alexmazlov](https://github.com/alexmazlov)|
+|||||
+|-|-|-|-|
+|French 🇫🇷 |[@dompepin](https://github.com/dompepin)|Italian 🇮🇹 |[gualtierofrigerio](https://github.com/gualtierofrigerio)|
+|Spanish 🇲🇽 |[@cesartru88](https://github.com/cesartru88)|Korean 🇰🇷 |[@ryan-son](https://github.com/ryan-son)|
+|Russian 🇷🇺 |[@alexmazlov](https://github.com/alexmazlov)|Turkish 🇹🇷 |[@egrimo](https://github.com/egrimo)|
+|Hindi 🇮🇳 |[@KGurpreet](https://github.com/KGurpreet)|Chinese-Simplified 🇨🇳|[@megabitsenmzq](https://github.com/megabitsenmzq)|
 
 Want to add more languages? Simply create a PR with the updated strings file. 
 ## Installation
@@ -148,4 +149,4 @@ popd
 
 Made with ❤️ by [Robots & Pencils](http://www.robotsandpencils.com)
 
-[Twitter](https://twitter.com/robotsNpencils) | [GitHub](https://github.com/robotsandpencils)
+[Twitter](https://twitter.com/xcodesApp) | [GitHub](https://github.com/robotsandpencils)
