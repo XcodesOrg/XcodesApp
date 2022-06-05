@@ -37,6 +37,8 @@ struct MainWindow: View {
             isShowingInfoPane: $isShowingInfoPane,
             searchText: $searchText
         )
+        .bottomStatusBar()
+        .padding([.top], 0)
         .navigationSubtitle(subtitleText)
         .frame(minWidth: 600, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
         .emittingError($appState.error, recoveryHandler: { _ in })

@@ -96,6 +96,17 @@ class AppState: ObservableObject {
         savedUsername != nil
     }
     
+    var bottomStatusBarMessage: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        let finishDate = formatter.date(from: "11/06/2022")
+        
+        if Date().compare(finishDate!) == .orderedAscending {
+            return "👨🏻‍💻👩🏼‍💻 Happy WWDC 2022! 👨🏽‍💻🧑🏻‍💻"
+        }
+        return ""
+    }
+    
     // MARK: - Init
     
     init() {
