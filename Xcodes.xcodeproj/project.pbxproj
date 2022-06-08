@@ -293,6 +293,7 @@
 		E8D0296E284B029800647641 /* BottomStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStatusBar.swift; sourceTree = "<group>"; };
 		E8DA461025FAF7FB002E85EF /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepDetailView.swift; sourceTree = "<group>"; };
+		F7F1C606284EA0E600B61317 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -708,6 +709,7 @@
 				tr,
 				ko,
 				it,
+				de,
 			);
 			mainGroup = CAD2E7952449574E00113D76;
 			packageReferences = (
@@ -915,6 +917,7 @@
 				9D3C3AF7282EBE3300CB0D37 /* tr */,
 				AAB037D32839BD4700017680 /* ko */,
 				25E2FA26284769A00014A318 /* it */,
+				F7F1C606284EA0E600B61317 /* de */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

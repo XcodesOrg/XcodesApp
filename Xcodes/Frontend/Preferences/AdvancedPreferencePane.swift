@@ -164,8 +164,9 @@ struct PreferencesGroupBoxStyle: GroupBoxStyle {
             HStack {
                 Spacer()
                 configuration.label
+                    .multilineTextAlignment(.trailing)
             }
-            .frame(width: 120)
+            .frame(width: 128)
             
             VStack(alignment: .leading) {
                 configuration.content
