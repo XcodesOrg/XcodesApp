@@ -37,7 +37,7 @@
 "SDKs" = "SDKler";
 "Compilers" = "Derleyiciler";
 "DownloadSize" = "İndirme Boyutu";
-"NoXcodeSelected" = "Bir Xcode Seçilmedi";
+"NoXcodeSelected" = "Xcode Sürümü Seçilmedi";
 
 // Installation Steps
 // When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
@@ -64,7 +64,7 @@
 "Updates" = "Güncellemeler";
 "Versions" = "Sürümler";
 "AutomaticInstallNewVersion" = "Xcode'un yeni versiyonlarını otomatik yükle";
-"IncludePreRelease" = "prerelease/beta sürümlerini dahil et";
+"IncludePreRelease" = "Prerelease/beta sürümlerini dahil et";
 "AppUpdates" = "Xcodes.app Güncellemeleri";
 "CheckForAppUpdates" = "Uygulama güncellemelerini otomatik kontrol et";
 "CheckNow" = "Kontrol Et";
@@ -116,11 +116,11 @@
 "NoTrustedPhones" = "Hesabına tanımlı güvenli bir telefon numarası yok, fakat iki aşamalı doğrulama için gerekmektedir.\n\nDaha fazlası için https://support.apple.com/tr-tr/HT204915 adresine bakın.";
 
 // MainWindow
-"UpdatedAt" = "Güncellenme Zamanı";
+"UpdatedAt" = "Güncellenme Zamanı:";
 
 // ToolBar
 "Login" = "Giriş";
-"LoginDescription" = "Girişi Aç";
+"LoginDescription" = "Giriş Yap";
 "Refresh" = "Yenile";
 "RefreshDescription" = "Xcode Listesini Yenile";
 "All" = "Tümü";
@@ -189,8 +189,8 @@
 "InstallationError.UnsupportedFileFormat" = "Xcodes henüz Xcodu %@ dosya formatında yüklemeye (henüz) izin vermiyor.";
 "InstallationError.MissingSudoerPassword" = "Eksik şifre. Lütfen tekrar deneyin";
 "InstallationError.UnavailableVersion" = "%@ sürümü bulunamadı.";
-"InstallationError.NoNonPrereleaseVersionAvailable" = "prerelease olmayan sürümler yok.";
-"InstallationError.NoPrereleaseVersionAvailable" = "prerelease sürümleri yok.";
+"InstallationError.NoNonPrereleaseVersionAvailable" = "Prerelease olmayan sürümler yok.";
+"InstallationError.NoPrereleaseVersionAvailable" = "Prerelease sürümleri yok.";
 "InstallationError.MissingUsernameOrPassword" = "Eksik kullanıcı adı veya şifre. Lütfen tekrar deneyin.";
 "InstallationError.VersionAlreadyInstalled" = "%@ zaten %@ konumunda yüklü.";
 "InstallationError.InvalidVersion" = "%@ geçerli bir sürüm numarası değil.";
@@ -216,3 +216,6 @@
 // Notifications
 "Notification.NewXcodeVersion.Title" = "Yeni Xcode sürümü";
 "Notification.NewXcodeVersion.Body" = "Yeni Xcode sürümleri indirmek için mevcut.";
+
+// WWDC
+"WWDC.Message" = "👨🏻‍💻👩🏼‍💻 WWDC %@ haftanız kutlu olsun! 👨🏽‍💻🧑🏻‍💻";

@@ -102,7 +102,7 @@ class AppState: ObservableObject {
         let finishDate = formatter.date(from: "11/06/2022")
         
         if Date().compare(finishDate!) == .orderedAscending {
-            return "👨🏻‍💻👩🏼‍💻 Happy WWDC 2022! 👨🏽‍💻🧑🏻‍💻"
+            return String(format: localizeString("WWDC.Message"), "2022")
         }
         return ""
     }
