@@ -82,7 +82,7 @@
 "DataSource" = "データソース";
 "DataSourceDescription" = "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。";
 "Downloader" = "ダウンローダ";
-"DownloaderDescription" = "aria2 は最大 16 個のコネクションを使って URLSession より 3-5 倍速いスピードで Xcode をダウンロードします。GPLv2 ライセンスを遵守するため、実行ファイルとしてソースコードと共に Xcodes の中にバンドルされています。\n\nURLSession は URL リクエストをするためのデフォルトの Apple API です。";
+"DownloaderDescription" = "aria2 は、最大16個の接続を使用して、Xcode を URLSession の3-5 倍のスピードでダウンロードします。GPLv2 ライセンスに準拠するため、Xcodes 内にソースコードと一緒に実行ファイルとしてバンドルされています。\n\nURLSession は、URLリクエストを行うための Apple のデフォルト API です。";
 "PrivilegedHelper" = "権限のあるヘルパー";
 "PrivilegedHelperDescription" = "Xcodesは、rootとしてタスクを実行するために、別の権限のあるヘルパーを使用します。インストール後の手順や xcode-select による Xcode のバージョン切り替えなど、コマンドラインで sudo を必要とするものです。\n\nインストールには、macOS アカウントのパスワードの入力が必要です。";
 "HelperInstalled" = "インストール済み";
@@ -111,9 +111,9 @@
 // SMS/2FA
 "DigitCodeDescription" = "信頼できるデバイスから、%d桁のコードを入力してください。";
 "SendSMS" = "SMS を送信";
-"EnterDigitCodeDescription" = "%d 桁の確認コードを (%@):";
+"EnterDigitCodeDescription" = "%@に送信された%d桁のコードを入力してください。";
 "SelectTrustedPhone" = "信頼できる電話番号を選択し、%d桁のコードをSMSで受信します。";
-"NoTrustedPhones" = "このアカウントには、2ファクタ認証に必要な信頼できる電話番号がありません。\n\n詳しくはこちらをご確認ください。https://support.apple.com/ja-jp/HT204915";
+"NoTrustedPhones" = "このアカウントに2要素認証に利用する、信頼できる電話番号がありません。\n\n詳しくはこちらをご確認ください。https://support.apple.com/ja-jp/HT204915";
 
 // MainWindow
 "UpdatedAt" = "前回の更新:";
@@ -144,12 +144,12 @@
 
 // Alerts
 // Uninstall
-"Alert.Uninstall.Title" = "本当に Xcode %@ をアンインストールしてもよろしいですか？";
+"Alert.Uninstall.Title" = "Xcode %@ をアンインストールしてもよろしいですか？";
 "Alert.Uninstall.Message" = "ゴミ箱に移動されますが、ゴミ箱を自動的に空にすることはありません。";
 "Alert.Uninstall.Error.Title" = "Xcode をアンインストールできませんでした";
 
 // Cancel Install
-"Alert.CancelInstall.Title" = "本当に Xcode %@ のインストールを中止してもよろしいですか？";
+"Alert.CancelInstall.Title" = "Xcode %@ のインストールを中止してもよろしいですか？";
 "Alert.CancelInstall.Message" = "インストール前の状態に戻します。";
 "Alert.CancelInstall.PrimaryButton" = "インストールを中止";
 
@@ -183,8 +183,8 @@
 "InstallationError.DamagedXIP" = "このアーカイブ \"%@\" は破損していて展開できません。";
 "InstallationError.NotEnoughFreeSpaceToExpandArchive" = "このボリュームの空き容量が不足しているため、アーカイブ \"%@\" を展開できません。\n\n空き容量を増やしてから Xcode %@ のインストールをもう一度お試しください。";
 "InstallationError.FailedToMoveXcodeToApplications" = "Xcode を %@ に移動できませんでした。";
-"InstallationError.FailedSecurityAssessment" = "Xcode %@ が自分のセキュリティ評価に失敗しました:\n%@\n%@ にインストールされていますので、そのままお使いになりたい場合はご確認ください。";
-"InstallationError.CodesignVerifyFailed" = "ダウンロードされた Xcode がコードサイニング検証に失敗しました:\n%@";
+"InstallationError.FailedSecurityAssessment" = "Xcode %@ は、次の出力でセキュリティ評価に失敗しました。\n%@\nそれでも使用したい場合は、%@にインストールされたままになっています。";
+"InstallationError.CodesignVerifyFailed" = "ダウンロードしたXcodeは、以下の出力で署名の検証に失敗しました。\n%@";
 "InstallationError.UnexpectedCodeSigningIdentity" = "ダウンロードしたXcodeに想定された署名IDがありません。\nGot:\n%@\n%@\nExpected:\n%@\n%@";
 "InstallationError.UnsupportedFileFormat" = "Xcodes は %@ 形式でのインストールには（まだ）対応していません。";
 "InstallationError.MissingSudoerPassword" = "パスワードが見つかりません。もう一度お試しください。";
