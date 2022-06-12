@@ -1,10 +1,10 @@
 // Menu
-"Menu.About" = "Xcodes について";
+"Menu.About" = "Xcodesについて";
 "Menu.CheckForUpdates" = "アップデートを確認...";
 "Menu.Acknowledgements" = "謝辞";
-"Menu.GitHubRepo" = "Xcodes GitHub リポジトリ";
+"Menu.GitHubRepo" = "GitHub";
 "Menu.ReportABug" = "バグを報告";
-"Menu.RequestNewFeature" = "新機能をリクエスト";
+"Menu.RequestNewFeature" = "機能のリクエスト";
 
 // Common
 "Install" = "インストール";
@@ -15,7 +15,7 @@
 "Open" = "開く";
 "OpenDescription" = "このバージョンを開く";
 "CopyPath" = "パスをコピー";
-"CreateSymLink" = "Xcode.app としてシンボリックリンクを作成";
+"CreateSymLink" = "Xcode.appとしてシンボリックリンクを作成";
 "Uninstall" = "アンインストール";
 "Selected" = "アクティブ";
 "Select" = "アクティブにする";
@@ -27,17 +27,17 @@
 
 // Info Pane
 "IdenticalBuilds" = "同一ビルド";
-"IdenticalBuilds.help" = "プレリリース・リリースバージョンが同じビルドになることもあります。Xcodes では同一ビルドとして表示されます。";
+"IdenticalBuilds.help" = "プレリリース版とリリース版が全く同じビルドであることがあります。Xcodesはこれらのバージョンを自動的に一緒に表示します。";
 
 "ReleaseDate" = "リリース日時";
 "ReleaseNotes" = "リリースノート";
 "ReleaseNotes.help" = "リリースノートを表示";
 "Compatibility" = "互換性";
 "MacOSRequirement" = "macOS %@ 以降";
-"SDKs" = "SDKs";
+"SDKs" = "SDK";
 "Compilers" = "コンパイラ";
 "DownloadSize" = "サイズ";
-"NoXcodeSelected" = "バージョン情報を表示するには、いずれかの Xcode バージョンを選択してください。";
+"NoXcodeSelected" = "Xcodeが選択されていません";
 
 // Installation Steps
 // When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
@@ -64,15 +64,15 @@
 "Updates" = "アップデート";
 "Versions" = "バージョン";
 "AutomaticInstallNewVersion" = "新しい Xcode バージョンを自動的にインストールする";
-"IncludePreRelease" = "プレリリース・ベータバージョンを含める";
+"IncludePreRelease" = "プレリリース版 / ベータ版を含む";
 "AppUpdates" = "Xcodes.app アップデート";
-"CheckForAppUpdates" = "アプリを自動的に最新の状態に保つ";
+"CheckForAppUpdates" = "アプリのアップデートを自動で確認する";
 "CheckNow" = "確認";
 "LastChecked" = "前回の確認: %@";
 "Never" = "なし";
 
 // Advanced Preference Pane
-"Advanced" = "高度";
+"Advanced" = "上級者向け";
 "LocalCachePath" = "ローカルキャッシュパス";
 "LocalCachePathDescription" = "Xcodes は利用可能な Xcode バージョンをキャッシュし、新しいバージョンを一時的に特定のディレクトリにダウンロードします。";
 "Change" = "変更";
