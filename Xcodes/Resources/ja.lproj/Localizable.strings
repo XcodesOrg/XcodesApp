@@ -111,7 +111,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "信頼できるデバイスから、%d桁のコードを入力してください。";
 "SendSMS" = "SMS を送信";
-"EnterDigitCodeDescription" = "%@に送信された%d桁のコードを入力してください。";
+"EnterDigitCodeDescription" = "%d桁のコードを%@に送信したので入力してください。";
 "SelectTrustedPhone" = "信頼できる電話番号を選択し、%d桁のコードをSMSで受信します。";
 "NoTrustedPhones" = "このアカウントに2要素認証に利用する、信頼できる電話番号がありません。\n\n詳しくはこちらをご確認ください。https://support.apple.com/ja-jp/HT204915";
 
@@ -183,7 +183,7 @@
 "InstallationError.DamagedXIP" = "このアーカイブ \"%@\" は破損していて展開できません。";
 "InstallationError.NotEnoughFreeSpaceToExpandArchive" = "このボリュームの空き容量が不足しているため、アーカイブ \"%@\" を展開できません。\n\n空き容量を増やしてから Xcode %@ のインストールをもう一度お試しください。";
 "InstallationError.FailedToMoveXcodeToApplications" = "Xcode を %@ に移動できませんでした。";
-"InstallationError.FailedSecurityAssessment" = "Xcode %@ は、次の出力でセキュリティ評価に失敗しました。\n%@\nそれでも使用したい場合は、%@にインストールされたままになっています。";
+"InstallationError.FailedSecurityAssessment" = "Xcode %@ は、以下の出力でセキュリティ評価に失敗しました。\n%@\nそれでも使用したい場合は、%@にインストールされたままになっています。";
 "InstallationError.CodesignVerifyFailed" = "ダウンロードしたXcodeは、以下の出力で署名の検証に失敗しました。\n%@";
 "InstallationError.UnexpectedCodeSigningIdentity" = "ダウンロードしたXcodeに想定された署名IDがありません。\nGot:\n%@\n%@\nExpected:\n%@\n%@";
 "InstallationError.UnsupportedFileFormat" = "Xcodes は %@ 形式でのインストールには（まだ）対応していません。";
