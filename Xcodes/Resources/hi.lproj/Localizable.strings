@@ -215,3 +215,6 @@
 // Notifications
 "Notification.NewXcodeVersion.Title" = "नए Xcode संस्करण";
 "Notification.NewXcodeVersion.Body" = "नए Xcode संस्करण डाउनलोड करने के लिए उपलब्ध हैं।";
+
+// WWDC
+"WWDC.Message" = "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻";
