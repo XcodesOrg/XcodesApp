@@ -1,9 +1,9 @@
 // Menu
 "Menu.About" = "Xcodesについて";
-"Menu.CheckForUpdates" = "アップデートを確認...";
+"Menu.CheckForUpdates" = "アップデートを確認…";
 "Menu.Acknowledgements" = "謝辞";
 "Menu.GitHubRepo" = "GitHub";
-"Menu.ReportABug" = "バグを報告";
+"Menu.ReportABug" = "不具合の報告";
 "Menu.RequestNewFeature" = "機能のリクエスト";
 
 // Common
@@ -26,10 +26,10 @@
 "OK" = "OK";
 
 // Info Pane
-"IdenticalBuilds" = "同一ビルド";
+"IdenticalBuilds" = "ビルドの同一性";
 "IdenticalBuilds.help" = "プレリリース版とリリース版が全く同じビルドであることがあります。Xcodesはこれらのバージョンを自動的に一緒に表示します。";
 
-"ReleaseDate" = "リリース日時";
+"ReleaseDate" = "リリース日";
 "ReleaseNotes" = "リリースノート";
 "ReleaseNotes.help" = "リリースノートを表示";
 "Compatibility" = "互換性";
@@ -65,16 +65,16 @@
 "Versions" = "バージョン";
 "AutomaticInstallNewVersion" = "新しい Xcode バージョンを自動的にインストールする";
 "IncludePreRelease" = "プレリリース版 / ベータ版を含む";
-"AppUpdates" = "Xcodes.app アップデート";
+"AppUpdates" = "Xcodes.appの更新";
 "CheckForAppUpdates" = "アプリのアップデートを自動で確認する";
-"CheckNow" = "確認";
+"CheckNow" = "今すぐ確認";
 "LastChecked" = "前回の確認: %@";
 "Never" = "なし";
 
 // Advanced Preference Pane
 "Advanced" = "上級者向け";
 "LocalCachePath" = "ローカルキャッシュパス";
-"LocalCachePathDescription" = "Xcodes は利用可能な Xcode バージョンをキャッシュし、新しいバージョンを一時的に特定のディレクトリにダウンロードします。";
+"LocalCachePathDescription" = "Xcodesは、利用可能なXcodeのバージョンをキャッシュし、新しいバージョンをディレクトリに一時的にダウンロードします。";
 "Change" = "変更";
 "Active/Select" = "アクティブ";
 "AutomaticallyCreateSymbolicLink" = "Xcode.appへのシンボリックリンクの自動生成";
@@ -90,7 +90,7 @@
 "InstallHelper" = "ヘルパーのインストール";
 
 // Experiment Preference Pane
-"Experiments" = "実験";
+"Experiments" = "試験的な機能";
 "FasterUnxip" = "より速い Unxip";
 "UseUnxipExperiment" = "実験的な実装で Unxip する";
 "FasterUnxipDescription" = "@_saagarjha さんのおかげで、この実験的な実装では Unxip をシステムによって最大 70% スピードアップできます。\n\n実装の細部については、こちらの unxip リポジトリをご確認ください。https://github.com/saagarjha/unxip";
