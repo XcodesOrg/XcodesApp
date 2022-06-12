@@ -9,7 +9,7 @@
 // Common
 "Install" = "インストール";
 "InstallDescription" = "このバージョンをインストール";
-"RevealInFinder" = "Finder に表示";
+"RevealInFinder" = "Finderに表示";
 "Active" = "アクティブ";
 "MakeActive" = "アクティブにする";
 "Open" = "開く";
@@ -49,7 +49,7 @@
 
 // About
 "VersionWithBuild" = "バージョン %@ (%@)";
-"GithubRepo" = "GitHub リポジトリ";
+"GithubRepo" = "GitHub";
 "Acknowledgements" = "謝辞";
 "UnxipExperiment" = "Unxip Experiment";
 "License" = "ライセンス";
@@ -77,17 +77,17 @@
 "LocalCachePathDescription" = "Xcodes は利用可能な Xcode バージョンをキャッシュし、新しいバージョンを一時的に特定のディレクトリにダウンロードします。";
 "Change" = "変更";
 "Active/Select" = "アクティブ";
-"AutomaticallyCreateSymbolicLink" = "Xcode.app までシンボリックリンクを自動的に作成する";
-"AutomaticallyCreateSymbolicLinkDescription" = "Xcode バージョンをアクティブにする時、インストール先で Xcode.app というシンボリックリンクを作成することを試みます。";
+"AutomaticallyCreateSymbolicLink" = "Xcode.appへのシンボリックリンクの自動生成";
+"AutomaticallyCreateSymbolicLinkDescription" = "Xcodeのバージョンをアクティブにする時、インストール先でXcode.appのシンボリックリンクの作成を試みます。";
 "DataSource" = "データソース";
-"DataSourceDescription" = "Apple データソースは Apple Developer サイトからスクレイピングで情報を取得します。常に最新の利用可能なリリースを表示しますが、サイトのリデザインによって使えなくなることがあります。\n\nXcode Releases は非公式のリリースリストです。よく整えられているデータを提供し、Apple からすぐに取得できない追加情報を含め、Apple Developer サイトがリデザインされた場合でも使えなくなる可能性は比較的に低いです。";
-"Downloader" = "ダウンローダー";
+"DataSourceDescription" = "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。";
+"Downloader" = "ダウンローダ";
 "DownloaderDescription" = "aria2 は最大 16 個のコネクションを使って URLSession より 3-5 倍速いスピードで Xcode をダウンロードします。GPLv2 ライセンスを遵守するため、実行ファイルとしてソースコードと共に Xcodes の中にバンドルされています。\n\nURLSession は URL リクエストをするためのデフォルトの Apple API です。";
-"PrivilegedHelper" = "特権ヘルパー";
-"PrivilegedHelperDescription" = "Xcodes は独自の特権ヘルパーを使うことで、root ユーザとしてタスクを実行することができます。インストール後の作業や xcode-select コマンドで Xcode 各バージョン間の切り替えなどは、コマンドラインで sudo しないとできないことなのです。\n\nインストールするには、macOS ユーザのパスワードが求められます。";
+"PrivilegedHelper" = "権限のあるヘルパー";
+"PrivilegedHelperDescription" = "Xcodesは、rootとしてタスクを実行するために、別の権限のあるヘルパーを使用します。インストール後の手順や xcode-select による Xcode のバージョン切り替えなど、コマンドラインで sudo を必要とするものです。\n\nインストールには、macOS アカウントのパスワードの入力が必要です。";
 "HelperInstalled" = "インストール済み";
-"HelperNotInstalled" = "インストールされていません";
-"InstallHelper" = "ヘルパーをインストール";
+"HelperNotInstalled" = "未インストール";
+"InstallHelper" = "ヘルパーのインストール";
 
 // Experiment Preference Pane
 "Experiments" = "実験";
