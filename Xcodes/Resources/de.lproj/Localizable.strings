@@ -216,3 +216,6 @@
 // Notifications
 "Notification.NewXcodeVersion.Title" = "Neue Xcode-Versionen";
 "Notification.NewXcodeVersion.Body" = "Neue Xcode-Versionen stehen zum Download bereit.";
+
+// WWDC
+"WWDC.Message" = "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻";
