@@ -18,7 +18,7 @@ struct AboutView: View {
                     Button(action: {
                         openURL(URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!)
                     }) {
-                        Label("GitHubRepo", systemImage: "link")
+                        Label("GithubRepo", systemImage: "link")
                     }
                     .buttonStyle(LinkButtonStyle())
                     

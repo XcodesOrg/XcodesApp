@@ -216,3 +216,6 @@
 // Notifications
 "Notification.NewXcodeVersion.Title" = "새 Xcode 버전";
 "Notification.NewXcodeVersion.Body" = "새로운 Xcode 버전을 다운로드 할 수 있습니다.";
+
+// WWDC
+"WWDC.Message" = "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻";

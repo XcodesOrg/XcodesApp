@@ -216,3 +216,6 @@
 // Notifications
 "Notification.NewXcodeVersion.Title" = "新Xcode版本可用";
 "Notification.NewXcodeVersion.Body" = "新的Xcode版本已经可以下载。";
+
+// WWDC
+"WWDC.Message" = "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻";
