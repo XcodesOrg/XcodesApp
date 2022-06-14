@@ -156,7 +156,7 @@ struct MainWindow: View {
         case let .checkMinSupportedVersion(xcode, deviceVersion):
             return Alert(
                 title: Text("Alert.MinSupported.Title"),
-                message: Text(String(format: "Alert.MinSupported.Message", xcode.version.descriptionWithoutBuildMetadata, xcode.requiredMacOSVersion ?? "", deviceVersion)),
+                message: Text(String(format: localizeString("Alert.MinSupported.Message"), xcode.version.descriptionWithoutBuildMetadata, xcode.requiredMacOSVersion ?? "", deviceVersion)),
                   primaryButton: .default(
                     Text("Install"),
                     action: {
