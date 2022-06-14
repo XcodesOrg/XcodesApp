@@ -80,7 +80,7 @@
 "AutomaticallyCreateSymbolicLink" = "Symbolischen Link zur Xcode.app automatisch erstellen";
 "AutomaticallyCreateSymbolicLinkDescription" = "Beim Umstellen der Xcode-Version auf Aktiv/Ausgewählt versuchen einen symbolischen Link namens Xcode.app im Installationsverzeichnis zu erstellen.";
 "DataSource" = "Datenquelle";
-"DataSourceDescription" = "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode-Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitsgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten.";
+"DataSourceDescription" = "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitsgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten.";
 "Downloader" = "Downloader";
 "DownloaderDescription" = "aria2 verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Es ist zusammen mit seinem Quellcode in Xcode enthalten, um seiner GPLv2-Lizenz nachzukommen.\n\nURLSession ist Apples Standard-API für URL-Requests.";
 "PrivilegedHelper" = "Privilegierter Helfer";
