@@ -120,7 +120,7 @@ struct InfoPane: View {
                 Text("ReleaseDate")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(DateFormatter.downloadsReleaseDate.string(from: releaseDate))
+                Text("\(releaseDate, style: .date)")
                     .font(.subheadline)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
