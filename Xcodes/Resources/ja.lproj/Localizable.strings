@@ -32,6 +32,7 @@
 "ReleaseDate" = "リリース日";
 "ReleaseNotes" = "リリースノート";
 "ReleaseNotes.help" = "リリースノートを表示";
+"CopyReleaseNoteURL" = "URLをコピー";
 "Compatibility" = "互換性";
 "MacOSRequirement" = "macOS %@ 以降";
 "SDKs" = "SDK";

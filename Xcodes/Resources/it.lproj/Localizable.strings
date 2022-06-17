@@ -32,6 +32,7 @@
 "ReleaseDate" = "Data di Rilascio";
 "ReleaseNotes" = "Note di Rilascio";
 "ReleaseNotes.help" = "Vedi Note di Rilascio";
+"CopyReleaseNoteURL" = "Copia URL";
 "Compatibility" = "Compatibilità";
 "MacOSRequirement" = "Richiede macOS %@ o successivo";
 "SDKs" = "SDKs";

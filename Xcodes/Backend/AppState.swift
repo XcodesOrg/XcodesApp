@@ -535,6 +535,13 @@ class AppState: ObservableObject {
         NSPasteboard.general.writeObjects([installedXcodePath.url as NSURL])
         NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
     }
+
+    func copyReleaseNote(xcode: Xcode) {
+      guard let url = xcode.releaseNotesURL else { return }
+      NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
+      NSPasteboard.general.writeObjects([url as NSURL])
+      NSPasteboard.general.setString(url.absoluteString, forType: .string)
+    }
     
     func createSymbolicLink(xcode: Xcode) {
         guard let installedXcodePath = xcode.installedPath else { return }

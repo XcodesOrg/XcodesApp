@@ -31,6 +31,7 @@
 "ReleaseDate" = "रिलीज़ दिनांक";
 "ReleaseNotes" = "रिलीज नोट्स";
 "ReleaseNotes.help" = "रिलीज़ नोट्स देखें";
+"CopyReleaseNoteURL" = "URL कॉपी करें";
 "Compatibility" = "अनुकूलता";
 "MacOSRequirement" = "macOS %@ या बाद के संस्करण की आवश्यकता है";
 "SDKs" = "SDKs";

@@ -32,6 +32,7 @@
 "ReleaseDate" = "发布日期";
 "ReleaseNotes" = "更新说明";
 "ReleaseNotes.help" = "查看更新说明";
+"CopyReleaseNoteURL" = "复制 URL";
 "Compatibility" = "兼容性";
 "MacOSRequirement" = "需要macOS %@及以上";
 "SDKs" = "SDK";

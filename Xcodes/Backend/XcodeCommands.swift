@@ -154,6 +154,24 @@ struct CopyPathButton: View {
     }
 }
 
+struct CopyReleaseNoteButton: View {
+  @EnvironmentObject var appState: AppState
+  let xcode: Xcode?
+
+  var body: some View {
+    Button(action: copyReleaseNote) {
+      Text("CopyReleaseNoteURL")
+    }
+    .help("CopyReleaseNoteURL")
+  }
+
+  private func copyReleaseNote() {
+    guard let xcode = xcode else { return }
+    appState.copyReleaseNote(xcode: xcode)
+  }
+}
+
+
 struct CreateSymbolicLinkButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
