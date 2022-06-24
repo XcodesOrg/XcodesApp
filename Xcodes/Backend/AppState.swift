@@ -43,7 +43,6 @@ class AppState: ObservableObject {
     var isUpdating: Bool { updatePublisher != nil }
     @Published var presentedSheet: XcodesSheet? = nil
     @Published var isProcessingAuthRequest = false
-    @Published var secondFactorData: SecondFactorData?
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var presentedAlert: XcodesAlert?
     @Published var helperInstallState: HelperInstallState = .notInstalled
@@ -197,12 +196,11 @@ class AppState: ObservableObject {
     }
     
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
-        self.secondFactorData = SecondFactorData(
+        self.presentedSheet = .twoFactor(.init(
             option: option,
             authOptions: authOptions,
             sessionData: AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        )
-        self.presentedSheet = .twoFactor
+        ))
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
@@ -225,7 +223,11 @@ class AppState: ObservableObject {
     }
     
     func choosePhoneNumberForSMS(authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {
-        secondFactorData = SecondFactorData(option: .smsPendingChoice, authOptions: authOptions, sessionData: sessionData)
+        self.presentedSheet = .twoFactor(.init(
+            option: .smsPendingChoice,
+            authOptions: authOptions,
+            sessionData: sessionData
+        ))
     }
     
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
@@ -255,7 +257,6 @@ class AppState: ObservableObject {
             switch self.authenticationState {
                 case .authenticated, .unauthenticated, .notAppleDeveloper:
                 self.presentedSheet = nil
-                self.secondFactorData = nil
             case let .waitingForSecondFactor(option, authOptions, sessionData):
                 self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
             }
@@ -697,12 +698,6 @@ class AppState: ObservableObject {
         var title: String
         var message: String
         var id: String { title + message }
-    }
-
-    struct SecondFactorData {
-        let option: TwoFactorOption
-        let authOptions: AuthOptionsResponse
-        let sessionData: AppleSessionData
     }
 }
 

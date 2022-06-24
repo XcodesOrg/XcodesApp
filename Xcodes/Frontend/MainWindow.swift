@@ -47,8 +47,8 @@ struct MainWindow: View {
             case .signIn:
                 signInView()
                     .environmentObject(appState)
-            case .twoFactor:
-                secondFactorView(appState.secondFactorData!)
+            case .twoFactor(let secondFactorData):
+                secondFactorView(secondFactorData)
                     .environmentObject(appState)
             }
         }
@@ -69,14 +69,14 @@ struct MainWindow: View {
     }
     
     @ViewBuilder
-    private func secondFactorView(_ secondFactorData: AppState.SecondFactorData) -> some View {
+    private func secondFactorView(_ secondFactorData: XcodesSheet.SecondFactorData) -> some View {
         switch secondFactorData.option {
         case .codeSent:
-            SignIn2FAView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+            SignIn2FAView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsSent(let trustedPhoneNumber):
-            SignInSMSView(isPresented: $appState.secondFactorData.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+            SignInSMSView(isPresented: $appState.presentedSheet.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsPendingChoice:
-            SignInPhoneListView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+            SignInPhoneListView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         }
     }
 
