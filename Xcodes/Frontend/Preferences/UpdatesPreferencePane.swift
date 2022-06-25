@@ -51,7 +51,6 @@ struct UpdatesPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .frame(width: 500)
     }
     
     private var lastUpdatedString: String {
@@ -127,6 +126,7 @@ struct UpdatesPreferencePane_Previews: PreviewProvider {
         Group {
             UpdatesPreferencePane()
                 .environmentObject(AppState())
+                .frame(maxWidth: 500)
         }
     }
 }

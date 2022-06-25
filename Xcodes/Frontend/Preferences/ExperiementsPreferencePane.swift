@@ -21,7 +21,6 @@ struct ExperimentsPreferencePane: View {
             
             Divider()
         }
-        .frame(width: 500)
     }
     
     private var unxipFootnote: NSAttributedString {
@@ -44,6 +43,7 @@ struct ExperimentsPreferencePane_Previews: PreviewProvider {
         Group {
             ExperimentsPreferencePane()
                 .environmentObject(AppState())
+                .frame(maxWidth: 500)
         }
     }
 }

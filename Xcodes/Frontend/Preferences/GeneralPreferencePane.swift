@@ -21,7 +21,6 @@ struct GeneralPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .frame(width: 500)
     }
 }
 
@@ -30,6 +29,7 @@ struct GeneralPreferencePane_Previews: PreviewProvider {
         Group {
             GeneralPreferencePane()
                 .environmentObject(AppState())
+                .frame(maxWidth: 500)
         }
     }
 }

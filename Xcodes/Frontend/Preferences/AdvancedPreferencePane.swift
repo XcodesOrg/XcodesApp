@@ -118,7 +118,6 @@ struct AdvancedPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .frame(width: 500)
     }
     
     private var dataSourceFootnote: NSAttributedString {
@@ -153,6 +152,7 @@ struct AdvancedPreferencePane_Previews: PreviewProvider {
         Group {
             AdvancedPreferencePane()
                 .environmentObject(AppState())
+                .frame(maxWidth: 500)
         }
     }
 }
