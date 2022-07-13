@@ -32,6 +32,7 @@
 "ReleaseDate" = "출시일";
 "ReleaseNotes" = "릴리즈 노트";
 "ReleaseNotes.help" = "릴리즈 노트 보기";
+"CopyReleaseNoteURL" = "URL 복사";
 "Compatibility" = "호환성";
 "MacOSRequirement" = "macOS %@ 또는 이후 버전";
 "SDKs" = "SDKs";

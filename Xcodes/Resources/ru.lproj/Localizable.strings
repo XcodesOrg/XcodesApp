@@ -31,6 +31,7 @@
 "ReleaseDate" = "Дата выпуска";
 "ReleaseNotes" = "Примечания к выпуску";
 "ReleaseNotes.help" = "Просмотреть примечания к выпуску";
+"CopyReleaseNoteURL" = "Копировать URL";
 "Compatibility" = "Совместимость";
 "MacOSRequirement" = "Требуется macOS %@ или новее";
 "SDKs" = "SDK";

@@ -10,6 +10,7 @@
 "Install" = "Installer";
 "InstallDescription" = "Installer cette version";
 "RevealInFinder" = "Ouvrir dans le Finder";
+"CopyReleaseNoteURL" = "Copier l'URL";
 "Active" = "Version Active";
 "MakeActive" = "Activer";
 "Open" = "Ouvrir";

@@ -32,6 +32,7 @@
 "ReleaseDate" = "發行日期";
 "ReleaseNotes" = "版本附註";
 "ReleaseNotes.help" = "檢視版本附註";
+"CopyReleaseNoteURL" = "複製 URL";
 "Compatibility" = "相容性";
 "MacOSRequirement" = "需要 macOS %@ 或以上版本";
 "SDKs" = "SDKs";

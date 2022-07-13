@@ -32,6 +32,7 @@
 "ReleaseDate" = "Yayınlanma Tarihi";
 "ReleaseNotes" = "Yayınlanma Notları";
 "ReleaseNotes.help" = "Yayınlanma Notlarını Görüntüle";
+"CopyReleaseNoteURL" = "URL'yi kopyala";
 "Compatibility" = "Uyumluluk";
 "MacOSRequirement" = "macOS %@ veya sonrasını gerektirir";
 "SDKs" = "SDKler";

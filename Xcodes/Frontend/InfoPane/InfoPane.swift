@@ -136,11 +136,19 @@ struct InfoPane: View {
                 Label("ReleaseNotes", systemImage: "link")
             }
             .buttonStyle(LinkButtonStyle())
+            .contextMenu(menuItems: {
+              releaseNotesMenu(for: xcode)
+            })
             .frame(maxWidth: .infinity, alignment: .leading)
             .help("ReleaseNotes.help")
         } else {
             EmptyView()
         }
+    }
+
+    @ViewBuilder
+    private func releaseNotesMenu(for xcode: Xcode) -> some View {
+        CopyReleaseNoteButton(xcode: xcode)
     }
     
     @ViewBuilder
