@@ -50,7 +50,7 @@ public struct ObservingProgressIndicator: View {
             
             if showsAdditionalDescription, progress.progress.xcodesLocalizedDescription.isEmpty == false {
                 Text(progress.progress.xcodesLocalizedDescription)
-                    .font(.subheadline)
+                    .font(.subheadline.monospacedDigit())
                     .foregroundColor(.secondary)
             }
         }
