@@ -14,7 +14,7 @@ let package = Package(
     dependencies: [
     ],
     targets: [
-        .target(
+        .executableTarget(
             name: "AcknowledgementsGenerator",
             dependencies: []
         ),
