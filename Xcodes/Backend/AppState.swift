@@ -74,6 +74,20 @@ class AppState: ObservableObject {
         }
     }
     
+    var createSymLinkOnSelectDisabled: Bool {
+        return onSelectActionType == .rename
+    }
+    
+    @Published var onSelectActionType = SelectedActionType.none {
+        didSet {
+            Current.defaults.set(onSelectActionType.rawValue, forKey: "onSelectActionType")
+            
+            if onSelectActionType == .rename {
+                createSymLinkOnSelect = false
+            }
+        }
+    }
+
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
@@ -120,6 +134,7 @@ class AppState: ObservableObject {
         localPath = Current.defaults.string(forKey: "localPath") ?? Path.defaultXcodesApplicationSupport.string
         unxipExperiment = Current.defaults.bool(forKey: "unxipExperiment") ?? false
         createSymLinkOnSelect = Current.defaults.bool(forKey: "createSymLinkOnSelect") ?? false
+        onSelectActionType = SelectedActionType(rawValue: Current.defaults.string(forKey: "onSelectActionType") ?? "none") ?? .none
     }
     
     // MARK: Timer
@@ -492,10 +507,15 @@ class AppState: ObservableObject {
         }
 
         guard
-            let installedXcodePath = xcode.installedPath,
+            var installedXcodePath = xcode.installedPath,
             selectPublisher == nil
         else { return }
        
+        if onSelectActionType == .rename {
+            guard let newDestinationXcodePath = renameToXcode(xcode: xcode) else { return }
+            installedXcodePath = newDestinationXcodePath
+        }
+        
         selectPublisher = installHelperIfNecessary()
             .flatMap {
                 Current.helper.switchXcodePath(installedXcodePath.string)
@@ -575,7 +595,39 @@ class AppState: ObservableObject {
             self.error = error
             self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
         }
+    }
+    
+    func renameToXcode(xcode: Xcode) -> Path? {
+        guard let installedXcodePath = xcode.installedPath else { return nil }
         
+        let destinationPath: Path = Path.installDirectory/"Xcode.app"
+        
+        // rename any old named `Xcode.app` to the Xcodes versioned named files
+        if FileManager.default.fileExists(atPath: destinationPath.string) {
+            if let originalXcode = Current.files.installedXcode(destination: destinationPath) {
+                let newName = "Xcode-\(originalXcode.version.descriptionWithoutBuildMetadata).app"
+                Logger.appState.debug("Found Xcode.app - renaming back to \(newName)")
+                do {
+                    try destinationPath.rename(to: newName)
+                } catch {
+                    Logger.appState.error("Unable to create rename Xcode.app back to original")
+                    self.error = error
+                    // TODO UPDATE MY ERROR STRING
+                    self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+                }
+            }
+        }
+        // rename passed in xcode to xcode.app
+        Logger.appState.debug("Found Xcode.app - renaming back to Xcode.app")
+        do {
+            return try installedXcodePath.rename(to: "Xcode.app")
+        } catch {
+            Logger.appState.error("Unable to create rename Xcode.app back to original")
+            self.error = error
+            // TODO UPDATE MY ERROR STRING
+            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+        }
+        return nil
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {

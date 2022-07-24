@@ -108,6 +108,7 @@
 		E8CBDB8927ADE32300B22292 /* unxip in Copy aria2c */ = {isa = PBXBuildFile; fileRef = E8CBDB8627ADD92000B22292 /* unxip */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E8CBDB8B27AE02FF00B22292 /* ExperiementsPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CBDB8A27AE02FF00B22292 /* ExperiementsPreferencePane.swift */; };
 		E8D0296F284B029800647641 /* BottomStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D0296E284B029800647641 /* BottomStatusBar.swift */; };
+		E8D655C0288DD04700A139C2 /* SelectedActionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D655BF288DD04700A139C2 /* SelectedActionType.swift */; };
 		E8DA461125FAF7FB002E85EF /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DA461025FAF7FB002E85EF /* NotificationsView.swift */; };
 		E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */; };
 		E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */; };
@@ -296,6 +297,7 @@
 		E8CBDB8627ADD92000B22292 /* unxip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = unxip; sourceTree = "<group>"; };
 		E8CBDB8A27AE02FF00B22292 /* ExperiementsPreferencePane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiementsPreferencePane.swift; sourceTree = "<group>"; };
 		E8D0296E284B029800647641 /* BottomStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStatusBar.swift; sourceTree = "<group>"; };
+		E8D655BF288DD04700A139C2 /* SelectedActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedActionType.swift; sourceTree = "<group>"; };
 		E8DA461025FAF7FB002E85EF /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepDetailView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -479,6 +481,7 @@
 				CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */,
 				E87DD6EA25D053FA00D86808 /* Progress+.swift */,
 				E81D7E9F2805250100A205FC /* Collection+.swift */,
+				E8D655BF288DD04700A139C2 /* SelectedActionType.swift */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -844,6 +847,7 @@
 				CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */,
 				CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */,
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
+				E8D655C0288DD04700A139C2 /* SelectedActionType.swift in Sources */,
 				CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */,
 				CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */,
 				CAFBDB912598FE80003DCC5A /* SelectedXcode.swift in Sources */,
