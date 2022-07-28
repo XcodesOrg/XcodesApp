@@ -48,13 +48,27 @@ struct AdvancedPreferencePane: View {
             
             GroupBox(label: Text("Active/Select")) {
                 VStack(alignment: .leading) {
-                    Toggle(
-                        "AutomaticallyCreateSymbolicLink",
-                        isOn: $appState.createSymLinkOnSelect
-                    )
-                    Text("AutomaticallyCreateSymbolicLinkDescription")
+                    Picker("OnSelect", selection: $appState.onSelectActionType) {
+                        
+                        Text(SelectedActionType.none.description)
+                            .tag(SelectedActionType.none)
+                        Text(SelectedActionType.rename.description)
+                            .tag(SelectedActionType.rename)
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.inline)
+                    
+                    Text(appState.onSelectActionType.detailedDescription)
                         .font(.footnote)
                         .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                        .frame(height: 20)
+                    
+                    Toggle("AutomaticallyCreateSymbolicLink", isOn: $appState.createSymLinkOnSelect)
+                        .disabled(appState.createSymLinkOnSelectDisabled)
+                    Text("AutomaticallyCreateSymbolicLinkDescription")
+                           .font(.footnote)
+                           .fixedSize(horizontal: false, vertical: true)
                 }
                 .fixedSize(horizontal: false, vertical: true)
             }
@@ -154,6 +168,7 @@ struct AdvancedPreferencePane_Previews: PreviewProvider {
                 .environmentObject(AppState())
                 .frame(maxWidth: 500)
         }
+        .frame(width: 500, height: 700, alignment: .center)
     }
 }
 
