@@ -78,8 +78,16 @@
 "LocalCachePathDescription" = "Xcodes会缓存可用的Xcode版本并暂时下载新版本到一个目录。";
 "Change" = "变更";
 "Active/Select" = "激活/选定";
+"InstallDirectory" = "安装目录";
+"InstallPathDescription" = "Xcodes会在一个目录中检索及安装。默认（推荐）保持/Applications。任何对Xcode存储位置的变更都可能会导致其他App或服务停止工作。";
+
+"OnSelectDoNothing" = "保持名称为Xcode-X.X.X.app";
+"OnSelectDoNothingDescription" = "选中时，将会将会保持各版本的名称。例如Xcode-13.4.1.app。";
 "AutomaticallyCreateSymbolicLink" = "自动创建名为Xcode.app的软连接";
 "AutomaticallyCreateSymbolicLinkDescription" = "当激活/选定某个Xcode版本时，尝试在安装目录创建一个名为Xcode.app的软链接。";
+"OnSelectRenameXcode" = "总是重命名为Xcode.app";
+"OnSelectRenameXcodeDescription" = "选中时，会自动尝试重命名活跃的Xcode为Xcode.app，将之前的Xcode.app重命名为包含版本的名称。";
+
 "DataSource" = "数据源";
 "DataSourceDescription" = "Apple数据源是从Apple开发者网站爬取的。它会及时反应最新版本，但较为脆弱。\n\nXcode Releases是一个非官方的Xcode版本列表。它提供了良好格式化的数据，包含了不便从Apple直接获得的附加信息，且更不容易在Apple开发者网站无法访问时出现问题。";
 "Downloader" = "下载器";
