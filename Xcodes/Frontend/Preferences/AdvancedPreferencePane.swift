@@ -10,6 +10,41 @@ struct AdvancedPreferencePane: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
+           
+            GroupBox(label: Text("InstallDirectory")) {
+                VStack(alignment: .leading) {
+                    HStack(alignment: .top, spacing: 5) {
+                        Text(appState.installPath).font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .lineLimit(2)
+                        Button(action: { appState.reveal(path: appState.installPath) }) {
+                            Image(systemName: "arrow.right.circle.fill")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .help("RevealInFinder")
+                        .fixedSize()
+                    }
+                    Button("Change") {
+                        let panel = NSOpenPanel()
+                        panel.allowsMultipleSelection = false
+                        panel.canChooseDirectories = true
+                        panel.canChooseFiles = false
+                        panel.canCreateDirectories = true
+                        panel.allowedContentTypes = [.folder]
+                        panel.directoryURL = URL(fileURLWithPath: appState.installPath)
+                        
+                        if panel.runModal() == .OK {
+                           
+                            guard let pathURL = panel.url, let path = Path(url: pathURL) else { return }
+                            self.appState.installPath = path.string
+                        }
+                    }
+                    Text("InstallPathDescription")
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
             
             GroupBox(label: Text("LocalCachePath")) {
                 VStack(alignment: .leading) {

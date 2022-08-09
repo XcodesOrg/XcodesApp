@@ -78,6 +78,8 @@
 "LocalCachePathDescription" = "Xcodes caches available Xcode versions and temporary downloads new versions to a directory";
 "Change" = "Change";
 "Active/Select" = "Active/Select";
+"InstallDirectory" = "Install Directory";
+"InstallPathDescription" = "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. ";
 
 "OnSelectDoNothing" = "Keep name as Xcode-X.X.X.app";
 "OnSelectDoNothingDescription" = "On select, will keep the name as the version eg. Xcode-13.4.1.app";

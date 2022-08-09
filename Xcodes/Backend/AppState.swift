@@ -62,6 +62,12 @@ class AppState: ObservableObject {
         }
     }
     
+    @Published var installPath = "" {
+        didSet {
+            Current.defaults.set(installPath, forKey: "installPath")
+        }
+    }
+    
     @Published var unxipExperiment = false {
         didSet {
             Current.defaults.set(unxipExperiment, forKey: "unxipExperiment")
@@ -135,6 +141,7 @@ class AppState: ObservableObject {
         unxipExperiment = Current.defaults.bool(forKey: "unxipExperiment") ?? false
         createSymLinkOnSelect = Current.defaults.bool(forKey: "createSymLinkOnSelect") ?? false
         onSelectActionType = SelectedActionType(rawValue: Current.defaults.string(forKey: "onSelectActionType") ?? "none") ?? .none
+        installPath = Current.defaults.string(forKey: "installPath") ?? Path.defaultInstallDirectory.string
     }
     
     // MARK: Timer
