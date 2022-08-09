@@ -8,6 +8,82 @@
             
                 
                     <item>
+                        <title>v1.7.0</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<p>Please follow us on Twitter at <a href="https://twitter.com/xcodesapp">@xcodesapp</a> to be notified when new releases happen!</p>
+
+<h2 id="changes">Changes</h2>
+
+<h3 id="support-for-5-new-languages-thanks-to-all-the-1st-time-contributors----were-up-to-14-supported-languages">Support for 5 new languages! Thanks to all the 1st time contributors!   🎉 We’re up to 14 supported languages!</h3>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Ability to change the installation directory (#268) @MattKiazyk</li>
+  <li>Add option to rename Xcode to Xcode.app on select. (#267) @MattKiazyk</li>
+  <li>Use monospaced digit font for download progress (#264) @gredman</li>
+  <li>Adds Copy Release Notes URL context menu (#255) @d-date</li>
+  <li>Turkish Language Improvements &amp; WWDC Message Localization (#246) @egrimo</li>
+</ul>
+
+<h2 id="-new-languages">🌎 New Languages</h2>
+
+<ul>
+  <li>Add Finnish Localization (#262) @marcusziade</li>
+  <li>Add Japanese Localization (#249) @tatsuz0u</li>
+  <li>Add Ukrainian Localization (#259) @gelosi</li>
+  <li>Add German Localization (#243) @drct</li>
+  <li>Add Traditional Chinese Localization (#240) @itszero</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Fix macOS Ventura crash on Settings View  (#258) @GetToSet</li>
+  <li>Fix crash on sign in sheet cancel (#257) @swiftty</li>
+  <li>Update Release Date format on InfoPane for better localization (#251) @d-date</li>
+  <li>Fix minimum version supported localization alert message (#253) @MattKiazyk</li>
+  <li>Fixed wrong localization key for Github Repo in AboutView (#248) @duffpod</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Bump actions/cache from 3.0.5 to 3.0.6 (#269) @dependabot</li>
+  <li>Bump tzinfo from 1.2.9 to 1.2.10 in /AppCast (#266) @dependabot</li>
+  <li>Bump actions/cache from 3.0.4 to 3.0.5 (#263) @dependabot</li>
+  <li>Bump actions/cache from 3.0.3 to 3.0.4 (#241) @dependabot</li>
+</ul>
+
+<!-- sparkle:edSignature=hB7zXWFEDyrIoZTatX9M+UVaP8dQDsEoau9CVrZpOaCt5rMH/w230CginnuTHk1v6y4fMiN4sAAe9YCjr34eAQ== -->
+]]></description>
+                        <pubDate>Tue, 09 Aug 2022 01:34:27 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.7.0b15/Xcodes.zip"
+                                    sparkle:version="15"
+                                    sparkle:shortVersionString="1.7.0"
+                                    sparkle:edSignature="hB7zXWFEDyrIoZTatX9M+UVaP8dQDsEoau9CVrZpOaCt5rMH/w230CginnuTHk1v6y4fMiN4sAAe9YCjr34eAQ=="
+                                    length="11907807"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v1.6.0</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
