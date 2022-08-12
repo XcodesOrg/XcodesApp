@@ -12,8 +12,9 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 ## Features
 
 - List all available Xcode versions from [Xcode Releases'](https://xcodereleases.com) data or the Apple Developer website.
-- Install any Xcode version, fully automated from start to finish. Xcodes uses [`aria2`](https://aria2.github.io), which uses up to 16 connections to download 3-5x faster than URLSession.
-- Automatically install new releases!
+- Install any Xcode version, **fully automated** from start to finish. Xcodes uses [`aria2`](https://aria2.github.io), which uses up to 16 connections to download 3-5x faster than URLSession.
+- Automatically resumes installs if network errors.
+- Apple ID required to download Xcode versions.
 - Just click a button to make a version active with `xcode-select`.
 - View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
 - Dark/Light Mode supported
@@ -34,9 +35,12 @@ The following languages are supported because of the following community users!
 |||||
 |-|-|-|-|
 |French 🇫🇷 |[@dompepin](https://github.com/dompepin)|Italian 🇮🇹 |[gualtierofrigerio](https://github.com/gualtierofrigerio)|
-|Spanish 🇲🇽 |[@cesartru88](https://github.com/cesartru88)|Korean 🇰🇷 |[@ryan-son](https://github.com/ryan-son)|
+|Spanish 🇪🇸🇲 |[@cesartru88](https://github.com/cesartru88)|Korean 🇰🇷 |[@ryan-son](https://github.com/ryan-son)|
 |Russian 🇷🇺 |[@alexmazlov](https://github.com/alexmazlov)|Turkish 🇹🇷 |[@egrimo](https://github.com/egrimo)|
 |Hindi 🇮🇳 |[@KGurpreet](https://github.com/KGurpreet)|Chinese-Simplified 🇨🇳|[@megabitsenmzq](https://github.com/megabitsenmzq)|
+|Finish 🇫🇮 |[@marcusziade](https://github.com/marcusziade)|Chinese-Traditional 🇨🇳|[@itszero](https://github.com/itszero)|
+|Ukranian 🇺🇦 |[@gelosi](https://github.com/gelosi)|Japanese 🇯🇵|[@tatsuz0u](https://github.com/tatsuz0u)|
+|German 🇩🇪|[@drct](https://github.com/drct)||
 
 Want to add more languages? Simply create a PR with the updated strings file. 
 ## Installation
@@ -143,7 +147,10 @@ popd
 ```
 </details>
 
-## Contact
+## Maintainers
+
+[Matt Kiazyk](https://github.com/mattkiazyk) - [Twitter](https://www.twitter.com/mattkiazyk)
+
 
 <a href="http://www.robotsandpencils.com"><img src="R&PLogo.png" width="153" height="74" /></a>
 
