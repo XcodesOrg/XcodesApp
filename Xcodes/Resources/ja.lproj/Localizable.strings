@@ -201,7 +201,7 @@
 
 // Installation Steps
 "Downloading" = "ダウンロードしています";
-"Unarchiving" = "アーカイブしています (時間かかることがあります)";
+"Unarchiving" = "アーカイブを展開しています (時間がかかることがあります)";
 "Moving" = "%@ に移動しています";
 "TrashingArchive" = "アーカイブをゴミ箱に移動しています";
 "CheckingSecurity" = "セキュリティを検証しています";
