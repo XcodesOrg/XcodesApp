@@ -78,8 +78,16 @@
 "LocalCachePathDescription" = "Xcodes, uygun Xcode sürümlerini ve geçici yeni indirilenleri bir klasörde önbelleğe alır";
 "Change" = "Değiştir";
 "Active/Select" = "Aktif/Seç";
+"InstallDirectory" = "Yükleme Klasörü";
+"InstallPathDescription" = "Xcodes bir klasörü arayıp oraya yükler. Varsayılan(ve önerilen) yöntem /Uygulamalar klasöründe tutmaktır. Xcode'un bulunduğu ortamdaki herhangi bir değişiklik başka bir uygulamanın/servisin çalışmasını durdurabilir.";
+
+"OnSelectDoNothing" = "Uygulama ismini Xcode-X.X.X.app gibi tut.";
+"OnSelectDoNothingDescription" = "Seçildiğinde, ismi Xcode-13.4.1.app örneğindeki gibi tutar.";
 "AutomaticallyCreateSymbolicLink" = "Xcodes.app'in sembolik linkini otomatik oluştur.";
 "AutomaticallyCreateSymbolicLinkDescription" = "Bir Xcode sürümünü Aktif/Seç yaparken Xcode.app ismindeki uygulamanın sembolik linkini yükleme klasörüne otomatik oluşturmayı dene";
+"OnSelectRenameXcode" = "Her zaman Xcode.app şeklinde ismi değiştir";
+"OnSelectRenameXcodeDescription" = "Seçildiğinde, aktif olan Xcode'u Xcode.app olarak isimlendirmeye çalışır ve eski Xcode ismine sürüm ismi ekler.";
+
 "DataSource" = "Veri Kaynağı";
 "DataSourceDescription" = "Apple veri kaynağı Apple'ın geliştirici sitesini inceliyor. Uygun olan en son sürümleri gösterir, ama biraz daha hassastır.\n\nXcode Releases, Xcode sürümlerinin bulunduğu resmi olmayan bir listedir. Data düzenli bir formata sahip bilgileri barındırır, Apple tarafında olmayan ek bilgileri içerir ve Apple'ın ileride sitesini değiştireceği için bozabileceği bir kaynak değildir.";
 "Downloader" = "Yükleyici";
