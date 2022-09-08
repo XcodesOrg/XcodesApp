@@ -78,8 +78,16 @@
 "LocalCachePathDescription" = "Xcodes speichert verfügbare Xcode-Versionen zwischen und lädt neue Versionen temporär in ein Verzeichnis.";
 "Change" = "Ändern";
 "Active/Select" = "Aktiv/Auswählen";
+"InstallDirectory" = "Installationsverzeichnis";
+"InstallPathDescription" = "Xcodes sucht and installiert in ein einzelnes Verzeichnis. Standard (und empfohlen beizubehalten) ist /Applications. Änderungen am Speicherort von Xcode können dazu führen, dass andere Apps/Dienste aufhören zu funktionieren. ";
+
+"OnSelectDoNothing" = "Name beibehalten als Xcode-X.X.X.app";
+"OnSelectDoNothingDescription" = "Bei Auswahl wird der Name mit Version beibehalten, z. B. Xcode-13.4.1.app";
 "AutomaticallyCreateSymbolicLink" = "Symbolischen Link zur Xcode.app automatisch erstellen";
-"AutomaticallyCreateSymbolicLinkDescription" = "Beim Umstellen der Xcode-Version auf Aktiv/Ausgewählt versuchen einen symbolischen Link namens Xcode.app im Installationsverzeichnis zu erstellen.";
+"AutomaticallyCreateSymbolicLinkDescription" = "Beim Umstellen einer Xcode-Version auf Aktiv/Ausgewählt versuchen einen symbolischen Link namens Xcode.app im Installationsverzeichnis zu erstellen.";
+"OnSelectRenameXcode" = "Immer in Xcode.app umbenennen";
+"OnSelectRenameXcodeDescription" = "Bei Auswahl wird versucht das aktive Xcode in Xcode.app umzubenennen. Die vorherige Xcode.app wird dazu in den Versionsnamen umbenannt.";
+
 "DataSource" = "Datenquelle";
 "DataSourceDescription" = "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitsgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten.";
 "Downloader" = "Downloader";
