@@ -1,8 +1,8 @@
 // Menu
 "Menu.About" = "À propos de Xcodes";
 "Menu.CheckForUpdates" = "Vérifier les mises à jour...";
-"Menu.Acknowledgements" = "Xcodes Remerciements";
-"Menu.GitHubRepo" = "Xcodes GitHub";
+"Menu.Acknowledgements" = "Remerciements Xcodes";
+"Menu.GitHubRepo" = "Dépôt GitHub Xcodes";
 "Menu.ReportABug" = "Signaler un Bogue";
 "Menu.RequestNewFeature" = "Demander une Nouvelle Fonctionnalité";
 
@@ -50,9 +50,9 @@
 
 // About
 "VersionWithBuild" = "Version %@ (%@)";
-"GithubRepo" = "GitHub Repo";
+"GithubRepo" = "Dépôt GitHub";
 "Acknowledgements" = "Remerciements";
-"UnxipExperiment" = "Expérience Unxip";
+"UnxipExperiment" = "Expérimentation Unxip";
 "License" = "Licence";
 
 // General Preference Pane
@@ -85,7 +85,7 @@
 "OnSelectRenameXcodeDescription" = "À la sélection, toujours essayer de renommer la version active de Xcode en Xcode.app, en renommant l'ancienne Xcode.app avec le nom de version.";
 
 "DataSource" = "Source de Données";
-"DataSourceDescription" = "La source de données Apple gratte le site Web de développeurs d'Apple. Elle contient les dernières versions disponibles, mais est plus fragile.\n\nXcode Releases est une liste non officielle des versions de Xcode. Elle contient des informations supplémentaires qui ne sont pas facilement disponibles auprès d'Apple et est moins susceptible de se briser si Apple redessine son site Web de développeurs.";
+"DataSourceDescription" = "La source de données Apple analyse le site Web de développeurs d'Apple. Elle contient les dernières versions disponibles, mais est plus fragile.\n\nXcode Releases est une liste non officielle des versions de Xcode. Elle contient des informations supplémentaires qui ne sont pas facilement disponibles auprès d'Apple et est moins susceptible de se briser si Apple refait son site Web de développeurs.";
 "Downloader" = "Téléchargeur";
 "DownloaderDescription" = "aria2 utilise jusqu'à 16 connexions pour télécharger Xcode de 3 à 5 fois plus rapidement que URLSession. aria2 est fourni sous forme d'exécutable avec son code source dans Xcodes pour se conformer à sa licence GPLv2.\n\nURLSession est l'API d'Apple utilisée par défaut pour effectuer des requêtes d'URL.";
 "PrivilegedHelper" = "Assistant Privilégié";
@@ -95,10 +95,10 @@
 "InstallHelper" = "Installer l'assistant'";
 
 // Experiment Preference Pane
-"Experiments" = "Experiences";
+"Experiments" = "Expérimentations";
 "FasterUnxip" = "Unxip Plus Rapide";
-"UseUnxipExperiment" = "Utiliser l'expérience, lors de la décompression Unxip";
-"FasterUnxipDescription" = "Grâce à @_saagarjha, cette expérience peut augmenter jusqu'à 70% la vitesse d'extraction pour certains systèmes.\n\nPour plus d'informations sur la façon dont cela est accompli, consultez le référentiel GitHub unxip - https://github.com/saagarjha/unxip";
+"UseUnxipExperiment" = "Lors de la décompression Unxip, utiliser l'expérimentation";
+"FasterUnxipDescription" = "Grâce à @_saagarjha, cette expérimentation peut augmenter jusqu'à 70% la vitesse de décompression pour certains systèmes.\n\nPour plus d'informations sur la façon dont cela est accompli, consultez le dépôt GitHub unxip - https://github.com/saagarjha/unxip";
 
 // Notifications
 "AccessGranted" = "Accès autorisé. Vous recevrez des notifications de Xcodes.";
@@ -115,10 +115,10 @@
 
 // SMS/2FA
 "DigitCodeDescription" = "Saisissez le code à %d chiffres de l'un de vos appareils de confiance :";
-"SendSMS" = "Envoyer un texto";
+"SendSMS" = "Envoyer un SMS";
 "EnterDigitCodeDescription" = "Entrez le code à %d chiffres envoyé à %@ : ";
-"SelectTrustedPhone" = "Sélectionnez le numéro de téléphone de confiance pour recevoir un code à %d chiffres par texto :";
-"NoTrustedPhones" = "Votre compte n'a pas de numéros de téléphone de confiance, mais ils sont requis pour l'authentification à deux facteurs.\n\nVoir https://support.apple.com/fr-fr/HT204915.";
+"SelectTrustedPhone" = "Sélectionnez le numéro de téléphone de confiance pour recevoir un code à %d chiffres par SMS :";
+"NoTrustedPhones" = "Votre compte n'a aucun numéro de téléphone de confiance, mais ils sont requis pour l'authentification à deux facteurs.\n\nVoir https://support.apple.com/fr-fr/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "Mis à jour le ";
@@ -127,7 +127,7 @@
 "Login" = "Connexion";
 "LoginDescription" = "Ouvrir une connexion";
 "Refresh" = "Actualiser";
-"RefreshDescription" = "Actualiser la liste de Xcode";
+"RefreshDescription" = "Actualiser la liste des Xcode";
 "All" = "Tout";
 "Release" = "Version";
 "ReleaseOnly" = "Seulement le versions finales";
@@ -136,7 +136,7 @@
 "Filter" = "Filtre";
 "FilterAvailableDescription" = "Filtrer les versions disponibles";
 "FilterInstalledDescription" = "Filtrer les versions installées";
-"Info" = "Info";
+"Info" = "Informations";
 "InfoDescription" = "Afficher ou masquer le volet d'informations";
 "Preferences" = "Préférences";
 "PreferencesDescription" = "Ouvrir les Préférences";
@@ -150,7 +150,7 @@
 // Alerts
 // Uninstall
 "Alert.Uninstall.Title" = "Désinstaller Xcode %@ ?";
-"Alert.Uninstall.Message" = "Xcodes sera déplacé vers la corbeille, mais la corbeille ne sera pas vidé.";
+"Alert.Uninstall.Message" = "Xcodes sera déplacé vers la corbeille, mais la corbeille ne sera pas vidée.";
 "Alert.Uninstall.Error.Title" = "Impossible de désinstaller Xcode";
 
 // Cancel Install
@@ -164,7 +164,7 @@
 "Alert.PrivilegedHelper.Error.Title" = "Impossible d'installer l'assistant";
 
 // Min MacOS Supported
-"Alert.MinSupported.Title" = "Exigences minimales non remplies";
+"Alert.MinSupported.Title" = "Pré-requis minimum non satisfaits";
 "Alert.MinSupported.Message" = "Xcode %@ nécessite MacOS %@, mais vous utilisez MacOS %@, voulez-vous toujours l'installer ?";
 
 // Install
@@ -185,11 +185,11 @@
 "Alert.PostInstall.Title" = "Impossible d'effectuer les étapes de post-installation";
 
 // InstallationErrors
-"InstallationError.DamagedXIP" = "L'archive \"%@\" est endommagée et ne peut pas être agrandie.";
-"InstallationError.NotEnoughFreeSpaceToExpandArchive" = "L'archive \"%@\" ne peut pas être agrandie car le volume actuel n'a pas assez d'espace libre.\n\nLibérez plus d'espace pour agrandir l'archive, puis réinstallez Xcode %@ pour démarrer l'installation là où elle s'est arrêtée.";
+"InstallationError.DamagedXIP" = "L'archive \"%@\" est endommagée et ne peut pas être décompressée.";
+"InstallationError.NotEnoughFreeSpaceToExpandArchive" = "L'archive \"%@\" ne peut pas être décompressée car le volume actuel n'a pas assez d'espace libre.\n\nLibérez plus d'espace pour décompresser l'archive, puis réinstallez Xcode %@ pour démarrer l'installation là où elle s'est arrêtée.";
 "InstallationError.FailedToMoveXcodeToApplications" = "Impossible de déplacer Xcode vers le répertoire %@.";
 "InstallationError.FailedSecurityAssessment" = "Xcode %@ a échoué à son évaluation de sécurité avec le résultat suivant :\n%@\nXcode reste installé à %@ si vous souhaitez l'utiliser quand même.";
-"InstallationError.CodesignVerifyFailed" = "Le Xcode téléchargé a échoué à la vérification de la signature de code avec le résultat suivant :\n%@";
+"InstallationError.CodesignVerifyFailed" = "La vérification de signature de code du Xcode téléchargé a échoué avec le résultat suivant :\n%@";
 "InstallationError.UnexpectedCodeSigningIdentity" = "Le Xcode téléchargé n'a pas l'identité de signature de code attendue.\nReçue :\n%@\n%@\nAttendue :\n%@\n%@";
 "InstallationError.UnsupportedFileFormat" = "Xcodes ne supporte pas (encore) l'installation de Xcode à partir du format de fichier %@.";
 "InstallationError.MissingSudoerPassword" = "Mot de passe manquant. Veuillez réessayer.";
@@ -205,7 +205,7 @@
 
 // Installation Steps
 "Downloading" = "Téléchargement";
-"Unarchiving" = "Désarchivage (cela peut prendre un certain temps)";
+"Unarchiving" = "Décompression (cela peut prendre un certain temps)";
 "Moving" = "Déplacement vers %@";
 "TrashingArchive" = "Déplacement de l'archive vers la corbeille";
 "CheckingSecurity" = "Vérification de sécurité";
