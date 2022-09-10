@@ -32,19 +32,19 @@
 
 "ReleaseDate" = "Date de Sortie";
 "ReleaseNotes" = "Notes de Mise à Jour";
-"ReleaseNotes.help" = "Consulter le Notes de Mise á Jour";
+"ReleaseNotes.help" = "Consulter les Notes de Mise á Jour";
 "Compatibility" = "Compatibilité";
 "MacOSRequirement" = "Nécessite macOS %@ ou une version ultérieure";
 "SDKs" = "SDKs";
 "Compilers" = "Compilateurs";
 "DownloadSize" = "Taille de téléchargement";
-"NoXcodeSelected" = "Aucun XCode Sélectionné";
+"NoXcodeSelected" = "Aucun Xcode Sélectionné";
 
 // Installation Steps
 // When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"
 // So if changing order, make sure the positional specficier is retained. ex: "%3$@: Step %1$d of %2$d"
-"InstallationStepDescription" = "Étape %1$d de %2$d: %3$@";
-"DownloadingPercentDescription" = "Téléchargement: %d%% téléchargé";
+"InstallationStepDescription" = "Étape %1$d sur %2$d : %3$@";
+"DownloadingPercentDescription" = "Téléchargement : %d%% téléchargé";
 "StopInstallation" = "Arrêter l'installation";
 "DownloadingError" = "Aucune information de téléchargement trouvée";
 
@@ -69,7 +69,7 @@
 "AppUpdates" = "Mises à Jour de Xcodes.app";
 "CheckForAppUpdates" = "Vérifier automatiquement les mises à jour de l'application";
 "CheckNow" = "Vérifier Maintenant";
-"LastChecked" = "Dernière vérification: %@";
+"LastChecked" = "Dernière vérification : %@";
 "Never" = "Jamais";
 
 // Advanced Preference Pane
@@ -80,8 +80,12 @@
 "Active/Select" = "Activer/Sélectionner";
 "AutomaticallyCreateSymbolicLink" = "Créer automatiquement un lien symbolique vers Xcode.app";
 "AutomaticallyCreateSymbolicLinkDescription" = "Lorsque vous activez/sélectionnez une version de Xcode, essayez de créer un lien symbolique nommé Xcode.app dans le répertoire d'installation";
+"OnSelectDoNothing" = "Ne rien faire";
+"OnSelectRenameXcode" = "Toujours renommer en Xcode.app";
+"OnSelectRenameXcodeDescription" = "À la sélection, toujours essayer de renommer la version active de Xcode en Xcode.app, en renommant l'ancienne Xcode.app avec le nom de version.";
+
 "DataSource" = "Source de Données";
-"DataSourceDescription" = "La source de données Apple gratte le site Web de developpeurs d'Apple. Elle contient les dernières versions disponibles, mais est plus fragile.\n\nXcode Releases est une liste non officielle des versions de Xcode. Elle contient des informations supplémentaires qui ne sont pas facilement disponibles auprès d'Apple et est moins susceptible de se briser si Apple redessine son site Web de développeurs.";
+"DataSourceDescription" = "La source de données Apple gratte le site Web de développeurs d'Apple. Elle contient les dernières versions disponibles, mais est plus fragile.\n\nXcode Releases est une liste non officielle des versions de Xcode. Elle contient des informations supplémentaires qui ne sont pas facilement disponibles auprès d'Apple et est moins susceptible de se briser si Apple redessine son site Web de développeurs.";
 "Downloader" = "Téléchargeur";
 "DownloaderDescription" = "aria2 utilise jusqu'à 16 connexions pour télécharger Xcode de 3 à 5 fois plus rapidement que URLSession. aria2 est fourni sous forme d'exécutable avec son code source dans Xcodes pour se conformer à sa licence GPLv2.\n\nURLSession est l'API d'Apple utilisée par défaut pour effectuer des requêtes d'URL.";
 "PrivilegedHelper" = "Assistant Privilégié";
@@ -104,20 +108,20 @@
 
 // SignIn
 "SignInWithApple" = "Connectez-vous avec votre identifiant Apple.";
-"AppleID" = "Identifiant Apple:";
-"Password" = "Mot de passe:";
+"AppleID" = "Identifiant Apple :";
+"Password" = "Mot de passe :";
 "Required" = "Requis";
 "SignOut" = "Déconnecter";
 
 // SMS/2FA
-"DigitCodeDescription" = "Saisissez le code à %d chiffres de l'un de vos appareils de confiance:";
+"DigitCodeDescription" = "Saisissez le code à %d chiffres de l'un de vos appareils de confiance :";
 "SendSMS" = "Envoyer un texto";
-"EnterDigitCodeDescription" = "Entrez le code à %d chiffres envoyé à %@: ";
-"SelectTrustedPhone" = "Sélectionnez le numéro de téléphone de confiance pour recevoir un code à %d chiffres par texto:";
-"NoTrustedPhones" = "Votre compte n'a pas de numéros de téléphone de confiance, mais ils sont requis pour l'authentification à deux facteurs.\n\nVoir https://support.apple.com/en-ca/HT204915.";
+"EnterDigitCodeDescription" = "Entrez le code à %d chiffres envoyé à %@ : ";
+"SelectTrustedPhone" = "Sélectionnez le numéro de téléphone de confiance pour recevoir un code à %d chiffres par texto :";
+"NoTrustedPhones" = "Votre compte n'a pas de numéros de téléphone de confiance, mais ils sont requis pour l'authentification à deux facteurs.\n\nVoir https://support.apple.com/fr-fr/HT204915.";
 
 // MainWindow
-"UpdatedAt" = "Actualisé: ";
+"UpdatedAt" = "Mis à jour le ";
 
 // ToolBar
 "Login" = "Connexion";
@@ -168,7 +172,7 @@
 "Alert.InstallArchive.Error.Title" = "Impossible d'installer l'archive de Xcode";
 
 // Update
-"Alert.Update.Error.Title" = "Impossible de mettre à jour la version de XCode sélectionnée";
+"Alert.Update.Error.Title" = "Impossible de mettre à jour la version de Xcode sélectionnée";
 
 // Active/Select
 "Alert.Select.Error.Title" = "Impossible de sélectionner Xcode";
@@ -184,7 +188,7 @@
 "InstallationError.DamagedXIP" = "L'archive \"%@\" est endommagée et ne peut pas être agrandie.";
 "InstallationError.NotEnoughFreeSpaceToExpandArchive" = "L'archive \"%@\" ne peut pas être agrandie car le volume actuel n'a pas assez d'espace libre.\n\nLibérez plus d'espace pour agrandir l'archive, puis réinstallez Xcode %@ pour démarrer l'installation là où elle s'est arrêtée.";
 "InstallationError.FailedToMoveXcodeToApplications" = "Impossible de déplacer Xcode vers le répertoire %@.";
-"InstallationError.FailedSecurityAssessment" = "Xcode %@ a échoué à son évaluation de sécurité avec le résultat suivant :\n%@\nXCode reste installé à %@ si vous souhaitez l'utiliser quand même.";
+"InstallationError.FailedSecurityAssessment" = "Xcode %@ a échoué à son évaluation de sécurité avec le résultat suivant :\n%@\nXcode reste installé à %@ si vous souhaitez l'utiliser quand même.";
 "InstallationError.CodesignVerifyFailed" = "Le Xcode téléchargé a échoué à la vérification de la signature de code avec le résultat suivant :\n%@";
 "InstallationError.UnexpectedCodeSigningIdentity" = "Le Xcode téléchargé n'a pas l'identité de signature de code attendue.\nReçue :\n%@\n%@\nAttendue :\n%@\n%@";
 "InstallationError.UnsupportedFileFormat" = "Xcodes ne supporte pas (encore) l'installation de Xcode à partir du format de fichier %@.";
