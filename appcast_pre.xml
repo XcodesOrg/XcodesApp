@@ -8,6 +8,74 @@
             
                 
                     <item>
+                        <title>v1.8.0</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="xcodes-now-does-not-require-any-apple-id-and-password-when-downloading-xcode-">Xcodes now <strong>DOES NOT</strong> require any Apple ID and password when downloading Xcode! 🎉</h2>
+
+<p>At long last!  <strong>you no longer are required</strong> to provide your Apple username and password in order to download Xcode (as long as your using XcodeReleases datasource).</p>
+<ul>
+  <li>No more 2FA prompts!</li>
+  <li>No more errors when you haven’t signed the latest developer EULA!</li>
+  <li>No more nervous feeling giving your password to a 3rd Party.</li>
+</ul>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Add ability to download Xcode without logging in using XcodeReleases (#290) @MattKiazyk</li>
+</ul>
+
+<h2 id="-localization">🌎 Localization</h2>
+
+<ul>
+  <li>Fix French Translation (#288) @florentmorin</li>
+  <li>updated German translation (#285) @drct</li>
+  <li>Added Turkish missing translations in 1.7.0 (#277) @egrimo</li>
+  <li>Fix “Unarchiving” localization in Japanese (#280) @swiftty</li>
+  <li>Update Localizable.strings for Russian language (2) (#271) @duffpod</li>
+  <li>Update zh_Hans localizations. (#270) @megabitsenmzq</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Fix Finnish language name typo in README (#284) @marcusziade</li>
+  <li>Update readme with Taiwan flag (#274) @ymhuang0808</li>
+  <li>Bump actions/cache from 3.0.7 to 3.0.8 (#276) @dependabot</li>
+  <li>Bump actions/cache from 3.0.6 to 3.0.7 (#272) @dependabot</li>
+</ul>
+
+<!-- sparkle:edSignature=SgcxGfx96rqxNpxpecvyLbgzAg6gqSk6pYPn38zyRqs4Tp1RSTAp4kNLJJSbwSdYneo8yaHrIkJyBWft48XnAw== -->
+]]></description>
+                        <pubDate>Sat, 17 Sep 2022 04:05:30 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.8.0b16/Xcodes.zip"
+                                    sparkle:version="16"
+                                    sparkle:shortVersionString="1.8.0"
+                                    sparkle:edSignature="SgcxGfx96rqxNpxpecvyLbgzAg6gqSk6pYPn38zyRqs4Tp1RSTAp4kNLJJSbwSdYneo8yaHrIkJyBWft48XnAw=="
+                                    length="11915836"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v1.7.0</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
