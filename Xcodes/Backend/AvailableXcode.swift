@@ -14,6 +14,9 @@ public struct AvailableXcode: Codable {
     public let sdks: SDKs?
     public let compilers: Compilers?
     public let fileSize: Int64?
+    public var downloadPath: String {
+        return url.path
+    }
 
     public init(
         version: Version,
