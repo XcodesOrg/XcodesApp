@@ -157,7 +157,16 @@ class AppState: ObservableObject {
     }
     // MARK: - Authentication
     
+    func validateADCSession(path: String) -> AnyPublisher<Void, Error> {
+        return Current.network.dataTask(with: URLRequest.downloadADCAuth(path: path))
+            .receive(on: DispatchQueue.main)
+            .tryMap { _ in
+            }
+            .eraseToAnyPublisher()
+    }
+    
     func validateSession() -> AnyPublisher<Void, Error> {
+        
         return Current.network.validateSession()
             .receive(on: DispatchQueue.main)
             .handleEvents(receiveCompletion: { completion in 
@@ -368,7 +377,12 @@ class AppState: ObservableObject {
             }
         }
         
-        install(id: id)
+        switch self.dataSource {
+        case .apple:
+            install(id: id)
+        case .xcodeReleases:
+            installWithoutLogin(id: id)
+        }
     }
     
     func install(id: Xcode.ID) {
@@ -431,6 +445,30 @@ class AppState: ObservableObject {
                             self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
                         }
                         if let index = self.allXcodes.firstIndex(where: { $0.id == id }) { 
+                            self.allXcodes[index].installState = .notInstalled
+                        }
+                    }
+                },
+                receiveValue: { _ in }
+            )
+    }
+    
+    /// Skips using the username/password to log in to Apple, and simply gets a Auth Cookie used in downloading
+    func installWithoutLogin(id: Xcode.ID) {
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+        
+        installationPublishers[id] = self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2)
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { [unowned self] completion in
+                    self.installationPublishers[id] = nil
+                    if case let .failure(error) = completion {
+                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
+                        if error as? AuthenticationError != .invalidSession {
+                            self.error = error
+                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+                        }
+                        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) {
                             self.allXcodes[index].installState = .notInstalled
                         }
                     }

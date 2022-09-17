@@ -40,15 +40,10 @@ extension AppState {
     }
     
     private func install(_ installationType: InstallationType, downloader: Downloader, attemptNumber: Int) -> AnyPublisher<InstalledXcode, Error> {
-        // We need to check if the Apple ID that is logged in is an Apple Developer
-        // Since users can use xcodereleases, we don't check for Apple ID on a xcode list refresh
-        // If the Apple Id is not a developer, the download action will try and download a xip that is invalid, causing a `xcode13.0.xip is damaged and can't be expanded.`
+        
         Logger.appState.info("Using \(downloader) downloader")
         
-        return validateSession()
-            .flatMap { _ in
-                self.getXcodeArchive(installationType, downloader: downloader)
-            }
+        return self.getXcodeArchive(installationType, downloader: downloader)
             .flatMap { xcode, url -> AnyPublisher<InstalledXcode, Swift.Error> in
                 self.installArchivedXcode(xcode, at: url)
             }
@@ -98,13 +93,16 @@ extension AppState {
     }
 
     private func downloadXcode(availableXcode: AvailableXcode, downloader: Downloader) -> AnyPublisher<(AvailableXcode, URL), Error> {
-        downloadOrUseExistingArchive(for: availableXcode, downloader: downloader, progressChanged: { [unowned self] progress in
-            DispatchQueue.main.async {
-                self.setInstallationStep(of: availableXcode.version, to: .downloading(progress: progress))
+        return validateADCSession(path: availableXcode.downloadPath)
+            .flatMap { _ in
+                return self.downloadOrUseExistingArchive(for: availableXcode, downloader: downloader, progressChanged: { [unowned self] progress in
+                    DispatchQueue.main.async {
+                        self.setInstallationStep(of: availableXcode.version, to: .downloading(progress: progress))
+                    }
+                })
+                .map { return (availableXcode, $0) }
             }
-        })
-        .map { return (availableXcode, $0) }
-        .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
     
     public func downloadOrUseExistingArchive(for availableXcode: AvailableXcode, downloader: Downloader, progressChanged: @escaping (Progress) -> Void) -> AnyPublisher<URL, Error> {
