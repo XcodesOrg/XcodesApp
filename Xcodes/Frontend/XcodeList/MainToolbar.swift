@@ -91,10 +91,16 @@ struct MainToolbarModifier: ViewModifier {
             })
             .help("PreferencesDescription")
             
-            TextField("Search", text: $searchText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 200)
-                .help("SearchDescription")
+            TextField("", text: $searchText)
+                .placeholder(when: searchText.isEmpty) {
+                    Text("Search")
+                        .foregroundColor(.gray)
+                        .padding(.leading, 9)
+            }
+            .textFieldStyle(.roundedBorder)
+            .frame(width: 200)
+            .help("SearchDescription")
+            
         }
     }
 }
@@ -115,4 +121,16 @@ extension View {
             )
         )
     }
+    
+    func placeholder<Content: View>(
+        when shouldShow: Bool,
+        alignment: Alignment = .leading,
+        @ViewBuilder placeholder: () -> Content) -> some View {
+
+        ZStack(alignment: alignment) {
+            placeholder().opacity(shouldShow ? 1 : 0)
+            self
+        }
+    }
+
 }
