@@ -40,7 +40,7 @@ The following languages are supported because of the following community users!
 |Hindi 🇮🇳 |[@KGurpreet](https://github.com/KGurpreet)|Chinese-Simplified 🇨🇳|[@megabitsenmzq](https://github.com/megabitsenmzq)|
 |Finnish 🇫🇮 |[@marcusziade](https://github.com/marcusziade)|Chinese-Traditional 🇹🇼|[@itszero](https://github.com/itszero)|
 |Ukranian 🇺🇦 |[@gelosi](https://github.com/gelosi)|Japanese 🇯🇵|[@tatsuz0u](https://github.com/tatsuz0u)|
-|German 🇩🇪|[@drct](https://github.com/drct)||
+|German 🇩🇪|[@drct](https://github.com/drct)|Catalan|[@ferranabello](https://github.com/ferranabello)||
 
 Want to add more languages? Simply create a PR with the updated strings file. 
 ## Installation
