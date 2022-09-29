@@ -125,7 +125,7 @@
 "NoTrustedPhones" = "Dein Account verfügt über keine vertrauenswürdigen Telefonnummern, diese sind aber für Zwei-Faktor-Authentifizierung erforderlich.\n\nInformationen dazu unter https://support.apple.com/en-ca/HT204915.";
 
 // MainWindow
-"UpdatedAt" = "Aktalisiert am";
+"UpdatedAt" = "Aktualisiert am";
 
 // ToolBar
 "Login" = "Login";
