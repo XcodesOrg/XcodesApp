@@ -78,15 +78,15 @@
 "LocalCachePathDescription" = "Xcodesは、利用可能なXcodeのバージョンをキャッシュし、新しいバージョンをディレクトリに一時的にダウンロードします。";
 "Change" = "変更";
 "Active/Select" = "アクティブ";
-"InstallDirectory" = "Install Directory";
-"InstallPathDescription" = "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. ";
+"InstallDirectory" = "インストール先";
+"InstallPathDescription" = "Xcodesは1つのディレクトリを検索し、そこにインストールします。デフォルト (推奨) は /Applications です。Xcodeの格納場所を変更すると、他のアプリケーションやサービスが動作しなくなる可能性があります。";
 
-"OnSelectDoNothing" = "Keep name as Xcode-X.X.X.app";
-"OnSelectDoNothingDescription" = "On select, will keep the name as the version eg. Xcode-13.4.1.app";
+"OnSelectDoNothing" = "名前をXcode-X.X.X.appのまま維持する";
+"OnSelectDoNothingDescription" = "選択時、バージョン付きの名前を維持します。例) Xcode-13.4.1.app";
 "AutomaticallyCreateSymbolicLink" = "Xcode.appへのシンボリックリンクの自動生成";
 "AutomaticallyCreateSymbolicLinkDescription" = "Xcodeのバージョンをアクティブにする時、インストール先でXcode.appのシンボリックリンクの作成を試みます。";
-"OnSelectRenameXcode" = "Always rename to Xcode.app";
-"OnSelectRenameXcodeDescription" = "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name.";
+"OnSelectRenameXcode" = "名前を常にXcode.appに変更する";
+"OnSelectRenameXcodeDescription" = "選択時、自動的にアクティブなXcodeをXcode.appに、以前のXcode.appをバージョン付きの名前に変更します。";
 
 "DataSource" = "データソース";
 "DataSourceDescription" = "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。";
