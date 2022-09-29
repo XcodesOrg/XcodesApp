@@ -78,8 +78,16 @@
 "LocalCachePathDescription" = "Xcodesは、利用可能なXcodeのバージョンをキャッシュし、新しいバージョンをディレクトリに一時的にダウンロードします。";
 "Change" = "変更";
 "Active/Select" = "アクティブ";
+"InstallDirectory" = "Install Directory";
+"InstallPathDescription" = "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. ";
+
+"OnSelectDoNothing" = "Keep name as Xcode-X.X.X.app";
+"OnSelectDoNothingDescription" = "On select, will keep the name as the version eg. Xcode-13.4.1.app";
 "AutomaticallyCreateSymbolicLink" = "Xcode.appへのシンボリックリンクの自動生成";
 "AutomaticallyCreateSymbolicLinkDescription" = "Xcodeのバージョンをアクティブにする時、インストール先でXcode.appのシンボリックリンクの作成を試みます。";
+"OnSelectRenameXcode" = "Always rename to Xcode.app";
+"OnSelectRenameXcodeDescription" = "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name.";
+
 "DataSource" = "データソース";
 "DataSourceDescription" = "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。";
 "Downloader" = "ダウンローダ";
@@ -217,3 +225,6 @@
 // Notifications
 "Notification.NewXcodeVersion.Title" = "新しいXcodeのバージョン";
 "Notification.NewXcodeVersion.Body" = "新しいバージョンがダウンロードできます。";
+
+// WWDC
+"WWDC.Message" = "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻";
