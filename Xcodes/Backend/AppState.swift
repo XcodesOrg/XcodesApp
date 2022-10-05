@@ -609,10 +609,10 @@ class AppState: ObservableObject {
       NSPasteboard.general.setString(url.absoluteString, forType: .string)
     }
     
-    func createSymbolicLink(xcode: Xcode) {
+    func createSymbolicLink(xcode: Xcode, isBeta: Bool = false) {
         guard let installedXcodePath = xcode.installedPath else { return }
         
-        let destinationPath: Path = Path.installDirectory/"Xcode.app"
+        let destinationPath: Path = Path.installDirectory/"Xcode\(isBeta ? "-Beta" : "").app"
         
         // does an Xcode.app file exist?
         if FileManager.default.fileExists(atPath: destinationPath.string) {
@@ -634,7 +634,7 @@ class AppState: ObservableObject {
         
         do {
             try FileManager.default.createSymbolicLink(atPath: destinationPath.string, withDestinationPath: installedXcodePath.string)
-            Logger.appState.info("Successfully created symbolic link with Xcode.app")
+            Logger.appState.info("Successfully created symbolic link with Xcode\(isBeta ? "-Beta": "").app")
         } catch {
             Logger.appState.error("Unable to create symbolic Link")
             self.error = error

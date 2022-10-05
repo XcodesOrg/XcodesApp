@@ -16,6 +16,7 @@
 "OpenDescription" = "打開這個版本";
 "CopyPath" = "拷貝路徑";
 "CreateSymLink" = "製作 Xcode.app 的 Symlink";
+"CreateSymLink" = "製作 Xcode-Beta.app 的 Symlink";
 "Uninstall" = "解除安裝";
 "Selected" = "已選取";
 "Select" = "選取";

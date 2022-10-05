@@ -16,6 +16,7 @@
 "OpenDescription" = "Bu sürümü aç";
 "CopyPath" = "Yolu Kopyala";
 "CreateSymLink" = "Xcode.app olarak sembolik link yarat";
+"CreateSymLinkBeta" = "Xcode-Beta.app olarak sembolik link yarat";
 "Uninstall" = "Kaldır";
 "Selected" = "Seçili";
 "Select" = "Seç";

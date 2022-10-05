@@ -16,6 +16,7 @@
 "OpenDescription" = "Запустити цю версію";
 "CopyPath" = "Скопіювати шлях";
 "CreateSymLink" = "Створити символічну ссилку як Xcode.app";
+"CreateSymLinkBeta" = "Створити символічну ссилку як Xcode-Beta.app";
 "Uninstall" = "Видалити";
 "Selected" = "Обрано";
 "Select" = "Обрати";

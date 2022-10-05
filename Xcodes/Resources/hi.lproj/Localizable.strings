@@ -16,6 +16,7 @@
 "OpenDescription" = "इस संस्करण को खोलें";
 "CopyPath" = "पथ की कॉपी करे";
 "CreateSymLink" = "Xcode.app के रूप में सिमलिंक बनाएं";
+"CreateSymLinkBeta" = "Xcode-Beta.app के रूप में सिमलिंक बनाएं";
 "Uninstall" = "असंस्थापित करे";
 "Selected" = "चयनित";
 "Select" = "चयन करे";
