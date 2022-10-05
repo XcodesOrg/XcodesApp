@@ -72,6 +72,13 @@
 "LastChecked" = "前回の確認: %@";
 "Never" = "なし";
 
+// Download Preference Pane
+"Downloads" = "ダウンロード"
+"DataSource" = "データソース";
+"DataSourceDescription" = "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。";
+"Downloader" = "ダウンローダ";
+"DownloaderDescription" = "aria2 は、最大16個の接続を使用して、Xcode を URLSession の3-5 倍のスピードでダウンロードします。GPLv2 ライセンスに準拠するため、Xcodes 内にソースコードと一緒に実行ファイルとしてバンドルされています。\n\nURLSession は、URLリクエストを行うための Apple のデフォルト API です。";
+
 // Advanced Preference Pane
 "Advanced" = "上級者向け";
 "LocalCachePath" = "ローカルキャッシュパス";
@@ -80,10 +87,6 @@
 "Active/Select" = "アクティブ";
 "AutomaticallyCreateSymbolicLink" = "Xcode.appへのシンボリックリンクの自動生成";
 "AutomaticallyCreateSymbolicLinkDescription" = "Xcodeのバージョンをアクティブにする時、インストール先でXcode.appのシンボリックリンクの作成を試みます。";
-"DataSource" = "データソース";
-"DataSourceDescription" = "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。";
-"Downloader" = "ダウンローダ";
-"DownloaderDescription" = "aria2 は、最大16個の接続を使用して、Xcode を URLSession の3-5 倍のスピードでダウンロードします。GPLv2 ライセンスに準拠するため、Xcodes 内にソースコードと一緒に実行ファイルとしてバンドルされています。\n\nURLSession は、URLリクエストを行うための Apple のデフォルト API です。";
 "PrivilegedHelper" = "権限のあるヘルパー";
 "PrivilegedHelperDescription" = "Xcodesは、rootとしてタスクを実行するために、別の権限のあるヘルパーを使用します。インストール後の手順や xcode-select による Xcode のバージョン切り替えなど、コマンドラインで sudo を必要とするものです。\n\nインストールには、macOS アカウントのパスワードの入力が必要です。";
 "HelperInstalled" = "インストール済み";

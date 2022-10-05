@@ -72,6 +72,13 @@
 "LastChecked" = "Son kontrol: %@";
 "Never" = "Daha Yeni";
 
+// Download Preference Pane
+"Downloads" = "İndirilenler"
+"DataSource" = "Veri Kaynağı";
+"DataSourceDescription" = "Apple veri kaynağı Apple'ın geliştirici sitesini inceliyor. Uygun olan en son sürümleri gösterir, ama biraz daha hassastır.\n\nXcode Releases, Xcode sürümlerinin bulunduğu resmi olmayan bir listedir. Data düzenli bir formata sahip bilgileri barındırır, Apple tarafında olmayan ek bilgileri içerir ve Apple'ın ileride sitesini değiştireceği için bozabileceği bir kaynak değildir.";
+"Downloader" = "Yükleyici";
+"DownloaderDescription" = "aria2 16ya kadar bağlantı kullanarak Xcode'u URLSession'a göre 3-5 kat daha hızlı indirir. Çalıştırılabilir bir dosya olarak Bundle'a dahildir ve kaynak dosyaları GPLv2 lisansıyla uyumlu olması açısından Xcode içerisinde yer alır.\n\nURLSession Apple'ın URL istekleri oluşturmak için sunduğu varsayılan API'dır.";
+
 // Advanced Preference Pane
 "Advanced" = "Gelişmiş";
 "LocalCachePath" = "Lokal Önbellek Konumu";
@@ -87,11 +94,6 @@
 "AutomaticallyCreateSymbolicLinkDescription" = "Bir Xcode sürümünü Aktif/Seç yaparken Xcode.app ismindeki uygulamanın sembolik linkini yükleme klasörüne otomatik oluşturmayı dene";
 "OnSelectRenameXcode" = "Her zaman Xcode.app şeklinde ismi değiştir";
 "OnSelectRenameXcodeDescription" = "Seçildiğinde, aktif olan Xcode'u Xcode.app olarak isimlendirmeye çalışır ve eski Xcode ismine sürüm ismi ekler.";
-
-"DataSource" = "Veri Kaynağı";
-"DataSourceDescription" = "Apple veri kaynağı Apple'ın geliştirici sitesini inceliyor. Uygun olan en son sürümleri gösterir, ama biraz daha hassastır.\n\nXcode Releases, Xcode sürümlerinin bulunduğu resmi olmayan bir listedir. Data düzenli bir formata sahip bilgileri barındırır, Apple tarafında olmayan ek bilgileri içerir ve Apple'ın ileride sitesini değiştireceği için bozabileceği bir kaynak değildir.";
-"Downloader" = "Yükleyici";
-"DownloaderDescription" = "aria2 16ya kadar bağlantı kullanarak Xcode'u URLSession'a göre 3-5 kat daha hızlı indirir. Çalıştırılabilir bir dosya olarak Bundle'a dahildir ve kaynak dosyaları GPLv2 lisansıyla uyumlu olması açısından Xcode içerisinde yer alır.\n\nURLSession Apple'ın URL istekleri oluşturmak için sunduğu varsayılan API'dır.";
 "PrivilegedHelper" = "Ayrıcalıklı Yardımcı";
 "PrivilegedHelperDescription" ="Xcodes, root görevlerini yerine getirmek için bir Ayrıcalıklı yardımcı aracı kullanır. Bunlar komut satırındaki sudo gerektiren, yükleme sonrası adımlarını sağlayan ve Xcode sürümü değiştiren xcode-select gibi komutlardan ibarettir.\n\nBunu yüklemek için macOS hesap şifrenizi girmeniz istenecektir.";
 "HelperInstalled" = "Yardımcı yüklendi";

@@ -72,6 +72,13 @@
 "LastChecked" = "Dernière vérification : %@";
 "Never" = "Jamais";
 
+// Download Preference Pane
+"Downloads" = "Téléchargements"
+"DataSource" = "Source de Données";
+"DataSourceDescription" = "La source de données Apple analyse le site Web de développeurs d'Apple. Elle contient les dernières versions disponibles, mais est plus fragile.\n\nXcode Releases est une liste non officielle des versions de Xcode. Elle contient des informations supplémentaires qui ne sont pas facilement disponibles auprès d'Apple et est moins susceptible de se briser si Apple refait son site Web de développeurs.";
+"Downloader" = "Téléchargeur";
+"DownloaderDescription" = "aria2 utilise jusqu'à 16 connexions pour télécharger Xcode de 3 à 5 fois plus rapidement que URLSession. aria2 est fourni sous forme d'exécutable avec son code source dans Xcodes pour se conformer à sa licence GPLv2.\n\nURLSession est l'API d'Apple utilisée par défaut pour effectuer des requêtes d'URL.";
+
 // Advanced Preference Pane
 "Advanced" = "Avancé";
 "LocalCachePath" = "Cache Local";
@@ -84,10 +91,6 @@
 "OnSelectRenameXcode" = "Toujours renommer en Xcode.app";
 "OnSelectRenameXcodeDescription" = "À la sélection, toujours essayer de renommer la version active de Xcode en Xcode.app, en renommant l'ancienne Xcode.app avec le nom de version.";
 
-"DataSource" = "Source de Données";
-"DataSourceDescription" = "La source de données Apple analyse le site Web de développeurs d'Apple. Elle contient les dernières versions disponibles, mais est plus fragile.\n\nXcode Releases est une liste non officielle des versions de Xcode. Elle contient des informations supplémentaires qui ne sont pas facilement disponibles auprès d'Apple et est moins susceptible de se briser si Apple refait son site Web de développeurs.";
-"Downloader" = "Téléchargeur";
-"DownloaderDescription" = "aria2 utilise jusqu'à 16 connexions pour télécharger Xcode de 3 à 5 fois plus rapidement que URLSession. aria2 est fourni sous forme d'exécutable avec son code source dans Xcodes pour se conformer à sa licence GPLv2.\n\nURLSession est l'API d'Apple utilisée par défaut pour effectuer des requêtes d'URL.";
 "PrivilegedHelper" = "Assistant Privilégié";
 "PrivilegedHelperDescription" = "Xcodes utilise un assistant privilégié distinct pour effectuer des tâches en tant que root. Ce sont des tâches qui nécessiteraient sudo sur la ligne de commande, y compris les étapes de post-installation et le changement de version de Xcode avec xcode-select.\n\nVous serez invité à saisir le mot de passe de votre compte macOS pour l'installer.";
 "HelperInstalled" = "L'assistant est installé";
