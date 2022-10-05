@@ -21,6 +21,11 @@ struct PreferencesView: View {
                     Label("Updates", systemImage: "arrow.triangle.2.circlepath.circle")
                 }
                 .tag(Tabs.updates)
+            DownloadPreferencePane()
+                .environmentObject(appState)
+                .tabItem {
+                    Label("Downloads", systemImage: "icloud.and.arrow.down")
+                }
             AdvancedPreferencePane()
                 .environmentObject(appState)
                 .tabItem {
