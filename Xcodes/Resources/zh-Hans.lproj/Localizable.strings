@@ -73,7 +73,7 @@
 "Never" = "从未检查";
 
 // Download Preference Pane
-"Downloads" = "下载"
+"Downloads" = "下载";
 "DataSource" = "数据源";
 "DataSourceDescription" = "Apple数据源是从Apple开发者网站爬取的。它会及时反应最新版本，但较为脆弱。\n\nXcode Releases是一个非官方的Xcode版本列表。它提供了良好格式化的数据，包含了不便从Apple直接获得的附加信息，且更不容易在Apple开发者网站无法访问时出现问题。";
 "Downloader" = "下载器";

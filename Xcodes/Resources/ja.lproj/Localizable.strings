@@ -73,7 +73,7 @@
 "Never" = "なし";
 
 // Download Preference Pane
-"Downloads" = "ダウンロード"
+"Downloads" = "ダウンロード";
 "DataSource" = "データソース";
 "DataSourceDescription" = "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。";
 "Downloader" = "ダウンローダ";

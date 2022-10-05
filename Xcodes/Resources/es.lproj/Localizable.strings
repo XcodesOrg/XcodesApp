@@ -73,7 +73,7 @@
 "Never" = "Nunca";
 
 // Download Preference Pane
-"Downloads" = "Descargas"
+"Downloads" = "Descargas";
 "DataSource" = "Fuente de datos";
 "DataSourceDescription" = "La fuente de datos de Apple la extrae de el sitio web de Apple Developer. Siempre mostrará los últimos lanzamientos disponibles, pero es más frágil.\n\nXcode Releases es una lista no oficial de lanzamientos de Xcode. Se proporciona como datos bien estructurados, contiene información adicional que no está disponible fácilmente en Apple y es menos probable que se rompa si Apple rediseña su sitio web para desarrolladores.";
 "Downloader" = "Downloader";

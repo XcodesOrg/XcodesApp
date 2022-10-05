@@ -72,7 +72,7 @@
 "Never" = "Ei koskaan";
 
 // Download Preference Pane
-"Downloads" = "Lataukset"
+"Downloads" = "Lataukset";
 "DataSource" = "Tietolähde";
 "DataSourceDescription" = "Applen tietolähde kaappaa Apple Developer -sivuston. Se näyttää aina uusimmat saatavilla olevat julkaisut, mutta se on herkempi hajoamiselle.\n\nXcode Releases on epävirallinen luettelo Xcode-julkaisuista. Se toimitetaan hyvin muotoiltuina tietoina, sisältää lisätietoa, jota ei ole helposti saatavilla Applelta, ja se ei todennäköisesti hajoa, jos Apple suunnittelee uudelleen kehittäjäsivustonsa.";
 "Downloader" = "Downloader";

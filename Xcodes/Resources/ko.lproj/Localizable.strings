@@ -73,7 +73,7 @@
 "Never" = "확인하지 않음";
 
 // Download Preference Pane
-"Downloads" = "다운로드"
+"Downloads" = "다운로드";
 "DataSource" = "데이터 소스";
 "DataSourceDescription" = "Apple 데이터 소스는 Apple Developer 웹사이트를 스크랩합니다. Apple Developer에는 항상 사용 가능한 최신 출시 버전이 표시되지만 취약한 면이 있습니다.\n\nXcode Releases는 비공식적인 Xcode 출시 버전 목록입니다. Xcode Releases에서는 정리된 데이터를 제공하며, Apple에서 쉽게 구할 수 없는 정보를 포함하며 Apple이 Apple Developer를 재설계할 경우에도 안전할 수 있습니다.";
 "Downloader" = "다운로더";

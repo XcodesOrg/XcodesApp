@@ -73,7 +73,7 @@
 "Never" = "從未使用";
 
 // Download Preference Pane
-"Downloads" = "下載"
+"Downloads" = "下載";
 "DataSource" = "資料來源";
 "DataSourceDescription" = "Apple 資料來源是擷取 Apple 開發者網站而來，永遠會顯示最新的可用版本，但比較容易出錯。\n\nXcode Releases 是一個非官方的 Xcodes 發行版本列表。這個來源提供格式良好的資料，包含了 Apple 開發者網站上未列出的額外資訊並且即使 Apple 決定重新設計他們的開發者網站也比較不容易出錯。";
 "Downloader" = "下載器";

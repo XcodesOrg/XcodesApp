@@ -73,7 +73,7 @@
 "Never" = "Jamais";
 
 // Download Preference Pane
-"Downloads" = "Téléchargements"
+"Downloads" = "Téléchargements";
 "DataSource" = "Source de Données";
 "DataSourceDescription" = "La source de données Apple analyse le site Web de développeurs d'Apple. Elle contient les dernières versions disponibles, mais est plus fragile.\n\nXcode Releases est une liste non officielle des versions de Xcode. Elle contient des informations supplémentaires qui ne sont pas facilement disponibles auprès d'Apple et est moins susceptible de se briser si Apple refait son site Web de développeurs.";
 "Downloader" = "Téléchargeur";

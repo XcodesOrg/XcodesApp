@@ -73,7 +73,7 @@
 "Never" = "Daha Yeni";
 
 // Download Preference Pane
-"Downloads" = "İndirilenler"
+"Downloads" = "İndirilenler";
 "DataSource" = "Veri Kaynağı";
 "DataSourceDescription" = "Apple veri kaynağı Apple'ın geliştirici sitesini inceliyor. Uygun olan en son sürümleri gösterir, ama biraz daha hassastır.\n\nXcode Releases, Xcode sürümlerinin bulunduğu resmi olmayan bir listedir. Data düzenli bir formata sahip bilgileri barındırır, Apple tarafında olmayan ek bilgileri içerir ve Apple'ın ileride sitesini değiştireceği için bozabileceği bir kaynak değildir.";
 "Downloader" = "Yükleyici";
