@@ -156,6 +156,7 @@
 "Alert.Uninstall.Title" = "Uninstall Xcode %@?";
 "Alert.Uninstall.Message" = "It will be moved to the Trash, but won't be emptied.";
 "Alert.Uninstall.Error.Title" = "Unable to uninstall Xcode";
+"Alert.Uninstall.Error.Message.FileNotFound" = "Could not find file \"%@\".";
 
 // Cancel Install
 "Alert.CancelInstall.Title" = "Are you sure you want to stop the installation of Xcode %@?";

@@ -156,6 +156,7 @@
 "Alert.Uninstall.Title" = "Xcode %@ deinstallieren?";
 "Alert.Uninstall.Message" = "Die Anwendung wird in den Papierkorb verschoben, dieser wird aber nicht geleert.";
 "Alert.Uninstall.Error.Title" = "Die Deinstallation von Xcode ist nicht möglich";
+"Alert.Uninstall.Error.Message.FileNotFound" = "Datei \"%@\" konnte nicht gefunden werden.";
 
 // Cancel Install
 "Alert.CancelInstall.Title" = "Bist du sicher, dass Du die installation von Xcode %@ anhalten möchtest?";
