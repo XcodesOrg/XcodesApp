@@ -69,7 +69,7 @@
 "AppUpdates" = "Xcodes.app Updates";
 "CheckForAppUpdates" = "Automatisch controleren op app updates";
 "CheckNow" = "Nu Controleren";
-"LastChecked" = "Laatste gecontroleerd: %@";
+"LastChecked" = "Laatste controle: %@";
 "Never" = "Nooit";
 
 // Advanced Preference Pane
@@ -89,11 +89,11 @@
 "OnSelectRenameXcodeDescription" = "Wanneer ingeschakeld, zal automatisch de actieve Xcode hernoemd worden naar Xcode.app, de vorige Xcode.app zal hernoemd worden naar de desbetreffende versie.";
 
 "DataSource" = "Databron";
-"DataSourceDescription" = "De Apple databron scraped de Apple Developer website. Dit zal altijd de laatste nieuwe versies tonen die beschikbaar zijn, maar is meer foutgevoelig.\n\nXcode Releases is an unofficial list of Xcode releases. It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website.";
+"DataSourceDescription" = "De Apple databron scraped de Apple Developer website. Dit zal altijd de laatste nieuwe versies tonen die beschikbaar zijn, maar is meer foutgevoelig.\n\nXcode Releases is een onofficiële lijst van Xcode releases. Deze lijst wordt gepresenteerd als gevalideerde data en bevat extra informatie die niet beschikbaar is vanuit Apple. Deze databron is minder foutgevoelig en niet afhankelijk van wanneer Apple de developer website aanpast.";
 "Downloader" = "Downloader";
 "DownloaderDescription" = "aria2 gebruikt tot 16 verbindingen om Xcode 3-5x sneller te downloaden dan met URLSession. Het is gebundeld als een executable samen met de broncode binnen Xcodes om te voldoen aan de GPLv2 licentie.\n\nURLSession is de standaard Apple API voor het maken van URL verzoeken.";
 "PrivilegedHelper" = "Privileged Helper";
-"PrivilegedHelperDescription" = "Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it.";
+"PrivilegedHelperDescription" = "Xcodes gebruikt een separate privilged helper om taken uit te voeren als root. Dit zijn operaties die een sudo vereisen op de command line, inclusief post-installatie stappen en het wijzigen van Xcode versies met xcode-select.\n\nJe zult worden gevraagd om je macOS account wachtwoord om deze te installeren.";
 "HelperInstalled" = "Helper is geïnstalleerd";
 "HelperNotInstalled" = "Helper is niet geïnstalleerd";
 "InstallHelper" = "Installeer helper";
@@ -102,11 +102,11 @@
 "Experiments" = "Experimenten";
 "FasterUnxip" = "Snellere Unxip";
 "UseUnxipExperiment" = "Bij unxipping, gebruik expiriment";
-"FasterUnxipDescription" = "Dankzij @_saagarjha, this experiment can increase unxipping speed by up to 70% for some systems.\n\nMore information on how this is accomplished can be seen on the unxip repo - https://github.com/saagarjha/unxip";
+"FasterUnxipDescription" = "Dankzij @_saagarjha, kan met dit experiment het uitpakken van Xcode tot 70% sneller gaan op sommige systemen.\n\nMeer informatie over hoe dit mogelijk wordt gemaakt kan worden gevonden op de unxip repo - https://github.com/saagarjha/unxip";
 
 // Notifications
 "AccessGranted" = "Toegang Verleend. Je krijgt notificaties van Xcodes.";
-"AccessDenied" = "⚠️ Toegang Geweigerd ⚠️\n\nPlease open your Notification Settings and select Xcodes if you wish to allow access.";
+"AccessDenied" = "⚠️ Toegang Geweigerd ⚠️\n\nOpen je Notificatie Instellingen en selecteer Xcodes om toegang te verlenen.";
 "NotificationSettings" = "Notificatie Instellingen";
 "EnableNotifications" = "Notificaties Inschakelen";
 
@@ -118,11 +118,11 @@
 "SignOut" = "Uitloggen";
 
 // SMS/2FA
-"DigitCodeDescription" = "Enter the %d digit code from one of your trusted devices:";
+"DigitCodeDescription" = "Voer de %d code in van een van je vertrouwde apparaten:";
 "SendSMS" = "Verstuur SMS";
-"EnterDigitCodeDescription" = "Enter the %d digit code sent to %@: ";
-"SelectTrustedPhone" = "Select a trusted phone number to receive a %d digit code via SMS:";
-"NoTrustedPhones" = "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication.\n\nSee https://support.apple.com/en-ca/HT204915.";
+"EnterDigitCodeDescription" = "Voer de %d code in die is verstuurd naar %@: ";
+"SelectTrustedPhone" = "Selecteer een vertrouwd telefoonnumer on een %d code te ontvangen via SMS:";
+"NoTrustedPhones" = "Je account heeft geen vertrouwde telefoonnummers, dit is nodig voor two-factor authenticatie.\n\nZie https://support.apple.com/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "Bijgewerkt op";
@@ -169,7 +169,7 @@
 
 // Min MacOS Supported
 "Alert.MinSupported.Title" = "Minimale vereisten niet voldaan";
-"Alert.MinSupported.Message" = "Xcode %@ requires MacOS %@, but you are running MacOS %@, do you still want to install it?";
+"Alert.MinSupported.Message" = "Xcode %@ vereist MacOS %@, maar jouw MacOS versie is %@, wil je doorgaan met installeren?";
 
 // Install
 "Alert.Install.Error.Title" = "Kan Xcode niet installeren";
@@ -186,15 +186,15 @@
 "Alert.SymLink.Message" = "Xcode.app bestaat en is geen symbolic link";
 
 // Post install
-"Alert.PostInstall.Title" = "Kan na-installatie stappen niet uitvoeren";
+"Alert.PostInstall.Title" = "Kan post-installatie stappen niet uitvoeren";
 
 // InstallationErrors
 "InstallationError.DamagedXIP" = "Het archief \"%@\" is beschadigd en kan niet worden uitgepakt.";
 "InstallationError.NotEnoughFreeSpaceToExpandArchive" = "Het archief \"%@\" kan niet worden uitgepakt omdat het huidige volume niet voldoende vrije schijf ruimte heeft.\n\nMaak meer ruimte beschikbaar om het archief uit te pakken en installeer dan Xcode %@ opnieuw om de installatie voort te zetten.";
 "InstallationError.FailedToMoveXcodeToApplications" = "Het is mislukt om Xcode te verplaatsen naar de %@ map.";
-"InstallationError.FailedSecurityAssessment" = "Xcode %@ failed its security assessment with the following output:\n%@\nIt remains installed at %@ if you wish to use it anyways.";
-"InstallationError.CodesignVerifyFailed" = "The downloaded Xcode failed code signing verification with the following output:\n%@";
-"InstallationError.UnexpectedCodeSigningIdentity" = "The downloaded Xcode doesn't have the expected code signing identity.\nGot:\n%@\n%@\nExpected:\n%@\n%@";
+"InstallationError.FailedSecurityAssessment" = "De Xcode %@ veiligheidsbeoordeling was onsuccesvol en gaf de volgende melding:\n%@\nXcode blijft geïnstalleerd op %@ als je deze toch wilt gebruiken.";
+"InstallationError.CodesignVerifyFailed" = "De gedownloade Xcode is mislukt voor verificatie van code-ondertekening met de volgende melding:\n%@";
+"InstallationError.UnexpectedCodeSigningIdentity" = "De gedownloade Xcode heeft niet de verwachte code-ondertekeningsidentiteit.\nVerkregen:\n%@\n%@\nVerwacht:\n%@\n%@";
 "InstallationError.UnsupportedFileFormat" = "Xcodes heeft (nog) geen ondersteuning om Xcode te installeren vanaf het %@ bestandsformaat.";
 "InstallationError.MissingSudoerPassword" = "Wachtwoord ontbreekt. Probeer het opnieuw.";
 "InstallationError.UnavailableVersion" = "Kan versie %@ niet vinden.";
@@ -204,8 +204,8 @@
 "InstallationError.VersionAlreadyInstalled" = "%@ is al geïnstalleerd op %@";
 "InstallationError.InvalidVersion" = "%@ is geen geldig versie nummer.";
 "InstallationError.VersionNotInstalled" = "%@ is niet geïnstalleerd.";
-"InstallationError.PostInstallStepsNotPerformed.Installed" = "Installation was completed, but some post-install steps weren't performed automatically. These will be performed when you first launch Xcode %@.";
-"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "Installation was completed, but some post-install steps weren't performed automatically. Xcodes performs these steps with a privileged helper, which appears to not be installed. You can install it from Preferences > Advanced.\n\nThese steps will be performed when you first launch Xcode %@.";
+"InstallationError.PostInstallStepsNotPerformed.Installed" = "De installatie is voltooid, maar sommige post-installatie taken zijn niet uitgevoerd. Deze taken zullen worden uitgevoerd wanneer je Xcode %@ voor het eerst start.";
+"InstallationError.PostInstallStepsNotPerformed.NotInstalled" =  "De installatie is voltooid, maar sommige post-installatie taken zijn niet uitgevoerd. Xcodes voert deze taken uit door middel van de privileged helper, maar deze lijkt niet te zijn geïnstalleerd. Je kunt deze installeren vanaf Voorkeuren > Geavanceerd.\n\nDeze taken zullen worden uitgevoerd wanneer je Xcode %@ voor het eerst start.";
 
 // Installation Steps
 "Downloading" = "Downloaden";
