@@ -114,7 +114,7 @@
 "SendSMS" = "SMS 보내기";
 "EnterDigitCodeDescription" = "%@(으)로 전송된 %d 자리 코드를 입력하세요.";
 "SelectTrustedPhone" = "SMS를 통해 %d 자리 코드를 수신하려면 신뢰할 수 있는 전화번호를 선택하세요.";
-"NoTrustedPhones" = "계정에 신뢰할 수 있는 전화번호가 없지만 이중 인증(2FA)에 필요합니다.\n\nhttps://support.apple.com/en-ca/HT204915를 참조하세요.";
+"NoTrustedPhones" = "계정에 신뢰할 수 있는 전화번호가 없지만 이중 인증(2FA)에 필요합니다.\n\nhttps://support.apple.com/HT204915를 참조하세요.";
 
 // MainWindow
 "UpdatedAt" = "마지막 업데이트 시점";

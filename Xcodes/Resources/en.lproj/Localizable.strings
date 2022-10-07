@@ -122,7 +122,7 @@
 "SendSMS" = "Send SMS";
 "EnterDigitCodeDescription" = "Enter the %d digit code sent to %@: ";
 "SelectTrustedPhone" = "Select a trusted phone number to receive a %d digit code via SMS:";
-"NoTrustedPhones" = "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication.\n\nSee https://support.apple.com/en-ca/HT204915.";
+"NoTrustedPhones" = "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication.\n\nSee https://support.apple.com/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "Updated at";

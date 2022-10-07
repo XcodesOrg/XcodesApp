@@ -113,7 +113,7 @@
 "SendSMS" = "Lähetä tekstiviesti";
 "EnterDigitCodeDescription" = "Anna %d numeroinen koodi, joka lähetettiin osoitteeseen %@: ";
 "SelectTrustedPhone" = "Valitse luotettu puhelinnumero saadaksesi %d numeroisen koodin tekstiviestinä:";
-"NoTrustedPhones" = "Tililläsi ei ole luotettuja puhelinnumeroita, mutta ne vaaditaan kaksivaiheiseen todentamiseen.\n\nKatso https://support.apple.com/en-ca/HT204915.";
+"NoTrustedPhones" = "Tililläsi ei ole luotettuja puhelinnumeroita, mutta ne vaaditaan kaksivaiheiseen todentamiseen.\n\nKatso https://support.apple.com/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "Päivitetty ajankohtana";
