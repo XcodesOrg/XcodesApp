@@ -513,7 +513,7 @@ public enum InstallationError: LocalizedError, Equatable {
         case .unexpectedCodeSigningIdentity(let identity, let certificateAuthority):
             return String(format: localizeString("InstallationError.UnexpectedCodeSigningIdentity"), identity, certificateAuthority, XcodeTeamIdentifier, XcodeCertificateAuthority)
         case .unsupportedFileFormat(let fileExtension):
-            return String(format: localizeString("InstallationError.UnsuppoawwrtedFileFormat"), fileExtension)
+            return String(format: localizeString("InstallationError.UnsupportedFileFormat"), fileExtension)
         case .missingSudoerPassword:
             return localizeString("InstallationError.MissingSudoerPassword")
         case let .unavailableVersion(version):
