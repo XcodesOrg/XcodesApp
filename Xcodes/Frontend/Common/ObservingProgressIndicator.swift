@@ -46,6 +46,7 @@ public struct ObservingProgressIndicator: View {
                 isIndeterminate: progress.progress.isIndeterminate,
                 style: style
             )
+            .accessibilityElement(children: .ignore)
             .help(String(format: localizeString("DownloadingPercentDescription"), Int((progress.progress.fractionCompleted * 100))))
             
             if showsAdditionalDescription, progress.progress.xcodesLocalizedDescription.isEmpty == false {

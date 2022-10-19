@@ -18,6 +18,7 @@ struct InstallationStepDetailView: View {
 
                 case .unarchiving, .moving, .trashingArchive, .checkingSecurity, .finishing:
                     ProgressView()
+                        .accessibilityElement(children: .ignore)
                         .scaleEffect(0.5)
             }
         }
