@@ -86,7 +86,13 @@ struct MainToolbarModifier: ViewModifier {
             .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
             .help("InfoDescription")
 
-            Button(action: { NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil) }, label: {
+            Button(action: {
+                if #available(macOS 13.0, *) {
+                    NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                } else {
+                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                }
+            }, label: {
                 Label("Preferences", systemImage: "gearshape")
             })
             .help("PreferencesDescription")
