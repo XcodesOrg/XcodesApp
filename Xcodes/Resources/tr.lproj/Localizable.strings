@@ -122,7 +122,7 @@
 "SendSMS" = "SMS Gönder";
 "EnterDigitCodeDescription" = "%@ kaynağından gönderilen %d rakamlı kodu gir: ";
 "SelectTrustedPhone" = "%d rakamlı kodu SMS olarak almak için güvenilir telefon numarasını seç:";
-"NoTrustedPhones" = "Hesabına tanımlı güvenli bir telefon numarası yok, fakat iki aşamalı doğrulama için gerekmektedir.\n\nDaha fazlası için https://support.apple.com/tr-tr/HT204915 adresine bakın.";
+"NoTrustedPhones" = "Hesabına tanımlı güvenli bir telefon numarası yok, fakat iki aşamalı doğrulama için gerekmektedir.\n\nDaha fazlası için https://support.apple.com/HT204915 adresine bakın.";
 
 // MainWindow
 "UpdatedAt" = "Güncellenme Zamanı:";

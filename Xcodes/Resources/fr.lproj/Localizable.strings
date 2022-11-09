@@ -118,7 +118,7 @@
 "SendSMS" = "Envoyer un SMS";
 "EnterDigitCodeDescription" = "Entrez le code à %d chiffres envoyé à %@ : ";
 "SelectTrustedPhone" = "Sélectionnez le numéro de téléphone de confiance pour recevoir un code à %d chiffres par SMS :";
-"NoTrustedPhones" = "Votre compte n'a aucun numéro de téléphone de confiance, mais ils sont requis pour l'authentification à deux facteurs.\n\nVoir https://support.apple.com/fr-fr/HT204915.";
+"NoTrustedPhones" = "Votre compte n'a aucun numéro de téléphone de confiance, mais ils sont requis pour l'authentification à deux facteurs.\n\nVoir https://support.apple.com/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "Mis à jour le ";

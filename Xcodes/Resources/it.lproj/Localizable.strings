@@ -114,7 +114,7 @@
 "SendSMS" = "Manda SMS";
 "EnterDigitCodeDescription" = "Inserisci il codice di %d cifre inviato a %@: ";
 "SelectTrustedPhone" = "Seleziona un numero di telefono registrato per ricevere il codice di  %d cifre via SMS:";
-"NoTrustedPhones" = "Il tuo account non ha dispositivi registrati, ma è richiesto dall'autenticazione a due fattori.\n\Vedi https://support.apple.com/en-ca/HT204915.";
+"NoTrustedPhones" = "Il tuo account non ha dispositivi registrati, ma è richiesto dall'autenticazione a due fattori.\n\Vedi https://support.apple.com/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "Aggiorna a";

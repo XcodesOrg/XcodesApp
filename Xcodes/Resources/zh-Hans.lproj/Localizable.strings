@@ -122,7 +122,7 @@
 "SendSMS" = "发送短信";
 "EnterDigitCodeDescription" = "请输入%d位代码，已发送到%@：";
 "SelectTrustedPhone" = "请选择一个信任的手机号来从短信接收%d位代码：";
-"NoTrustedPhones" = "您的账户没有任何信任的手机号，但这是两步验证所必须的。\n\n请参阅 https://support.apple.com/en-ca/HT204915。";
+"NoTrustedPhones" = "您的账户没有任何信任的手机号，但这是两步验证所必须的。\n\n请参阅 https://support.apple.com/HT204915。";
 
 // MainWindow
 "UpdatedAt" = "更新于";
