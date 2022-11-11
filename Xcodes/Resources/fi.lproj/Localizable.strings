@@ -71,6 +71,13 @@
 "LastChecked" = "Viimeksi tarkistettu: %@";
 "Never" = "Ei koskaan";
 
+// Download Preference Pane
+"Downloads" = "Lataukset";
+"DataSource" = "Tietolähde";
+"DataSourceDescription" = "Applen tietolähde kaappaa Apple Developer -sivuston. Se näyttää aina uusimmat saatavilla olevat julkaisut, mutta se on herkempi hajoamiselle.\n\nXcode Releases on epävirallinen luettelo Xcode-julkaisuista. Se toimitetaan hyvin muotoiltuina tietoina, sisältää lisätietoa, jota ei ole helposti saatavilla Applelta, ja se ei todennäköisesti hajoa, jos Apple suunnittelee uudelleen kehittäjäsivustonsa.";
+"Downloader" = "Downloader";
+"DownloaderDescription" = "aria2 käyttää jopa 16 yhteyttä ladatakseen Xcoden 3–5 kertaa nopeammin kuin URLSession. Se on niputettu suoritettavaksi tiedostoksi ja sen lähdekoodiin Xcodesissa GPLv2-lisenssin noudattamiseksi.\n\nURLSession on Applen oletussovellusliittymä URL-pyyntöjen tekemiseen..";
+
 // Advanced Preference Pane
 "Advanced" = "Lisäasetukset";
 "LocalCachePath" = "Paikallisen välimuistin polku";
@@ -79,10 +86,6 @@
 "Active/Select" = "Aktiivinen/Valitse";
 "AutomaticallyCreateSymbolicLink" = "Luo automaattisesti symbolinen linkki Xcode.appiin";
 "AutomaticallyCreateSymbolicLinkDescription" = "Kun teet Xcode-versiosta aktiivisen/valitun, yritä luoda symbolinen linkki nimeltä Xcode.app asennushakemistoon";
-"DataSource" = "Tietolähde";
-"DataSourceDescription" = "Applen tietolähde kaappaa Apple Developer -sivuston. Se näyttää aina uusimmat saatavilla olevat julkaisut, mutta se on herkempi hajoamiselle.\n\nXcode Releases on epävirallinen luettelo Xcode-julkaisuista. Se toimitetaan hyvin muotoiltuina tietoina, sisältää lisätietoa, jota ei ole helposti saatavilla Applelta, ja se ei todennäköisesti hajoa, jos Apple suunnittelee uudelleen kehittäjäsivustonsa.";
-"Downloader" = "Downloader";
-"DownloaderDescription" = "aria2 käyttää jopa 16 yhteyttä ladatakseen Xcoden 3–5 kertaa nopeammin kuin URLSession. Se on niputettu suoritettavaksi tiedostoksi ja sen lähdekoodiin Xcodesissa GPLv2-lisenssin noudattamiseksi.\n\nURLSession on Applen oletussovellusliittymä URL-pyyntöjen tekemiseen..";
 "PrivilegedHelper" = "Etuoikeutettu auttaja";
 "PrivilegedHelperDescription" = "Xcodes käyttää erillistä etuoikeutettua avustajaa tehtävien suorittamiseen pääkäyttäjänä. Nämä ovat asioita, jotka edellyttävät sudo komentoa komentorivillä, mukaan lukien asennuksen jälkeiset vaiheet ja Xcode-versioiden vaihtaminen xcode-selectillä.\n\nSinua pyydetään antamaan macOS-tilisi salasana sen asentamiseksi.";
 "HelperInstalled" = "Apulainen on asennettu";
