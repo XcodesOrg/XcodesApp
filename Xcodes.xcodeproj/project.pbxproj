@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		36741BFD291E4FDB00A85AAE /* DownloadPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */; };
 		36741BFF291E50F500A85AAE /* FileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36741BFE291E50F500A85AAE /* FileError.swift */; };
 		536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD1263C94DE00026CE0 /* SignedInView.swift */; };
 		536CFDD4263C9A8000026CE0 /* XcodesSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */; };
@@ -171,6 +172,7 @@
 /* Begin PBXFileReference section */
 		15FAD1652811D15600B63259 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		25E2FA26284769A00014A318 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadPreferencePane.swift; sourceTree = "<group>"; };
 		36741BFE291E50F500A85AAE /* FileError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileError.swift; sourceTree = "<group>"; };
 		4A5AAA1D28118FAD00528958 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		536CFDD1263C94DE00026CE0 /* SignedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedInView.swift; sourceTree = "<group>"; };
@@ -591,6 +593,7 @@
 			isa = PBXGroup;
 			children = (
 				CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */,
+				36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */,
 				CAFE4AAB25B7D2C70064FE51 /* GeneralPreferencePane.swift */,
 				CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */,
 				E8977EA225C11E1500835F80 /* PreferencesView.swift */,
@@ -852,6 +855,7 @@
 				CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */,
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
 				E8D655C0288DD04700A139C2 /* SelectedActionType.swift in Sources */,
+				36741BFD291E4FDB00A85AAE /* DownloadPreferencePane.swift in Sources */,
 				CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */,
 				CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */,
 				CAFBDB912598FE80003DCC5A /* SelectedXcode.swift in Sources */,
