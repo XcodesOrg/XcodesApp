@@ -11,7 +11,11 @@ extension FileManager {
     @discardableResult
     func trashItem(at url: URL) throws -> URL {
         var resultingItemURL: NSURL!
-        try trashItem(at: url, resultingItemURL: &resultingItemURL)
+        if fileExists(atPath: url.path) {
+            try trashItem(at: url, resultingItemURL: &resultingItemURL)
+        } else {
+            throw FileError.fileNotFound(url.lastPathComponent)
+        }
         return resultingItemURL as URL
     }
 }
