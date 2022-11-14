@@ -72,6 +72,13 @@
 "LastChecked" = "Last checked: %@";
 "Never" = "Never";
 
+// Download Preference Pane
+"Downloads" = "Downloads";
+"DataSource" = "Data Source";
+"DataSourceDescription" = "The Apple data source scrapes the Apple Developer website. It will always show the latest releases that are available, but is more fragile.\n\nXcode Releases is an unofficial list of Xcode releases. It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website.";
+"Downloader" = "Downloader";
+"DownloaderDescription" = "aria2 uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.\n\nURLSession is the default Apple API for making URL requests.";
+
 // Advanced Preference Pane
 "Advanced" = "Advanced";
 "LocalCachePath" = "Local Cache Path";
@@ -88,10 +95,6 @@
 "OnSelectRenameXcode" = "Always rename to Xcode.app";
 "OnSelectRenameXcodeDescription" = "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name.";
 
-"DataSource" = "Data Source";
-"DataSourceDescription" = "The Apple data source scrapes the Apple Developer website. It will always show the latest releases that are available, but is more fragile.\n\nXcode Releases is an unofficial list of Xcode releases. It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website.";
-"Downloader" = "Downloader";
-"DownloaderDescription" = "aria2 uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.\n\nURLSession is the default Apple API for making URL requests.";
 "PrivilegedHelper" = "Privileged Helper";
 "PrivilegedHelperDescription" = "Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it.";
 "HelperInstalled" = "Helper is installed";
@@ -156,6 +159,7 @@
 "Alert.Uninstall.Title" = "Uninstall Xcode %@?";
 "Alert.Uninstall.Message" = "It will be moved to the Trash, but won't be emptied.";
 "Alert.Uninstall.Error.Title" = "Unable to uninstall Xcode";
+"Alert.Uninstall.Error.Message.FileNotFound" = "Could not find file \"%@\".";
 
 // Cancel Install
 "Alert.CancelInstall.Title" = "Are you sure you want to stop the installation of Xcode %@?";

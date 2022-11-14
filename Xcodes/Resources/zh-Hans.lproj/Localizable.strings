@@ -72,6 +72,13 @@
 "LastChecked" = "上次检查时间：%@";
 "Never" = "从未检查";
 
+// Download Preference Pane
+"Downloads" = "下载";
+"DataSource" = "数据源";
+"DataSourceDescription" = "Apple数据源是从Apple开发者网站爬取的。它会及时反应最新版本，但较为脆弱。\n\nXcode Releases是一个非官方的Xcode版本列表。它提供了良好格式化的数据，包含了不便从Apple直接获得的附加信息，且更不容易在Apple开发者网站无法访问时出现问题。";
+"Downloader" = "下载器";
+"DownloaderDescription" = "aria2使用最高16线程，能提供3至5倍的下载速度。它与它的源代码被一同打包在Xcodes中以符合GPLv2授权。\n\nURLSession是用于发起URL请求的默认Apple API。";
+
 // Advanced Preference Pane
 "Advanced" = "高级";
 "LocalCachePath" = "本地缓存位置";
@@ -88,10 +95,6 @@
 "OnSelectRenameXcode" = "总是重命名为Xcode.app";
 "OnSelectRenameXcodeDescription" = "选中时，会自动尝试重命名活跃的Xcode为Xcode.app，将之前的Xcode.app重命名为包含版本的名称。";
 
-"DataSource" = "数据源";
-"DataSourceDescription" = "Apple数据源是从Apple开发者网站爬取的。它会及时反应最新版本，但较为脆弱。\n\nXcode Releases是一个非官方的Xcode版本列表。它提供了良好格式化的数据，包含了不便从Apple直接获得的附加信息，且更不容易在Apple开发者网站无法访问时出现问题。";
-"Downloader" = "下载器";
-"DownloaderDescription" = "aria2使用最高16线程，能提供3至5倍的下载速度。它与它的源代码被一同打包在Xcodes中以符合GPLv2授权。\n\nURLSession是用于发起URL请求的默认Apple API。";
 "PrivilegedHelper" = "提权帮助程序";
 "PrivilegedHelperDescription" = "Xcodes使用一个独立的提权帮助程序来以root身份执行任务。就是那些需要在命令行中用sudo执行的命令。包括一些安装前置步骤以及用xcode-select切换Xcode版本。\n\n您需要提供当前用户的密码来安装它。";
 "HelperInstalled" = "帮助程序已安装";
