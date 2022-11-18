@@ -381,7 +381,7 @@ class AppState: ObservableObject {
         case .apple:
             install(id: id)
         case .xcodeReleases:
-            installWithoutLogin(id: id)
+            install(id: id)
         }
     }
     
@@ -454,6 +454,7 @@ class AppState: ObservableObject {
     }
     
     /// Skips using the username/password to log in to Apple, and simply gets a Auth Cookie used in downloading
+    /// As of Nov 2022 this was returning a 403 forbidden
     func installWithoutLogin(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
         
