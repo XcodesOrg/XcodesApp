@@ -16,6 +16,7 @@
 "OpenDescription" = "打开此版本";
 "CopyPath" = "复制文件位置";
 "CreateSymLink" = "以Xcode.app创建软链接";
+"CreateSymLinkBeta" = "以Xcode-Beta.app创建软链接";
 "Uninstall" = "卸载";
 "Selected" = "已选定";
 "Select" = "选定";

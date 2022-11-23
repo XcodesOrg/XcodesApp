@@ -16,6 +16,7 @@
 "OpenDescription" = "Abrir esta versión";
 "CopyPath" = "Copiar Ruta";
 "CreateSymLink" = "Crear Symlink como Xcode.app";
+"CreateSymLinkBeta" = "Crear Symlink como Xcode-Beta.app";
 "Uninstall" = "Desinstalar";
 "Selected" = "Seleccionado";
 "Select" = "Seleccionar";

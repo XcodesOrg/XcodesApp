@@ -16,6 +16,7 @@
 "OpenDescription" = "Avaa tämä versio";
 "CopyPath" = "Kopioi polku";
 "CreateSymLink" = "Luo Symlink nimellä Xcode.app";
+"CreateSymLinkBeta" = "Luo Symlink nimellä Xcode-Beta.app";
 "Uninstall" = "Poista";
 "Selected" = "Valittu";
 "Select" = "Valitse";

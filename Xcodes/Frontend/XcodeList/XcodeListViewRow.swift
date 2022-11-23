@@ -6,16 +6,16 @@ struct XcodeListViewRow: View {
     let xcode: Xcode
     let selected: Bool
     let appState: AppState
-    
+
     var body: some View {
         HStack {
             appIconView(for: xcode)
-            
+
             VStack(alignment: .leading) {
                 HStack {
                     Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                         .font(.body)
-                    
+
                     if !xcode.identicalBuilds.isEmpty {
                         Image(systemName: "square.fill.on.square.fill")
                             .font(.subheadline)
@@ -25,7 +25,7 @@ struct XcodeListViewRow: View {
                             .help("IdenticalBuilds.help")
                     }
                 }
-                
+
                 if case let .installed(path) = xcode.installState {
                     Text(verbatim: path.string)
                         .font(.caption)
@@ -35,9 +35,9 @@ struct XcodeListViewRow: View {
                         .font(.caption)
                 }
             }
-            
+
             Spacer()
-            
+
             selectControl(for: xcode)
                 .padding(.trailing, 16)
             installControl(for: xcode)
@@ -54,14 +54,17 @@ struct XcodeListViewRow: View {
                 RevealButton(xcode: xcode)
                 CopyPathButton(xcode: xcode)
                 CreateSymbolicLinkButton(xcode: xcode)
+                if xcode.version.isPrerelease {
+                    CreateSymbolicBetaLinkButton(xcode: xcode)
+                }
                 Divider()
                 UninstallButton(xcode: xcode)
-                
+
                 #if DEBUG
-                Divider()
-                Button("Perform post-install steps") {
-                    appState.performPostInstallSteps(for: InstalledXcode(path: path)!) as Void
-                }
+                    Divider()
+                    Button("Perform post-install steps") {
+                        appState.performPostInstallSteps(for: InstalledXcode(path: path)!) as Void
+                    }
                 #endif
             }
         }
@@ -77,7 +80,7 @@ struct XcodeListViewRow: View {
                 .foregroundColor(.secondary)
         }
     }
-    
+
     @ViewBuilder
     private func selectControl(for xcode: Xcode) -> some View {
         if xcode.installState.installed {
@@ -97,7 +100,7 @@ struct XcodeListViewRow: View {
             EmptyView()
         }
     }
-    
+
     @ViewBuilder
     private func installControl(for xcode: Xcode) -> some View {
         switch xcode.installState {
@@ -129,31 +132,31 @@ struct XcodeListViewRow_Previews: PreviewProvider {
                 selected: false,
                 appState: AppState()
             )
-            
+
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, icon: nil),
                 selected: false,
                 appState: AppState()
             )
-            
+
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, icon: nil),
                 selected: false,
                 appState: AppState()
             )
-            
+
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.0.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
                 selected: false,
                 appState: AppState()
             )
-            
+
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.0.0+1234A")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
                 selected: false,
                 appState: AppState()
             )
-            
+
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [Version("12.0.0-RC+1234A")!], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
                 selected: false,

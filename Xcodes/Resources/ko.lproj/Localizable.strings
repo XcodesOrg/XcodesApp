@@ -16,6 +16,7 @@
 "OpenDescription" = "이 버전 열기";
 "CopyPath" = "경로 복사하기";
 "CreateSymLink" = "Xcode.app과 같은 Symlink 만들기";
+"CreateSymLinkBeta" = "Xcode-Beta.app과 같은 Symlink 만들기";
 "Uninstall" = "제거";
 "Selected" = "선택됨";
 "Select" = "선택";

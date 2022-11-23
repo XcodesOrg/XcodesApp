@@ -189,6 +189,23 @@ struct CreateSymbolicLinkButton: View {
     }
 }
 
+struct CreateSymbolicBetaLinkButton: View {
+    @EnvironmentObject var appState: AppState
+    let xcode: Xcode?
+
+    var body: some View {
+        Button(action: createSymbolicBetaLink) {
+            Text("CreateSymLinkBeta")
+        }
+        .help("CreateSymLinkBeta")
+    }
+
+    private func createSymbolicBetaLink() {
+        guard let xcode = xcode else { return }
+        appState.createSymbolicLink(xcode: xcode, isBeta: true)
+    }
+}
+
 // MARK: - Commands
 
 struct InstallCommand: View {
