@@ -8,6 +8,74 @@
             
                 
                     <item>
+                        <title>v1.9.0 - The Empire Strikes Back 🍎 </title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<p>This returns the requirement of having to log in via your Apple username/password when using xcodereleases. 😢</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Improve Spanish localization in Preferences (#322) @DannyJJK</li>
+  <li>Adds an option to save beta versions with <code class="language-plaintext highlighter-rouge">-beta</code> symlink (#304) @leon-wolf</li>
+  <li>add error message when trying to uninstall Xcode if file not found (#306) @leon-wolf</li>
+  <li>move download settings to own PreferencePane (#305) @leon-wolf</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Switch Xcode releases back to using Apple Auth :( (#328) @MattKiazyk</li>
+  <li>fix: Preference button on toolbar not working on Mac OS 13 Ventura (#303) @chedabob</li>
+</ul>
+
+<h2 id="-localization">🌎 Localization</h2>
+
+<ul>
+  <li>Add brazilian portuguese localization (#260) @brunomunizaf</li>
+  <li>Add Dutch localization (#307) @jfversluis</li>
+  <li>Fix localization on UnsupportedFileFormat (#309) @tt37</li>
+  <li>Remove localization from apple.com links (#308) @jfversluis</li>
+  <li>Typo in German Localization File (#296) @nklasio</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Bump actions/cache from 3.0.8 to 3.0.11 (#310) @dependabot</li>
+  <li>Add new contributing.md (#318) @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=BHOjL96nA0/98Fw4OJoSi/PXhjcTpo2jb3twRvwhwFbsJQV+AKLM+H3GRAvsT4rVbtX+txQw6A0UDeiSliPPBg== -->
+]]></description>
+                        <pubDate>Wed, 23 Nov 2022 03:56:04 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.9.0b17/Xcodes.zip"
+                                    sparkle:version="17"
+                                    sparkle:shortVersionString="1.9.0"
+                                    sparkle:edSignature="BHOjL96nA0/98Fw4OJoSi/PXhjcTpo2jb3twRvwhwFbsJQV+AKLM+H3GRAvsT4rVbtX+txQw6A0UDeiSliPPBg=="
+                                    length="11925583"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v1.8.0</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
