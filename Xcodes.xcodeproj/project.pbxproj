@@ -172,7 +172,7 @@
 /* Begin PBXFileReference section */
 		15FAD1652811D15600B63259 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		25E2FA26284769A00014A318 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-    327DF109286ABE6B00D694D5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		327DF109286ABE6B00D694D5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadPreferencePane.swift; sourceTree = "<group>"; };
 		36741BFE291E50F500A85AAE /* FileError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileError.swift; sourceTree = "<group>"; };
 		4A5AAA1D28118FAD00528958 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1026,7 +1026,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1036,7 +1036,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.0;
+				MARKETING_VERSION = 1.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp;
 				PRODUCT_NAME = Xcodes;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1267,7 +1267,7 @@
 				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/Xcodes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = PBH8V487HB;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1277,7 +1277,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.0;
+				MARKETING_VERSION = 1.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
@@ -1291,7 +1291,7 @@
 				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/Xcodes.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = PBH8V487HB;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1301,7 +1301,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.8.0;
+				MARKETING_VERSION = 1.9.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
