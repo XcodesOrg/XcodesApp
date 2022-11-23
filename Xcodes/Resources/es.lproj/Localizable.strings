@@ -77,7 +77,7 @@
 "Downloads" = "Descargas";
 "DataSource" = "Fuente de datos";
 "DataSourceDescription" = "La fuente de datos de Apple la extrae de el sitio web de Apple Developer. Siempre mostrará los últimos lanzamientos disponibles, pero es más frágil.\n\nXcode Releases es una lista no oficial de lanzamientos de Xcode. Se proporciona como datos bien estructurados, contiene información adicional que no está disponible fácilmente en Apple y es menos probable que se rompa si Apple rediseña su sitio web para desarrolladores.";
-"Downloader" = "Downloader";
+"Downloader" = "Descargador";
 "DownloaderDescription" = "aria2 usa hasta 16 conexiones para descargar Xcode de 3 a 5 veces más rápido que URLSession. Se incluye como un ejecutable junto con su código fuente dentro de Xcodes para cumplir con su licencia GPLv2.\n\nURLSession es la API predeterminada de Apple para realizar solicitudes de URL.";
 
 // Advanced Preference Pane
@@ -86,6 +86,10 @@
 "LocalCachePathDescription" = "Xcodes almacena en caché versiones de Xcode disponibles y descargas temporalmente las nuevas versiones en un directorio";
 "Change" = "Cambiar";
 "Active/Select" = "Activar/Seleccionar";
+"InstallDirectory" = "Directorio de instalación";
+
+"OnSelectDoNothing" = "Mantener el nombre como Xcode-X.X.X.app";
+"OnSelectDoNothingDescription" = "Al seleccionar, mantener el nombre como la versión p.ej. Xcode-13.4.1.app";
 "AutomaticallyCreateSymbolicLink" = "Crear automáticamente enlace simbólico a Xcode.app";
 "AutomaticallyCreateSymbolicLinkDescription" = "Al activar/seleccionar una versión de Xcode, intentará crear un enlace simbólico llamado Xcode.app en el directorio de instalación.";
 "PrivilegedHelper" = "Asistente privilegiado";
@@ -95,13 +99,13 @@
 "InstallHelper" = "Instalar Asistente";
 
 // Experiment Preference Pane
-"Experiments" = "Experiments";
+"Experiments" = "Experimentos";
 "FasterUnxip" = "Unxip más rápido";
-"UseUnxipExperiment" = "Al descomprimir, use experiment";
+"UseUnxipExperiment" = "Al descomprimir, usar experimento";
 "FasterUnxipDescription" = "Gracias a @_saagarjha, este experimento puede aumentar la velocidad de liberación hasta en un 70 % para algunos sistemas.\n\nPuede ver más información sobre cómo se logra esto en el repositorio de unxip: https://github.com/saagarjha/unxip";
 
 // Notifications
-"AccessGranted" = "Access Permitido. Recibirás notificaciones de Xcodes.";
+"AccessGranted" = "Acceso Permitido. Recibirás notificaciones de Xcodes.";
 "AccessDenied" = "⚠️ Acceso Denegado ⚠️\n\nPor favor abra su Configuración de notificaciones y seleccione Xcodes si desea permitir el acceso.";
 "NotificationSettings" = "Configuración de las notificaciones";
 "EnableNotifications" = "Permitir notificaciones";
