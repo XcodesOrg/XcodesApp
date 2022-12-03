@@ -15,7 +15,12 @@ struct MainToolbarModifier: ViewModifier {
     private var toolbar: some ToolbarContent {
         ToolbarItemGroup(placement: .status) {
             Button(action: { appState.presentedSheet = .signIn }, label: {
-                Label("Login", systemImage: "person.circle")
+                if appState.authenticationState == .authenticated {
+                    Label("Login", systemImage: "person.circle")
+                } else {
+                    Label("Login", systemImage: "person.circle")
+                        .foregroundColor(Color.red)
+                }
             })
             .help("LoginDescription")
 
