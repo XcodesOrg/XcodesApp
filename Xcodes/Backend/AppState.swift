@@ -93,7 +93,12 @@ class AppState: ObservableObject {
             }
         }
     }
-
+    
+    @Published var showOpenInRosettaOption = false {
+        didSet {
+            Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
+        }
+    }
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
@@ -142,6 +147,7 @@ class AppState: ObservableObject {
         createSymLinkOnSelect = Current.defaults.bool(forKey: "createSymLinkOnSelect") ?? false
         onSelectActionType = SelectedActionType(rawValue: Current.defaults.string(forKey: "onSelectActionType") ?? "none") ?? .none
         installPath = Current.defaults.string(forKey: "installPath") ?? Path.defaultInstallDirectory.string
+        showOpenInRosettaOption = Current.defaults.bool(forKey: "showOpenInRosettaOption") ?? false
     }
     
     // MARK: Timer
@@ -585,13 +591,18 @@ class AppState: ObservableObject {
             )
     }
     
-    func open(xcode: Xcode) {
+    func open(xcode: Xcode, openInRosetta: Bool? = false) {
         switch xcode.installState {
-            case let .installed(path):
-                NSWorkspace.shared.openApplication(at: path.url, configuration: .init())
-            default:
-                Logger.appState.error("\(xcode.id) is not installed")
-                return
+        case let .installed(path):
+            let config = NSWorkspace.OpenConfiguration.init()
+            if (openInRosetta ?? false) {
+                config.architecture = CPU_TYPE_X86_64
+            }
+            config.allowsRunningApplicationSubstitution = false
+            NSWorkspace.shared.openApplication(at: path.url, configuration: config)
+        default:
+            Logger.appState.error("\(xcode.id) is not installed")
+            return
         }
     }
     

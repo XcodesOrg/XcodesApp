@@ -106,6 +106,16 @@ struct AdvancedPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             
+            if Hardware.isAppleSilicon() {
+                GroupBox(label: Text("Apple Silicon")) {
+                    Toggle("ShowOpenInRosetta", isOn: $appState.showOpenInRosettaOption)
+                        .disabled(appState.createSymLinkOnSelectDisabled)
+                    Text("ShowOpenInRosettaDescription")
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .groupBoxStyle(PreferencesGroupBoxStyle())
+            }
             
             GroupBox(label: Text("PrivilegedHelper")) {
                 VStack(alignment: .leading, spacing: 8) {

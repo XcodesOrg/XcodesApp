@@ -104,6 +104,7 @@
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
 		E81D7EA02805250100A205FC /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D7E9F2805250100A205FC /* Collection+.swift */; };
 		E872EE4E2808D4F100D3DD8B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E872EE502808D4F100D3DD8B /* Localizable.strings */; };
+		E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87AB3C42939B65E00D72F43 /* Hardware.swift */; };
 		E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DD6EA25D053FA00D86808 /* Progress+.swift */; };
 		E89342FA25EDCC17007CF557 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89342F925EDCC17007CF557 /* NotificationManager.swift */; };
 		E8977EA325C11E1500835F80 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8977EA225C11E1500835F80 /* PreferencesView.swift */; };
@@ -297,6 +298,7 @@
 		E2AFDCCA28F024D000864ADD /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E81D7E9F2805250100A205FC /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		E872EE4F2808D4F100D3DD8B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E87AB3C42939B65E00D72F43 /* Hardware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hardware.swift; sourceTree = "<group>"; };
 		E87DD6EA25D053FA00D86808 /* Progress+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+.swift"; sourceTree = "<group>"; };
 		E89342F925EDCC17007CF557 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E8977EA225C11E1500835F80 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
@@ -489,6 +491,7 @@
 				E87DD6EA25D053FA00D86808 /* Progress+.swift */,
 				E81D7E9F2805250100A205FC /* Collection+.swift */,
 				E8D655BF288DD04700A139C2 /* SelectedActionType.swift */,
+				E87AB3C42939B65E00D72F43 /* Hardware.swift */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -877,6 +880,7 @@
 				CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */,
 				CABFA9C22592EEEA00380FEE /* Publisher+Resumable.swift in Sources */,
 				CAFBDC68259A308B003DCC5A /* InfoPane.swift in Sources */,
+				E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */,
 				CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */,
 				CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */,
 				CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */,

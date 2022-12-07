@@ -102,6 +102,9 @@
 "HelperNotInstalled" = "Helper is not installed";
 "InstallHelper" = "Install helper";
 
+"ShowOpenInRosetta" = "Show Open In Rosetta option";
+"ShowOpenInRosettaDescription" = "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines.";
+
 // Experiment Preference Pane
 "Experiments" = "Experiments";
 "FasterUnxip" = "Faster Unxip";
