@@ -102,6 +102,9 @@
 "HelperNotInstalled" = "未インストール";
 "InstallHelper" = "ヘルパーのインストール";
 
+"ShowOpenInRosetta" = "Rosettaで開くオプションを表示する";
+"ShowOpenInRosettaDescription" = "Rosettaで開くオプションは \"開く\" 機能が利用できる場所に表示されます。注意: これはApple Siliconマシンにのみ表示されます。";
+
 // Experiment Preference Pane
 "Experiments" = "試験的な機能";
 "FasterUnxip" = "高速な Unxip";
@@ -160,6 +163,7 @@
 "Alert.Uninstall.Title" = "Xcode %@ をアンインストールしてもよろしいですか？";
 "Alert.Uninstall.Message" = "ゴミ箱に移動されますが、ゴミ箱を自動的に空にすることはありません。";
 "Alert.Uninstall.Error.Title" = "Xcode をアンインストールできませんでした";
+"Alert.Uninstall.Error.Message.FileNotFound" = "ファイル \"%@\" が見つかりませんでした。";
 
 // Cancel Install
 "Alert.CancelInstall.Title" = "Xcode %@ のインストールを中止してもよろしいですか？";
