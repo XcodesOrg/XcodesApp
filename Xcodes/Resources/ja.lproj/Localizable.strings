@@ -16,6 +16,7 @@
 "OpenDescription" = "このバージョンを開く";
 "CopyPath" = "パスをコピー";
 "CreateSymLink" = "Xcode.appとしてシンボリックリンクを作成";
+"CreateSymLinkBeta" = "Xcode-Beta.appとしてシンボリックリンクを作成";
 "Uninstall" = "アンインストール";
 "Selected" = "アクティブ";
 "Select" = "アクティブにする";
@@ -72,6 +73,13 @@
 "LastChecked" = "前回の確認: %@";
 "Never" = "なし";
 
+// Download Preference Pane
+"Downloads" = "ダウンロード";
+"DataSource" = "データソース";
+"DataSourceDescription" = "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。";
+"Downloader" = "ダウンローダ";
+"DownloaderDescription" = "aria2 は、最大16個の接続を使用して、Xcode を URLSession の3-5 倍のスピードでダウンロードします。GPLv2 ライセンスに準拠するため、Xcodes 内にソースコードと一緒に実行ファイルとしてバンドルされています。\n\nURLSession は、URLリクエストを行うための Apple のデフォルト API です。";
+
 // Advanced Preference Pane
 "Advanced" = "上級者向け";
 "LocalCachePath" = "ローカルキャッシュパス";
@@ -88,10 +96,6 @@
 "OnSelectRenameXcode" = "名前を常にXcode.appに変更する";
 "OnSelectRenameXcodeDescription" = "選択時、自動的にアクティブなXcodeをXcode.appに、以前のXcode.appをバージョン付きの名前に変更します。";
 
-"DataSource" = "データソース";
-"DataSourceDescription" = "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。";
-"Downloader" = "ダウンローダ";
-"DownloaderDescription" = "aria2 は、最大16個の接続を使用して、Xcode を URLSession の3-5 倍のスピードでダウンロードします。GPLv2 ライセンスに準拠するため、Xcodes 内にソースコードと一緒に実行ファイルとしてバンドルされています。\n\nURLSession は、URLリクエストを行うための Apple のデフォルト API です。";
 "PrivilegedHelper" = "権限のあるヘルパー";
 "PrivilegedHelperDescription" = "Xcodesは、rootとしてタスクを実行するために、別の権限のあるヘルパーを使用します。インストール後の手順や xcode-select による Xcode のバージョン切り替えなど、コマンドラインで sudo を必要とするものです。\n\nインストールには、macOS アカウントのパスワードの入力が必要です。";
 "HelperInstalled" = "インストール済み";
@@ -122,7 +126,7 @@
 "SendSMS" = "SMS を送信";
 "EnterDigitCodeDescription" = "%d桁のコードを%@に送信したので入力してください。";
 "SelectTrustedPhone" = "信頼できる電話番号を選択し、%d桁のコードをSMSで受信します。";
-"NoTrustedPhones" = "このアカウントに2要素認証に利用する、信頼できる電話番号がありません。\n\n詳しくはこちらをご確認ください。https://support.apple.com/ja-jp/HT204915";
+"NoTrustedPhones" = "このアカウントに2要素認証に利用する、信頼できる電話番号がありません。\n\n詳しくはこちらをご確認ください。https://support.apple.com/HT204915";
 
 // MainWindow
 "UpdatedAt" = "前回の更新:";

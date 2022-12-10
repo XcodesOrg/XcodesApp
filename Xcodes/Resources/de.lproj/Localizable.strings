@@ -16,6 +16,7 @@
 "OpenDescription" = "Diese Version öffnen";
 "CopyPath" = "Pfad kopieren";
 "CreateSymLink" = "Symlink als Xcode.app erstellen";
+"CreateSymLinkBeta" = "Symlink als Xcode-Beta.app erstellen";
 "Uninstall" = "Deinstallieren";
 "Selected" = "Ausgewählt";
 "Select" = "Auswählen";
@@ -72,6 +73,13 @@
 "LastChecked" = "Letzte Prüfung: %@";
 "Never" = "Nie";
 
+// Download Preference Pane
+"Downloads" = "Downloads";
+"DataSource" = "Datenquelle";
+"DataSourceDescription" = "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitsgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten.";
+"Downloader" = "Downloader";
+"DownloaderDescription" = "aria2 verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Es ist zusammen mit seinem Quellcode in Xcode enthalten, um seiner GPLv2-Lizenz nachzukommen.\n\nURLSession ist Apples Standard-API für URL-Requests.";
+
 // Advanced Preference Pane
 "Advanced" = "Erweitert";
 "LocalCachePath" = "Lokaler Cache-Pfad";
@@ -88,10 +96,6 @@
 "OnSelectRenameXcode" = "Immer in Xcode.app umbenennen";
 "OnSelectRenameXcodeDescription" = "Bei Auswahl wird versucht das aktive Xcode in Xcode.app umzubenennen. Die vorherige Xcode.app wird dazu in den Versionsnamen umbenannt.";
 
-"DataSource" = "Datenquelle";
-"DataSourceDescription" = "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitsgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten.";
-"Downloader" = "Downloader";
-"DownloaderDescription" = "aria2 verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Es ist zusammen mit seinem Quellcode in Xcode enthalten, um seiner GPLv2-Lizenz nachzukommen.\n\nURLSession ist Apples Standard-API für URL-Requests.";
 "PrivilegedHelper" = "Privilegierter Helfer";
 "PrivilegedHelperDescription" = "Xcodes verwendet einen separaten privilegierten Helfer, um Aufgaben als root zu erledigen. Das sind Dinge, die sudo in der Kommandozeile erfordern würden, einschließlich Post-Installationsschritte sowie das Umstellen von Xcode-Versionen mit xcode-select.\n\nUm ihn zu installieren, erfolgt eine Aufforderung zur Eingabe des Passworts für Dein macOS-Benutzerkonto.";
 "HelperInstalled" = "Helfer ist installiert";
@@ -122,7 +126,7 @@
 "SendSMS" = "SMS senden";
 "EnterDigitCodeDescription" = "Gib den %d-stelligen Code ein der an '%@' gesendet wurde.";
 "SelectTrustedPhone" = "Wähle eine vertrauenswürdige Telefonnummer aus, um einen %d-stelligen Code via SMS zum empfangen:";
-"NoTrustedPhones" = "Dein Account verfügt über keine vertrauenswürdigen Telefonnummern, diese sind aber für Zwei-Faktor-Authentifizierung erforderlich.\n\nInformationen dazu unter https://support.apple.com/en-ca/HT204915.";
+"NoTrustedPhones" = "Dein Account verfügt über keine vertrauenswürdigen Telefonnummern, diese sind aber für Zwei-Faktor-Authentifizierung erforderlich.\n\nInformationen dazu unter https://support.apple.com/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "Aktualisiert am";
@@ -156,6 +160,7 @@
 "Alert.Uninstall.Title" = "Xcode %@ deinstallieren?";
 "Alert.Uninstall.Message" = "Die Anwendung wird in den Papierkorb verschoben, dieser wird aber nicht geleert.";
 "Alert.Uninstall.Error.Title" = "Die Deinstallation von Xcode ist nicht möglich";
+"Alert.Uninstall.Error.Message.FileNotFound" = "Datei \"%@\" konnte nicht gefunden werden.";
 
 // Cancel Install
 "Alert.CancelInstall.Title" = "Bist du sicher, dass Du die installation von Xcode %@ anhalten möchtest?";
