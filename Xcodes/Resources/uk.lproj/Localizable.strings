@@ -16,6 +16,7 @@
 "OpenDescription" = "Запустити цю версію";
 "CopyPath" = "Скопіювати шлях";
 "CreateSymLink" = "Створити символічну ссилку як Xcode.app";
+"CreateSymLinkBeta" = "Створити символічну ссилку як Xcode-Beta.app";
 "Uninstall" = "Видалити";
 "Selected" = "Обрано";
 "Select" = "Обрати";
@@ -71,6 +72,13 @@
 "LastChecked" = "Перевірено в останнє: %@";
 "Never" = "Ніколи";
 
+// Download Preference Pane
+"Downloads" = "Завантаження";
+"DataSource" = "Джерело інформації";
+"DataSourceDescription" = "Apple – cканування порталу Apple Developer у пошуку доступних версій Xcode. Створюючи список усих нових релізів, але це не завжи спрацьовує.\n\nXcode Releases – це не офіційний список релізів Xcode. Він являє собою відформатований список, що також має додаткову інформацію не завжди доступну напряму з сайту Apple, і менш ймовірно що він зламається якщо Apple випустить редизайн Developer Portal";
+"Downloader" = "Завантажувач";
+"DownloaderDescription" = "aria2 може використовувати до 16 з'єднань, завантажуючи Xcode у 3-5 разів швидше ніж URLSession. Вона поставляється у вигляді бінарника та коду, відповідно до вимог її GPLv2 ліцензії.\n\nURLSession – це завантажувач по замовчуванню від Apple";
+ 
 // Advanced Preference Pane
 "Advanced" = "Розширені";
 "LocalCachePath" = "Локальний Кеш";
@@ -79,10 +87,6 @@
 "Active/Select" = "Акивний/Обрати";
 "AutomaticallyCreateSymbolicLink" = "Автоматично створювати символічну ссилку Xcode.app";
 "AutomaticallyCreateSymbolicLinkDescription" = "Обираючи Акивний Xcode, спробувати створити символічну ссилку Xcode.app що вказує на обрану версію. Ссилка буде розміщена у папці інсталяції Xcode";
-"DataSource" = "Джерело інформації";
-"DataSourceDescription" = "Apple – cканування порталу Apple Developer у пошуку доступних версій Xcode. Створюючи список усих нових релізів, але це не завжи спрацьовує.\n\nXcode Releases – це не офіційний список релізів Xcode. Він являє собою відформатований список, що також має додаткову інформацію не завжди доступну напряму з сайту Apple, і менш ймовірно що він зламається якщо Apple випустить редизайн Developer Portal";
-"Downloader" = "Завантажувач";
-"DownloaderDescription" = "aria2 може використовувати до 16 з'єднань, завантажуючи Xcode у 3-5 разів швидше ніж URLSession. Вона поставляється у вигляді бінарника та коду, відповідно до вимог її GPLv2 ліцензії.\n\nURLSession – це завантажувач по замовчуванню від Apple";
 "PrivilegedHelper" = "Privileged Helper";
 "PrivilegedHelperDescription" = "Xcodes використовує спеціальний \"privilege helper\" щоб запускати задачі як суперюзер. Це включає наприклад sudo в терміналі, та кроки після інсталяції або перемикання версії Xcode за допомогою xcode-select.\n\nБуде запит на ваш пароль від Мак щоб встановити цей хелпер.";
 "HelperInstalled" = "Helper встановлено";
@@ -113,7 +117,7 @@
 "SendSMS" = "Надіслати СМС";
 "EnterDigitCodeDescription" = "Введіть %d-значний код відправлений на %@:";
 "SelectTrustedPhone" = "Виберіть довірений номер телефону щоб отримати %d-значний код в СМС:";
-"NoTrustedPhones" = "Ваш аккаунт не має перевіреного телефонного номеру, що вимагається для двофакторної авторизації.\n\nДивіться https://support.apple.com/en-ca/HT204915.";
+"NoTrustedPhones" = "Ваш аккаунт не має перевіреного телефонного номеру, що вимагається для двофакторної авторизації.\n\nДивіться https://support.apple.com/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "Оновлено о";

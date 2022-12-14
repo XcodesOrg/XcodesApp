@@ -16,6 +16,7 @@
 "OpenDescription" = "打開這個版本";
 "CopyPath" = "拷貝路徑";
 "CreateSymLink" = "製作 Xcode.app 的 Symlink";
+"CreateSymLink" = "製作 Xcode-Beta.app 的 Symlink";
 "Uninstall" = "解除安裝";
 "Selected" = "已選取";
 "Select" = "選取";
@@ -72,6 +73,13 @@
 "LastChecked" = "上一次檢查： %@";
 "Never" = "從未使用";
 
+// Download Preference Pane
+"Downloads" = "下載";
+"DataSource" = "資料來源";
+"DataSourceDescription" = "Apple 資料來源是擷取 Apple 開發者網站而來，永遠會顯示最新的可用版本，但比較容易出錯。\n\nXcode Releases 是一個非官方的 Xcodes 發行版本列表。這個來源提供格式良好的資料，包含了 Apple 開發者網站上未列出的額外資訊並且即使 Apple 決定重新設計他們的開發者網站也比較不容易出錯。";
+"Downloader" = "下載器";
+"DownloaderDescription" = "aria2 相較 URLSession 可以同時使用最多 16 條連線以 3 ~ 5 倍的速度下載 Xcode。Xcodes 包含了執行檔與其原始碼以遵循他的 GPLv2 授權合約。\n\nURLSession 是系統內建用來發送 URL 連線請求的 Apple API。";
+
 // Advanced Preference Pane
 "Advanced" = "進階";
 "LocalCachePath" = "本機快取路徑";
@@ -80,10 +88,6 @@
 "Active/Select" = "啟用/選取";
 "AutomaticallyCreateSymbolicLink" = "自動建立 Symlink 至 Xcode.app";
 "AutomaticallyCreateSymbolicLinkDescription" = "當你選擇/啟用一個 Xcode 版本，自動建立一個名為 Xcode.app 的 Symlink 到該版本的安裝目錄";
-"DataSource" = "資料來源";
-"DataSourceDescription" = "Apple 資料來源是擷取 Apple 開發者網站而來，永遠會顯示最新的可用版本，但比較容易出錯。\n\nXcode Releases 是一個非官方的 Xcodes 發行版本列表。這個來源提供格式良好的資料，包含了 Apple 開發者網站上未列出的額外資訊並且即使 Apple 決定重新設計他們的開發者網站也比較不容易出錯。";
-"Downloader" = "下載器";
-"DownloaderDescription" = "aria2 相較 URLSession 可以同時使用最多 16 條連線以 3 ~ 5 倍的速度下載 Xcode。Xcodes 包含了執行檔與其原始碼以遵循他的 GPLv2 授權合約。\n\nURLSession 是系統內建用來發送 URL 連線請求的 Apple API。";
 "PrivilegedHelper" = "權限輔助程式";
 "PrivilegedHelperDescription" = "Xcodes 使用一個分開的權限輔助程式以使用 root 身份執行特定工作。這些工作包含了通常需要在命令列使用 sudo 的指令，包含安裝後步驟以及使用 xcode-select 選擇 Xcode 版本。\n\n安裝時，你將會被詢問你的 macOS 帳號密碼。";
 "HelperInstalled" = "輔助程式已安裝";
@@ -114,7 +118,7 @@
 "SendSMS" = "傳送簡訊";
 "EnterDigitCodeDescription" = "請輸入 %d 位數密碼，已傳送至 %@： ";
 "SelectTrustedPhone" = "請輸入一個你想用來接收 %d 位數密碼簡訊的電話號碼：";
-"NoTrustedPhones" = "你的帳號沒有任何已信任的手機號碼，但兩階段認證需要信任的手機號碼。\n\n請參閱 https://support.apple.com/zh-tw/HT204915.";
+"NoTrustedPhones" = "你的帳號沒有任何已信任的手機號碼，但兩階段認證需要信任的手機號碼。\n\n請參閱 https://support.apple.com/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "上一次檢查：";

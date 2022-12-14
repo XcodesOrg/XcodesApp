@@ -16,6 +16,7 @@
 "OpenDescription" = "Apri questa versione";
 "CopyPath" = "Copia Percorso";
 "CreateSymLink" = "Crea Symlink come Xcode.app";
+"CreateSymLinkBeta" = "Crea Symlink come Xcode-Beta.app";
 "Uninstall" = "Disinstalla";
 "Selected" = "Selezionato";
 "Select" = "Seleziona";
@@ -72,6 +73,13 @@
 "LastChecked" = "Ultimo controllo: %@";
 "Never" = "Mai";
 
+// Download Preference Pane
+"Downloads" = "Downloads";
+"DataSource" = "Sorgente Dati";
+"DataSourceDescription" = "La sorgente dati Apple controlla il sito sviluppatori Apple. Mostra sempre le ultime versioni disponibili, ma è più fragile. Xcode Releases è una lista non ufficiale di versioni di Xcode. E' disponibile con un formato ben strutturato, contiene più in formazioni che non vengono rilasciate da Apple ed è più difficile che smetta di funzionare se Apple ristruttura il suo sito sviluppatori.";
+"Downloader" = "Scaricatore";
+"DownloaderDescription" = "aria2 usa fino a 16 connessioni per scaricar Xcode da 3 a 5 volte più veloce di URLSession. E' incluso come eseguibile assieme ai suoi sogenti dentro Xcodes per rispettare la sua licenza GPLv2. \n\nURLSession è l'API di default di Apple per fare richieste a URL remote.";
+
 // Advanced Preference Pane
 "Advanced" = "Avanzate";
 "LocalCachePath" = "Percorso Cache Locale";
@@ -80,10 +88,6 @@
 "Active/Select" = "Attivo/Seleziona";
 "AutomaticallyCreateSymbolicLink" = "Crea Automaticamente link simbolico a Xcodes.app";
 "AutomaticallyCreateSymbolicLinkDescription" = "Quando rendi una versione di Xcode Attiva/Selezionata, prova a fare un link simbolico chiamato nella directory di installazione.";
-"DataSource" = "Sorgente Dati";
-"DataSourceDescription" = "La sorgente dati Apple controlla il sito sviluppatori Apple. Mostra sempre le ultime versioni disponibili, ma è più fragile. Xcode Releases è una lista non ufficiale di versioni di Xcode. E' disponibile con un formato ben strutturato, contiene più in formazioni che non vengono rilasciate da Apple ed è più difficile che smetta di funzionare se Apple ristruttura il suo sito sviluppatori.";
-"Downloader" = "Scaricatore";
-"DownloaderDescription" = "aria2 usa fino a 16 connessioni per scaricar Xcode da 3 a 5 volte più veloce di URLSession. E' incluso come eseguibile assieme ai suoi sogenti dentro Xcodes per rispettare la sua licenza GPLv2. \n\nURLSession è l'API di default di Apple per fare richieste a URL remote.";
 "PrivilegedHelper" = "Aiutante Privilegiato";
 "PrivilegedHelperDescription" = "Xcodes usa un aiutante privilegiato per svolgere dei compiti come root. Si tratta di comandi che normalmente richiederebbero sudo da linea di comando, incluse fasi di post-install e modificare la versione di Xcode con xcode-select.\n\nTi verrà richiesta la password del tuo account di macOS per installarlo.";
 "HelperInstalled" = "Aiutante è installato";
@@ -114,7 +118,7 @@
 "SendSMS" = "Manda SMS";
 "EnterDigitCodeDescription" = "Inserisci il codice di %d cifre inviato a %@: ";
 "SelectTrustedPhone" = "Seleziona un numero di telefono registrato per ricevere il codice di  %d cifre via SMS:";
-"NoTrustedPhones" = "Il tuo account non ha dispositivi registrati, ma è richiesto dall'autenticazione a due fattori.\n\Vedi https://support.apple.com/en-ca/HT204915.";
+"NoTrustedPhones" = "Il tuo account non ha dispositivi registrati, ma è richiesto dall'autenticazione a due fattori.\n\Vedi https://support.apple.com/HT204915.";
 
 // MainWindow
 "UpdatedAt" = "Aggiorna a";

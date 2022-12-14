@@ -43,7 +43,10 @@ extension AppState {
         
         Logger.appState.info("Using \(downloader) downloader")
         
-        return self.getXcodeArchive(installationType, downloader: downloader)
+        return validateSession()
+            .flatMap { _ in
+                self.getXcodeArchive(installationType, downloader: downloader)
+            }
             .flatMap { xcode, url -> AnyPublisher<InstalledXcode, Swift.Error> in
                 self.installArchivedXcode(xcode, at: url)
             }
@@ -93,15 +96,12 @@ extension AppState {
     }
 
     private func downloadXcode(availableXcode: AvailableXcode, downloader: Downloader) -> AnyPublisher<(AvailableXcode, URL), Error> {
-        return validateADCSession(path: availableXcode.downloadPath)
-            .flatMap { _ in
-                return self.downloadOrUseExistingArchive(for: availableXcode, downloader: downloader, progressChanged: { [unowned self] progress in
-                    DispatchQueue.main.async {
-                        self.setInstallationStep(of: availableXcode.version, to: .downloading(progress: progress))
-                    }
-                })
-                .map { return (availableXcode, $0) }
-            }
+            self.downloadOrUseExistingArchive(for: availableXcode, downloader: downloader, progressChanged: { [unowned self] progress in
+                DispatchQueue.main.async {
+                    self.setInstallationStep(of: availableXcode.version, to: .downloading(progress: progress))
+                }
+            })
+            .map { return (availableXcode, $0) }
             .eraseToAnyPublisher()
     }
     
@@ -513,7 +513,7 @@ public enum InstallationError: LocalizedError, Equatable {
         case .unexpectedCodeSigningIdentity(let identity, let certificateAuthority):
             return String(format: localizeString("InstallationError.UnexpectedCodeSigningIdentity"), identity, certificateAuthority, XcodeTeamIdentifier, XcodeCertificateAuthority)
         case .unsupportedFileFormat(let fileExtension):
-            return String(format: localizeString("InstallationError.UnsuppoawwrtedFileFormat"), fileExtension)
+            return String(format: localizeString("InstallationError.UnsupportedFileFormat"), fileExtension)
         case .missingSudoerPassword:
             return localizeString("InstallationError.MissingSudoerPassword")
         case let .unavailableVersion(version):

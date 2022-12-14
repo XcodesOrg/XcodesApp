@@ -92,16 +92,34 @@ struct OpenButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
     
+    var openInRosetta: Bool {
+        appState.showOpenInRosettaOption && Hardware.isAppleSilicon()
+    }
+    
     var body: some View {
-        Button(action: open) {
-            Text("Open")
+        if openInRosetta {
+            Menu("Open") {
+                Button(action: open) {
+                    Text("Open")
+                }
+                .help("Open")
+                Button(action: open) {
+                    Text("Open In Rosetta")
+                }
+                .help("Open In Rosetta")
+            }
+        } else {
+            Button(action: open) {
+                Text("Open")
+            }
+            .help("Open")
         }
-        .help("Open")
+        
     }
     
     private func open() {
         guard let xcode = xcode else { return }
-        appState.open(xcode: xcode)
+        appState.open(xcode: xcode, openInRosetta: openInRosetta)
     }
 }
 
@@ -186,6 +204,23 @@ struct CreateSymbolicLinkButton: View {
     private func createSymbolicLink() {
         guard let xcode = xcode else { return }
         appState.createSymbolicLink(xcode: xcode)
+    }
+}
+
+struct CreateSymbolicBetaLinkButton: View {
+    @EnvironmentObject var appState: AppState
+    let xcode: Xcode?
+
+    var body: some View {
+        Button(action: createSymbolicBetaLink) {
+            Text("CreateSymLinkBeta")
+        }
+        .help("CreateSymLinkBeta")
+    }
+
+    private func createSymbolicBetaLink() {
+        guard let xcode = xcode else { return }
+        appState.createSymbolicLink(xcode: xcode, isBeta: true)
     }
 }
 

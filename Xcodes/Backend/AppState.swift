@@ -93,7 +93,12 @@ class AppState: ObservableObject {
             }
         }
     }
-
+    
+    @Published var showOpenInRosettaOption = false {
+        didSet {
+            Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
+        }
+    }
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
@@ -142,6 +147,7 @@ class AppState: ObservableObject {
         createSymLinkOnSelect = Current.defaults.bool(forKey: "createSymLinkOnSelect") ?? false
         onSelectActionType = SelectedActionType(rawValue: Current.defaults.string(forKey: "onSelectActionType") ?? "none") ?? .none
         installPath = Current.defaults.string(forKey: "installPath") ?? Path.defaultInstallDirectory.string
+        showOpenInRosettaOption = Current.defaults.bool(forKey: "showOpenInRosettaOption") ?? false
     }
     
     // MARK: Timer
@@ -381,7 +387,7 @@ class AppState: ObservableObject {
         case .apple:
             install(id: id)
         case .xcodeReleases:
-            installWithoutLogin(id: id)
+            install(id: id)
         }
     }
     
@@ -454,6 +460,7 @@ class AppState: ObservableObject {
     }
     
     /// Skips using the username/password to log in to Apple, and simply gets a Auth Cookie used in downloading
+    /// As of Nov 2022 this was returning a 403 forbidden
     func installWithoutLogin(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
         
@@ -584,13 +591,18 @@ class AppState: ObservableObject {
             )
     }
     
-    func open(xcode: Xcode) {
+    func open(xcode: Xcode, openInRosetta: Bool? = false) {
         switch xcode.installState {
-            case let .installed(path):
-                NSWorkspace.shared.openApplication(at: path.url, configuration: .init())
-            default:
-                Logger.appState.error("\(xcode.id) is not installed")
-                return
+        case let .installed(path):
+            let config = NSWorkspace.OpenConfiguration.init()
+            if (openInRosetta ?? false) {
+                config.architecture = CPU_TYPE_X86_64
+            }
+            config.allowsRunningApplicationSubstitution = false
+            NSWorkspace.shared.openApplication(at: path.url, configuration: config)
+        default:
+            Logger.appState.error("\(xcode.id) is not installed")
+            return
         }
     }
     
@@ -609,10 +621,10 @@ class AppState: ObservableObject {
       NSPasteboard.general.setString(url.absoluteString, forType: .string)
     }
     
-    func createSymbolicLink(xcode: Xcode) {
+    func createSymbolicLink(xcode: Xcode, isBeta: Bool = false) {
         guard let installedXcodePath = xcode.installedPath else { return }
         
-        let destinationPath: Path = Path.installDirectory/"Xcode.app"
+        let destinationPath: Path = Path.installDirectory/"Xcode\(isBeta ? "-Beta" : "").app"
         
         // does an Xcode.app file exist?
         if FileManager.default.fileExists(atPath: destinationPath.string) {
@@ -634,7 +646,7 @@ class AppState: ObservableObject {
         
         do {
             try FileManager.default.createSymbolicLink(atPath: destinationPath.string, withDestinationPath: installedXcodePath.string)
-            Logger.appState.info("Successfully created symbolic link with Xcode.app")
+            Logger.appState.info("Successfully created symbolic link with Xcode\(isBeta ? "-Beta": "").app")
         } catch {
             Logger.appState.error("Unable to create symbolic Link")
             self.error = error
