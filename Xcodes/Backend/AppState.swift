@@ -13,7 +13,8 @@ class AppState: ObservableObject {
    
     // MARK: - Published Properties
     
-    @Published var authenticationState: AuthenticationState = .unauthenticated
+    @Published var authenticationState: AuthenticationState = .checking
+    var isCheckingAuthentication: Bool { authenticationState == .checking }
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
             if newValue.count > availableXcodes.count && availableXcodes.count != 0 {
@@ -139,6 +140,21 @@ class AppState: ObservableObject {
         checkIfHelperIsInstalled()
         setupAutoInstallTimer()
         setupDefaults()
+        
+        validateSession()
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { [weak self] result in
+                    switch result {
+                    case .finished:
+                        self?.authenticationState = .authenticated
+                    case .failure:
+                        self?.authenticationState = .unauthenticated
+                    }
+                },
+                receiveValue: { _ in }
+            )
+            .store(in: &cancellables)
     }
     
     func setupDefaults() {
@@ -292,7 +308,7 @@ class AppState: ObservableObject {
             self.authError = error
         case .finished:
             switch self.authenticationState {
-                case .authenticated, .unauthenticated, .notAppleDeveloper:
+                case .authenticated, .unauthenticated, .notAppleDeveloper, .checking:
                 self.presentedSheet = nil
             case let .waitingForSecondFactor(option, authOptions, sessionData):
                 self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
@@ -402,7 +418,7 @@ class AppState: ObservableObject {
                 self.$authenticationState
                     .filter { state in
                         switch state {
-                            case .authenticated, .unauthenticated, .notAppleDeveloper: return true
+                            case .authenticated, .unauthenticated, .notAppleDeveloper, .checking: return true
                         case .waitingForSecondFactor: return false
                         }
                     }

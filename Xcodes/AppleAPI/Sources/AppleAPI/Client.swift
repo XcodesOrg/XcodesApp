@@ -182,6 +182,7 @@ public class Client {
 // MARK: - Types
 
 public enum AuthenticationState: Equatable {
+    case checking
     case unauthenticated
     case waitingForSecondFactor(TwoFactorOption, AuthOptionsResponse, AppleSessionData)
     case authenticated

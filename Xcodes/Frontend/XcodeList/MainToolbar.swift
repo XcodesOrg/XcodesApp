@@ -14,9 +14,20 @@ struct MainToolbarModifier: ViewModifier {
 
     private var toolbar: some ToolbarContent {
         ToolbarItemGroup(placement: .status) {
-            Button(action: { appState.presentedSheet = .signIn }, label: {
-                Label("Login", systemImage: "person.circle")
-            })
+            ProgressButton(
+                isInProgress: appState.isCheckingAuthentication,
+                action: { appState.presentedSheet = .signIn }
+            ) {
+                switch appState.authenticationState {
+                case .authenticated:
+                    Label("Login", systemImage: "person.circle")
+                case .unauthenticated, .notAppleDeveloper, .checking, .waitingForSecondFactor:
+                    Label("Login", systemImage: "person.circle")
+                        .foregroundColor(Color.red)
+                    Text("Signed out") // TODO: Localization
+                        .foregroundColor(Color.red)
+                }
+            }
             .help("LoginDescription")
 
             ProgressButton(
