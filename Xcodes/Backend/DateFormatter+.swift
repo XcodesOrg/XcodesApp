@@ -6,6 +6,7 @@ extension DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yy HH:mm"
         formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.calendar = .init(identifier: .iso8601)
         return formatter
     }()
 
