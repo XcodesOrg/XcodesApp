@@ -13,12 +13,12 @@ struct MainToolbarModifier: ViewModifier {
     }
 
     private var toolbar: some ToolbarContent {
-        ToolbarItemGroup(placement: .status) {
+        ToolbarItemGroup {
             Button(action: { appState.presentedSheet = .signIn }, label: {
                 Label("Login", systemImage: "person.circle")
             })
             .help("LoginDescription")
-
+            
             ProgressButton(
                 isInProgress: appState.isUpdating, 
                 action: appState.update
@@ -85,7 +85,7 @@ struct MainToolbarModifier: ViewModifier {
             }
             .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
             .help("InfoDescription")
-
+            
             Button(action: {
                 if #available(macOS 13, *) {
                     NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
