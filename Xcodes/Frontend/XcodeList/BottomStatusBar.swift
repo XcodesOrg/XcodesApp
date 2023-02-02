@@ -9,27 +9,27 @@
 import Foundation
 import SwiftUI
 
-
 struct BottomStatusModifier: ViewModifier {
     @EnvironmentObject var appState: AppState
     
     func body(content: Content) -> some View {
-        content
         VStack(spacing: 0) {
-            Divider()
-            HStack {
-                Text(appState.bottomStatusBarMessage)
-                    .font(.subheadline)
-                Spacer()
-                Text(Bundle.main.shortVersion!)
-                    .font(.subheadline)
+            content
+            VStack(spacing: 0) {
+                Divider()
+                HStack {
+                    Text(appState.bottomStatusBarMessage)
+                        .font(.subheadline)
+                    Spacer()
+                    Text(Bundle.main.shortVersion!)
+                        .font(.subheadline)
+                }
+                .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
+                .padding([.leading, .trailing], 10)
             }
             .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
-            .padding([.leading, .trailing], 10)
         }
-        .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
     }
-
 }
 
 extension View {
