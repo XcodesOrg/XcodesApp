@@ -117,8 +117,8 @@ class ObservableUpdater: ObservableObject {
 }
 
 extension URL {
-    static let appcast = URL(string: "https://robotsandpencils.github.io/XcodesApp/appcast.xml")!
-    static let prereleaseAppcast = URL(string: "https://robotsandpencils.github.io/XcodesApp/appcast_pre.xml")!
+    static let appcast = URL(string: "https://www.xcodes.app/appcast.xml")!
+    static let prereleaseAppcast = URL(string: "https://www.xcodes.app/appcast_pre.xml")!
 }
 
 struct UpdatesPreferencePane_Previews: PreviewProvider {
