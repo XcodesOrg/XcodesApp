@@ -6,6 +6,72 @@
         <language>en</language>
         
             
+        
+            
+                
+                    <item>
+                        <title>v1.10.0 - Revenge of the Sith</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+<p>⚠⚠ Apple has implemented a version of Hashcash when logging in, which caused previous versions to lock Apple ID’s. This effect all tools that implemented the similar <code class="language-plaintext highlighter-rouge">auth/signin</code> api’s. The fix should stop any new locks of Apple ID’s. If your Apple ID is locked, you must reset your password. ⚠⚠</p>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Update unxip binary to 1.1.3 (#356) @MattKiazyk</li>
+  <li>Adds open in Rosetta option for Apple Silicon machines (#333) @MattKiazyk</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Implement hashcash for Apple ID Authentication (#361) @MattKiazyk</li>
+  <li>Ventura UI fixes (#349) @FelixHerrmann</li>
+  <li>Fix #329 (#336) @yossizahn</li>
+</ul>
+
+<h2 id="-localization">🌎 Localization</h2>
+
+<ul>
+  <li>Update Japanese localization (#299) @jrsaruo</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Bump actions/cache from 3.2.4 to 3.2.5 (#354) @dependabot</li>
+  <li>Updating the username (#348) @egesucu</li>
+  <li>Bump actions/cache from 3.2.2 to 3.2.4 (#351) @dependabot</li>
+  <li>Bump actions/cache from 3.0.11 to 3.2.2 (#342) @dependabot</li>
+</ul>
+
+<!-- sparkle:edSignature=Ttm9zduGZ1nayiSModh8sZilyC8GHyEioCQYl0d73ezH3Daj63CdS1xMh9hfROgcp0XpOOl7z84qgW+RAxkBDA== -->
+]]></description>
+                        <pubDate>Wed, 01 Mar 2023 01:23:04 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.10.0b18/Xcodes.zip"
+                                    sparkle:version="18"
+                                    sparkle:shortVersionString="1.10.0"
+                                    sparkle:edSignature="Ttm9zduGZ1nayiSModh8sZilyC8GHyEioCQYl0d73ezH3Daj63CdS1xMh9hfROgcp0XpOOl7z84qgW+RAxkBDA=="
+                                    length="11955115"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
                 
                     <item>
                         <title>v1.9.0 - The Empire Strikes Back 🍎 </title>
