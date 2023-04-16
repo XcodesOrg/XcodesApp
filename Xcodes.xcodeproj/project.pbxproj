@@ -172,6 +172,7 @@
 
 /* Begin PBXFileReference section */
 		15FAD1652811D15600B63259 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		23703D6E29EBF63500DFA346 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		25E2FA26284769A00014A318 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		327DF109286ABE6B00D694D5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadPreferencePane.swift; sourceTree = "<group>"; };
@@ -734,6 +735,7 @@
 				fi,
 				"pt-BR",
 				nl,
+				pl,
 			);
 			mainGroup = CAD2E7952449574E00113D76;
 			packageReferences = (
@@ -952,6 +954,7 @@
 				5AA8A6102877EDAD009ECDB0 /* fi */,
 				327DF109286ABE6B00D694D5 /* pt-BR */,
 				E2AFDCCA28F024D000864ADD /* nl */,
+				23703D6E29EBF63500DFA346 /* pl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
