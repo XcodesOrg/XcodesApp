@@ -9,6 +9,10 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 ![](screenshot_light.png#gh-light-mode-only)
 ![](screenshot_dark.png#gh-dark-mode-only)
 
+### :tada: Announcment
+
+XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
+
 ## Features
 
 - List all available Xcode versions from [Xcode Releases'](https://xcodereleases.com) data or the Apple Developer website.
