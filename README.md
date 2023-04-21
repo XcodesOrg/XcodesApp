@@ -2,9 +2,9 @@
 
 The easiest way to install and switch between multiple versions of Xcode.
 
-_If you're looking for a command-line version of Xcodes.app, try [`xcodes`](https://github.com/RobotsAndPencils/xcodes)._
+_If you're looking for a command-line version of Xcodes.app, try [`xcodes`](https://github.com/XcodesOrg/xcodes)._
 
-![CI](https://github.com/RobotsAndPencils/Xcodes.app/workflows/CI/badge.svg)
+![CI](https://github.com/XcodesOrg/Xcodes.app/workflows/CI/badge.svg)
 
 ![](screenshot_light.png#gh-light-mode-only)
 ![](screenshot_dark.png#gh-dark-mode-only)
@@ -62,14 +62,12 @@ brew install --cask xcodes
 
 ### Download a release
 
-1. Download the latest version [here](https://github.com/RobotsAndPencils/XcodesApp/releases/latest) using the **Xcodes.zip** asset. These are Developer ID-signed and notarized release builds and don't require Xcode to already be installed in order to use.
+1. Download the latest version [here](https://github.com/XcodesOrg/XcodesApp/releases/latest) using the **Xcodes.zip** asset. These are Developer ID-signed and notarized release builds and don't require Xcode to already be installed in order to use.
 2. Move the unzipped `Xcodes.app` to your `/Applications` directory
 
 ## Development
 
 You'll need macOS 12 Big Sur and Xcode 13 in order to build and run Xcodes.app.
-
-If you aren't a Robots and Pencils employee you'll need to change the CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT build setting to your Apple Developer team ID in order for code signing validation to succeed between the main app and the privileged helper.
 
 `Unxip` and `aria2` must be compiled as a universal binary
 ```
@@ -137,7 +135,7 @@ pushd Product
 ../scripts/sign_update Xcodes.zip
 popd
 
-# Go to https://github.com/RobotsAndPencils/XcodesApp/releases
+# Go to https://github.com/XcodesOrg/XcodesApp/releases
 # If there are uncategorized PRs, add the appropriate label and run the Release Drafter action manually
 # Edit the latest draft release
 # Set its tag to the tag you just pushed
@@ -156,9 +154,4 @@ popd
 
 [Matt Kiazyk](https://github.com/mattkiazyk) - [Twitter](https://www.twitter.com/mattkiazyk)
 
-
-<a href="http://www.robotsandpencils.com"><img src="R&PLogo.png" width="153" height="74" /></a>
-
-Made with ❤️ by [Robots & Pencils](http://www.robotsandpencils.com)
-
-[Twitter](https://twitter.com/xcodesApp) | [GitHub](https://github.com/robotsandpencils)
+[Twitter](https://twitter.com/xcodesApp) | [GitHub](https://github.com/xcodesOrg)
