@@ -39,8 +39,16 @@ struct XcodeListView: View {
     }
     
     var body: some View {
-        List(visibleXcodes, selection: $selectedXcodeID) { xcode in
-            XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
+        // We have this version check to show alternating row backgrounds when available
+        if #available(macOS 12, *) {
+            List(visibleXcodes, selection: $selectedXcodeID) { xcode in
+                XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
+            }
+            .listStyle(.inset(alternatesRowBackgrounds: true))
+        } else {
+            List(visibleXcodes, selection: $selectedXcodeID) { xcode in
+                XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
+            }
         }
     }
 }
