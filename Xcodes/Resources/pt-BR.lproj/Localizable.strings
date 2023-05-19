@@ -81,7 +81,7 @@
 "AutomaticallyCreateSymbolicLink" = "Criar link simbólico para o Xcode.app automaticamente";
 "AutomaticallyCreateSymbolicLinkDescription" = "Quando ativar/selecionar uma versão do Xcode, tentar criar um link simbólico chamado Xcode.app no diretório de instalação";
 "DataSource" = "Fonte de dados";
-"DataSourceDescription" = "A fonte de dados da Apple copia o site Apple Developer. Sempre mostrará os lançamentos mais recentes que estão disponíveis, porém é mais frágil.\n\nLançamentos do Xcode é uma lista de lançamentos do Xcode não-oficial. É provido como dado formatado, contem informação extra que não está prontamente disponível pela Apple, e é menos provável que quebre se a Apple redesenhar o seu site de desenvolvedores.";
+"DataSourceDescription" = "A fonte de dados da Apple copia o site Apple Developer. Sempre mostrará os lançamentos mais recentes que estão disponíveis, porém é mais frágil.\n\nLançamentos do Xcode (Xcode Releases) é uma lista de lançamentos do Xcode não-oficial. É provido como dado formatado, contem informação extra que não está prontamente disponível pela Apple, e é menos provável que quebre se a Apple redesenhar o seu site de desenvolvedores.";
 "Downloader" = "Baixador";
 "DownloaderDescription" = "aria2 usa até 16 conexões para baixar o Xcode 3-5x mais rápido que URLSession. Está empacotado como um executável junto com o seu código fonte dentro do Xcodes para conformar com a licensa GPLv2.\n\nURLSession é a API padrão da Apple para performar requisições URL.";
 "PrivilegedHelper" = "Ajudante privilegiado";
