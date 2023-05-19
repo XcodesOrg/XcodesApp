@@ -89,6 +89,11 @@
 "HelperInstalled" = "Ajudante está instalado";
 "HelperNotInstalled" = "Ajudante não está instalado";
 "InstallHelper" = "Instalar ajudante";
+"OnSelectDoNothing" = "Manter nome como Xcode-X.X.X.app";
+"OnSelectRenameXcode" = "Sempre renomear para Xcode.app";
+"OnSelectRenameXcodeDescription" = "Ao selecionar, tentar renomear o Xcode ativo para Xcode.app, renomeando o Xcode.app anterior para um nome com a versão.";
+"ShowOpenInRosetta" = "Mostrar opçao abrir com Rosetta";
+"ShowOpenInRosettaDescription" = "Opção de abrir com o Rosetta será mostrar onde outras opções \"Abrir\" estão disponíveis. Nota: Isso só será mostrado pra máquinas Apple Silicon.";
 
 // Experiment Preference Pane
 "Experiments" = "Experiments";
