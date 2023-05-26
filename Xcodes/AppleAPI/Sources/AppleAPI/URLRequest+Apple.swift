@@ -7,6 +7,7 @@ public extension URL {
     static let requestSecurityCode = URL(string: "https://idmsa.apple.com/appleauth/auth/verify/phone")!
     static func submitSecurityCode(_ code: SecurityCode) -> URL { URL(string: "https://idmsa.apple.com/appleauth/auth/verify/\(code.urlPathComponent)/securitycode")! }
     static let trust = URL(string: "https://idmsa.apple.com/appleauth/auth/2sv/trust")!
+    static let federate = URL(string: "https://idmsa.apple.com/appleauth/auth/federate")!
     static let olympusSession = URL(string: "https://appstoreconnect.apple.com/olympus/v1/session")!
 }
 
@@ -15,7 +16,7 @@ public extension URLRequest {
         return URLRequest(url: .itcServiceKey)
     }
 
-    static func signIn(serviceKey: String, accountName: String, password: String) -> URLRequest {
+    static func signIn(serviceKey: String, accountName: String, password: String, hashcash: String) -> URLRequest {
         struct Body: Encodable {
             let accountName: String
             let password: String
@@ -27,6 +28,7 @@ public extension URLRequest {
         request.allHTTPHeaderFields?["Content-Type"] = "application/json"
         request.allHTTPHeaderFields?["X-Requested-With"] = "XMLHttpRequest"
         request.allHTTPHeaderFields?["X-Apple-Widget-Key"] = serviceKey
+        request.allHTTPHeaderFields?["X-Apple-HC"] = hashcash
         request.allHTTPHeaderFields?["Accept"] = "application/json, text/javascript"
         request.httpMethod = "POST"
         request.httpBody = try! JSONEncoder().encode(Body(accountName: accountName, password: password))
@@ -116,5 +118,22 @@ public extension URLRequest {
 
     static var olympusSession: URLRequest {
         return URLRequest(url: .olympusSession)
+    }
+    
+    static func federate(account: String, serviceKey: String) throws -> URLRequest {
+        struct FederateRequest: Encodable {
+            let accountName: String
+            let rememberMe: Bool
+        }
+        var request = URLRequest(url: .signIn)
+        request.allHTTPHeaderFields?["Accept"] = "application/json"
+        request.allHTTPHeaderFields?["Content-Type"] = "application/json"
+        request.httpMethod = "GET"
+        
+//        let encoder = JSONEncoder()
+//        encoder.outputFormatting = .withoutEscapingSlashes
+//        request.httpBody = try encoder.encode(FederateRequest(accountName: account, rememberMe: true))
+        
+        return request
     }
 }

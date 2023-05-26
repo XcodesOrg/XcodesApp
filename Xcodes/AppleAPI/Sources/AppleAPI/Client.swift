@@ -14,11 +14,21 @@ public class Client {
         return Current.network.dataTask(with: URLRequest.itcServiceKey)
             .map(\.data)
             .decode(type: ServiceKeyResponse.self, decoder: JSONDecoder())
-            .flatMap { serviceKeyResponse -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+            .flatMap { serviceKeyResponse -> AnyPublisher<(String, String), Swift.Error> in
                 serviceKey = serviceKeyResponse.authServiceKey
-                return Current.network.dataTask(with: URLRequest.signIn(serviceKey: serviceKey, accountName: accountName, password: password))
-                    .mapError { $0 as Swift.Error }
+                
+                // Fixes issue https://github.com/RobotsAndPencils/XcodesApp/issues/360
+                // On 2023-02-23, Apple added a custom implementation of hashcash to their auth flow
+                // Without this addition, Apple ID's would get set to locked
+                return self.loadHashcash(accountName: accountName, serviceKey: serviceKey)
+                    .map { return (serviceKey, $0)}
                     .eraseToAnyPublisher()
+            }
+            .flatMap { (serviceKey, hashcash) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+                    
+                return Current.network.dataTask(with: URLRequest.signIn(serviceKey: serviceKey, accountName: accountName, password: password, hashcash: hashcash))
+                            .mapError { $0 as Swift.Error }
+                            .eraseToAnyPublisher()
             }
             .flatMap { result -> AnyPublisher<AuthenticationState, Swift.Error> in
                 let (data, response) = result
@@ -55,6 +65,44 @@ public class Client {
             }
             .mapError { $0 as Swift.Error }
             .eraseToAnyPublisher()
+    }
+    
+    func loadHashcash(accountName: String, serviceKey: String) -> AnyPublisher<String, Swift.Error> {
+        
+        Result {
+            try URLRequest.federate(account: accountName, serviceKey: serviceKey)
+        }
+        .publisher
+        .flatMap { request in
+            Current.network.dataTask(with: request)
+                .mapError { $0 as Error }
+                .tryMap { (data, response) throws -> (String) in
+                    guard let urlResponse = response as? HTTPURLResponse else {
+                        throw AuthenticationError.invalidSession
+                    }
+                    switch urlResponse.statusCode {
+                    case 200..<300:
+                        
+                        let httpResponse = response as! HTTPURLResponse
+                        guard let bitsString = httpResponse.allHeaderFields["X-Apple-HC-Bits"] as? String, let bits = UInt(bitsString) else {
+                            throw AuthenticationError.invalidHashcash
+                        }
+                        guard let challenge = httpResponse.allHeaderFields["X-Apple-HC-Challenge"] as? String else {
+                            throw AuthenticationError.invalidHashcash
+                        }
+                        guard let hashcash = Hashcash().mint(resource: challenge, bits: bits) else {
+                            throw AuthenticationError.invalidHashcash
+                        }
+                        return (hashcash)
+                    case 400, 401:
+                        throw AuthenticationError.invalidHashcash
+                    case let code:
+                        throw AuthenticationError.badStatusCode(statusCode: code, data: data, response: urlResponse)
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    
     }
 
     func handleTwoStepOrFactor(data: Data, response: URLResponse, serviceKey: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
@@ -190,6 +238,7 @@ public enum AuthenticationState: Equatable {
 
 public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case invalidSession
+    case invalidHashcash
     case invalidUsernameOrPassword(username: String)
     case incorrectSecurityCode
     case unexpectedSignInResponse(statusCode: Int, message: String?)
@@ -206,6 +255,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
         switch self {
         case .invalidSession:
             return "Your authentication session is invalid. Try signing in again."
+        case .invalidHashcash:
+            return "Could not create a hashcash for the session."
         case .invalidUsernameOrPassword:
             return "Invalid username and password combination."
         case .incorrectSecurityCode:

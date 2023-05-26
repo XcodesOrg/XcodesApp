@@ -15,15 +15,15 @@ jobs:
         persist-credentials: false
 
     - name: Cache 📦
-      uses: actions/cache@v3.0.11
+      uses: actions/cache@v3.3.1
       with:
         path: AppCast/vendor/bundle
         key: ${{ runner.os }}-gems-v1.0-${{ hashFiles('AppCast/Gemfile') }}
         restore-keys: |
           ${{ runner.os }}-gems-
           
-    - name: Ruby ♦️
-      uses: actions/setup-ruby@v1.1.3
+    - name: Setup Ruby, JRuby and TruffleRuby
+      uses: ruby/setup-ruby@v1.149.0
       with:
         ruby-version: '2.7'
 
