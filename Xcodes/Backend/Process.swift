@@ -73,3 +73,7 @@ struct ProcessExecutionError: Error {
     let standardOutput: String
     let standardError: String
 }
+
+extension Process: @unchecked Sendable {
+    
+}
