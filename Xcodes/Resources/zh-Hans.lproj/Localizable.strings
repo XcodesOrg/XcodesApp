@@ -102,6 +102,9 @@
 "HelperNotInstalled" = "帮助程序未安装";
 "InstallHelper" = "安装帮助程序";
 
+"ShowOpenInRosetta" = "显示“在Rosetta中打开”选项";
+"ShowOpenInRosettaDescription" = "“在Rosetta中打开”将会在有其他“打开”方式可用时显示。注：此选项只会在Apple Silicon设备上显示。";
+
 // Experiment Preference Pane
 "Experiments" = "实验性功能";
 "FasterUnxip" = "更快的xip解压";
@@ -160,6 +163,7 @@
 "Alert.Uninstall.Title" = "要卸载Xcode %@吗？";
 "Alert.Uninstall.Message" = "它会被移动到废纸篓，但废纸篓不会清空。";
 "Alert.Uninstall.Error.Title" = "无法卸载Xcode";
+"Alert.Uninstall.Error.Message.FileNotFound" = "无法找到文件\"%@\".";
 
 // Cancel Install
 "Alert.CancelInstall.Title" = "您确定要终止Xcode %@的安装吗？";
