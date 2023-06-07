@@ -7,9 +7,11 @@ import KeychainAccess
 import Path
 import Version
 import os.log
+import XcodesKit
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
+    internal let runtimeService = RuntimeService()
    
     // MARK: - Published Properties
     
@@ -99,6 +101,12 @@ class AppState: ObservableObject {
             Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
         }
     }
+    
+    // MARK: - Runtimes
+    
+    @Published var downloadableRuntimes: [DownloadableRuntime] = []
+    @Published var installedRuntimes: [CoreSimulatorRuntimeInfo] = []
+
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
@@ -136,6 +144,7 @@ class AppState: ObservableObject {
     init() {
         guard !isTesting else { return }
         try? loadCachedAvailableXcodes()
+        try? loadCacheDownloadableRuntimes()
         checkIfHelperIsInstalled()
         setupAutoInstallTimer()
         setupDefaults()
@@ -781,6 +790,21 @@ class AppState: ObservableObject {
         }
         
         self.allXcodes = newAllXcodes.sorted { $0.version > $1.version }
+    }
+    
+    // MARK: Runtimes
+    func getRunTimes(xcode: Xcode) -> [DownloadableRuntime] {
+     
+        let builds = xcode.sdks?.allBuilds()
+            
+        let runtime = builds?.flatMap { sdkBuild in
+            downloadableRuntimes.filter {
+                $0.simulatorVersion.buildUpdate == sdkBuild
+            }
+        }
+            // appState.installedRuntimes has a list of builds that user has installed.
+            
+        return runtime ?? []
     }
     
     // MARK: - Private

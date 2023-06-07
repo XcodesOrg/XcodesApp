@@ -3,7 +3,7 @@ import Foundation
 import Path
 import AppleAPI
 import KeychainAccess
-
+import XcodesKit
 /**
  Lightweight dependency injection using global mutable state :P
 
@@ -166,7 +166,7 @@ public struct Files {
     public var installedXcodes = _installedXcodes
     
     public func installedXcode(destination: Path) -> InstalledXcode? {
-        if Entry.isAppBundle(kind: destination.isDirectory ? .directory : .file, path: destination) && Entry.infoPlist(kind:  destination.isDirectory ? .directory : .file, path: destination)?.bundleID == "com.apple.dt.Xcode" {
+        if Path.isAppBundle(path: destination) && Path.infoPlist(path: destination)?.bundleID == "com.apple.dt.Xcode" {
             return InstalledXcode.init(path: destination)
         } else {
             return nil
@@ -175,9 +175,9 @@ public struct Files {
 }
 
 private func _installedXcodes(destination: Path) -> [InstalledXcode] {
-    ((try? destination.ls()) ?? [])
+    destination.ls()
         .filter { $0.isAppBundle && $0.infoPlist?.bundleID == "com.apple.dt.Xcode" }
-        .map { $0.path }
+        .map { $0 }
         .compactMap(InstalledXcode.init)
 }
 

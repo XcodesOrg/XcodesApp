@@ -1,0 +1,161 @@
+import Foundation
+
+public struct DownloadableRuntimesResponse: Codable {
+    public let sdkToSimulatorMappings: [SDKToSimulatorMapping]
+    public let sdkToSeedMappings: [SDKToSeedMapping]
+    public let refreshInterval: Int
+    public let downloadables: [DownloadableRuntime]
+    public let version: String
+}
+
+public struct DownloadableRuntime: Codable {
+    public let category: Category
+    public let simulatorVersion: SimulatorVersion
+    public let source: String
+    public let dictionaryVersion: Int
+    public let contentType: ContentType
+    public let platform: Platform
+    public let identifier: String
+    public let version: String
+    public let fileSize: Int
+    public let hostRequirements: HostRequirements?
+    public let name: String
+    public let authentication: Authentication?
+    
+    // dynamically updated - not decoded
+    public var installState: InstallState = .notInstalled
+    
+    enum CodingKeys: CodingKey {
+        case category
+        case simulatorVersion
+        case source
+        case dictionaryVersion
+        case contentType
+        case platform
+        case identifier
+        case version
+        case fileSize
+        case hostRequirements
+        case name
+        case authentication
+    }
+
+    var betaNumber: Int? {
+        enum Regex { static let shared = try! NSRegularExpression(pattern: "b[0-9]+$") }
+        guard var foundString = Regex.shared.firstString(in: identifier) else { return nil }
+        foundString.removeFirst()
+        return Int(foundString)!
+    }
+
+    var completeVersion: String {
+        makeVersion(for: simulatorVersion.version, betaNumber: betaNumber)
+    }
+
+    public var visibleIdentifier: String {
+        return platform.shortName + " " + completeVersion
+    }
+    
+    func makeVersion(for osVersion: String, betaNumber: Int?) -> String {
+        let betaSuffix = betaNumber.flatMap { "-beta\($0)" } ?? ""
+        return osVersion + betaSuffix
+    }
+    
+    public var downloadFileSizeString: String {
+        return ByteCountFormatter.string(fromByteCount: Int64(fileSize), countStyle: .file)
+    }
+}
+
+public struct SDKToSeedMapping: Codable {
+    public let buildUpdate: String
+    public let platform: DownloadableRuntime.Platform
+    public let seedNumber: Int
+}
+
+public struct SDKToSimulatorMapping: Codable {
+    public let sdkBuildUpdate: String
+    public let simulatorBuildUpdate: String
+    public let sdkIdentifier: String
+}
+
+extension DownloadableRuntime {
+    public struct SimulatorVersion: Codable {
+        public let buildUpdate: String
+        public let version: String
+    }
+
+    public struct HostRequirements: Codable {
+        let maxHostVersion: String?
+        let excludedHostArchitectures: [String]?
+        let minHostVersion: String?
+        let minXcodeVersion: String?
+    }
+
+    public enum Authentication: String, Codable {
+        case virtual = "virtual"
+    }
+
+    public enum Category: String, Codable {
+        case simulator = "simulator"
+    }
+
+    public enum ContentType: String, Codable {
+        case diskImage = "diskImage"
+        case package = "package"
+    }
+
+    public enum Platform: String, Codable {
+        case iOS = "com.apple.platform.iphoneos"
+        case macOS = "com.apple.platform.macosx"
+        case watchOS = "com.apple.platform.watchos"
+        case tvOS = "com.apple.platform.appletvos"
+
+        var order: Int {
+            switch self {
+                case .iOS: return 1
+                case .macOS: return 2
+                case .watchOS: return 3
+                case .tvOS: return 4
+            }
+        }
+
+        var shortName: String {
+            switch self {
+                case .iOS: return "iOS"
+                case .macOS: return "macOS"
+                case .watchOS: return "watchOS"
+                case .tvOS: return "tvOS"
+            }
+        }
+    }
+}
+
+public struct InstalledRuntime: Decodable {
+    let build: String
+    let deletable: Bool
+    let identifier: UUID
+    let kind: Kind
+    let lastUsedAt: Date?
+    let path: String
+    let platformIdentifier: Platform
+    let runtimeBundlePath: String
+    let runtimeIdentifier: String
+    let signatureState: String
+    let state: String
+    let version: String
+    let sizeBytes: Int?
+}
+
+extension InstalledRuntime {
+    enum Kind: String, Decodable {
+        case diskImage = "Disk Image"
+        case bundled = "Bundled with Xcode"
+        case legacyDownload = "Legacy Download"
+    }
+
+    enum Platform: String, Decodable {
+        case tvOS = "com.apple.platform.appletvsimulator"
+        case iOS = "com.apple.platform.iphonesimulator"
+        case watchOS = "com.apple.platform.watchsimulator"
+    }
+}
+

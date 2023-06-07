@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "AsyncNetworkService",
+        "repositoryURL": "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService",
+        "state": {
+          "branch": "main",
+          "revision": "97770856c4e429f880d4b4dd68cfaf286dc00c30",
+          "version": null
+        }
+      },
+      {
         "package": "CombineExpectations",
         "repositoryURL": "https://github.com/groue/CombineExpectations",
         "state": {
@@ -51,8 +60,8 @@
         "repositoryURL": "https://github.com/mxcl/Path.swift",
         "state": {
           "branch": null,
-          "revision": "dac007e907a4f4c565cfdc55a9ce148a761a11d5",
-          "version": "0.16.3"
+          "revision": "9c6f807b0a76be0e27aecc908bc6f173400d839e",
+          "version": "1.4.0"
         }
       },
       {

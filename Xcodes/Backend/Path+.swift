@@ -28,4 +28,8 @@ extension Path {
         }
         return path
     }
+    
+    static var runtimeCacheFile: Path {
+        return xcodesApplicationSupport/"downloadable-runtimes.json"
+    }
 }

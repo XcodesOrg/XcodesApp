@@ -1,4 +1,5 @@
 import SwiftUI
+import XcodesKit
 
 // MARK: - CommandMenu
 
@@ -204,6 +205,23 @@ struct CreateSymbolicLinkButton: View {
     private func createSymbolicLink() {
         guard let xcode = xcode else { return }
         appState.createSymbolicLink(xcode: xcode)
+    }
+}
+
+struct DownloadRuntimeButton: View {
+    @EnvironmentObject var appState: AppState
+    let runtime: DownloadableRuntime?
+    
+    var body: some View {
+        Button(action: install) {
+            Text("Install")
+                .help("Install")
+        }
+    }
+    
+    private func install() {
+        guard let runtime = runtime else { return }
+        // appState.checkMinVersionAndInstall(id: xcode.id)
     }
 }
 

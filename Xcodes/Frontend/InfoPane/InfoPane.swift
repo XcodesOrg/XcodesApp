@@ -54,6 +54,7 @@ struct InfoPane: View {
                     Divider()
 
                     Group{
+                        runtimes(for: xcode)
                         releaseNotes(for: xcode)
                         releaseDate(for: xcode)
                         identicalBuilds(for: xcode)
@@ -245,6 +246,29 @@ struct InfoPane: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .padding()
     }
+    
+    @ViewBuilder
+    private func runtimes(for xcode: Xcode) -> some View {
+        let runtimes = appState.getRunTimes(xcode: xcode)
+        
+        VStack(alignment: .leading) {
+            Text("Platforms")
+                .font(.headline)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            ForEach(runtimes, id: \.simulatorVersion.buildUpdate) { runtime in
+                HStack {
+                    Text("\(runtime.visibleIdentifier)")
+                        .font(.subheadline)
+                    Spacer()
+                    Text(runtime.downloadFileSizeString)
+                        .font(.subheadline)
+                    DownloadRuntimeButton(runtime: runtime)
+                }
+               
+            }
+        }
+    }
 }
 
 struct InfoPane_Previews: PreviewProvider {
@@ -329,6 +353,7 @@ struct InfoPane_Previews: PreviewProvider {
                             ),
                             downloadFileSize: 242342424)
                     ]
+                    
                 })
                 .previewDisplayName("Populated, Uninstalled")
 

@@ -18,7 +18,6 @@
 		CA25192A25A9644800F08414 /* XcodeInstallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA25192925A9644800F08414 /* XcodeInstallState.swift */; };
 		CA378F992466567600A58CE0 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA378F982466567600A58CE0 /* AppState.swift */; };
 		CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */; };
-		CA42DD6E25AEA8B200BC0B0C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA42DD6D25AEA8B200BC0B0C /* Logger.swift */; };
 		CA42DD7325AEB04300BC0B0C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA42DD7225AEB04300BC0B0C /* Logger.swift */; };
 		CA44901F2463AD34003D8213 /* Tag.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA44901E2463AD34003D8213 /* Tag.swift */; };
 		CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */; };
@@ -71,7 +70,6 @@
 		CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AC2592EEE900380FEE /* Foundation.swift */; };
 		CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A62592EEE900380FEE /* Version+Xcode.swift */; };
 		CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B42592EEEA00380FEE /* Process.swift */; };
-		CABFA9DF2592F07A00380FEE /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9DE2592F07A00380FEE /* Path */; };
 		CABFA9E42592F08E00380FEE /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9E32592F08E00380FEE /* Version */; };
 		CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9ED2592F0CC00380FEE /* SwiftSoup */; };
 		CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F72592F0F900380FEE /* KeychainAccess */; };
@@ -108,6 +106,9 @@
 		E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DD6EA25D053FA00D86808 /* Progress+.swift */; };
 		E89342FA25EDCC17007CF557 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89342F925EDCC17007CF557 /* NotificationManager.swift */; };
 		E8977EA325C11E1500835F80 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8977EA225C11E1500835F80 /* PreferencesView.swift */; };
+		E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */; };
+		E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */ = {isa = PBXBuildFile; productRef = E8C0EB19291EF43E0081528A /* XcodesKit */; };
+		E8C0EB1C291EF9A10081528A /* AppState+Runtimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */; };
 		E8CBDB8927ADE32300B22292 /* unxip in Copy aria2c */ = {isa = PBXBuildFile; fileRef = E8CBDB8627ADD92000B22292 /* unxip */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E8CBDB8B27AE02FF00B22292 /* ExperiementsPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CBDB8A27AE02FF00B22292 /* ExperiementsPreferencePane.swift */; };
 		E8D0296F284B029800647641 /* BottomStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D0296E284B029800647641 /* BottomStatusBar.swift */; };
@@ -115,7 +116,9 @@
 		E8DA461125FAF7FB002E85EF /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DA461025FAF7FB002E85EF /* NotificationsView.swift */; };
 		E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */; };
 		E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */; };
+		E8F44A1E296B4CD7002D6592 /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = E8F44A1D296B4CD7002D6592 /* Path */; };
 		E8F81FC4282D8A17006CBD0F /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E8F81FC3282D8A17006CBD0F /* Sparkle */; };
+		E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = E8FD5726291EE4AC001E004C /* AsyncNetworkService */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -196,7 +199,6 @@
 		CA25192925A9644800F08414 /* XcodeInstallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeInstallState.swift; sourceTree = "<group>"; };
 		CA378F982466567600A58CE0 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
-		CA42DD6D25AEA8B200BC0B0C /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		CA42DD7225AEB04300BC0B0C /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		CA44901E2463AD34003D8213 /* Tag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tag.swift; sourceTree = "<group>"; };
 		CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
@@ -297,11 +299,14 @@
 		CAFFFEEE259CEAC400903F81 /* RingProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingProgressViewStyle.swift; sourceTree = "<group>"; };
 		E2AFDCCA28F024D000864ADD /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E81D7E9F2805250100A205FC /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
+		E856BB73291EDD3D00DC438B /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XcodesKit; path = Xcodes/XcodesKit; sourceTree = "<group>"; };
 		E872EE4F2808D4F100D3DD8B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E87AB3C42939B65E00D72F43 /* Hardware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hardware.swift; sourceTree = "<group>"; };
 		E87DD6EA25D053FA00D86808 /* Progress+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+.swift"; sourceTree = "<group>"; };
 		E89342F925EDCC17007CF557 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E8977EA225C11E1500835F80 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
+		E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKs+Xcode.swift"; sourceTree = "<group>"; };
+		E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState+Runtimes.swift"; sourceTree = "<group>"; };
 		E8CBDB8627ADD92000B22292 /* unxip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = unxip; sourceTree = "<group>"; };
 		E8CBDB8A27AE02FF00B22292 /* ExperiementsPreferencePane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiementsPreferencePane.swift; sourceTree = "<group>"; };
 		E8D0296E284B029800647641 /* BottomStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStatusBar.swift; sourceTree = "<group>"; };
@@ -328,9 +333,11 @@
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
 				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
+				E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */,
+				E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */,
 				CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */,
-				CABFA9DF2592F07A00380FEE /* Path in Frameworks */,
 				CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */,
+				E8F44A1E296B4CD7002D6592 /* Path in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -452,6 +459,7 @@
 			isa = PBXGroup;
 			children = (
 				CA378F982466567600A58CE0 /* AppState.swift */,
+				E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */,
 				CAE424B3259A764700B8B246 /* AppState+Install.swift */,
 				CABFA9A72592EEE900380FEE /* AppState+Update.swift */,
 				CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */,
@@ -473,7 +481,6 @@
 				CAC281D9259F985100B8AB0B /* InstallationStep.swift */,
 				CA9FF8862595607900E47BAF /* InstalledXcode.swift */,
 				CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */,
-				CA42DD6D25AEA8B200BC0B0C /* Logger.swift */,
 				E89342F925EDCC17007CF557 /* NotificationManager.swift */,
 				CAE4248B259A68B800B8B246 /* Optional+IsNotNil.swift */,
 				CABFA9AE2592EEE900380FEE /* Path+.swift */,
@@ -492,6 +499,7 @@
 				E81D7E9F2805250100A205FC /* Collection+.swift */,
 				E8D655BF288DD04700A139C2 /* SelectedActionType.swift */,
 				E87AB3C42939B65E00D72F43 /* Hardware.swift */,
+				E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */,
 			);
 			path = Backend;
 			sourceTree = "<group>";
@@ -532,6 +540,7 @@
 		CAD2E7952449574E00113D76 = {
 			isa = PBXGroup;
 			children = (
+				E856BB73291EDD3D00DC438B /* XcodesKit */,
 				CA8FB5F8256E0F9400469DA5 /* README.md */,
 				CABFA9D42592EF6300380FEE /* DECISIONS.md */,
 				CABFA9A02592EAF500380FEE /* R&PLogo.png */,
@@ -656,7 +665,6 @@
 			name = Xcodes;
 			packageProductDependencies = (
 				CAA1CB2C255A5262003FD669 /* AppleAPI */,
-				CABFA9DE2592F07A00380FEE /* Path */,
 				CABFA9E32592F08E00380FEE /* Version */,
 				CABFA9ED2592F0CC00380FEE /* SwiftSoup */,
 				CABFA9F72592F0F900380FEE /* KeychainAccess */,
@@ -664,6 +672,9 @@
 				CA9FF86C25951C6E00E47BAF /* XCModel */,
 				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
 				E8F81FC3282D8A17006CBD0F /* Sparkle */,
+				E8FD5726291EE4AC001E004C /* AsyncNetworkService */,
+				E8C0EB19291EF43E0081528A /* XcodesKit */,
+				E8F44A1D296B4CD7002D6592 /* Path */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -737,7 +748,6 @@
 			);
 			mainGroup = CAD2E7952449574E00113D76;
 			packageReferences = (
-				CABFA9DD2592F07A00380FEE /* XCRemoteSwiftPackageReference "Path" */,
 				CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */,
 				CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
@@ -746,6 +756,8 @@
 				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
 				CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */,
 				E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */,
+				E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */,
+				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -854,7 +866,6 @@
 				36741BFF291E50F500A85AAE /* FileError.swift in Sources */,
 				CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */,
 				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
-				CA42DD6E25AEA8B200BC0B0C /* Logger.swift in Sources */,
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,
 				CAE4247F259A666100B8B246 /* MainWindow.swift in Sources */,
 				CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */,
@@ -871,6 +882,7 @@
 				E8DA461125FAF7FB002E85EF /* NotificationsView.swift in Sources */,
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
 				E81D7EA02805250100A205FC /* Collection+.swift in Sources */,
+				E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */,
 				CA9FF877259528CC00E47BAF /* Version+XcodeReleases.swift in Sources */,
 				CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
@@ -894,6 +906,7 @@
 				CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */,
 				CABFAA432593104F00380FEE /* AboutView.swift in Sources */,
 				E8D0296F284B029800647641 /* BottomStatusBar.swift in Sources */,
+				E8C0EB1C291EF9A10081528A /* AppState+Runtimes.swift in Sources */,
 				E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */,
 				CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */,
 				CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */,
@@ -1416,14 +1429,6 @@
 				minimumVersion = 0.1.0;
 			};
 		};
-		CABFA9DD2592F07A00380FEE /* XCRemoteSwiftPackageReference "Path" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mxcl/Path.swift";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.16.0;
-			};
-		};
 		CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Version";
@@ -1464,12 +1469,28 @@
 				minimumVersion = 0.6.0;
 			};
 		};
+		E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mxcl/Path.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 2.0.0;
+			};
+		};
+		E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService";
+			requirement = {
+				branch = main;
+				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1488,11 +1509,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */;
 			productName = ErrorHandling;
-		};
-		CABFA9DE2592F07A00380FEE /* Path */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CABFA9DD2592F07A00380FEE /* XCRemoteSwiftPackageReference "Path" */;
-			productName = Path;
 		};
 		CABFA9E32592F08E00380FEE /* Version */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1519,10 +1535,24 @@
 			package = CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */;
 			productName = CombineExpectations;
 		};
+		E8C0EB19291EF43E0081528A /* XcodesKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = XcodesKit;
+		};
+		E8F44A1D296B4CD7002D6592 /* Path */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */;
+			productName = Path;
+		};
 		E8F81FC3282D8A17006CBD0F /* Sparkle */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */;
 			productName = Sparkle;
+		};
+		E8FD5726291EE4AC001E004C /* AsyncNetworkService */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */;
+			productName = AsyncNetworkService;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

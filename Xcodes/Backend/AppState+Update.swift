@@ -5,6 +5,7 @@ import Version
 import SwiftSoup
 import struct XCModel.Xcode
 import AppleAPI
+import XcodesKit
 
 extension AppState {
     
@@ -36,6 +37,8 @@ extension AppState {
 
     func update() {
         guard !isUpdating else { return }
+        updateDownloadableRuntimes()
+        updateInstalledRuntimes()
         updatePublisher = updateSelectedXcodePath()
             .flatMap { _ in 
                 self.updateAvailableXcodes(from: self.dataSource)
@@ -124,6 +127,21 @@ extension AppState {
         try FileManager.default.createDirectory(at: Path.cacheFile.url.deletingLastPathComponent(),
                                                 withIntermediateDirectories: true)
         try data.write(to: Path.cacheFile.url)
+    }
+    
+    // MARK: Runtime Cache
+    
+    func loadCacheDownloadableRuntimes() throws {
+        guard let data = Current.files.contents(atPath: Path.runtimeCacheFile.string) else { return }
+        let runtimes = try JSONDecoder().decode([DownloadableRuntime].self, from: data)
+        self.downloadableRuntimes = runtimes
+    }
+    
+    func cacheDownloadableRuntimes(_ runtimes: [DownloadableRuntime]) throws {
+        let data = try JSONEncoder().encode(runtimes)
+        try FileManager.default.createDirectory(at: Path.runtimeCacheFile.url.deletingLastPathComponent(),
+                                                withIntermediateDirectories: true)
+        try data.write(to: Path.runtimeCacheFile.url)
     }
 }
 

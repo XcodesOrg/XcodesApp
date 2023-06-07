@@ -5,6 +5,7 @@ import AppleAPI
 import Version
 import LegibleError
 import os.log
+import XcodesKit
 
 /// Downloads and installs Xcodes
 extension AppState {
