@@ -76,7 +76,7 @@
 // Download Preference Pane
 "Downloads" = "Downloads";
 "DataSource" = "Datenquelle";
-"DataSourceDescription" = "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitsgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten.";
+"DataSourceDescription" = "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten.";
 "Downloader" = "Downloader";
 "DownloaderDescription" = "aria2 verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Es ist zusammen mit seinem Quellcode in Xcode enthalten, um seiner GPLv2-Lizenz nachzukommen.\n\nURLSession ist Apples Standard-API für URL-Requests.";
 
@@ -163,7 +163,7 @@
 "Alert.Uninstall.Error.Message.FileNotFound" = "Datei \"%@\" konnte nicht gefunden werden.";
 
 // Cancel Install
-"Alert.CancelInstall.Title" = "Bist du sicher, dass Du die installation von Xcode %@ anhalten möchtest?";
+"Alert.CancelInstall.Title" = "Bist du sicher, dass Du die Installation von Xcode %@ anhalten möchtest?";
 "Alert.CancelInstall.Message" = "Jeglicher Fortschritt wird verworfen.";
 "Alert.CancelInstall.PrimaryButton" = "Installation anhalten";
 
@@ -173,7 +173,7 @@
 "Alert.PrivilegedHelper.Error.Title" = "Installation des Helfers nicht möglich";
 
 // Min MacOS Supported
-"Alert.MinSupported.Title" = "Minimalanforderungen nicht erfülltt";
+"Alert.MinSupported.Title" = "Minimalanforderungen nicht erfüllt";
 "Alert.MinSupported.Message" = "Xcode %@ erfordert MacOS %@ aber es läuft nur MacOS %@. Möchtest Du es trotzdem installieren?";
 
 // Install
