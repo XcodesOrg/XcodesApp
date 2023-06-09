@@ -225,7 +225,7 @@
 "Notification.FinishedInstalling" = "Installation beendet";
 
 
-"HelperClient.error" = "Unable to communicate with privileged helper.";
+"HelperClient.error" = "Kommunikation mit privilegiertem Helfer nicht möglich.";
 ///++
 // Notifications
 "Notification.NewXcodeVersion.Title" = "Neue Xcode-Versionen";
