@@ -87,7 +87,7 @@
 "Change" = "Ändern";
 "Active/Select" = "Aktiv/Auswählen";
 "InstallDirectory" = "Installationsverzeichnis";
-"InstallPathDescription" = "Xcodes sucht and installiert in ein einzelnes Verzeichnis. Standard (und empfohlen beizubehalten) ist /Applications. Änderungen am Speicherort von Xcode können dazu führen, dass andere Apps/Dienste aufhören zu funktionieren. ";
+"InstallPathDescription" = "Xcodes sucht and installiert in ein einzelnes Verzeichnis. Standard (und empfohlen beizubehalten) ist /Programme. Änderungen am Speicherort von Xcode können dazu führen, dass andere Apps/Dienste aufhören zu funktionieren. ";
 
 "OnSelectDoNothing" = "Name beibehalten als Xcode-X.X.X.app";
 "OnSelectDoNothingDescription" = "Bei Auswahl wird der Name mit Version beibehalten, z. B. Xcode-13.4.1.app";
@@ -174,7 +174,7 @@
 
 // Min MacOS Supported
 "Alert.MinSupported.Title" = "Minimalanforderungen nicht erfüllt";
-"Alert.MinSupported.Message" = "Xcode %@ erfordert MacOS %@ aber es läuft nur MacOS %@. Möchtest Du es trotzdem installieren?";
+"Alert.MinSupported.Message" = "Xcode %@ erfordert macOS %@ aber es läuft nur macOS %@. Möchtest Du es trotzdem installieren?";
 
 // Install
 "Alert.Install.Error.Title" = "Installation von Xcode nicht möglich";
