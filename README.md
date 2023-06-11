@@ -9,7 +9,7 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 ![](screenshot_light.png#gh-light-mode-only)
 ![](screenshot_dark.png#gh-dark-mode-only)
 
-### :tada: Announcment
+### :tada: Announcement
 
 XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 
