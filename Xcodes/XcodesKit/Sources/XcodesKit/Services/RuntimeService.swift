@@ -38,17 +38,19 @@ public struct RuntimeService {
     
     /// Loops through `/Library/Developer/CoreSimulator/images/images.plist` which contains a list of downloaded Simuator Runtimes
     /// This is different then using `simctl` (`installedRuntimes()`) which only returns the installed runtimes for the selected xcode version.
-    public func localInstalledRuntimes() async throws -> [CoreSimulatorRuntimeInfo] {
+    public func localInstalledRuntimes() async throws -> [CoreSimulatorImage] {
         guard let path = Path("/Library/Developer/CoreSimulator/images/images.plist") else { throw "Could not find images.plist for CoreSimulators" }
         guard let infoPlistData = FileManager.default.contents(atPath: path.string) else { throw "Could not get data from \(path.string)" }
         
         do {
             let infoPlist: CoreSimulatorPlist = try PropertyListDecoder().decode(CoreSimulatorPlist.self, from: infoPlistData)
-            return infoPlist.images.map { $0.runtimeInfo }
+            return infoPlist.images
         } catch {
             throw error
         }
     }
+    
+    
 
 }
 

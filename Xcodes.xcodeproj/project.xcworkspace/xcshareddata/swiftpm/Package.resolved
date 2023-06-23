@@ -23,8 +23,8 @@
         "package": "XcodeReleases",
         "repositoryURL": "https://github.com/xcodereleases/data",
         "state": {
-          "branch": null,
-          "revision": "b47228c688b608e34b3b84079ab6052a24c7a981",
+          "branch": "main",
+          "revision": "a43ad89e536d7a3da525fcc23fb182c37b756ecc",
           "version": null
         }
       },

@@ -1054,7 +1054,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
@@ -1286,7 +1286,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Xcodes/Resources/Info.plist;
@@ -1295,7 +1295,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1310,7 +1310,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Xcodes/Resources/Info.plist;
@@ -1319,7 +1319,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.10.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
 			};
@@ -1417,8 +1417,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/xcodereleases/data";
 			requirement = {
-				kind = revision;
-				revision = b47228c688b608e34b3b84079ab6052a24c7a981;
+				branch = main;
+				kind = branch;
 			};
 		};
 		CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */ = {

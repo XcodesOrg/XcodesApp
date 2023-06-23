@@ -466,6 +466,15 @@ extension AppState {
             let xcode = self.allXcodes[index]
             Current.notificationManager.scheduleNotification(title: xcode.id.appleDescription, body: step.description, category: .normal)
         }
+    }w    func setInstallationStep(of runtime: DownloadableRuntime, to step: InstallationStep) {
+        DispatchQueue.main.async {
+            
+            guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
+            self.downloadableRuntimes[index].installState = .installing(step)
+            
+        //    let xcode = self.allXcodes[index]
+           // Current.notificationManager.scheduleNotification(title: xcode.id.appleDescription, body: step.description, category: .normal)
+        }
     }
 }
 

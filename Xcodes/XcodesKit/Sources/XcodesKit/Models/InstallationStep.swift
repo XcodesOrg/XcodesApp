@@ -20,7 +20,7 @@ public enum InstallationStep: Equatable, CustomStringConvertible {
         "(\(stepNumber)/\(stepCount)) \(message)"
     }
 
-    var message: String {
+    public var message: String {
         switch self {
         case .downloading:
             return localizeString("Downloading")
@@ -37,7 +37,7 @@ public enum InstallationStep: Equatable, CustomStringConvertible {
         }
     }
 
-    var stepNumber: Int {
+    public var stepNumber: Int {
         switch self {
         case .downloading:      return 1
         case .unarchiving:      return 2
@@ -48,7 +48,7 @@ public enum InstallationStep: Equatable, CustomStringConvertible {
         }
     }
 
-    var stepCount: Int { 6 }
+    public var stepCount: Int { 6 }
 }
 func localizeString(_ key: String, comment: String = "") -> String {
     if #available(macOS 12, *) {

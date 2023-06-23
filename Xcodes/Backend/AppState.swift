@@ -105,12 +105,13 @@ class AppState: ObservableObject {
     // MARK: - Runtimes
     
     @Published var downloadableRuntimes: [DownloadableRuntime] = []
-    @Published var installedRuntimes: [CoreSimulatorRuntimeInfo] = []
+    @Published var installedRuntimes: [CoreSimulatorImage] = []
 
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
     private var installationPublishers: [Version: AnyCancellable] = [:]
+    internal var runtimePublishers: [String: AnyCancellable] = [:]
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
     private var autoInstallTimer: Timer?
@@ -148,6 +149,7 @@ class AppState: ObservableObject {
         checkIfHelperIsInstalled()
         setupAutoInstallTimer()
         setupDefaults()
+        updateInstalledRuntimes()
     }
     
     func setupDefaults() {
@@ -175,7 +177,11 @@ class AppState: ObservableObject {
     func validateADCSession(path: String) -> AnyPublisher<Void, Error> {
         return Current.network.dataTask(with: URLRequest.downloadADCAuth(path: path))
             .receive(on: DispatchQueue.main)
-            .tryMap { _ in
+            .tryMap { result -> Void in
+                let httpResponse = result.response as! HTTPURLResponse
+                if httpResponse.statusCode == 401 {
+                    throw AuthenticationError.notAuthorized
+                }
             }
             .eraseToAnyPublisher()
     }
@@ -796,16 +802,27 @@ class AppState: ObservableObject {
     func getRunTimes(xcode: Xcode) -> [DownloadableRuntime] {
      
         let builds = xcode.sdks?.allBuilds()
-            
-        let runtime = builds?.flatMap { sdkBuild in
+        
+        let runtimes: [DownloadableRuntime]? = builds?.flatMap { sdkBuild in
             downloadableRuntimes.filter {
-                $0.simulatorVersion.buildUpdate == sdkBuild
+                $0.sdkBuildUpdate == sdkBuild
             }
         }
-            // appState.installedRuntimes has a list of builds that user has installed.
-            
-        return runtime ?? []
+        
+        let updatedRuntimes = runtimes?.map { runtime in
+            var updatedRuntime = runtime
+            if let coreSimulatorInfo = installedRuntimes.filter({ $0.runtimeInfo.build == runtime.sdkBuildUpdate }).first {
+                let url = URL(fileURLWithPath: coreSimulatorInfo.path["relative"]!)
+                updatedRuntime.installState = .installed(Path(url: url)!)
+            } else {
+                updatedRuntime.installState = .notInstalled
+            }
+            return updatedRuntime
+        }
+       
+        return updatedRuntimes ?? []
     }
+ 
     
     // MARK: - Private
     

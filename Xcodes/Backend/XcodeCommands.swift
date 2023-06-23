@@ -221,7 +221,7 @@ struct DownloadRuntimeButton: View {
     
     private func install() {
         guard let runtime = runtime else { return }
-        // appState.checkMinVersionAndInstall(id: xcode.id)
+        appState.downloadRuntime(runtime: runtime)
     }
 }
 

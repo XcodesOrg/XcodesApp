@@ -1,4 +1,5 @@
 import SwiftUI
+import XcodesKit
 
 struct InstallationStepDetailView: View {
     let installationStep: InstallationStep

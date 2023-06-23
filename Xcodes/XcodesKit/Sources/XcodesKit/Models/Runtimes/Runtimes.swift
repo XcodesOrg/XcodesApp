@@ -21,9 +21,16 @@ public struct DownloadableRuntime: Codable {
     public let hostRequirements: HostRequirements?
     public let name: String
     public let authentication: Authentication?
+    public var url: URL {
+        return URL(string: source)!
+    }
+    public var downloadPath: String {
+        url.path
+    }
     
     // dynamically updated - not decoded
     public var installState: InstallState = .notInstalled
+    public var sdkBuildUpdate: String?
     
     enum CodingKeys: CodingKey {
         case category
@@ -38,6 +45,7 @@ public struct DownloadableRuntime: Codable {
         case hostRequirements
         case name
         case authentication
+        case sdkBuildUpdate
     }
 
     var betaNumber: Int? {
@@ -108,13 +116,15 @@ extension DownloadableRuntime {
         case macOS = "com.apple.platform.macosx"
         case watchOS = "com.apple.platform.watchos"
         case tvOS = "com.apple.platform.appletvos"
-
+        case visionOS = "com.apple.platform.xros"
+        
         var order: Int {
             switch self {
                 case .iOS: return 1
                 case .macOS: return 2
                 case .watchOS: return 3
                 case .tvOS: return 4
+                case .visionOS: return 5
             }
         }
 
@@ -124,6 +134,7 @@ extension DownloadableRuntime {
                 case .macOS: return "macOS"
                 case .watchOS: return "watchOS"
                 case .tvOS: return "tvOS"
+                case .visionOS: return "visionOS"
             }
         }
     }
@@ -156,6 +167,16 @@ extension InstalledRuntime {
         case tvOS = "com.apple.platform.appletvsimulator"
         case iOS = "com.apple.platform.iphonesimulator"
         case watchOS = "com.apple.platform.watchsimulator"
+        case visionOS = "com.apple.platform.xrsimulator"
+        
+        var asPlatformOS: DownloadableRuntime.Platform {
+            switch self {
+                case .watchOS: return .watchOS
+                case .iOS: return .iOS
+                case .tvOS: return .tvOS
+                case .visionOS: return .visionOS
+            }
+        }
     }
 }
 

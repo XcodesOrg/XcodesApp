@@ -257,13 +257,27 @@ struct InfoPane: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             ForEach(runtimes, id: \.simulatorVersion.buildUpdate) { runtime in
-                HStack {
-                    Text("\(runtime.visibleIdentifier)")
-                        .font(.subheadline)
-                    Spacer()
-                    Text(runtime.downloadFileSizeString)
-                        .font(.subheadline)
-                    DownloadRuntimeButton(runtime: runtime)
+                VStack {
+                    HStack {
+                        Text("\(runtime.visibleIdentifier)")
+                            .font(.subheadline)
+                        Spacer()
+                        Text(runtime.downloadFileSizeString)
+                            .font(.subheadline)
+                        DownloadRuntimeButton(runtime: runtime)
+                    }
+                    switch runtime.installState {
+                        
+                  
+                    case .notInstalled:
+                        Text("NOT INSTALLED")
+                    case .installing(let installationStep):
+                        Text("INSTALLING")
+                        InstallationStepDetailView(installationStep: installationStep)
+                            .fixedSize(horizontal: false, vertical: true)
+                    case .installed(let path):
+                        Text(path.string)
+                    }
                 }
                
             }

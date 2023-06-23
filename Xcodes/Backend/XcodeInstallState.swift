@@ -1,5 +1,6 @@
 import Foundation
 import Path
+import XcodesKit
 
 enum XcodeInstallState: Equatable {
     case notInstalled

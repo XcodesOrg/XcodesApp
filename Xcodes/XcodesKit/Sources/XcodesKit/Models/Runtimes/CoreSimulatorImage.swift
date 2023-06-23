@@ -13,6 +13,7 @@ public struct CoreSimulatorPlist: Decodable {
 
 public struct CoreSimulatorImage: Decodable {
     public let uuid: String
+    public let path: [String: String]
     public let runtimeInfo: CoreSimulatorRuntimeInfo
 }
 

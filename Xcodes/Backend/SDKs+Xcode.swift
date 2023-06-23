@@ -26,6 +26,9 @@ extension SDKs {
         if let watchOS = self.watchOS?.compactMap({ $0.build }) {
             buildNumbers += watchOS
         }
+        if let visionOS = self.visionOS?.compactMap({ $0.build }) {
+            buildNumbers += visionOS
+        }
         
         return buildNumbers
     }
