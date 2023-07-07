@@ -32,7 +32,8 @@ struct MainToolbarModifier: ViewModifier {
                 switch category {
                 case .all: category = .release
                 case .release: category = .beta
-                case .beta: category = .all
+                case .beta: category = .releasePlusNewBetas
+                case .releasePlusNewBetas: category = .all
                 }
             }) {
                 switch category {
@@ -55,6 +56,16 @@ struct MainToolbarModifier: ViewModifier {
                             .foregroundColor(.accentColor)
                     } else {
                         Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleOnlyLabelStyle())
+                            .foregroundColor(.accentColor)
+                    }
+                case .releasePlusBeta:
+                    if #available(macOS 11.3, *) {
+                        Label("ReleasePlusBetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleAndIconLabelStyle())
+                            .foregroundColor(.accentColor)
+                    } else {
+                        Label("ReleasePlusBetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .labelStyle(TitleOnlyLabelStyle())
                             .foregroundColor(.accentColor)
                     }

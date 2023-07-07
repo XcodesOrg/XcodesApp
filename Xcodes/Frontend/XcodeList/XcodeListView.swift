@@ -25,6 +25,15 @@ struct XcodeListView: View {
             xcodes = appState.allXcodes.filter { $0.version.isNotPrerelease }
         case .beta:
             xcodes = appState.allXcodes.filter { $0.version.isPrerelease }
+        case .releasePlusNewBetas:
+            let releases = Set(
+                appState.allXcodes
+                    .filter(\.version.isNotPrerelease)
+                    .map { $0.version.withoutIdentifiers() }
+            )
+            xcodes = appState.allXcodes.filter {
+                $0.version.isNotPrerelease || !releases.contains($0.version.withoutIdentifiers())
+            }
         }
         
         if !searchText.isEmpty {

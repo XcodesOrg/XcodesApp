@@ -144,6 +144,8 @@
 "ReleaseOnly" = "Release only";
 "Beta" = "Beta";
 "BetaOnly" = "Beta only";
+"ReleasePlusNewBetas" = "Release & New Betas";
+"ReleasePlusNewBetasOnly" = "Release & New Betas Only";
 "Filter" = "Filter";
 "FilterAvailableDescription" = "Filter available versions";
 "FilterInstalledDescription" = "Filter installed versions";
