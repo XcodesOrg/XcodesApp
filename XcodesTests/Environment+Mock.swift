@@ -68,6 +68,11 @@ extension Network {
                     .setFailureType(to: Error.self)
                     .eraseToAnyPublisher()
             ) 
+        },
+        validateSession: {
+            return Just(())
+                .setFailureType(to: Error.self)
+                .eraseToAnyPublisher()
         }
     )
 }

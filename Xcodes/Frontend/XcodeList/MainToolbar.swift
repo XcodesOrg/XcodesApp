@@ -3,6 +3,7 @@ import SwiftUI
 struct MainToolbarModifier: ViewModifier {
     @EnvironmentObject var appState: AppState
     @Binding var category: XcodeListCategory
+    @Binding var isInstalledOnly: Bool
     @Binding var isShowingInfoPane: Bool
     @Binding var searchText: String
     
@@ -12,12 +13,12 @@ struct MainToolbarModifier: ViewModifier {
     }
 
     private var toolbar: some ToolbarContent {
-        ToolbarItemGroup(placement: .status) {
+        ToolbarItemGroup {
             Button(action: { appState.presentedSheet = .signIn }, label: {
                 Label("Login", systemImage: "person.circle")
             })
-            .help("Login")
-
+            .help("LoginDescription")
+            
             ProgressButton(
                 isInProgress: appState.isUpdating, 
                 action: appState.update
@@ -25,23 +26,54 @@ struct MainToolbarModifier: ViewModifier {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }
             .keyboardShortcut(KeyEquivalent("r"))
-            .help("Refresh")
+            .help("RefreshDescription")
             
             Button(action: {
                 switch category {
-                case .all: category = .installed
-                case .installed: category = .all
+                case .all: category = .release
+                case .release: category = .beta
+                case .beta: category = .all
                 }
             }) {
                 switch category {
                 case .all:
-                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle")
-                case .installed:
-                    Label("Filter", systemImage: "line.horizontal.3.decrease.circle.fill")
-                        .foregroundColor(.accentColor)
+                    Label("All", systemImage: "line.horizontal.3.decrease.circle")
+                case .release:
+                    if #available(macOS 11.3, *) {
+                        Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleAndIconLabelStyle())
+                            .foregroundColor(.accentColor)
+                    } else {
+                        Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleOnlyLabelStyle())
+                            .foregroundColor(.accentColor)
+                    }
+                case .beta:
+                    if #available(macOS 11.3, *) {
+                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleAndIconLabelStyle())
+                            .foregroundColor(.accentColor)
+                    } else {
+                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .labelStyle(TitleOnlyLabelStyle())
+                            .foregroundColor(.accentColor)
+                    }
                 }
             }
-            .help("Filter installed versions")
+            .help("FilterAvailableDescription")
+            
+            Button(action: {
+                isInstalledOnly.toggle()
+            }) {
+                if isInstalledOnly {
+                    Label("Filter", systemImage: "arrow.down.app.fill")
+                        .foregroundColor(.accentColor)
+                } else {
+                    Label("Filter", systemImage: "arrow.down.app")
+                        
+                }
+            }
+            .help("FilterInstalledDescription")
             
             Button(action: { isShowingInfoPane.toggle() }) {
                 if isShowingInfoPane {
@@ -52,12 +84,23 @@ struct MainToolbarModifier: ViewModifier {
                 }
             }
             .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
-            .help("Show or hide the info pane")
-
-            TextField("Search...", text: $searchText)
+            .help("InfoDescription")
+            
+            Button(action: {
+                if #available(macOS 13, *) {
+                    NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                } else {
+                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                }   
+            }, label: {
+                Label("Preferences", systemImage: "gearshape")
+            })
+            .help("PreferencesDescription")
+            
+            TextField("Search", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .frame(width: 200)
-                .help("Search list")
+                .help("SearchDescription")
         }
     }
 }
@@ -65,12 +108,14 @@ struct MainToolbarModifier: ViewModifier {
 extension View {
     func mainToolbar(
         category: Binding<XcodeListCategory>,
+        isInstalledOnly: Binding<Bool>,
         isShowingInfoPane: Binding<Bool>,
         searchText: Binding<String>
     ) -> some View {
         self.modifier(
             MainToolbarModifier(
                 category: category,
+                isInstalledOnly: isInstalledOnly,
                 isShowingInfoPane: isShowingInfoPane,
                 searchText: searchText
             )

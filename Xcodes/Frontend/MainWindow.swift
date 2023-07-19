@@ -12,16 +12,17 @@ struct MainWindow: View {
     // FB8979533 SceneStorage doesn't restore value after app is quit by user
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
+    @AppStorage("isInstalledOnly") private var isInstalledOnly = false
   
     var body: some View {
         HSplitView {
-            XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category)
+            XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
                 .frame(minWidth: 300)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
-                    Alert(title: Text("Uninstall Xcode \(xcode.description)?"),
-                          message: Text("It will be moved to the Trash, but won't be emptied."),
-                          primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(id: xcode.id) }),
+                    Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
+                          message: Text("Alert.Uninstall.Message"),
+                          primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(xcode: xcode) }),
                           secondaryButton: .cancel(Text("Cancel")))
                 }
             
@@ -32,9 +33,12 @@ struct MainWindow: View {
         }
         .mainToolbar(
             category: $category,
+            isInstalledOnly: $isInstalledOnly,
             isShowingInfoPane: $isShowingInfoPane,
             searchText: $searchText
         )
+        .bottomStatusBar()
+        .padding([.top], 0)
         .navigationSubtitle(subtitleText)
         .frame(minWidth: 600, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
         .emittingError($appState.error, recoveryHandler: { _ in })
@@ -43,8 +47,8 @@ struct MainWindow: View {
             case .signIn:
                 signInView()
                     .environmentObject(appState)
-            case .twoFactor:
-                secondFactorView(appState.secondFactorData!)
+            case .twoFactor(let secondFactorData):
+                secondFactorView(secondFactorData)
                     .environmentObject(appState)
             }
         }
@@ -58,21 +62,21 @@ struct MainWindow: View {
     
     private var subtitleText: Text {
         if let lastUpdated = lastUpdated.map(Date.init(timeIntervalSince1970:)) {
-            return Text("Updated at \(lastUpdated, style: .date) \(lastUpdated, style: .time)")
+            return Text("\(localizeString("UpdatedAt")) \(lastUpdated, style: .date) \(lastUpdated, style: .time)")
         } else {
             return Text("")
         }
     }
     
     @ViewBuilder
-    private func secondFactorView(_ secondFactorData: AppState.SecondFactorData) -> some View {
+    private func secondFactorView(_ secondFactorData: XcodesSheet.SecondFactorData) -> some View {
         switch secondFactorData.option {
         case .codeSent:
-            SignIn2FAView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+            SignIn2FAView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsSent(let trustedPhoneNumber):
-            SignInSMSView(isPresented: $appState.secondFactorData.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+            SignInSMSView(isPresented: $appState.presentedSheet.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsPendingChoice:
-            SignInPhoneListView(isPresented: $appState.secondFactorData.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+            SignInPhoneListView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         }
     }
 
@@ -99,10 +103,10 @@ struct MainWindow: View {
         switch alertType {
         case let .cancelInstall(xcode):
             return Alert(
-                title: Text("Are you sure you want to stop the installation of Xcode \(xcode.description)?"),
-                  message: Text("Any progress will be discarded."),
+                title: Text(String(format: localizeString("Alert.CancelInstall.Title"), xcode.description)),
+                  message: Text("Alert.CancelInstall.Message"),
                   primaryButton: .destructive(
-                    Text("Stop Installation"),
+                    Text("Alert.CancelInstall.PrimaryButton"),
                     action: {
                         self.appState.cancelInstall(id: xcode.id)
                     }
@@ -111,8 +115,8 @@ struct MainWindow: View {
             )
         case .privilegedHelper:
             return Alert(
-                title: Text("Privileged Helper"),
-                message: Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it."),
+                title: Text("Alert.PrivilegedHelper.Title"),
+                message: Text("Alert.PrivilegedHelper.Message"),
                 primaryButton: .default(Text("Install"), action: {
                     // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
                     // We need to capture it to be invoked after that happens.
@@ -145,9 +149,21 @@ struct MainWindow: View {
                 title: Text(title),
                 message: Text(message),
                 dismissButton: .default(
-                    Text("Ok"),
+                    Text("OK"),
                     action: { appState.presentedAlert = nil }
                 )
+            )
+        case let .checkMinSupportedVersion(xcode, deviceVersion):
+            return Alert(
+                title: Text("Alert.MinSupported.Title"),
+                message: Text(String(format: localizeString("Alert.MinSupported.Message"), xcode.version.descriptionWithoutBuildMetadata, xcode.requiredMacOSVersion ?? "", deviceVersion)),
+                  primaryButton: .default(
+                    Text("Install"),
+                    action: {
+                        self.appState.install(id: xcode.version)
+                    }
+                  ),
+                  secondaryButton: .cancel(Text("Cancel"))
             )
         }
     }

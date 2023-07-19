@@ -1,63 +1,140 @@
 import AppleAPI
 import SwiftUI
+import Path
 
 struct AdvancedPreferencePane: View {
     @EnvironmentObject var appState: AppState
-    @AppStorage("dataSource") var dataSource: DataSource = .xcodeReleases
-    @AppStorage("downloader") var downloader: Downloader = .aria2
     
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            GroupBox(label: Text("Data Source")) {
+            
+            GroupBox(label: Text("InstallDirectory")) {
                 VStack(alignment: .leading) {
-                    Picker("Data Source", selection: $dataSource) {
-                        ForEach(DataSource.allCases) { dataSource in
-                            Text(dataSource.description)
-                                .tag(dataSource)
+                    HStack(alignment: .top, spacing: 5) {
+                        Text(appState.installPath).font(.footnote)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .lineLimit(2)
+                        Button(action: { appState.reveal(path: appState.installPath) }) {
+                            Image(systemName: "arrow.right.circle.fill")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .help("RevealInFinder")
+                        .fixedSize()
+                    }
+                    Button("Change") {
+                        let panel = NSOpenPanel()
+                        panel.allowsMultipleSelection = false
+                        panel.canChooseDirectories = true
+                        panel.canChooseFiles = false
+                        panel.canCreateDirectories = true
+                        panel.allowedContentTypes = [.folder]
+                        panel.directoryURL = URL(fileURLWithPath: appState.installPath)
+                        
+                        if panel.runModal() == .OK {
+                            
+                            guard let pathURL = panel.url, let path = Path(url: pathURL) else { return }
+                            self.appState.installPath = path.string
                         }
                     }
-                    .labelsHidden()
-                    
-                    AttributedText(dataSourceFootnote)
+                    Text("InstallPathDescription")
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-              
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             
-            GroupBox(label: Text("Downloader")) {
+            GroupBox(label: Text("LocalCachePath")) {
                 VStack(alignment: .leading) {
-                    Picker("Downloader", selection: $downloader) {
-                        ForEach(Downloader.allCases) { downloader in
-                            Text(downloader.description)
-                                .tag(downloader)
+                    HStack(alignment: .top, spacing: 5) {
+                        Text(appState.localPath).font(.footnote)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .lineLimit(2)
+                        Button(action: { appState.reveal(path: appState.localPath) }) {
+                            Image(systemName: "arrow.right.circle.fill")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                        .help("RevealInFinder")
+                        .fixedSize()
+                    }
+                    Button("Change") {
+                        let panel = NSOpenPanel()
+                        panel.allowsMultipleSelection = false
+                        panel.canChooseDirectories = true
+                        panel.canChooseFiles = false
+                        panel.canCreateDirectories = true
+                        panel.allowedContentTypes = [.folder]
+                        panel.directoryURL = URL(fileURLWithPath: appState.localPath)
+                        
+                        if panel.runModal() == .OK {
+                            
+                            guard let pathURL = panel.url, let path = Path(url: pathURL) else { return }
+                            self.appState.localPath = path.string
                         }
                     }
-                    .labelsHidden()
-                    
-                    AttributedText(downloaderFootnote)
+                    Text("LocalCachePathDescription")
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             
-            GroupBox(label: Text("Privileged Helper")) {
+            GroupBox(label: Text("Active/Select")) {
+                VStack(alignment: .leading) {
+                    Picker("OnSelect", selection: $appState.onSelectActionType) {
+                        
+                        Text(SelectedActionType.none.description)
+                            .tag(SelectedActionType.none)
+                        Text(SelectedActionType.rename.description)
+                            .tag(SelectedActionType.rename)
+                    }
+                    .labelsHidden()
+                    .pickerStyle(.inline)
+                    
+                    Text(appState.onSelectActionType.detailedDescription)
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                        .frame(height: 20)
+                    
+                    Toggle("AutomaticallyCreateSymbolicLink", isOn: $appState.createSymLinkOnSelect)
+                        .disabled(appState.createSymLinkOnSelectDisabled)
+                    Text("AutomaticallyCreateSymbolicLinkDescription")
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .fixedSize(horizontal: false, vertical: true)
+            }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
+            
+            if Hardware.isAppleSilicon() {
+                GroupBox(label: Text("Apple Silicon")) {
+                    Toggle("ShowOpenInRosetta", isOn: $appState.showOpenInRosettaOption)
+                        .disabled(appState.createSymLinkOnSelectDisabled)
+                    Text("ShowOpenInRosettaDescription")
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .groupBoxStyle(PreferencesGroupBoxStyle())
+            }
+            
+            GroupBox(label: Text("PrivilegedHelper")) {
                 VStack(alignment: .leading, spacing: 8) {
                     switch appState.helperInstallState {
                     case .unknown:
                         ProgressView()
                             .scaleEffect(0.5, anchor: .center)
                     case .installed:
-                        Text("Helper is installed")
+                        Text("HelperInstalled")
                     case .notInstalled:
                         HStack {
-                            Text("Helper is not installed")
-                            Button("Install helper") {
+                            Text("HelperNotInstalled")
+                            Button("InstallHelper") {
                                 appState.installHelperIfNecessary()
                             }
                         }
                     }
                     
-                    Text("Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it.")
+                    Text("PrivilegedHelperDescription")
                         .font(.footnote)
                         .fixedSize(horizontal: false, vertical: true)
                     
@@ -66,41 +143,6 @@ struct AdvancedPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .frame(width: 400)
-    }
-    
-    private var dataSourceFootnote: NSAttributedString {
-        let string = """
-        The Apple data source scrapes the Apple Developer website. It will always show the latest releases that are available, but is more fragile.
-
-        Xcode Releases is an unofficial list of Xcode releases. It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website.
-        """
-        let attributedString = NSMutableAttributedString(
-            string: string, 
-            attributes: [
-                .font: NSFont.preferredFont(forTextStyle: .footnote, options: [:]),
-                .foregroundColor: NSColor.labelColor
-            ]
-        )
-        attributedString.addAttribute(.link, value: URL(string: "https://xcodereleases.com")!, range: NSRange(string.range(of: "Xcode Releases")!, in: string))
-        return attributedString
-    }
-    
-    private var downloaderFootnote: NSAttributedString {
-        let string = """
-        aria2 uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.
-
-        URLSession is the default Apple API for making URL requests.
-        """
-        let attributedString = NSMutableAttributedString(
-            string: string, 
-            attributes: [
-                .font: NSFont.preferredFont(forTextStyle: .footnote, options: [:]),
-                .foregroundColor: NSColor.labelColor
-            ]
-        )
-        attributedString.addAttribute(.link, value: URL(string: "https://github.com/aria2/aria2")!, range: NSRange(string.range(of: "aria2")!, in: string))
-        return attributedString
     }
 }
 
@@ -109,7 +151,9 @@ struct AdvancedPreferencePane_Previews: PreviewProvider {
         Group {
             AdvancedPreferencePane()
                 .environmentObject(AppState())
+                .frame(maxWidth: 500)
         }
+        .frame(width: 500, height: 700, alignment: .center)
     }
 }
 

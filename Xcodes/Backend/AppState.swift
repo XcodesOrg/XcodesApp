@@ -10,18 +10,18 @@ import os.log
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
-    
+   
     // MARK: - Published Properties
     
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
             if newValue.count > availableXcodes.count && availableXcodes.count != 0 {
-                Current.notificationManager.scheduleNotification(title: "New Xcode versions", body: "New Xcode versions are available to download.", category: .normal)
+                Current.notificationManager.scheduleNotification(title: localizeString("Notification.NewXcodeVersion.Title"), body: localizeString("Notification.NewXcodeVersion.Body"), category: .normal)
             }
             updateAllXcodes(
                 availableXcodes: newValue, 
-                installedXcodes: Current.files.installedXcodes(Path.root/"Applications"), 
+                installedXcodes: Current.files.installedXcodes(Path.installDirectory), 
                 selectedXcodePath: selectedXcodePath
             )
         }
@@ -34,7 +34,7 @@ class AppState: ObservableObject {
         willSet {
             updateAllXcodes(
                 availableXcodes: availableXcodes,
-                installedXcodes: Current.files.installedXcodes(Path.root/"Applications"), 
+                installedXcodes: Current.files.installedXcodes(Path.installDirectory),
                 selectedXcodePath: newValue
             )
         }
@@ -43,7 +43,6 @@ class AppState: ObservableObject {
     var isUpdating: Bool { updatePublisher != nil }
     @Published var presentedSheet: XcodesSheet? = nil
     @Published var isProcessingAuthRequest = false
-    @Published var secondFactorData: SecondFactorData?
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var presentedAlert: XcodesAlert?
     @Published var helperInstallState: HelperInstallState = .notInstalled
@@ -55,7 +54,51 @@ class AppState: ObservableObject {
 
     @Published var error: Error?
     @Published var authError: Error?
-
+    
+    // MARK: Advanced Preferences
+    @Published var localPath = "" {
+        didSet {
+            Current.defaults.set(localPath, forKey: "localPath")
+        }
+    }
+    
+    @Published var installPath = "" {
+        didSet {
+            Current.defaults.set(installPath, forKey: "installPath")
+        }
+    }
+    
+    @Published var unxipExperiment = false {
+        didSet {
+            Current.defaults.set(unxipExperiment, forKey: "unxipExperiment")
+        }
+    }
+    
+    @Published var createSymLinkOnSelect = false {
+        didSet {
+            Current.defaults.set(createSymLinkOnSelect, forKey: "createSymLinkOnSelect")
+        }
+    }
+    
+    var createSymLinkOnSelectDisabled: Bool {
+        return onSelectActionType == .rename
+    }
+    
+    @Published var onSelectActionType = SelectedActionType.none {
+        didSet {
+            Current.defaults.set(onSelectActionType.rawValue, forKey: "onSelectActionType")
+            
+            if onSelectActionType == .rename {
+                createSymLinkOnSelect = false
+            }
+        }
+    }
+    
+    @Published var showOpenInRosettaOption = false {
+        didSet {
+            Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
+        }
+    }
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
@@ -77,6 +120,17 @@ class AppState: ObservableObject {
         savedUsername != nil
     }
     
+    var bottomStatusBarMessage: String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd/MM/yyyy"
+        let finishDate = formatter.date(from: "11/06/2022")
+        
+        if Date().compare(finishDate!) == .orderedAscending {
+            return String(format: localizeString("WWDC.Message"), "2022")
+        }
+        return ""
+    }
+    
     // MARK: - Init
     
     init() {
@@ -84,6 +138,16 @@ class AppState: ObservableObject {
         try? loadCachedAvailableXcodes()
         checkIfHelperIsInstalled()
         setupAutoInstallTimer()
+        setupDefaults()
+    }
+    
+    func setupDefaults() {
+        localPath = Current.defaults.string(forKey: "localPath") ?? Path.defaultXcodesApplicationSupport.string
+        unxipExperiment = Current.defaults.bool(forKey: "unxipExperiment") ?? false
+        createSymLinkOnSelect = Current.defaults.bool(forKey: "createSymLinkOnSelect") ?? false
+        onSelectActionType = SelectedActionType(rawValue: Current.defaults.string(forKey: "onSelectActionType") ?? "none") ?? .none
+        installPath = Current.defaults.string(forKey: "installPath") ?? Path.defaultInstallDirectory.string
+        showOpenInRosettaOption = Current.defaults.bool(forKey: "showOpenInRosettaOption") ?? false
     }
     
     // MARK: Timer
@@ -99,13 +163,23 @@ class AppState: ObservableObject {
     }
     // MARK: - Authentication
     
+    func validateADCSession(path: String) -> AnyPublisher<Void, Error> {
+        return Current.network.dataTask(with: URLRequest.downloadADCAuth(path: path))
+            .receive(on: DispatchQueue.main)
+            .tryMap { _ in
+            }
+            .eraseToAnyPublisher()
+    }
+    
     func validateSession() -> AnyPublisher<Void, Error> {
-        return client.validateSession()
+        
+        return Current.network.validateSession()
             .receive(on: DispatchQueue.main)
             .handleEvents(receiveCompletion: { completion in 
                 if case .failure = completion {
-                    self.authenticationState = .unauthenticated
-                    self.presentedSheet = .signIn
+                    // this is causing some awkwardness with showing an alert with the error and also popping up the sign in view
+                    // self.authenticationState = .unauthenticated
+                    // self.presentedSheet = .signIn
                 }
             })
             .eraseToAnyPublisher()
@@ -159,12 +233,11 @@ class AppState: ObservableObject {
     }
     
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
-        self.secondFactorData = SecondFactorData(
+        self.presentedSheet = .twoFactor(.init(
             option: option,
             authOptions: authOptions,
             sessionData: AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        )
-        self.presentedSheet = .twoFactor
+        ))
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
@@ -187,7 +260,11 @@ class AppState: ObservableObject {
     }
     
     func choosePhoneNumberForSMS(authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {
-        secondFactorData = SecondFactorData(option: .smsPendingChoice, authOptions: authOptions, sessionData: sessionData)
+        self.presentedSheet = .twoFactor(.init(
+            option: .smsPendingChoice,
+            authOptions: authOptions,
+            sessionData: sessionData
+        ))
     }
     
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
@@ -215,9 +292,8 @@ class AppState: ObservableObject {
             self.authError = error
         case .finished:
             switch self.authenticationState {
-            case .authenticated, .unauthenticated:
+                case .authenticated, .unauthenticated, .notAppleDeveloper:
                 self.presentedSheet = nil
-                self.secondFactorData = nil
             case let .waitingForSecondFactor(option, authOptions, sessionData):
                 self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
             }
@@ -257,7 +333,7 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
                         self.error = error
-                        self.presentedAlert = .generic(title: "Unable to install helper", message: error.legibleLocalizedDescription)
+                        self.presentedAlert = .generic(title: localizeString("Alert.PrivilegedHelper.Error.Title"), message: error.legibleLocalizedDescription)
                     }
                 }, 
                 receiveValue: {}
@@ -292,6 +368,29 @@ class AppState: ObservableObject {
     
     // MARK: - Install
     
+    func checkMinVersionAndInstall(id: Xcode.ID) {
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+        
+        // Check to see if users MacOS is supported
+        if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
+            let split = requiredMacOSVersion.components(separatedBy: ".").compactMap { Int($0) }
+            let xcodeMinimumMacOSVersion = OperatingSystemVersion(majorVersion: split[safe: 0] ?? 0, minorVersion: split[safe: 1] ?? 0, patchVersion: split[safe: 2] ?? 0)
+            
+            if !ProcessInfo.processInfo.isOperatingSystemAtLeast(xcodeMinimumMacOSVersion) {
+                // prompt
+                self.presentedAlert = .checkMinSupportedVersion(xcode: availableXcode, macOS: ProcessInfo.processInfo.operatingSystemVersion.versionString())
+                return
+            }
+        }
+        
+        switch self.dataSource {
+        case .apple:
+            install(id: id)
+        case .xcodeReleases:
+            install(id: id)
+        }
+    }
+    
     func install(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
 
@@ -303,7 +402,7 @@ class AppState: ObservableObject {
                 self.$authenticationState
                     .filter { state in
                         switch state {
-                        case .authenticated, .unauthenticated: return true
+                            case .authenticated, .unauthenticated, .notAppleDeveloper: return true
                         case .waitingForSecondFactor: return false
                         }
                     }
@@ -311,6 +410,9 @@ class AppState: ObservableObject {
                     .tryMap { state in
                         if state == .unauthenticated {
                             throw AuthenticationError.invalidSession
+                        }
+                        if state == .notAppleDeveloper {
+                            throw AuthenticationError.notDeveloperAppleId
                         }
                         return Void()
                     }
@@ -321,8 +423,18 @@ class AppState: ObservableObject {
                 // We need the cookies from its response in order to download Xcodes though,
                 // so perform it here first just to be sure.
                 Current.network.dataTask(with: URLRequest.downloads)
-                    .receive(on: DispatchQueue.main)
-                    .map { _ in Void() }
+                    .map(\.data)
+                    .decode(type: Downloads.self, decoder: configure(JSONDecoder()) {
+                        $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
+                    })
+                    .tryMap { downloads -> Void in
+                        if downloads.hasError {
+                            throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
+                        }
+                       if downloads.downloads == nil {
+                            throw AuthenticationError.invalidResult(resultString: localizeString("DownloadingError"))
+                        }
+                    }
                     .mapError { $0 as Error }
             }
             .flatMap { [unowned self] in
@@ -336,9 +448,34 @@ class AppState: ObservableObject {
                         // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
                         if error as? AuthenticationError != .invalidSession {
                             self.error = error
-                            self.presentedAlert = .generic(title: "Unable to install Xcode", message: error.legibleLocalizedDescription)
+                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
                         }
                         if let index = self.allXcodes.firstIndex(where: { $0.id == id }) { 
+                            self.allXcodes[index].installState = .notInstalled
+                        }
+                    }
+                },
+                receiveValue: { _ in }
+            )
+    }
+    
+    /// Skips using the username/password to log in to Apple, and simply gets a Auth Cookie used in downloading
+    /// As of Nov 2022 this was returning a 403 forbidden
+    func installWithoutLogin(id: Xcode.ID) {
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+        
+        installationPublishers[id] = self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2)
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { [unowned self] completion in
+                    self.installationPublishers[id] = nil
+                    if case let .failure(error) = completion {
+                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
+                        if error as? AuthenticationError != .invalidSession {
+                            self.error = error
+                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+                        }
+                        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) {
                             self.allXcodes[index].installState = .notInstalled
                         }
                     }
@@ -366,13 +503,13 @@ class AppState: ObservableObject {
     }
     
     // MARK: - Uninstall
-    func uninstall(id: Xcode.ID) {
+    func uninstall(xcode: Xcode) {
         guard
-            let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
+            let installedXcodePath = xcode.installedPath,
             uninstallPublisher == nil
         else { return }
         
-        uninstallPublisher = uninstallXcode(path: installedXcode.path)
+        uninstallPublisher = uninstallXcode(path: installedXcodePath)
             .flatMap { [unowned self] _ in
                 self.updateSelectedXcodePath()
             }
@@ -380,7 +517,7 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
                         self.error = error
-                        self.presentedAlert = .generic(title: "Unable to uninstall Xcode", message: error.legibleLocalizedDescription)
+                        self.presentedAlert = .generic(title: localizeString("Alert.Uninstall.Error.Title"), message: error.legibleLocalizedDescription)
                     }
                     self.uninstallPublisher = nil
                 },
@@ -388,10 +525,15 @@ class AppState: ObservableObject {
         )
     }
     
-    func reveal(id: Xcode.ID) {
+    func reveal(xcode: Xcode) {
         // TODO: show error if not
-        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
-        NSWorkspace.shared.activateFileViewerSelecting([installedXcode.path.url])
+        guard let installedXcodePath = xcode.installedPath else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([installedXcodePath.url])
+    }
+    
+    func reveal(path: String) {
+        let url = URL(fileURLWithPath: path)
+        NSWorkspace.shared.activateFileViewerSelecting([url])
     }
 
     /// Make an Xcode active, a.k.a select it, in the `xcode-select` sense.
@@ -404,26 +546,31 @@ class AppState: ObservableObject {
     /// If they consent to installing the helper then this method will be invoked again with  `shouldPrepareUserForHelperInstallation` set to false.
     /// This will install the helper and make the Xcode active.
     ///
-    /// - Parameter id: The identifier of the Xcode to make active.
+    /// - Parameter xcode: The Xcode to make active.
     /// - Parameter shouldPrepareUserForHelperInstallation: Whether the user should be presented with an alert preparing them for helper installation before making the Xcode version active.
-    func select(id: Xcode.ID, shouldPrepareUserForHelperInstallation: Bool = true) {
+    func select(xcode: Xcode, shouldPrepareUserForHelperInstallation: Bool = true) {
         guard helperInstallState == .installed || shouldPrepareUserForHelperInstallation == false else {
             isPreparingUserForActionRequiringHelper = { [unowned self] userConsented in
                 guard userConsented else { return }
-                self.select(id: id, shouldPrepareUserForHelperInstallation: false) 
+                self.select(xcode: xcode, shouldPrepareUserForHelperInstallation: false)
             }
             presentedAlert = .privilegedHelper
             return
         }
 
-        guard 
-            let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }),
+        guard
+            var installedXcodePath = xcode.installedPath,
             selectPublisher == nil
         else { return }
+       
+        if onSelectActionType == .rename {
+            guard let newDestinationXcodePath = renameToXcode(xcode: xcode) else { return }
+            installedXcodePath = newDestinationXcodePath
+        }
         
         selectPublisher = installHelperIfNecessary()
             .flatMap {
-                Current.helper.switchXcodePath(installedXcode.path.string)
+                Current.helper.switchXcodePath(installedXcodePath.string)
             }
             .flatMap { [unowned self] _ in
                 self.updateSelectedXcodePath()
@@ -432,7 +579,11 @@ class AppState: ObservableObject {
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
                         self.error = error
-                        self.presentedAlert = .generic(title: "Unable to select Xcode", message: error.legibleLocalizedDescription)
+                        self.presentedAlert = .generic(title: localizeString("Alert.Select.Error.Title"), message: error.legibleLocalizedDescription)
+                    } else {
+                        if self.createSymLinkOnSelect {
+                            createSymbolicLink(xcode: xcode)
+                        }
                     }
                     self.selectPublisher = nil
                 },
@@ -440,16 +591,100 @@ class AppState: ObservableObject {
             )
     }
     
-    func open(id: Xcode.ID) {
-        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
-        NSWorkspace.shared.openApplication(at: installedXcode.path.url, configuration: .init())
+    func open(xcode: Xcode, openInRosetta: Bool? = false) {
+        switch xcode.installState {
+        case let .installed(path):
+            let config = NSWorkspace.OpenConfiguration.init()
+            if (openInRosetta ?? false) {
+                config.architecture = CPU_TYPE_X86_64
+            }
+            config.allowsRunningApplicationSubstitution = false
+            NSWorkspace.shared.openApplication(at: path.url, configuration: config)
+        default:
+            Logger.appState.error("\(xcode.id) is not installed")
+            return
+        }
     }
     
-    func copyPath(id: Xcode.ID) {
-        guard let installedXcode = Current.files.installedXcodes(Path.root/"Applications").first(where: { $0.version == id }) else { return }
+    func copyPath(xcode: Xcode) {
+        guard let installedXcodePath = xcode.installedPath else { return }
+        
         NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
-        NSPasteboard.general.writeObjects([installedXcode.path.url as NSURL])
-        NSPasteboard.general.setString(installedXcode.path.string, forType: .string)
+        NSPasteboard.general.writeObjects([installedXcodePath.url as NSURL])
+        NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
+    }
+
+    func copyReleaseNote(xcode: Xcode) {
+      guard let url = xcode.releaseNotesURL else { return }
+      NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
+      NSPasteboard.general.writeObjects([url as NSURL])
+      NSPasteboard.general.setString(url.absoluteString, forType: .string)
+    }
+    
+    func createSymbolicLink(xcode: Xcode, isBeta: Bool = false) {
+        guard let installedXcodePath = xcode.installedPath else { return }
+        
+        let destinationPath: Path = Path.installDirectory/"Xcode\(isBeta ? "-Beta" : "").app"
+        
+        // does an Xcode.app file exist?
+        if FileManager.default.fileExists(atPath: destinationPath.string) {
+            do {
+                // if it's not a symlink, error because we don't want to delete an actual xcode.app file
+                let attributes: [FileAttributeKey : Any]? = try? FileManager.default.attributesOfItem(atPath: destinationPath.string)
+                
+                if attributes?[.type] as? FileAttributeType == FileAttributeType.typeSymbolicLink {
+                    try FileManager.default.removeItem(atPath: destinationPath.string)
+                    Logger.appState.info("Successfully deleted old symlink")
+                } else {
+                    self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: localizeString("Alert.SymLink.Message"))
+                    return
+                }
+            } catch {
+                self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.localizedDescription)
+            }
+        }
+        
+        do {
+            try FileManager.default.createSymbolicLink(atPath: destinationPath.string, withDestinationPath: installedXcodePath.string)
+            Logger.appState.info("Successfully created symbolic link with Xcode\(isBeta ? "-Beta": "").app")
+        } catch {
+            Logger.appState.error("Unable to create symbolic Link")
+            self.error = error
+            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+        }
+    }
+    
+    func renameToXcode(xcode: Xcode) -> Path? {
+        guard let installedXcodePath = xcode.installedPath else { return nil }
+        
+        let destinationPath: Path = Path.installDirectory/"Xcode.app"
+        
+        // rename any old named `Xcode.app` to the Xcodes versioned named files
+        if FileManager.default.fileExists(atPath: destinationPath.string) {
+            if let originalXcode = Current.files.installedXcode(destination: destinationPath) {
+                let newName = "Xcode-\(originalXcode.version.descriptionWithoutBuildMetadata).app"
+                Logger.appState.debug("Found Xcode.app - renaming back to \(newName)")
+                do {
+                    try destinationPath.rename(to: newName)
+                } catch {
+                    Logger.appState.error("Unable to create rename Xcode.app back to original")
+                    self.error = error
+                    // TODO UPDATE MY ERROR STRING
+                    self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+                }
+            }
+        }
+        // rename passed in xcode to xcode.app
+        Logger.appState.debug("Found Xcode.app - renaming back to Xcode.app")
+        do {
+            return try installedXcodePath.rename(to: "Xcode.app")
+        } catch {
+            Logger.appState.error("Unable to create rename Xcode.app back to original")
+            self.error = error
+            // TODO UPDATE MY ERROR STRING
+            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+        }
+        return nil
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {
@@ -580,10 +815,10 @@ class AppState: ObservableObject {
         var message: String
         var id: String { title + message }
     }
+}
 
-    struct SecondFactorData {
-        let option: TwoFactorOption
-        let authOptions: AuthOptionsResponse
-        let sessionData: AppleSessionData
+extension OperatingSystemVersion {
+    func versionString() -> String {
+        return String(majorVersion) + "." + String(minorVersion) + "." + String(patchVersion)
     }
 }

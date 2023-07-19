@@ -47,7 +47,7 @@ extension AppState {
                         // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
                         if error as? AuthenticationError != .invalidSession {
                             self.error = error
-                            self.presentedAlert = .generic(title: "Unable to update selected Xcode", message: error.legibleLocalizedDescription)
+                            self.presentedAlert = .generic(title: localizeString("Alert.Update.Error.Title"), message: error.legibleLocalizedDescription)
                         }
                     case .finished:
                         Current.defaults.setDate(Current.date(), forKey: "lastUpdated")
@@ -71,7 +71,12 @@ extension AppState {
     private func updateAvailableXcodes(from dataSource: DataSource) -> AnyPublisher<[AvailableXcode], Error> {
         switch dataSource {
         case .apple:
-            return signInIfNeeded() 
+            return signInIfNeeded()
+                .flatMap { [unowned self] in
+                    // this will check to see if the Apple ID is a valid Apple Developer or not.
+                    // If it's not, we can't use the Apple source to get xcode info.
+                    self.validateSession()
+                }
                 .flatMap { [unowned self] in self.releasedXcodes().combineLatest(self.prereleaseXcodes()) }
                 .receive(on: DispatchQueue.main)
                 .map { releasedXcodes, prereleaseXcodes in
@@ -125,15 +130,20 @@ extension AppState {
 extension AppState {
     // MARK: - Apple
     
-    private func releasedXcodes() -> AnyPublisher<[AvailableXcode], Error> {
+    private func releasedXcodes() -> AnyPublisher<[AvailableXcode], Swift.Error> {
         Current.network.dataTask(with: URLRequest.downloads)
             .map(\.data)
             .decode(type: Downloads.self, decoder: configure(JSONDecoder()) {
                 $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
             })
-            .map { downloads -> [AvailableXcode] in
-                let xcodes = downloads
-                    .downloads
+            .tryMap { downloads -> [AvailableXcode] in
+                if downloads.hasError {
+                    throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
+                }
+                guard let downloadList = downloads.downloads else {
+                    throw AuthenticationError.invalidResult(resultString: localizeString("DownloadingError"))
+                }
+                let xcodes = downloadList
                     .filter { $0.name.range(of: "^Xcode [0-9]", options: .regularExpression) != nil }
                     .compactMap { download -> AvailableXcode? in
                         let urlPrefix = URL(string: "https://download.developer.apple.com/")!

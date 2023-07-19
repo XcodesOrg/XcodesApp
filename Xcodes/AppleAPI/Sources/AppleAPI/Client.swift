@@ -14,11 +14,21 @@ public class Client {
         return Current.network.dataTask(with: URLRequest.itcServiceKey)
             .map(\.data)
             .decode(type: ServiceKeyResponse.self, decoder: JSONDecoder())
-            .flatMap { serviceKeyResponse -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+            .flatMap { serviceKeyResponse -> AnyPublisher<(String, String), Swift.Error> in
                 serviceKey = serviceKeyResponse.authServiceKey
-                return Current.network.dataTask(with: URLRequest.signIn(serviceKey: serviceKey, accountName: accountName, password: password))
-                    .mapError { $0 as Swift.Error }
+                
+                // Fixes issue https://github.com/RobotsAndPencils/XcodesApp/issues/360
+                // On 2023-02-23, Apple added a custom implementation of hashcash to their auth flow
+                // Without this addition, Apple ID's would get set to locked
+                return self.loadHashcash(accountName: accountName, serviceKey: serviceKey)
+                    .map { return (serviceKey, $0)}
                     .eraseToAnyPublisher()
+            }
+            .flatMap { (serviceKey, hashcash) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+                    
+                return Current.network.dataTask(with: URLRequest.signIn(serviceKey: serviceKey, accountName: accountName, password: password, hashcash: hashcash))
+                            .mapError { $0 as Swift.Error }
+                            .eraseToAnyPublisher()
             }
             .flatMap { result -> AnyPublisher<AuthenticationState, Swift.Error> in
                 let (data, response) = result
@@ -55,6 +65,44 @@ public class Client {
             }
             .mapError { $0 as Swift.Error }
             .eraseToAnyPublisher()
+    }
+    
+    func loadHashcash(accountName: String, serviceKey: String) -> AnyPublisher<String, Swift.Error> {
+        
+        Result {
+            try URLRequest.federate(account: accountName, serviceKey: serviceKey)
+        }
+        .publisher
+        .flatMap { request in
+            Current.network.dataTask(with: request)
+                .mapError { $0 as Error }
+                .tryMap { (data, response) throws -> (String) in
+                    guard let urlResponse = response as? HTTPURLResponse else {
+                        throw AuthenticationError.invalidSession
+                    }
+                    switch urlResponse.statusCode {
+                    case 200..<300:
+                        
+                        let httpResponse = response as! HTTPURLResponse
+                        guard let bitsString = httpResponse.allHeaderFields["X-Apple-HC-Bits"] as? String, let bits = UInt(bitsString) else {
+                            throw AuthenticationError.invalidHashcash
+                        }
+                        guard let challenge = httpResponse.allHeaderFields["X-Apple-HC-Challenge"] as? String else {
+                            throw AuthenticationError.invalidHashcash
+                        }
+                        guard let hashcash = Hashcash().mint(resource: challenge, bits: bits) else {
+                            throw AuthenticationError.invalidHashcash
+                        }
+                        return (hashcash)
+                    case 400, 401:
+                        throw AuthenticationError.invalidHashcash
+                    case let code:
+                        throw AuthenticationError.badStatusCode(statusCode: code, data: data, response: urlResponse)
+                    }
+                }
+        }
+        .eraseToAnyPublisher()
+    
     }
 
     func handleTwoStepOrFactor(data: Data, response: URLResponse, serviceKey: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
@@ -148,11 +196,22 @@ public class Client {
     /// Use the olympus session endpoint to see if the existing session is still valid
     public func validateSession() -> AnyPublisher<Void, Error> {
         return Current.network.dataTask(with: URLRequest.olympusSession)
-            .tryMap { (data, response) in
-                guard
-                    let jsonObject = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any],
-                    jsonObject["provider"] != nil
-                else { throw AuthenticationError.invalidSession }
+            .tryMap { result -> Data in
+                let httpResponse = result.response as! HTTPURLResponse
+                if httpResponse.statusCode == 401 {
+                    throw AuthenticationError.notAuthorized
+                }
+
+                return result.data
+            }
+            .decode(type: AppleSession.self, decoder: JSONDecoder())
+            .tryMap { session in
+                // A user that is a non-paid Apple Developer will have a provider == nil
+                // Those users can still download Xcode.
+                // Non Apple Developers will get caught in the download as invalid
+//                if session.provider == nil {
+//                    throw AuthenticationError.notDeveloperAppleId
+//                }
             }
             .eraseToAnyPublisher()
     }
@@ -174,10 +233,12 @@ public enum AuthenticationState: Equatable {
     case unauthenticated
     case waitingForSecondFactor(TwoFactorOption, AuthOptionsResponse, AppleSessionData)
     case authenticated
+    case notAppleDeveloper
 }
 
 public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case invalidSession
+    case invalidHashcash
     case invalidUsernameOrPassword(username: String)
     case incorrectSecurityCode
     case unexpectedSignInResponse(statusCode: Int, message: String?)
@@ -186,11 +247,16 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case accountUsesUnknownAuthenticationKind(String?)
     case accountLocked(String)
     case badStatusCode(statusCode: Int, data: Data, response: HTTPURLResponse)
-
+    case notDeveloperAppleId
+    case notAuthorized
+    case invalidResult(resultString: String?)
+    
     public var errorDescription: String? {
         switch self {
         case .invalidSession:
             return "Your authentication session is invalid. Try signing in again."
+        case .invalidHashcash:
+            return "Could not create a hashcash for the session."
         case .invalidUsernameOrPassword:
             return "Invalid username and password combination."
         case .incorrectSecurityCode:
@@ -212,6 +278,12 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             return message
         case let .badStatusCode(statusCode, _, _):
             return "Received an unexpected status code: \(statusCode). If you continue to have problems, please submit a bug report in the Help menu."
+        case .notDeveloperAppleId:
+            return "You are not registered as an Apple Developer.  Please visit Apple Developer Registration. https://developer.apple.com/register/"
+        case .notAuthorized:
+            return "You are not authorized. Please Sign in with your Apple ID first."
+        case let .invalidResult(resultString):
+            return resultString ?? "If you continue to have problems, please submit a bug report in the Help menu."
         }
     }
 }
@@ -361,4 +433,21 @@ public enum SecurityCode {
         case .sms: return "phone"
         }
     }
+}
+
+/// Object returned from olympus/v1/session
+/// Used to check Provider, and show name
+/// If Provider is nil, we can assume the Apple User is NOT an Apple Developer and can't download Xcode.
+public struct AppleSession: Decodable, Equatable {
+    public let user: AppleUser
+    public let provider: AppleProvider?
+}
+
+public struct AppleProvider: Decodable, Equatable {
+    public let providerId: Int
+    public let name: String
+}
+
+public struct AppleUser: Decodable, Equatable {
+    public let fullName: String
 }

@@ -3,7 +3,13 @@ import Path
 import Version
 
 struct Downloads: Codable {
-    let downloads: [Download]
+    let resultCode: Int
+    let resultsString: String?
+    let downloads: [Download]?
+    
+    var hasError: Bool {
+        return resultCode != 0
+    }
 }
 
 // Set to Int64 as ByteCountFormatter uses it.

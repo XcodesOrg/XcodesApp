@@ -9,21 +9,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout 🛎
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v3
       with:
-        # If you're using actions/checkout@v2.3.4 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        # If you're using actions/checkout@v3 you must set persist-credentials to false in most cases for the deployment to work correctly.
         persist-credentials: false
 
     - name: Cache 📦
-      uses: actions/cache@v2.1.6
+      uses: actions/cache@v3.3.1
       with:
         path: AppCast/vendor/bundle
         key: ${{ runner.os }}-gems-v1.0-${{ hashFiles('AppCast/Gemfile') }}
         restore-keys: |
           ${{ runner.os }}-gems-
           
-    - name: Ruby ♦️
-      uses: actions/setup-ruby@v1.1.3
+    - name: Setup Ruby, JRuby and TruffleRuby
+      uses: ruby/setup-ruby@v1.149.0
       with:
         ruby-version: '2.7'
 

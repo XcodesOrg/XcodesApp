@@ -46,11 +46,11 @@ public struct ObservingProgressIndicator: View {
                 isIndeterminate: progress.progress.isIndeterminate,
                 style: style
             )
-            .help("Downloading: \(Int((progress.progress.fractionCompleted * 100)))% complete")
+            .help(String(format: localizeString("DownloadingPercentDescription"), Int((progress.progress.fractionCompleted * 100))))
             
             if showsAdditionalDescription, progress.progress.xcodesLocalizedDescription.isEmpty == false {
                 Text(progress.progress.xcodesLocalizedDescription)
-                    .font(.subheadline)
+                    .font(.subheadline.monospacedDigit())
                     .foregroundColor(.secondary)
             }
         }

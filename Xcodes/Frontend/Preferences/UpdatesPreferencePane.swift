@@ -3,7 +3,7 @@ import Sparkle
 import SwiftUI
 
 struct UpdatesPreferencePane: View {
-    @StateObject var updater = ObservableUpdater()
+    @EnvironmentObject var updater: ObservableUpdater
     
     @AppStorage("autoInstallation") var autoInstallationType: AutoInstallationType = .none
     
@@ -12,12 +12,12 @@ struct UpdatesPreferencePane: View {
             GroupBox(label: Text("Versions")) {
                 VStack(alignment: .leading) {
                     Toggle(
-                        "Automatically install new versions of Xcode",
+                        "AutomaticInstallNewVersion",
                         isOn: $autoInstallationType.isAutoInstalling
                     )
                     
                     Toggle(
-                        "Include prerelease/beta versions",
+                        "IncludePreRelease",
                         isOn: $autoInstallationType.isAutoInstallingBeta
                     )
                 }
@@ -27,37 +27,37 @@ struct UpdatesPreferencePane: View {
             
             Divider()
             
-            GroupBox(label: Text("Xcodes.app Updates")) {
+            GroupBox(label: Text("AppUpdates")) {
                 VStack(alignment: .leading) {
                     Toggle(
-                        "Automatically check for app updates",
+                        "CheckForAppUpdates",
                         isOn: $updater.automaticallyChecksForUpdates
                     )
+                    .fixedSize(horizontal: true, vertical: false)
                     
                     Toggle(
-                        "Include prerelease app versions",
+                        "IncludePreRelease",
                         isOn: $updater.includePrereleaseVersions
                     )
                     
-                    Button("Check Now") {
-                        SUUpdater.shared()?.checkForUpdates(nil)
+                    Button("CheckNow") {
+                        updater.checkForUpdates()
                     }
                     
-                    Text("Last checked: \(lastUpdatedString)")
+                    Text(String(format: localizeString("LastChecked"), lastUpdatedString))
                         .font(.footnote)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .frame(width: 400)
     }
     
     private var lastUpdatedString: String {
         if let lastUpdatedDate = updater.lastUpdateCheckDate {
             return Self.formatter.string(from: lastUpdatedDate)
         } else {
-            return "Never"
+            return localizeString("Never")
         }
     }
     
@@ -68,9 +68,11 @@ struct UpdatesPreferencePane: View {
 }
 
 class ObservableUpdater: ObservableObject {
+    private let updater: SPUUpdater
+      
     @Published var automaticallyChecksForUpdates = false {
         didSet {
-            SUUpdater.shared()?.automaticallyChecksForUpdates = automaticallyChecksForUpdates
+            updater.automaticallyChecksForUpdates = automaticallyChecksForUpdates
         }
     }
     private var automaticallyChecksForUpdatesObservation: NSKeyValueObservation?
@@ -81,15 +83,17 @@ class ObservableUpdater: ObservableObject {
             UserDefaults.standard.setValue(includePrereleaseVersions, forKey: "includePrereleaseVersions")
 
             if includePrereleaseVersions {
-                SUUpdater.shared()?.feedURL = .prereleaseAppcast
+                updater.setFeedURL(.prereleaseAppcast)
             } else {
-                SUUpdater.shared()?.feedURL = .appcast
+                updater.setFeedURL(.appcast)
             }
         }
     }
     
     init() {
-        automaticallyChecksForUpdatesObservation = SUUpdater.shared()?.observe(
+        updater = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil).updater
+        
+        automaticallyChecksForUpdatesObservation = updater.observe(
             \.automaticallyChecksForUpdates, 
             options: [.initial, .new, .old],
             changeHandler: { [unowned self] updater, change in
@@ -97,7 +101,7 @@ class ObservableUpdater: ObservableObject {
                 self.automaticallyChecksForUpdates = updater.automaticallyChecksForUpdates
             }
         )
-        lastUpdateCheckDateObservation = SUUpdater.shared()?.observe(
+        lastUpdateCheckDateObservation = updater.observe(
             \.lastUpdateCheckDate, 
             options: [.initial, .new, .old],
             changeHandler: { [unowned self] updater, change in
@@ -106,11 +110,15 @@ class ObservableUpdater: ObservableObject {
         )
         includePrereleaseVersions = UserDefaults.standard.bool(forKey: "includePrereleaseVersions")
     }
+    
+    func checkForUpdates() {
+        updater.checkForUpdates()
+    }
 }
 
 extension URL {
-    static let appcast = URL(string: "https://robotsandpencils.github.io/XcodesApp/appcast.xml")!
-    static let prereleaseAppcast = URL(string: "https://robotsandpencils.github.io/XcodesApp/appcast_pre.xml")!
+    static let appcast = URL(string: "https://www.xcodes.app/appcast.xml")!
+    static let prereleaseAppcast = URL(string: "https://www.xcodes.app/appcast_pre.xml")!
 }
 
 struct UpdatesPreferencePane_Previews: PreviewProvider {
@@ -118,6 +126,7 @@ struct UpdatesPreferencePane_Previews: PreviewProvider {
         Group {
             UpdatesPreferencePane()
                 .environmentObject(AppState())
+                .frame(maxWidth: 500)
         }
     }
 }

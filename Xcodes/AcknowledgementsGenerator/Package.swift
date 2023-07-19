@@ -1,4 +1,4 @@
-// swift-tools-version:5.3
+// swift-tools-version:5.4
 
 import PackageDescription
 
@@ -14,7 +14,7 @@ let package = Package(
     dependencies: [
     ],
     targets: [
-        .target(
+        .executableTarget(
             name: "AcknowledgementsGenerator",
             dependencies: []
         ),

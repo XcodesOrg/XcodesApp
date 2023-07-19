@@ -31,11 +31,11 @@ struct InfoPane: View {
                     case let .installed(path):
                         HStack {
                             Text(path.string)
-                            Button(action: { appState.reveal(id: xcode.id) }) {
+                            Button(action: { appState.reveal(xcode: xcode) }) {
                                 Image(systemName: "arrow.right.circle.fill")
                             }
                             .buttonStyle(PlainButtonStyle())
-                            .help("Reveal in Finder")
+                            .help("RevealInFinder")
                         }
                         
                         HStack {
@@ -90,11 +90,11 @@ struct InfoPane: View {
         if !xcode.identicalBuilds.isEmpty {
             VStack(alignment: .leading) {
                 HStack {
-                    Text("Identical Builds")
+                    Text("IdenticalBuilds")
                     Image(systemName: "square.fill.on.square.fill")
                         .foregroundColor(.secondary)
                         .accessibility(hidden: true)
-                        .help("Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together.")
+                        .help("IdenticalBuilds.help")
                 }
                 .font(.headline)
                 
@@ -105,9 +105,9 @@ struct InfoPane: View {
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityElement()
-            .accessibility(label: Text("Identical Builds"))
+            .accessibility(label: Text("IdenticalBuilds"))
             .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
-            .accessibility(hint: Text("Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together."))
+            .accessibility(hint: Text("IdenticalBuilds.help"))
         } else {
             EmptyView()
         }
@@ -117,10 +117,10 @@ struct InfoPane: View {
     private func releaseDate(for xcode: Xcode) -> some View {
         if let releaseDate = xcode.releaseDate {
             VStack(alignment: .leading) {
-                Text("Release Date")
+                Text("ReleaseDate")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text(DateFormatter.downloadsReleaseDate.string(from: releaseDate))
+                Text("\(releaseDate, style: .date)")
                     .font(.subheadline)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -133,14 +133,22 @@ struct InfoPane: View {
     private func releaseNotes(for xcode: Xcode) -> some View {
         if let releaseNotesURL = xcode.releaseNotesURL {
             Button(action: { openURL(releaseNotesURL) }) {
-                Label("Release Notes", systemImage: "link")
+                Label("ReleaseNotes", systemImage: "link")
             }
             .buttonStyle(LinkButtonStyle())
+            .contextMenu(menuItems: {
+              releaseNotesMenu(for: xcode)
+            })
             .frame(maxWidth: .infinity, alignment: .leading)
-            .help("View Release Notes")
+            .help("ReleaseNotes.help")
         } else {
             EmptyView()
         }
+    }
+
+    @ViewBuilder
+    private func releaseNotesMenu(for xcode: Xcode) -> some View {
+        CopyReleaseNoteButton(xcode: xcode)
     }
     
     @ViewBuilder
@@ -150,7 +158,7 @@ struct InfoPane: View {
                 Text("Compatibility")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                Text("Requires macOS \(requiredMacOSVersion) or later")
+                Text(String(format: localizeString("MacOSRequirement"), requiredMacOSVersion))
                     .font(.subheadline)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -217,7 +225,7 @@ struct InfoPane: View {
         // if we've downloaded it no need to show the download size
         if let downloadFileSize = xcode.downloadFileSizeString, case .notInstalled = xcode.installState {
             VStack(alignment: .leading) {
-                Text("Download Size")
+                Text("DownloadSize")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 Text("\(downloadFileSize)")
@@ -231,7 +239,7 @@ struct InfoPane: View {
     
     @ViewBuilder
     private var empty: some View {
-        Text("No Xcode Selected")
+        Text("NoXcodeSelected")
             .font(.title)
             .foregroundColor(.secondary)
             .frame(maxWidth: .infinity, maxHeight: .infinity)

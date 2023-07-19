@@ -19,13 +19,13 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>7</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT</key>
 	<string>$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2020 Robots and Pencils.</string>
+	<string>Copyright © 2023 Robots and Pencils.</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticTermination</key>
@@ -38,7 +38,7 @@
 		<string>identifier "com.robotsandpencils.XcodesApp.Helper" and info [CFBundleShortVersionString] &gt;= "1.0.0" and anchor apple generic and certificate leaf[subject.OU] = "$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)"</string>
 	</dict>
 	<key>SUFeedURL</key>
-	<string>https://robotsandpencils.github.io/XcodesApp/appcast.xml</string>
+	<string>https://www.xcodes.app/appcast.xml</string>
 	<key>SUPublicEDKey</key>
 	<string>SEcz0vgUSeBTOoAXYe+64zea95G6lIf5NgzFs3InYJQ=</string>
 </dict>

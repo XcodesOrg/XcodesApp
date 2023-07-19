@@ -43,7 +43,7 @@ public struct Shell {
             "--max-connection-per-server=16",
             "--split=16",
             "--summary-interval=1",
-            "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)",
+            "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)", // if xcodes quits, stop aria2 process
             "--dir=\(destination.parent.string)",
             "--out=\(destination.basename())",
             "--human-readable=false", // sets the output to use bytes instead of formatting
@@ -111,6 +111,12 @@ public struct Shell {
         
         return (progress, publisher)
     }
+    
+    public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
+        let unxipPath = Path(url: Bundle.main.url(forAuxiliaryExecutable: "unxip")!)!
+        return Process.run(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
+    }
+    
 }
 
 public struct Files {
@@ -158,7 +164,16 @@ public struct Files {
     }
 
     public var installedXcodes = _installedXcodes
+    
+    public func installedXcode(destination: Path) -> InstalledXcode? {
+        if Entry.isAppBundle(kind: destination.isDirectory ? .directory : .file, path: destination) && Entry.infoPlist(kind:  destination.isDirectory ? .directory : .file, path: destination)?.bundleID == "com.apple.dt.Xcode" {
+            return InstalledXcode.init(path: destination)
+        } else {
+            return nil
+        }
+    }
 }
+
 private func _installedXcodes(destination: Path) -> [InstalledXcode] {
     ((try? destination.ls()) ?? [])
         .filter { $0.isAppBundle && $0.infoPlist?.bundleID == "com.apple.dt.Xcode" }
@@ -169,7 +184,7 @@ private func _installedXcodes(destination: Path) -> [InstalledXcode] {
 public struct Network {
     private static let client = AppleAPI.Client()
     
-    public var dataTask: (URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> = { 
+    public var dataTask: (URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> = {
         AppleAPI.Current.network.session.dataTaskPublisher(for: $0)
             .mapError { $0 as Error }
             .eraseToAnyPublisher() 
@@ -182,6 +197,10 @@ public struct Network {
 
     public func downloadTask(with url: URL, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, publisher: AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) {
         return downloadTask(url, saveLocation, resumeData)
+    }
+    
+    public var validateSession: () -> AnyPublisher<Void, Error> = {
+        return client.validateSession()
     }
 }
 
@@ -233,6 +252,11 @@ public struct Defaults {
     public var get: (String) -> Any? = { UserDefaults.standard.value(forKey: $0) }
     public func get(forKey key: String) -> Any? {
         get(key)
+    }
+    
+    public var bool: (String) -> Bool? = { UserDefaults.standard.bool(forKey: $0) }
+    public func bool(forKey key: String) -> Bool? {
+        bool(key)
     }
 }
 

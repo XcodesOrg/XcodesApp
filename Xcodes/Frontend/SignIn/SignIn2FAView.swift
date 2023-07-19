@@ -10,7 +10,8 @@ struct SignIn2FAView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Enter the \(authOptions.securityCode.length) digit code from one of your trusted devices:")
+            Text(String(format: localizeString("DigitCodeDescription"), authOptions.securityCode.length))
+                .fixedSize(horizontal: true, vertical: false)
             
             HStack {
                 Spacer()
@@ -22,7 +23,7 @@ struct SignIn2FAView: View {
             HStack {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
-                Button("Send SMS", action: { appState.choosePhoneNumberForSMS(authOptions: authOptions, sessionData: sessionData) })
+                Button("SendSMS", action: { appState.choosePhoneNumberForSMS(authOptions: authOptions, sessionData: sessionData) })
                 Spacer()
                 ProgressButton(isInProgress: appState.isProcessingAuthRequest,
                                action: { appState.submitSecurityCode(.device(code: code), sessionData: sessionData) }) {

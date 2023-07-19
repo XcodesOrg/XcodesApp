@@ -6,11 +6,11 @@ struct GeneralPreferencePane: View {
    
     var body: some View {
         VStack(alignment: .leading) {
-            GroupBox(label: Text("Apple ID")) {
+            GroupBox(label: Text("AppleID")) {
                 if appState.authenticationState == .authenticated {
                     SignedInView()
                 } else {
-                    Button("Sign In", action: { self.appState.presentedSheet = .signIn })
+                    Button("SignIn", action: { self.appState.presentedSheet = .signIn })
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
@@ -21,7 +21,6 @@ struct GeneralPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
-        .frame(width: 400)
     }
 }
 
@@ -30,6 +29,7 @@ struct GeneralPreferencePane_Previews: PreviewProvider {
         Group {
             GeneralPreferencePane()
                 .environmentObject(AppState())
+                .frame(maxWidth: 500)
         }
     }
 }

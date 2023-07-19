@@ -11,7 +11,7 @@ struct SignInSMSView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Enter the \(authOptions.securityCode.length) digit code sent to \(trustedPhoneNumber.numberWithDialCode): ")
+            Text(String(format: localizeString("EnterDigitCodeDescription"), authOptions.securityCode.length, trustedPhoneNumber.numberWithDialCode))
             
             HStack {
                 Spacer()

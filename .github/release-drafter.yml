@@ -5,6 +5,9 @@ categories:
   - title: '🐛 Bug Fixes'
     labels:
       - 'bugfix'
+  - title: '🌎 Localization'
+    labels:
+      - 'localization'
   - title: '🧰 Maintenance'
     label:
       - 'chore'

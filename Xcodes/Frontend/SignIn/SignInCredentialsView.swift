@@ -7,16 +7,16 @@ struct SignInCredentialsView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text("Sign in with your Apple ID.")
+            Text("SignInWithApple")
                 .bold()
                 .padding(.vertical)
             HStack {
-                Text("Apple ID:")
+                Text("AppleID")
                     .frame(minWidth: 100, alignment: .trailing)
                 TextField("example@icloud.com", text: $username)
             }
             HStack {
-                Text("Password:")
+                Text("Password")
                     .frame(minWidth: 100, alignment: .trailing)
                 SecureField("Required", text: $password)
             }

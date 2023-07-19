@@ -18,6 +18,7 @@ struct XcodeCommands: Commands {
                 OpenCommand()
                 RevealCommand()
                 CopyPathCommand()
+                CreateSymbolicLinkCommand()
                 
                 Divider()
                 
@@ -44,7 +45,7 @@ struct InstallButton: View {
     
     private func install() {
         guard let xcode = xcode else { return }
-        appState.install(id: xcode.id)
+        appState.checkMinVersionAndInstall(id: xcode.id)
     }
 }
 
@@ -55,7 +56,7 @@ struct CancelInstallButton: View {
     var body: some View {
         Button(action: cancelInstall) {
             Text("Cancel")
-                .help("Stop installation")
+                .help(localizeString("StopInstallation"))
         }
     }
     
@@ -74,7 +75,7 @@ struct SelectButton: View {
             if xcode?.selected == true {
                 Text("Active")
             } else {
-                Text("Make active")
+                Text("MakeActive")
             }
         }
         .disabled(xcode?.selected != false)
@@ -83,7 +84,7 @@ struct SelectButton: View {
     
     private func select() {
         guard let xcode = xcode else { return }
-        appState.select(id: xcode.id)
+        appState.select(xcode: xcode)
     }
 }
 
@@ -91,16 +92,34 @@ struct OpenButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
     
+    var openInRosetta: Bool {
+        appState.showOpenInRosettaOption && Hardware.isAppleSilicon()
+    }
+    
     var body: some View {
-        Button(action: open) {
-            Text("Open")
+        if openInRosetta {
+            Menu("Open") {
+                Button(action: open) {
+                    Text("Open")
+                }
+                .help("Open")
+                Button(action: open) {
+                    Text("Open In Rosetta")
+                }
+                .help("Open In Rosetta")
+            }
+        } else {
+            Button(action: open) {
+                Text("Open")
+            }
+            .help("Open")
         }
-        .help("Open")
+        
     }
     
     private func open() {
         guard let xcode = xcode else { return }
-        appState.open(id: xcode.id)
+        appState.open(xcode: xcode, openInRosetta: openInRosetta)
     }
 }
 
@@ -125,14 +144,14 @@ struct RevealButton: View {
     
     var body: some View {
         Button(action: reveal) {
-            Text("Reveal in Finder")
+            Text("RevealInFinder")
         }
-        .help("Reveal in Finder")
+        .help("RevealInFinder")
     }
     
     private func reveal() {
         guard let xcode = xcode else { return }
-        appState.reveal(id: xcode.id)
+        appState.reveal(xcode: xcode)
     }
 }
 
@@ -142,14 +161,66 @@ struct CopyPathButton: View {
     
     var body: some View {
         Button(action: copyPath) {
-            Text("Copy Path")
+            Text("CopyPath")
         }
-        .help("Copy path")
+        .help("CopyPath")
     }
     
     private func copyPath() {
         guard let xcode = xcode else { return }
-        appState.copyPath(id: xcode.id)
+        appState.copyPath(xcode: xcode)
+    }
+}
+
+struct CopyReleaseNoteButton: View {
+  @EnvironmentObject var appState: AppState
+  let xcode: Xcode?
+
+  var body: some View {
+    Button(action: copyReleaseNote) {
+      Text("CopyReleaseNoteURL")
+    }
+    .help("CopyReleaseNoteURL")
+  }
+
+  private func copyReleaseNote() {
+    guard let xcode = xcode else { return }
+    appState.copyReleaseNote(xcode: xcode)
+  }
+}
+
+
+struct CreateSymbolicLinkButton: View {
+    @EnvironmentObject var appState: AppState
+    let xcode: Xcode?
+    
+    var body: some View {
+        Button(action: createSymbolicLink) {
+            Text("CreateSymLink")
+        }
+        .help("CreateSymLink")
+    }
+    
+    private func createSymbolicLink() {
+        guard let xcode = xcode else { return }
+        appState.createSymbolicLink(xcode: xcode)
+    }
+}
+
+struct CreateSymbolicBetaLinkButton: View {
+    @EnvironmentObject var appState: AppState
+    let xcode: Xcode?
+
+    var body: some View {
+        Button(action: createSymbolicBetaLink) {
+            Text("CreateSymLinkBeta")
+        }
+        .help("CreateSymLinkBeta")
+    }
+
+    private func createSymbolicBetaLink() {
+        guard let xcode = xcode else { return }
+        appState.createSymbolicLink(xcode: xcode, isBeta: true)
     }
 }
 
@@ -225,3 +296,15 @@ struct UninstallCommand: View {
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
+
+struct CreateSymbolicLinkCommand: View {
+    @EnvironmentObject var appState: AppState
+    @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
+    
+    var body: some View {
+        CreateSymbolicLinkButton(xcode: selectedXcode.unwrapped)
+            .keyboardShortcut("s", modifiers: [.command, .option])
+            .disabled(selectedXcode.unwrapped?.installState.installed != true)
+    }
+}
+

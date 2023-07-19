@@ -8,11 +8,13 @@ struct XcodesApp: App {
     @SwiftUI.Environment(\.scenePhase) private var scenePhase: ScenePhase
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     @StateObject private var appState = AppState()
-    
+    @StateObject private var updater = ObservableUpdater()
+   
     var body: some Scene {
         WindowGroup("Xcodes") {
             MainWindow()
                 .environmentObject(appState)
+                .environmentObject(updater)
                 // This is intentionally used on a View, and not on a WindowGroup, 
                 // so that it's triggered when an individual window's phase changes instead of all window phases.
                 // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup. 
@@ -26,13 +28,13 @@ struct XcodesApp: App {
         }
         .commands {
             CommandGroup(replacing: .appInfo) {
-                Button("About Xcodes") {
+                Button("Menu.About") {
                     appDelegate.showAboutWindow()
                 }
             }
             CommandGroup(after: .appInfo) {
-                Button("Check for Updates...") {
-                    appDelegate.checkForUpdates()
+                Button("Menu.CheckForUpdates") {
+                    updater.checkForUpdates()
                 }
             }
         
@@ -47,19 +49,19 @@ struct XcodesApp: App {
             XcodeCommands(appState: appState)
             
             CommandGroup(replacing: CommandGroupPlacement.help) {
-                Button("Xcodes GitHub Repo") {
+                Button("Menu.GitHubRepo") {
                     let xcodesRepoURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!
                     openURL(xcodesRepoURL)
                 }
                 
                 Divider()
                 
-                Button("Report a Bug") {
+                Button("Menu.ReportABug") {
                     let bugReportURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/issues/new?assignees=&labels=bug&template=bug_report.md&title=")!
                     openURL(bugReportURL)
                 }
                 
-                Button("Request a New Feature") {
+                Button("Menu.RequestNewFeature") {
                     let featureRequestURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=")!
                     openURL(featureRequestURL)
                 }
@@ -69,6 +71,7 @@ struct XcodesApp: App {
         Settings {
             PreferencesView()
                 .environmentObject(appState)
+                .environmentObject(updater)
         }
         #endif
     }
@@ -81,7 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         backing: .buffered,
         defer: false
     )) {
-        $0.title = "About Xcodes"
+        $0.title = localizeString("About")
         $0.contentView = NSHostingView(rootView: AboutView(showAcknowledgementsWindow: showAcknowledgementsWindow))
         $0.isReleasedWhenClosed = false
     }
@@ -92,7 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         backing: .buffered,
         defer: false
     )) {
-        $0.title = "Xcodes Acknowledgements"
+        $0.title = localizeString("Acknowledgements")
         $0.contentView = NSHostingView(rootView: AcknowledgmentsView())
         $0.isReleasedWhenClosed = false
     }
@@ -112,12 +115,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         acknowledgementsWindow.makeKeyAndOrderFront(nil)
     }
     
-    func checkForUpdates() {
-        SUUpdater.shared()?.checkForUpdates(self)
-    }
-    
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // Initialize manually
-        SUUpdater.shared()
+      
     }
+}
+
+func localizeString(_ key: String, comment: String = "") -> String {
+    if #available(macOS 12, *) {
+        return String(localized: String.LocalizationValue(key))
+    } else {
+        return NSLocalizedString(key, comment: comment)
+    }
+
 }

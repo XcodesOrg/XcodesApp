@@ -22,9 +22,9 @@ public enum XcodesNotificationType: String, Identifiable, CaseIterable, CustomSt
     public var description: String {
         switch self {
             case .newVersionAvailable:
-                return "New version is available"
+                return localizeString("Notification.NewVersionAvailable")
             case .finishedInstalling:
-                return "Finished installing"
+                return localizeString("Notification.FinishedInstalling")
         }
     }
 }
