@@ -19,6 +19,7 @@ struct InfoPane: View {
 
                     Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                         .font(.title)
+                        .textSelection(.enabled)
                     
                     switch xcode.installState {
                     case .notInstalled:
