@@ -107,6 +107,19 @@ class AppState: ObservableObject {
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
     private var autoInstallTimer: Timer?
+    
+    // MARK: - Dock Progress Tracking
+    
+    public static let totalProgressUnits = Int64(10)
+    public static let unxipProgressWeight = Int64(1)
+    var overallProgress = Progress()
+    var unxipProgress = {
+        let progress = Progress(totalUnitCount: totalProgressUnits)
+        progress.kind = .file
+        progress.fileOperationKind = .copying
+        return progress
+    }()
+    
     // MARK: - 
     
     var dataSource: DataSource {
@@ -491,8 +504,7 @@ class AppState: ObservableObject {
         // Cancel the publisher
         installationPublishers[id] = nil
         
-        // Remove dock icon progress indicator
-        DockProgress.progress = 1 // Only way to completely remove overlay with DockProgress is setting progress to complete
+        resetDockProgressTracking()
                 
         // If the download is cancelled by the user, clean up the download files that aria2 creates.
         // This isn't done as part of the publisher with handleEvents(receiveCancel:) because it shouldn't happen when e.g. the app quits.
