@@ -112,6 +112,101 @@ public struct Shell {
         return (progress, publisher)
     }
     
+    public var downloadWithAria2Async: (Path, URL, Path, [HTTPCookie]) async throws -> Progress = { aria2Path, url, destination, cookies in
+        let process = Process()
+        process.executableURL = aria2Path.url
+        process.arguments = [
+            "--header=Cookie: \(cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; "))",
+            "--max-connection-per-server=16",
+            "--split=16",
+            "--summary-interval=1",
+            "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)", // if xcodes quits, stop aria2 process
+            "--dir=\(destination.parent.string)",
+            "--out=\(destination.basename())",
+            "--human-readable=false", // sets the output to use bytes instead of formatting
+            url.absoluteString,
+        ]
+        let stdOutPipe = Pipe()
+        process.standardOutput = stdOutPipe
+        let stdErrPipe = Pipe()
+        process.standardError = stdErrPipe
+        
+        var progress = Progress()
+        progress.kind = .file
+        progress.fileOperationKind = .downloading
+        
+        let observer = NotificationCenter.default.addObserver(
+            forName: .NSFileHandleDataAvailable,
+            object: nil,
+            queue: OperationQueue.main
+        ) { note in
+            guard
+                // This should always be the case for Notification.Name.NSFileHandleDataAvailable
+                let handle = note.object as? FileHandle,
+                handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
+            else { return }
+
+            defer { handle.waitForDataInBackgroundAndNotify() }
+
+            let string = String(decoding: handle.availableData, as: UTF8.self)
+            
+            progress.updateFromAria2(string: string)
+        }
+
+        stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+        
+        do {
+            
+            defer {
+                //DispatchQueue.global(qos: .default).async {
+                    process.waitUntilExit()
+                    
+                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                    
+                    guard process.terminationReason == .exit, process.terminationStatus == 0 else {
+                        if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
+                            throw aria2cError
+                        } else {
+                            throw ProcessExecutionError(process: process, standardOutput: "", standardError: "")
+                        }
+                    }
+                    return
+//                }
+            }
+            try process.run()
+        } catch {
+            throw error
+        }
+
+      
+//        let publisher = Deferred {
+//            Future<Void, Error> { promise in
+//                DispatchQueue.global(qos: .default).async {
+//                    process.waitUntilExit()
+//
+//                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+//
+//                    guard process.terminationReason == .exit, process.terminationStatus == 0 else {
+//                        if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
+//                            return promise(.failure(aria2cError))
+//                        } else {
+//                            return promise(.failure(ProcessExecutionError(process: process, standardOutput: "", standardError: "")))
+//                        }
+//                    }
+//                    promise(.success(()))
+//                }
+//            }
+//        }
+//        .handleEvents(receiveCancel: {
+//            process.terminate()
+//            NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+//        })
+//        .eraseToAnyPublisher()
+//
+//        return (progress, publisher)
+    }
+    
     public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
         let unxipPath = Path(url: Bundle.main.url(forAuxiliaryExecutable: "unxip")!)!
         return Process.run(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
@@ -189,10 +284,15 @@ public struct Network {
             .mapError { $0 as Error }
             .eraseToAnyPublisher() 
     }
+   
     public func dataTask(with request: URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
         dataTask(request)
     }
-
+    
+    public func dataTaskAsync(with request: URLRequest) async throws -> (Data, URLResponse) {
+        return try await AppleAPI.Current.network.session.data(for: request)
+    }
+    
     public var downloadTask: (URL, URL, Data?) -> (Progress, AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) = { AppleAPI.Current.network.session.downloadTask(with: $0, to: $1, resumingWith: $2) }
 
     public func downloadTask(with url: URL, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, publisher: AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) {

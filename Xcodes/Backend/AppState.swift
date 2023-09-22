@@ -186,6 +186,14 @@ class AppState: ObservableObject {
             .eraseToAnyPublisher()
     }
     
+    func validateADCSession(path: String) async throws {
+        let result = try await Current.network.dataTaskAsync(with: URLRequest.downloadADCAuth(path: path))
+        let httpResponse = result.1 as! HTTPURLResponse
+        if httpResponse.statusCode == 401 {
+            throw AuthenticationError.notAuthorized
+        }
+    }
+    
     func validateSession() -> AnyPublisher<Void, Error> {
         
         return Current.network.validateSession()
@@ -799,30 +807,17 @@ class AppState: ObservableObject {
     }
     
     // MARK: Runtimes
-    func getRunTimes(xcode: Xcode) -> [DownloadableRuntime] {
-     
-        let builds = xcode.sdks?.allBuilds()
-        
-        let runtimes: [DownloadableRuntime]? = builds?.flatMap { sdkBuild in
-            downloadableRuntimes.filter {
-                $0.sdkBuildUpdate == sdkBuild
-            }
+    func runtimeInstallPath(xcode: Xcode, runtime: DownloadableRuntime) -> Path? {
+        if let coreSimulatorInfo = installedRuntimes.filter({ $0.runtimeInfo.build == runtime.sdkBuildUpdate }).first {
+            let urlString = coreSimulatorInfo.path["relative"]!
+            // app was not allowed to open up file:// url's so remove
+            let fileRemovedString = urlString.replacingOccurrences(of: "file://", with: "")
+            let url = URL(fileURLWithPath: fileRemovedString)
+            
+            return Path(url: url)!
         }
-        
-        let updatedRuntimes = runtimes?.map { runtime in
-            var updatedRuntime = runtime
-            if let coreSimulatorInfo = installedRuntimes.filter({ $0.runtimeInfo.build == runtime.sdkBuildUpdate }).first {
-                let url = URL(fileURLWithPath: coreSimulatorInfo.path["relative"]!)
-                updatedRuntime.installState = .installed(Path(url: url)!)
-            } else {
-                updatedRuntime.installState = .notInstalled
-            }
-            return updatedRuntime
-        }
-       
-        return updatedRuntimes ?? []
+        return nil
     }
- 
     
     // MARK: - Private
     

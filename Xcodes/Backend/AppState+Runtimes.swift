@@ -46,28 +46,38 @@ extension AppState {
     }
     
     func downloadRuntime(runtime: DownloadableRuntime) {
-        self.runtimePublishers[runtime.identifier] = downloadRunTimeFull(runtime: runtime)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { [unowned self] completion in
-                    self.runtimePublishers[runtime.identifier] = nil
-                    if case let .failure(error) = completion {
-//                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
-//                        if error as? AuthenticationError != .invalidSession {
-//                            self.error = error
-//                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
-//                        }
-//                        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) {
-//                            self.allXcodes[index].installState = .notInstalled
-//                        }
-                    }
-                },
-                receiveValue: { _ in }
-            )
+        Task {
+            try? await downloadRunTimeFull(runtime: runtime)
+        }
+        
+//        self.runtimePublishers[runtime.identifier] = downloadRunTimeFull(runtime: runtime)
+//            .receive(on: DispatchQueue.main)
+//            .sink(
+//                receiveCompletion: { [unowned self] completion in
+//                    self.runtimePublishers[runtime.identifier] = nil
+//                    if case let .failure(error) = completion {
+//                        Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
+////                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
+////                        if error as? AuthenticationError != .invalidSession {
+////                            self.error = error
+////                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+////                        }
+////                        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) {
+////                            self.allXcodes[index].installState = .notInstalled
+////                        }
+//                    }
+//                },
+//                receiveValue: { _ in }
+//            )
     }
     
-    func downloadRunTimeFull(runtime: DownloadableRuntime) -> AnyPublisher<(DownloadableRuntime, URL), Error> {
-        // gets a proper cookie for runtimes
+    func downloadRunTimeFull(runtime: DownloadableRuntime) async throws {
+        // sets a proper cookie for runtimes
+        try await validateADCSession(path: runtime.downloadPath)
+        
+        let downloader = Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2
+        Logger.appState.info("Downloading \(runtime.visibleIdentifier) with \(downloader)")
+        
         
         return validateADCSession(path: runtime.downloadPath)
             .flatMap { _ in
@@ -82,6 +92,18 @@ extension AppState {
                 })
                 .map { return (runtime, $0) }
             }
+            .flatMap { runtime, url -> AnyPublisher<URL, Error> in
+                switch runtime.contentType {
+                case .package:
+                    return self.installFromPackage(dmgURL: url, runtime: runtime)
+                case .diskImage:
+                    return self.installFromImage(dmgURL: url)
+                }
+            }
+            .map { url in
+                // Done deleting
+                Logger.appState.debug("URL: \(url)")
+            }
             .eraseToAnyPublisher()
     }
     
@@ -92,7 +114,9 @@ extension AppState {
         // use runtime.url for final with cookies
         
         // Check to see if the archive is in the expected path in case it was downloaded but failed to install
-        let expectedRuntimePath = Path.xcodesApplicationSupport/"\(runtime.name).\(runtime.name.suffix(fromLast: "."))"
+//        let expectedRuntimePath = Path.xcodesApplicationSupport/"\(runtime.name).\(runtime.name.suffix(fromLast: "."))"
+        let url = URL(string: runtime.source)!
+        let expectedRuntimePath = Path.xcodesApplicationSupport/"\(url.lastPathComponent)"
         // aria2 downloads directly to the destination (instead of into /tmp first) so we need to make sure that the download isn't incomplete
         let aria2DownloadMetadataPath = expectedRuntimePath.parent/(expectedRuntimePath.basename() + ".aria2")
         var aria2DownloadIsIncomplete = false
@@ -106,7 +130,8 @@ extension AppState {
                 .eraseToAnyPublisher()
         }
         else {
-//            let destination = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).\(availableXcode.filename.suffix(fromLast: "."))"
+
+            Logger.appState.info("Downloading runtime: \(url.lastPathComponent)")
             switch downloader {
             case .aria2:
                 let aria2Path = Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!
@@ -115,12 +140,7 @@ extension AppState {
                     to: expectedRuntimePath,
                     aria2Path: aria2Path,
                     progressChanged: progressChanged)
-//                return downloadXcodeWithAria2(
-//                    availableXcode,
-//                    to: destination,
-//                    aria2Path: aria2Path,
-//                    progressChanged: progressChanged
-//                )
+
             case .urlSession:
                 
                 return Just(runtime.url)
@@ -134,7 +154,6 @@ extension AppState {
 //                )
             }
         }
-        
     }
     
     public func downloadRuntimeWithAria2(_ runtime: DownloadableRuntime, to destination: Path, aria2Path: Path, progressChanged: @escaping (Progress) -> Void) -> AnyPublisher<URL, Error> {
@@ -151,4 +170,54 @@ extension AppState {
             .map { _ in destination.url }
             .eraseToAnyPublisher()
     }
+    
+    public func downloadRuntimeWithAria2(_ runtime: DownloadableRuntime, to destination: Path, aria2Path: Path, progressChanged: @escaping (Progress) -> Void) async -> URL {
+        
+    }
+    
+    public func installFromImage(dmgURL: URL) -> AnyPublisher<URL, Error> {
+        
+        
+            try? self.runtimeService.installRuntimeImage(dmgURL: dmgURL)
+            
+            
+        return Just(dmgURL)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+        
+    }
+    
+    public func installFromPackage(dmgURL: URL, runtime: DownloadableRuntime) -> AnyPublisher<URL, Error> {
+        Logger.appState.info("Mounting DMG")
+        Task {
+            do {
+                let mountedUrl = try await self.runtimeService.mountDMG(dmgUrl: dmgURL)
+                
+                // 2-Get the first path under the mounted path, should be a .pkg
+                let pkgPath = Path(url: mountedUrl)!.ls().first!
+                try Path.xcodesCaches.mkdir().setCurrentUserAsOwner()
+                
+                let expandedPkgPath = Path.xcodesCaches/runtime.identifier
+                //try expandedPkgPath.mkdir()
+                Logger.appState.info("PKG Path: \(pkgPath)")
+                Logger.appState.info("Expanded PKG Path: \(expandedPkgPath)")
+                //try? Current.files.removeItem(at: expandedPkgPath.url)
+                
+                // 5-Expand (not install) the pkg to temporary path
+                try await self.runtimeService.expand(pkgPath: pkgPath, expandedPkgPath: expandedPkgPath)
+                //try await self.runtimeService.unmountDMG(mountedURL: mountedUrl)
+                
+            } catch {
+                Logger.appState.error("Error installing runtime: \(error.localizedDescription)")
+            }
+            
+        }
+       
+        
+        
+        return Just(dmgURL)
+            .setFailureType(to: Error.self)
+            .eraseToAnyPublisher()
+    }
+    
 }

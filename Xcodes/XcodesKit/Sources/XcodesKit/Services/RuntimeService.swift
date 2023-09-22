@@ -8,6 +8,10 @@ extension URL {
 
 public struct RuntimeService {
     var networkService: AsyncHTTPNetworkService
+    public enum Error: LocalizedError, Equatable {
+        case unavailableRuntime(String)
+        case failedMountingDMG
+    }
 
     public init() {
         networkService = AsyncHTTPNetworkService()
@@ -50,7 +54,30 @@ public struct RuntimeService {
         }
     }
     
+    public func installRuntimeImage(dmgURL: URL) throws {
+        Task {
+            _ =  try await Current.shell.installRuntimeImage(dmgURL)
+        }
+    }
     
+    public func mountDMG(dmgUrl: URL) async throws -> URL {
+        let resultPlist = try await Current.shell.mountDmg(dmgUrl)
+        
+        let dict = try? (PropertyListSerialization.propertyList(from: resultPlist.out.data(using: .utf8)!, format: nil) as? NSDictionary)
+        let systemEntities = dict?["system-entities"] as? NSArray
+        guard let path = systemEntities?.compactMap ({ ($0 as? NSDictionary)?["mount-point"] as? String }).first else {
+            throw Error.failedMountingDMG
+        }
+        return URL(fileURLWithPath: path)
+    }
+    
+    public func unmountDMG(mountedURL: URL) async throws {
+        let url = try await Current.shell.unmountDmg(mountedURL)
+    }
+    
+    public func expand(pkgPath: Path, expandedPkgPath: Path) async throws {
+        _ = try await Current.shell.expandPkg(pkgPath.url, expandedPkgPath.url)
+    }
 
 }
 

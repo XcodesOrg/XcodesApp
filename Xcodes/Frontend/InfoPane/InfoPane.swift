@@ -249,14 +249,22 @@ struct InfoPane: View {
     
     @ViewBuilder
     private func runtimes(for xcode: Xcode) -> some View {
-        let runtimes = appState.getRunTimes(xcode: xcode)
+        
         
         VStack(alignment: .leading) {
             Text("Platforms")
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
-            ForEach(runtimes, id: \.simulatorVersion.buildUpdate) { runtime in
+            let builds = xcode.sdks?.allBuilds()
+            let runtimes = builds?.flatMap { sdkBuild in
+                appState.downloadableRuntimes.filter {
+                    $0.sdkBuildUpdate == sdkBuild
+                }
+            }
+//            let runtimes = appState.getRunTimes(xcode: xcode)
+            
+            ForEach(runtimes ?? [], id: \.simulatorVersion.buildUpdate) { runtime in
                 VStack {
                     HStack {
                         Text("\(runtime.visibleIdentifier)")
@@ -264,19 +272,26 @@ struct InfoPane: View {
                         Spacer()
                         Text(runtime.downloadFileSizeString)
                             .font(.subheadline)
-                        DownloadRuntimeButton(runtime: runtime)
+                        
+                        // it's installed if we have a path
+                        if let path = appState.runtimeInstallPath(xcode: xcode, runtime: runtime) {
+                            Button(action: { appState.reveal(path: path.string) }) {
+                                Image(systemName: "arrow.right.circle.fill")
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                            .help("RevealInFinder")
+                        } else {
+                            DownloadRuntimeButton(runtime: runtime)
+                        }
                     }
                     switch runtime.installState {
                         
-                  
-                    case .notInstalled:
-                        Text("NOT INSTALLED")
                     case .installing(let installationStep):
                         Text("INSTALLING")
                         InstallationStepDetailView(installationStep: installationStep)
                             .fixedSize(horizontal: false, vertical: true)
-                    case .installed(let path):
-                        Text(path.string)
+                    default:
+                        EmptyView()
                     }
                 }
                
