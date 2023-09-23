@@ -116,7 +116,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "請輸入顯示在你其中一個信任裝置中的 %d 位數密碼：";
 "SendSMS" = "傳送簡訊";
-"EnterDigitCodeDescription" = "請輸入 %d 位數密碼，已傳送至 %@： ";
+"EnterDigitCodeDescription" = "請輸入 %1$d 位數密碼，已傳送至 %2$@： ";
 "SelectTrustedPhone" = "請輸入一個你想用來接收 %d 位數密碼簡訊的電話號碼：";
 "NoTrustedPhones" = "你的帳號沒有任何已信任的手機號碼，但兩階段認證需要信任的手機號碼。\n\n請參閱 https://support.apple.com/HT204915.";
 

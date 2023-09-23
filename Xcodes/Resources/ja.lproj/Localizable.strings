@@ -127,7 +127,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "信頼できるデバイスから、%d桁のコードを入力してください。";
 "SendSMS" = "SMS を送信";
-"EnterDigitCodeDescription" = "%d桁のコードを%@に送信したので入力してください。";
+"EnterDigitCodeDescription" = "%1$d桁のコードを%2$@に送信したので入力してください。";
 "SelectTrustedPhone" = "信頼できる電話番号を選択し、%d桁のコードをSMSで受信します。";
 "NoTrustedPhones" = "このアカウントに2要素認証に利用する、信頼できる電話番号がありません。\n\n詳しくはこちらをご確認ください。https://support.apple.com/HT204915";
 

@@ -115,7 +115,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "अपने किसी विश्वसनीय डिवाइस से %d अंक कोड दर्ज करें:";
 "SendSMS" = "SMS भेजें";
-"EnterDigitCodeDescription" = "%@ को भेजा गया %d अंक कोड दर्ज करें: ";
+"EnterDigitCodeDescription" = "%2$@ को भेजा गया %1$d अंक कोड दर्ज करें: ";
 "SelectTrustedPhone" = "SMS के द्वारा %d अंक कोड प्राप्त करने के लिए विश्वसनीय फ़ोन नंबर चुनें:";
 "NoTrustedPhones" = "आपके खाते में कोई विश्वसनीय फ़ोन नंबर नहीं है, लेकिन वे दो-कारक प्रमाणीकरण के लिए आवश्यक हैं।\n\nhttps://support.apple.com/HT204915 देखें।";
 

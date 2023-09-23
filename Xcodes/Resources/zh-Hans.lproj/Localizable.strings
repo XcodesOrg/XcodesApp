@@ -124,7 +124,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "请输入从信任的设备接收到的%d位代码：";
 "SendSMS" = "发送短信";
-"EnterDigitCodeDescription" = "请输入%d位代码，已发送到%@：";
+"EnterDigitCodeDescription" = "请输入%1$d位代码，已发送到%2$@：";
 "SelectTrustedPhone" = "请选择一个信任的手机号来从短信接收%d位代码：";
 "NoTrustedPhones" = "您的账户没有任何信任的手机号，但这是两步验证所必须的。\n\n请参阅 https://support.apple.com/HT204915。";
 

@@ -127,7 +127,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "Enter the %d digit code from one of your trusted devices:";
 "SendSMS" = "Send SMS";
-"EnterDigitCodeDescription" = "Enter the %d digit code sent to %@: ";
+"EnterDigitCodeDescription" = "Enter the %1$d digit code sent to %2$@: ";
 "SelectTrustedPhone" = "Select a trusted phone number to receive a %d digit code via SMS:";
 "NoTrustedPhones" = "Your account doesn't have any trusted phone numbers, but they're required for two-factor authentication.\n\nSee https://support.apple.com/HT204915.";
 

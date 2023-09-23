@@ -120,7 +120,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "Saisissez le code à %d chiffres de l'un de vos appareils de confiance :";
 "SendSMS" = "Envoyer un SMS";
-"EnterDigitCodeDescription" = "Entrez le code à %d chiffres envoyé à %@ : ";
+"EnterDigitCodeDescription" = "Entrez le code à %1$d chiffres envoyé à %2$@ : ";
 "SelectTrustedPhone" = "Sélectionnez le numéro de téléphone de confiance pour recevoir un code à %d chiffres par SMS :";
 "NoTrustedPhones" = "Votre compte n'a aucun numéro de téléphone de confiance, mais ils sont requis pour l'authentification à deux facteurs.\n\nVoir https://support.apple.com/HT204915.";
 

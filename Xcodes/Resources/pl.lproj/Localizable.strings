@@ -127,7 +127,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "Wprowadź %d-cyfrowy kod z jednego ze swoich zaufanych urządzeń:";
 "SendSMS" = "Wyślij SMS";
-"EnterDigitCodeDescription" = "Wprowadź %d-cyfrowy kod wysłany do %@: ";
+"EnterDigitCodeDescription" = "Wprowadź %1$d-cyfrowy kod wysłany do %2$@: ";
 "SelectTrustedPhone" = "Wybierz zaufany numer telefonu, aby otrzymać %d-cyfrowy kod przez SMS:";
 "NoTrustedPhones" = "Twoje konto nie ma żadnych zaufanych numerów telefonów, ale są one wymagane do autoryzacji dwuskładnikowej.\n\nZobacz https://support.apple.com/HT204915.";
 
