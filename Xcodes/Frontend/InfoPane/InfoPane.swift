@@ -55,7 +55,8 @@ struct InfoPane: View {
 
                     Group{
                         releaseNotes(for: xcode)
-                        releaseDate(for: xcode)
+                        ReleaseDateView(date: xcode.releaseDate)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         identicalBuilds(for: xcode)
                         compatibility(for: xcode)
                         sdks(for: xcode)
@@ -113,22 +114,6 @@ struct InfoPane: View {
         }
     }
 
-    @ViewBuilder
-    private func releaseDate(for xcode: Xcode) -> some View {
-        if let releaseDate = xcode.releaseDate {
-            VStack(alignment: .leading) {
-                Text("ReleaseDate")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(releaseDate, style: .date)")
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        } else {
-            EmptyView()
-        }
-    }
-    
     @ViewBuilder
     private func releaseNotes(for xcode: Xcode) -> some View {
         if let releaseNotesURL = xcode.releaseNotesURL {
