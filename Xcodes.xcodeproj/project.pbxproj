@@ -15,6 +15,7 @@
 		63EAA4EB259944450046AB8F /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA4EA259944450046AB8F /* ProgressButton.swift */; };
 		B0C6AD042AD6E65700E64698 /* ReleaseDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */; };
 		B0C6AD0B2AD9178E00E64698 /* IdenticalBuildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */; };
+		B0C6AD0D2AD91D7900E64698 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0C2AD91D7900E64698 /* IconView.swift */; };
 		CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */; };
 		CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */; };
 		CA25192A25A9644800F08414 /* XcodeInstallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA25192925A9644800F08414 /* XcodeInstallState.swift */; };
@@ -196,6 +197,7 @@
 		AB4EB0DE28541FA000FF3B1D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseDateView.swift; sourceTree = "<group>"; };
 		B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdenticalBuildView.swift; sourceTree = "<group>"; };
+		B0C6AD0C2AD91D7900E64698 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
 		B648F22B2810C1130096781B /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C0AE7FA4283002DC00DA63D2 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommands.swift; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 				E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */,
 				B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */,
 				B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */,
+				B0C6AD0C2AD91D7900E64698 /* IconView.swift */,
 			);
 			path = InfoPane;
 			sourceTree = "<group>";
@@ -847,6 +850,7 @@
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
 				CAE4248C259A68B800B8B246 /* Optional+IsNotNil.swift in Sources */,
+				B0C6AD0D2AD91D7900E64698 /* IconView.swift in Sources */,
 				CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */,
 				B0C6AD042AD6E65700E64698 /* ReleaseDateView.swift in Sources */,
 				CAA8587C25A2B37900ACF8C0 /* IsTesting.swift in Sources */,

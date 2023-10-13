@@ -14,7 +14,7 @@ struct InfoPane: View {
         if let xcode = appState.allXcodes.first(where: { $0.id == selectedXcodeID }) {
             ScrollView {
                 VStack(alignment: .leading, spacing: 16) {
-                    icon(for: xcode)
+                    IconView(installState: xcode.installState)
                         .frame(maxWidth: .infinity, alignment: .center)
 
                     Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
@@ -71,18 +71,6 @@ struct InfoPane: View {
         } else {
             empty
                 .frame(minWidth: 200, maxWidth: .infinity)
-        }
-    }
-    
-    @ViewBuilder
-    private func icon(for xcode: Xcode) -> some View {
-        if case let .installed(path) = xcode.installState {
-            Image(nsImage: NSWorkspace.shared.icon(forFile: path.string))
-        } else {
-            Image(systemName: "app.fill")
-                .resizable()
-                .frame(width: 32, height: 32)
-                .foregroundColor(.secondary)
         }
     }
     
