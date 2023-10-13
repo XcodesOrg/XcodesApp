@@ -17,6 +17,7 @@
 		B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CF12AD934B600137C09 /* CompatibilityView.swift */; };
 		B0403CF42AD9381D00137C09 /* SDKsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CF32AD9381D00137C09 /* SDKsView.swift */; };
 		B0403CF62AD9849E00137C09 /* CompilersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CF52AD9849E00137C09 /* CompilersView.swift */; };
+		B0403CF82AD991F800137C09 /* UnselectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CF72AD991F800137C09 /* UnselectedView.swift */; };
 		B0C6AD042AD6E65700E64698 /* ReleaseDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */; };
 		B0C6AD0B2AD9178E00E64698 /* IdenticalBuildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */; };
 		B0C6AD0D2AD91D7900E64698 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0C2AD91D7900E64698 /* IconView.swift */; };
@@ -203,6 +204,7 @@
 		B0403CF12AD934B600137C09 /* CompatibilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityView.swift; sourceTree = "<group>"; };
 		B0403CF32AD9381D00137C09 /* SDKsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKsView.swift; sourceTree = "<group>"; };
 		B0403CF52AD9849E00137C09 /* CompilersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompilersView.swift; sourceTree = "<group>"; };
+		B0403CF72AD991F800137C09 /* UnselectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnselectedView.swift; sourceTree = "<group>"; };
 		B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseDateView.swift; sourceTree = "<group>"; };
 		B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdenticalBuildView.swift; sourceTree = "<group>"; };
 		B0C6AD0C2AD91D7900E64698 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 				B0403CF52AD9849E00137C09 /* CompilersView.swift */,
 				B0403CF12AD934B600137C09 /* CompatibilityView.swift */,
 				CAFBDC67259A308B003DCC5A /* InfoPane.swift */,
+				B0403CF72AD991F800137C09 /* UnselectedView.swift */,
 				E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */,
 				B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */,
 				B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */,
@@ -915,6 +918,7 @@
 				CABFA9C22592EEEA00380FEE /* Publisher+Resumable.swift in Sources */,
 				B0C6AD0B2AD9178E00E64698 /* IdenticalBuildView.swift in Sources */,
 				CAFBDC68259A308B003DCC5A /* InfoPane.swift in Sources */,
+				B0403CF82AD991F800137C09 /* UnselectedView.swift in Sources */,
 				E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */,
 				CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */,
 				CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */,

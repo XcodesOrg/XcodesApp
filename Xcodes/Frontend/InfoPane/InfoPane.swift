@@ -68,8 +68,7 @@ struct InfoPane: View {
             }
             .frame(minWidth: 200, maxWidth: .infinity)
         } else {
-            empty
-                .frame(minWidth: 200, maxWidth: .infinity)
+            UnselectedView()
         }
     }
 
@@ -88,15 +87,6 @@ struct InfoPane: View {
         } else {
             EmptyView()
         }
-    }
-
-    @ViewBuilder
-    private var empty: some View {
-        Text("NoXcodeSelected")
-            .font(.title)
-            .foregroundColor(.secondary)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .padding()
     }
 }
 
