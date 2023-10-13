@@ -9,7 +9,7 @@
 import SwiftUI
 import Version
 
-struct NotInstalledStateButtonsView: View {
+struct NotInstalledStateButtons: View {
     let downloadFileSizeString: String?
     let id: Version
 
@@ -35,7 +35,7 @@ struct NotInstalledStateButtonsView: View {
     }
 }
 
-struct NotInstalledStateButtonsView_Preview: PreviewProvider {
+struct NotInstalledStateButtons_Preview: PreviewProvider {
     static var previews: some View {
         WrapperView()
     }
@@ -52,7 +52,7 @@ private struct WrapperView: View {
 
     var body: some View {
         VStack {
-            NotInstalledStateButtonsView(
+            NotInstalledStateButtons(
                 downloadFileSizeString: downloadFileSizeString,
                 id: Version(major: 12, minor: 3, patch: 0)
             )

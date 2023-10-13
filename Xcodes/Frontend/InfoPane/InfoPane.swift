@@ -21,7 +21,7 @@ struct InfoPane: View {
 
                     switch xcode.installState {
                     case .notInstalled:
-                        NotInstalledStateButtonsView(
+                        NotInstalledStateButtons(
                             downloadFileSizeString: xcode.downloadFileSizeString,
                             id: xcode.id
                         )
@@ -29,27 +29,8 @@ struct InfoPane: View {
                         InstallationStepDetailView(installationStep: installationStep)
                             .fixedSize(horizontal: false, vertical: true)
                         CancelInstallButton(xcode: xcode)
-                    case let .installed(path):
-                        HStack {
-                            Text(path.string)
-                            Button(action: { appState.reveal(xcode: xcode) }) {
-                                Image(systemName: "arrow.right.circle.fill")
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .help("RevealInFinder")
-                        }
-
-                        HStack {
-                            SelectButton(xcode: xcode)
-                                .disabled(xcode.selected)
-                                .help("Selected")
-
-                            OpenButton(xcode: xcode)
-                                .help("Open")
-
-                            Spacer()
-                            UninstallButton(xcode: xcode)
-                        }
+                    case .installed:
+                        InstalledStateButtons(xcode: xcode)
                     }
 
                     Divider()

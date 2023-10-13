@@ -151,7 +151,7 @@ struct RevealButton: View {
     
     private func reveal() {
         guard let xcode = xcode else { return }
-        appState.reveal(xcode: xcode)
+        appState.reveal(xcode.installedPath)
     }
 }
 

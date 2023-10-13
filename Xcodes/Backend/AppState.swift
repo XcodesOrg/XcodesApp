@@ -541,10 +541,10 @@ class AppState: ObservableObject {
         )
     }
     
-    func reveal(xcode: Xcode) {
+    func reveal(_ path: Path?) {
         // TODO: show error if not
-        guard let installedXcodePath = xcode.installedPath else { return }
-        NSWorkspace.shared.activateFileViewerSelecting([installedXcodePath.url])
+        guard let path = path else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([path.url])
     }
     
     func reveal(path: String) {
