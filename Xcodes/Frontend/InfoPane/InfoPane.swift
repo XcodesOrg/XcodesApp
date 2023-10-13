@@ -57,7 +57,7 @@ struct InfoPane: View {
                         releaseNotes(for: xcode)
                         ReleaseDateView(date: xcode.releaseDate)
                             .frame(maxWidth: .infinity, alignment: .leading)
-                        identicalBuilds(for: xcode)
+                        IdenticalBuildsView(builds: xcode.identicalBuilds)
                         compatibility(for: xcode)
                         sdks(for: xcode)
                         compilers(for: xcode)
@@ -86,34 +86,6 @@ struct InfoPane: View {
         }
     }
     
-    @ViewBuilder
-    private func identicalBuilds(for xcode: Xcode) -> some View {
-        if !xcode.identicalBuilds.isEmpty {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("IdenticalBuilds")
-                    Image(systemName: "square.fill.on.square.fill")
-                        .foregroundColor(.secondary)
-                        .accessibility(hidden: true)
-                        .help("IdenticalBuilds.help")
-                }
-                .font(.headline)
-                
-                ForEach(xcode.identicalBuilds, id: \.description) { version in
-                    Text("• \(version.appleDescription)")
-                        .font(.subheadline)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .accessibilityElement()
-            .accessibility(label: Text("IdenticalBuilds"))
-            .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
-            .accessibility(hint: Text("IdenticalBuilds.help"))
-        } else {
-            EmptyView()
-        }
-    }
-
     @ViewBuilder
     private func releaseNotes(for xcode: Xcode) -> some View {
         if let releaseNotesURL = xcode.releaseNotesURL {
