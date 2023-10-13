@@ -46,16 +46,12 @@ private struct WrapperView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                ReleaseNotesView(url: url)
-                    .border(.red)
-            }
+            ReleaseNotesView(url: url).border(.red)
             Spacer()
             Toggle(isOn: $hasURL) {
                 Text("Has URL?")
             }
         }
-        .animation(.default)
         .frame(width: 300, height: 100)
         .padding()
     }

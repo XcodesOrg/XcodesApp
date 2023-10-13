@@ -14,7 +14,7 @@ struct ReleaseDateView: View {
     var body: some View {
         if let date = date {
             VStack(alignment: .leading) {
-                Text("ReleaseDate (old version)")
+                Text("ReleaseDate")
                     .font(.headline)
                 Text("\(date, style: .date)")
                     .font(.subheadline)
@@ -41,16 +41,13 @@ private struct WrapperView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                ReleaseDateView(date: date)
-                    .border(.red)
-            }
+            ReleaseDateView(date: date)
+                .border(.red)
             Spacer()
             Toggle(isOn: $isNil) {
                 Text("Is Nil?")
             }
         }
-        .animation(.default)
         .frame(width: 300, height: 100)
         .padding()
     }

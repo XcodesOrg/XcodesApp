@@ -65,16 +65,13 @@ private struct WrapperView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                CompilersView(compilers: compilers)
-                    .border(.red)
-            }
+            CompilersView(compilers: compilers)
+                .border(.red)
             Spacer()
             Toggle(isOn: $isNil) {
                 Text("Is Nil?")
             }
         }
-        .animation(.default)
         .frame(width: 200, height: 100)
         .padding()
     }

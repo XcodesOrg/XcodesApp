@@ -22,8 +22,8 @@ struct NotInstalledStateButtons: View {
             } label: {
                 Text("Install") .help("Install")
             }
+            
             if let size = downloadFileSizeString {
-
                 Text("DownloadSize")
                     .font(.headline)
                 Text(size)

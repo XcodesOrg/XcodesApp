@@ -38,7 +38,6 @@ struct InstalledStateButtons: View {
                 Spacer()
                 UninstallButton(xcode: xcode)
             }
-
         }
     }
 }

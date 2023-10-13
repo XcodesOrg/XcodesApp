@@ -39,10 +39,11 @@ struct InstallDetailView_Previews: PreviewProvider {
                     }
                 )
             )
-            
+
             InstallationStepDetailView(
                 installationStep: .unarchiving
             )
         }
+        .padding()
     }
 }

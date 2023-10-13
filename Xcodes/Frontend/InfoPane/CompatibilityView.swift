@@ -50,7 +50,6 @@ private struct WrapperView: View {
                 Text("Is Nil?")
             }
         }
-        .animation(.default)
         .frame(width: 200, height: 100)
         .padding()
     }

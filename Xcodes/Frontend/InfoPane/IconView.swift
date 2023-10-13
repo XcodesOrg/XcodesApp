@@ -42,22 +42,19 @@ private struct WrapperView: View {
     @State var isIcon = false
     var state: XcodeInstallState {
         isIcon 
-        ? XcodeInstallState.notInstalled
-        : XcodeInstallState.installed(Path("/Applications/Xcode.app")!)
+        ? XcodeInstallState.installed(Path("/Applications/Xcode.app")!)
+        : XcodeInstallState.notInstalled
     }
 
     var body: some View {
         VStack {
-            HStack {
-                IconView(installState: state)
-                    .border(.red)
-            }
+            IconView(installState: state)
+                .border(.red)
             Spacer()
             Toggle(isOn: $isIcon) {
-                Text("Is an Icon?")
+                Text("Icon?")
             }
         }
-        .animation(.default)
         .frame(width: 300, height: 100)
         .padding()
     }

@@ -33,7 +33,6 @@ struct IdenticalBuildsView: View {
                         .font(.subheadline)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
             .accessibilityElement()
             .accessibility(label: Text("IdenticalBuilds"))
             .accessibility(value: Text(accessibilityDescription))
@@ -67,16 +66,13 @@ private struct WrapperView: View {
 
     var body: some View {
         VStack {
-            HStack {
-                IdenticalBuildsView(builds: builds)
+            IdenticalBuildsView(builds: builds)
                 .border(.red)
-            }
             Spacer()
             Toggle(isOn: $isEmpty) {
-                Text("Is Empty?")
+                Text("No Builds?")
             }
         }
-        .animation(.default)
         .frame(width: 300, height: 100)
         .padding()
     }

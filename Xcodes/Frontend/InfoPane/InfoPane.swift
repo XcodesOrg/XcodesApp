@@ -27,7 +27,6 @@ struct InfoPane: View {
                         )
                     case let .installing(installationStep):
                         InstallationStepDetailView(installationStep: installationStep)
-                            .fixedSize(horizontal: false, vertical: true)
                         CancelInstallButton(xcode: xcode)
                     case .installed:
                         InstalledStateButtons(xcode: xcode)
@@ -38,7 +37,6 @@ struct InfoPane: View {
                     Group {
                         ReleaseNotesView(url: xcode.releaseNotesURL)
                         ReleaseDateView(date: xcode.releaseDate)
-                            .frame(maxWidth: .infinity, alignment: .leading)
                         IdenticalBuildsView(builds: xcode.identicalBuilds)
                         CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
                         SDKsView(sdks: xcode.sdks)
@@ -52,23 +50,6 @@ struct InfoPane: View {
             .frame(minWidth: 200, maxWidth: .infinity)
         } else {
             UnselectedView()
-        }
-    }
-
-    @ViewBuilder
-    private func downloadFileSize(for xcode: Xcode) -> some View {
-        // if we've downloaded it no need to show the download size
-        if let downloadFileSize = xcode.downloadFileSizeString, case .notInstalled = xcode.installState {
-            VStack(alignment: .leading) {
-                Text("DownloadSize")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(downloadFileSize)")
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        } else {
-            EmptyView()
         }
     }
 }
