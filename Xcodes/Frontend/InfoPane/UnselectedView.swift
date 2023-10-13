@@ -10,9 +10,13 @@ import SwiftUI
 
 struct UnselectedView: View {
     var body: some View {
-        Text("NoXcodeSelected")
-            .font(.title)
-            .foregroundColor(.secondary)
+        VStack {
+            Spacer()
+            Text("NoXcodeSelected")
+                .font(.title)
+                .foregroundColor(.secondary)
+            Spacer()
+        }
     }
 }
 
