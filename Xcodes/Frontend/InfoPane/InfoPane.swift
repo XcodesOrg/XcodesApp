@@ -2,8 +2,8 @@ import AppKit
 import Path
 import SwiftUI
 import Version
-import struct XCModel.SDKs
 import struct XCModel.Compilers
+import struct XCModel.SDKs
 
 struct InfoPane: View {
     @EnvironmentObject var appState: AppState
@@ -18,12 +18,12 @@ struct InfoPane: View {
 
                     Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                         .font(.title)
-                    
+
                     switch xcode.installState {
                     case .notInstalled:
                         InstallButton(xcode: xcode)
                         downloadFileSize(for: xcode)
-                    case .installing(let installationStep):
+                    case let .installing(installationStep):
                         InstallationStepDetailView(installationStep: installationStep)
                             .fixedSize(horizontal: false, vertical: true)
                         CancelInstallButton(xcode: xcode)
@@ -36,32 +36,32 @@ struct InfoPane: View {
                             .buttonStyle(PlainButtonStyle())
                             .help("RevealInFinder")
                         }
-                        
+
                         HStack {
                             SelectButton(xcode: xcode)
                                 .disabled(xcode.selected)
                                 .help("Selected")
-                            
+
                             OpenButton(xcode: xcode)
                                 .help("Open")
-                            
+
                             Spacer()
                             UninstallButton(xcode: xcode)
                         }
                     }
-                    
+
                     Divider()
 
-                    Group{
+                    Group {
                         ReleaseNotesView(url: xcode.releaseNotesURL)
                         ReleaseDateView(date: xcode.releaseDate)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         IdenticalBuildsView(builds: xcode.identicalBuilds)
                         CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
-                        sdks(for: xcode)
+                        SDKsView(sdks: xcode.sdks)
                         compilers(for: xcode)
                     }
-                    
+
                     Spacer()
                 }
                 .padding()
@@ -72,34 +72,7 @@ struct InfoPane: View {
                 .frame(minWidth: 200, maxWidth: .infinity)
         }
     }
-    
-    @ViewBuilder
-    private func sdks(for xcode: Xcode) -> some View {
-        if let sdks = xcode.sdks {
-            VStack(alignment: .leading) {
-                Text("SDKs")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                ForEach([
-                    ("macOS", \SDKs.macOS),
-                    ("iOS", \.iOS),
-                    ("watchOS", \.watchOS),
-                    ("tvOS", \.tvOS),
-                    ("visionOS", \.visionOS),
-                ], id: \.0) { row in
-                    if let sdk = sdks[keyPath: row.1] {
-                        Text("\(row.0): \(sdk.compactMap { $0.number }.joined(separator: ", "))")
-                            .font(.subheadline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-            }
-        } else {
-            EmptyView()
-        }
-    }
-    
+
     @ViewBuilder
     private func compilers(for xcode: Xcode) -> some View {
         if let compilers = xcode.compilers {
@@ -107,7 +80,7 @@ struct InfoPane: View {
                 Text("Compilers")
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                
+
                 ForEach([
                     ("Swift", \Compilers.swift),
                     ("Clang", \.clang),
@@ -126,7 +99,7 @@ struct InfoPane: View {
             EmptyView()
         }
     }
-    
+
     @ViewBuilder
     private func downloadFileSize(for xcode: Xcode) -> some View {
         // if we've downloaded it no need to show the download size
@@ -143,7 +116,7 @@ struct InfoPane: View {
             EmptyView()
         }
     }
-    
+
     @ViewBuilder
     private var empty: some View {
         Text("NoXcodeSelected")
@@ -181,8 +154,8 @@ struct InfoPane_Previews: PreviewProvider {
                                 clang: .init(number: "7.3"),
                                 swift: .init(number: "5.3.2")
                             ),
-                            downloadFileSize: 242342424
-                            )
+                            downloadFileSize: 242_342_424
+                        ),
                     ]
                 })
                 .previewDisplayName("Populated, Installed, Selected")
@@ -208,7 +181,8 @@ struct InfoPane_Previews: PreviewProvider {
                                 clang: .init(number: "7.3"),
                                 swift: .init(number: "5.3.2")
                             ),
-                            downloadFileSize: 242342424)
+                            downloadFileSize: 242_342_424
+                        ),
                     ]
                 })
                 .previewDisplayName("Populated, Installed, Unselected")
@@ -234,7 +208,8 @@ struct InfoPane_Previews: PreviewProvider {
                                 clang: .init(number: "7.3"),
                                 swift: .init(number: "5.3.2")
                             ),
-                            downloadFileSize: 242342424)
+                            downloadFileSize: 242_342_424
+                        ),
                     ]
                 })
                 .previewDisplayName("Populated, Uninstalled")
@@ -248,7 +223,8 @@ struct InfoPane_Previews: PreviewProvider {
                             selected: false,
                             icon: nil,
                             sdks: nil,
-                            compilers: nil)
+                            compilers: nil
+                        ),
                     ]
                 })
                 .previewDisplayName("Basic, installed")
@@ -258,15 +234,16 @@ struct InfoPane_Previews: PreviewProvider {
                     $0.allXcodes = [
                         .init(
                             version: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]),
-                            installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40; $0.throughput = 232323232; $0.fileCompletedCount = 2323004; $0.fileTotalCount = 1193939393 })),
+                            installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40; $0.throughput = 232_323_232; $0.fileCompletedCount = 2_323_004; $0.fileTotalCount = 1_193_939_393 })),
                             selected: false,
                             icon: nil,
                             sdks: nil,
-                            compilers: nil)
+                            compilers: nil
+                        ),
                     ]
                 })
                 .previewDisplayName("Basic, installing")
-            
+
             InfoPane(selectedXcodeID: nil)
                 .environmentObject(configure(AppState()) {
                     $0.allXcodes = [
