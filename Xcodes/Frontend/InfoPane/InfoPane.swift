@@ -21,8 +21,10 @@ struct InfoPane: View {
 
                     switch xcode.installState {
                     case .notInstalled:
-                        InstallButton(xcode: xcode)
-                        downloadFileSize(for: xcode)
+                        NotInstalledStateButtonsView(
+                            downloadFileSizeString: xcode.downloadFileSizeString,
+                            id: xcode.id
+                        )
                     case let .installing(installationStep):
                         InstallationStepDetailView(installationStep: installationStep)
                             .fixedSize(horizontal: false, vertical: true)
