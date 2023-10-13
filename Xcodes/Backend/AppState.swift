@@ -630,8 +630,8 @@ class AppState: ObservableObject {
         NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
     }
 
-    func copyReleaseNote(xcode: Xcode) {
-      guard let url = xcode.releaseNotesURL else { return }
+    func copyReleaseNote(from url: URL?) {
+      guard let url = url else { return }
       NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
       NSPasteboard.general.writeObjects([url as NSURL])
       NSPasteboard.general.setString(url.absoluteString, forType: .string)

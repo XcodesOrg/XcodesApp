@@ -13,6 +13,7 @@
 		536CFDD4263C9A8000026CE0 /* XcodesSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */; };
 		53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CBAB2B263DCC9100410495 /* XcodesAlert.swift */; };
 		63EAA4EB259944450046AB8F /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA4EA259944450046AB8F /* ProgressButton.swift */; };
+		B0403CF02AD92D7B00137C09 /* ReleaseNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */; };
 		B0C6AD042AD6E65700E64698 /* ReleaseDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */; };
 		B0C6AD0B2AD9178E00E64698 /* IdenticalBuildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */; };
 		B0C6AD0D2AD91D7900E64698 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0C2AD91D7900E64698 /* IconView.swift */; };
@@ -195,6 +196,7 @@
 		A0187D39285792D1002F46F9 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AAB037D32839BD4700017680 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB4EB0DE28541FA000FF3B1D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
+		B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseNotesView.swift; sourceTree = "<group>"; };
 		B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseDateView.swift; sourceTree = "<group>"; };
 		B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdenticalBuildView.swift; sourceTree = "<group>"; };
 		B0C6AD0C2AD91D7900E64698 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
@@ -621,6 +623,7 @@
 		E8E98A9425D863B100EC89A0 /* InfoPane */ = {
 			isa = PBXGroup;
 			children = (
+				B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */,
 				CAFBDC67259A308B003DCC5A /* InfoPane.swift */,
 				E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */,
 				B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */,
@@ -877,6 +880,7 @@
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,
 				CAE4247F259A666100B8B246 /* MainWindow.swift in Sources */,
 				CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */,
+				B0403CF02AD92D7B00137C09 /* ReleaseNotesView.swift in Sources */,
 				CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */,
 				CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */,
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,

@@ -54,7 +54,7 @@ struct InfoPane: View {
                     Divider()
 
                     Group{
-                        releaseNotes(for: xcode)
+                        ReleaseNotesView(url: xcode.releaseNotesURL)
                         ReleaseDateView(date: xcode.releaseDate)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         IdenticalBuildsView(builds: xcode.identicalBuilds)
@@ -72,28 +72,6 @@ struct InfoPane: View {
             empty
                 .frame(minWidth: 200, maxWidth: .infinity)
         }
-    }
-    
-    @ViewBuilder
-    private func releaseNotes(for xcode: Xcode) -> some View {
-        if let releaseNotesURL = xcode.releaseNotesURL {
-            Button(action: { openURL(releaseNotesURL) }) {
-                Label("ReleaseNotes", systemImage: "link")
-            }
-            .buttonStyle(LinkButtonStyle())
-            .contextMenu(menuItems: {
-              releaseNotesMenu(for: xcode)
-            })
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .help("ReleaseNotes.help")
-        } else {
-            EmptyView()
-        }
-    }
-
-    @ViewBuilder
-    private func releaseNotesMenu(for xcode: Xcode) -> some View {
-        CopyReleaseNoteButton(xcode: xcode)
     }
     
     @ViewBuilder
