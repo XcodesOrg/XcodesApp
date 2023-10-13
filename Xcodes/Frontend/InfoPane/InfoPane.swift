@@ -8,8 +8,7 @@ import struct XCModel.Compilers
 struct InfoPane: View {
     @EnvironmentObject var appState: AppState
     let selectedXcodeID: Xcode.ID?
-    @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
-    
+
     var body: some View {
         if let xcode = appState.allXcodes.first(where: { $0.id == selectedXcodeID }) {
             ScrollView {
