@@ -14,6 +14,7 @@
 		53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CBAB2B263DCC9100410495 /* XcodesAlert.swift */; };
 		63EAA4EB259944450046AB8F /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA4EA259944450046AB8F /* ProgressButton.swift */; };
 		B0403CF02AD92D7B00137C09 /* ReleaseNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */; };
+		B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CF12AD934B600137C09 /* CompatibilityView.swift */; };
 		B0C6AD042AD6E65700E64698 /* ReleaseDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */; };
 		B0C6AD0B2AD9178E00E64698 /* IdenticalBuildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */; };
 		B0C6AD0D2AD91D7900E64698 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0C2AD91D7900E64698 /* IconView.swift */; };
@@ -197,6 +198,7 @@
 		AAB037D32839BD4700017680 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		AB4EB0DE28541FA000FF3B1D /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseNotesView.swift; sourceTree = "<group>"; };
+		B0403CF12AD934B600137C09 /* CompatibilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityView.swift; sourceTree = "<group>"; };
 		B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseDateView.swift; sourceTree = "<group>"; };
 		B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdenticalBuildView.swift; sourceTree = "<group>"; };
 		B0C6AD0C2AD91D7900E64698 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
@@ -624,6 +626,7 @@
 			isa = PBXGroup;
 			children = (
 				B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */,
+				B0403CF12AD934B600137C09 /* CompatibilityView.swift */,
 				CAFBDC67259A308B003DCC5A /* InfoPane.swift */,
 				E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */,
 				B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */,
@@ -875,6 +878,7 @@
 				CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */,
 				36741BFF291E50F500A85AAE /* FileError.swift in Sources */,
 				CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */,
+				B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */,
 				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
 				CA42DD6E25AEA8B200BC0B0C /* Logger.swift in Sources */,
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,

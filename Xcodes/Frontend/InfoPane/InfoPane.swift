@@ -58,7 +58,7 @@ struct InfoPane: View {
                         ReleaseDateView(date: xcode.releaseDate)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         IdenticalBuildsView(builds: xcode.identicalBuilds)
-                        compatibility(for: xcode)
+                        CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
                         sdks(for: xcode)
                         compilers(for: xcode)
                     }
@@ -71,22 +71,6 @@ struct InfoPane: View {
         } else {
             empty
                 .frame(minWidth: 200, maxWidth: .infinity)
-        }
-    }
-    
-    @ViewBuilder
-    private func compatibility(for xcode: Xcode) -> some View {
-        if let requiredMacOSVersion = xcode.requiredMacOSVersion {
-            VStack(alignment: .leading) {
-                Text("Compatibility")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(String(format: localizeString("MacOSRequirement"), requiredMacOSVersion))
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        } else {
-            EmptyView()
         }
     }
     
