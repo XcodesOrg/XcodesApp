@@ -10,17 +10,26 @@ import SwiftUI
 import struct XCModel.SDKs
 
 struct SDKsView: View {
-    let sdks: SDKs?
+    let content: String
 
     var body: some View {
-        if let sdks = sdks {
+        if content.isEmpty {
+            EmptyView()
+        } else {
             VStack(alignment: .leading) {
                 Text("SDKs").font(.headline)
-                Text(Self.content(from: sdks)).font(.subheadline)
+                Text(content).font(.subheadline)
             }
-        } else {
-            EmptyView()
         }
+    }
+
+    init(sdks: SDKs?) {
+        guard let sdks = sdks else {
+            self.content = ""
+            return
+        }
+        let content = Self.content(from: sdks)
+        self.content = content
     }
 
     static private func content(from sdks: SDKs) -> String {
@@ -41,6 +50,7 @@ struct SDKsView: View {
             // description for each type of compilers
             return "\($0.0): \(numbers.joined(separator: ", "))"
         }.joined(separator: "\n")
+            .trimmingCharacters(in: .whitespaces)
 
         return content
     }
@@ -68,7 +78,7 @@ private struct WrapperView: View {
             SDKsView(sdks: sdks).border(.red)
             Spacer()
             Toggle(isOn: $isNil) {
-                Text("Is Nil?")
+                Text("Empty Content?")
             }
         }
         .frame(width: 200, height: 100)
