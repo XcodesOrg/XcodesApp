@@ -17,18 +17,7 @@ struct InfoPane: View {
                 Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                     .font(.title)
 
-                switch xcode.installState {
-                case .notInstalled:
-                    NotInstalledStateButtons(
-                        downloadFileSizeString: xcode.downloadFileSizeString,
-                        id: xcode.id
-                    )
-                case let .installing(installationStep):
-                    InstallationStepDetailView(installationStep: installationStep)
-                    CancelInstallButton(xcode: xcode)
-                case .installed:
-                    InstalledStateButtons(xcode: xcode)
-                }
+                InfoPaneControls(xcode: xcode)
 
                 Divider()
 
@@ -79,7 +68,7 @@ private struct WrapperView: View {
     var xcode: Xcode { xcodeDict[name]! }
 }
 
-private enum PreviewName: String, CaseIterable, Identifiable {
+enum PreviewName: String, CaseIterable, Identifiable {
     case Populated_Installed_Selected
     case Populated_Installed_Unselected
     case Populated_Uninstalled
@@ -89,7 +78,7 @@ private enum PreviewName: String, CaseIterable, Identifiable {
     var id: PreviewName { self }
 }
 
-private var xcodeDict: [PreviewName: Xcode] = [
+var xcodeDict: [PreviewName: Xcode] = [
     .Populated_Installed_Selected: .init(
         version: _versionNoMeta,
         installState: .installed(Path(_path)!),
@@ -130,7 +119,16 @@ private var xcodeDict: [PreviewName: Xcode] = [
     ),
     .Basic_Installing: .init(
         version: _versionWithMeta,
-        installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40; $0.throughput = 232_323_232; $0.fileCompletedCount = 2_323_004; $0.fileTotalCount = 1_193_939_393 })),
+        installState: .installing(.downloading(
+            progress: configure(Progress()) {
+                $0.kind = .file
+                $0.fileOperationKind = .downloading
+                $0.estimatedTimeRemaining = 123
+                $0.totalUnitCount = 11_944_848_484
+                $0.completedUnitCount = 848_444_920
+                $0.throughput = 9_211_681
+            }
+        )),
         selected: false,
         icon: nil,
         sdks: nil,

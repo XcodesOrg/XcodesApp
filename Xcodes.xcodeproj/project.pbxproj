@@ -20,6 +20,7 @@
 		B0403CF82AD991F800137C09 /* UnselectedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CF72AD991F800137C09 /* UnselectedView.swift */; };
 		B0403CFA2AD9942A00137C09 /* NotInstalledStateButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CF92AD9942A00137C09 /* NotInstalledStateButtons.swift */; };
 		B0403CFC2AD9A6BF00137C09 /* InstalledStateButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CFB2AD9A6BF00137C09 /* InstalledStateButtons.swift */; };
+		B0403CFE2ADA712C00137C09 /* InfoPaneControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CFD2ADA712C00137C09 /* InfoPaneControls.swift */; };
 		B0C6AD042AD6E65700E64698 /* ReleaseDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */; };
 		B0C6AD0B2AD9178E00E64698 /* IdenticalBuildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */; };
 		B0C6AD0D2AD91D7900E64698 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0C2AD91D7900E64698 /* IconView.swift */; };
@@ -209,6 +210,7 @@
 		B0403CF72AD991F800137C09 /* UnselectedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnselectedView.swift; sourceTree = "<group>"; };
 		B0403CF92AD9942A00137C09 /* NotInstalledStateButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotInstalledStateButtons.swift; sourceTree = "<group>"; };
 		B0403CFB2AD9A6BF00137C09 /* InstalledStateButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledStateButtons.swift; sourceTree = "<group>"; };
+		B0403CFD2ADA712C00137C09 /* InfoPaneControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPaneControls.swift; sourceTree = "<group>"; };
 		B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseDateView.swift; sourceTree = "<group>"; };
 		B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdenticalBuildView.swift; sourceTree = "<group>"; };
 		B0C6AD0C2AD91D7900E64698 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
@@ -640,6 +642,7 @@
 				B0403CF52AD9849E00137C09 /* CompilersView.swift */,
 				B0403CF12AD934B600137C09 /* CompatibilityView.swift */,
 				CAFBDC67259A308B003DCC5A /* InfoPane.swift */,
+				B0403CFD2ADA712C00137C09 /* InfoPaneControls.swift */,
 				B0403CF72AD991F800137C09 /* UnselectedView.swift */,
 				B0403CF92AD9942A00137C09 /* NotInstalledStateButtons.swift */,
 				B0403CFB2AD9A6BF00137C09 /* InstalledStateButtons.swift */,
@@ -895,6 +898,7 @@
 				36741BFF291E50F500A85AAE /* FileError.swift in Sources */,
 				CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */,
 				B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */,
+				B0403CFE2ADA712C00137C09 /* InfoPaneControls.swift in Sources */,
 				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
 				CA42DD6E25AEA8B200BC0B0C /* Logger.swift in Sources */,
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,
