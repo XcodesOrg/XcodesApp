@@ -34,16 +34,26 @@ struct XcodeCommands: Commands {
 
 struct InstallButton: View {
     @EnvironmentObject var appState: AppState
+    @State private var isLoading = false
+
     let xcode: Xcode?
-    
+
     var body: some View {
         Button(action: install) {
-            Text("Install")
-                .help("Install")
-        }
+            if isLoading {
+                ProgressView()
+                    .colorInvert()
+                    .controlSize(.small)
+            } else {
+                Text("Install")
+                    .textCase(.uppercase)
+                    .help("InstallDescription")
+            }
+        }.buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
     }
-    
+
     private func install() {
+        isLoading = true
         guard let xcode = xcode else { return }
         appState.checkMinVersionAndInstall(id: xcode.id)
     }
