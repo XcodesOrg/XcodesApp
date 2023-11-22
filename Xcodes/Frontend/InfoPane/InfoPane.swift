@@ -180,6 +180,7 @@ struct InfoPane: View {
                     ("iOS", \.iOS),
                     ("watchOS", \.watchOS),
                     ("tvOS", \.tvOS),
+                    ("visionOS", \.visionOS),
                 ], id: \.0) { row in
                     if let sdk = sdks[keyPath: row.1] {
                         Text("\(row.0): \(sdk.compactMap { $0.number }.joined(separator: ", "))")

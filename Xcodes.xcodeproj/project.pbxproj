@@ -1411,7 +1411,7 @@
 			repositoryURL = "https://github.com/xcodereleases/data";
 			requirement = {
 				kind = revision;
-				revision = b47228c688b608e34b3b84079ab6052a24c7a981;
+				revision = a43ad89e536d7a3da525fcc23fb182c37b756ecc;
 			};
 		};
 		CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */ = {
