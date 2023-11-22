@@ -9,9 +9,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout 🛎
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
-        # If you're using actions/checkout@v3 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        # If you're using actions/checkout@v4 you must set persist-credentials to false in most cases for the deployment to work correctly.
         persist-credentials: false
 
     - name: Cache 📦
