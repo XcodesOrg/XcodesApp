@@ -124,7 +124,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "Gib den %d-stelligen Code von einem Deiner Vertrauensgeräte ein:";
 "SendSMS" = "SMS senden";
-"EnterDigitCodeDescription" = "Gib den %d-stelligen Code ein der an '%@' gesendet wurde.";
+"EnterDigitCodeDescription" = "Gib den %1$d-stelligen Code ein der an '%2$@' gesendet wurde.";
 "SelectTrustedPhone" = "Wähle eine vertrauenswürdige Telefonnummer aus, um einen %d-stelligen Code via SMS zum empfangen:";
 "NoTrustedPhones" = "Dein Account verfügt über keine vertrauenswürdigen Telefonnummern, diese sind aber für Zwei-Faktor-Authentifizierung erforderlich.\n\nInformationen dazu unter https://support.apple.com/HT204915.";
 

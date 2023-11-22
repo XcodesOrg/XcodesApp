@@ -117,7 +117,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "Insira o código de %d dígitos de um de seus dispositivos confiáveis:";
 "SendSMS" = "Enviar SMS";
-"EnterDigitCodeDescription" = "Insira o código de %d dígitos enviado para %@: ";
+"EnterDigitCodeDescription" = "Insira o código de %1$d dígitos enviado para %2$@: ";
 "SelectTrustedPhone" = "Selecione um número de telefone confiável para receber um código de %d dígitos via SMS:";
 "NoTrustedPhones" = "Sua conta não possui nenhum telefone confiável, mas é necessário para autenticação de dois fatores.\n\nVer https://support.apple.com/en-ca/HT204915.";
 

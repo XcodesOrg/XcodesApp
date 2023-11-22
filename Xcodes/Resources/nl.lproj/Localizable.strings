@@ -120,7 +120,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "Voer de %d code in van een van je vertrouwde apparaten:";
 "SendSMS" = "Verstuur SMS";
-"EnterDigitCodeDescription" = "Voer de %d code in die is verstuurd naar %@: ";
+"EnterDigitCodeDescription" = "Voer de %1$d code in die is verstuurd naar %2$@: ";
 "SelectTrustedPhone" = "Selecteer een vertrouwd telefoonnumer on een %d code te ontvangen via SMS:";
 "NoTrustedPhones" = "Je account heeft geen vertrouwde telefoonnummers, dit is nodig voor two-factor authenticatie.\n\nZie https://support.apple.com/HT204915.";
 

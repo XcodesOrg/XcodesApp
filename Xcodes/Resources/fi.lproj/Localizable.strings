@@ -115,7 +115,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "Anna %d numeroinen koodi jostakin luotetusta laitteesta:";
 "SendSMS" = "Lähetä tekstiviesti";
-"EnterDigitCodeDescription" = "Anna %d numeroinen koodi, joka lähetettiin osoitteeseen %@: ";
+"EnterDigitCodeDescription" = "Anna %1$d numeroinen koodi, joka lähetettiin osoitteeseen %2$@: ";
 "SelectTrustedPhone" = "Valitse luotettu puhelinnumero saadaksesi %d numeroisen koodin tekstiviestinä:";
 "NoTrustedPhones" = "Tililläsi ei ole luotettuja puhelinnumeroita, mutta ne vaaditaan kaksivaiheiseen todentamiseen.\n\nKatso https://support.apple.com/HT204915.";
 
