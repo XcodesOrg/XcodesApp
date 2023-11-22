@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -102,6 +102,7 @@
 		CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */; };
 		CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */; };
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
+		E689540325BE8C64000EBCEA /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = E689540225BE8C64000EBCEA /* DockProgress */; };
 		E81D7EA02805250100A205FC /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D7E9F2805250100A205FC /* Collection+.swift */; };
 		E872EE4E2808D4F100D3DD8B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E872EE502808D4F100D3DD8B /* Localizable.strings */; };
 		E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87AB3C42939B65E00D72F43 /* Hardware.swift */; };
@@ -116,7 +117,6 @@
 		E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */; };
 		E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */; };
 		E8F81FC4282D8A17006CBD0F /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E8F81FC3282D8A17006CBD0F /* Sparkle */; };
-		E689540325BE8C64000EBCEA /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = E689540225BE8C64000EBCEA /* DockProgress */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1087,7 +1087,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
 				MARKETING_VERSION = 1.0.3;
@@ -1137,7 +1137,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
 				MARKETING_VERSION = 1.0.3;
@@ -1283,7 +1283,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Xcodes/Resources/Info.plist;
@@ -1307,7 +1307,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Xcodes/Resources/Info.plist;
@@ -1329,7 +1329,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				INFOPLIST_FILE = XcodesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1350,7 +1350,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				INFOPLIST_FILE = XcodesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1474,20 +1474,20 @@
 				minimumVersion = 0.6.0;
 			};
 		};
-		E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
 		E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/DockProgress";
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 3.2.0;
+			};
+		};
+		E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1537,15 +1537,15 @@
 			package = CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */;
 			productName = CombineExpectations;
 		};
-		E8F81FC3282D8A17006CBD0F /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
-		};
 		E689540225BE8C64000EBCEA /* DockProgress */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */;
 			productName = DockProgress;
+		};
+		E8F81FC3282D8A17006CBD0F /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
