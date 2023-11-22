@@ -6,10 +6,12 @@ struct PinCodeTextField: NSViewRepresentable {
 
     @Binding var code: String
     let numberOfDigits: Int
+    let complete: (String) -> Void
 
     func makeNSView(context: Context) -> NSViewType {
         let view = PinCodeTextView(numberOfDigits: numberOfDigits, itemSpacing: 10)
-        view.codeDidChange = { c in code = c  }
+        view.codeDidChange = { c in code = c }
+        view.codeDidComplete = { complete($0) }
         return view
     }
     
@@ -29,8 +31,9 @@ struct PinCodeTextField_Previews: PreviewProvider {
     struct PreviewContainer: View {
         @State private var code = "1234567890"
         var body: some View {
-            PinCodeTextField(code: $code, numberOfDigits: 11)
-                .padding()
+            PinCodeTextField(code: $code, numberOfDigits: 11) {
+                print("Input is complete \($0)")
+            }.padding()
         }
     }
 
@@ -52,10 +55,16 @@ class PinCodeTextView: NSControl, NSTextFieldDelegate {
                 handler(String(code.compactMap { $0 }))
             }
             updateText()
+            
+            if code.compactMap({ $0 }).count == numberOfDigits,
+               let handler = codeDidComplete {
+                handler(String(code.compactMap { $0 }))
+            }
         }
     }
     var codeDidChange: ((String) -> Void)? = nil
-    
+    var codeDidComplete: ((String) -> Void)? = nil
+
     private let numberOfDigits: Int
     private let stackView: NSStackView = .init(frame: .zero)
     private var characterViews: [PinCodeCharacterTextField] = []
