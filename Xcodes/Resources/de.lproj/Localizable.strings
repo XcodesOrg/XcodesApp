@@ -76,7 +76,7 @@
 // Download Preference Pane
 "Downloads" = "Downloads";
 "DataSource" = "Datenquelle";
-"DataSourceDescription" = "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitsgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten.";
+"DataSourceDescription" = "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten.";
 "Downloader" = "Downloader";
 "DownloaderDescription" = "aria2 verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Es ist zusammen mit seinem Quellcode in Xcode enthalten, um seiner GPLv2-Lizenz nachzukommen.\n\nURLSession ist Apples Standard-API für URL-Requests.";
 
@@ -87,7 +87,7 @@
 "Change" = "Ändern";
 "Active/Select" = "Aktiv/Auswählen";
 "InstallDirectory" = "Installationsverzeichnis";
-"InstallPathDescription" = "Xcodes sucht and installiert in ein einzelnes Verzeichnis. Standard (und empfohlen beizubehalten) ist /Applications. Änderungen am Speicherort von Xcode können dazu führen, dass andere Apps/Dienste aufhören zu funktionieren. ";
+"InstallPathDescription" = "Xcodes sucht and installiert in ein einzelnes Verzeichnis. Standard (und empfohlen beizubehalten) ist /Programme. Änderungen am Speicherort von Xcode können dazu führen, dass andere Apps/Dienste aufhören zu funktionieren. ";
 
 "OnSelectDoNothing" = "Name beibehalten als Xcode-X.X.X.app";
 "OnSelectDoNothingDescription" = "Bei Auswahl wird der Name mit Version beibehalten, z. B. Xcode-13.4.1.app";
@@ -124,7 +124,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "Gib den %d-stelligen Code von einem Deiner Vertrauensgeräte ein:";
 "SendSMS" = "SMS senden";
-"EnterDigitCodeDescription" = "Gib den %d-stelligen Code ein der an '%@' gesendet wurde.";
+"EnterDigitCodeDescription" = "Gib den %1$d-stelligen Code ein der an '%2$@' gesendet wurde.";
 "SelectTrustedPhone" = "Wähle eine vertrauenswürdige Telefonnummer aus, um einen %d-stelligen Code via SMS zum empfangen:";
 "NoTrustedPhones" = "Dein Account verfügt über keine vertrauenswürdigen Telefonnummern, diese sind aber für Zwei-Faktor-Authentifizierung erforderlich.\n\nInformationen dazu unter https://support.apple.com/HT204915.";
 
@@ -163,7 +163,7 @@
 "Alert.Uninstall.Error.Message.FileNotFound" = "Datei \"%@\" konnte nicht gefunden werden.";
 
 // Cancel Install
-"Alert.CancelInstall.Title" = "Bist du sicher, dass Du die installation von Xcode %@ anhalten möchtest?";
+"Alert.CancelInstall.Title" = "Bist du sicher, dass Du die Installation von Xcode %@ anhalten möchtest?";
 "Alert.CancelInstall.Message" = "Jeglicher Fortschritt wird verworfen.";
 "Alert.CancelInstall.PrimaryButton" = "Installation anhalten";
 
@@ -173,8 +173,8 @@
 "Alert.PrivilegedHelper.Error.Title" = "Installation des Helfers nicht möglich";
 
 // Min MacOS Supported
-"Alert.MinSupported.Title" = "Minimalanforderungen nicht erfülltt";
-"Alert.MinSupported.Message" = "Xcode %@ erfordert MacOS %@ aber es läuft nur MacOS %@. Möchtest Du es trotzdem installieren?";
+"Alert.MinSupported.Title" = "Minimalanforderungen nicht erfüllt";
+"Alert.MinSupported.Message" = "Xcode %@ erfordert macOS %@ aber es läuft nur macOS %@. Möchtest Du es trotzdem installieren?";
 
 // Install
 "Alert.Install.Error.Title" = "Installation von Xcode nicht möglich";
@@ -225,7 +225,7 @@
 "Notification.FinishedInstalling" = "Installation beendet";
 
 
-"HelperClient.error" = "Unable to communicate with privileged helper.";
+"HelperClient.error" = "Kommunikation mit privilegiertem Helfer nicht möglich.";
 ///++
 // Notifications
 "Notification.NewXcodeVersion.Title" = "Neue Xcode-Versionen";

@@ -4,12 +4,12 @@ The easiest way to install and switch between multiple versions of Xcode.
 
 _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](https://github.com/XcodesOrg/xcodes)._
 
-![CI](https://github.com/XcodesOrg/Xcodes.app/workflows/CI/badge.svg)
+![CI](https://github.com/XcodesOrg/XcodesApp/workflows/CI/badge.svg)
 
 ![](screenshot_light.png#gh-light-mode-only)
 ![](screenshot_dark.png#gh-dark-mode-only)
 
-### :tada: Announcment
+### :tada: Announcement
 
 XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 
@@ -25,14 +25,14 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 
 ## Experiments
 
-- Thanks to the wonderful work of [https://github.com/saagarjha/unxip](https://github.com/saagarjha/unxip), turn on the experiment to increase your unxipping time by up to 70%! More can be found on his repo, but bugs, high memory may occur if used. 
+- Thanks to the wonderful work of [https://github.com/saagarjha/unxip](https://github.com/saagarjha/unxip), turn on the experiment to increase your unxipping time by up to 70%! More can be found on his repo, but bugs, high memory may occur if used.
 
-![](experiment_light.jpg#gh-light-mode-only)
-![](experiment_dark.jpg#gh-dark-mode-only)
+![](experiment_light.png#gh-light-mode-only)
+![](experiment_dark.png#gh-dark-mode-only)
 
 ## Localization
 
-Xcodes supports localization in several languages. 
+Xcodes supports localization in several languages.
 
 The following languages are supported because of the following community users!
 
@@ -45,22 +45,23 @@ The following languages are supported because of the following community users!
 |Finnish 🇫🇮 |[@marcusziade](https://github.com/marcusziade)|Chinese-Traditional 🇹🇼|[@itszero](https://github.com/itszero)|
 |Ukranian 🇺🇦 |[@gelosi](https://github.com/gelosi)|Japanese 🇯🇵|[@tatsuz0u](https://github.com/tatsuz0u)|
 |German 🇩🇪|[@drct](https://github.com/drct)|Dutch 🇳🇱|[@jfversluis](https://github/com/jfversluis)|
-|Brazilian Portuguese 🇧🇷|[@brunomunizaf](https://github.com/brunomunizaf)||
+|Brazilian Portuguese 🇧🇷|[@brunomunizaf](https://github.com/brunomunizaf)|Polish 🇵🇱|[@jakex7](https://github.com/jakex7)|
+|Catalan|[@ferranabello](https://github.com/ferranabello)|
 
-Want to add more languages? Simply create a PR with the updated strings file. 
+Want to add more languages? Simply create a PR with the updated strings file.
 ## Installation
 
 Xcodes.app runs on macOS Big Sur 11.0 or later.
 
-### Homebrew Cask
+### Install with Homebrew
+
+Developer ID-signed and notarized release builds are available on Homebrew. These don't require Xcode to already be installed in order to use.
 
 ```sh
 brew install --cask xcodes
-
-# These are Developer ID-signed and notarized release builds and don't require Xcode to already be installed in order to use.
 ```
 
-### Download a release
+### Manually install
 
 1. Download the latest version [here](https://github.com/XcodesOrg/XcodesApp/releases/latest) using the **Xcodes.zip** asset. These are Developer ID-signed and notarized release builds and don't require Xcode to already be installed in order to use.
 2. Move the unzipped `Xcodes.app` to your `/Applications` directory
@@ -79,7 +80,7 @@ You'll need macOS 12 Big Sur and Xcode 13 in order to build and run Xcodes.app.
 # combine for universal binary
  lipo -create -output unxip unxip_intel unxip_m1  
 # check it
- lipo -archs unxip 
+ lipo -archs unxip
 ```
 
 Notable design decisions are recorded in [DECISIONS.md](./DECISIONS.md). The Apple authentication flow is described in [Apple.paw](./Apple.paw), which will allow you to play with the API endpoints that are involved using the [Paw](https://paw.cloud) app.

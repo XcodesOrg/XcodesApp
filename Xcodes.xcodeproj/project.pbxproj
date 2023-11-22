@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -100,6 +100,7 @@
 		CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */; };
 		CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */; };
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
+		E689540325BE8C64000EBCEA /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = E689540225BE8C64000EBCEA /* DockProgress */; };
 		E81D7EA02805250100A205FC /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D7E9F2805250100A205FC /* Collection+.swift */; };
 		E872EE4E2808D4F100D3DD8B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E872EE502808D4F100D3DD8B /* Localizable.strings */; };
 		E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87AB3C42939B65E00D72F43 /* Hardware.swift */; };
@@ -175,6 +176,7 @@
 
 /* Begin PBXFileReference section */
 		15FAD1652811D15600B63259 /* hi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = hi; path = hi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		23703D6E29EBF63500DFA346 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		25E2FA26284769A00014A318 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		327DF109286ABE6B00D694D5 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadPreferencePane.swift; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		53CBAB2B263DCC9100410495 /* XcodesAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesAlert.swift; sourceTree = "<group>"; };
 		58F743C02810A34900EEC0F3 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5AA8A6102877EDAD009ECDB0 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5C3927ED28E4B486007B5119 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63EAA4EA259944450046AB8F /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		6CA3A090282EBE72005A6E35 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7CBF284E28606D2C001AA66B /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -330,6 +333,7 @@
 				E8F81FC4282D8A17006CBD0F /* Sparkle in Frameworks */,
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
+				E689540325BE8C64000EBCEA /* DockProgress in Frameworks */,
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
 				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
@@ -672,6 +676,7 @@
 				CA9FF86C25951C6E00E47BAF /* XCModel */,
 				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
 				E8F81FC3282D8A17006CBD0F /* Sparkle */,
+				E689540225BE8C64000EBCEA /* DockProgress */,
 				E8FD5726291EE4AC001E004C /* AsyncNetworkService */,
 				E8C0EB19291EF43E0081528A /* XcodesKit */,
 				E8F44A1D296B4CD7002D6592 /* Path */,
@@ -743,8 +748,10 @@
 				de,
 				uk,
 				fi,
+				ca,
 				"pt-BR",
 				nl,
+				pl,
 			);
 			mainGroup = CAD2E7952449574E00113D76;
 			packageReferences = (
@@ -756,6 +763,7 @@
 				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
 				CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */,
 				E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */,
+				E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */,
 				E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */,
 				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */,
 			);
@@ -963,8 +971,10 @@
 				A0187D39285792D1002F46F9 /* de */,
 				7CBF284E28606D2C001AA66B /* uk */,
 				5AA8A6102877EDAD009ECDB0 /* fi */,
+				5C3927ED28E4B486007B5119 /* ca */,
 				327DF109286ABE6B00D694D5 /* pt-BR */,
 				E2AFDCCA28F024D000864ADD /* nl */,
+				23703D6E29EBF63500DFA346 /* pl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1090,7 +1100,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
 				MARKETING_VERSION = 1.0.3;
@@ -1140,7 +1150,7 @@
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
 				MARKETING_VERSION = 1.0.3;
@@ -1332,7 +1342,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				INFOPLIST_FILE = XcodesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1353,7 +1363,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = PBH8V487HB;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				INFOPLIST_FILE = XcodesTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1417,6 +1427,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/xcodereleases/data";
 			requirement = {
+				kind = revision;
+				revision = a43ad89e536d7a3da525fcc23fb182c37b756ecc;
 				branch = main;
 				kind = branch;
 			};
@@ -1467,6 +1479,14 @@
 			requirement = {
 				kind = upToNextMinorVersion;
 				minimumVersion = 0.6.0;
+			};
+		};
+		E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/DockProgress";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 3.2.0;
 			};
 		};
 		E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */ = {
@@ -1534,6 +1554,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */;
 			productName = CombineExpectations;
+		};
+		E689540225BE8C64000EBCEA /* DockProgress */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */;
+			productName = DockProgress;
 		};
 		E8C0EB19291EF43E0081528A /* XcodesKit */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -86,16 +86,23 @@ struct MainToolbarModifier: ViewModifier {
             .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
             .help("InfoDescription")
             
-            Button(action: {
-                if #available(macOS 13, *) {
-                    NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                } else {
-                    NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                }   
-            }, label: {
-                Label("Preferences", systemImage: "gearshape")
-            })
-            .help("PreferencesDescription")
+            if #available(macOS 14, *) {
+                SettingsLink(label: {
+                    Label("Preferences", systemImage: "gearshape")
+                })
+                .help("PreferencesDescription")
+            } else {
+                Button(action: {
+                    if #available(macOS 13, *) {
+                        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                    } else {
+                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                    }
+                }, label: {
+                    Label("Preferences", systemImage: "gearshape")
+                })
+                .help("PreferencesDescription")
+            }
             
             TextField("Search", text: $searchText)
                 .textFieldStyle(RoundedBorderTextFieldStyle())

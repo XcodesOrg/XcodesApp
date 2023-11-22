@@ -23,9 +23,18 @@
         "package": "XcodeReleases",
         "repositoryURL": "https://github.com/xcodereleases/data",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "a43ad89e536d7a3da525fcc23fb182c37b756ecc",
           "version": null
+        }
+      },
+      {
+        "package": "DockProgress",
+        "repositoryURL": "https://github.com/sindresorhus/DockProgress",
+        "state": {
+          "branch": null,
+          "revision": "7100b68571e2dafe3a06ad5905b80fc3b0107b4b",
+          "version": "3.2.0"
         }
       },
       {

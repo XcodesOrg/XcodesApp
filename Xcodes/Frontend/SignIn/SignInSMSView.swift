@@ -15,7 +15,9 @@ struct SignInSMSView: View {
             
             HStack {
                 Spacer()
-                PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode.length)
+                PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode.length) {
+                    appState.submitSecurityCode(.sms(code: $0, phoneNumberId: trustedPhoneNumber.id), sessionData: sessionData)
+                }
                 Spacer()
             }
             .padding()

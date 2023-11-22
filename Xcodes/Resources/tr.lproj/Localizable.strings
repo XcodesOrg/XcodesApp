@@ -127,7 +127,7 @@
 // SMS/2FA
 "DigitCodeDescription" = "Güvenilir cihazından aldığın %d rakamlı kodu gir:";
 "SendSMS" = "SMS Gönder";
-"EnterDigitCodeDescription" = "%@ kaynağından gönderilen %d rakamlı kodu gir: ";
+"EnterDigitCodeDescription" = "%2$@ kaynağından gönderilen %1$d rakamlı kodu gir: ";
 "SelectTrustedPhone" = "%d rakamlı kodu SMS olarak almak için güvenilir telefon numarasını seç:";
 "NoTrustedPhones" = "Hesabına tanımlı güvenli bir telefon numarası yok, fakat iki aşamalı doğrulama için gerekmektedir.\n\nDaha fazlası için https://support.apple.com/HT204915 adresine bakın.";
 
