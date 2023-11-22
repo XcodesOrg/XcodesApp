@@ -183,6 +183,7 @@
 		53CBAB2B263DCC9100410495 /* XcodesAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodesAlert.swift; sourceTree = "<group>"; };
 		58F743C02810A34900EEC0F3 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5AA8A6102877EDAD009ECDB0 /* fi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fi; path = fi.lproj/Localizable.strings; sourceTree = "<group>"; };
+		5C3927ED28E4B486007B5119 /* ca */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ca; path = ca.lproj/Localizable.strings; sourceTree = "<group>"; };
 		63EAA4EA259944450046AB8F /* ProgressButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressButton.swift; sourceTree = "<group>"; };
 		6CA3A090282EBE72005A6E35 /* zh-Hant */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hant"; path = "zh-Hant.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		7CBF284E28606D2C001AA66B /* uk */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = uk; path = uk.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -733,6 +734,7 @@
 				de,
 				uk,
 				fi,
+				ca,
 				"pt-BR",
 				nl,
 				pl,
@@ -952,6 +954,7 @@
 				A0187D39285792D1002F46F9 /* de */,
 				7CBF284E28606D2C001AA66B /* uk */,
 				5AA8A6102877EDAD009ECDB0 /* fi */,
+				5C3927ED28E4B486007B5119 /* ca */,
 				327DF109286ABE6B00D694D5 /* pt-BR */,
 				E2AFDCCA28F024D000864ADD /* nl */,
 				23703D6E29EBF63500DFA346 /* pl */,
