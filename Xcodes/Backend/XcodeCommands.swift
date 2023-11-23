@@ -152,7 +152,7 @@ struct RevealButton: View {
     
     private func reveal() {
         guard let xcode = xcode else { return }
-        appState.reveal(xcode: xcode)
+        appState.reveal(xcode.installedPath)
     }
 }
 
@@ -174,8 +174,9 @@ struct CopyPathButton: View {
 }
 
 struct CopyReleaseNoteButton: View {
+  let url: URL?
+    
   @EnvironmentObject var appState: AppState
-  let xcode: Xcode?
 
   var body: some View {
     Button(action: copyReleaseNote) {
@@ -185,8 +186,8 @@ struct CopyReleaseNoteButton: View {
   }
 
   private func copyReleaseNote() {
-    guard let xcode = xcode else { return }
-    appState.copyReleaseNote(xcode: xcode)
+    guard let url = url else { return }
+    appState.copyReleaseNote(from: url)
   }
 }
 

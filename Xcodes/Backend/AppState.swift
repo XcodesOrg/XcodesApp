@@ -564,10 +564,10 @@ class AppState: ObservableObject {
         )
     }
     
-    func reveal(xcode: Xcode) {
+    func reveal(_ path: Path?) {
         // TODO: show error if not
-        guard let installedXcodePath = xcode.installedPath else { return }
-        NSWorkspace.shared.activateFileViewerSelecting([installedXcodePath.url])
+        guard let path = path else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([path.url])
     }
     
     func reveal(path: String) {
@@ -653,8 +653,8 @@ class AppState: ObservableObject {
         NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
     }
 
-    func copyReleaseNote(xcode: Xcode) {
-      guard let url = xcode.releaseNotesURL else { return }
+    func copyReleaseNote(from url: URL?) {
+      guard let url = url else { return }
       NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
       NSPasteboard.general.writeObjects([url as NSURL])
       NSPasteboard.general.setString(url.absoluteString, forType: .string)
