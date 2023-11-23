@@ -824,7 +824,7 @@ class AppState: ObservableObject {
     
     // MARK: Runtimes
     func runtimeInstallPath(xcode: Xcode, runtime: DownloadableRuntime) -> Path? {
-        if let coreSimulatorInfo = installedRuntimes.filter({ $0.runtimeInfo.build == runtime.sdkBuildUpdate }).first {
+        if let coreSimulatorInfo = installedRuntimes.filter({ $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate }).first {
             let urlString = coreSimulatorInfo.path["relative"]!
             // app was not allowed to open up file:// url's so remove
             let fileRemovedString = urlString.replacingOccurrences(of: "file://", with: "")

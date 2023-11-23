@@ -54,6 +54,8 @@ extension AppState {
                     guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
                     self.downloadableRuntimes[index].installState = .installed
                 }
+                
+                updateInstalledRuntimes()
             }
             catch {
                 Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
