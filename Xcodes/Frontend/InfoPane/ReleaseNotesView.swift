@@ -30,29 +30,9 @@ struct ReleaseNotesView: View {
     }
 }
 
-struct ReleaseNotesView_Preview: PreviewProvider {
-    static var previews: some View {
-        WrapperView()
-    }
-}
+#Preview {
+  let url = URL(string: "https://developer.apple.com/documentation/xcode-release-notes/xcode-12_3-release-notes/")!
 
-private struct WrapperView: View {
-    @State var hasURL = false
-    var url: URL? {
-        hasURL
-        ? nil
-        : URL(string: "https://developer.apple.com/documentation/xcode-release-notes/xcode-12_3-release-notes/")!
-    }
-
-    var body: some View {
-        VStack {
-            ReleaseNotesView(url: url).border(.red)
-            Spacer()
-            Toggle(isOn: $hasURL) {
-                Text("Has URL?")
-            }
-        }
-        .frame(width: 300, height: 100)
-        .padding()
-    }
+  return ReleaseNotesView(url: url)
+    .padding()
 }

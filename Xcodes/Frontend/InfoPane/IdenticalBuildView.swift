@@ -49,31 +49,14 @@ struct IdenticalBuildsView: View {
     }
 }
 
-struct IdenticalBuildsView_Preview: PreviewProvider {
-    static var previews: some View {
-        WrapperView()
-    }
+let builds: [Version] = [.init(xcodeVersion: "15.0")!, .init(xcodeVersion: "15.1")!]
+
+#Preview("Has Some Builds") {
+  IdenticalBuildsView(builds: builds)
+    .padding()
 }
 
-private struct WrapperView: View {
-    @State var isEmpty = false
-    var builds: [Version] {
-        isEmpty
-        ? []
-        : [.init(xcodeVersion: "15.0")!,
-           .init(xcodeVersion: "15.1")!]
-    }
-
-    var body: some View {
-        VStack {
-            IdenticalBuildsView(builds: builds)
-                .border(.red)
-            Spacer()
-            Toggle(isOn: $isEmpty) {
-                Text("No Builds?")
-            }
-        }
-        .frame(width: 300, height: 100)
-        .padding()
-    }
+#Preview("No Build") {
+  IdenticalBuildsView(builds: [])
+    .padding()
 }

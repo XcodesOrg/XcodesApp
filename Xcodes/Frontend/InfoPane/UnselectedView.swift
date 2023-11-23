@@ -20,9 +20,7 @@ struct UnselectedView: View {
     }
 }
 
-struct UnselectedView_Preview: PreviewProvider {
-    static var previews: some View {
-        UnselectedView()
-            .padding()
-    }
+#Preview {
+  UnselectedView()
+    .padding()
 }

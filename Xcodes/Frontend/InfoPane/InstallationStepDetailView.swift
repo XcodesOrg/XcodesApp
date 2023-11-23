@@ -24,26 +24,25 @@ struct InstallationStepDetailView: View {
     }
 }
 
-struct InstallDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            InstallationStepDetailView(
-                installationStep: .downloading(
-                    progress: configure(Progress()) {
-                        $0.kind = .file
-                        $0.fileOperationKind = .downloading
-                        $0.estimatedTimeRemaining = 123
-                        $0.totalUnitCount = 11944848484
-                        $0.completedUnitCount = 848444920
-                        $0.throughput = 9211681
-                    }
-                )
-            )
+#Preview("Downloading") {
+  InstallationStepDetailView(
+    installationStep: .downloading(
+      progress: configure(Progress()) {
+        $0.kind = .file
+        $0.fileOperationKind = .downloading
+        $0.estimatedTimeRemaining = 123
+        $0.totalUnitCount = 11944848484
+        $0.completedUnitCount = 848444920
+        $0.throughput = 9211681
+      }
+    )
+  )
+  .padding()
+}
 
-            InstallationStepDetailView(
-                installationStep: .unarchiving
-            )
-        }
-        .padding()
-    }
+#Preview("Unarchiving") {
+    InstallationStepDetailView(
+      installationStep: .unarchiving
+    )
+    .padding()
 }

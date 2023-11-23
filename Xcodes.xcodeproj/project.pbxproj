@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		36741BFD291E4FDB00A85AAE /* DownloadPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */; };
 		36741BFF291E50F500A85AAE /* FileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36741BFE291E50F500A85AAE /* FileError.swift */; };
-		536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD1263C94DE00026CE0 /* SignedInView.swift */; };
+      536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD1263C94DE00026CE0 /* SignedInView.swift */; };
 		536CFDD4263C9A8000026CE0 /* XcodesSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */; };
 		53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53CBAB2B263DCC9100410495 /* XcodesAlert.swift */; };
 		63EAA4EB259944450046AB8F /* ProgressButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63EAA4EA259944450046AB8F /* ProgressButton.swift */; };

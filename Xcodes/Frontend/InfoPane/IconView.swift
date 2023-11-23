@@ -24,38 +24,14 @@ struct IconView: View {
     }
 }
 
-//#Preview {
-//    Group {
-//        IconView(path: "/Applications/Xcode.app")
-//        IconView()
-//    }
-//    .padding()
-//}
-
-struct IconView_Preview: PreviewProvider {
-    static var previews: some View {
-        WrapperView()
-    }
+#Preview("Installed") {
+  IconView(installState: XcodeInstallState.installed(Path("/Applications/Xcode.app")!))
+    .frame(width: 300, height: 100)
+    .padding()
 }
 
-private struct WrapperView: View {
-    @State var isIcon = false
-    var state: XcodeInstallState {
-        isIcon 
-        ? XcodeInstallState.installed(Path("/Applications/Xcode.app")!)
-        : XcodeInstallState.notInstalled
-    }
-
-    var body: some View {
-        VStack {
-            IconView(installState: state)
-                .border(.red)
-            Spacer()
-            Toggle(isOn: $isIcon) {
-                Text("Icon?")
-            }
-        }
-        .frame(width: 300, height: 100)
-        .padding()
-    }
+#Preview("Not Installed") {
+  IconView(installState: XcodeInstallState.notInstalled)
+    .frame(width: 300, height: 100)
+    .padding()
 }

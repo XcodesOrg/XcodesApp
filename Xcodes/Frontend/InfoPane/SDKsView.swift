@@ -56,32 +56,13 @@ struct SDKsView: View {
     }
 }
 
-struct SDKsView_Preview: PreviewProvider {
-    static var previews: some View {
-        WrapperView()
-    }
-}
+#Preview {
+  let sdks = SDKs(
+    macOS: .init(number: "11.1"),
+    iOS: .init(number: "14.3"),
+    watchOS: .init(number: "7.3"),
+    tvOS: .init(number: "14.3"))
 
-private struct WrapperView: View {
-    @State var isNil = false
-    var sdks: SDKs? {
-        isNil
-        ? nil
-        : SDKs(macOS: .init(number: "11.1"),
-               iOS: .init(number: "14.3"),
-               watchOS: .init(number: "7.3"),
-               tvOS: .init(number: "14.3"))
-    }
-
-    var body: some View {
-        VStack {
-            SDKsView(sdks: sdks).border(.red)
-            Spacer()
-            Toggle(isOn: $isNil) {
-                Text("Empty Content?")
-            }
-        }
-        .frame(width: 200, height: 100)
-        .padding()
-    }
+  return SDKsView(sdks: sdks)
+    .padding()
 }

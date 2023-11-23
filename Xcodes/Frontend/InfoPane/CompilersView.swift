@@ -44,36 +44,15 @@ struct CompilersView: View {
     }
 }
 
-struct CompilersView_Preview: PreviewProvider {
-    static var previews: some View {
-        WrapperView()
-    }
+#Preview {
+  let compilers = Compilers(
+    gcc: .init(number: "4"),
+    llvm_gcc: .init(number: "213"),
+    llvm: .init(number: "2.3"),
+    clang: .init(number: "7.3"),
+    swift: .init(number: "5.3.2")
+  )
+
+  return CompilersView(compilers: compilers)
+    .padding()
 }
-
-private struct WrapperView: View {
-    @State var isNil = false
-    var compilers: Compilers? {
-        isNil
-        ? nil
-        : Compilers(
-            gcc: .init(number: "4"),
-            llvm_gcc: .init(number: "213"),
-            llvm: .init(number: "2.3"),
-            clang: .init(number: "7.3"),
-            swift: .init(number: "5.3.2"))
-    }
-
-    var body: some View {
-        VStack {
-            CompilersView(compilers: compilers)
-                .border(.red)
-            Spacer()
-            Toggle(isOn: $isNil) {
-                Text("Is Nil?")
-            }
-        }
-        .frame(width: 200, height: 100)
-        .padding()
-    }
-}
-

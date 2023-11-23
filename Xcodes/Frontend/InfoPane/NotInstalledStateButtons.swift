@@ -35,34 +35,10 @@ struct NotInstalledStateButtons: View {
     }
 }
 
-struct NotInstalledStateButtons_Preview: PreviewProvider {
-    static var previews: some View {
-        WrapperView()
-    }
-}
-
-private struct WrapperView: View {
-    @State var isSizeNil = false
-
-    var downloadFileSizeString: String? {
-        isSizeNil
-        ? nil
-        : "1,19 GB"
-    }
-
-    var body: some View {
-        VStack {
-            NotInstalledStateButtons(
-                downloadFileSizeString: downloadFileSizeString,
-                id: Version(major: 12, minor: 3, patch: 0)
-            )
-            .border(.red)
-            Spacer()
-            Toggle(isOn: $isSizeNil) {
-                Text("Is Size Nil?")
-            }
-        }
-        .frame(width: 200, height: 100)
-        .padding()
-    }
+#Preview {
+  NotInstalledStateButtons(
+    downloadFileSizeString: "1,19 GB",
+    id: Version(major: 12, minor: 3, patch: 0)
+  )
+  .padding()
 }

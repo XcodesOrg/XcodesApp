@@ -29,26 +29,7 @@ struct ReleaseDateView: View {
     }
 }
 
-struct ReleaseDateView_Preview: PreviewProvider {
-    static var previews: some View {
-        WrapperView()
-    }
-}
-
-private struct WrapperView: View {
-    @State var isNil = false
-    var date: Date? { isNil ? nil : Date() }
-
-    var body: some View {
-        VStack {
-            ReleaseDateView(date: date)
-                .border(.red)
-            Spacer()
-            Toggle(isOn: $isNil) {
-                Text("Is Nil?")
-            }
-        }
-        .frame(width: 300, height: 100)
-        .padding()
-    }
+#Preview {
+  ReleaseDateView(date: Date())
+    .padding()
 }

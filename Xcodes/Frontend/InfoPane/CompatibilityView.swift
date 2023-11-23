@@ -25,32 +25,7 @@ struct CompatibilityView: View {
     }
 }
 
-struct CompatibilityView_Preview: PreviewProvider {
-    static var previews: some View {
-        WrapperView()
-    }
-}
-
-private struct WrapperView: View {
-    @State var isNil = false
-    var requiredMacOSVersion: String? {
-        isNil 
-        ? nil
-        : "10.15.4"
-    }
-
-    var body: some View {
-        VStack {
-            HStack {
-                CompatibilityView(requiredMacOSVersion: requiredMacOSVersion)
-                    .border(.red)
-            }
-            Spacer()
-            Toggle(isOn: $isNil) {
-                Text("Is Nil?")
-            }
-        }
-        .frame(width: 200, height: 100)
-        .padding()
-    }
+#Preview {
+  CompatibilityView(requiredMacOSVersion: "10.15.4")
+    .padding()
 }

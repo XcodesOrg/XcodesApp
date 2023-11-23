@@ -28,35 +28,19 @@ struct InfoPaneControls: View {
     }
 }
 
-struct InfoPaneControls_Previews: PreviewProvider {
-    static var previews: some View {
-        WrapperView()
-    }
-}
+#Preview(PreviewName.allCases[0].rawValue) { makePreviewContent(for: 0) }
+#Preview(PreviewName.allCases[1].rawValue) { makePreviewContent(for: 1) }
+#Preview(PreviewName.allCases[2].rawValue) { makePreviewContent(for: 2) }
+#Preview(PreviewName.allCases[3].rawValue) { makePreviewContent(for: 3) }
+#Preview(PreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
 
-private struct WrapperView: View {
-    @State var name: PreviewName = .Populated_Installed_Selected
+private func makePreviewContent(for index: Int) -> some View {
+  let name = PreviewName.allCases[index]
 
-    var body: some View {
-        VStack {
-            InfoPaneControls(xcode: xcode)
-                .environmentObject(configure(AppState()) {
-                    $0.allXcodes = [xcode]
-                })
-                .border(.red)
-                .frame(width: 300, height: 400)
-            Spacer()
-            Picker("Preview Name", selection: $name) {
-                ForEach(PreviewName.allCases) {
-                    Text($0.rawValue).tag($0)
-                }
-            }
-            .pickerStyle(.inline)
-
-        }
-        .frame(maxWidth: .infinity)
-        .padding()
-    }
-
-    var xcode: Xcode { xcodeDict[name]! }
+  return InfoPaneControls(xcode: xcodeDict[name]!)
+    .environmentObject(configure(AppState()) {
+      $0.allXcodes = [xcodeDict[name]!]
+    })
+    .frame(width: 300)
+    .padding()
 }
