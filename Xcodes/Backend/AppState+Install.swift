@@ -499,9 +499,9 @@ extension AppState {
             Current.notificationManager.scheduleNotification(title: xcode.id.appleDescription, body: step.description, category: .normal)
         }
     }
+    
     func setInstallationStep(of runtime: DownloadableRuntime, to step: RuntimeInstallationStep) {
         DispatchQueue.main.async {
-            
             guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
             self.downloadableRuntimes[index].installState = .installing(step)
             

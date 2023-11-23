@@ -49,9 +49,18 @@ extension AppState {
         Task {
             do {
                 try await downloadRunTimeFull(runtime: runtime)
+                
+                DispatchQueue.main.async {
+                    guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
+                    self.downloadableRuntimes[index].installState = .installed
+                }
             }
             catch {
                 Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
+                DispatchQueue.main.async {
+                    self.error = error
+                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+                }
             }
         }
         
@@ -83,6 +92,7 @@ extension AppState {
         let downloader = Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2
         Logger.appState.info("Downloading \(runtime.visibleIdentifier) with \(downloader)")
         
+        
         let url = try await self.downloadRuntime(for: runtime, downloader: downloader, progressChanged: { [unowned self] progress in
             DispatchQueue.main.async {
                 self.setInstallationStep(of: runtime, to: .downloading(progress: progress))
@@ -90,15 +100,23 @@ extension AppState {
         }).async()
         
         Logger.appState.debug("Done downloading: \(url)")
-        //self.setInstallationStep(of: runtime, to: .downloading(progress: progress))
+        DispatchQueue.main.async {
+            self.setInstallationStep(of: runtime, to: .installing)
+        }
         switch runtime.contentType {
         case .package:
-            try await self.installFromPackage(dmgURL: url, runtime: runtime)
+            // not supported yet (do we need to for old packages?)
+            throw "Installing via package not support - please install manually from \(url.description)"
         case .diskImage:
             try await self.installFromImage(dmgURL: url)
+            DispatchQueue.main.async {
+                self.setInstallationStep(of: runtime, to: .trashingArchive)
+            }
+            try Current.files.removeItem(at: url)
         }
     }
     
+    @MainActor
     func downloadRuntime(for runtime: DownloadableRuntime, downloader: Downloader, progressChanged: @escaping (Progress) -> Void) -> AnyPublisher<URL, Error> {
         // Check to see if the dmg is in the expected path in case it was downloaded but failed to install
     
@@ -139,9 +157,9 @@ extension AppState {
                                 .setFailureType(to: Error.self)
                                 .eraseToAnyPublisher()
                 
-//                return downloadXcodeWithURLSession(
-//                    availableXcode,
-//                    to: destination,
+//                return downloadRuntimeWithURLSession(
+//                    runtime,
+//                    to: expectedRuntimePath,
 //                    progressChanged: progressChanged
 //                )
             }
@@ -163,36 +181,8 @@ extension AppState {
             .eraseToAnyPublisher()
     }
     
-    
     public func installFromImage(dmgURL: URL) async throws {
-        
-        try? self.runtimeService.installRuntimeImage(dmgURL: dmgURL)
-        
-    }
-    
-    public func installFromPackage(dmgURL: URL, runtime: DownloadableRuntime) async throws {
-        Logger.appState.info("Mounting DMG")
-       
-        do {
-            let mountedUrl = try await self.runtimeService.mountDMG(dmgUrl: dmgURL)
-            
-            // 2-Get the first path under the mounted path, should be a .pkg
-            let pkgPath = Path(url: mountedUrl)!.ls().first!
-            try Path.xcodesCaches.mkdir().setCurrentUserAsOwner()
-            
-            let expandedPkgPath = Path.xcodesCaches/runtime.identifier
-            //try expandedPkgPath.mkdir()
-            Logger.appState.info("PKG Path: \(pkgPath)")
-            Logger.appState.info("Expanded PKG Path: \(expandedPkgPath)")
-            //try? Current.files.removeItem(at: expandedPkgPath.url)
-            
-            // 5-Expand (not install) the pkg to temporary path
-            try await self.runtimeService.expand(pkgPath: pkgPath, expandedPkgPath: expandedPkgPath)
-            //try await self.runtimeService.unmountDMG(mountedURL: mountedUrl)
-            
-        } catch {
-            Logger.appState.error("Error installing runtime: \(error.localizedDescription)")
-        }
+        try await self.runtimeService.installRuntimeImage(dmgURL: dmgURL)
     }
 }
 

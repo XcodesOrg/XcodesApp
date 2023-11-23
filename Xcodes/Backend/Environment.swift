@@ -240,6 +240,12 @@ public struct Files {
             return nil
         }
     }
+    
+    public var write: (Data, URL) throws -> Void = { try $0.write(to: $1) }
+
+    public func write(_ data: Data, to url: URL) throws {
+        try write(data, url)
+    }
 }
 
 private func _installedXcodes(destination: Path) -> [InstalledXcode] {

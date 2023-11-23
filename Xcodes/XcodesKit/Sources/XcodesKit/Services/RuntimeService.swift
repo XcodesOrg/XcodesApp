@@ -54,10 +54,8 @@ public struct RuntimeService {
         }
     }
     
-    public func installRuntimeImage(dmgURL: URL) throws {
-        Task {
-            _ =  try await Current.shell.installRuntimeImage(dmgURL)
-        }
+    public func installRuntimeImage(dmgURL: URL) async throws {
+        _ =  try await Current.shell.installRuntimeImage(dmgURL)
     }
     
     public func mountDMG(dmgUrl: URL) async throws -> URL {
@@ -72,13 +70,20 @@ public struct RuntimeService {
     }
     
     public func unmountDMG(mountedURL: URL) async throws {
-        let url = try await Current.shell.unmountDmg(mountedURL)
+        _ = try await Current.shell.unmountDmg(mountedURL)
     }
     
     public func expand(pkgPath: Path, expandedPkgPath: Path) async throws {
         _ = try await Current.shell.expandPkg(pkgPath.url, expandedPkgPath.url)
     }
-
+    
+    public func createPkg(pkgPath: Path, expandedPkgPath: Path) async throws {
+        _ = try await Current.shell.createPkg(pkgPath.url, expandedPkgPath.url)
+    }
+    
+    public func installPkg(pkgPath: Path, expandedPkgPath: Path) async throws {
+        _ = try await Current.shell.installPkg(pkgPath.url, expandedPkgPath.url.absoluteString)
+    }
 }
 
 extension String: Error {}

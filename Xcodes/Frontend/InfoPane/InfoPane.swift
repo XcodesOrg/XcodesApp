@@ -288,8 +288,7 @@ struct InfoPane: View {
                     switch runtime.installState {
                         
                     case .installing(let installationStep):
-                        Text("INSTALLING")
-                        InstallationStepDetailView(installationStep: installationStep)
+                        RuntimeInstallationStepDetailView(installationStep: installationStep)
                             .fixedSize(horizontal: false, vertical: true)
                     default:
                         EmptyView()

@@ -11,7 +11,7 @@ import Path
 public enum RuntimeInstallState: Equatable {
     case notInstalled
     case installing(RuntimeInstallationStep)
-    case installed(Path)
+    case installed
 
     var notInstalled: Bool {
         switch self {
