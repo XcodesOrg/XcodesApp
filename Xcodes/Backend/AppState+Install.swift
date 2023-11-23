@@ -490,7 +490,7 @@ extension AppState {
     
     // MARK: - 
     
-    func setInstallationStep(of version: Version, to step: InstallationStep) {
+    func setInstallationStep(of version: Version, to step: XcodeInstallationStep) {
         DispatchQueue.main.async {
             guard let index = self.allXcodes.firstIndex(where: { $0.version.isEquivalent(to: version) }) else { return }
             self.allXcodes[index].installState = .installing(step)
@@ -499,14 +499,13 @@ extension AppState {
             Current.notificationManager.scheduleNotification(title: xcode.id.appleDescription, body: step.description, category: .normal)
         }
     }
-    func setInstallationStep(of runtime: DownloadableRuntime, to step: InstallationStep) {
+    func setInstallationStep(of runtime: DownloadableRuntime, to step: RuntimeInstallationStep) {
         DispatchQueue.main.async {
             
             guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
             self.downloadableRuntimes[index].installState = .installing(step)
             
-        //    let xcode = self.allXcodes[index]
-           // Current.notificationManager.scheduleNotification(title: xcode.id.appleDescription, body: step.description, category: .normal)
+            Current.notificationManager.scheduleNotification(title: runtime.name, body: step.description, category: .normal)
         }
     }
 }

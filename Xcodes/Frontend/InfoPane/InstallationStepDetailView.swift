@@ -2,7 +2,7 @@ import SwiftUI
 import XcodesKit
 
 struct InstallationStepDetailView: View {
-    let installationStep: InstallationStep
+    let installationStep: XcodeInstallationStep
    
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {

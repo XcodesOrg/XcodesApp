@@ -1,14 +1,13 @@
 //
-//  InstallationStep.swift
+//  RuntimeInstallationStep.swift
 //  
 //
-//  Created by Matt Kiazyk on 2023-06-06.
+//  Created by Matt Kiazyk on 2023-11-23.
 //
 
 import Foundation
 
-// A numbered step
-public enum InstallationStep: Equatable, CustomStringConvertible {
+public enum RuntimeInstallationStep: Equatable, CustomStringConvertible {
     case downloading(progress: Progress)
     case unarchiving
     case moving(destination: String)
@@ -49,12 +48,4 @@ public enum InstallationStep: Equatable, CustomStringConvertible {
     }
 
     public var stepCount: Int { 6 }
-}
-func localizeString(_ key: String, comment: String = "") -> String {
-    if #available(macOS 12, *) {
-        return String(localized: String.LocalizationValue(key))
-    } else {
-        return NSLocalizedString(key, comment: comment)
-    }
-
 }

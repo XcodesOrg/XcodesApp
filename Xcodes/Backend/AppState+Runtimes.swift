@@ -47,7 +47,12 @@ extension AppState {
     
     func downloadRuntime(runtime: DownloadableRuntime) {
         Task {
-            try? await downloadRunTimeFull(runtime: runtime)
+            do {
+                try await downloadRunTimeFull(runtime: runtime)
+            }
+            catch {
+                Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
+            }
         }
         
 //        self.runtimePublishers[runtime.identifier] = downloadRunTimeFull(runtime: runtime)
@@ -78,33 +83,20 @@ extension AppState {
         let downloader = Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2
         Logger.appState.info("Downloading \(runtime.visibleIdentifier) with \(downloader)")
         
+        let url = try await self.downloadRuntime(for: runtime, downloader: downloader, progressChanged: { [unowned self] progress in
+            DispatchQueue.main.async {
+                self.setInstallationStep(of: runtime, to: .downloading(progress: progress))
+            }
+        }).async()
         
-        return validateADCSession(path: runtime.downloadPath)
-            .flatMap { _ in
-                // we shouldn't have to be authenticated to download runtimes
-                let downloader = Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2
-                Logger.appState.info("Downloading \(runtime.visibleIdentifier) with \(downloader)")
-                
-                return self.downloadRuntime(for: runtime, downloader: downloader, progressChanged: { [unowned self] progress in
-                    DispatchQueue.main.async {
-                        self.setInstallationStep(of: runtime, to: .downloading(progress: progress))
-                    }
-                })
-                .map { return (runtime, $0) }
-            }
-            .flatMap { runtime, url -> AnyPublisher<URL, Error> in
-                switch runtime.contentType {
-                case .package:
-                    return self.installFromPackage(dmgURL: url, runtime: runtime)
-                case .diskImage:
-                    return self.installFromImage(dmgURL: url)
-                }
-            }
-            .map { url in
-                // Done deleting
-                Logger.appState.debug("URL: \(url)")
-            }
-            .eraseToAnyPublisher()
+        Logger.appState.debug("Done downloading: \(url)")
+        //self.setInstallationStep(of: runtime, to: .downloading(progress: progress))
+        switch runtime.contentType {
+        case .package:
+            try await self.installFromPackage(dmgURL: url, runtime: runtime)
+        case .diskImage:
+            try await self.installFromImage(dmgURL: url)
+        }
     }
     
     func downloadRuntime(for runtime: DownloadableRuntime, downloader: Downloader, progressChanged: @escaping (Progress) -> Void) -> AnyPublisher<URL, Error> {
@@ -142,7 +134,7 @@ extension AppState {
                     progressChanged: progressChanged)
 
             case .urlSession:
-                
+                // TODO: Support runtime download via URL Session
                 return Just(runtime.url)
                                 .setFailureType(to: Error.self)
                                 .eraseToAnyPublisher()
@@ -171,53 +163,56 @@ extension AppState {
             .eraseToAnyPublisher()
     }
     
-    public func downloadRuntimeWithAria2(_ runtime: DownloadableRuntime, to destination: Path, aria2Path: Path, progressChanged: @escaping (Progress) -> Void) async -> URL {
+    
+    public func installFromImage(dmgURL: URL) async throws {
+        
+        try? self.runtimeService.installRuntimeImage(dmgURL: dmgURL)
         
     }
     
-    public func installFromImage(dmgURL: URL) -> AnyPublisher<URL, Error> {
-        
-        
-            try? self.runtimeService.installRuntimeImage(dmgURL: dmgURL)
-            
-            
-        return Just(dmgURL)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-        
-    }
-    
-    public func installFromPackage(dmgURL: URL, runtime: DownloadableRuntime) -> AnyPublisher<URL, Error> {
+    public func installFromPackage(dmgURL: URL, runtime: DownloadableRuntime) async throws {
         Logger.appState.info("Mounting DMG")
-        Task {
-            do {
-                let mountedUrl = try await self.runtimeService.mountDMG(dmgUrl: dmgURL)
-                
-                // 2-Get the first path under the mounted path, should be a .pkg
-                let pkgPath = Path(url: mountedUrl)!.ls().first!
-                try Path.xcodesCaches.mkdir().setCurrentUserAsOwner()
-                
-                let expandedPkgPath = Path.xcodesCaches/runtime.identifier
-                //try expandedPkgPath.mkdir()
-                Logger.appState.info("PKG Path: \(pkgPath)")
-                Logger.appState.info("Expanded PKG Path: \(expandedPkgPath)")
-                //try? Current.files.removeItem(at: expandedPkgPath.url)
-                
-                // 5-Expand (not install) the pkg to temporary path
-                try await self.runtimeService.expand(pkgPath: pkgPath, expandedPkgPath: expandedPkgPath)
-                //try await self.runtimeService.unmountDMG(mountedURL: mountedUrl)
-                
-            } catch {
-                Logger.appState.error("Error installing runtime: \(error.localizedDescription)")
-            }
-            
-        }
        
-        
-        
-        return Just(dmgURL)
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+        do {
+            let mountedUrl = try await self.runtimeService.mountDMG(dmgUrl: dmgURL)
+            
+            // 2-Get the first path under the mounted path, should be a .pkg
+            let pkgPath = Path(url: mountedUrl)!.ls().first!
+            try Path.xcodesCaches.mkdir().setCurrentUserAsOwner()
+            
+            let expandedPkgPath = Path.xcodesCaches/runtime.identifier
+            //try expandedPkgPath.mkdir()
+            Logger.appState.info("PKG Path: \(pkgPath)")
+            Logger.appState.info("Expanded PKG Path: \(expandedPkgPath)")
+            //try? Current.files.removeItem(at: expandedPkgPath.url)
+            
+            // 5-Expand (not install) the pkg to temporary path
+            try await self.runtimeService.expand(pkgPath: pkgPath, expandedPkgPath: expandedPkgPath)
+            //try await self.runtimeService.unmountDMG(mountedURL: mountedUrl)
+            
+        } catch {
+            Logger.appState.error("Error installing runtime: \(error.localizedDescription)")
+        }
     }
-    
+}
+
+extension AnyPublisher {
+    func async() async throws -> Output {
+        try await withCheckedThrowingContinuation { continuation in
+            var cancellable: AnyCancellable?
+            
+            cancellable = first()
+                .sink { result in
+                    switch result {
+                    case .finished:
+                        break
+                    case let .failure(error):
+                        continuation.resume(throwing: error)
+                    }
+                    cancellable?.cancel()
+                } receiveValue: { value in
+                    continuation.resume(with: .success(value))
+                }
+        }
+    }
 }

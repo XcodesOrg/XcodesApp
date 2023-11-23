@@ -8,9 +8,9 @@
 import Foundation
 import Path
 
-public enum InstallState: Equatable {
+public enum XcodeInstallState: Equatable {
     case notInstalled
-    case installing(InstallationStep)
+    case installing(XcodeInstallationStep)
     case installed(Path)
 
     var notInstalled: Bool {

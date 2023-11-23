@@ -4,6 +4,8 @@ import os.log
 import Path
 import XcodesKit
 
+public typealias ProcessOutput = (status: Int32, out: String, err: String)
+
 extension Process {
     @discardableResult
     static func run(_ executable: any Pathish, workingDirectory: URL? = nil, input: String? = nil, _ arguments: String...) -> AnyPublisher<ProcessOutput, Error> {
