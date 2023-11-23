@@ -59,7 +59,7 @@ struct InfoPane: View {
                         IdenticalBuildsView(builds: xcode.identicalBuilds)
                         CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
                         SDKsView(sdks: xcode.sdks)
-                        compilers(for: xcode)
+                        CompilersView(compilers: xcode.compilers)
                     }
 
                     Spacer()
@@ -70,33 +70,6 @@ struct InfoPane: View {
         } else {
             empty
                 .frame(minWidth: 200, maxWidth: .infinity)
-        }
-    }
-
-    @ViewBuilder
-    private func compilers(for xcode: Xcode) -> some View {
-        if let compilers = xcode.compilers {
-            VStack(alignment: .leading) {
-                Text("Compilers")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                ForEach([
-                    ("Swift", \Compilers.swift),
-                    ("Clang", \.clang),
-                    ("LLVM", \.llvm),
-                    ("LLVM GCC", \.llvm_gcc),
-                    ("GCC", \.gcc),
-                ], id: \.0) { row in
-                    if let sdk = compilers[keyPath: row.1] {
-                        Text("\(row.0): \(sdk.compactMap { $0.number }.joined(separator: ", "))")
-                            .font(.subheadline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
-                }
-            }
-        } else {
-            EmptyView()
         }
     }
 
