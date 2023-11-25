@@ -59,13 +59,13 @@ struct MainToolbarModifier: ViewModifier {
                             .labelStyle(TitleOnlyLabelStyle())
                             .foregroundColor(.accentColor)
                     }
-                case .releasePlusBeta:
+                case .releasePlusNewBetas:
                     if #available(macOS 11.3, *) {
-                        Label("ReleasePlusBetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        Label("ReleasePlusNewBetas", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .labelStyle(TitleAndIconLabelStyle())
                             .foregroundColor(.accentColor)
                     } else {
-                        Label("ReleasePlusBetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        Label("ReleasePlusNewBetas", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .labelStyle(TitleOnlyLabelStyle())
                             .foregroundColor(.accentColor)
                     }
