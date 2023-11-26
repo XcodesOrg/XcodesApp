@@ -39,16 +39,12 @@ struct InstallButton: View {
     let xcode: Xcode?
 
     var body: some View {
-        Button(action: install) {
-            if isLoading {
-                ProgressView()
-                    .colorInvert()
-                    .controlSize(.small)
-            } else {
-                Text("Install")
-                    .textCase(.uppercase)
-                    .help("InstallDescription")
-            }
+        ProgressButton(isInProgress: isLoading) {
+            install()
+        } label: {
+            Text("Install")
+                .textCase(.uppercase)
+                .help("InstallDescription")
         }.buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
     }
 
