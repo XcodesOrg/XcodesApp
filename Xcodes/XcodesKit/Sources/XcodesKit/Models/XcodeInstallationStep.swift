@@ -1,7 +1,14 @@
+//
+//  InstallationStep.swift
+//  
+//
+//  Created by Matt Kiazyk on 2023-06-06.
+//
+
 import Foundation
 
-/// A numbered step
-enum InstallationStep: Equatable, CustomStringConvertible {
+// A numbered step
+public enum XcodeInstallationStep: Equatable, CustomStringConvertible {
     case downloading(progress: Progress)
     case unarchiving
     case moving(destination: String)
@@ -9,11 +16,11 @@ enum InstallationStep: Equatable, CustomStringConvertible {
     case checkingSecurity
     case finishing
 
-    var description: String {
+    public var description: String {
         "(\(stepNumber)/\(stepCount)) \(message)"
     }
 
-    var message: String {
+    public var message: String {
         switch self {
         case .downloading:
             return localizeString("Downloading")
@@ -30,7 +37,7 @@ enum InstallationStep: Equatable, CustomStringConvertible {
         }
     }
 
-    var stepNumber: Int {
+    public var stepNumber: Int {
         switch self {
         case .downloading:      return 1
         case .unarchiving:      return 2
@@ -41,5 +48,14 @@ enum InstallationStep: Equatable, CustomStringConvertible {
         }
     }
 
-    var stepCount: Int { 6 }
+    public var stepCount: Int { 6 }
+}
+
+func localizeString(_ key: String, comment: String = "") -> String {
+    if #available(macOS 12, *) {
+        return String(localized: String.LocalizationValue(key))
+    } else {
+        return NSLocalizedString(key, comment: comment)
+    }
+
 }

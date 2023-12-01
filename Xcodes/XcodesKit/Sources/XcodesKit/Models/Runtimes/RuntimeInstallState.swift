@@ -1,25 +1,31 @@
+//
+//  RuntimeInstallState.swift
+//
+//
+//  Created by Matt Kiazyk on 2023-11-23.
+//
+
 import Foundation
 import Path
-import XcodesKit
 
-enum XcodeInstallState: Equatable {
+public enum RuntimeInstallState: Equatable {
     case notInstalled
-    case installing(XcodeInstallationStep)
-    case installed(Path)
+    case installing(RuntimeInstallationStep)
+    case installed
 
     var notInstalled: Bool {
         switch self {
         case .notInstalled: return true
         default: return false
         }
-    }    
-    var installing: Bool { 
+    }
+    var installing: Bool {
         switch self {
         case .installing: return true
         default: return false
         }
     }
-    var installed: Bool { 
+    var installed: Bool {
         switch self {
         case .installed: return true
         default: return false

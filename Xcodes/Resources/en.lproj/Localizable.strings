@@ -40,6 +40,7 @@
 "Compilers" = "Compilers";
 "DownloadSize" = "Download Size";
 "NoXcodeSelected" = "No Xcode Selected";
+"Platforms" = "Platforms";
 
 // Installation Steps
 // When localizing. Items will be replaced in order. ie "Step 1 of 6: Downloading"

@@ -22,8 +22,9 @@ struct InfoPane: View {
                 Divider()
 
                 Group {
-                    ReleaseNotesView(url: xcode.releaseNotesURL)
+                    RuntimesView(xcode: xcode)
                     ReleaseDateView(date: xcode.releaseDate)
+                    ReleaseNotesView(url: xcode.releaseNotesURL)
                     IdenticalBuildsView(builds: xcode.identicalBuilds)
                     CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
                     SDKsView(sdks: xcode.sdks)
@@ -44,13 +45,12 @@ struct InfoPane: View {
 
 private func makePreviewContent(for index: Int) -> some View {
   let name = PreviewName.allCases[index]
-
-  return InfoPane(xcode: xcodeDict[name]!)
-    .environmentObject(configure(AppState()) {
-      $0.allXcodes = [xcodeDict[name]!]
-    })
-    .frame(width: 300, height: 400)
-    .padding()
+    return InfoPane(xcode: xcodeDict[name]!)
+        .environmentObject(configure(AppState()) {
+          $0.allXcodes = [xcodeDict[name]!]
+        })
+        .frame(width: 300, height: 400)
+            .padding()
 }
 
 enum PreviewName: String, CaseIterable, Identifiable {

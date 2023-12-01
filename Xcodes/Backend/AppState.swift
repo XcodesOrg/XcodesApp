@@ -8,9 +8,11 @@ import Path
 import Version
 import os.log
 import DockProgress
+import XcodesKit
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
+    internal let runtimeService = RuntimeService()
    
     // MARK: - Published Properties
     
@@ -100,10 +102,17 @@ class AppState: ObservableObject {
             Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
         }
     }
+    
+    // MARK: - Runtimes
+    
+    @Published var downloadableRuntimes: [DownloadableRuntime] = []
+    @Published var installedRuntimes: [CoreSimulatorImage] = []
+
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
     private var installationPublishers: [Version: AnyCancellable] = [:]
+    internal var runtimePublishers: [String: AnyCancellable] = [:]
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
     private var autoInstallTimer: Timer?
@@ -150,9 +159,11 @@ class AppState: ObservableObject {
     init() {
         guard !isTesting else { return }
         try? loadCachedAvailableXcodes()
+        try? loadCacheDownloadableRuntimes()
         checkIfHelperIsInstalled()
         setupAutoInstallTimer()
         setupDefaults()
+        updateInstalledRuntimes()
     }
     
     func setupDefaults() {
@@ -180,9 +191,21 @@ class AppState: ObservableObject {
     func validateADCSession(path: String) -> AnyPublisher<Void, Error> {
         return Current.network.dataTask(with: URLRequest.downloadADCAuth(path: path))
             .receive(on: DispatchQueue.main)
-            .tryMap { _ in
+            .tryMap { result -> Void in
+                let httpResponse = result.response as! HTTPURLResponse
+                if httpResponse.statusCode == 401 {
+                    throw AuthenticationError.notAuthorized
+                }
             }
             .eraseToAnyPublisher()
+    }
+    
+    func validateADCSession(path: String) async throws {
+        let result = try await Current.network.dataTaskAsync(with: URLRequest.downloadADCAuth(path: path))
+        let httpResponse = result.1 as! HTTPURLResponse
+        if httpResponse.statusCode == 401 {
+            throw AuthenticationError.notAuthorized
+        }
     }
     
     func validateSession() -> AnyPublisher<Void, Error> {
@@ -797,6 +820,19 @@ class AppState: ObservableObject {
         }
         
         self.allXcodes = newAllXcodes.sorted { $0.version > $1.version }
+    }
+    
+    // MARK: Runtimes
+    func runtimeInstallPath(xcode: Xcode, runtime: DownloadableRuntime) -> Path? {
+        if let coreSimulatorInfo = installedRuntimes.filter({ $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate }).first {
+            let urlString = coreSimulatorInfo.path["relative"]!
+            // app was not allowed to open up file:// url's so remove
+            let fileRemovedString = urlString.replacingOccurrences(of: "file://", with: "")
+            let url = URL(fileURLWithPath: fileRemovedString)
+            
+            return Path(url: url)!
+        }
+        return nil
     }
     
     // MARK: - Private

@@ -3,7 +3,7 @@ import Foundation
 import Path
 import AppleAPI
 import KeychainAccess
-
+import XcodesKit
 /**
  Lightweight dependency injection using global mutable state :P
 
@@ -111,6 +111,9 @@ public struct Shell {
         
         return (progress, publisher)
     }
+    // TODO: Support using aria2 using AysncStream/AsyncSequence
+//    public var downloadWithAria2Async: (Path, URL, Path, [HTTPCookie]) async throws -> Progress = { aria2Path, url, destination, cookies in
+
     
     public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
         let unxipPath = Path(url: Bundle.main.url(forAuxiliaryExecutable: "unxip")!)!
@@ -166,18 +169,24 @@ public struct Files {
     public var installedXcodes = _installedXcodes
     
     public func installedXcode(destination: Path) -> InstalledXcode? {
-        if Entry.isAppBundle(kind: destination.isDirectory ? .directory : .file, path: destination) && Entry.infoPlist(kind:  destination.isDirectory ? .directory : .file, path: destination)?.bundleID == "com.apple.dt.Xcode" {
+        if Path.isAppBundle(path: destination) && Path.infoPlist(path: destination)?.bundleID == "com.apple.dt.Xcode" {
             return InstalledXcode.init(path: destination)
         } else {
             return nil
         }
     }
+    
+    public var write: (Data, URL) throws -> Void = { try $0.write(to: $1) }
+
+    public func write(_ data: Data, to url: URL) throws {
+        try write(data, url)
+    }
 }
 
 private func _installedXcodes(destination: Path) -> [InstalledXcode] {
-    ((try? destination.ls()) ?? [])
+    destination.ls()
         .filter { $0.isAppBundle && $0.infoPlist?.bundleID == "com.apple.dt.Xcode" }
-        .map { $0.path }
+        .map { $0 }
         .compactMap(InstalledXcode.init)
 }
 
@@ -189,10 +198,15 @@ public struct Network {
             .mapError { $0 as Error }
             .eraseToAnyPublisher() 
     }
+   
     public func dataTask(with request: URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
         dataTask(request)
     }
-
+    
+    public func dataTaskAsync(with request: URLRequest) async throws -> (Data, URLResponse) {
+        return try await AppleAPI.Current.network.session.data(for: request)
+    }
+    
     public var downloadTask: (URL, URL, Data?) -> (Progress, AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) = { AppleAPI.Current.network.session.downloadTask(with: $0, to: $1, resumingWith: $2) }
 
     public func downloadTask(with url: URL, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, publisher: AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) {
