@@ -24,7 +24,6 @@ struct RuntimesView: View {
                             $0.sdkBuildUpdate == sdkBuild
                         }
                     }
-        //            let runtimes = appState.getRunTimes(xcode: xcode)
                     
                     ForEach(runtimes ?? [], id: \.simulatorVersion.buildUpdate) { runtime in
                         VStack {

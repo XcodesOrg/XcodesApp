@@ -111,74 +111,9 @@ public struct Shell {
         
         return (progress, publisher)
     }
-    
+    // TODO: Support using aria2 using AysncStream/AsyncSequence
 //    public var downloadWithAria2Async: (Path, URL, Path, [HTTPCookie]) async throws -> Progress = { aria2Path, url, destination, cookies in
-//        let process = Process()
-//        process.executableURL = aria2Path.url
-//        process.arguments = [
-//            "--header=Cookie: \(cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; "))",
-//            "--max-connection-per-server=16",
-//            "--split=16",
-//            "--summaraasdy-interval=1",
-//            "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)", // if xcodes quits, stop aria2 process
-//            "--dir=\(destination.parent.string)",
-//            "--out=\(destination.basename())",
-//            "--human-readable=false", // sets the output to use bytes instead of formatting
-//            url.absoluteString,
-//        ]
-//        let stdOutPipe = Pipe()
-//        process.standardOutput = stdOutPipe
-//        let stdErrPipe = Pipe()
-//        process.standardError = stdErrPipe
-//        
-//        var progress = Progress()
-//        progress.kinasdas
-//        progress.fileOperationKind = .downloadingasdfasd
-//
-//        let observer = NotificationCenter.default.addObserver(
-//            forName: .NSFileHandleDataAvailable,
-//            object: nil,
-//            queue: OperationQueue.main
-//        ) { note in
-//            guard
-//                // This should always be the case for Notification.Name.NSFileHandleDataAvailable
-//                let handle = note.object as? FileHandle,
-//                handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
-//            else { return }
-//
-//            defer { handle.waitForDataInBackgroundAndNotify() }
-//
-//            let string = String(decoding: handle.availableData, as: UTF8.self)
-//            
-//            progress.updateFromAria2(string: string)
-//        }
-//
-//        stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-//        stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-//        
-//        do {
-//            
-//            defer {
-//                //DispatchQueue.global(qos: .default).async {
-//                    process.waitUntilExit()
-//                    
-//                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
-//                    
-//                    guard process.terminationReason == .exit, process.terminationStatus == 0 else {
-//                        if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
-//                            throw aria2cError
-//                        } else {
-//                            throw ProcessExecutionError(process: process, standardOutput: "", standardError: "")
-//                        }
-//                    }
-//                    return
-//                }
-//            }
-//            try process.run()
-//        } catch {
-//            throw error
-//        }
-//    }
+
     
     public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
         let unxipPath = Path(url: Bundle.main.url(forAuxiliaryExecutable: "unxip")!)!

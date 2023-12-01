@@ -65,26 +65,6 @@ extension AppState {
                 }
             }
         }
-        
-//        self.runtimePublishers[runtime.identifier] = downloadRunTimeFull(runtime: runtime)
-//            .receive(on: DispatchQueue.main)
-//            .sink(
-//                receiveCompletion: { [unowned self] completion in
-//                    self.runtimePublishers[runtime.identifier] = nil
-//                    if case let .failure(error) = completion {
-//                        Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
-////                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
-////                        if error as? AuthenticationError != .invalidSession {
-////                            self.error = error
-////                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
-////                        }
-////                        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) {
-////                            self.allXcodes[index].installState = .notInstalled
-////                        }
-//                    }
-//                },
-//                receiveValue: { _ in }
-//            )
     }
     
     func downloadRunTimeFull(runtime: DownloadableRuntime) async throws {
@@ -126,7 +106,6 @@ extension AppState {
         // use runtime.url for final with cookies
         
         // Check to see if the archive is in the expected path in case it was downloaded but failed to install
-//        let expectedRuntimePath = Path.xcodesApplicationSupport/"\(runtime.name).\(runtime.name.suffix(fromLast: "."))"
         let url = URL(string: runtime.source)!
         let expectedRuntimePath = Path.xcodesApplicationSupport/"\(url.lastPathComponent)"
         // aria2 downloads directly to the destination (instead of into /tmp first) so we need to make sure that the download isn't incomplete
@@ -158,12 +137,6 @@ extension AppState {
                 return Just(runtime.url)
                                 .setFailureType(to: Error.self)
                                 .eraseToAnyPublisher()
-                
-//                return downloadRuntimeWithURLSession(
-//                    runtime,
-//                    to: expectedRuntimePath,
-//                    progressChanged: progressChanged
-//                )
             }
         }
     }
