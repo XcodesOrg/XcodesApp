@@ -1,8 +1,26 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
+    "%@" : {
+
+    },
+    "%@ %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@ %3$@"
+          }
+        }
+      }
+    },
+    "• %@" : {
+
+    },
     "AccessDenied" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -116,7 +134,6 @@
     },
     "AccessGranted" : {
       "comment" : "Notifications",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -229,7 +246,6 @@
       }
     },
     "Acknowledgements" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -241,12 +257,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anerkennungen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Acknowledgements"
           }
         },
         "es" : {
@@ -342,7 +352,6 @@
       }
     },
     "Active" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -354,12 +363,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktiv"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Active"
           }
         },
         "es" : {
@@ -455,7 +458,6 @@
       }
     },
     "Active/Select" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -467,12 +469,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktiv/Auswählen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Active/Select"
           }
         },
         "es" : {
@@ -569,7 +565,6 @@
     },
     "ActiveVersionDescription" : {
       "comment" : "List",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -683,7 +678,6 @@
     },
     "Advanced" : {
       "comment" : "Advanced Preference Pane",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -695,12 +689,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erweitert"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Advanced"
           }
         },
         "es" : {
@@ -796,7 +784,6 @@
       }
     },
     "Alert.CancelInstall.Message" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -909,7 +896,6 @@
       }
     },
     "Alert.CancelInstall.PrimaryButton" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1021,9 +1007,21 @@
         }
       }
     },
+    "Alert.CancelInstall.Runtimes.Title" : {
+      "comment" : "Cancel Runtime Install",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        }
+      }
+    },
     "Alert.CancelInstall.Title" : {
       "comment" : "Cancel Install",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1137,7 +1135,7 @@
     },
     "Alert.Install.Error.Title" : {
       "comment" : "Install",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1250,7 +1248,7 @@
       }
     },
     "Alert.InstallArchive.Error.Title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1363,7 +1361,7 @@
       }
     },
     "Alert.MinSupported.Message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1477,7 +1475,6 @@
     },
     "Alert.MinSupported.Title" : {
       "comment" : "Min MacOS Supported",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1591,7 +1588,7 @@
     },
     "Alert.PostInstall.Title" : {
       "comment" : "Post install",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1704,7 +1701,7 @@
       }
     },
     "Alert.PrivilegedHelper.Error.Title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1817,7 +1814,6 @@
       }
     },
     "Alert.PrivilegedHelper.Message" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -1931,7 +1927,6 @@
     },
     "Alert.PrivilegedHelper.Title" : {
       "comment" : "Privileged Helper",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -2045,7 +2040,7 @@
     },
     "Alert.Select.Error.Title" : {
       "comment" : "Active/Select",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -2158,7 +2153,7 @@
       }
     },
     "Alert.SymLink.Message" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -2272,7 +2267,7 @@
     },
     "Alert.SymLink.Title" : {
       "comment" : "Symbolic Links",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -2385,7 +2380,7 @@
       }
     },
     "Alert.Uninstall.Error.Message.FileNotFound" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -2426,7 +2421,7 @@
       }
     },
     "Alert.Uninstall.Error.Title" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -2539,7 +2534,6 @@
       }
     },
     "Alert.Uninstall.Message" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -2653,7 +2647,7 @@
     },
     "Alert.Uninstall.Title" : {
       "comment" : "Uninstall",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -2767,7 +2761,7 @@
     },
     "Alert.Update.Error.Title" : {
       "comment" : "Update",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -2880,7 +2874,6 @@
       }
     },
     "All" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -2892,12 +2885,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Alle"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "All"
           }
         },
         "es" : {
@@ -2992,8 +2979,10 @@
         }
       }
     },
+    "Apple Silicon" : {
+
+    },
     "AppleID" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3106,7 +3095,6 @@
       }
     },
     "AppUpdates" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3219,7 +3207,6 @@
       }
     },
     "AutomaticallyCreateSymbolicLink" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3332,7 +3319,6 @@
       }
     },
     "AutomaticallyCreateSymbolicLinkDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3445,7 +3431,6 @@
       }
     },
     "AutomaticInstallNewVersion" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3558,7 +3543,7 @@
       }
     },
     "Beta" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3671,7 +3656,6 @@
       }
     },
     "BetaOnly" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3784,7 +3768,6 @@
       }
     },
     "Cancel" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3796,12 +3779,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abbrechen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cancel"
           }
         },
         "es" : {
@@ -3897,7 +3874,6 @@
       }
     },
     "Change" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -3909,12 +3885,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ändern"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Change"
           }
         },
         "es" : {
@@ -4010,7 +3980,6 @@
       }
     },
     "CheckForAppUpdates" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -4123,7 +4092,7 @@
       }
     },
     "CheckingSecurity" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -4236,7 +4205,6 @@
       }
     },
     "CheckNow" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -4349,7 +4317,6 @@
       }
     },
     "Close" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -4361,12 +4328,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schließen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Close"
           }
         },
         "es" : {
@@ -4462,7 +4423,6 @@
       }
     },
     "Compatibility" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -4474,12 +4434,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kompatibilität"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Compatibility"
           }
         },
         "es" : {
@@ -4575,7 +4529,6 @@
       }
     },
     "Compilers" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -4587,12 +4540,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Compiler"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Compilers"
           }
         },
         "es" : {
@@ -4688,7 +4635,6 @@
       }
     },
     "Continue" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -4700,12 +4646,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fortfahren"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Continue"
           }
         },
         "es" : {
@@ -4801,7 +4741,6 @@
       }
     },
     "CopyPath" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -4914,7 +4853,6 @@
       }
     },
     "CopyReleaseNoteURL" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5009,7 +4947,6 @@
       }
     },
     "CreateSymLink" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5122,7 +5059,6 @@
       }
     },
     "CreateSymLinkBeta" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -5205,7 +5141,6 @@
       }
     },
     "DataSource" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5318,7 +5253,7 @@
       }
     },
     "DataSourceDescription" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5432,7 +5367,7 @@
     },
     "DigitCodeDescription" : {
       "comment" : "SMS/2FA",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5545,7 +5480,6 @@
       }
     },
     "Downloader" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5554,12 +5488,6 @@
           }
         },
         "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Downloader"
-          }
-        },
-        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Downloader"
@@ -5658,7 +5586,7 @@
       }
     },
     "DownloaderDescription" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5772,7 +5700,7 @@
     },
     "Downloading" : {
       "comment" : "Installation Steps",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5885,7 +5813,7 @@
       }
     },
     "DownloadingError" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -5998,7 +5926,7 @@
       }
     },
     "DownloadingPercentDescription" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -6112,15 +6040,8 @@
     },
     "Downloads" : {
       "comment" : "Download Preference Pane",
-      "extractionState" : "migrated",
       "localizations" : {
         "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Downloads"
-          }
-        },
-        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Downloads"
@@ -6207,7 +6128,6 @@
       }
     },
     "DownloadSize" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -6320,7 +6240,6 @@
       }
     },
     "EnableNotifications" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -6433,7 +6352,7 @@
       }
     },
     "EnterDigitCodeDescription" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -6545,9 +6464,11 @@
         }
       }
     },
+    "example@icloud.com" : {
+
+    },
     "Experiments" : {
       "comment" : "Experiment Preference Pane",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -6559,12 +6480,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Experimente"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Experiments"
           }
         },
         "es" : {
@@ -6660,7 +6575,6 @@
       }
     },
     "FasterUnxip" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -6773,7 +6687,7 @@
       }
     },
     "FasterUnxipDescription" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -6886,7 +6800,6 @@
       }
     },
     "Filter" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -6895,12 +6808,6 @@
           }
         },
         "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Filter"
-          }
-        },
-        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filter"
@@ -6999,7 +6906,6 @@
       }
     },
     "FilterAvailableDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -7112,7 +7018,6 @@
       }
     },
     "FilterInstalledDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -7225,7 +7130,7 @@
       }
     },
     "Finishing" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -7339,7 +7244,6 @@
     },
     "General" : {
       "comment" : "General Preference Pane",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -7351,12 +7255,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Allgemein"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "General"
           }
         },
         "es" : {
@@ -7452,7 +7350,6 @@
       }
     },
     "GithubRepo" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -7565,7 +7462,7 @@
       }
     },
     "HelperClient.error" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -7678,7 +7575,6 @@
       }
     },
     "HelperInstalled" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -7791,7 +7687,6 @@
       }
     },
     "HelperNotInstalled" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -7903,9 +7798,11 @@
         }
       }
     },
+    "Hidden" : {
+
+    },
     "IdenticalBuilds" : {
       "comment" : "Info Pane",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8018,7 +7915,6 @@
       }
     },
     "IdenticalBuilds.help" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8131,7 +8027,6 @@
       }
     },
     "IncludePreRelease" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8244,7 +8139,6 @@
       }
     },
     "Info" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8253,12 +8147,6 @@
           }
         },
         "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info"
-          }
-        },
-        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Info"
@@ -8357,7 +8245,6 @@
       }
     },
     "InfoDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8471,7 +8358,6 @@
     },
     "Install" : {
       "comment" : "Common",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8483,12 +8369,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Installieren"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Install"
           }
         },
         "es" : {
@@ -8583,8 +8463,11 @@
         }
       }
     },
+    "INSTALL" : {
+
+    },
     "InstallationError.CodesignVerifyFailed" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8698,7 +8581,7 @@
     },
     "InstallationError.DamagedXIP" : {
       "comment" : "InstallationErrors",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8811,7 +8694,7 @@
       }
     },
     "InstallationError.FailedSecurityAssessment" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8924,7 +8807,7 @@
       }
     },
     "InstallationError.FailedToMoveXcodeToApplications" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9037,7 +8920,7 @@
       }
     },
     "InstallationError.InvalidVersion" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9150,7 +9033,7 @@
       }
     },
     "InstallationError.MissingSudoerPassword" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9263,7 +9146,7 @@
       }
     },
     "InstallationError.MissingUsernameOrPassword" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9376,7 +9259,7 @@
       }
     },
     "InstallationError.NoNonPrereleaseVersionAvailable" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9489,7 +9372,7 @@
       }
     },
     "InstallationError.NoPrereleaseVersionAvailable" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9602,7 +9485,7 @@
       }
     },
     "InstallationError.NotEnoughFreeSpaceToExpandArchive" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9715,7 +9598,7 @@
       }
     },
     "InstallationError.PostInstallStepsNotPerformed.Installed" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9828,7 +9711,7 @@
       }
     },
     "InstallationError.PostInstallStepsNotPerformed.NotInstalled" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -9941,7 +9824,7 @@
       }
     },
     "InstallationError.UnavailableVersion" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10054,7 +9937,7 @@
       }
     },
     "InstallationError.UnexpectedCodeSigningIdentity" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10167,7 +10050,7 @@
       }
     },
     "InstallationError.UnsupportedFileFormat" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10280,7 +10163,7 @@
       }
     },
     "InstallationError.VersionAlreadyInstalled" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10393,7 +10276,7 @@
       }
     },
     "InstallationError.VersionNotInstalled" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10507,7 +10390,7 @@
     },
     "InstallationStepDescription" : {
       "comment" : "So if changing order, make sure the positional specficier is retained. ex: \"%3$@: Step %1$d of %2$d\"",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10620,7 +10503,6 @@
       }
     },
     "InstallDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10733,7 +10615,6 @@
       }
     },
     "InstallDirectory" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10798,7 +10679,6 @@
       }
     },
     "InstallHelper" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10911,7 +10791,6 @@
       }
     },
     "InstallPathDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -10970,7 +10849,7 @@
       }
     },
     "LastChecked" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -11083,7 +10962,6 @@
       }
     },
     "License" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -11095,12 +10973,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lizenz"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "License"
           }
         },
         "es" : {
@@ -11196,7 +11068,6 @@
       }
     },
     "LocalCachePath" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -11309,7 +11180,6 @@
       }
     },
     "LocalCachePathDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -11423,7 +11293,6 @@
     },
     "Login" : {
       "comment" : "ToolBar",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -11432,12 +11301,6 @@
           }
         },
         "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Login"
-          }
-        },
-        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Login"
@@ -11536,7 +11399,6 @@
       }
     },
     "LoginDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -11649,7 +11511,7 @@
       }
     },
     "MacOSRequirement" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -11762,7 +11624,6 @@
       }
     },
     "MakeActive" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -11875,7 +11736,6 @@
       }
     },
     "MakeActiveVersionDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -11989,7 +11849,6 @@
     },
     "Menu.About" : {
       "comment" : "Menu",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -12102,7 +11961,7 @@
       }
     },
     "Menu.Acknowledgements" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -12215,7 +12074,6 @@
       }
     },
     "Menu.CheckForUpdates" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -12328,7 +12186,6 @@
       }
     },
     "Menu.GitHubRepo" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -12441,7 +12298,6 @@
       }
     },
     "Menu.ReportABug" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -12554,7 +12410,6 @@
       }
     },
     "Menu.RequestNewFeature" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -12667,7 +12522,7 @@
       }
     },
     "Moving" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -12780,7 +12635,7 @@
       }
     },
     "Never" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -12893,7 +12748,6 @@
       }
     },
     "Next" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -12905,12 +12759,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nächstes"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Next"
           }
         },
         "es" : {
@@ -13005,8 +12853,11 @@
         }
       }
     },
+    "Not Hidden" : {
+
+    },
     "Notification.FinishedInstalling" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13120,7 +12971,7 @@
     },
     "Notification.NewVersionAvailable" : {
       "comment" : "Notifications",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13233,7 +13084,7 @@
       }
     },
     "Notification.NewXcodeVersion.Body" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13347,7 +13198,7 @@
     },
     "Notification.NewXcodeVersion.Title" : {
       "comment" : "Notifications",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13460,7 +13311,6 @@
       }
     },
     "Notifications" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13472,12 +13322,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benachrichtigungen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notifications"
           }
         },
         "es" : {
@@ -13573,7 +13417,6 @@
       }
     },
     "NotificationSettings" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13686,7 +13529,7 @@
       }
     },
     "NoTrustedPhones" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13799,7 +13642,6 @@
       }
     },
     "NoXcodeSelected" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13912,7 +13754,6 @@
       }
     },
     "OK" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13921,12 +13762,6 @@
           }
         },
         "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OK"
-          }
-        },
-        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -14018,8 +13853,11 @@
         }
       }
     },
+    "OnSelect" : {
+
+    },
     "OnSelectDoNothing" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -14096,7 +13934,7 @@
       }
     },
     "OnSelectDoNothingDescription" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -14161,7 +13999,7 @@
       }
     },
     "OnSelectRenameXcode" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "de" : {
           "stringUnit" : {
@@ -14226,7 +14064,7 @@
       }
     },
     "OnSelectRenameXcodeDescription" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -14297,7 +14135,6 @@
       }
     },
     "Open" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -14309,12 +14146,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Öffnen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Open"
           }
         },
         "es" : {
@@ -14409,8 +14240,13 @@
         }
       }
     },
+    "OPEN" : {
+
+    },
+    "Open In Rosetta" : {
+
+    },
     "OpenDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -14523,7 +14359,6 @@
       }
     },
     "Password" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -14635,19 +14470,13 @@
         }
       }
     },
+    "Perform post-install steps" : {
+
+    },
     "Platforms" : {
-      "extractionState" : "migrated",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Platforms"
-          }
-        }
-      }
+
     },
     "Preferences" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -14659,12 +14488,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Einstellungen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Preferences"
           }
         },
         "es" : {
@@ -14760,7 +14583,6 @@
       }
     },
     "PreferencesDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -14873,7 +14695,6 @@
       }
     },
     "PrivilegedHelper" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -14986,7 +14807,6 @@
       }
     },
     "PrivilegedHelperDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -15099,7 +14919,6 @@
       }
     },
     "Refresh" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -15111,12 +14930,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktualisieren"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Refresh"
           }
         },
         "es" : {
@@ -15212,7 +15025,6 @@
       }
     },
     "RefreshDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -15325,7 +15137,7 @@
       }
     },
     "Release" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -15438,7 +15250,6 @@
       }
     },
     "ReleaseDate" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -15551,7 +15362,6 @@
       }
     },
     "ReleaseNotes" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -15664,7 +15474,6 @@
       }
     },
     "ReleaseNotes.help" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -15777,7 +15586,6 @@
       }
     },
     "ReleaseOnly" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -15890,7 +15698,6 @@
       }
     },
     "Required" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -15902,12 +15709,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erforderlich"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Required"
           }
         },
         "es" : {
@@ -16003,7 +15804,6 @@
       }
     },
     "RevealInFinder" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16116,7 +15916,6 @@
       }
     },
     "SDKs" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16125,12 +15924,6 @@
           }
         },
         "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "SDKs"
-          }
-        },
-        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "SDKs"
@@ -16229,7 +16022,6 @@
       }
     },
     "Search" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16342,7 +16134,6 @@
       }
     },
     "SearchDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16455,7 +16246,6 @@
       }
     },
     "Select" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16467,12 +16257,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Auswählen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select"
           }
         },
         "es" : {
@@ -16568,7 +16352,6 @@
       }
     },
     "Selected" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16580,12 +16363,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ausgewählt"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Selected"
           }
         },
         "es" : {
@@ -16681,7 +16458,7 @@
       }
     },
     "SelectTrustedPhone" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16794,7 +16571,6 @@
       }
     },
     "SendSMS" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16907,7 +16683,6 @@
       }
     },
     "ShowOpenInRosetta" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -16948,7 +16723,6 @@
       }
     },
     "ShowOpenInRosettaDescription" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -16989,7 +16763,6 @@
       }
     },
     "SignIn" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -17103,7 +16876,6 @@
     },
     "SignInWithApple" : {
       "comment" : "SignIn",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -17216,7 +16988,6 @@
       }
     },
     "SignOut" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -17329,7 +17100,6 @@
       }
     },
     "StopInstallation" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -17442,7 +17212,7 @@
       }
     },
     "TrashingArchive" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -17555,7 +17325,7 @@
       }
     },
     "Unarchiving" : {
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -17668,7 +17438,6 @@
       }
     },
     "Uninstall" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -17680,12 +17449,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Deinstallieren"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Uninstall"
           }
         },
         "es" : {
@@ -17781,7 +17544,6 @@
       }
     },
     "UnxipExperiment" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -17895,7 +17657,7 @@
     },
     "UpdatedAt" : {
       "comment" : "MainWindow",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -18009,7 +17771,6 @@
     },
     "Updates" : {
       "comment" : "Updates Preference Pane",
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -18018,12 +17779,6 @@
           }
         },
         "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Updates"
-          }
-        },
-        "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Updates"
@@ -18122,7 +17877,6 @@
       }
     },
     "UseUnxipExperiment" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -18235,7 +17989,6 @@
       }
     },
     "Versions" : {
-      "extractionState" : "migrated",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -18247,12 +18000,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Versionen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Versions"
           }
         },
         "es" : {
@@ -18349,7 +18096,7 @@
     },
     "VersionWithBuild" : {
       "comment" : "About",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -18463,7 +18210,7 @@
     },
     "WWDC.Message" : {
       "comment" : "WWDC",
-      "extractionState" : "migrated",
+      "extractionState" : "manual",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -18568,6 +18315,12 @@
           }
         }
       }
+    },
+    "Xcode" : {
+
+    },
+    "Xcodes" : {
+
     }
   },
   "version" : "1.0"
