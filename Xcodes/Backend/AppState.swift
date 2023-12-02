@@ -112,7 +112,7 @@ class AppState: ObservableObject {
     
     var cancellables = Set<AnyCancellable>()
     private var installationPublishers: [Version: AnyCancellable] = [:]
-    internal var runtimePublishers: [String: AnyCancellable] = [:]
+    internal var runtimePublishers: [String: Task<(), any Error>] = [:]
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
     private var autoInstallTimer: Timer?

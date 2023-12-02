@@ -111,9 +111,84 @@ public struct Shell {
         
         return (progress, publisher)
     }
-    // TODO: Support using aria2 using AysncStream/AsyncSequence
-//    public var downloadWithAria2Async: (Path, URL, Path, [HTTPCookie]) async throws -> Progress = { aria2Path, url, destination, cookies in
-
+    
+    public var downloadWithAria2Async: (Path, URL, Path, [HTTPCookie]) -> AsyncThrowingStream<Progress, Error> = { aria2Path, url, destination, cookies in
+        return AsyncThrowingStream<Progress, Error> { continuation in
+ 
+            Task {
+                var progress = Progress()
+                progress.kind = .file
+                progress.fileOperationKind = .downloading
+                
+                let process = Process()
+                process.executableURL = aria2Path.url
+                process.arguments = [
+                    "--header=Cookie: \(cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; "))",
+                    "--max-connection-per-server=16",
+                    "--split=16",
+                    "--summary-interval=1",
+                    "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)", // if xcodes quits, stop aria2 process
+                    "--dir=\(destination.parent.string)",
+                    "--out=\(destination.basename())",
+                    "--human-readable=false", // sets the output to use bytes instead of formatting
+                    url.absoluteString,
+                ]
+                let stdOutPipe = Pipe()
+                process.standardOutput = stdOutPipe
+                let stdErrPipe = Pipe()
+                process.standardError = stdErrPipe
+                
+                let observer = NotificationCenter.default.addObserver(
+                    forName: .NSFileHandleDataAvailable,
+                    object: nil,
+                    queue: OperationQueue.main
+                ) { note in
+                    guard
+                        // This should always be the case for Notification.Name.NSFileHandleDataAvailable
+                        let handle = note.object as? FileHandle,
+                        handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
+                    else { return }
+                    
+                    defer { handle.waitForDataInBackgroundAndNotify() }
+                    
+                    let string = String(decoding: handle.availableData, as: UTF8.self)
+                    // TODO: fix warning. ObservingProgressView is currently tied to an updating progress
+                    progress.updateFromAria2(string: string)
+                    
+                    continuation.yield(progress)
+                }
+                
+                stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+                stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+                
+                continuation.onTermination = { @Sendable _ in
+                    process.terminate()
+                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                }
+                
+                do {
+                    try process.run()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+                
+                process.waitUntilExit()
+                
+                NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                
+                guard process.terminationReason == .exit, process.terminationStatus == 0 else {
+                    if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
+                        continuation.finish(throwing: aria2cError)
+                    } else {
+                        continuation.finish(throwing: ProcessExecutionError(process: process, standardOutput: "", standardError: ""))
+                    }
+                    return
+                }
+                continuation.finish()
+            }
+        }
+    }
+    
     
     public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
         let unxipPath = Path(url: Bundle.main.url(forAuxiliaryExecutable: "unxip")!)!

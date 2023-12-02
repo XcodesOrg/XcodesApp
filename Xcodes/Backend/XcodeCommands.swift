@@ -67,6 +67,23 @@ struct CancelInstallButton: View {
     }
 }
 
+struct CancelRuntimeInstallButton: View {
+    @EnvironmentObject var appState: AppState
+    let runtime: DownloadableRuntime?
+    
+    var body: some View {
+        Button(action: cancelInstall) {
+            Text("Cancel")
+                .help(localizeString("StopInstallation"))
+        }
+    }
+    
+    private func cancelInstall() {
+        guard let runtime = runtime else { return }
+        appState.presentedAlert = .cancelRuntimeInstall(runtime: runtime)
+    }
+}
+
 struct SelectButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?

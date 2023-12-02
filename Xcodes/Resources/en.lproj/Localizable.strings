@@ -167,6 +167,7 @@
 "Alert.Uninstall.Error.Message.FileNotFound" = "Could not find file \"%@\".";
 
 // Cancel Install
+"Alert.CancelInstall.Runtimes.Title" = "Are you sure you want to stop the installation of Runtime %@?";
 "Alert.CancelInstall.Title" = "Are you sure you want to stop the installation of Xcode %@?";
 "Alert.CancelInstall.Message" = "Any progress will be discarded.";
 "Alert.CancelInstall.PrimaryButton" = "Stop Installation";
