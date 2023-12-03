@@ -68,7 +68,7 @@ brew install --cask xcodes
 
 ## Development
 
-You'll need macOS 12 Big Sur and Xcode 13 in order to build and run Xcodes.app.
+You'll need macOS 13.5 Ventura and Xcode 15 in order to build and run Xcodes.app.
 
 `Unxip` and `aria2` must be compiled as a universal binary
 ```
