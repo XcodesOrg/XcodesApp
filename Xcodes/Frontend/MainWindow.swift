@@ -1,5 +1,6 @@
 import ErrorHandling
 import SwiftUI
+import XcodesKit
 
 struct MainWindow: View {
     @EnvironmentObject var appState: AppState
@@ -176,7 +177,21 @@ struct MainWindow: View {
                   ),
                   secondaryButton: .cancel(Text("Cancel"))
             )
+            
+        case let .cancelRuntimeInstall(runtime):
+            return Alert(
+                title: Text(String(format: localizeString("Alert.CancelInstall.Runtimes.Title"), runtime.name)),
+                  message: Text("Alert.CancelInstall.Message"),
+                  primaryButton: .destructive(
+                    Text("Alert.CancelInstall.PrimaryButton"),
+                    action: {
+                        self.appState.cancelRuntimeInstall(runtime: runtime)
+                    }
+                  ),
+                  secondaryButton: .cancel(Text("Cancel"))
+            )
         }
+        
     }
 }
 
