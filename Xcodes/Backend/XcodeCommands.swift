@@ -43,9 +43,8 @@ struct InstallButton: View {
             install()
         } label: {
             Text("Install")
-                .textCase(.uppercase)
                 .help("InstallDescription")
-        }.buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
+        }
     }
 
     private func install() {

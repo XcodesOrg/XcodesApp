@@ -111,6 +111,8 @@ struct XcodeListViewRow: View {
                 .help("OpenDescription")
         case .notInstalled:
             InstallButton(xcode: xcode)
+                .textCase(.uppercase)
+                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
         case let .installing(installationStep):
             InstallationStepRowView(
                 installationStep: installationStep,
