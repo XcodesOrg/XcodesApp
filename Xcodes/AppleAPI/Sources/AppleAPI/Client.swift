@@ -180,6 +180,8 @@ public class Client {
                         return (data, urlResponse)
                     case 400, 401:
                         throw AuthenticationError.incorrectSecurityCode
+                    case 412:
+                        throw AuthenticationError.appleIDAndPrivacyAcknowledgementRequired
                     case let code:
                         throw AuthenticationError.badStatusCode(statusCode: code, data: data, response: urlResponse)
                     }
