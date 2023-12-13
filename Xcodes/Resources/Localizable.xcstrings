@@ -2,10 +2,24 @@
   "sourceLanguage" : "en",
   "strings" : {
     "" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        }
+      }
     },
     "%@" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%@ %@ %@" : {
       "localizations" : {
@@ -14,11 +28,24 @@
             "state" : "new",
             "value" : "%1$@ %2$@ %3$@"
           }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ %3$@"
+          }
         }
       }
     },
     "• %@" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• %@"
+          }
+        }
+      }
     },
     "AccessDenied" : {
       "localizations" : {
@@ -1015,6 +1042,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ sürümünü yüklemeyi durdurmak istediğine emin misin?"
           }
         }
       }
@@ -2980,7 +3013,14 @@
       }
     },
     "Apple Silicon" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Silikon"
+          }
+        }
+      }
     },
     "AppleID" : {
       "localizations" : {
@@ -6465,7 +6505,14 @@
       }
     },
     "example@icloud.com" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ornek@icloud.com"
+          }
+        }
+      }
     },
     "Experiments" : {
       "comment" : "Experiment Preference Pane",
@@ -7799,7 +7846,14 @@
       }
     },
     "Hidden" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gizli"
+          }
+        }
+      }
     },
     "IdenticalBuilds" : {
       "comment" : "Info Pane",
@@ -8464,7 +8518,14 @@
       }
     },
     "INSTALL" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "YÜKLE"
+          }
+        }
+      }
     },
     "InstallationError.CodesignVerifyFailed" : {
       "extractionState" : "manual",
@@ -12854,7 +12915,14 @@
       }
     },
     "Not Hidden" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gizli Değil"
+          }
+        }
+      }
     },
     "Notification.FinishedInstalling" : {
       "extractionState" : "manual",
@@ -13854,7 +13922,14 @@
       }
     },
     "OnSelect" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OnSelect"
+          }
+        }
+      }
     },
     "OnSelectDoNothing" : {
       "extractionState" : "manual",
@@ -14241,10 +14316,24 @@
       }
     },
     "OPEN" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AÇ"
+          }
+        }
+      }
     },
     "Open In Rosetta" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rosetta ile Aç"
+          }
+        }
+      }
     },
     "OpenDescription" : {
       "localizations" : {
@@ -14471,10 +14560,24 @@
       }
     },
     "Perform post-install steps" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yükleme sonrası adımları uygula"
+          }
+        }
+      }
     },
     "Platforms" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platformlar"
+          }
+        }
+      }
     },
     "Preferences" : {
       "localizations" : {
@@ -18317,10 +18420,24 @@
       }
     },
     "Xcode" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode"
+          }
+        }
+      }
     },
     "Xcodes" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
