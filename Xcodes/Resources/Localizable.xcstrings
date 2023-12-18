@@ -8193,6 +8193,7 @@
       }
     },
     "Info" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -8299,6 +8300,7 @@
       }
     },
     "InfoDescription" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16125,6 +16127,7 @@
       }
     },
     "Search" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -16237,6 +16240,7 @@
       }
     },
     "SearchDescription" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
