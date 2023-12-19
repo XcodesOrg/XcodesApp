@@ -61,9 +61,10 @@ struct CancelInstallButton: View {
     
     var body: some View {
         Button(action: cancelInstall) {
-            Text("Cancel")
-                .help(localizeString("StopInstallation"))
+            Image(systemName: "xmark.circle.fill")
         }
+        .help(localizeString("StopInstallation"))
+        .buttonStyle(.plain)
     }
     
     private func cancelInstall() {
@@ -78,9 +79,9 @@ struct CancelRuntimeInstallButton: View {
     
     var body: some View {
         Button(action: cancelInstall) {
-            Text("Cancel")
-                .help(localizeString("StopInstallation"))
-        }
+            Image(systemName: "xmark.circle.fill")
+        }.help(localizeString("StopInstallation"))
+            .buttonStyle(.plain)
     }
     
     private func cancelInstall() {

@@ -10,26 +10,37 @@ import SwiftUI
 
 struct ReleaseDateView: View {
     let date: Date?
-
+    let url: URL?
     var body: some View {
         if let date = date {
-            VStack(alignment: .leading) {
-                Text("ReleaseDate")
-                    .font(.headline)
-                Text("\(date, style: .date)")
-                    .font(.subheadline)
-            }
+           
+                VStack(alignment: .leading) {
+                    HStack {
+                        Text("ReleaseDate")
+                            .font(.headline)
+                        Spacer()
+                        if let url {
+                            ReleaseNotesView(url: url)
+                        }
+                    }
+                    
+                    Text("\(date, style: .date)")
+                        .font(.subheadline)
+                  
+                }
+                
+           
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding()
+            .background(.background)
+            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
         } else {
             EmptyView()
         }
     }
-
-    init(date: Date? = nil) {
-        self.date = date
-    }
 }
 
 #Preview {
-  ReleaseDateView(date: Date())
+  ReleaseDateView(date: Date(), url: URL(string: "https://www.xcodes.app")!)
     .padding()
 }

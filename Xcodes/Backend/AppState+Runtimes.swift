@@ -36,6 +36,7 @@ extension AppState {
         Task {
             do {
                 let runtimes = try await self.runtimeService.localInstalledRuntimes()
+                
                 DispatchQueue.main.async {
                     self.installedRuntimes = runtimes
                 }

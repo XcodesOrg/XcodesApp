@@ -23,6 +23,7 @@ struct XcodesApp: App {
                     guard !isTesting else { return }
                     if case .active = newScenePhase {
                         appState.updateIfNeeded()
+                        appState.updateInstalledRuntimes()
                     }
                 }
         }

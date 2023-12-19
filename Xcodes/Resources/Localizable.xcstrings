@@ -15467,6 +15467,7 @@
       }
     },
     "ReleaseNotes" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ca" : {
           "stringUnit" : {

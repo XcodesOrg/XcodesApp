@@ -15,12 +15,18 @@ struct InfoPaneControls: View {
         VStack (alignment: .leading) {
             switch xcode.installState {
             case .notInstalled:
-                NotInstalledStateButtons(
-                    downloadFileSizeString: xcode.downloadFileSizeString,
-                    id: xcode.id)
+                HStack {
+                    Spacer()
+                    NotInstalledStateButtons(
+                        downloadFileSizeString: xcode.downloadFileSizeString,
+                        id: xcode.id)
+                }
+                
             case .installing(let installationStep):
-                InstallationStepDetailView(installationStep: installationStep)
-                CancelInstallButton(xcode: xcode)
+                HStack(alignment: .top) {
+                    InstallationStepDetailView(installationStep: installationStep)
+                    CancelInstallButton(xcode: xcode)
+                }
             case .installed(_):
                 InstalledStateButtons(xcode: xcode)
             }
@@ -28,14 +34,14 @@ struct InfoPaneControls: View {
     }
 }
 
-#Preview(PreviewName.allCases[0].rawValue) { makePreviewContent(for: 0) }
-#Preview(PreviewName.allCases[1].rawValue) { makePreviewContent(for: 1) }
-#Preview(PreviewName.allCases[2].rawValue) { makePreviewContent(for: 2) }
-#Preview(PreviewName.allCases[3].rawValue) { makePreviewContent(for: 3) }
-#Preview(PreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
+#Preview(XcodePreviewName.allCases[0].rawValue) { makePreviewContent(for: 0) }
+#Preview(XcodePreviewName.allCases[1].rawValue) { makePreviewContent(for: 1) }
+#Preview(XcodePreviewName.allCases[2].rawValue) { makePreviewContent(for: 2) }
+#Preview(XcodePreviewName.allCases[3].rawValue) { makePreviewContent(for: 3) }
+#Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
 
 private func makePreviewContent(for index: Int) -> some View {
-  let name = PreviewName.allCases[index]
+  let name = XcodePreviewName.allCases[index]
 
   return InfoPaneControls(xcode: xcodeDict[name]!)
     .environmentObject(configure(AppState()) {

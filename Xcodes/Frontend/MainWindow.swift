@@ -20,7 +20,7 @@ struct MainWindow: View {
     var body: some View {
         NavigationSplitViewWrapper {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
-                .frame(minWidth: 300)
+                .frame(minWidth: 250)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
                     Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
@@ -37,7 +37,7 @@ struct MainWindow: View {
         } detail: {
             Group {
                 if let xcode = xcode {
-                    InfoPane(xcode: xcode)
+                    InfoPane2(xcode: xcode)
                 } else {
                     UnselectedView()
                 }

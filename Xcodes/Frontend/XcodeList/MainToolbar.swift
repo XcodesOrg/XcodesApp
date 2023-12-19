@@ -70,18 +70,6 @@ struct MainToolbarModifier: ViewModifier {
             }
             .help("FilterInstalledDescription")
             
-//            Button(action: { isShowingInfoPane.toggle() }) {
-//                if isShowingInfoPane {
-//                    Label("Info", systemImage: "info.circle.fill")
-//                        .foregroundColor(.accentColor)
-//                } else {
-//                    Label("Info", systemImage: "info.circle")
-//                }
-//            }
-//            .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
-//            .help("InfoDescription")
-            
-           
         }
     }
 }
