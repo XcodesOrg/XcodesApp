@@ -37,7 +37,7 @@ struct MainWindow: View {
         } detail: {
             Group {
                 if let xcode = xcode {
-                    InfoPane2(xcode: xcode)
+                    InfoPane(xcode: xcode)
                 } else {
                     UnselectedView()
                 }

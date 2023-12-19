@@ -29,10 +29,7 @@ struct CompatibilityView: View {
                         .font(.largeTitle)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
-            .background(.background)
-            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+            .xcodesBackground()
         } else {
             EmptyView()
         }

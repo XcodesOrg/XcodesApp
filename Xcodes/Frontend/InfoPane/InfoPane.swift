@@ -8,33 +8,54 @@ import struct XCModel.SDKs
 
 struct InfoPane: View {
     let xcode: Xcode
-
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                IconView(installState: xcode.installState)
-                    .frame(maxWidth: .infinity, alignment: .center)
-
-                Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
-                    .font(.title)
-
-                InfoPaneControls(xcode: xcode)
-
-                Divider()
-
-                Group {
-                    RuntimesView(xcode: xcode)
-                    ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
-                    ReleaseNotesView(url: xcode.releaseNotesURL)
-                    IdenticalBuildsView(builds: xcode.identicalBuilds)
-                    CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
-                    SDKsView(sdks: xcode.sdks)
-                    CompilersView(compilers: xcode.compilers)
+        ScrollView(.vertical) {
+            HStack(alignment: .top) {
+                VStack {
+                    VStack(spacing: 5) {
+                        HStack {
+                            IconView(installState: xcode.installState)
+                            
+                            Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
+                                .font(.title)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        InfoPaneControls(xcode: xcode)
+                    }
+                    .xcodesBackground()
+               
+                
+                    VStack {
+                        Text("Platforms")
+                            .font(.title3)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        PlatformsView(xcode: xcode)
+                    }
+                    .xcodesBackground()
                 }
-
-                Spacer()
+                
+                VStack(alignment: .leading) {
+                    ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
+                    CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
+                    IdenticalBuildsView(builds: xcode.identicalBuilds)
+                    SDKandCompilers
+                }
+                .frame(width: 200)
+                
             }
         }
+    }
+    
+    @ViewBuilder
+    var SDKandCompilers: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            SDKsView(sdks: xcode.sdks)
+            CompilersView(compilers: xcode.compilers)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(.background)
+        .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
     }
 }
 

@@ -33,10 +33,7 @@ struct IdenticalBuildsView: View {
                         .font(.subheadline)
                 }
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding()
-            .background(.background)
-            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+            .xcodesBackground()
             .accessibilityElement()
             .accessibility(label: Text("IdenticalBuilds"))
             .accessibility(value: Text(accessibilityDescription))

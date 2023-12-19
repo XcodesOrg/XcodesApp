@@ -115,8 +115,7 @@
 		E81D7EA02805250100A205FC /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D7E9F2805250100A205FC /* Collection+.swift */; };
 		E832EAF82B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */; };
 		E84B7D0D2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */; };
-		E84B7D0F2B30986700DBDA2B /* InfoPane2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84B7D0E2B30986700DBDA2B /* InfoPane2.swift */; };
-		E84CF8C12B0FEB8300ECA259 /* RuntimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84CF8C02B0FEB8300ECA259 /* RuntimesView.swift */; };
+		E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */; };
 		E86671272B309D2F0048559A /* PlatformsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86671262B309D2F0048559A /* PlatformsView.swift */; };
 		E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87AB3C42939B65E00D72F43 /* Hardware.swift */; };
 		E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DD6EA25D053FA00D86808 /* Progress+.swift */; };
@@ -313,8 +312,7 @@
 		E81D7E9F2805250100A205FC /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeInstallationStepDetailView.swift; sourceTree = "<group>"; };
 		E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSplitViewWrapper.swift; sourceTree = "<group>"; };
-		E84B7D0E2B30986700DBDA2B /* InfoPane2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPane2.swift; sourceTree = "<group>"; };
-		E84CF8C02B0FEB8300ECA259 /* RuntimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimesView.swift; sourceTree = "<group>"; };
+		E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusModifier.swift; sourceTree = "<group>"; };
 		E856BB73291EDD3D00DC438B /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XcodesKit; path = Xcodes/XcodesKit; sourceTree = "<group>"; };
 		E86671262B309D2F0048559A /* PlatformsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsView.swift; sourceTree = "<group>"; };
 		E87AB3C42939B65E00D72F43 /* Hardware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hardware.swift; sourceTree = "<group>"; };
@@ -651,9 +649,8 @@
 				B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */,
 				B0C6AD0C2AD91D7900E64698 /* IconView.swift */,
 				E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */,
-				E84CF8C02B0FEB8300ECA259 /* RuntimesView.swift */,
-				E84B7D0E2B30986700DBDA2B /* InfoPane2.swift */,
 				E86671262B309D2F0048559A /* PlatformsView.swift */,
+				E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */,
 			);
 			path = InfoPane;
 			sourceTree = "<group>";
@@ -875,7 +872,6 @@
 				CA9FF8CF25959A9700E47BAF /* HelperXPCShared.swift in Sources */,
 				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
 				CAFBDC4E2599B33D003DCC5A /* MainToolbar.swift in Sources */,
-				E84CF8C12B0FEB8300ECA259 /* RuntimesView.swift in Sources */,
 				CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */,
 				CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */,
 				536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */,
@@ -904,6 +900,7 @@
 				B0403CFC2AD9A6BF00137C09 /* InstalledStateButtons.swift in Sources */,
 				36741BFF291E50F500A85AAE /* FileError.swift in Sources */,
 				CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */,
+				E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */,
 				B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */,
 				B0403CFE2ADA712C00137C09 /* InfoPaneControls.swift in Sources */,
 				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
@@ -929,7 +926,6 @@
 				E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */,
 				CA9FF877259528CC00E47BAF /* Version+XcodeReleases.swift in Sources */,
 				CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */,
-				E84B7D0F2B30986700DBDA2B /* InfoPane2.swift in Sources */,
 				E84B7D0D2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
 				CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */,
