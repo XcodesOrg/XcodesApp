@@ -1,4 +1,5 @@
 import SwiftUI
+import XcodesKit
 
 // MARK: - CommandMenu
 
@@ -34,16 +35,21 @@ struct XcodeCommands: Commands {
 
 struct InstallButton: View {
     @EnvironmentObject var appState: AppState
+    @State private var isLoading = false
+
     let xcode: Xcode?
-    
+
     var body: some View {
-        Button(action: install) {
+        ProgressButton(isInProgress: isLoading) {
+            install()
+        } label: {
             Text("Install")
-                .help("Install")
+                .help("InstallDescription")
         }
     }
-    
+
     private func install() {
+        isLoading = true
         guard let xcode = xcode else { return }
         appState.checkMinVersionAndInstall(id: xcode.id)
     }
@@ -63,6 +69,23 @@ struct CancelInstallButton: View {
     private func cancelInstall() {
         guard let xcode = xcode else { return }
         appState.presentedAlert = .cancelInstall(xcode: xcode)
+    }
+}
+
+struct CancelRuntimeInstallButton: View {
+    @EnvironmentObject var appState: AppState
+    let runtime: DownloadableRuntime?
+    
+    var body: some View {
+        Button(action: cancelInstall) {
+            Text("Cancel")
+                .help(localizeString("StopInstallation"))
+        }
+    }
+    
+    private func cancelInstall() {
+        guard let runtime = runtime else { return }
+        appState.presentedAlert = .cancelRuntimeInstall(runtime: runtime)
     }
 }
 
@@ -151,7 +174,7 @@ struct RevealButton: View {
     
     private func reveal() {
         guard let xcode = xcode else { return }
-        appState.reveal(xcode: xcode)
+        appState.reveal(xcode.installedPath)
     }
 }
 
@@ -173,8 +196,9 @@ struct CopyPathButton: View {
 }
 
 struct CopyReleaseNoteButton: View {
+  let url: URL?
+    
   @EnvironmentObject var appState: AppState
-  let xcode: Xcode?
 
   var body: some View {
     Button(action: copyReleaseNote) {
@@ -184,8 +208,8 @@ struct CopyReleaseNoteButton: View {
   }
 
   private func copyReleaseNote() {
-    guard let xcode = xcode else { return }
-    appState.copyReleaseNote(xcode: xcode)
+    guard let url = url else { return }
+    appState.copyReleaseNote(from: url)
   }
 }
 
@@ -204,6 +228,23 @@ struct CreateSymbolicLinkButton: View {
     private func createSymbolicLink() {
         guard let xcode = xcode else { return }
         appState.createSymbolicLink(xcode: xcode)
+    }
+}
+
+struct DownloadRuntimeButton: View {
+    @EnvironmentObject var appState: AppState
+    let runtime: DownloadableRuntime?
+    
+    var body: some View {
+        Button(action: install) {
+            Text("Install")
+                .help("Install")
+        }
+    }
+    
+    private func install() {
+        guard let runtime = runtime else { return }
+        appState.downloadRuntime(runtime: runtime)
     }
 }
 

@@ -9,7 +9,7 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 ![](screenshot_light.png#gh-light-mode-only)
 ![](screenshot_dark.png#gh-dark-mode-only)
 
-### :tada: Announcment
+### :tada: Announcement
 
 XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 
@@ -46,6 +46,7 @@ The following languages are supported because of the following community users!
 |Ukranian 🇺🇦 |[@gelosi](https://github.com/gelosi)|Japanese 🇯🇵|[@tatsuz0u](https://github.com/tatsuz0u)|
 |German 🇩🇪|[@drct](https://github.com/drct)|Dutch 🇳🇱|[@jfversluis](https://github/com/jfversluis)|
 |Brazilian Portuguese 🇧🇷|[@brunomunizaf](https://github.com/brunomunizaf)|Polish 🇵🇱|[@jakex7](https://github.com/jakex7)|
+|Catalan|[@ferranabello](https://github.com/ferranabello)|
 
 Want to add more languages? Simply create a PR with the updated strings file.
 ## Installation
@@ -67,7 +68,7 @@ brew install --cask xcodes
 
 ## Development
 
-You'll need macOS 12 Big Sur and Xcode 13 in order to build and run Xcodes.app.
+You'll need macOS 13.5 Ventura and Xcode 15 in order to build and run Xcodes.app.
 
 `Unxip` and `aria2` must be compiled as a universal binary
 ```

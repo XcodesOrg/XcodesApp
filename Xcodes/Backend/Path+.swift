@@ -28,4 +28,19 @@ extension Path {
         }
         return path
     }
+    
+    static var runtimeCacheFile: Path {
+        return xcodesApplicationSupport/"downloadable-runtimes.json"
+    }
+    
+    static var xcodesCaches: Path {
+        return caches/"com.xcodesorg.xcodesapp"
+    }
+    
+    @discardableResult
+    func setCurrentUserAsOwner() -> Path {
+        let user = ProcessInfo.processInfo.environment["SUDO_USER"] ?? NSUserName()
+        try? FileManager.default.setAttributes([.ownerAccountName: user], ofItemAtPath: string)
+        return self
+    }
 }

@@ -1,13 +1,13 @@
 import Foundation
 import Path
 
-extension Entry {
-    static func isAppBundle(kind: Kind, path: Path) -> Bool {
-        kind == .directory &&
+extension Path {
+    static func isAppBundle(path: Path) -> Bool {
+        path.isDirectory &&
         path.extension == "app" &&
         !path.isSymlink
     }
-    static func infoPlist(kind: Kind, path: Path) -> InfoPlist? {
+    static func infoPlist(path: Path) -> InfoPlist? {
         let infoPlistPath = path.join("Contents").join("Info.plist")
         guard
             let infoPlistData = try? Data(contentsOf: infoPlistPath.url),
@@ -18,10 +18,10 @@ extension Entry {
     }
     
     var isAppBundle: Bool {
-        Entry.isAppBundle(kind: kind, path: path)
+        Path.isAppBundle(path: self)
     }
 
     var infoPlist: InfoPlist? {
-        Entry.infoPlist(kind: kind, path: path)
+        Path.infoPlist(path: self)
     }
 }

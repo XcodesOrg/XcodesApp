@@ -1,5 +1,6 @@
 import ErrorHandling
 import SwiftUI
+import XcodesKit
 
 struct MainWindow: View {
     @EnvironmentObject var appState: AppState
@@ -27,8 +28,15 @@ struct MainWindow: View {
                 }
             
             if isShowingInfoPane {
-                InfoPane(selectedXcodeID: selectedXcodeID)
-                    .frame(minWidth: 300, maxWidth: .infinity)
+                Group {
+                    if let xcode = xcode {
+                        InfoPane(xcode: xcode)
+                    } else {
+                        UnselectedView()
+                    }
+                }
+                .padding()
+                .frame(minWidth: 300, maxWidth: .infinity)
             }
         }
         .mainToolbar(
@@ -59,7 +67,11 @@ struct MainWindow: View {
         // FB8954571 focusedValue(_:_:) on List row doesn't propagate value to @FocusedValue
         .focusedValue(\.selectedXcode, SelectedXcode(appState.allXcodes.first { $0.id == selectedXcodeID }))
     }
-    
+
+    private var xcode: Xcode? {
+        appState.allXcodes.first(where: { $0.id == selectedXcodeID })
+    }
+
     private var subtitleText: Text {
         if let lastUpdated = lastUpdated.map(Date.init(timeIntervalSince1970:)) {
             return Text("\(localizeString("UpdatedAt")) \(lastUpdated, style: .date) \(lastUpdated, style: .time)")
@@ -165,7 +177,21 @@ struct MainWindow: View {
                   ),
                   secondaryButton: .cancel(Text("Cancel"))
             )
+            
+        case let .cancelRuntimeInstall(runtime):
+            return Alert(
+                title: Text(String(format: localizeString("Alert.CancelInstall.Runtimes.Title"), runtime.name)),
+                  message: Text("Alert.CancelInstall.Message"),
+                  primaryButton: .destructive(
+                    Text("Alert.CancelInstall.PrimaryButton"),
+                    action: {
+                        self.appState.cancelRuntimeInstall(runtime: runtime)
+                    }
+                  ),
+                  secondaryButton: .cancel(Text("Cancel"))
+            )
         }
+        
     }
 }
 

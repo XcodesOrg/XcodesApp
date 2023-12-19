@@ -2,12 +2,13 @@ import Combine
 import Foundation
 import os.log
 import Path
+import XcodesKit
 
 public typealias ProcessOutput = (status: Int32, out: String, err: String)
 
 extension Process {
     @discardableResult
-    static func run(_ executable: Path, workingDirectory: URL? = nil, input: String? = nil, _ arguments: String...) -> AnyPublisher<ProcessOutput, Error> {
+    static func run(_ executable: any Pathish, workingDirectory: URL? = nil, input: String? = nil, _ arguments: String...) -> AnyPublisher<ProcessOutput, Error> {
         return run(executable.url, workingDirectory: workingDirectory, input: input, arguments)
     }
     
@@ -66,10 +67,4 @@ extension Process {
         }
         .eraseToAnyPublisher()
     }
-}
-
-struct ProcessExecutionError: Error {
-    let process: Process
-    let standardOutput: String
-    let standardError: String
 }
