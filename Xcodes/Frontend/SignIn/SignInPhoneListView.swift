@@ -16,6 +16,11 @@ struct SignInPhoneListView: View {
                 List(phoneNumbers, selection: $selectedPhoneNumberID) {
                     Text($0.numberWithDialCode)
                 }
+                .onAppear {
+                    if phoneNumbers.count == 1 {
+                        selectedPhoneNumberID = phoneNumbers.first?.id
+                    }
+                }
             } else {
                 AttributedText(
                     NSAttributedString(string: localizeString("NoTrustedPhones"))
