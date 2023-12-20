@@ -62,6 +62,7 @@ struct PlatformsView: View {
                 HStack(alignment: .top, spacing: 5){
                     RuntimeInstallationStepDetailView(installationStep: installationStep)
                         .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
                     CancelRuntimeInstallButton(runtime: runtime)
                 }
                 

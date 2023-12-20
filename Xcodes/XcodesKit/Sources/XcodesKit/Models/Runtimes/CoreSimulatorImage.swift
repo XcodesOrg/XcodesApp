@@ -15,7 +15,11 @@ public struct CoreSimulatorPlist: Decodable {
     }
 }
 
-public struct CoreSimulatorImage: Decodable {
+public struct CoreSimulatorImage: Decodable, Identifiable, Equatable {
+    public var id: String {
+        return uuid
+    }
+    
     public let uuid: String
     public let path: [String: String]
     public let runtimeInfo: CoreSimulatorRuntimeInfo
@@ -24,6 +28,10 @@ public struct CoreSimulatorImage: Decodable {
         self.uuid = uuid
         self.path = path
         self.runtimeInfo = runtimeInfo
+    }
+    
+    public static func == (lhs: CoreSimulatorImage, rhs: CoreSimulatorImage) -> Bool {
+        lhs.id == rhs.id
     }
 }
 

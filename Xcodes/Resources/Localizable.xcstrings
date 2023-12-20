@@ -1166,6 +1166,28 @@
         }
       }
     },
+    "Alert.DeletePlatform.PrimaryButton" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        }
+      }
+    },
+    "Alert.DeletePlatform.Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        }
+      }
+    },
     "Alert.Install.Error.Title" : {
       "comment" : "Install",
       "extractionState" : "manual",
@@ -6500,6 +6522,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "請輸入 %1$d 位數密碼，已傳送至 %2$@： "
+          }
+        }
+      }
+    },
+    "Error" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
           }
         }
       }
@@ -14577,6 +14610,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Platformlar"
+          }
+        }
+      }
+    },
+    "PlatformsList.Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
           }
         }
       }
