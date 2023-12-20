@@ -16,13 +16,13 @@ struct ReleaseNotesView: View {
     var body: some View {
         if let url = url {
             Button(action: { openURL(url) }) {
-                Label("ReleaseNotes", systemImage: "link")
+                Image(systemName: "link.circle.fill")
+                    .font(.title)
             }
-            .buttonStyle(LinkButtonStyle())
+            .buttonStyle(.plain)
             .contextMenu(menuItems: {
                 CopyReleaseNoteButton(url: url)
             })
-            .frame(maxWidth: .infinity, alignment: .leading)
             .help("ReleaseNotes.help")
         } else {
             EmptyView()

@@ -163,7 +163,6 @@ class AppState: ObservableObject {
         checkIfHelperIsInstalled()
         setupAutoInstallTimer()
         setupDefaults()
-        updateInstalledRuntimes()
     }
     
     func setupDefaults() {
@@ -410,10 +409,7 @@ class AppState: ObservableObject {
         
         // Check to see if users MacOS is supported
         if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
-            let split = requiredMacOSVersion.components(separatedBy: ".").compactMap { Int($0) }
-            let xcodeMinimumMacOSVersion = OperatingSystemVersion(majorVersion: split[safe: 0] ?? 0, minorVersion: split[safe: 1] ?? 0, patchVersion: split[safe: 2] ?? 0)
-            
-            if !ProcessInfo.processInfo.isOperatingSystemAtLeast(xcodeMinimumMacOSVersion) {
+            if hasMinSupportedOS(requiredMacOSVersion: requiredMacOSVersion) {
                 // prompt
                 self.presentedAlert = .checkMinSupportedVersion(xcode: availableXcode, macOS: ProcessInfo.processInfo.operatingSystemVersion.versionString())
                 return
@@ -426,6 +422,13 @@ class AppState: ObservableObject {
         case .xcodeReleases:
             install(id: id)
         }
+    }
+    
+    func hasMinSupportedOS(requiredMacOSVersion: String) -> Bool {
+        let split = requiredMacOSVersion.components(separatedBy: ".").compactMap { Int($0) }
+        let xcodeMinimumMacOSVersion = OperatingSystemVersion(majorVersion: split[safe: 0] ?? 0, minorVersion: split[safe: 1] ?? 0, patchVersion: split[safe: 2] ?? 0)
+        
+        return !ProcessInfo.processInfo.isOperatingSystemAtLeast(xcodeMinimumMacOSVersion)
     }
     
     func install(id: Xcode.ID) {

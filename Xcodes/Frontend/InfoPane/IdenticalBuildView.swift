@@ -33,6 +33,7 @@ struct IdenticalBuildsView: View {
                         .font(.subheadline)
                 }
             }
+            .xcodesBackground()
             .accessibilityElement()
             .accessibility(label: Text("IdenticalBuilds"))
             .accessibility(value: Text(accessibilityDescription))

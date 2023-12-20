@@ -1,4 +1,5 @@
 import AppKit
+import XcodesKit
 import Path
 import SwiftUI
 import Version
@@ -7,44 +8,65 @@ import struct XCModel.SDKs
 
 struct InfoPane: View {
     let xcode: Xcode
-
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                IconView(installState: xcode.installState)
-                    .frame(maxWidth: .infinity, alignment: .center)
-
-                Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
-                    .font(.title)
-
-                InfoPaneControls(xcode: xcode)
-
-                Divider()
-
-                Group {
-                    RuntimesView(xcode: xcode)
-                    ReleaseDateView(date: xcode.releaseDate)
-                    ReleaseNotesView(url: xcode.releaseNotesURL)
-                    IdenticalBuildsView(builds: xcode.identicalBuilds)
-                    CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
-                    SDKsView(sdks: xcode.sdks)
-                    CompilersView(compilers: xcode.compilers)
+        ScrollView(.vertical) {
+            HStack(alignment: .top) {
+                VStack {
+                    VStack(spacing: 5) {
+                        HStack {
+                            IconView(installState: xcode.installState)
+                            
+                            Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
+                                .font(.title)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        InfoPaneControls(xcode: xcode)
+                    }
+                    .xcodesBackground()
+               
+                
+                    VStack {
+                        Text("Platforms")
+                            .font(.title3)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        PlatformsView(xcode: xcode)
+                    }
+                    .xcodesBackground()
                 }
-
-                Spacer()
+                
+                VStack(alignment: .leading) {
+                    ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
+                    CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
+                    IdenticalBuildsView(builds: xcode.identicalBuilds)
+                    SDKandCompilers
+                }
+                .frame(width: 200)
+                
             }
         }
     }
+    
+    @ViewBuilder
+    var SDKandCompilers: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            SDKsView(sdks: xcode.sdks)
+            CompilersView(compilers: xcode.compilers)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(.background)
+        .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+    }
 }
 
-#Preview(PreviewName.allCases[0].rawValue) { makePreviewContent(for: 0) }
-#Preview(PreviewName.allCases[1].rawValue) { makePreviewContent(for: 1) }
-#Preview(PreviewName.allCases[2].rawValue) { makePreviewContent(for: 2) }
-#Preview(PreviewName.allCases[3].rawValue) { makePreviewContent(for: 3) }
-#Preview(PreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
+#Preview(XcodePreviewName.allCases[0].rawValue) { makePreviewContent(for: 0) }
+#Preview(XcodePreviewName.allCases[1].rawValue) { makePreviewContent(for: 1) }
+#Preview(XcodePreviewName.allCases[2].rawValue) { makePreviewContent(for: 2) }
+#Preview(XcodePreviewName.allCases[3].rawValue) { makePreviewContent(for: 3) }
+#Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
 
 private func makePreviewContent(for index: Int) -> some View {
-  let name = PreviewName.allCases[index]
+  let name = XcodePreviewName.allCases[index]
     return InfoPane(xcode: xcodeDict[name]!)
         .environmentObject(configure(AppState()) {
           $0.allXcodes = [xcodeDict[name]!]
@@ -53,17 +75,17 @@ private func makePreviewContent(for index: Int) -> some View {
             .padding()
 }
 
-enum PreviewName: String, CaseIterable, Identifiable {
+enum XcodePreviewName: String, CaseIterable, Identifiable {
     case Populated_Installed_Selected
     case Populated_Installed_Unselected
     case Populated_Uninstalled
     case Basic_Installed
     case Basic_Installing
 
-    var id: PreviewName { self }
+    var id: XcodePreviewName { self }
 }
 
-var xcodeDict: [PreviewName: Xcode] = [
+var xcodeDict: [XcodePreviewName: Xcode] = [
     .Populated_Installed_Selected: .init(
         version: _versionNoMeta,
         installState: .installed(Path(_path)!),
@@ -121,15 +143,48 @@ var xcodeDict: [PreviewName: Xcode] = [
     ),
 ]
 
+var downloadableRuntimes: [DownloadableRuntime] = {
+    var runtimes = try! JSONDecoder().decode([DownloadableRuntime].self, from: Current.files.contents(atPath: Path.runtimeCacheFile.string)!)
+    // set iOS to installed
+    let iOSIndex = runtimes.firstIndex { $0.sdkBuildUpdate == "19E239" }!
+    var iOSRuntime = runtimes[iOSIndex]
+    iOSRuntime.installState = .installed
+    runtimes[iOSIndex] = iOSRuntime
+    
+    let watchOSIndex = runtimes.firstIndex { $0.sdkBuildUpdate == "20R362" }!
+    var runtime = runtimes[watchOSIndex]
+    runtime.installState = .installing(
+        RuntimeInstallationStep.downloading(
+            progress:configure(Progress()) {
+                $0.kind = .file
+                $0.fileOperationKind = .downloading
+                $0.estimatedTimeRemaining = 123
+                $0.totalUnitCount = 11_944_848_484
+                $0.completedUnitCount = 848_444_920
+                $0.throughput = 9_211_681
+            }
+            )
+    )
+    runtimes[watchOSIndex] = runtime
+    
+    return runtimes
+}()
+
+var installedRuntimes: [CoreSimulatorImage] = {
+    [CoreSimulatorImage(uuid: "85B22F5B-048B-4331-B6E2-F4196D8B7475", path: ["relative" : "file:///Library/Developer/CoreSimulator/Images/85B22F5B-048B-4331-B6E2-F4196D8B7475.dmg"], runtimeInfo: CoreSimulatorRuntimeInfo(build: "19E240"))] // same as iOS in _SDK's
+}()
+
+
 private let _versionNoMeta = Version(major: 12, minor: 3, patch: 0)
 private let _versionWithMeta = Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"])
 private let _path = "/Applications/Xcode-12.3.0.app"
 private let _requiredMacOSVersion = "10.15.4"
 private let _sdks = SDKs(
     macOS: .init(number: "11.1"),
-    iOS: .init(number: "14.3"),
-    watchOS: .init(number: "7.3"),
-    tvOS: .init(number: "14.3")
+    iOS: .init(number: "15.4", "19E239"),
+    watchOS: .init(number: "7.3", "20R362"),
+    tvOS: .init(number: "14.3", "20K67"),
+    visionOS: .init(number: "1.0", "21N5233e")
 )
 private let _compilers = Compilers(
     gcc: .init(number: "4"),

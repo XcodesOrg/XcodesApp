@@ -8,6 +8,8 @@
 
 import Foundation
 import struct XCModel.SDKs
+import XcodesKit
+import SwiftUI
 
 extension SDKs {
     /// Loops through all SDK's and returns an array of buildNumbers (to be used to correlate runtimes)
@@ -31,5 +33,26 @@ extension SDKs {
         }
         
         return buildNumbers
+    }
+}
+
+extension DownloadableRuntime {
+    func icon() -> Image {
+        switch self.platform {
+        case .iOS:
+            return Image(systemName: "iphone")
+        case .macOS:
+            return Image(systemName: "macwindow")
+        case .watchOS:
+            return Image(systemName: "applewatch")
+        case .tvOS:
+            return Image(systemName: "appletv")
+        case .visionOS:
+            if #available(macOS 14, *) {
+                return Image(systemName: "visionpro")
+            } else {
+                return Image(systemName: "eyeglasses")
+            }
+        }
     }
 }

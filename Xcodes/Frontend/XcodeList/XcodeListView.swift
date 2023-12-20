@@ -42,6 +42,7 @@ struct XcodeListView: View {
         List(visibleXcodes, selection: $selectedXcodeID) { xcode in
             XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
         }
+        .listStyle(.sidebar)
     }
 }
 
