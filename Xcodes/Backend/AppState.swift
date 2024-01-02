@@ -48,6 +48,7 @@ class AppState: ObservableObject {
     @Published var isProcessingAuthRequest = false
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var presentedAlert: XcodesAlert?
+    @Published var presentedPreferenceAlert: XcodesPreferencesAlert?
     @Published var helperInstallState: HelperInstallState = .notInstalled
     /// Whether the user is being prepared for the helper installation alert with an explanation.
     /// This closure will be performed after the user chooses whether or not to proceed.
@@ -824,19 +825,7 @@ class AppState: ObservableObject {
         
         self.allXcodes = newAllXcodes.sorted { $0.version > $1.version }
     }
-    
-    // MARK: Runtimes
-    func runtimeInstallPath(xcode: Xcode, runtime: DownloadableRuntime) -> Path? {
-        if let coreSimulatorInfo = installedRuntimes.filter({ $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate }).first {
-            let urlString = coreSimulatorInfo.path["relative"]!
-            // app was not allowed to open up file:// url's so remove
-            let fileRemovedString = urlString.replacingOccurrences(of: "file://", with: "")
-            let url = URL(fileURLWithPath: fileRemovedString)
-            
-            return Path(url: url)!
-        }
-        return nil
-    }
+
     
     // MARK: - Private
     

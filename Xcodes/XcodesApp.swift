@@ -73,8 +73,54 @@ struct XcodesApp: App {
         PreferencesView()
           .environmentObject(appState)
           .environmentObject(updater)
+          .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
+              alert(for: presentedAlert)
+          })
       }
+        
+        Window("Platforms", id: "platforms") {
+            PlatformsListView()
+                .environmentObject(appState)
+        }
 #endif
+    }
+    
+    private func alert(for alertType: XcodesPreferencesAlert) -> Alert {
+        switch alertType {
+        case let .deletePlatform(runtime):
+            return Alert(
+                title: Text(String(format: localizeString("Alert.DeletePlatform.Title"), runtime.name)),
+                  primaryButton: .destructive(
+                    Text("Alert.DeletePlatform.PrimaryButton"),
+                    action: {
+                        Task {
+                            do {
+                                try await self.appState.deleteRuntime(runtime: runtime)
+                            } catch {
+                                var errorString: String
+                                if let error = error as? String {
+                                    errorString = error
+                                } else {
+                                    errorString = error.localizedDescription
+                                }
+                                self.appState.presentedPreferenceAlert = .generic(title: "Error", message: errorString)
+                            }
+                            
+                        }
+                    }
+                  ),
+                  secondaryButton: .cancel(Text("Cancel"))
+            )
+        case let .generic(title, message):
+            return Alert(
+                title: Text(title),
+                message: Text(message),
+                dismissButton: .default(
+                    Text("OK"),
+                    action: { appState.presentedAlert = nil }
+                )
+            )
+        }
     }
 }
 

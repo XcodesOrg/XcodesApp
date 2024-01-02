@@ -23,4 +23,7 @@ public struct XcodesShell {
     public var installRuntimeImage: (URL) async throws -> ProcessOutput = {
         try await Process.run(Path.root.usr.bin.join("xcrun"), "simctl", "runtime", "add", $0.path)
     }
+    public var deleteRuntime: (String) async throws -> ProcessOutput = {
+        try await Process.run(Path.root.usr.bin.join("xcrun"), "simctl", "runtime", "delete", $0)
+    }
 }

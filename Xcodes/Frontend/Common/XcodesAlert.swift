@@ -18,3 +18,17 @@ enum XcodesAlert: Identifiable {
         }
     }
 }
+
+// Splitting out alerts that are shown on the preference screen as by default we are showing on the MainWindow()
+// and users awkwardly switch screens, sometimes losing the preference screen
+enum XcodesPreferencesAlert: Identifiable {
+    case deletePlatform(runtime: DownloadableRuntime)
+    case generic(title: String, message: String)
+    
+    var id: Int {
+        switch self {
+        case .deletePlatform: return 1
+        case .generic: return 2
+        }
+    }
+}

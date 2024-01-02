@@ -8,7 +8,7 @@ public struct DownloadableRuntimesResponse: Codable {
     public let version: String
 }
 
-public struct DownloadableRuntime: Codable {
+public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     public let category: Category
     public let simulatorVersion: SimulatorVersion
     public let source: String
@@ -71,6 +71,14 @@ public struct DownloadableRuntime: Codable {
     public var downloadFileSizeString: String {
         return ByteCountFormatter.string(fromByteCount: Int64(fileSize), countStyle: .file)
     }
+    
+    public var id: String {
+        return visibleIdentifier
+    }
+    
+    public static func == (lhs: DownloadableRuntime, rhs: DownloadableRuntime) -> Bool {
+        return lhs.identifier == rhs.identifier
+    }
 }
 
 public struct SDKToSeedMapping: Codable {
@@ -86,12 +94,12 @@ public struct SDKToSimulatorMapping: Codable {
 }
 
 extension DownloadableRuntime {
-    public struct SimulatorVersion: Codable {
+    public struct SimulatorVersion: Codable, Hashable {
         public let buildUpdate: String
         public let version: String
     }
 
-    public struct HostRequirements: Codable {
+    public struct HostRequirements: Codable, Hashable {
         let maxHostVersion: String?
         let excludedHostArchitectures: [String]?
         let minHostVersion: String?
@@ -118,7 +126,7 @@ extension DownloadableRuntime {
         case tvOS = "com.apple.platform.appletvos"
         case visionOS = "com.apple.platform.xros"
         
-        var order: Int {
+        public var order: Int {
             switch self {
                 case .iOS: return 1
                 case .macOS: return 2
@@ -128,7 +136,7 @@ extension DownloadableRuntime {
             }
         }
 
-        var shortName: String {
+        public var shortName: String {
             switch self {
                 case .iOS: return "iOS"
                 case .macOS: return "macOS"
@@ -137,6 +145,7 @@ extension DownloadableRuntime {
                 case .visionOS: return "visionOS"
             }
         }
+        
     }
 }
 

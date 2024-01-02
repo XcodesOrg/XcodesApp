@@ -69,32 +69,6 @@ struct MainWindow: View {
                 }
             }
         }
-
-//        HSplitView {
-//            XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
-//                .frame(minWidth: 300)
-//                .layoutPriority(1)
-//                .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
-//                    Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
-//                          message: Text("Alert.Uninstall.Message"),
-//                          primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(xcode: xcode) }),
-//                          secondaryButton: .cancel(Text("Cancel")))
-//                }
-//                .searchable(text: $searchText)
-//            
-//            if isShowingInfoPane {
-//                Group {
-//                    if let xcode = xcode {
-//                        InfoPane(xcode: xcode)
-//                    } else {
-//                        UnselectedView()
-//                    }
-//                }
-//                .padding()
-//                .frame(minWidth: 300, maxWidth: .infinity)
-//            }
-//        }
-       
         .bottomStatusBar()
         .padding([.top], 0)
         .navigationSubtitle(subtitleText)

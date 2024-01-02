@@ -8,7 +8,7 @@
 import Foundation
 import Path
 
-public enum RuntimeInstallState: Equatable {
+public enum RuntimeInstallState: Equatable, Hashable {
     case notInstalled
     case installing(RuntimeInstallationStep)
     case installed
