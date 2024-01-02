@@ -43,7 +43,7 @@ struct XcodeListView: View {
             XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
         }
         .listStyle(.sidebar)
-        .safeAreaInset(edge: .bottom, spacing: 10) {
+        .safeAreaInset(edge: .bottom, spacing: 0) {
             PlatformsPocket()
                 .padding()
         }
@@ -59,11 +59,11 @@ struct PlatformsPocket: View {
         ) {
             VStack(spacing: 5) {
                 Image(systemName: "square.3.layers.3d")
-                    .font(.largeTitle)
+                    .font(.title)
                 Text("Platforms")
                     .font(.callout)
             }
-            .frame(width: 100, height: 75)
+            .frame(width: 70, height: 70)
             .background(.quaternary)
             .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
             
