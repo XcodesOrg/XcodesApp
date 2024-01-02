@@ -77,6 +77,11 @@ struct XcodesApp: App {
               alert(for: presentedAlert)
           })
       }
+        
+        Window("Platforms", id: "platforms") {
+            PlatformsListView()
+                .environmentObject(appState)
+        }
 #endif
     }
     
