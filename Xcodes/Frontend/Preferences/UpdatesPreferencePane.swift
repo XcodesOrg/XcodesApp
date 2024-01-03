@@ -69,7 +69,8 @@ struct UpdatesPreferencePane: View {
 
 class ObservableUpdater: ObservableObject {
     private let updater: SPUUpdater
-      
+    private let updaterDelegate = UpdaterDelegate()
+    
     @Published var automaticallyChecksForUpdates = false {
         didSet {
             updater.automaticallyChecksForUpdates = automaticallyChecksForUpdates
@@ -81,17 +82,17 @@ class ObservableUpdater: ObservableObject {
     @Published var includePrereleaseVersions = false {
         didSet {
             UserDefaults.standard.setValue(includePrereleaseVersions, forKey: "includePrereleaseVersions")
-
-            if includePrereleaseVersions {
-                updater.setFeedURL(.prereleaseAppcast)
-            } else {
-                updater.setFeedURL(.appcast)
-            }
+            
+            updaterDelegate.includePrereleaseVersions = includePrereleaseVersions
         }
     }
     
     init() {
-        updater = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil).updater
+        updater = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: updaterDelegate, userDriverDelegate: nil).updater
+        
+        // upgrade from an old sparkle version which set feeds via the updater
+        // now it uses the `updaterDelegate`
+        updater.clearFeedURLFromUserDefaults()
         
         automaticallyChecksForUpdatesObservation = updater.observe(
             \.automaticallyChecksForUpdates, 
@@ -116,9 +117,22 @@ class ObservableUpdater: ObservableObject {
     }
 }
 
-extension URL {
-    static let appcast = URL(string: "https://www.xcodes.app/appcast.xml")!
-    static let prereleaseAppcast = URL(string: "https://www.xcodes.app/appcast_pre.xml")!
+class UpdaterDelegate: NSObject, SPUUpdaterDelegate {
+    var includePrereleaseVersions: Bool = false
+    
+    func feedURLString(for updater: SPUUpdater) -> String? {
+        if includePrereleaseVersions {
+            return .prereleaseAppcast
+        } else {
+            return .appcast
+        }
+    }
+}
+
+
+extension String {
+    static let appcast = "https://www.xcodes.app/appcast.xml"
+    static let prereleaseAppcast = "https://www.xcodes.app/appcast_pre.xml"
 }
 
 struct UpdatesPreferencePane_Previews: PreviewProvider {
