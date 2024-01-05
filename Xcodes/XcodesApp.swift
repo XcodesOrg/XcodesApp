@@ -81,6 +81,9 @@ struct XcodesApp: App {
         Window("Platforms", id: "platforms") {
             PlatformsListView()
                 .environmentObject(appState)
+                .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
+                    alert(for: presentedAlert)
+                })
         }
 #endif
     }
