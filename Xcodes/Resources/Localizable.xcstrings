@@ -13,6 +13,12 @@
     },
     "%@" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -29,6 +35,12 @@
             "value" : "%1$@ %2$@ %3$@"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@%2$@%3$@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -39,6 +51,12 @@
     },
     "• %@" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "• %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -107,6 +125,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚠️ 접근 권한이 부여되지 않았습니다 ⚠️\n\n 접근을 허용하려면 알림 설정을 열고 Xcodes를 선택하여 알림을 허용해주세요."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ Ingen tilgang ⚠️\n\nVennligst åpne varslingsinnstillinger og velg Xcodes om du ønsker å gi tilgang."
           }
         },
         "nl" : {
@@ -222,6 +246,12 @@
             "value" : "접근 권한이 부여되었습니다. Xcodes에서 알림을 받게 됩니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tilgang gitt. Du vil motta varsler fra Xcodes."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -326,6 +356,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Acknowledgements"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Opplysninger og lisenser"
           }
         },
         "nl" : {
@@ -434,6 +470,12 @@
             "value" : "기본 버전으로 사용 중"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiv"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -538,6 +580,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "기본 버전/선택"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aktiv/Velg"
           }
         },
         "nl" : {
@@ -653,6 +701,12 @@
             "value" : "기본 버전으로 사용 중"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dette er den aktive versjonen"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -758,6 +812,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "고급"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avansert"
           }
         },
         "nl" : {
@@ -872,6 +932,12 @@
             "value" : "진행된 모든 사항은 삭제됩니다"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All framgang vil forkastes."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -984,6 +1050,12 @@
             "value" : "설치 중지"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopp installasjon"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1042,6 +1114,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er du sikker på at du vil stoppe installasjonen av Xcode %@?"
           }
         },
         "tr" : {
@@ -1116,6 +1194,12 @@
             "value" : "Xcode %@ 설치를 중지하시겠습니까?"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er du sikker på at du vil stoppe installasjonen av Xcode %@?"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1174,6 +1258,12 @@
             "state" : "translated",
             "value" : "Delete"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slett"
+          }
         }
       }
     },
@@ -1184,6 +1274,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er du sikker på at du vil slette %@?"
           }
         }
       }
@@ -1250,6 +1346,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode를 설치할 수 없음"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke installere Xcode"
           }
         },
         "nl" : {
@@ -1365,6 +1467,12 @@
             "value" : "아카이브된 Xcode를 설치할 수 없음"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke installere arkivert Xcode"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1478,6 +1586,12 @@
             "value" : "Xcode %@는 MacOS %@이(가) 필요하지만 MacOS %@을(를) 실행 중입니다. 그래도 설치하시겠습니까?"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ trenger MacOS %@, men du kjører MacOS %@, vil du fortsatt installere det?"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1589,6 +1703,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "최소 요건 충족되지 않음"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Minimumskravene er ikke møtt"
           }
         },
         "nl" : {
@@ -1705,6 +1825,12 @@
             "value" : "설치 후 단계를 수행할 수 없음"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke fullføre etterinstallasjons-stegene"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1816,6 +1942,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "도우미를 설치할 수 없음"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke installere helper"
           }
         },
         "nl" : {
@@ -1930,6 +2062,12 @@
             "value" : "Xcodes는 별도의 권한을 가진 도우미를 사용하여 작업을 루트로서 수행합니다. 설치 후 단계와 xcode-select로 Xcode 버전을 전환하는 것과 같이 커맨드 라인에서 sudo가 필요한 작업이 이에 해당합니다.\n\n설치하려면 macOS 계정 암호를 입력하라는 메시지가 표시됩니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode bruker en separat \"privileged helper\" for å gjøre oppgaver som root. Dette er oppgaver som ville krevd sudo i kommandolinjen, inkludert etterinstallasjons-steg og bytte av Xcode-versjoner med xcode-select.\n\nDu vil bli bedt om passordet på din MacOS-bruker for å installere."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2041,6 +2179,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "권한을 가진 도우미 (Privileged Helper)"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privileged Helper"
           }
         },
         "nl" : {
@@ -2157,6 +2301,12 @@
             "value" : "Xcode를 선택할 수 없음"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke velge Xcode"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2268,6 +2418,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode.app이 존재하며 심볼릭 링크가 아닙니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode.app eksisterer, og er ikke en symbolsk lenke"
           }
         },
         "nl" : {
@@ -2384,6 +2540,12 @@
             "value" : "심볼릭 링크를 생성할 수 없음"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke lage symbolsk lenke"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2453,6 +2615,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "ファイル \"%@\" が見つかりませんでした。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fant ikke filen \"%@\"."
           }
         },
         "pl" : {
@@ -2536,6 +2704,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode를 제거할 수 없음"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke installere Xcode"
           }
         },
         "nl" : {
@@ -2648,6 +2822,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "휴지통으로 이동되지만 비워지지는 않습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den vil flyttes til søppelkurven, men den vil ikke tømmes."
           }
         },
         "nl" : {
@@ -2764,6 +2944,12 @@
             "value" : "Xcode %@을 제거하시겠습니까?"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avinstaller Xcode %@?"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2878,6 +3064,12 @@
             "value" : "선택된 Xcode를 업데이트할 수 없음"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke oppdatere valgt Xcode"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2984,6 +3176,12 @@
             "value" : "전체"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alle"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3036,6 +3234,12 @@
     },
     "Apple Silicon" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Silicon"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3101,6 +3305,12 @@
           }
         },
         "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AppleID:"
+          }
+        },
+        "nb" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "AppleID:"
@@ -3218,6 +3428,12 @@
             "value" : "Xcodes.app 업데이트"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes.app-oppdateringer"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3328,6 +3544,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes.app에 대한 심볼릭 링크 자동 생성"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lag symbolsk lenke til Xcode.app automatisk"
           }
         },
         "nl" : {
@@ -3442,6 +3664,12 @@
             "value" : "Xcode 버전을 기본 버전(활성)/선택됨 상태로 만들 때 설치 디렉토리에 Xcode.app이라는 심볼릭 링크를 만들어 보세요."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Når en Xcode-versjoner settes aktiv/valgt, prøv å lag en symbolsk lenke med navn Xcode.app automatisk i installasjons-mappen"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3552,6 +3780,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "새 Xcode 버전 자동으로 설치"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Automatisk installer nye versjoner av Xcode"
           }
         },
         "nl" : {
@@ -3667,6 +3901,12 @@
             "value" : "베타"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beta"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3779,6 +4019,12 @@
             "value" : "베타만"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kun Beta"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3885,6 +4131,12 @@
             "value" : "취소"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avbryt"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3989,6 +4241,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "변경"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endre"
           }
         },
         "nl" : {
@@ -4101,6 +4359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "업데이트 자동 확인"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se etter app-oppdateringer automatisk"
           }
         },
         "nl" : {
@@ -4216,6 +4480,12 @@
             "value" : "보안 확인"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sikkerhets-sjekk"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4328,6 +4598,12 @@
             "value" : "지금 확인하기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sjekk nå"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4432,6 +4708,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "닫기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lukk"
           }
         },
         "nl" : {
@@ -4540,6 +4822,12 @@
             "value" : "호환성"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kompabilitet"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4646,6 +4934,12 @@
             "value" : "컴파일러"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compilere"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4750,6 +5044,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "계속하기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fortsett"
           }
         },
         "nl" : {
@@ -4864,6 +5164,12 @@
             "value" : "경로 복사하기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopier sti"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4970,6 +5276,12 @@
             "value" : "URL 복사"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopier URL"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5068,6 +5380,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode.app과 같은 Symlink 만들기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lag Symlink som Xcode.app"
           }
         },
         "nl" : {
@@ -5170,6 +5488,12 @@
             "value" : "Xcode-Beta.app과 같은 Symlink 만들기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lag Symlink som Xcode-Beta.app"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5262,6 +5586,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "데이터 소스"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Datakilde"
           }
         },
         "nl" : {
@@ -5375,6 +5705,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple 데이터 소스는 Apple Developer 웹사이트를 스크랩합니다. Apple Developer에는 항상 사용 가능한 최신 출시 버전이 표시되지만 취약한 면이 있습니다.\n\nXcode Releases는 비공식적인 Xcode 출시 버전 목록입니다. Xcode Releases에서는 정리된 데이터를 제공하며, Apple에서 쉽게 구할 수 없는 정보를 포함하며 Apple이 Apple Developer를 재설계할 경우에도 안전할 수 있습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple-datakilden skraper \"Apple Developer\"-nettsiden. Den vil alltid vise de nyeste tilgjengelige utgivelsene, men er mer ustabil.  Xcode Releases er en uoffisiell liste over Xcode-utgivelser. Den leveres som velformet data, har ekstra informasjon som ikke er tilgjengelig fra Apple, og har mindre sannsynlighet for å brekke om Apple redesigner Developer-siden."
           }
         },
         "nl" : {
@@ -5491,6 +5827,12 @@
             "value" : "신뢰할 수 있는 장치 중 하나에서 %d 자리 코드를 입력하세요."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tast inn den %d-sifrede koden fra en av dine godkjente enheter:"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5595,6 +5937,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "다운로더"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nedlaster"
           }
         },
         "nl" : {
@@ -5708,6 +6056,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "aria2는 최대 16 개의 연결을 사용하여 URLSession보다 3~5배 더 빠르게 Xcode를 다운로드합니다. GPLv2 라이센스를 준수하기 위해 Xcodes 내 소스 코드와 함께 실행 파일 번들로 제공됩니다.\n\nURLSession은 URL 요청을 만들기 위한 기본 Apple API입니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "aria2 bruker opp til 16 tilkoblinger for å laste ned Xcode 3-5x raskere enn URLSession. Det er inkludert som en executable sammen med dens kildekode i Xcodes for å etterkomme dens GPLv2-lisens.  URLSession er Apple-APIets standard for URL-requests."
           }
         },
         "nl" : {
@@ -5824,6 +6178,12 @@
             "value" : "다운로드 중"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laster ned"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5935,6 +6295,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "다운로드 정보를 찾을 수 없음"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen nedlastningsinformasjon funnet"
           }
         },
         "nl" : {
@@ -6050,6 +6416,12 @@
             "value" : "다운로드 중: %d%% 완료"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Laster ned: %d%% fullført"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6151,6 +6523,12 @@
             "value" : "다운로드"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nedlastninger"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6249,6 +6627,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "다운로드 크기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nedlastningsstørrelse"
           }
         },
         "nl" : {
@@ -6361,6 +6745,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "알림 활성화"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skru på varsler"
           }
         },
         "nl" : {
@@ -6476,6 +6866,12 @@
             "value" : "%2$@(으)로 전송된 %1$d 자리 코드를 입력하세요."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tast inn den %1$d-sifrede koden som ble sendt til %2$@:"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6534,11 +6930,23 @@
             "state" : "translated",
             "value" : "Error"
           }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Feil"
+          }
         }
       }
     },
     "example@icloud.com" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "example@icloud.com"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6602,6 +7010,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "실험실"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eksperimenter"
           }
         },
         "nl" : {
@@ -6714,6 +7128,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "더 빠른 Unxip"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Raskere Unxip"
           }
         },
         "nl" : {
@@ -6829,6 +7249,12 @@
             "value" : "@_saagarjha님 덕분에 이 실험 기능을 이용하면 일부 시스템에서 압축 해제 속도를 최대 70%까지 향상시킬 수 있습니다.\n\n이를 수행하는 방법에 대한 자세한 내용은 unxip 저장소 (https://github.com/saagarjha/unxip)에서 확인할 수 있습니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Takket være @_saagarjha kan dette eksperimentet øke unxipping-hastigheten opp til 70% på noen systemer.  Mere Informasjon om hvordan dette er mulig kan sees i unxip-repoet - https://github.com/saagarjha/unxip"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6933,6 +7359,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "필터"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter"
           }
         },
         "nl" : {
@@ -7047,6 +7479,12 @@
             "value" : "이용 가능한 버전만 보기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrer tilgjengelige versjoner"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7157,6 +7595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "설치한 버전만 보기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrer installerte versjoner"
           }
         },
         "nl" : {
@@ -7272,6 +7716,12 @@
             "value" : "마무리하는 중"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fullfører"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7377,6 +7827,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "일반"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Generelt"
           }
         },
         "nl" : {
@@ -7489,6 +7945,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GitHub 저장소"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub Repo"
           }
         },
         "nl" : {
@@ -7604,6 +8066,12 @@
             "value" : "권한을 가진 도우미 (Privileged helper)와의 통신할 수 없습니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke kommunisere med \"privileged helper\"."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7714,6 +8182,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "도우미 설치됨"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helper er installert"
           }
         },
         "nl" : {
@@ -7828,6 +8302,12 @@
             "value" : "도우미 설치되지 않음"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Helper er ikke installert"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7880,6 +8360,12 @@
     },
     "Hidden" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skjult"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7949,6 +8435,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "동일한 빌드"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Identiske bygg"
           }
         },
         "nl" : {
@@ -8063,6 +8555,12 @@
             "value" : "가끔 사전 출시 (prerelease) 버전과 출시 버전이 완전히 동일한 빌드인 경우가 있습니다. Xcodes는 자동으로 이 버전들을 함께 표시합니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Noen ganger er en prerelease- og en release-versjon nøyaktig samme bygg. Xcodes viser automatisk disse versjonene sammen."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8175,6 +8673,12 @@
             "value" : "사전 출시/베타 버전 포함"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inkluder prerelease-/beta-versjoner"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8280,6 +8784,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "정보"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Informasjon"
           }
         },
         "nl" : {
@@ -8395,6 +8905,12 @@
             "value" : "정보창 표시 또는 숨기기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vis eller skjul info-ruten"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8502,6 +9018,12 @@
             "value" : "설치"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installer"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8554,6 +9076,12 @@
     },
     "INSTALL" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "INSTALLER"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8623,6 +9151,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "다운로드한 Xcode가 다음과 같이 코드 서명 확인에 실패했습니다.\n%@"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den nedlastede Xcode feilet code signing verification med følgende melding: %@"
           }
         },
         "nl" : {
@@ -8739,6 +9273,12 @@
             "value" : "아카이브 \"%@\"이(가) 손상되어 확장할 수 없습니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arkivet \"%@\" er skadet, og kan ikke pakkes ut."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8850,6 +9390,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode %@이(가) 다음과 같이 보안 평가에 실패했습니다.\n%@\n그래도 사용하려는 경우 %@에 설치된 상태로 유지됩니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ feilet sikkerhetssjekken med følgende melding: %@ Den er fortsatt instalert på %@ hvis du vil bruke den uansett."
           }
         },
         "nl" : {
@@ -8965,6 +9511,12 @@
             "value" : "Xcode를 %@ 디렉토리로 이동하지 못했습니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kunne ikke flytte Xcode til %@-mappen."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9076,6 +9628,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@은(는) 유효한 버전 번호가 아닙니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ er ikke et gyldig versjonsnummer."
           }
         },
         "nl" : {
@@ -9191,6 +9749,12 @@
             "value" : "비밀번호가 입력되지 않았습니다. 다시 시도해 주세요."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mangler passord. Vennligst prøv igjen."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9302,6 +9866,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "사용자 이름 또는 비밀번호가 입력되지 않았습니다. 다시 시도해 주세요."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mangler brukernavn eller passord. Vennligst prøv igjen."
           }
         },
         "nl" : {
@@ -9417,6 +9987,12 @@
             "value" : "사전 출시 버전 이외에 사용 가능한 버전이 없습니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen ikke-prerelease-versjoner tilgjengelig."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9528,6 +10104,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "사용 가능한 사전 출시 버전이 없습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen prerelease-versjoner tilgjengelig"
           }
         },
         "nl" : {
@@ -9643,6 +10225,12 @@
             "value" : "현재 볼륨에 여유 공간이 충분하지 않기 때문에 아카이브 \"%@\"을(를) 확장할 수 없습니다.\n\n아카이브를 확장하기 위해 더 많은 공간을 확보한 다음 Xcode %@을(를) 다시 설치하여 중단된 위치에서 설치를 시작하세요."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arkivet \"%@\" kan ikke pakkes ut fordi den nåværende partisjonen ikke har nok tilgjenglelig plass.  Gjør mere plass tilgjengelig for å pakke ut arkivet og installer Xcode %@ igjen for å starte installasjonen fra der den var."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9754,6 +10342,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "설치가 완료되었지만 일부 설치 후 단계가 자동으로 수행되지 않았습니다. 이는 Xcode %@를 처음 실행할 때 수행됩니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installasjon fullført, men noen etterinstallasjons-steg ble ikke utført automatisk. Disse vil bli utført når du kjører Xcode %@ for første gang."
           }
         },
         "nl" : {
@@ -9869,6 +10463,12 @@
             "value" : "설치가 완료되었지만 일부 설치 후 단계가 자동으로 수행되지 않았습니다. Xcodes는 설치되지 않은 것으로 보이는 권한을 가진 도우미 (Privileged helper)를 사용하여 이러한 단계를 수행합니다. 권한을 가진 도우미는 환경설정 > 고급에서 설치할 수 있습니다.\n\n이 단계는 Xcode %@를 처음 실행할 때 수행됩니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installasjon fullført, men noen etterinstallasjons-steg ble ikke utført automatisk. Xcodes gjør disse stegene med en \"privileged helper\" privileged helper, som ser ut til å ikke være installert. Du kan installere den fra Preferanser > Avansert.   Disse stegene vil bli utført når du åpner Xcode %@ for første gang."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9980,6 +10580,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ 버전을 찾을 수 없습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fant ikke versjon %@."
           }
         },
         "nl" : {
@@ -10095,6 +10701,12 @@
             "value" : "다운로드한 Xcode에 예상된 코드 서명 ID가 없습니다.\n받은 값:\n%@\n%@\n예상된 값:\n%@\n%@"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Den nedlastede Xcode har ikke den forventede code signing identity. Fikk: %@ %@ Forventet: %@ %@"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10206,6 +10818,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes는 (아직) %@ 파일 형식에서 Xcode 설치를 지원하지 않습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes støtter ikke (enda) å installere Xcode fra filformatet %@."
           }
         },
         "nl" : {
@@ -10321,6 +10939,12 @@
             "value" : "%@은(는) 이미 %@에 설치되어 있습니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ er allerede installert på %@"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10432,6 +11056,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@이(가) 설치되지 않았습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ er ikke installert."
           }
         },
         "nl" : {
@@ -10548,6 +11178,12 @@
             "value" : "%1$d / %2$d 단계: %3$@"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Steg %1$d av %2$d:%3$@"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10660,6 +11296,12 @@
             "value" : "이 버전 설치하기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installer denne versjonen"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10740,6 +11382,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "インストール先"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installasjonsmappe"
           }
         },
         "nl" : {
@@ -10836,6 +11484,12 @@
             "value" : "도우미 설치"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installasjonshjelper"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10910,6 +11564,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodesは1つのディレクトリを検索し、そこにインストールします。デフォルト (推奨) は /Applications です。Xcodeの格納場所を変更すると、他のアプリケーションやサービスが動作しなくなる可能性があります。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes søker og installerer til én enkel mappe. Som standard (og anbefalt) er det å beholde denne mappen som /Applications. Endringer i hvor Xcode er lagret kan få andre apper og tjenester til å slutte å virke."
           }
         },
         "nl" : {
@@ -11005,6 +11665,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "마지막 확인 시점: %@"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sist sjekket: %@"
           }
         },
         "nl" : {
@@ -11111,6 +11777,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "라이센스"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lisens"
           }
         },
         "nl" : {
@@ -11225,6 +11897,12 @@
             "value" : "로컬 캐시 경로"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lokal cache-sti"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11337,6 +12015,12 @@
             "value" : "Xcodes는 사용 가능한 Xcode 버전을 캐시하고 임시로 디렉토리에 새 버전을 다운로드 합니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode cacher tilgjengelige Xcode-versjoner og laster midlertidig ned nye versjoner til en mappe"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11442,6 +12126,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "로그인"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logg inn"
           }
         },
         "nl" : {
@@ -11554,6 +12244,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "로그인 창 열기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne innlogging"
           }
         },
         "nl" : {
@@ -11669,6 +12365,12 @@
             "value" : "macOS %@ 또는 이후 버전"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Krever macOS %@ eller nyere"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11781,6 +12483,12 @@
             "value" : "기본 버전으로 만들기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gjør aktiv"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11891,6 +12599,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "기본 버전으로 만들기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gjør denne den aktive versjonen"
           }
         },
         "nl" : {
@@ -12006,6 +12720,12 @@
             "value" : "Xcodes 정보"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Om Xcodes"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12117,6 +12837,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes 법적고지"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes opplysninger og lisenser"
           }
         },
         "nl" : {
@@ -12231,6 +12957,12 @@
             "value" : "업데이트 확인..."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sjekk etter oppdateringer..."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12341,6 +13073,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes GitHub 저장소"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes GitHub repo"
           }
         },
         "nl" : {
@@ -12455,6 +13193,12 @@
             "value" : "버그 제보하기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Rapporter en feil"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12565,6 +13309,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "새로운 기능 요청하기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Be om en ny funksjon"
           }
         },
         "nl" : {
@@ -12680,6 +13430,12 @@
             "value" : "%@(으)로 이동 중"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flytter til %@"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12793,6 +13549,12 @@
             "value" : "확인하지 않음"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aldri"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12899,6 +13661,12 @@
             "value" : "다음"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Neste"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12951,6 +13719,12 @@
     },
     "Not Hidden" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ikke skjult"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13020,6 +13794,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "설치 완료"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ferdig å installere"
           }
         },
         "nl" : {
@@ -13136,6 +13916,12 @@
             "value" : "새 버전을 사용할 수 있습니다"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ny versjon tilgjengelig"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13247,6 +14033,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "새로운 Xcode 버전을 다운로드 할 수 있습니다."
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nye Xcode-versjoner er tilgjengelige for nedlastning."
           }
         },
         "nl" : {
@@ -13363,6 +14155,12 @@
             "value" : "새 Xcode 버전"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nye Xcode-versjoner"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13467,6 +14265,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "알림"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varsler"
           }
         },
         "nl" : {
@@ -13579,6 +14383,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "알림 설정"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Varslingsinnstillinger"
           }
         },
         "nl" : {
@@ -13694,6 +14504,12 @@
             "value" : "계정에 신뢰할 수 있는 전화번호가 없지만 이중 인증(2FA)에 필요합니다.\n\nhttps://support.apple.com/HT204915를 참조하세요."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kontoen din har ingen godkjente telefonnummer, men det er påkrevd for to-faktor-godkjenning.  Se https://support.apple.com/HT204915."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13806,6 +14622,12 @@
             "value" : "선택된 Xcode 없음"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ingen Xcode valgt"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13904,6 +14726,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "확인"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
           }
         },
         "nl" : {
@@ -14005,6 +14833,12 @@
             "value" : "名前をXcode-X.X.X.appのまま維持する"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Behold navn som Xcode-X.X.X.app"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14076,6 +14910,12 @@
             "value" : "選択時、バージョン付きの名前を維持します。例) Xcode-13.4.1.app"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ved valg, beholdes navnet det samme som versjonen, f.eks. Xcode-13.4.1.app"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14133,6 +14973,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "名前を常にXcode.appに変更する"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endre alltid navn til Xcode.app"
           }
         },
         "nl" : {
@@ -14204,6 +15050,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "選択時、自動的にアクティブなXcodeをXcode.appに、以前のXcode.appをバージョン付きの名前に変更します。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ved valg, prøv automatisk å endre navn på den aktive Xcode til Xcode.app, og bytt navn på den forrige Xcode.app til versjonsnavnet."
           }
         },
         "nl" : {
@@ -14300,6 +15152,12 @@
             "value" : "열기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14352,6 +15210,12 @@
     },
     "OPEN" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ÅPNE"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14362,6 +15226,12 @@
     },
     "Open In Rosetta" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne i Rosetta"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14430,6 +15300,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "이 버전 열기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne denne versjonen"
           }
         },
         "nl" : {
@@ -14544,6 +15420,12 @@
             "value" : "비밀번호:"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passord:"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14596,6 +15478,12 @@
     },
     "Perform post-install steps" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utfør etterinstallasjons-stegene"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14606,6 +15494,12 @@
     },
     "Platforms" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platformer"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14621,6 +15515,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Under følger en liste med platformer som er installert på denne maskinen."
           }
         }
       }
@@ -14679,6 +15579,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "환경설정"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Preferanser"
           }
         },
         "nl" : {
@@ -14793,6 +15699,12 @@
             "value" : "환경설정 열기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Åpne preferanser"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14903,6 +15815,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "권한을 가진 도우미 (Privileged Helper)"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Privileged Helper"
           }
         },
         "nl" : {
@@ -15017,6 +15935,12 @@
             "value" : "Xcodes는 별도의 권한을 가진 도우미를 사용하여 작업을 루트로서 수행합니다. 설치 후 단계와 xcode-select로 Xcode 버전을 전환하는 것과 같이 커맨드 라인에서 sudo가 필요한 작업이 이에 해당합니다.\n\n설치하려면 macOS 계정 암호를 입력하라는 메시지가 표시됩니다."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes bruker en separat \"privileged helper\" for å gjøre oppgaver som root. Dette er oppgaver som ville ha krevd sudo på kommandolinjen, inkludert etterinstallerings-steg og å bytte Xcode-versjoner med xcode-select.  Du vil bli bedt om passordet på din macOS-bruker for å installere det."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15121,6 +16045,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "갱신"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppdater"
           }
         },
         "nl" : {
@@ -15233,6 +16163,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode 목록 갱신"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppdater Xcode-listen"
           }
         },
         "nl" : {
@@ -15348,6 +16284,12 @@
             "value" : "출시 버전"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Release"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15458,6 +16400,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "출시일"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utgivelsesdato"
           }
         },
         "nl" : {
@@ -15573,6 +16521,12 @@
             "value" : "릴리즈 노트"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Utgivelsesnotater"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15683,6 +16637,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "릴리즈 노트 보기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se utgivelsesnotater"
           }
         },
         "nl" : {
@@ -15797,6 +16757,12 @@
             "value" : "출시 버전만"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Run release"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15901,6 +16867,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "필수 입력"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Påkrevd"
           }
         },
         "nl" : {
@@ -16015,6 +16987,12 @@
             "value" : "Finder에서 보기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vis i Finder"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16119,6 +17097,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SDKs"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SDKer"
           }
         },
         "nl" : {
@@ -16234,6 +17218,12 @@
             "value" : "검색하기..."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Søk..."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16347,6 +17337,12 @@
             "value" : "목록 검색하기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Søk i listen"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16453,6 +17449,12 @@
             "value" : "선택"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16557,6 +17559,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "선택됨"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Valgt"
           }
         },
         "nl" : {
@@ -16672,6 +17680,12 @@
             "value" : "SMS를 통해 %d 자리 코드를 수신하려면 신뢰할 수 있는 전화번호를 선택하세요."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Velg et godkjent telefonnummer for å motta en %d-sifret kode via SMS:"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16784,6 +17798,12 @@
             "value" : "SMS 보내기"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send SMS"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16848,6 +17868,12 @@
             "value" : "Rosettaで開くオプションを表示する"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vis \"Åpne i Rosetta\"-valg"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16886,6 +17912,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rosettaで開くオプションは \"開く\" 機能が利用できる場所に表示されます。注意: これはApple Siliconマシンにのみ表示されます。"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "\"Åpne i Rosetta\"-valg vises der andre \"Åpne\"-funksjoner er tilgjengelig. Obs: Dette gjelder kun for Apple Silicon-maskiner."
           }
         },
         "pl" : {
@@ -16974,6 +18006,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "로그인하기"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logg inn"
           }
         },
         "nl" : {
@@ -17089,6 +18127,12 @@
             "value" : "Apple ID로 로그인하세요."
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logg inn med din Apple ID."
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17201,6 +18245,12 @@
             "value" : "로그아웃"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logg ut"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17311,6 +18361,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "설치 중지"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stopp installasjon"
           }
         },
         "nl" : {
@@ -17426,6 +18482,12 @@
             "value" : "아카이브를 휴지통으로 이동"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Flytter arkivet til søppelkurven"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17539,6 +18601,12 @@
             "value" : "언아카이빙 중 (시간이 좀 걸릴 수 있습니다)"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pakker ut (Dette kan ta litt tid)"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17643,6 +18711,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "제거"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avinstaller"
           }
         },
         "nl" : {
@@ -17755,6 +18829,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unxip 실험"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unxip-eksperiment"
           }
         },
         "nl" : {
@@ -17871,6 +18951,12 @@
             "value" : "마지막 업데이트 시점"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppdatert den"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17976,6 +19062,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "업데이트"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Oppdateringer"
           }
         },
         "nl" : {
@@ -18090,6 +19182,12 @@
             "value" : "unxipping 시 실험 기능 사용"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ved utpakking, bruk eksperiment"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18194,6 +19292,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "버전"
+          }
+        },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versjoner"
           }
         },
         "nl" : {
@@ -18310,6 +19414,12 @@
             "value" : "버전 %@ (%@)"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versjon %@ (%@)"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18424,6 +19534,12 @@
             "value" : "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻"
           }
         },
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨🏻‍💻👩🏼‍💻 God WWDC %@! 👨🏽‍💻🧑🏻‍💻"
+          }
+        },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18470,6 +19586,12 @@
     },
     "Xcode" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18480,6 +19602,12 @@
     },
     "Xcodes" : {
       "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18489,7 +19617,14 @@
       }
     },
     "XCODES RULES!" : {
-
+      "localizations" : {
+        "nb" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "XCODES RULER!"
+          }
+        }
+      }
     }
   },
   "version" : "1.0"
