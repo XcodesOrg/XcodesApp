@@ -1044,6 +1044,12 @@
             "value" : "Are you sure you want to stop the installation of Xcode %@?"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Êtes-vous sûr de vouloir arrêter l'installation de Xcode %@ ?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1174,6 +1180,12 @@
             "state" : "translated",
             "value" : "Delete"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer"
+          }
         }
       }
     },
@@ -1184,6 +1196,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Êtes-vous sûr de vouloir supprimer %@ ?"
           }
         }
       }
@@ -2447,6 +2465,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Could not find file \"%@\"."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Impossible de trouver le fichier \"%@\"."
           }
         },
         "ja" : {
@@ -5146,6 +5170,12 @@
             "value" : "Luo Symlink nimellä Xcode-Beta.app"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Créer un lien symbolique Xcode-Beta.app"
+          }
+        },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6534,6 +6564,12 @@
             "state" : "translated",
             "value" : "Error"
           }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Erreur"
+          }
         }
       }
     },
@@ -7880,6 +7916,12 @@
     },
     "Hidden" : {
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Masqué"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8554,6 +8596,12 @@
     },
     "INSTALL" : {
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "INSTALLER"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10736,6 +10784,12 @@
             "value" : "Directorio de instalación"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Répertoire d'installation"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10904,6 +10958,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes recherche et installe dans un répertoire spécifique. Par défaut, il est recommandé de laisser /Applications. Tout changement modifiant l'emplacement de Xcode risque de provoquer des dysfonctionnements aux autres apps/services."
           }
         },
         "ja" : {
@@ -12951,6 +13011,12 @@
     },
     "Not Hidden" : {
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Visible"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14070,6 +14136,12 @@
             "value" : "Al seleccionar, mantener el nombre como la versión p.ej. Xcode-13.4.1.app"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lors de la sélection, gardera le numéro de version. Exemple: Xcode-13.4.1.app"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14197,7 +14269,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "À la sélection, toujours essayer de renommer la version active de Xcode en Xcode.app, en renommant l'ancienne Xcode.app avec le nom de version."
+            "value" : "Lors de la sélection, toujours essayer de renommer la version active de Xcode en Xcode.app, en renommant l'ancienne Xcode.app avec le nom de version."
           }
         },
         "ja" : {
@@ -14352,6 +14424,12 @@
     },
     "OPEN" : {
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OUVRIR"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14362,6 +14440,12 @@
     },
     "Open In Rosetta" : {
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir avec Rosetta"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14596,6 +14680,12 @@
     },
     "Perform post-install steps" : {
       "localizations" : {
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Exécuter des étapes post-installation"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14621,6 +14711,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ci-dessous une liste des plateformes installées sur cette machine."
           }
         }
       }
@@ -16842,6 +16938,12 @@
             "value" : "Show Open In Rosetta option"
           }
         },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Afficher l'option Ouvrir avec Rosetta"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16880,6 +16982,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir avec Rosetta s'affichera d'autres options \"Ouvrir\" sont disponibles. Note: Uniquement pour les machines Apple Silicon."
           }
         },
         "ja" : {
