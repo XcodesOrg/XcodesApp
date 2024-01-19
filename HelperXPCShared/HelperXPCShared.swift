@@ -1,7 +1,7 @@
 import Foundation
 
-let machServiceName = "com.robotsandpencils.XcodesApp.Helper"
-let clientBundleID = "com.robotsandpencils.XcodesApp"
+let machServiceName = "com.xcodesorg.xcodesapp.Helper"
+let clientBundleID = "com.xcodesorg.xcodesapp"
 let subjectOrganizationalUnit = Bundle.main.infoDictionary!["CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT"] as! String
 
 @objc(HelperXPCProtocol)
