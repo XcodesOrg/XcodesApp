@@ -783,6 +783,7 @@
 				"pt-BR",
 				nl,
 				pl,
+				nb,
 			);
 			mainGroup = CAD2E7952449574E00113D76;
 			packageReferences = (

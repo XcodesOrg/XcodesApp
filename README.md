@@ -46,7 +46,7 @@ The following languages are supported because of the following community users!
 |Ukranian 🇺🇦 |[@gelosi](https://github.com/gelosi)|Japanese 🇯🇵|[@tatsuz0u](https://github.com/tatsuz0u)|
 |German 🇩🇪|[@drct](https://github.com/drct)|Dutch 🇳🇱|[@jfversluis](https://github/com/jfversluis)|
 |Brazilian Portuguese 🇧🇷|[@brunomunizaf](https://github.com/brunomunizaf)|Polish 🇵🇱|[@jakex7](https://github.com/jakex7)|
-|Catalan|[@ferranabello](https://github.com/ferranabello)|
+|Catalan|[@ferranabello](https://github.com/ferranabello)|Norwegian(Bokmål)🇳🇴|[@erik-vik](https://github.com/erik-vik)|
 
 Want to add more languages? Simply create a PR with the updated strings file.
 ## Installation
