@@ -11,8 +11,7 @@
                 
                     <item>
                         <title>2.0 beta 1 - The Force Awakens</title>
-                        <description><![CDATA[
-<h2 id="introducing-v20--">Introducing v2.0  🎉</h2>
+                        <description><![CDATA[<h2 id="introducing-v20--">Introducing v2.0  🎉</h2>
 
 <h3 id="a-slight-redesign">A slight redesign</h3>
 <p>The majority of the information in v1.X was only included in the info pane. While this was sufficient a few years ago, with the newly added Platforms as a separate download, more space was needed. 2.0 now uses a <code class="language-plaintext highlighter-rouge">NavigationSplitView</code> with a smaller left view and a larger main view.</p>
@@ -99,7 +98,7 @@
   <li>Bump actions/cache from 3.2.5 to 3.2.6 (#358) @dependabot</li>
 </ul>
 
-<!-- sparkle:edSignature=v19BUpXdl0GsgloWn2tj1Jru6xT1dRKscWcR+i6tKTTefMl7wJcJomRZad27sR5YO6BkE2+xXjaCNcgQwx5vAw== -->
+<!-- sparkle:edSignature=c46QifwsZ0BZKBgkB2OFHdVEhNM29WNtyNgr1e5t0mvcZTl6fzhSldGBkYQqFpRXiTJ0CCE7obNgry/faOU3Cw== -->
 ]]></description>
                         <pubDate>Fri, 19 Jan 2024 17:53:33 +0000</pubDate>
                         
@@ -111,11 +110,11 @@
                                 
 
                                 <enclosure
-                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.0.0b19/Xcodes.zip"
-                                    sparkle:version="19"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.0.0b20/Xcodes.zip"
+                                    sparkle:version="20"
                                     sparkle:shortVersionString="2.0.0"
-                                    sparkle:edSignature="v19BUpXdl0GsgloWn2tj1Jru6xT1dRKscWcR+i6tKTTefMl7wJcJomRZad27sR5YO6BkE2+xXjaCNcgQwx5vAw=="
-                                    length="12352203"
+                                    sparkle:edSignature="c46QifwsZ0BZKBgkB2OFHdVEhNM29WNtyNgr1e5t0mvcZTl6fzhSldGBkYQqFpRXiTJ0CCE7obNgry/faOU3Cw=="
+                                    length="12240278"
                                     type="application/octet-stream" />
                             
                         
