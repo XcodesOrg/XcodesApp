@@ -17251,6 +17251,9 @@
         }
       }
     },
+    "SponsorXcodes" : {
+      "extractionState" : "manual"
+    },
     "StopInstallation" : {
       "localizations" : {
         "ca" : {
