@@ -9,6 +9,10 @@
         
             
                 
+            
+        
+            
+                
                     <item>
                         <title>v1.10.0 - Revenge of the Sith</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
@@ -59,7 +63,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.10.0b18/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.10.0b18/Xcodes.zip"
                                     sparkle:version="18"
                                     sparkle:shortVersionString="1.10.0"
                                     sparkle:edSignature="Ttm9zduGZ1nayiSModh8sZilyC8GHyEioCQYl0d73ezH3Daj63CdS1xMh9hfROgcp0XpOOl7z84qgW+RAxkBDA=="
@@ -127,7 +131,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.9.0b17/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.9.0b17/Xcodes.zip"
                                     sparkle:version="17"
                                     sparkle:shortVersionString="1.9.0"
                                     sparkle:edSignature="BHOjL96nA0/98Fw4OJoSi/PXhjcTpo2jb3twRvwhwFbsJQV+AKLM+H3GRAvsT4rVbtX+txQw6A0UDeiSliPPBg=="
@@ -195,7 +199,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.8.0b16/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.8.0b16/Xcodes.zip"
                                     sparkle:version="16"
                                     sparkle:shortVersionString="1.8.0"
                                     sparkle:edSignature="SgcxGfx96rqxNpxpecvyLbgzAg6gqSk6pYPn38zyRqs4Tp1RSTAp4kNLJJSbwSdYneo8yaHrIkJyBWft48XnAw=="
@@ -271,7 +275,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.7.0b15/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.7.0b15/Xcodes.zip"
                                     sparkle:version="15"
                                     sparkle:shortVersionString="1.7.0"
                                     sparkle:edSignature="hB7zXWFEDyrIoZTatX9M+UVaP8dQDsEoau9CVrZpOaCt5rMH/w230CginnuTHk1v6y4fMiN4sAAe9YCjr34eAQ=="
@@ -326,7 +330,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.6.0b14/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.6.0b14/Xcodes.zip"
                                     sparkle:version="14"
                                     sparkle:shortVersionString="1.6.0"
                                     sparkle:edSignature="whzvbz/AK1Zv7laaOlBC+O5b2ra1stDa38FI30cA1+KxRExSIve/sf7d0JEBz18rbFBHxO1DpOpIiB5rwZRODQ=="
@@ -391,7 +395,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.5.0b13/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.5.0b13/Xcodes.zip"
                                     sparkle:version="13"
                                     sparkle:shortVersionString="1.5.0"
                                     sparkle:edSignature="oOzczQVk8QV9OsnTvEkp0U6H7w5OE0KYHt0DI1jgeywW7ciiydsBnGx3cl+5/tbdpHXvfVni7ePAzapjPPloAQ=="
@@ -458,7 +462,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.4.0b12/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.4.0b12/Xcodes.zip"
                                     sparkle:version="12"
                                     sparkle:shortVersionString="1.4.0"
                                     sparkle:edSignature="TVoWUrdazSWlLZtbe1RFrs9cKRUiZZls9fg8/QJ+kjnYefQ1AA0gN0AJn+2PkIOUS1cMXQJktfEULHdTcUhrBg=="
@@ -517,7 +521,7 @@ In the first experiment - thanks to the wonderful work of https://github.com/saa
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.3.1b11/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.3.1b11/Xcodes.zip"
                                     sparkle:version="11"
                                     sparkle:shortVersionString="1.3.1"
                                     sparkle:edSignature="ioZ6VrsmbabIfKEmj/mGuUSF1RWZWnE7fyhGCziTs0avLpGfrNKGljkdQ3lXFlJoaL+viMuII2znYRnGoCEqBg=="
@@ -583,7 +587,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.2.0b8/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.2.0b8/Xcodes.zip"
                                     sparkle:version="8"
                                     sparkle:shortVersionString="1.2.0"
                                     sparkle:edSignature="iXFkt6ZhiaTeAHQDVOwEzL4Oin+w+UtMlv4MeCmsI6xQc8+YOm2GTtnfhxhXnGWkgRwzSQC/+2Iw0r0nEqwKDA=="
@@ -644,7 +648,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.1.0b7/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.1.0b7/Xcodes.zip"
                                     sparkle:version="7"
                                     sparkle:shortVersionString="1.1.0"
                                     sparkle:edSignature="cLGxQg5k3EVJzlvPTdnD3E8pwOcx9ZjVVBrcPdicLGyOANGs3Ase6UhlF5JO94Mi6NoQmXrj2T9JuVdBT5LABw=="
@@ -690,7 +694,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.5b6/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.5b6/Xcodes.zip"
                                     sparkle:version="6"
                                     sparkle:shortVersionString="1.0.5"
                                     sparkle:edSignature="o68WXbj/QpF+uMivHgPdRV1cafP/EuYQycCVXAEl+TqNgI2eKbu5jUuelP1ZmLwQIVADOyPUA4E2hq4Wz+kJCQ=="
@@ -747,7 +751,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.4b5/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.4b5/Xcodes.zip"
                                     sparkle:version="5"
                                     sparkle:shortVersionString="1.0.4"
                                     sparkle:edSignature="M/e+bFPmNSwUI2P4UaucSXsqMdT4woH5mkhwDR0rJ5OBbaJ9FY+8+9Dk5eOg4QabMa5juFXZHuQf7UW8k/HZCg=="
@@ -803,7 +807,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.3b4/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.3b4/Xcodes.zip"
                                     sparkle:version="4"
                                     sparkle:shortVersionString="1.0.3"
                                     sparkle:edSignature="kZt1uUbQR9BLjX9r0DjlajGlz20k7hRuRBNPnI71f1k/DdtFKJnlvd+eotBI9/kIhvbMyv4QpLsCkzRPZGOcCg=="
@@ -837,7 +841,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.2b3/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.2b3/Xcodes.zip"
                                     sparkle:version="3"
                                     sparkle:shortVersionString="1.0.2"
                                     sparkle:edSignature="Z4orm82DLqUB0q5B+9PsVWgm8FYEqije7umuylooLZM8+XaiX9IEH2OoNoHWIGh8e+PRekMJ5DfL0iTmqz2eBQ=="
@@ -873,7 +877,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.1b2/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.1b2/Xcodes.zip"
                                     sparkle:version="2"
                                     sparkle:shortVersionString="1.0.1"
                                     sparkle:edSignature="0sFDBZVFN1QNfXYDocYG0KUCsXkHUbrBGuugsqEo5XWpQa6MIdKRN8agry9UeUdStTk2iH45XfNiA+lzuj1xBA=="
@@ -903,7 +907,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.0b1/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.0b1/Xcodes.zip"
                                     sparkle:version="1"
                                     sparkle:shortVersionString="1.0.0"
                                     sparkle:edSignature="ELrJn0LYxAlaAUbO4FNcEXtQDAMV1md0eWbtRfsCwBRwa6em+RrVB0Bcm3KlIGW1L6zTTqdsWmf7isyJwRs4CQ=="

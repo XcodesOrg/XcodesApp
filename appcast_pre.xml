@@ -10,6 +10,122 @@
             
                 
                     <item>
+                        <title>2.0 beta 1 - The Force Awakens</title>
+                        <description><![CDATA[
+<h2 id="introducing-v20--">Introducing v2.0  🎉</h2>
+
+<h3 id="a-slight-redesign">A slight redesign</h3>
+<p>The majority of the information in v1.X was only included in the info pane. While this was sufficient a few years ago, with the newly added Platforms as a separate download, more space was needed. 2.0 now uses a <code class="language-plaintext highlighter-rouge">NavigationSplitView</code> with a smaller left view and a larger main view.</p>
+
+<p>The UI has been updated for a more cleaner look</p>
+
+<p><img width="664" alt="Screenshot 2024-01-19 at 11 32 11 AM" src="https://user-images.githubusercontent.com/1119565/298149823-b1d6d4bb-79fd-49dd-804e-7593d2df8062.png" /></p>
+
+<h3 id="platforms">Platforms</h3>
+<p>You can now download the platforms with the speed of Xcodes and aria2.</p>
+
+<h3 id="xcodeskit">XcodesKit</h3>
+<p>2.0 has the start of a <code class="language-plaintext highlighter-rouge">XcodesKit</code> library using Swift Concurrency. This will allow us to more easily share code between the UI and the CLI in the future.</p>
+
+<h3 id="new-requirements">New Requirements</h3>
+<p>MacOS 13.0 is now required for 2.0</p>
+
+<h2 id="big-thanks">Big thanks!</h2>
+
+<p>Thank you to all the contributors over 2023 who have kept adding on functionality to Xcodes and who have supported me via <a href="https://www.buymeacoffee.com/mattkiazyk">buymeacoffee.com/mattkiazyk</a></p>
+
+<p>Full change log is below!</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>update Sparkle to 2.5.2 (#469) @MattKiazyk</li>
+  <li>Add new Platforms List Window (#463) @MattKiazyk</li>
+  <li>Redesign the main window to better suit more data (#461) @MattKiazyk</li>
+  <li>Add default phone number selection when there is only one (#462) @redryerye</li>
+  <li>Activity Indicator on Install Pressed (#437) @chickdan</li>
+  <li>Add ability to cancel runtime downloads (#453) @MattKiazyk</li>
+  <li>Support Runtime/Platforms Downloading and Install 🚀  (#448) @MattKiazyk</li>
+  <li>Add installation progress bar to dock icon (#423) @senmu</li>
+  <li>SDK column in the info panel supports displaying visionOS (#400) @LavareX</li>
+  <li>Add PinCodeTextField autocomplete support (#398) @Kyle-Ye</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Descriptive error for login status code 412 (#456) @chickdan</li>
+  <li>fix: settings link on Sonoma not working (#444) @MattKiazyk</li>
+  <li>Improve Brazilian Portuguese translation (#386) @0x7067</li>
+</ul>
+
+<h2 id="-localization">🌎 Localization</h2>
+
+<ul>
+  <li>Updated Turkish to 100% (#454) @egesucu</li>
+  <li>Support new Xcode 15 String Catalog (#449) @egesucu</li>
+  <li>Fix SMS Enter Digit Code Crash on some localizations (#428) @ElonPark</li>
+  <li>Update DE localization (#393) @qnotna</li>
+  <li>Update zh_CN localizations. (#391) @megabitsenmzq</li>
+  <li>Add catalan translation (#297) @ferranabello</li>
+  <li>Introduce Polish translations (#375) @jakex7</li>
+  <li>Fix zh_Hans localizations (#376) @LinXunFeng</li>
+  <li>Turkish Localization Update (#362) @egesucu</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Bump ruby/setup-ruby from 1.162.0 to 1.165.1 (#468) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.161.0 to 1.162.0 (#459) @dependabot</li>
+  <li>Updated README.md (#455) @egesucu</li>
+  <li>Clean up code in <code class="language-plaintext highlighter-rouge">InfoPane</code> to be more robust (#436) @thai-d-v</li>
+  <li>Bump actions/cache from 3.3.1 to 3.3.2 (#447) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.152.0 to 1.161.0 (#446) @dependabot</li>
+  <li>Bump actions/checkout from 3 to 4 (#445) @dependabot</li>
+  <li>cleans up project team so it builds (#443) @MattKiazyk</li>
+  <li>Bump ruby/setup-ruby from 1.149.0 to 1.152.0 (#397) @dependabot</li>
+  <li>Fix typo in README.md (#395) @jmg-duarte</li>
+  <li>Bump ruby/setup-ruby from 1.144.2 to 1.149.0 (#384) @dependabot</li>
+  <li>Update unxip binary to v2.1 (#371) @Kyle-Ye</li>
+  <li>Updated readme (#385) @KyLeggiero</li>
+  <li>Bump ruby/setup-ruby from 1.144.1 to 1.144.2 (#369) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.144.0 to 1.144.1 (#368) @dependabot</li>
+  <li>Bump actions/cache from 3.2.6 to 3.3.1 (#366) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.143.0 to 1.144.0 (#365) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.139.0 to 1.143.0 (#363) @dependabot</li>
+  <li>Bump actions/cache from 3.2.5 to 3.2.6 (#358) @dependabot</li>
+</ul>
+
+<!-- sparkle:edSignature=v19BUpXdl0GsgloWn2tj1Jru6xT1dRKscWcR+i6tKTTefMl7wJcJomRZad27sR5YO6BkE2+xXjaCNcgQwx5vAw== -->
+]]></description>
+                        <pubDate>Fri, 19 Jan 2024 17:53:33 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.0.0b19/Xcodes.zip"
+                                    sparkle:version="19"
+                                    sparkle:shortVersionString="2.0.0"
+                                    sparkle:edSignature="v19BUpXdl0GsgloWn2tj1Jru6xT1dRKscWcR+i6tKTTefMl7wJcJomRZad27sR5YO6BkE2+xXjaCNcgQwx5vAw=="
+                                    length="12352203"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v1.10.0 - Revenge of the Sith</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
@@ -59,7 +175,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.10.0b18/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.10.0b18/Xcodes.zip"
                                     sparkle:version="18"
                                     sparkle:shortVersionString="1.10.0"
                                     sparkle:edSignature="Ttm9zduGZ1nayiSModh8sZilyC8GHyEioCQYl0d73ezH3Daj63CdS1xMh9hfROgcp0XpOOl7z84qgW+RAxkBDA=="
@@ -127,7 +243,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.9.0b17/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.9.0b17/Xcodes.zip"
                                     sparkle:version="17"
                                     sparkle:shortVersionString="1.9.0"
                                     sparkle:edSignature="BHOjL96nA0/98Fw4OJoSi/PXhjcTpo2jb3twRvwhwFbsJQV+AKLM+H3GRAvsT4rVbtX+txQw6A0UDeiSliPPBg=="
@@ -195,7 +311,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.8.0b16/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.8.0b16/Xcodes.zip"
                                     sparkle:version="16"
                                     sparkle:shortVersionString="1.8.0"
                                     sparkle:edSignature="SgcxGfx96rqxNpxpecvyLbgzAg6gqSk6pYPn38zyRqs4Tp1RSTAp4kNLJJSbwSdYneo8yaHrIkJyBWft48XnAw=="
@@ -271,7 +387,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.7.0b15/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.7.0b15/Xcodes.zip"
                                     sparkle:version="15"
                                     sparkle:shortVersionString="1.7.0"
                                     sparkle:edSignature="hB7zXWFEDyrIoZTatX9M+UVaP8dQDsEoau9CVrZpOaCt5rMH/w230CginnuTHk1v6y4fMiN4sAAe9YCjr34eAQ=="
@@ -326,7 +442,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.6.0b14/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.6.0b14/Xcodes.zip"
                                     sparkle:version="14"
                                     sparkle:shortVersionString="1.6.0"
                                     sparkle:edSignature="whzvbz/AK1Zv7laaOlBC+O5b2ra1stDa38FI30cA1+KxRExSIve/sf7d0JEBz18rbFBHxO1DpOpIiB5rwZRODQ=="
@@ -391,7 +507,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.5.0b13/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.5.0b13/Xcodes.zip"
                                     sparkle:version="13"
                                     sparkle:shortVersionString="1.5.0"
                                     sparkle:edSignature="oOzczQVk8QV9OsnTvEkp0U6H7w5OE0KYHt0DI1jgeywW7ciiydsBnGx3cl+5/tbdpHXvfVni7ePAzapjPPloAQ=="
@@ -458,7 +574,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.4.0b12/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.4.0b12/Xcodes.zip"
                                     sparkle:version="12"
                                     sparkle:shortVersionString="1.4.0"
                                     sparkle:edSignature="TVoWUrdazSWlLZtbe1RFrs9cKRUiZZls9fg8/QJ+kjnYefQ1AA0gN0AJn+2PkIOUS1cMXQJktfEULHdTcUhrBg=="
@@ -517,7 +633,7 @@ In the first experiment - thanks to the wonderful work of https://github.com/saa
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.3.1b11/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.3.1b11/Xcodes.zip"
                                     sparkle:version="11"
                                     sparkle:shortVersionString="1.3.1"
                                     sparkle:edSignature="ioZ6VrsmbabIfKEmj/mGuUSF1RWZWnE7fyhGCziTs0avLpGfrNKGljkdQ3lXFlJoaL+viMuII2znYRnGoCEqBg=="
@@ -575,7 +691,7 @@ In the first experiment - thanks to the wonderful work of https://github.com/saa
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.3.0b10/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.3.0b10/Xcodes.zip"
                                     sparkle:version="10"
                                     sparkle:shortVersionString="1.3.0"
                                     sparkle:edSignature="sgLWFusBeT/DO6ca2oEen+dkuVNp8uE/XjOl+fjZy2G7rtmAJrhB8H4ElXMryI0dMybyFtZX+3+wj11aLT32DA=="
@@ -637,7 +753,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.2.0b8/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.2.0b8/Xcodes.zip"
                                     sparkle:version="8"
                                     sparkle:shortVersionString="1.2.0"
                                     sparkle:edSignature="iXFkt6ZhiaTeAHQDVOwEzL4Oin+w+UtMlv4MeCmsI6xQc8+YOm2GTtnfhxhXnGWkgRwzSQC/+2Iw0r0nEqwKDA=="
@@ -698,7 +814,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.1.0b7/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.1.0b7/Xcodes.zip"
                                     sparkle:version="7"
                                     sparkle:shortVersionString="1.1.0"
                                     sparkle:edSignature="cLGxQg5k3EVJzlvPTdnD3E8pwOcx9ZjVVBrcPdicLGyOANGs3Ase6UhlF5JO94Mi6NoQmXrj2T9JuVdBT5LABw=="
@@ -744,7 +860,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.5b6/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.5b6/Xcodes.zip"
                                     sparkle:version="6"
                                     sparkle:shortVersionString="1.0.5"
                                     sparkle:edSignature="o68WXbj/QpF+uMivHgPdRV1cafP/EuYQycCVXAEl+TqNgI2eKbu5jUuelP1ZmLwQIVADOyPUA4E2hq4Wz+kJCQ=="
@@ -801,7 +917,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.4b5/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.4b5/Xcodes.zip"
                                     sparkle:version="5"
                                     sparkle:shortVersionString="1.0.4"
                                     sparkle:edSignature="M/e+bFPmNSwUI2P4UaucSXsqMdT4woH5mkhwDR0rJ5OBbaJ9FY+8+9Dk5eOg4QabMa5juFXZHuQf7UW8k/HZCg=="
@@ -857,7 +973,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.3b4/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.3b4/Xcodes.zip"
                                     sparkle:version="4"
                                     sparkle:shortVersionString="1.0.3"
                                     sparkle:edSignature="kZt1uUbQR9BLjX9r0DjlajGlz20k7hRuRBNPnI71f1k/DdtFKJnlvd+eotBI9/kIhvbMyv4QpLsCkzRPZGOcCg=="
@@ -891,7 +1007,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.2b3/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.2b3/Xcodes.zip"
                                     sparkle:version="3"
                                     sparkle:shortVersionString="1.0.2"
                                     sparkle:edSignature="Z4orm82DLqUB0q5B+9PsVWgm8FYEqije7umuylooLZM8+XaiX9IEH2OoNoHWIGh8e+PRekMJ5DfL0iTmqz2eBQ=="
@@ -927,7 +1043,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.1b2/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.1b2/Xcodes.zip"
                                     sparkle:version="2"
                                     sparkle:shortVersionString="1.0.1"
                                     sparkle:edSignature="0sFDBZVFN1QNfXYDocYG0KUCsXkHUbrBGuugsqEo5XWpQa6MIdKRN8agry9UeUdStTk2iH45XfNiA+lzuj1xBA=="
@@ -957,7 +1073,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/RobotsAndPencils/XcodesApp/releases/download/v1.0.0b1/Xcodes.zip"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v1.0.0b1/Xcodes.zip"
                                     sparkle:version="1"
                                     sparkle:shortVersionString="1.0.0"
                                     sparkle:edSignature="ELrJn0LYxAlaAUbO4FNcEXtQDAMV1md0eWbtRfsCwBRwa6em+RrVB0Bcm3KlIGW1L6zTTqdsWmf7isyJwRs4CQ=="
