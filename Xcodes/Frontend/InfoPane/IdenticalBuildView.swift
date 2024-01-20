@@ -29,7 +29,7 @@ struct IdenticalBuildsView: View {
                 .font(.headline)
 
                 ForEach(builds, id: \.description) { version in
-                    Text("• \(version.appleDescription)")
+                    Text("• \(version.appleDescription)".hideInLocalizations)
                         .font(.subheadline)
                 }
             }
