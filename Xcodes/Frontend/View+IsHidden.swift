@@ -14,10 +14,10 @@ extension View {
 struct View_IsHidden_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            Text("Not Hidden")
+            Text("Not Hidden".hideInLocalizations)
                 .isHidden(false)
             
-            Text("Hidden")
+            Text("Hidden".hideInLocalizations)
                 .isHidden(true)
         }
     }

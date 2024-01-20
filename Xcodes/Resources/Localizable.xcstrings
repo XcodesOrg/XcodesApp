@@ -7918,28 +7918,6 @@
         }
       }
     },
-    "Hidden" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Masqué"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gizli"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "隐藏"
-          }
-        }
-      }
-    },
     "IdenticalBuilds" : {
       "comment" : "Info Pane",
       "localizations" : {
@@ -13011,28 +12989,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "下一步"
-          }
-        }
-      }
-    },
-    "Not Hidden" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visible"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gizli Değil"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未隐藏"
           }
         }
       }
