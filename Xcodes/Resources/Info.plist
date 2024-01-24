@@ -34,8 +34,8 @@
 	<true/>
 	<key>SMPrivilegedExecutables</key>
 	<dict>
-		<key>com.robotsandpencils.XcodesApp.Helper</key>
-		<string>identifier &quot;com.robotsandpencils.XcodesApp.Helper&quot; and info [CFBundleShortVersionString] &gt;= &quot;1.0.0&quot; and anchor apple generic and certificate leaf[subject.OU] = &quot;$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)&quot;</string>
+		<key>com.xcodesorg.xcodesapp.Helper</key>
+		<string>identifier &quot;com.xcodesorg.xcodesapp.Helper&quot; and info [CFBundleShortVersionString] &gt;= &quot;1.0.0&quot; and anchor apple generic and certificate leaf[subject.OU] = &quot;$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)&quot;</string>
 	</dict>
 	<key>SUFeedURL</key>
 	<string>https://www.xcodes.app/appcast.xml</string>
