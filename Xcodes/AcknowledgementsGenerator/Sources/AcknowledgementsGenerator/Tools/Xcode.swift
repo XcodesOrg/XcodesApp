@@ -35,7 +35,7 @@ private extension Xcode {
         try? task.run()
         let handle = pipe.fileHandleForReading
         let data = handle.readDataToEndOfFile()
-        let path = String(data: data, encoding: String.Encoding.utf8)
+        let path = String(data: data, encoding: String.Encoding.utf8)?.trimmingCharacters(in: .whitespacesAndNewlines)
         return (path?.isEmpty ?? true) ? nil : path
     }
 }

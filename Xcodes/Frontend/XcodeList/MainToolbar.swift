@@ -5,7 +5,6 @@ struct MainToolbarModifier: ViewModifier {
     @Binding var category: XcodeListCategory
     @Binding var isInstalledOnly: Bool
     @Binding var isShowingInfoPane: Bool
-    @Binding var searchText: String
     
     func body(content: Content) -> some View {
         content
@@ -14,10 +13,6 @@ struct MainToolbarModifier: ViewModifier {
 
     private var toolbar: some ToolbarContent {
         ToolbarItemGroup {
-            Button(action: { appState.presentedSheet = .signIn }, label: {
-                Label("Login", systemImage: "person.circle")
-            })
-            .help("LoginDescription")
             
             ProgressButton(
                 isInProgress: appState.isUpdating, 
@@ -27,7 +22,7 @@ struct MainToolbarModifier: ViewModifier {
             }
             .keyboardShortcut(KeyEquivalent("r"))
             .help("RefreshDescription")
-            
+            Spacer()
             Button(action: {
                 switch category {
                 case .all: category = .release
@@ -75,39 +70,6 @@ struct MainToolbarModifier: ViewModifier {
             }
             .help("FilterInstalledDescription")
             
-            Button(action: { isShowingInfoPane.toggle() }) {
-                if isShowingInfoPane {
-                    Label("Info", systemImage: "info.circle.fill")
-                        .foregroundColor(.accentColor)
-                } else {
-                    Label("Info", systemImage: "info.circle")
-                }
-            }
-            .keyboardShortcut(KeyboardShortcut("i", modifiers: [.command, .option]))
-            .help("InfoDescription")
-            
-            if #available(macOS 14, *) {
-                SettingsLink(label: {
-                    Label("Preferences", systemImage: "gearshape")
-                })
-                .help("PreferencesDescription")
-            } else {
-                Button(action: {
-                    if #available(macOS 13, *) {
-                        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                    } else {
-                        NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                    }
-                }, label: {
-                    Label("Preferences", systemImage: "gearshape")
-                })
-                .help("PreferencesDescription")
-            }
-            
-            TextField("Search", text: $searchText)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-                .frame(width: 200)
-                .help("SearchDescription")
         }
     }
 }
@@ -116,15 +78,13 @@ extension View {
     func mainToolbar(
         category: Binding<XcodeListCategory>,
         isInstalledOnly: Binding<Bool>,
-        isShowingInfoPane: Binding<Bool>,
-        searchText: Binding<String>
+        isShowingInfoPane: Binding<Bool>
     ) -> some View {
         self.modifier(
             MainToolbarModifier(
                 category: category,
                 isInstalledOnly: isInstalledOnly,
-                isShowingInfoPane: isShowingInfoPane,
-                searchText: searchText
+                isShowingInfoPane: isShowingInfoPane
             )
         )
     }

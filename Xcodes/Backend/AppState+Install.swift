@@ -500,12 +500,13 @@ extension AppState {
         }
     }
     
-    func setInstallationStep(of runtime: DownloadableRuntime, to step: RuntimeInstallationStep) {
+    func setInstallationStep(of runtime: DownloadableRuntime, to step: RuntimeInstallationStep, postNotification: Bool = true) {
         DispatchQueue.main.async {
             guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
             self.downloadableRuntimes[index].installState = .installing(step)
-            
-            Current.notificationManager.scheduleNotification(title: runtime.name, body: step.description, category: .normal)
+            if postNotification {
+                Current.notificationManager.scheduleNotification(title: runtime.name, body: step.description, category: .normal)
+            }
         }
     }
 }

@@ -49,7 +49,6 @@
 		CA9FF88125955C7000E47BAF /* AvailableXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF88025955C7000E47BAF /* AvailableXcode.swift */; };
 		CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8862595607900E47BAF /* InstalledXcode.swift */; };
 		CA9FF8B12595967A00E47BAF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8B02595967A00E47BAF /* main.swift */; };
-		CA9FF8BC259596CB00E47BAF /* com.robotsandpencils.XcodesApp.Helper in Copy Helper */ = {isa = PBXBuildFile; fileRef = CA9FF8AE2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CA9FF8CF25959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
 		CA9FF8D025959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
 		CA9FF8DB25959B4000E47BAF /* XPCDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8DA25959B4000E47BAF /* XPCDelegate.swift */; };
@@ -114,10 +113,14 @@
 		E689540325BE8C64000EBCEA /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = E689540225BE8C64000EBCEA /* DockProgress */; };
 		E81D7EA02805250100A205FC /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D7E9F2805250100A205FC /* Collection+.swift */; };
 		E832EAF82B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */; };
-		E84CF8C12B0FEB8300ECA259 /* RuntimesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84CF8C02B0FEB8300ECA259 /* RuntimesView.swift */; };
-		E872EE4E2808D4F100D3DD8B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E872EE502808D4F100D3DD8B /* Localizable.strings */; };
+		E84B7D0D2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */; };
+		E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */; };
+		E84E4F542B333864003F3959 /* PlatformsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F532B333864003F3959 /* PlatformsListView.swift */; };
+		E84E4F572B335094003F3959 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E84E4F562B335094003F3959 /* OrderedCollections */; };
+		E86671272B309D2F0048559A /* PlatformsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86671262B309D2F0048559A /* PlatformsView.swift */; };
 		E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87AB3C42939B65E00D72F43 /* Hardware.swift */; };
 		E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DD6EA25D053FA00D86808 /* Progress+.swift */; };
+		E891A1C42B43ACF900A1B9D1 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E891A1C32B43ACF900A1B9D1 /* Sparkle */; };
 		E89342FA25EDCC17007CF557 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89342F925EDCC17007CF557 /* NotificationManager.swift */; };
 		E8977EA325C11E1500835F80 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8977EA225C11E1500835F80 /* PreferencesView.swift */; };
 		E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */; };
@@ -131,7 +134,7 @@
 		E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */; };
 		E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */; };
 		E8F44A1E296B4CD7002D6592 /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = E8F44A1D296B4CD7002D6592 /* Path */; };
-		E8F81FC4282D8A17006CBD0F /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E8F81FC3282D8A17006CBD0F /* Sparkle */; };
+		E8FA00542B5B109800769CE0 /* com.xcodesorg.xcodesapp.Helper in Copy Helper */ = {isa = PBXBuildFile; fileRef = CA9FF8AE2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = E8FD5726291EE4AC001E004C /* AsyncNetworkService */; };
 /* End PBXBuildFile section */
 
@@ -168,7 +171,7 @@
 			dstPath = Contents/Library/LaunchServices;
 			dstSubfolderSpec = 1;
 			files = (
-				CA9FF8BC259596CB00E47BAF /* com.robotsandpencils.XcodesApp.Helper in Copy Helper */,
+				E8FA00542B5B109800769CE0 /* com.xcodesorg.xcodesapp.Helper in Copy Helper */,
 			);
 			name = "Copy Helper";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,7 +236,7 @@
 		CA9FF87A2595293E00E47BAF /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		CA9FF88025955C7000E47BAF /* AvailableXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableXcode.swift; sourceTree = "<group>"; };
 		CA9FF8862595607900E47BAF /* InstalledXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledXcode.swift; sourceTree = "<group>"; };
-		CA9FF8AE2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.robotsandpencils.XcodesApp.Helper; sourceTree = BUILT_PRODUCTS_DIR; };
+		CA9FF8AE2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.xcodesorg.xcodesapp.Helper; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9FF8B02595967A00E47BAF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CA9FF8C22595988B00E47BAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CA9FF8C32595989800E47BAF /* launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = launchd.plist; sourceTree = "<group>"; };
@@ -242,8 +245,8 @@
 		CA9FF8DF25959BAA00E47BAF /* ConnectionVerifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionVerifier.swift; sourceTree = "<group>"; };
 		CA9FF8E425959BB800E47BAF /* AuditTokenHack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AuditTokenHack.h; sourceTree = "<group>"; };
 		CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AuditTokenHack.m; sourceTree = "<group>"; };
-		CA9FF8EA25959BDD00E47BAF /* com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h"; sourceTree = "<group>"; };
-		CA9FF9052595A28400E47BAF /* com.robotsandpencils.XcodesApp.HelperTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = com.robotsandpencils.XcodesApp.HelperTest.entitlements; sourceTree = "<group>"; };
+		CA9FF8EA25959BDD00E47BAF /* com.xcodesorg.xcodesapp.Helper-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "com.xcodesorg.xcodesapp.Helper-Bridging-Header.h"; sourceTree = "<group>"; };
+		CA9FF9052595A28400E47BAF /* com.xcodesorg.xcodesapp.HelperTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = com.xcodesorg.xcodesapp.HelperTest.entitlements; sourceTree = "<group>"; };
 		CA9FF9252595A7EB00E47BAF /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		CA9FF9352595B44700E47BAF /* HelperClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperClient.swift; sourceTree = "<group>"; };
 		CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCredentialsView.swift; sourceTree = "<group>"; };
@@ -310,9 +313,11 @@
 		CAFFFEEE259CEAC400903F81 /* RingProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingProgressViewStyle.swift; sourceTree = "<group>"; };
 		E81D7E9F2805250100A205FC /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeInstallationStepDetailView.swift; sourceTree = "<group>"; };
-		E84CF8C02B0FEB8300ECA259 /* RuntimesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimesView.swift; sourceTree = "<group>"; };
+		E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSplitViewWrapper.swift; sourceTree = "<group>"; };
+		E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusModifier.swift; sourceTree = "<group>"; };
+		E84E4F532B333864003F3959 /* PlatformsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsListView.swift; sourceTree = "<group>"; };
 		E856BB73291EDD3D00DC438B /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XcodesKit; path = Xcodes/XcodesKit; sourceTree = "<group>"; };
-		E872EE4F2808D4F100D3DD8B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		E86671262B309D2F0048559A /* PlatformsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsView.swift; sourceTree = "<group>"; };
 		E87AB3C42939B65E00D72F43 /* Hardware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hardware.swift; sourceTree = "<group>"; };
 		E87DD6EA25D053FA00D86808 /* Progress+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+.swift"; sourceTree = "<group>"; };
 		E89342F925EDCC17007CF557 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
@@ -339,17 +344,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E8F81FC4282D8A17006CBD0F /* Sparkle in Frameworks */,
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				E689540325BE8C64000EBCEA /* DockProgress in Frameworks */,
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
+				E891A1C42B43ACF900A1B9D1 /* Sparkle in Frameworks */,
 				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
 				E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */,
 				E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */,
 				CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */,
 				CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */,
+				E84E4F572B335094003F3959 /* OrderedCollections in Frameworks */,
 				E8F44A1E296B4CD7002D6592 /* Path in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,6 +379,7 @@
 				CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */,
 				536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */,
 				53CBAB2B263DCC9100410495 /* XcodesAlert.swift */,
+				E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -412,22 +419,22 @@
 			path = About;
 			sourceTree = "<group>";
 		};
-		CA9FF8AF2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */ = {
+		CA9FF8AF2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */ = {
 			isa = PBXGroup;
 			children = (
 				CA9FF8E425959BB800E47BAF /* AuditTokenHack.h */,
 				CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */,
-				CA9FF8EA25959BDD00E47BAF /* com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h */,
+				CA9FF8EA25959BDD00E47BAF /* com.xcodesorg.xcodesapp.Helper-Bridging-Header.h */,
 				CA9FF8DF25959BAA00E47BAF /* ConnectionVerifier.swift */,
 				CA42DD7225AEB04300BC0B0C /* Logger.swift */,
 				CA9FF8B02595967A00E47BAF /* main.swift */,
 				CA9FF8DA25959B4000E47BAF /* XPCDelegate.swift */,
 				CA9FF8C22595988B00E47BAF /* Info.plist */,
 				CA9FF8C32595989800E47BAF /* launchd.plist */,
-				CA9FF9052595A28400E47BAF /* com.robotsandpencils.XcodesApp.HelperTest.entitlements */,
+				CA9FF9052595A28400E47BAF /* com.xcodesorg.xcodesapp.HelperTest.entitlements */,
 				CAFBDBA525990C76003DCC5A /* SimpleXPCApp.LICENSE */,
 			);
-			path = com.robotsandpencils.XcodesApp.Helper;
+			path = com.xcodesorg.xcodesapp.Helper;
 			sourceTree = "<group>";
 		};
 		CA9FF8CD25959A7600E47BAF /* HelperXPCShared */ = {
@@ -564,7 +571,7 @@
 				CA538A0C255A4F1A00E64DD7 /* AppleAPI */,
 				CAD2E7A02449574E00113D76 /* Xcodes */,
 				CAD2E7B62449575100113D76 /* XcodesTests */,
-				CA9FF8AF2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */,
+				CA9FF8AF2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */,
 				CA9FF8CD25959A7600E47BAF /* HelperXPCShared */,
 				CAD2E79F2449574E00113D76 /* Products */,
 				CA538A12255A4F7C00E64DD7 /* Frameworks */,
@@ -577,7 +584,7 @@
 			children = (
 				CAD2E79E2449574E00113D76 /* Xcodes.app */,
 				CAD2E7B32449575100113D76 /* XcodesTests.xctest */,
-				CA9FF8AE2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */,
+				CA9FF8AE2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -625,6 +632,7 @@
 				E8977EA225C11E1500835F80 /* PreferencesView.swift */,
 				E8DA461025FAF7FB002E85EF /* NotificationsView.swift */,
 				E8CBDB8A27AE02FF00B22292 /* ExperiementsPreferencePane.swift */,
+				E84E4F532B333864003F3959 /* PlatformsListView.swift */,
 			);
 			path = Preferences;
 			sourceTree = "<group>";
@@ -646,7 +654,8 @@
 				B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */,
 				B0C6AD0C2AD91D7900E64698 /* IconView.swift */,
 				E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */,
-				E84CF8C02B0FEB8300ECA259 /* RuntimesView.swift */,
+				E86671262B309D2F0048559A /* PlatformsView.swift */,
+				E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */,
 			);
 			path = InfoPane;
 			sourceTree = "<group>";
@@ -654,9 +663,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		CA9FF8AD2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */ = {
+		CA9FF8AD2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CA9FF8B52595967A00E47BAF /* Build configuration list for PBXNativeTarget "com.robotsandpencils.XcodesApp.Helper" */;
+			buildConfigurationList = CA9FF8B52595967A00E47BAF /* Build configuration list for PBXNativeTarget "com.xcodesorg.xcodesapp.Helper" */;
 			buildPhases = (
 				CA9FF8AA2595967A00E47BAF /* Sources */,
 				CA9FF8AB2595967A00E47BAF /* Frameworks */,
@@ -666,9 +675,9 @@
 			);
 			dependencies = (
 			);
-			name = com.robotsandpencils.XcodesApp.Helper;
+			name = com.xcodesorg.xcodesapp.Helper;
 			productName = com.robotsandpencils.XcodesApp.Helper;
-			productReference = CA9FF8AE2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */;
+			productReference = CA9FF8AE2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */;
 			productType = "com.apple.product-type.tool";
 		};
 		CAD2E79D2449574E00113D76 /* Xcodes */ = {
@@ -696,11 +705,12 @@
 				CABFA9FC2592F13300380FEE /* LegibleError */,
 				CA9FF86C25951C6E00E47BAF /* XCModel */,
 				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
-				E8F81FC3282D8A17006CBD0F /* Sparkle */,
 				E689540225BE8C64000EBCEA /* DockProgress */,
 				E8FD5726291EE4AC001E004C /* AsyncNetworkService */,
 				E8C0EB19291EF43E0081528A /* XcodesKit */,
 				E8F44A1D296B4CD7002D6592 /* Path */,
+				E84E4F562B335094003F3959 /* OrderedCollections */,
+				E891A1C32B43ACF900A1B9D1 /* Sparkle */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -783,10 +793,11 @@
 				CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */,
 				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
 				CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */,
-				E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */,
 				E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */,
 				E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */,
 				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */,
+				E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				E891A1C22B43ACA400A1B9D1 /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -794,7 +805,7 @@
 			targets = (
 				CAD2E79D2449574E00113D76 /* Xcodes */,
 				CAD2E7B22449575100113D76 /* XcodesTests */,
-				CA9FF8AD2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */,
+				CA9FF8AD2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */,
 			);
 		};
 /* End PBXProject section */
@@ -868,7 +879,6 @@
 				CA9FF8CF25959A9700E47BAF /* HelperXPCShared.swift in Sources */,
 				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
 				CAFBDC4E2599B33D003DCC5A /* MainToolbar.swift in Sources */,
-				E84CF8C12B0FEB8300ECA259 /* RuntimesView.swift in Sources */,
 				CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */,
 				CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */,
 				536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */,
@@ -897,6 +907,7 @@
 				B0403CFC2AD9A6BF00137C09 /* InstalledStateButtons.swift in Sources */,
 				36741BFF291E50F500A85AAE /* FileError.swift in Sources */,
 				CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */,
+				E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */,
 				B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */,
 				B0403CFE2ADA712C00137C09 /* InfoPaneControls.swift in Sources */,
 				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
@@ -910,6 +921,8 @@
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
 				E8D655C0288DD04700A139C2 /* SelectedActionType.swift in Sources */,
 				36741BFD291E4FDB00A85AAE /* DownloadPreferencePane.swift in Sources */,
+				E84E4F542B333864003F3959 /* PlatformsListView.swift in Sources */,
+				E86671272B309D2F0048559A /* PlatformsView.swift in Sources */,
 				CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */,
 				CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */,
 				CAFBDB912598FE80003DCC5A /* SelectedXcode.swift in Sources */,
@@ -921,6 +934,7 @@
 				E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */,
 				CA9FF877259528CC00E47BAF /* Version+XcodeReleases.swift in Sources */,
 				CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */,
+				E84B7D0D2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
 				CAFBDB952598FE96003DCC5A /* FocusedValues.swift in Sources */,
 				B0403CF42AD9381D00137C09 /* SDKsView.swift in Sources */,
@@ -976,7 +990,7 @@
 /* Begin PBXTargetDependency section */
 		CA9FF8BA259596A000E47BAF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = CA9FF8AD2595967A00E47BAF /* com.robotsandpencils.XcodesApp.Helper */;
+			target = CA9FF8AD2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */;
 			targetProxy = CA9FF8B9259596A000E47BAF /* PBXContainerItemProxy */;
 		};
 		CAD2E7B52449575100113D76 /* PBXTargetDependency */ = {
@@ -1020,7 +1034,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = PBH8V487HB;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1040,7 +1054,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1055,11 +1069,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/XcodesTest.entitlements;
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1069,7 +1084,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.10.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1092,6 +1108,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1104,22 +1121,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.0;
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
 					__launchd_plist,
 					"$(SRCROOT)/${TARGET_NAME}/launchd.plist",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp.Helper;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp.Helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "com.robotsandpencils.XcodesApp.Helper/com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "com.xcodesorg.xcodesapp.Helper/com.xcodesorg.xcodesapp.Helper-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -1128,24 +1146,25 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CODE_SIGN_ENTITLEMENTS = com.robotsandpencils.XcodesApp.Helper/com.robotsandpencils.XcodesApp.HelperTest.entitlements;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
+				CODE_SIGN_ENTITLEMENTS = com.xcodesorg.xcodesapp.Helper/com.xcodesorg.xcodesapp.HelperTest.entitlements;
 				CODE_SIGN_STYLE = Manual;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.0;
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
 					__launchd_plist,
 					"$(SRCROOT)/${TARGET_NAME}/launchd.plist",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp.Helper;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp.Helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "com.robotsandpencils.XcodesApp.Helper/com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "com.xcodesorg.xcodesapp.Helper/com.xcodesorg.xcodesapp.Helper-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Test;
@@ -1154,22 +1173,23 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 2.0.0;
 				OTHER_LDFLAGS = (
 					"-sectcreate",
 					__TEXT,
 					__launchd_plist,
 					"$(SRCROOT)/${TARGET_NAME}/launchd.plist",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesApp.Helper;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp.Helper;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "com.robotsandpencils.XcodesApp.Helper/com.robotsandpencils.XcodesApp.Helper-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "com.xcodesorg.xcodesapp.Helper/com.xcodesorg.xcodesapp.Helper-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
@@ -1207,7 +1227,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = PBH8V487HB;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1227,7 +1247,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1271,7 +1291,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = PBH8V487HB;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -1285,7 +1305,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.0;
+				MACOSX_DEPLOYMENT_TARGET = 12.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -1299,10 +1319,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/Xcodes.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1312,7 +1334,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.10.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
@@ -1323,10 +1346,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/Xcodes.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1336,7 +1361,8 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.10.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
@@ -1357,6 +1383,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1378,7 +1405,8 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xcodes.app/Contents/MacOS/Xcodes";
@@ -1388,7 +1416,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		CA9FF8B52595967A00E47BAF /* Build configuration list for PBXNativeTarget "com.robotsandpencils.XcodesApp.Helper" */ = {
+		CA9FF8B52595967A00E47BAF /* Build configuration list for PBXNativeTarget "com.xcodesorg.xcodesapp.Helper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CA9FF8B22595967A00E47BAF /* Debug */,
@@ -1495,20 +1523,28 @@
 				minimumVersion = 3.2.0;
 			};
 		};
+		E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.5;
+			};
+		};
+		E891A1C22B43ACA400A1B9D1 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.5.2;
+			};
+		};
 		E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Path.swift";
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.0;
-			};
-		};
-		E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.0.0;
 			};
 		};
 		E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */ = {
@@ -1566,6 +1602,16 @@
 			package = E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */;
 			productName = DockProgress;
 		};
+		E84E4F562B335094003F3959 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
+		E891A1C32B43ACF900A1B9D1 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E891A1C22B43ACA400A1B9D1 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
 		E8C0EB19291EF43E0081528A /* XcodesKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = XcodesKit;
@@ -1574,11 +1620,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */;
 			productName = Path;
-		};
-		E8F81FC3282D8A17006CBD0F /* Sparkle */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E8F81FC2282D8A17006CBD0F /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
 		};
 		E8FD5726291EE4AC001E004C /* AsyncNetworkService */ = {
 			isa = XCSwiftPackageProductDependency;

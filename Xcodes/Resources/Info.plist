@@ -25,7 +25,7 @@
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright © 2023 Robots and Pencils.</string>
+	<string>Copyright © 2024 XcodesOrg</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
 	<key>NSSupportsAutomaticTermination</key>
@@ -34,12 +34,12 @@
 	<true/>
 	<key>SMPrivilegedExecutables</key>
 	<dict>
-		<key>com.robotsandpencils.XcodesApp.Helper</key>
-		<string>identifier "com.robotsandpencils.XcodesApp.Helper" and info [CFBundleShortVersionString] &gt;= "1.0.0" and anchor apple generic and certificate leaf[subject.OU] = "$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)"</string>
+		<key>com.xcodesorg.xcodesapp.Helper</key>
+		<string>identifier &quot;com.xcodesorg.xcodesapp.Helper&quot; and info [CFBundleShortVersionString] &gt;= &quot;1.0.0&quot; and anchor apple generic and certificate leaf[subject.OU] = &quot;$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)&quot;</string>
 	</dict>
 	<key>SUFeedURL</key>
 	<string>https://www.xcodes.app/appcast.xml</string>
 	<key>SUPublicEDKey</key>
-	<string>SEcz0vgUSeBTOoAXYe+64zea95G6lIf5NgzFs3InYJQ=</string>
+	<string>GrqOrFQHxfqoLFCAGc9luvsAWQifHtG9gQ3NVJ583tE=</string>
 </dict>
 </plist>

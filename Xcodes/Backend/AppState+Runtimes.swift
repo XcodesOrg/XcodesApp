@@ -35,7 +35,9 @@ extension AppState {
     func updateInstalledRuntimes() {
         Task {
             do {
+                Logger.appState.info("Loading Installed runtimes")
                 let runtimes = try await self.runtimeService.localInstalledRuntimes()
+                
                 DispatchQueue.main.async {
                     self.installedRuntimes = runtimes
                 }
@@ -50,7 +52,7 @@ extension AppState {
             do {
                 let downloadedURL = try await downloadRunTimeFull(runtime: runtime)
                 if !Task.isCancelled {
-                    Logger.appState.debug("Installing rungtime: \(runtime.name)")
+                    Logger.appState.debug("Installing runtime: \(runtime.name)")
                     DispatchQueue.main.async {
                         self.setInstallationStep(of: runtime, to: .installing)
                     }
@@ -109,11 +111,10 @@ extension AppState {
             let aria2Path = Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!
                 for try await progress in downloadRuntimeWithAria2(runtime, to: expectedRuntimePath, aria2Path: aria2Path) {
                     DispatchQueue.main.async {
-                        Logger.appState.debug("Downloading: \(progress.fractionCompleted)")
-                        self.setInstallationStep(of: runtime, to: .downloading(progress: progress))
+                        self.setInstallationStep(of: runtime, to: .downloading(progress: progress), postNotification: false)
                     }
                 }
-                Logger.appState.debug("Done downloading")
+                Logger.appState.debug("Done downloading runtime")
 
         case .urlSession:
             throw "Downloading runtimes with URLSession is not supported. Please use aria2"
@@ -121,64 +122,6 @@ extension AppState {
         return expectedRuntimePath.url
     }
 
-    
-    func downloadRuntime(for runtime: DownloadableRuntime, downloader: Downloader, progressChanged: @escaping (Progress) -> Void) -> AnyPublisher<URL, Error> {
-        // Check to see if the dmg is in the expected path in case it was downloaded but failed to install
-    
-        // call https://developerservices2.apple.com/services/download?path=/Developer_Tools/watchOS_10_beta/watchOS_10_beta_Simulator_Runtime.dmg 1st to get cookie
-        // use runtime.url for final with cookies
-        
-        // Check to see if the archive is in the expected path in case it was downloaded but failed to install
-        let url = URL(string: runtime.source)!
-        let expectedRuntimePath = Path.xcodesApplicationSupport/"\(url.lastPathComponent)"
-        // aria2 downloads directly to the destination (instead of into /tmp first) so we need to make sure that the download isn't incomplete
-        let aria2DownloadMetadataPath = expectedRuntimePath.parent/(expectedRuntimePath.basename() + ".aria2")
-        var aria2DownloadIsIncomplete = false
-        if case .aria2 = downloader, aria2DownloadMetadataPath.exists {
-            aria2DownloadIsIncomplete = true
-        }
-        if Current.files.fileExistsAtPath(expectedRuntimePath.string), aria2DownloadIsIncomplete == false {
-            Logger.appState.info("Found existing runtime that will be used for installation at \(expectedRuntimePath).")
-            return Just(expectedRuntimePath.url)
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        }
-        else {
-
-            Logger.appState.info("Downloading runtime: \(url.lastPathComponent)")
-            switch downloader {
-            case .aria2:
-                let aria2Path = Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!
-                return downloadRuntimeWithAria2(
-                    runtime,
-                    to: expectedRuntimePath,
-                    aria2Path: aria2Path,
-                    progressChanged: progressChanged)
-
-            case .urlSession:
-                // TODO: Support runtime download via URL Session
-                return Just(runtime.url)
-                                .setFailureType(to: Error.self)
-                                .eraseToAnyPublisher()
-            }
-        }
-    }
-    
-    public func downloadRuntimeWithAria2(_ runtime: DownloadableRuntime, to destination: Path, aria2Path: Path, progressChanged: @escaping (Progress) -> Void) -> AnyPublisher<URL, Error> {
-        let cookies = AppleAPI.Current.network.session.configuration.httpCookieStorage?.cookies(for: runtime.url) ?? []
-    
-        let (progress, publisher) = Current.shell.downloadWithAria2(
-            aria2Path,
-            runtime.url,
-            destination,
-            cookies
-        )
-        progressChanged(progress)
-        return publisher
-            .map { _ in destination.url }
-            .eraseToAnyPublisher()
-    }
-    
     public func downloadRuntimeWithAria2(_ runtime: DownloadableRuntime, to destination: Path, aria2Path: Path) -> AsyncThrowingStream<Progress, Error> {
         let cookies = AppleAPI.Current.network.session.configuration.httpCookieStorage?.cookies(for: runtime.url) ?? []
     
@@ -208,6 +151,35 @@ extension AppState {
         self.downloadableRuntimes[index].installState = .notInstalled
         
         updateInstalledRuntimes()
+    }
+    
+    func runtimeInstallPath(xcode: Xcode, runtime: DownloadableRuntime) -> Path? {
+        if let coreSimulatorInfo = coreSimulatorInfo(runtime: runtime) {
+            let urlString = coreSimulatorInfo.path["relative"]!
+            // app was not allowed to open up file:// url's so remove
+            let fileRemovedString = urlString.replacingOccurrences(of: "file://", with: "")
+            let url = URL(fileURLWithPath: fileRemovedString)
+            
+            return Path(url: url)!
+        }
+        return nil
+    }
+    
+    func coreSimulatorInfo(runtime: DownloadableRuntime) -> CoreSimulatorImage? {
+        return installedRuntimes.filter({ $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate }).first
+    }
+    
+    func deleteRuntime(runtime: DownloadableRuntime) async throws {
+        if let info = coreSimulatorInfo(runtime: runtime) {
+            try await runtimeService.deleteRuntime(identifier: info.uuid)
+            
+            // give it some time to actually finish deleting before updating
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+                self?.updateInstalledRuntimes()
+            }
+        } else {
+            throw "No simulator found with \(runtime.identifier)"
+        }
     }
 }
 

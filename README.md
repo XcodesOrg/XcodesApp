@@ -97,8 +97,8 @@ Follow the steps below to build and release a new version of Xcodes.app. For any
 # Update the version number in Xcode and commit the change, if necessary
 
 # Question: Did anything in XPCHelper change?
-# - com.robotsandpencils.XcodesApp.Helper folder and HelperXPCShared
-# - if so, bump the version number in com.robotsandpencils.XcodesApp.Helper target.
+# - com.xcodesorg.xcodesapp.Helper folder and HelperXPCShared
+# - if so, bump the version number in com.xcodesorg.xcodesapp.Helper target.
 # Note: you do not have to bump the version number if nothing has changed.
 # Note2: If you do bump the version, the end user, must re-install the XPCHelper and give permission again.
 

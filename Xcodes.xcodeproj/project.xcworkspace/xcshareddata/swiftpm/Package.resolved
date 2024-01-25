@@ -78,8 +78,17 @@
         "repositoryURL": "https://github.com/sparkle-project/Sparkle/",
         "state": {
           "branch": null,
-          "revision": "286edd1fa22505a9e54d170e9fd07d775ea233f2",
-          "version": "2.1.0"
+          "revision": "47d3d90aee3c52b6f61d04ceae426e607df62347",
+          "version": "2.5.2"
+        }
+      },
+      {
+        "package": "swift-collections",
+        "repositoryURL": "https://github.com/apple/swift-collections.git",
+        "state": {
+          "branch": null,
+          "revision": "a902f1823a7ff3c9ab2fba0f992396b948eda307",
+          "version": "1.0.5"
         }
       },
       {

@@ -84,6 +84,17 @@ public struct RuntimeService {
     public func installPkg(pkgPath: Path, expandedPkgPath: Path) async throws {
         _ = try await Current.shell.installPkg(pkgPath.url, expandedPkgPath.url.absoluteString)
     }
+    
+    public func deleteRuntime(identifier: String) async throws {
+        do {
+            _ = try await Current.shell.deleteRuntime(identifier)
+        } catch {
+            if let executionError = error as? ProcessExecutionError {
+                throw executionError.standardError
+            }
+            throw error
+        }
+    }
 }
 
 extension String: Error {}
