@@ -53,7 +53,7 @@ struct AboutView: View {
                     }) {
                         HStack {
                             Image(systemName: "heart.circle")
-                            Text("SponsorXcodes")
+                            Text("Support.Xcodes")
                         }
                     }
                 }

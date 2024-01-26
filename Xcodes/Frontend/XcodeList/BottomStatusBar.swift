@@ -27,7 +27,7 @@ struct BottomStatusModifier: ViewModifier {
                     }) {
                         HStack {
                             Image(systemName: "heart.circle")
-                            Text("SponsorXcodes")
+                            Text("Support.Xcodes")
                         }
                     }
                     Text(Bundle.main.shortVersion!)

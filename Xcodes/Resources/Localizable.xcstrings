@@ -8282,6 +8282,12 @@
             "value" : "Info"
           }
         },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Info"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8500,6 +8506,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Installieren"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install"
           }
         },
         "es" : {
@@ -17359,9 +17371,6 @@
         }
       }
     },
-    "SponsorXcodes" : {
-      "extractionState" : "manual"
-    },
     "StopInstallation" : {
       "localizations" : {
         "ca" : {
@@ -17470,6 +17479,17 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "停止安裝"
+          }
+        }
+      }
+    },
+    "Support.Xcodes" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
           }
         }
       }
