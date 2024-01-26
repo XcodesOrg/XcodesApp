@@ -23,6 +23,10 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 - View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
 - Dark/Light Mode supported
 
+## Platforms/Runtimes
+
+- Xcodes supports downloading the Apple runtimes via the app. Simply click on the Platform, and Xcodes will install automatically for you.
+
 ## Experiments
 
 - Thanks to the wonderful work of [https://github.com/saagarjha/unxip](https://github.com/saagarjha/unxip), turn on the experiment to increase your unxipping time by up to 70%! More can be found on his repo, but bugs, high memory may occur if used.
@@ -49,9 +53,10 @@ The following languages are supported because of the following community users!
 |Catalan|[@ferranabello](https://github.com/ferranabello)|
 
 Want to add more languages? Simply create a PR with the updated strings file.
-## Installation
 
-Xcodes.app runs on macOS Big Sur 11.0 or later.
+## Installation
+v1.X - requires MacOS 11 or newer
+v2.X - requires MacOS 13
 
 ### Install with Homebrew
 
@@ -65,6 +70,12 @@ brew install --cask xcodes
 
 1. Download the latest version [here](https://github.com/XcodesOrg/XcodesApp/releases/latest) using the **Xcodes.zip** asset. These are Developer ID-signed and notarized release builds and don't require Xcode to already be installed in order to use.
 2. Move the unzipped `Xcodes.app` to your `/Applications` directory
+
+## Support
+
+Xcodes.app and CLI is updated, maintained with contributors like yourself. Even open source libraries and tools come with expenses. If you would like to support Xcodes or donate to the development and maintenance of the tool, it would be greatly appreciated. There is absolutely no obligation!
+
+[Support Now](https://opencollective.com/xcodesapp)
 
 ## Development
 
@@ -155,4 +166,4 @@ popd
 
 [Matt Kiazyk](https://github.com/mattkiazyk) - [Twitter](https://www.twitter.com/mattkiazyk)
 
-[Twitter](https://twitter.com/xcodesApp) | [GitHub](https://github.com/xcodesOrg)
+[Twitter](https://twitter.com/xcodesApp) | [GitHub](https://github.com/xcodesOrg) | [Mastadon](https://iosdev.space/@XcodesApp) |
