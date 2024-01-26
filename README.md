@@ -75,7 +75,9 @@ brew install --cask xcodes
 
 Xcodes.app and CLI is updated, maintained with contributors like yourself. Even open source libraries and tools come with expenses. If you would like to support Xcodes or donate to the development and maintenance of the tool, it would be greatly appreciated. There is absolutely no obligation!
 
-[Support Now](https://opencollective.com/xcodesapp)
+<a href="https://opencollective.com/xcodesapp" target="_blank">
+				<img src="https://opencollective.com/xcodesapp/donate/button@2x.png?color=blue" class="buymeacoffee" width=200 />
+</a>
 
 ## Development
 
