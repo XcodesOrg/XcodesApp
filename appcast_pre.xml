@@ -6,6 +6,8 @@
         <language>en</language>
         
             
+        
+            
                 
                     <item>
                         <title>2.0 - The Force Awakens</title>
@@ -107,7 +109,7 @@
   <li>Bump actions/cache from 3.2.5 to 3.2.6 (#358) @dependabot</li>
 </ul>
 
-<!-- sparkle:edSignature=tEMs88vzZE4xDaf/Gld+mt0Uw/sx/Wj1RHM3oCwrDd623iAI+4i7b/SviiHNh0LojZO02qSiuEO5irm7w24dAA== -->
+<!-- sparkle:edSignature=0mGgwNAQnkK2Zw4I4/stXhu3BYqxiKTkaNZszLu+3YrWyu81EUQ6Arv5zSDOZSZjfLWAW+T0WUFe1Kxu/SzIDQ== -->
 ]]></description>
                         <pubDate>Fri, 26 Jan 2024 04:37:50 +0000</pubDate>
                         
@@ -119,11 +121,11 @@
                                 
 
                                 <enclosure
-                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.0.1b22/Xcodes.zip"
-                                    sparkle:version="22"
-                                    sparkle:shortVersionString="2.0.1"
-                                    sparkle:edSignature="tEMs88vzZE4xDaf/Gld+mt0Uw/sx/Wj1RHM3oCwrDd623iAI+4i7b/SviiHNh0LojZO02qSiuEO5irm7w24dAA=="
-                                    length="12240111"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.0.2b23/Xcodes.zip"
+                                    sparkle:version="23"
+                                    sparkle:shortVersionString="2.0.2"
+                                    sparkle:edSignature="0mGgwNAQnkK2Zw4I4/stXhu3BYqxiKTkaNZszLu+3YrWyu81EUQ6Arv5zSDOZSZjfLWAW+T0WUFe1Kxu/SzIDQ=="
+                                    length="12240133"
                                     type="application/octet-stream" />
                             
                         
