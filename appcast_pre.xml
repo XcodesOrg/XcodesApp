@@ -6,6 +6,130 @@
         <language>en</language>
         
             
+                
+                    <item>
+                        <title>2.0 - The Force Awakens</title>
+                        <description><![CDATA[<h2 id="introducing-v20--">Introducing v2.0  🎉</h2>
+
+<h3 id="a-slight-redesign">A slight redesign</h3>
+<p>The majority of the information in v1.X was only included in the info pane. While this was sufficient a few years ago, with the newly added Platforms as a separate download, more space was needed. 2.0 now uses a <code class="language-plaintext highlighter-rouge">NavigationSplitView</code> with a smaller left view and a larger main view.</p>
+
+<p>The UI has been updated for a more cleaner look</p>
+
+<p><img width="664" alt="Screenshot 2024-01-19 at 11 32 11 AM" src="https://user-images.githubusercontent.com/1119565/298149823-b1d6d4bb-79fd-49dd-804e-7593d2df8062.png" /></p>
+
+<h3 id="platformsruntimes">Platforms/Runtimes</h3>
+<p>You can now download all the platforms/runtimes with the speed of Xcodes and aria2!</p>
+
+<h3 id="xcodeskit">XcodesKit</h3>
+<p>2.0 has the start of a <code class="language-plaintext highlighter-rouge">XcodesKit</code> library using Swift Concurrency. This will allow us to more easily share code between the UI and the CLI in the future.</p>
+
+<h3 id="new-requirements">New Requirements</h3>
+<p>MacOS 13.0 is now required for 2.0</p>
+
+<h3 id="support">Support</h3>
+
+<p>If you would like to support Xcodes or donate to the development, I’ve set up a page on <a href="https://opencollective.com/xcodesapp">opencollective.com/xcodesapp</a>. There is absolutely no obligation!</p>
+
+<h2 id="big-thanks">Big thanks!</h2>
+
+<p>Thank you to all the contributors over 2023 who have kept adding on functionality to Xcodes and who have supported me via <a href="https://www.buymeacoffee.com/mattkiazyk">buymeacoffee.com/mattkiazyk</a></p>
+
+<p>Full change log is below!</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Add Sponsor/Donate Button (#481) @MattKiazyk</li>
+  <li>update Sparkle to 2.5.2 (#469) @MattKiazyk</li>
+  <li>Add new Platforms List Window (#463) @MattKiazyk</li>
+  <li>Redesign the main window to better suit more data (#461) @MattKiazyk</li>
+  <li>Add default phone number selection when there is only one (#462) @redryerye</li>
+  <li>Activity Indicator on Install Pressed (#437) @chickdan</li>
+  <li>Add ability to cancel runtime downloads (#453) @MattKiazyk</li>
+  <li>Support Runtime/Platforms Downloading and Install 🚀  (#448) @MattKiazyk</li>
+  <li>Add installation progress bar to dock icon (#423) @senmu</li>
+  <li>SDK column in the info panel supports displaying visionOS (#400) @LavareX</li>
+  <li>Add PinCodeTextField autocomplete support (#398) @Kyle-Ye</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Update privilege helper to xcodesOrg and Team (#480) @MattKiazyk</li>
+  <li>Handle preference alerts from the PlatformsListView (#470) @chickdan</li>
+  <li>Descriptive error for login status code 412 (#456) @chickdan</li>
+  <li>fix: settings link on Sonoma not working (#444) @MattKiazyk</li>
+  <li>Improve Brazilian Portuguese translation (#386) @0x7067</li>
+</ul>
+
+<h2 id="-localization">🌎 Localization</h2>
+
+<ul>
+  <li>Add latest missing french translations (#477) @McNight</li>
+  <li>Updated Turkish to 100% (#454) @egesucu</li>
+  <li>Support new Xcode 15 String Catalog (#449) @egesucu</li>
+  <li>Fix SMS Enter Digit Code Crash on some localizations (#428) @ElonPark</li>
+  <li>Update DE localization (#393) @qnotna</li>
+  <li>Update zh_CN localizations. (#391) @megabitsenmzq</li>
+  <li>Add catalan translation (#297) @ferranabello</li>
+  <li>Introduce Polish translations (#375) @jakex7</li>
+  <li>Fix zh_Hans localizations (#376) @LinXunFeng</li>
+  <li>Turkish Localization Update (#362) @egesucu</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Remove newline from derived data path returned by defaults (#472) @robinkunde</li>
+  <li>Bump ruby/setup-ruby from 1.165.1 to 1.169.0 (#484) @dependabot</li>
+  <li>Bump actions/cache from 3.3.2 to 4.0.0 (#475) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.162.0 to 1.165.1 (#468) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.161.0 to 1.162.0 (#459) @dependabot</li>
+  <li>Updated README.md (#455) @egesucu</li>
+  <li>Clean up code in <code class="language-plaintext highlighter-rouge">InfoPane</code> to be more robust (#436) @thai-d-v</li>
+  <li>Bump actions/cache from 3.3.1 to 3.3.2 (#447) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.152.0 to 1.161.0 (#446) @dependabot</li>
+  <li>Bump actions/checkout from 3 to 4 (#445) @dependabot</li>
+  <li>cleans up project team so it builds (#443) @MattKiazyk</li>
+  <li>Bump ruby/setup-ruby from 1.149.0 to 1.152.0 (#397) @dependabot</li>
+  <li>Fix typo in README.md (#395) @jmg-duarte</li>
+  <li>Bump ruby/setup-ruby from 1.144.2 to 1.149.0 (#384) @dependabot</li>
+  <li>Update unxip binary to v2.1 (#371) @Kyle-Ye</li>
+  <li>Updated readme (#385) @KyLeggiero</li>
+  <li>Bump ruby/setup-ruby from 1.144.1 to 1.144.2 (#369) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.144.0 to 1.144.1 (#368) @dependabot</li>
+  <li>Bump actions/cache from 3.2.6 to 3.3.1 (#366) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.143.0 to 1.144.0 (#365) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.139.0 to 1.143.0 (#363) @dependabot</li>
+  <li>Bump actions/cache from 3.2.5 to 3.2.6 (#358) @dependabot</li>
+</ul>
+
+<!-- sparkle:edSignature=tEMs88vzZE4xDaf/Gld+mt0Uw/sx/Wj1RHM3oCwrDd623iAI+4i7b/SviiHNh0LojZO02qSiuEO5irm7w24dAA== -->
+]]></description>
+                        <pubDate>Fri, 26 Jan 2024 04:37:50 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.0.1b22/Xcodes.zip"
+                                    sparkle:version="22"
+                                    sparkle:shortVersionString="2.0.1"
+                                    sparkle:edSignature="tEMs88vzZE4xDaf/Gld+mt0Uw/sx/Wj1RHM3oCwrDd623iAI+4i7b/SviiHNh0LojZO02qSiuEO5irm7w24dAA=="
+                                    length="12240111"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
         
             
                 
