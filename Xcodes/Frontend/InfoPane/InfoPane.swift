@@ -1,372 +1,197 @@
 import AppKit
+import XcodesKit
 import Path
 import SwiftUI
 import Version
-import struct XCModel.SDKs
 import struct XCModel.Compilers
+import struct XCModel.SDKs
 
 struct InfoPane: View {
-    @EnvironmentObject var appState: AppState
-    let selectedXcodeID: Xcode.ID?
-    @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
-    
+    let xcode: Xcode
     var body: some View {
-        if let xcode = appState.allXcodes.first(where: { $0.id == selectedXcodeID }) {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 16) {
-                    icon(for: xcode)
-                        .frame(maxWidth: .infinity, alignment: .center)
-
-                    Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
-                        .font(.title)
-                    
-                    switch xcode.installState {
-                    case .notInstalled:
-                        InstallButton(xcode: xcode)
-                        downloadFileSize(for: xcode)
-                    case .installing(let installationStep):
-                        InstallationStepDetailView(installationStep: installationStep)
-                            .fixedSize(horizontal: false, vertical: true)
-                        CancelInstallButton(xcode: xcode)
-                    case let .installed(path):
+        ScrollView(.vertical) {
+            HStack(alignment: .top) {
+                VStack {
+                    VStack(spacing: 5) {
                         HStack {
-                            Text(path.string)
-                            Button(action: { appState.reveal(xcode: xcode) }) {
-                                Image(systemName: "arrow.right.circle.fill")
-                            }
-                            .buttonStyle(PlainButtonStyle())
-                            .help("RevealInFinder")
-                        }
-                        
-                        HStack {
-                            SelectButton(xcode: xcode)
-                                .disabled(xcode.selected)
-                                .help("Selected")
+                            IconView(installState: xcode.installState)
                             
-                            OpenButton(xcode: xcode)
-                                .help("Open")
-                            
-                            Spacer()
-                            UninstallButton(xcode: xcode)
+                            Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
+                                .font(.title)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                         }
+                        InfoPaneControls(xcode: xcode)
                     }
-                    
-                    Divider()
-
-                    Group{
-                        releaseNotes(for: xcode)
-                        releaseDate(for: xcode)
-                        identicalBuilds(for: xcode)
-                        compatibility(for: xcode)
-                        sdks(for: xcode)
-                        compilers(for: xcode)
-                    }
-                    
-                    Spacer()
-                }
-                .padding()
-            }
-            .frame(minWidth: 200, maxWidth: .infinity)
-        } else {
-            empty
-                .frame(minWidth: 200, maxWidth: .infinity)
-        }
-    }
-    
-    @ViewBuilder
-    private func icon(for xcode: Xcode) -> some View {
-        if case let .installed(path) = xcode.installState {
-            Image(nsImage: NSWorkspace.shared.icon(forFile: path.string))
-        } else {
-            Image(systemName: "app.fill")
-                .resizable()
-                .frame(width: 32, height: 32)
-                .foregroundColor(.secondary)
-        }
-    }
-    
-    @ViewBuilder
-    private func identicalBuilds(for xcode: Xcode) -> some View {
-        if !xcode.identicalBuilds.isEmpty {
-            VStack(alignment: .leading) {
-                HStack {
-                    Text("IdenticalBuilds")
-                    Image(systemName: "square.fill.on.square.fill")
-                        .foregroundColor(.secondary)
-                        .accessibility(hidden: true)
-                        .help("IdenticalBuilds.help")
-                }
-                .font(.headline)
+                    .xcodesBackground()
+               
                 
-                ForEach(xcode.identicalBuilds, id: \.description) { version in
-                    Text("• \(version.appleDescription)")
-                        .font(.subheadline)
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .accessibilityElement()
-            .accessibility(label: Text("IdenticalBuilds"))
-            .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
-            .accessibility(hint: Text("IdenticalBuilds.help"))
-        } else {
-            EmptyView()
-        }
-    }
-
-    @ViewBuilder
-    private func releaseDate(for xcode: Xcode) -> some View {
-        if let releaseDate = xcode.releaseDate {
-            VStack(alignment: .leading) {
-                Text("ReleaseDate")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(releaseDate, style: .date)")
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        } else {
-            EmptyView()
-        }
-    }
-    
-    @ViewBuilder
-    private func releaseNotes(for xcode: Xcode) -> some View {
-        if let releaseNotesURL = xcode.releaseNotesURL {
-            Button(action: { openURL(releaseNotesURL) }) {
-                Label("ReleaseNotes", systemImage: "link")
-            }
-            .buttonStyle(LinkButtonStyle())
-            .contextMenu(menuItems: {
-              releaseNotesMenu(for: xcode)
-            })
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .help("ReleaseNotes.help")
-        } else {
-            EmptyView()
-        }
-    }
-
-    @ViewBuilder
-    private func releaseNotesMenu(for xcode: Xcode) -> some View {
-        CopyReleaseNoteButton(xcode: xcode)
-    }
-    
-    @ViewBuilder
-    private func compatibility(for xcode: Xcode) -> some View {
-        if let requiredMacOSVersion = xcode.requiredMacOSVersion {
-            VStack(alignment: .leading) {
-                Text("Compatibility")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text(String(format: localizeString("MacOSRequirement"), requiredMacOSVersion))
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        } else {
-            EmptyView()
-        }
-    }
-    
-    @ViewBuilder
-    private func sdks(for xcode: Xcode) -> some View {
-        if let sdks = xcode.sdks {
-            VStack(alignment: .leading) {
-                Text("SDKs")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                
-                ForEach([
-                    ("macOS", \SDKs.macOS),
-                    ("iOS", \.iOS),
-                    ("watchOS", \.watchOS),
-                    ("tvOS", \.tvOS),
-                ], id: \.0) { row in
-                    if let sdk = sdks[keyPath: row.1] {
-                        Text("\(row.0): \(sdk.compactMap { $0.number }.joined(separator: ", "))")
-                            .font(.subheadline)
+                    VStack {
+                        Text("Platforms")
+                            .font(.title3)
                             .frame(maxWidth: .infinity, alignment: .leading)
+                        PlatformsView(xcode: xcode)
                     }
+                    .xcodesBackground()
                 }
-            }
-        } else {
-            EmptyView()
-        }
-    }
-    
-    @ViewBuilder
-    private func compilers(for xcode: Xcode) -> some View {
-        if let compilers = xcode.compilers {
-            VStack(alignment: .leading) {
-                Text("Compilers")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
                 
-                ForEach([
-                    ("Swift", \Compilers.swift),
-                    ("Clang", \.clang),
-                    ("LLVM", \.llvm),
-                    ("LLVM GCC", \.llvm_gcc),
-                    ("GCC", \.gcc),
-                ], id: \.0) { row in
-                    if let sdk = compilers[keyPath: row.1] {
-                        Text("\(row.0): \(sdk.compactMap { $0.number }.joined(separator: ", "))")
-                            .font(.subheadline)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                    }
+                VStack(alignment: .leading) {
+                    ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
+                    CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
+                    IdenticalBuildsView(builds: xcode.identicalBuilds)
+                    SDKandCompilers
                 }
+                .frame(width: 200)
+                
             }
-        } else {
-            EmptyView()
         }
     }
     
     @ViewBuilder
-    private func downloadFileSize(for xcode: Xcode) -> some View {
-        // if we've downloaded it no need to show the download size
-        if let downloadFileSize = xcode.downloadFileSizeString, case .notInstalled = xcode.installState {
-            VStack(alignment: .leading) {
-                Text("DownloadSize")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                Text("\(downloadFileSize)")
-                    .font(.subheadline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
-        } else {
-            EmptyView()
+    var SDKandCompilers: some View {
+        VStack(alignment: .leading, spacing: 16) {
+            SDKsView(sdks: xcode.sdks)
+            CompilersView(compilers: xcode.compilers)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding()
+        .background(.background)
+        .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
     }
-    
-    @ViewBuilder
-    private var empty: some View {
-        Text("NoXcodeSelected")
-            .font(.title)
-            .foregroundColor(.secondary)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
+}
+
+#Preview(XcodePreviewName.allCases[0].rawValue) { makePreviewContent(for: 0) }
+#Preview(XcodePreviewName.allCases[1].rawValue) { makePreviewContent(for: 1) }
+#Preview(XcodePreviewName.allCases[2].rawValue) { makePreviewContent(for: 2) }
+#Preview(XcodePreviewName.allCases[3].rawValue) { makePreviewContent(for: 3) }
+#Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
+
+private func makePreviewContent(for index: Int) -> some View {
+  let name = XcodePreviewName.allCases[index]
+    return InfoPane(xcode: xcodeDict[name]!)
+        .environmentObject(configure(AppState()) {
+          $0.allXcodes = [xcodeDict[name]!]
+        })
+        .frame(width: 300, height: 400)
             .padding()
-    }
 }
 
-struct InfoPane_Previews: PreviewProvider {
-    static var previews: some View {
-        Group {
-            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
-                .environmentObject(configure(AppState()) {
-                    $0.allXcodes = [
-                        .init(
-                            version: Version(major: 12, minor: 3, patch: 0),
-                            installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
-                            selected: true,
-                            icon: NSWorkspace.shared.icon(forFile: "/Applications/Xcode-12.3.0.app"),
-                            requiredMacOSVersion: "10.15.4",
-                            releaseNotesURL: URL(string: "https://developer.apple.com/documentation/xcode-release-notes/xcode-12_3-release-notes/")!,
-                            releaseDate: Date(),
-                            sdks: SDKs(
-                                macOS: .init(number: "11.1"),
-                                iOS: .init(number: "14.3"),
-                                watchOS: .init(number: "7.3"),
-                                tvOS: .init(number: "14.3")
-                            ),
-                            compilers: Compilers(
-                                gcc: .init(number: "4"),
-                                llvm_gcc: .init(number: "213"),
-                                llvm: .init(number: "2.3"),
-                                clang: .init(number: "7.3"),
-                                swift: .init(number: "5.3.2")
-                            ),
-                            downloadFileSize: 242342424
-                            )
-                    ]
-                })
-                .previewDisplayName("Populated, Installed, Selected")
+enum XcodePreviewName: String, CaseIterable, Identifiable {
+    case Populated_Installed_Selected
+    case Populated_Installed_Unselected
+    case Populated_Uninstalled
+    case Basic_Installed
+    case Basic_Installing
 
-            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
-                .environmentObject(configure(AppState()) {
-                    $0.allXcodes = [
-                        .init(
-                            version: Version(major: 12, minor: 3, patch: 0),
-                            installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
-                            selected: false,
-                            icon: NSWorkspace.shared.icon(forFile: "/Applications/Xcode-12.3.0.app"),
-                            sdks: SDKs(
-                                macOS: .init(number: "11.1"),
-                                iOS: .init(number: "14.3"),
-                                watchOS: .init(number: "7.3"),
-                                tvOS: .init(number: "14.3")
-                            ),
-                            compilers: Compilers(
-                                gcc: .init(number: "4"),
-                                llvm_gcc: .init(number: "213"),
-                                llvm: .init(number: "2.3"),
-                                clang: .init(number: "7.3"),
-                                swift: .init(number: "5.3.2")
-                            ),
-                            downloadFileSize: 242342424)
-                    ]
-                })
-                .previewDisplayName("Populated, Installed, Unselected")
-
-            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 0))
-                .environmentObject(configure(AppState()) {
-                    $0.allXcodes = [
-                        .init(
-                            version: Version(major: 12, minor: 3, patch: 0),
-                            installState: .notInstalled,
-                            selected: false,
-                            icon: nil,
-                            sdks: SDKs(
-                                macOS: .init(number: "11.1"),
-                                iOS: .init(number: "14.3"),
-                                watchOS: .init(number: "7.3"),
-                                tvOS: .init(number: "14.3")
-                            ),
-                            compilers: Compilers(
-                                gcc: .init(number: "4"),
-                                llvm_gcc: .init(number: "213"),
-                                llvm: .init(number: "2.3"),
-                                clang: .init(number: "7.3"),
-                                swift: .init(number: "5.3.2")
-                            ),
-                            downloadFileSize: 242342424)
-                    ]
-                })
-                .previewDisplayName("Populated, Uninstalled")
-
-            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]))
-                .environmentObject(configure(AppState()) {
-                    $0.allXcodes = [
-                        .init(
-                            version: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]),
-                            installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
-                            selected: false,
-                            icon: nil,
-                            sdks: nil,
-                            compilers: nil)
-                    ]
-                })
-                .previewDisplayName("Basic, installed")
-
-            InfoPane(selectedXcodeID: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]))
-                .environmentObject(configure(AppState()) {
-                    $0.allXcodes = [
-                        .init(
-                            version: Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"]),
-                            installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40; $0.throughput = 232323232; $0.fileCompletedCount = 2323004; $0.fileTotalCount = 1193939393 })),
-                            selected: false,
-                            icon: nil,
-                            sdks: nil,
-                            compilers: nil)
-                    ]
-                })
-                .previewDisplayName("Basic, installing")
-            
-            InfoPane(selectedXcodeID: nil)
-                .environmentObject(configure(AppState()) {
-                    $0.allXcodes = [
-                    ]
-                })
-                .previewDisplayName("Empty")
-        }
-        .frame(maxWidth: 300)
-    }
+    var id: XcodePreviewName { self }
 }
+
+var xcodeDict: [XcodePreviewName: Xcode] = [
+    .Populated_Installed_Selected: .init(
+        version: _versionNoMeta,
+        installState: .installed(Path(_path)!),
+        selected: true,
+        icon: NSWorkspace.shared.icon(forFile: _path),
+        requiredMacOSVersion: _requiredMacOSVersion,
+        releaseNotesURL: URL(string: "https://developer.apple.com/documentation/xcode-release-notes/xcode-12_3-release-notes/")!,
+        releaseDate: Date(),
+        sdks: _sdks,
+        compilers: _compilers,
+        downloadFileSize: _downloadFileSize
+    ),
+    .Populated_Installed_Unselected: .init(
+        version: _versionNoMeta,
+        installState: .installed(Path(_path)!),
+        selected: false,
+        icon: NSWorkspace.shared.icon(forFile: _path),
+        sdks: _sdks,
+        compilers: _compilers,
+        downloadFileSize: _downloadFileSize
+    ),
+    .Populated_Uninstalled: .init(
+        version: Version(major: 12, minor: 3, patch: 0),
+        installState: .notInstalled,
+        selected: false,
+        icon: nil,
+        sdks: _sdks,
+        compilers: _compilers,
+        downloadFileSize: _downloadFileSize
+    ),
+    .Basic_Installed: .init(
+        version: _versionWithMeta,
+        installState: .installed(Path(_path)!),
+        selected: false,
+        icon: nil,
+        sdks: nil,
+        compilers: nil
+    ),
+    .Basic_Installing: .init(
+        version: _versionWithMeta,
+        installState: .installing(.downloading(
+            progress: configure(Progress()) {
+                $0.kind = .file
+                $0.fileOperationKind = .downloading
+                $0.estimatedTimeRemaining = 123
+                $0.totalUnitCount = 11_944_848_484
+                $0.completedUnitCount = 848_444_920
+                $0.throughput = 9_211_681
+            }
+        )),
+        selected: false,
+        icon: nil,
+        sdks: nil,
+        compilers: nil
+    ),
+]
+
+var downloadableRuntimes: [DownloadableRuntime] = {
+    var runtimes = try! JSONDecoder().decode([DownloadableRuntime].self, from: Current.files.contents(atPath: Path.runtimeCacheFile.string)!)
+    // set iOS to installed
+    let iOSIndex = runtimes.firstIndex { $0.sdkBuildUpdate == "19E239" }!
+    var iOSRuntime = runtimes[iOSIndex]
+    iOSRuntime.installState = .installed
+    runtimes[iOSIndex] = iOSRuntime
+    
+    let watchOSIndex = runtimes.firstIndex { $0.sdkBuildUpdate == "20R362" }!
+    var runtime = runtimes[watchOSIndex]
+    runtime.installState = .installing(
+        RuntimeInstallationStep.downloading(
+            progress:configure(Progress()) {
+                $0.kind = .file
+                $0.fileOperationKind = .downloading
+                $0.estimatedTimeRemaining = 123
+                $0.totalUnitCount = 11_944_848_484
+                $0.completedUnitCount = 848_444_920
+                $0.throughput = 9_211_681
+            }
+            )
+    )
+    runtimes[watchOSIndex] = runtime
+    
+    return runtimes
+}()
+
+var installedRuntimes: [CoreSimulatorImage] = {
+    [CoreSimulatorImage(uuid: "85B22F5B-048B-4331-B6E2-F4196D8B7475", path: ["relative" : "file:///Library/Developer/CoreSimulator/Images/85B22F5B-048B-4331-B6E2-F4196D8B7475.dmg"], runtimeInfo: CoreSimulatorRuntimeInfo(build: "19E240")),
+     CoreSimulatorImage(uuid: "85B22F5B-048B-4331-B6E2-F4196D8B7473", path: ["relative" : "file:///Library/Developer/CoreSimulator/Images/85B22F5B-048B-4331-B6E2-F4196D8B7475.dmg"], runtimeInfo: CoreSimulatorRuntimeInfo(build: "21N5233f"))]
+}()
+
+
+private let _versionNoMeta = Version(major: 12, minor: 3, patch: 0)
+private let _versionWithMeta = Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"])
+private let _path = "/Applications/Xcode-12.3.0.app"
+private let _requiredMacOSVersion = "10.15.4"
+private let _sdks = SDKs(
+    macOS: .init(number: "11.1"),
+    iOS: .init(number: "15.4", "19E239"),
+    watchOS: .init(number: "7.3", "20R362"),
+    tvOS: .init(number: "14.3", "20K67"),
+    visionOS: .init(number: "1.0", "21N5233e")
+)
+private let _compilers = Compilers(
+    gcc: .init(number: "4"),
+    llvm_gcc: .init(number: "213"),
+    llvm: .init(number: "2.3"),
+    clang: .init(number: "7.3"),
+    swift: .init(number: "5.3.2")
+)
+private let _downloadFileSize: Int64 = 242_342_424

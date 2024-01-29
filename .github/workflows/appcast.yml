@@ -9,13 +9,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout 🛎
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
       with:
-        # If you're using actions/checkout@v3 you must set persist-credentials to false in most cases for the deployment to work correctly.
+        # If you're using actions/checkout@v4 you must set persist-credentials to false in most cases for the deployment to work correctly.
         persist-credentials: false
 
     - name: Cache 📦
-      uses: actions/cache@v3.3.1
+      uses: actions/cache@v4.0.0
       with:
         path: AppCast/vendor/bundle
         key: ${{ runner.os }}-gems-v1.0-${{ hashFiles('AppCast/Gemfile') }}
@@ -23,9 +23,9 @@ jobs:
           ${{ runner.os }}-gems-
           
     - name: Setup Ruby, JRuby and TruffleRuby
-      uses: ruby/setup-ruby@v1.149.0
+      uses: ruby/setup-ruby@v1.169.0
       with:
-        ruby-version: '2.7'
+        ruby-version: '3.0'
 
     - name: Bundler 💎
       working-directory: AppCast
@@ -43,8 +43,8 @@ jobs:
       run: bundle exec jekyll build
       
     - name: Publish 🚀
-      uses: JamesIves/github-pages-deploy-action@releases/v3
+      uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH: gh-pages
-        FOLDER: AppCast/_site
+        token: ${{ secrets.GITHUB_TOKEN }}
+        branch: gh-pages
+        folder: AppCast/_site

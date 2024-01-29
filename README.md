@@ -9,7 +9,7 @@ _If you're looking for a command-line version of Xcodes.app, try [`xcodes`](http
 ![](screenshot_light.png#gh-light-mode-only)
 ![](screenshot_dark.png#gh-dark-mode-only)
 
-### :tada: Announcment
+### :tada: Announcement
 
 XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 
@@ -22,6 +22,10 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 - Just click a button to make a version active with `xcode-select`.
 - View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
 - Dark/Light Mode supported
+
+## Platforms/Runtimes
+
+- Xcodes supports downloading the Apple runtimes via the app. Simply click on the Platform, and Xcodes will install automatically for you.
 
 ## Experiments
 
@@ -46,11 +50,13 @@ The following languages are supported because of the following community users!
 |Ukranian 🇺🇦 |[@gelosi](https://github.com/gelosi)|Japanese 🇯🇵|[@tatsuz0u](https://github.com/tatsuz0u)|
 |German 🇩🇪|[@drct](https://github.com/drct)|Dutch 🇳🇱|[@jfversluis](https://github/com/jfversluis)|
 |Brazilian Portuguese 🇧🇷|[@brunomunizaf](https://github.com/brunomunizaf)|Polish 🇵🇱|[@jakex7](https://github.com/jakex7)|
+|Catalan|[@ferranabello](https://github.com/ferranabello)|
 
 Want to add more languages? Simply create a PR with the updated strings file.
-## Installation
 
-Xcodes.app runs on macOS Big Sur 11.0 or later.
+## Installation
+v1.X - requires MacOS 11 or newer
+v2.X - requires MacOS 13
 
 ### Install with Homebrew
 
@@ -65,9 +71,17 @@ brew install --cask xcodes
 1. Download the latest version [here](https://github.com/XcodesOrg/XcodesApp/releases/latest) using the **Xcodes.zip** asset. These are Developer ID-signed and notarized release builds and don't require Xcode to already be installed in order to use.
 2. Move the unzipped `Xcodes.app` to your `/Applications` directory
 
+## Support
+
+Xcodes.app and CLI is updated, maintained with contributors like yourself. Even open source libraries and tools come with expenses. If you would like to support Xcodes or donate to the development and maintenance of the tool, it would be greatly appreciated. There is absolutely no obligation!
+
+<a href="https://opencollective.com/xcodesapp" target="_blank">
+				<img src="https://opencollective.com/xcodesapp/donate/button@2x.png?color=blue" class="buymeacoffee" width=200 />
+</a>
+
 ## Development
 
-You'll need macOS 12 Big Sur and Xcode 13 in order to build and run Xcodes.app.
+You'll need macOS 13.5 Ventura and Xcode 15 in order to build and run Xcodes.app.
 
 `Unxip` and `aria2` must be compiled as a universal binary
 ```
@@ -96,8 +110,8 @@ Follow the steps below to build and release a new version of Xcodes.app. For any
 # Update the version number in Xcode and commit the change, if necessary
 
 # Question: Did anything in XPCHelper change?
-# - com.robotsandpencils.XcodesApp.Helper folder and HelperXPCShared
-# - if so, bump the version number in com.robotsandpencils.XcodesApp.Helper target.
+# - com.xcodesorg.xcodesapp.Helper folder and HelperXPCShared
+# - if so, bump the version number in com.xcodesorg.xcodesapp.Helper target.
 # Note: you do not have to bump the version number if nothing has changed.
 # Note2: If you do bump the version, the end user, must re-install the XPCHelper and give permission again.
 
@@ -154,4 +168,4 @@ popd
 
 [Matt Kiazyk](https://github.com/mattkiazyk) - [Twitter](https://www.twitter.com/mattkiazyk)
 
-[Twitter](https://twitter.com/xcodesApp) | [GitHub](https://github.com/xcodesOrg)
+[Twitter](https://twitter.com/xcodesApp) | [GitHub](https://github.com/xcodesOrg) | [Mastadon](https://iosdev.space/@XcodesApp) |

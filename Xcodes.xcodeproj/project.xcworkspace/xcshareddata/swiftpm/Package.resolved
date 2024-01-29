@@ -2,6 +2,15 @@
   "object": {
     "pins": [
       {
+        "package": "AsyncNetworkService",
+        "repositoryURL": "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService",
+        "state": {
+          "branch": "main",
+          "revision": "97770856c4e429f880d4b4dd68cfaf286dc00c30",
+          "version": null
+        }
+      },
+      {
         "package": "CombineExpectations",
         "repositoryURL": "https://github.com/groue/CombineExpectations",
         "state": {
@@ -14,9 +23,18 @@
         "package": "XcodeReleases",
         "repositoryURL": "https://github.com/xcodereleases/data",
         "state": {
-          "branch": null,
-          "revision": "b47228c688b608e34b3b84079ab6052a24c7a981",
+          "branch": "main",
+          "revision": "a43ad89e536d7a3da525fcc23fb182c37b756ecc",
           "version": null
+        }
+      },
+      {
+        "package": "DockProgress",
+        "repositoryURL": "https://github.com/sindresorhus/DockProgress",
+        "state": {
+          "branch": null,
+          "revision": "7100b68571e2dafe3a06ad5905b80fc3b0107b4b",
+          "version": "3.2.0"
         }
       },
       {
@@ -51,8 +69,8 @@
         "repositoryURL": "https://github.com/mxcl/Path.swift",
         "state": {
           "branch": null,
-          "revision": "dac007e907a4f4c565cfdc55a9ce148a761a11d5",
-          "version": "0.16.3"
+          "revision": "8e355c28e9393c42e58b18c54cace2c42c98a616",
+          "version": "1.4.1"
         }
       },
       {
@@ -60,8 +78,17 @@
         "repositoryURL": "https://github.com/sparkle-project/Sparkle/",
         "state": {
           "branch": null,
-          "revision": "286edd1fa22505a9e54d170e9fd07d775ea233f2",
-          "version": "2.1.0"
+          "revision": "47d3d90aee3c52b6f61d04ceae426e607df62347",
+          "version": "2.5.2"
+        }
+      },
+      {
+        "package": "swift-collections",
+        "repositoryURL": "https://github.com/apple/swift-collections.git",
+        "state": {
+          "branch": null,
+          "revision": "a902f1823a7ff3c9ab2fba0f992396b948eda307",
+          "version": "1.0.5"
         }
       },
       {

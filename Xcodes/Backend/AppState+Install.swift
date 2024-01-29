@@ -5,6 +5,8 @@ import AppleAPI
 import Version
 import LegibleError
 import os.log
+import DockProgress
+import XcodesKit
 
 /// Downloads and installs Xcodes
 extension AppState {
@@ -43,6 +45,8 @@ extension AppState {
         
         Logger.appState.info("Using \(downloader) downloader")
         
+        setupDockProgress()
+        
         return validateSession()
             .flatMap { _ in
                 self.getXcodeArchive(installationType, downloader: downloader)
@@ -51,6 +55,8 @@ extension AppState {
                 self.installArchivedXcode(xcode, at: url)
             }
             .catch { error -> AnyPublisher<InstalledXcode, Swift.Error> in
+                self.resetDockProgressTracking()
+                
                 switch error {
                 case InstallationError.damagedXIP(let damagedXIPURL):
                     guard attemptNumber < 1 else { return Fail(error: error).eraseToAnyPublisher() }
@@ -99,6 +105,7 @@ extension AppState {
             self.downloadOrUseExistingArchive(for: availableXcode, downloader: downloader, progressChanged: { [unowned self] progress in
                 DispatchQueue.main.async {
                     self.setInstallationStep(of: availableXcode.version, to: .downloading(progress: progress))
+                    self.overallProgress.addChild(progress, withPendingUnitCount: AppState.totalProgressUnits - AppState.unxipProgressWeight)
                 }
             })
             .map { return (availableXcode, $0) }
@@ -151,6 +158,7 @@ extension AppState {
             cookies
         )
         progressChanged(progress)
+        
         return publisher
             .map { _ in destination.url }
             .eraseToAnyPublisher()
@@ -165,6 +173,7 @@ extension AppState {
                                                                    to: destination.url,
                                                                    resumingWith: resumeData ?? persistedResumeData)
             progressChanged(progress)
+            
             return publisher
                 .map { $0.saveLocation }
                 .eraseToAnyPublisher()
@@ -176,6 +185,9 @@ extension AppState {
     }
 
     public func installArchivedXcode(_ availableXcode: AvailableXcode, at archiveURL: URL) -> AnyPublisher<InstalledXcode, Error> {
+        unxipProgress.completedUnitCount = 0
+        overallProgress.addChild(unxipProgress, withPendingUnitCount: AppState.unxipProgressWeight)
+        
         do {
             let destinationURL = Path.installDirectory.join("Xcode-\(availableXcode.version.descriptionWithoutBuildMetadata).app").url
             switch archiveURL.pathExtension {
@@ -415,6 +427,9 @@ extension AppState {
                 }
                 self.presentedAlert = .privilegedHelper
             }
+            
+            unxipProgress.completedUnitCount = AppState.totalProgressUnits
+            resetDockProgressTracking()
 
             return helperInstallConsentSubject
                 .flatMap { 
@@ -455,15 +470,43 @@ extension AppState {
             .eraseToAnyPublisher()
     }
     
+    // MARK: - Dock Progress Tracking
+    
+    private func setupDockProgress() {
+        DockProgress.progressInstance = nil
+        DockProgress.style = .bar
+        
+        let progress = Progress(totalUnitCount: AppState.totalProgressUnits)
+        progress.kind = .file
+        progress.fileOperationKind = .downloading
+        overallProgress = progress
+        
+        DockProgress.progressInstance = overallProgress
+    }
+    
+    func resetDockProgressTracking() {
+        DockProgress.progress = 1 // Only way to completely remove overlay with DockProgress is setting progress to complete
+    }
+    
     // MARK: - 
     
-    func setInstallationStep(of version: Version, to step: InstallationStep) {
+    func setInstallationStep(of version: Version, to step: XcodeInstallationStep) {
         DispatchQueue.main.async {
             guard let index = self.allXcodes.firstIndex(where: { $0.version.isEquivalent(to: version) }) else { return }
             self.allXcodes[index].installState = .installing(step)
             
             let xcode = self.allXcodes[index]
             Current.notificationManager.scheduleNotification(title: xcode.id.appleDescription, body: step.description, category: .normal)
+        }
+    }
+    
+    func setInstallationStep(of runtime: DownloadableRuntime, to step: RuntimeInstallationStep, postNotification: Bool = true) {
+        DispatchQueue.main.async {
+            guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
+            self.downloadableRuntimes[index].installState = .installing(step)
+            if postNotification {
+                Current.notificationManager.scheduleNotification(title: runtime.name, body: step.description, category: .normal)
+            }
         }
     }
 }

@@ -4,6 +4,8 @@ import CombineExpectations
 import Path
 import Version
 import XCTest
+import XcodesKit
+
 @testable import Xcodes
 
 class AppStateTests: XCTestCase {

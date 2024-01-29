@@ -3,7 +3,7 @@ import Foundation
 import Path
 import AppleAPI
 import KeychainAccess
-
+import XcodesKit
 /**
  Lightweight dependency injection using global mutable state :P
 
@@ -112,6 +112,84 @@ public struct Shell {
         return (progress, publisher)
     }
     
+    public var downloadWithAria2Async: (Path, URL, Path, [HTTPCookie]) -> AsyncThrowingStream<Progress, Error> = { aria2Path, url, destination, cookies in
+        return AsyncThrowingStream<Progress, Error> { continuation in
+ 
+            Task {
+                var progress = Progress()
+                progress.kind = .file
+                progress.fileOperationKind = .downloading
+                
+                let process = Process()
+                process.executableURL = aria2Path.url
+                process.arguments = [
+                    "--header=Cookie: \(cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; "))",
+                    "--max-connection-per-server=16",
+                    "--split=16",
+                    "--summary-interval=1",
+                    "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)", // if xcodes quits, stop aria2 process
+                    "--dir=\(destination.parent.string)",
+                    "--out=\(destination.basename())",
+                    "--human-readable=false", // sets the output to use bytes instead of formatting
+                    url.absoluteString,
+                ]
+                let stdOutPipe = Pipe()
+                process.standardOutput = stdOutPipe
+                let stdErrPipe = Pipe()
+                process.standardError = stdErrPipe
+                
+                let observer = NotificationCenter.default.addObserver(
+                    forName: .NSFileHandleDataAvailable,
+                    object: nil,
+                    queue: OperationQueue.main
+                ) { note in
+                    guard
+                        // This should always be the case for Notification.Name.NSFileHandleDataAvailable
+                        let handle = note.object as? FileHandle,
+                        handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
+                    else { return }
+                    
+                    defer { handle.waitForDataInBackgroundAndNotify() }
+                    
+                    let string = String(decoding: handle.availableData, as: UTF8.self)
+                    // TODO: fix warning. ObservingProgressView is currently tied to an updating progress
+                    progress.updateFromAria2(string: string)
+                    
+                    continuation.yield(progress)
+                }
+                
+                stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+                stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+                
+                continuation.onTermination = { @Sendable _ in
+                    process.terminate()
+                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                }
+                
+                do {
+                    try process.run()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+                
+                process.waitUntilExit()
+                
+                NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                
+                guard process.terminationReason == .exit, process.terminationStatus == 0 else {
+                    if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
+                        continuation.finish(throwing: aria2cError)
+                    } else {
+                        continuation.finish(throwing: ProcessExecutionError(process: process, standardOutput: "", standardError: ""))
+                    }
+                    return
+                }
+                continuation.finish()
+            }
+        }
+    }
+    
+    
     public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
         let unxipPath = Path(url: Bundle.main.url(forAuxiliaryExecutable: "unxip")!)!
         return Process.run(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
@@ -166,18 +244,24 @@ public struct Files {
     public var installedXcodes = _installedXcodes
     
     public func installedXcode(destination: Path) -> InstalledXcode? {
-        if Entry.isAppBundle(kind: destination.isDirectory ? .directory : .file, path: destination) && Entry.infoPlist(kind:  destination.isDirectory ? .directory : .file, path: destination)?.bundleID == "com.apple.dt.Xcode" {
+        if Path.isAppBundle(path: destination) && Path.infoPlist(path: destination)?.bundleID == "com.apple.dt.Xcode" {
             return InstalledXcode.init(path: destination)
         } else {
             return nil
         }
     }
+    
+    public var write: (Data, URL) throws -> Void = { try $0.write(to: $1) }
+
+    public func write(_ data: Data, to url: URL) throws {
+        try write(data, url)
+    }
 }
 
 private func _installedXcodes(destination: Path) -> [InstalledXcode] {
-    ((try? destination.ls()) ?? [])
+    destination.ls()
         .filter { $0.isAppBundle && $0.infoPlist?.bundleID == "com.apple.dt.Xcode" }
-        .map { $0.path }
+        .map { $0 }
         .compactMap(InstalledXcode.init)
 }
 
@@ -189,10 +273,15 @@ public struct Network {
             .mapError { $0 as Error }
             .eraseToAnyPublisher() 
     }
+   
     public func dataTask(with request: URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
         dataTask(request)
     }
-
+    
+    public func dataTaskAsync(with request: URLRequest) async throws -> (Data, URLResponse) {
+        return try await AppleAPI.Current.network.session.data(for: request)
+    }
+    
     public var downloadTask: (URL, URL, Data?) -> (Progress, AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) = { AppleAPI.Current.network.session.downloadTask(with: $0, to: $1, resumingWith: $2) }
 
     public func downloadTask(with url: URL, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, publisher: AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) {

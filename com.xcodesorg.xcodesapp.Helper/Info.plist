@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleIdentifier</key>
+	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleShortVersionString</key>
+	<string>$(MARKETING_VERSION)</string>
+	<key>CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT</key>
+	<string>$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)</string>
+	<key>SMAuthorizedClients</key>
+	<array>
+		<string>identifier &quot;com.xcodesorg.xcodesapp&quot; and info [CFBundleShortVersionString] &gt;= &quot;1.0.0&quot; and anchor apple generic and certificate leaf[subject.OU] = &quot;$(CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT)&quot;</string>
+	</array>
+</dict>
+</plist>

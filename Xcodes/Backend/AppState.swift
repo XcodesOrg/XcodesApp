@@ -7,9 +7,12 @@ import KeychainAccess
 import Path
 import Version
 import os.log
+import DockProgress
+import XcodesKit
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
+    internal let runtimeService = RuntimeService()
    
     // MARK: - Published Properties
     
@@ -45,6 +48,7 @@ class AppState: ObservableObject {
     @Published var isProcessingAuthRequest = false
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var presentedAlert: XcodesAlert?
+    @Published var presentedPreferenceAlert: XcodesPreferencesAlert?
     @Published var helperInstallState: HelperInstallState = .notInstalled
     /// Whether the user is being prepared for the helper installation alert with an explanation.
     /// This closure will be performed after the user chooses whether or not to proceed.
@@ -99,13 +103,33 @@ class AppState: ObservableObject {
             Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
         }
     }
+    
+    // MARK: - Runtimes
+    
+    @Published var downloadableRuntimes: [DownloadableRuntime] = []
+    @Published var installedRuntimes: [CoreSimulatorImage] = []
+
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
     private var installationPublishers: [Version: AnyCancellable] = [:]
+    internal var runtimePublishers: [String: Task<(), any Error>] = [:]
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
     private var autoInstallTimer: Timer?
+    
+    // MARK: - Dock Progress Tracking
+    
+    public static let totalProgressUnits = Int64(10)
+    public static let unxipProgressWeight = Int64(1)
+    var overallProgress = Progress()
+    var unxipProgress = {
+        let progress = Progress(totalUnitCount: totalProgressUnits)
+        progress.kind = .file
+        progress.fileOperationKind = .copying
+        return progress
+    }()
+    
     // MARK: - 
     
     var dataSource: DataSource {
@@ -136,6 +160,7 @@ class AppState: ObservableObject {
     init() {
         guard !isTesting else { return }
         try? loadCachedAvailableXcodes()
+        try? loadCacheDownloadableRuntimes()
         checkIfHelperIsInstalled()
         setupAutoInstallTimer()
         setupDefaults()
@@ -166,9 +191,21 @@ class AppState: ObservableObject {
     func validateADCSession(path: String) -> AnyPublisher<Void, Error> {
         return Current.network.dataTask(with: URLRequest.downloadADCAuth(path: path))
             .receive(on: DispatchQueue.main)
-            .tryMap { _ in
+            .tryMap { result -> Void in
+                let httpResponse = result.response as! HTTPURLResponse
+                if httpResponse.statusCode == 401 {
+                    throw AuthenticationError.notAuthorized
+                }
             }
             .eraseToAnyPublisher()
+    }
+    
+    func validateADCSession(path: String) async throws {
+        let result = try await Current.network.dataTaskAsync(with: URLRequest.downloadADCAuth(path: path))
+        let httpResponse = result.1 as! HTTPURLResponse
+        if httpResponse.statusCode == 401 {
+            throw AuthenticationError.notAuthorized
+        }
     }
     
     func validateSession() -> AnyPublisher<Void, Error> {
@@ -373,10 +410,7 @@ class AppState: ObservableObject {
         
         // Check to see if users MacOS is supported
         if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
-            let split = requiredMacOSVersion.components(separatedBy: ".").compactMap { Int($0) }
-            let xcodeMinimumMacOSVersion = OperatingSystemVersion(majorVersion: split[safe: 0] ?? 0, minorVersion: split[safe: 1] ?? 0, patchVersion: split[safe: 2] ?? 0)
-            
-            if !ProcessInfo.processInfo.isOperatingSystemAtLeast(xcodeMinimumMacOSVersion) {
+            if hasMinSupportedOS(requiredMacOSVersion: requiredMacOSVersion) {
                 // prompt
                 self.presentedAlert = .checkMinSupportedVersion(xcode: availableXcode, macOS: ProcessInfo.processInfo.operatingSystemVersion.versionString())
                 return
@@ -389,6 +423,13 @@ class AppState: ObservableObject {
         case .xcodeReleases:
             install(id: id)
         }
+    }
+    
+    func hasMinSupportedOS(requiredMacOSVersion: String) -> Bool {
+        let split = requiredMacOSVersion.components(separatedBy: ".").compactMap { Int($0) }
+        let xcodeMinimumMacOSVersion = OperatingSystemVersion(majorVersion: split[safe: 0] ?? 0, minorVersion: split[safe: 1] ?? 0, patchVersion: split[safe: 2] ?? 0)
+        
+        return !ProcessInfo.processInfo.isOperatingSystemAtLeast(xcodeMinimumMacOSVersion)
     }
     
     func install(id: Xcode.ID) {
@@ -489,6 +530,8 @@ class AppState: ObservableObject {
 
         // Cancel the publisher
         installationPublishers[id] = nil
+        
+        resetDockProgressTracking()
                 
         // If the download is cancelled by the user, clean up the download files that aria2 creates.
         // This isn't done as part of the publisher with handleEvents(receiveCancel:) because it shouldn't happen when e.g. the app quits.
@@ -525,10 +568,10 @@ class AppState: ObservableObject {
         )
     }
     
-    func reveal(xcode: Xcode) {
+    func reveal(_ path: Path?) {
         // TODO: show error if not
-        guard let installedXcodePath = xcode.installedPath else { return }
-        NSWorkspace.shared.activateFileViewerSelecting([installedXcodePath.url])
+        guard let path = path else { return }
+        NSWorkspace.shared.activateFileViewerSelecting([path.url])
     }
     
     func reveal(path: String) {
@@ -614,8 +657,8 @@ class AppState: ObservableObject {
         NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
     }
 
-    func copyReleaseNote(xcode: Xcode) {
-      guard let url = xcode.releaseNotesURL else { return }
+    func copyReleaseNote(from url: URL?) {
+      guard let url = url else { return }
       NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
       NSPasteboard.general.writeObjects([url as NSURL])
       NSPasteboard.general.setString(url.absoluteString, forType: .string)
@@ -782,6 +825,7 @@ class AppState: ObservableObject {
         
         self.allXcodes = newAllXcodes.sorted { $0.version > $1.version }
     }
+
     
     // MARK: - Private
     

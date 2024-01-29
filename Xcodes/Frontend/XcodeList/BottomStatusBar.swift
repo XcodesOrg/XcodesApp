@@ -11,6 +11,7 @@ import SwiftUI
 
 struct BottomStatusModifier: ViewModifier {
     @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     
     func body(content: Content) -> some View {
         VStack(spacing: 0) {
@@ -21,6 +22,14 @@ struct BottomStatusModifier: ViewModifier {
                     Text(appState.bottomStatusBarMessage)
                         .font(.subheadline)
                     Spacer()
+                    Button(action: {
+                        openURL(URL(string: "https://opencollective.com/xcodesapp")!)
+                    }) {
+                        HStack {
+                            Image(systemName: "heart.circle")
+                            Text("Support.Xcodes")
+                        }
+                    }
                     Text(Bundle.main.shortVersion!)
                         .font(.subheadline)
                 }

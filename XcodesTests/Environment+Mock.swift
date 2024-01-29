@@ -2,8 +2,8 @@ import Combine
 import Foundation
 @testable import Xcodes
 
-extension Environment {
-    static var mock = Environment(
+extension Xcodes.Environment {
+    static var mock = Xcodes.Environment(
         shell: .mock,
         files: .mock,
         network: .mock,

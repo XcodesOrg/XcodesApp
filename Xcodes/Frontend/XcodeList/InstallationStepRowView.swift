@@ -1,7 +1,8 @@
 import SwiftUI
+import XcodesKit
 
 struct InstallationStepRowView: View {
-    let installationStep: InstallationStep
+    let installationStep: XcodeInstallationStep
     let highlighted: Bool
     let cancel: () -> Void
     

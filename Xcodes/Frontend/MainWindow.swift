@@ -1,5 +1,8 @@
 import ErrorHandling
 import SwiftUI
+import XcodesKit
+import Path
+import Version
 
 struct MainWindow: View {
     @EnvironmentObject var appState: AppState
@@ -15,9 +18,9 @@ struct MainWindow: View {
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
   
     var body: some View {
-        HSplitView {
+        NavigationSplitViewWrapper {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
-                .frame(minWidth: 300)
+                .frame(minWidth: 250)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
                     Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
@@ -25,18 +28,47 @@ struct MainWindow: View {
                           primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(xcode: xcode) }),
                           secondaryButton: .cancel(Text("Cancel")))
                 }
-            
-            if isShowingInfoPane {
-                InfoPane(selectedXcodeID: selectedXcodeID)
-                    .frame(minWidth: 300, maxWidth: .infinity)
+                .searchable(text: $searchText, placement: .sidebar)
+                .mainToolbar(
+                    category: $category,
+                    isInstalledOnly: $isInstalledOnly,
+                    isShowingInfoPane: $isShowingInfoPane
+                )
+        } detail: {
+            Group {
+                if let xcode = xcode {
+                    InfoPane(xcode: xcode)
+                } else {
+                    UnselectedView()
+                }
+            }
+            .padding()
+            .toolbar {
+                ToolbarItemGroup {
+                    Button(action: { appState.presentedSheet = .signIn }, label: {
+                        Label("Login", systemImage: "person.circle")
+                    })
+                    .help("LoginDescription")
+                    if #available(macOS 14, *) {
+                        SettingsLink(label: {
+                            Label("Preferences", systemImage: "gearshape")
+                        })
+                        .help("PreferencesDescription")
+                    } else {
+                        Button(action: {
+                            if #available(macOS 13, *) {
+                                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+                            } else {
+                                NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
+                            }
+                        }, label: {
+                            Label("Preferences", systemImage: "gearshape")
+                        })
+                        .help("PreferencesDescription")
+                    }
+                }
             }
         }
-        .mainToolbar(
-            category: $category,
-            isInstalledOnly: $isInstalledOnly,
-            isShowingInfoPane: $isShowingInfoPane,
-            searchText: $searchText
-        )
         .bottomStatusBar()
         .padding([.top], 0)
         .navigationSubtitle(subtitleText)
@@ -59,7 +91,11 @@ struct MainWindow: View {
         // FB8954571 focusedValue(_:_:) on List row doesn't propagate value to @FocusedValue
         .focusedValue(\.selectedXcode, SelectedXcode(appState.allXcodes.first { $0.id == selectedXcodeID }))
     }
-    
+
+    private var xcode: Xcode? {
+        appState.allXcodes.first(where: { $0.id == selectedXcodeID })
+    }
+
     private var subtitleText: Text {
         if let lastUpdated = lastUpdated.map(Date.init(timeIntervalSince1970:)) {
             return Text("\(localizeString("UpdatedAt")) \(lastUpdated, style: .date) \(lastUpdated, style: .time)")
@@ -165,12 +201,36 @@ struct MainWindow: View {
                   ),
                   secondaryButton: .cancel(Text("Cancel"))
             )
+            
+        case let .cancelRuntimeInstall(runtime):
+            return Alert(
+                title: Text(String(format: localizeString("Alert.CancelInstall.Runtimes.Title"), runtime.name)),
+                  message: Text("Alert.CancelInstall.Message"),
+                  primaryButton: .destructive(
+                    Text("Alert.CancelInstall.PrimaryButton"),
+                    action: {
+                        self.appState.cancelRuntimeInstall(runtime: runtime)
+                    }
+                  ),
+                  secondaryButton: .cancel(Text("Cancel"))
+            )
         }
+        
     }
 }
 
 struct MainWindow_Previews: PreviewProvider {
     static var previews: some View {
-        MainWindow()
+        MainWindow().environmentObject({ () -> AppState in
+            let a = AppState()
+            a.allXcodes = [
+                Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [Version("12.0.0+1234A")!, Version("12.0.0-RC+1234A")!], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil),
+                Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, icon: nil),
+                Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, icon: nil),
+                Xcode(version: Version("12.0.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+            ]
+            return a
+        }())
     }
 }
