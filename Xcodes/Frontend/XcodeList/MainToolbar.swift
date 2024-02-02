@@ -5,32 +5,36 @@ struct MainToolbarModifier: ViewModifier {
     @Binding var category: XcodeListCategory
     @Binding var isInstalledOnly: Bool
     @Binding var isShowingInfoPane: Bool
-    
+    @SwiftUI.Environment(\.openWindow) private var openWindow
+
     func body(content: Content) -> some View {
         content
-            .toolbar { toolbar }
+            .toolbar { self.toolbar }
     }
 
     private var toolbar: some ToolbarContent {
         ToolbarItemGroup {
-            
             ProgressButton(
-                isInProgress: appState.isUpdating, 
-                action: appState.update
+                isInProgress: self.appState.isUpdating,
+                action: self.appState.update
             ) {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }
             .keyboardShortcut(KeyEquivalent("r"))
             .help("RefreshDescription")
             Spacer()
+
+            Button("Platforms", systemImage: "square.3.layers.3d") {
+                self.openWindow(id: "platforms")
+            }
             Button(action: {
-                switch category {
-                case .all: category = .release
-                case .release: category = .beta
-                case .beta: category = .all
+                switch self.category {
+                case .all: self.category = .release
+                case .release: self.category = .beta
+                case .beta: self.category = .all
                 }
             }) {
-                switch category {
+                switch self.category {
                 case .all:
                     Label("All", systemImage: "line.horizontal.3.decrease.circle")
                 case .release:
@@ -56,20 +60,18 @@ struct MainToolbarModifier: ViewModifier {
                 }
             }
             .help("FilterAvailableDescription")
-            
+
             Button(action: {
-                isInstalledOnly.toggle()
+                self.isInstalledOnly.toggle()
             }) {
-                if isInstalledOnly {
+                if self.isInstalledOnly {
                     Label("Filter", systemImage: "arrow.down.app.fill")
                         .foregroundColor(.accentColor)
                 } else {
                     Label("Filter", systemImage: "arrow.down.app")
-                        
                 }
             }
             .help("FilterInstalledDescription")
-            
         }
     }
 }

@@ -12,26 +12,27 @@ import SwiftUI
 struct BottomStatusModifier: ViewModifier {
     @EnvironmentObject var appState: AppState
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
-    
+
     func body(content: Content) -> some View {
         VStack(spacing: 0) {
             content
             VStack(spacing: 0) {
                 Divider()
                 HStack {
-                    Text(appState.bottomStatusBarMessage)
+                    Text(self.appState.bottomStatusBarMessage)
                         .font(.subheadline)
                     Spacer()
-                    Button(action: {
-                        openURL(URL(string: "https://opencollective.com/xcodesapp")!)
-                    }) {
-                        HStack {
-                            Image(systemName: "heart.circle")
-                            Text("Support.Xcodes")
-                        }
-                    }
+
                     Text(Bundle.main.shortVersion!)
                         .font(.subheadline)
+
+                    Divider()
+                        .opacity(0.25)
+                    Button("Support.Xcodes", systemImage: "heart.fill") {
+                        self.openURL(URL(string: "https://opencollective.com/xcodesapp")!)
+                    }
+                    .foregroundStyle(.pink)
+                    .buttonStyle(.plain)
                 }
                 .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
                 .padding([.leading, .trailing], 10)
@@ -51,8 +52,7 @@ extension View {
 
 struct Previews_BottomStatusBar_Previews: PreviewProvider {
     static var previews: some View {
-        HStack {
-        
-        }.bottomStatusBar()
+        HStack {}.bottomStatusBar()
+            .environmentObject(AppState())
     }
 }

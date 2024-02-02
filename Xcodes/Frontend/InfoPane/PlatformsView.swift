@@ -15,7 +15,6 @@ struct PlatformsView: View {
     let xcode: Xcode
  
     var body: some View {
-        
         let builds = xcode.sdks?.allBuilds()
         let runtimes = builds?.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
@@ -49,7 +48,7 @@ struct PlatformsView: View {
                 EmptyView()
             case .notInstalled:
                 // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
-                if let path = appState.runtimeInstallPath(xcode: xcode, runtime: runtime) {
+                if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
                     EmptyView()
                 } else {
                     HStack {
@@ -59,13 +58,12 @@ struct PlatformsView: View {
                 }
                 
             case .installing(let installationStep):
-                HStack(alignment: .top, spacing: 5){
+                HStack(alignment: .top, spacing: 5) {
                     RuntimeInstallationStepDetailView(installationStep: installationStep)
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
                     CancelRuntimeInstallButton(runtime: runtime)
                 }
-                
             }
         }
     }

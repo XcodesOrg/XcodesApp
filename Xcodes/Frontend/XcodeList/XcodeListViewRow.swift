@@ -39,7 +39,7 @@ struct XcodeListViewRow: View {
             Spacer()
 
             selectControl(for: xcode)
-                .padding(.trailing, 16)
+                .padding(.trailing, 12)
             installControl(for: xcode)
         }
         .contextMenu {
@@ -75,9 +75,12 @@ struct XcodeListViewRow: View {
         if let icon = xcode.icon {
             Image(nsImage: icon)
         } else {
-            Color.clear
+            Image(.xcode)
+                .resizable()
+                .scaledToFit()
+                .saturation(0)
                 .frame(width: 32, height: 32)
-                .foregroundColor(.secondary)
+                .opacity(0.5)
         }
     }
 
@@ -125,7 +128,7 @@ struct XcodeListViewRow: View {
 
 struct XcodeListViewRow_Previews: PreviewProvider {
     static var previews: some View {
-        Group {
+        VStack {
             XcodeListViewRow(
                 xcode: Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil),
                 selected: false,
@@ -162,5 +165,6 @@ struct XcodeListViewRow_Previews: PreviewProvider {
                 appState: AppState()
             )
         }
+        .padding(.vertical)
     }
 }

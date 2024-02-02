@@ -1,10 +1,10 @@
 import AppKit
-import XcodesKit
 import Path
 import SwiftUI
 import Version
 import struct XCModel.Compilers
 import struct XCModel.SDKs
+import XcodesKit
 
 struct InfoPane: View {
     let xcode: Xcode
@@ -15,7 +15,7 @@ struct InfoPane: View {
                     VStack(spacing: 5) {
                         HStack {
                             IconView(installState: xcode.installState)
-                            
+
                             Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                                 .font(.title)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -23,8 +23,7 @@ struct InfoPane: View {
                         InfoPaneControls(xcode: xcode)
                     }
                     .xcodesBackground()
-               
-                
+
                     VStack {
                         Text("Platforms")
                             .font(.title3)
@@ -33,7 +32,7 @@ struct InfoPane: View {
                     }
                     .xcodesBackground()
                 }
-                
+
                 VStack(alignment: .leading) {
                     ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
                     CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
@@ -41,11 +40,11 @@ struct InfoPane: View {
                     SDKandCompilers
                 }
                 .frame(width: 200)
-                
             }
+            .padding()
         }
     }
-    
+
     @ViewBuilder
     var SDKandCompilers: some View {
         VStack(alignment: .leading, spacing: 16) {
@@ -66,13 +65,13 @@ struct InfoPane: View {
 #Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
 
 private func makePreviewContent(for index: Int) -> some View {
-  let name = XcodePreviewName.allCases[index]
+    let name = XcodePreviewName.allCases[index]
     return InfoPane(xcode: xcodeDict[name]!)
         .environmentObject(configure(AppState()) {
-          $0.allXcodes = [xcodeDict[name]!]
+            $0.allXcodes = [xcodeDict[name]!]
         })
-        .frame(width: 300, height: 400)
-            .padding()
+        .frame(width: 500, height: 400)
+        .padding()
 }
 
 enum XcodePreviewName: String, CaseIterable, Identifiable {
@@ -150,12 +149,12 @@ var downloadableRuntimes: [DownloadableRuntime] = {
     var iOSRuntime = runtimes[iOSIndex]
     iOSRuntime.installState = .installed
     runtimes[iOSIndex] = iOSRuntime
-    
+
     let watchOSIndex = runtimes.firstIndex { $0.sdkBuildUpdate == "20R362" }!
     var runtime = runtimes[watchOSIndex]
     runtime.installState = .installing(
         RuntimeInstallationStep.downloading(
-            progress:configure(Progress()) {
+            progress: configure(Progress()) {
                 $0.kind = .file
                 $0.fileOperationKind = .downloading
                 $0.estimatedTimeRemaining = 123
@@ -163,18 +162,15 @@ var downloadableRuntimes: [DownloadableRuntime] = {
                 $0.completedUnitCount = 848_444_920
                 $0.throughput = 9_211_681
             }
-            )
+        )
     )
     runtimes[watchOSIndex] = runtime
-    
+
     return runtimes
 }()
 
-var installedRuntimes: [CoreSimulatorImage] = {
-    [CoreSimulatorImage(uuid: "85B22F5B-048B-4331-B6E2-F4196D8B7475", path: ["relative" : "file:///Library/Developer/CoreSimulator/Images/85B22F5B-048B-4331-B6E2-F4196D8B7475.dmg"], runtimeInfo: CoreSimulatorRuntimeInfo(build: "19E240")),
-     CoreSimulatorImage(uuid: "85B22F5B-048B-4331-B6E2-F4196D8B7473", path: ["relative" : "file:///Library/Developer/CoreSimulator/Images/85B22F5B-048B-4331-B6E2-F4196D8B7475.dmg"], runtimeInfo: CoreSimulatorRuntimeInfo(build: "21N5233f"))]
-}()
-
+var installedRuntimes: [CoreSimulatorImage] = [CoreSimulatorImage(uuid: "85B22F5B-048B-4331-B6E2-F4196D8B7475", path: ["relative": "file:///Library/Developer/CoreSimulator/Images/85B22F5B-048B-4331-B6E2-F4196D8B7475.dmg"], runtimeInfo: CoreSimulatorRuntimeInfo(build: "19E240")),
+                                               CoreSimulatorImage(uuid: "85B22F5B-048B-4331-B6E2-F4196D8B7473", path: ["relative": "file:///Library/Developer/CoreSimulator/Images/85B22F5B-048B-4331-B6E2-F4196D8B7475.dmg"], runtimeInfo: CoreSimulatorRuntimeInfo(build: "21N5233f"))]
 
 private let _versionNoMeta = Version(major: 12, minor: 3, patch: 0)
 private let _versionWithMeta = Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"])

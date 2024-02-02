@@ -1,8 +1,8 @@
 import ErrorHandling
-import SwiftUI
-import XcodesKit
 import Path
+import SwiftUI
 import Version
+import XcodesKit
 
 struct MainWindow: View {
     @EnvironmentObject var appState: AppState
@@ -16,11 +16,11 @@ struct MainWindow: View {
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
-  
+
     var body: some View {
         NavigationSplitViewWrapper {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
-                .frame(minWidth: 250)
+                .frame(minWidth: 300)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
                     Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
@@ -28,7 +28,7 @@ struct MainWindow: View {
                           primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(xcode: xcode) }),
                           secondaryButton: .cancel(Text("Cancel")))
                 }
-                .searchable(text: $searchText, placement: .sidebar)
+                .searchable(text: $searchText, placement: .toolbar, prompt: Text("Search.Xcode.Version"))
                 .mainToolbar(
                     category: $category,
                     isInstalledOnly: $isInstalledOnly,
@@ -42,7 +42,6 @@ struct MainWindow: View {
                     UnselectedView()
                 }
             }
-            .padding()
             .toolbar {
                 ToolbarItemGroup {
                     Button(action: { appState.presentedSheet = .signIn }, label: {
@@ -79,7 +78,7 @@ struct MainWindow: View {
             case .signIn:
                 signInView()
                     .environmentObject(appState)
-            case .twoFactor(let secondFactorData):
+            case let .twoFactor(secondFactorData):
                 secondFactorView(secondFactorData)
                     .environmentObject(appState)
             }
@@ -103,13 +102,13 @@ struct MainWindow: View {
             return Text("")
         }
     }
-    
+
     @ViewBuilder
     private func secondFactorView(_ secondFactorData: XcodesSheet.SecondFactorData) -> some View {
         switch secondFactorData.option {
         case .codeSent:
             SignIn2FAView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
-        case .smsSent(let trustedPhoneNumber):
+        case let .smsSent(trustedPhoneNumber):
             SignInSMSView(isPresented: $appState.presentedSheet.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsPendingChoice:
             SignInPhoneListView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
@@ -140,14 +139,14 @@ struct MainWindow: View {
         case let .cancelInstall(xcode):
             return Alert(
                 title: Text(String(format: localizeString("Alert.CancelInstall.Title"), xcode.description)),
-                  message: Text("Alert.CancelInstall.Message"),
-                  primaryButton: .destructive(
+                message: Text("Alert.CancelInstall.Message"),
+                primaryButton: .destructive(
                     Text("Alert.CancelInstall.PrimaryButton"),
                     action: {
                         self.appState.cancelInstall(id: xcode.id)
                     }
-                  ),
-                  secondaryButton: .cancel(Text("Cancel"))
+                ),
+                secondaryButton: .cancel(Text("Cancel"))
             )
         case .privilegedHelper:
             return Alert(
@@ -193,29 +192,28 @@ struct MainWindow: View {
             return Alert(
                 title: Text("Alert.MinSupported.Title"),
                 message: Text(String(format: localizeString("Alert.MinSupported.Message"), xcode.version.descriptionWithoutBuildMetadata, xcode.requiredMacOSVersion ?? "", deviceVersion)),
-                  primaryButton: .default(
+                primaryButton: .default(
                     Text("Install"),
                     action: {
                         self.appState.install(id: xcode.version)
                     }
-                  ),
-                  secondaryButton: .cancel(Text("Cancel"))
+                ),
+                secondaryButton: .cancel(Text("Cancel"))
             )
-            
+
         case let .cancelRuntimeInstall(runtime):
             return Alert(
                 title: Text(String(format: localizeString("Alert.CancelInstall.Runtimes.Title"), runtime.name)),
-                  message: Text("Alert.CancelInstall.Message"),
-                  primaryButton: .destructive(
+                message: Text("Alert.CancelInstall.Message"),
+                primaryButton: .destructive(
                     Text("Alert.CancelInstall.PrimaryButton"),
                     action: {
                         self.appState.cancelRuntimeInstall(runtime: runtime)
                     }
-                  ),
-                  secondaryButton: .cancel(Text("Cancel"))
+                ),
+                secondaryButton: .cancel(Text("Cancel"))
             )
         }
-        
     }
 }
 

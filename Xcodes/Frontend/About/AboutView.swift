@@ -13,7 +13,12 @@ struct AboutView: View {
                     .font(.largeTitle)
                 
                 Text(String(format: localizeString("VersionWithBuild"), Bundle.main.shortVersion!, Bundle.main.version!))
+                    .foregroundStyle(.secondary)
+                    .font(.subheadline)
                 
+                Divider()
+                    .frame(width: 300, height: 0)
+                    .opacity(0.125)
                 HStack(spacing: 32) {
                     Button(action: {
                         openURL(URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!)
@@ -27,36 +32,36 @@ struct AboutView: View {
                     }
                     .buttonStyle(LinkButtonStyle())
                 }
-                Color.clear
+                
+                Divider()
                     .frame(width: 300, height: 0)
+                    .opacity(0.5)
+                
                 Label("UnxipExperiment", systemImage: "lightbulb")
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
                 HStack(spacing: 32) {
-                    Button(action: {
-                        openURL(URL(string: "https://github.com/saagarjha/unxip/")!)
-                    }) {
+                    Link(destination: URL(
+                        string: "https://github.com/saagarjha/unxip/"
+                    )!,
+                    label: {
                         Label("GithubRepo", systemImage: "link")
-                    }
-                    .buttonStyle(LinkButtonStyle())
+                    })
                     
-                    Button(action: {
-                        openURL(URL(string: "https://github.com/saagarjha/unxip/blob/main/LICENSE")!)
-                    }) {
+                    Link(destination: URL(
+                        string: "https://github.com/saagarjha/unxip/blob/main/LICENSE"
+                    )!,
+                    label: {
                         Label("License", systemImage: "link")
-                    }
-                    .buttonStyle(LinkButtonStyle())
+                    })
+                    .buttonStyle(.link)
                 }
-                HStack {
-                    Text(Bundle.main.humanReadableCopyright!)
-                        .font(.footnote)
-                    Button(action: {
-                        openURL(URL(string: "https://opencollective.com/xcodesapp")!)
-                    }) {
-                        HStack {
-                            Image(systemName: "heart.circle")
-                            Text("Support.Xcodes")
-                        }
-                    }
-                }
+                
+                Divider()
+                    .frame(width: 300, height: 0)
+                Text(Bundle.main.humanReadableCopyright!)
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
             }
         }
         .padding()
