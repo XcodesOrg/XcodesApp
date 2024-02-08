@@ -13,7 +13,9 @@ struct SignInCredentialsView: View {
             HStack {
                 Text("AppleID")
                     .frame(minWidth: 100, alignment: .trailing)
-                TextField("example@icloud.com".hideInLocalizations, text: $username)
+                TextField(text: $username) {
+                    Text(verbatim: "example@icloud.com")
+                }
             }
             HStack {
                 Text("Password")

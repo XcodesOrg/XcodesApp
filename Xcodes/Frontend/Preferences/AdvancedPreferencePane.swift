@@ -80,12 +80,14 @@ struct AdvancedPreferencePane: View {
             
             GroupBox(label: Text("Active/Select")) {
                 VStack(alignment: .leading) {
-                    Picker("OnSelect".hideInLocalizations, selection: $appState.onSelectActionType) {
+                    Picker(selection: $appState.onSelectActionType) {
                         
                         Text(SelectedActionType.none.description)
                             .tag(SelectedActionType.none)
                         Text(SelectedActionType.rename.description)
                             .tag(SelectedActionType.rename)
+                    } label: {
+                        Text(verbatim: "OnSelect")
                     }
                     .labelsHidden()
                     .pickerStyle(.inline)

@@ -3073,6 +3073,12 @@
             "state" : "translated",
             "value" : "Apple Silikon"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
         }
       }
     },
