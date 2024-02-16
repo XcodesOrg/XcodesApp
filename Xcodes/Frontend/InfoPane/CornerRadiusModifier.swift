@@ -29,7 +29,7 @@ extension View {
 struct Previews_CornerRadius_Previews: PreviewProvider {
     static var previews: some View {
         HStack {
-        Text("XCODES RULES!")
+            Text(verbatim: "XCODES RULES!")
         }.xcodesBackground()
     }
 }
