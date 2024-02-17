@@ -16,7 +16,9 @@ struct CompilersView: View {
         if let compilers = compilers {
             VStack(alignment: .leading) {
                 Text("Compilers").font(.headline)
-                Text(Self.content(from: compilers)).font(.subheadline)
+                Text(Self.content(from: compilers))
+                    .font(.subheadline)
+                    .textSelection(.enabled)
             }
         } else {
             EmptyView()
