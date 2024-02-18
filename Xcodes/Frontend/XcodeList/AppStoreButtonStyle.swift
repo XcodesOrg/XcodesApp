@@ -97,33 +97,45 @@ struct AppStoreButtonStyle_Previews: PreviewProvider {
         Group {
             ForEach([ColorScheme.light, .dark], id: \.self) { colorScheme in
                 Group {
-                    Button("OPEN", action: {})
+                    Button{ } label: {
+                        Text(verbatim: "OPEN")
+                    }
                         .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: false))
                         .padding()
                         .background(Color(.textBackgroundColor))
                         .previewDisplayName("Primary")
-                    Button("OPEN", action: {})
+                    Button{ } label: {
+                        Text(verbatim: "OPEN")
+                    }
                         .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: true))
                         .padding()
                         .background(Color(.controlAccentColor))
                         .previewDisplayName("Primary, Highlighted")
-                    Button("OPEN", action: {})
+                    Button{ } label: {
+                        Text(verbatim: "OPEN")
+                    }
                         .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: false))
                         .padding()
                         .disabled(true)
                         .background(Color(.textBackgroundColor))
                         .previewDisplayName("Primary, Disabled")
-                    Button("INSTALL", action: {})
+                    Button{ } label: {
+                        Text(verbatim: "INSTALL")
+                    }
                         .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
                         .padding()
                         .background(Color(.textBackgroundColor))
                         .previewDisplayName("Secondary")
-                    Button("INSTALL", action: {})
+                    Button{ } label: {
+                        Text(verbatim: "INSTALL")
+                    }
                         .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: true))
                         .padding()
                         .background(Color(.controlAccentColor))
                         .previewDisplayName("Secondary, Highlighted")
-                    Button("INSTALL", action: {})
+                    Button{ } label: {
+                        Text(verbatim: "INSTALL")
+                    }
                         .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
                         .padding()
                         .disabled(true)
