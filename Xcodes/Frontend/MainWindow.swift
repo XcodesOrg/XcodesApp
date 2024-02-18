@@ -16,11 +16,11 @@ struct MainWindow: View {
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
-  
+
     var body: some View {
         NavigationSplitViewWrapper {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
-                .frame(minWidth: 250)
+                .frame(minWidth: 260)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
                     Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),

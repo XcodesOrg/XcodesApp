@@ -14716,6 +14716,16 @@
         }
       }
     },
+    "PlatformsDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed platforms"
+          }
+        }
+      }
+    },
     "PlatformsList.Title" : {
       "extractionState" : "manual",
       "localizations" : {
