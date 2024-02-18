@@ -26,7 +26,7 @@ struct NavigationSplitViewWrapper<Sidebar, Detail>: View where Sidebar: View, De
                 
                 if #available(macOS 14, *) {
                     sidebar
-                        .navigationSplitViewColumnWidth(min: 250, ideal: 300)
+                        .navigationSplitViewColumnWidth(min: 300, ideal: 300)
                 } else {
                     sidebar
                 }
@@ -39,7 +39,7 @@ struct NavigationSplitViewWrapper<Sidebar, Detail>: View where Sidebar: View, De
             NavigationView {
                 // The first column is the sidebar.
                 sidebar
-                    .frame(minWidth: 250)
+                    .frame(minWidth: 300)
                 detail
             }
             .navigationViewStyle(.columns)
