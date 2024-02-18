@@ -9,6 +9,12 @@
             "value" : ""
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23,6 +29,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
           }
         },
         "zh-Hant" : {
@@ -47,26 +59,16 @@
             "value" : "%1$@ %2$@ %3$@"
           }
         },
-        "zh-Hant" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$@ %2$@ %3$@"
-          }
-        }
-      }
-    },
-    "• %@" : {
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "• %@"
+            "value" : ""
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "• %@"
+            "value" : "%1$@ %2$@ %3$@"
           }
         }
       }
@@ -178,7 +180,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ 通知已停用 ⚠️\n\n如果你想要啟用通知，請打開你的通知設定並選擇 Xcodes。"
+            "value" : "⚠️ 權限不足⚠️\n\n如果你想要啟用通知，請打開系統的通知設定並選擇 Xcodes。"
           }
         }
       }
@@ -291,7 +293,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通知已啟用。你將會開始收到來自 Xcodes 的通知。"
+            "value" : "已核准權限。你可以收到來自 Xcodes 的通知。"
           }
         }
       }
@@ -1080,6 +1082,12 @@
             "value" : "Xcode %@ sürümünü yüklemeyi durdurmak istediğine emin misin?"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你确定要停止安装Xcode %@吗？"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1217,6 +1225,12 @@
             "value" : "Supprimer"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "删除"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1238,6 +1252,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Êtes-vous sûr de vouloir supprimer %@ ?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你确定要删除%@吗？"
           }
         },
         "zh-Hant" : {
@@ -1804,7 +1824,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "无法执行安装前置步骤"
+            "value" : "无法执行安装后准备步骤"
           }
         },
         "zh-Hant" : {
@@ -2029,13 +2049,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes使用一个独立的提权帮助程序来以root身份执行任务。就是那些需要在命令行中用sudo执行的命令。包括安装前置步骤以及用xcode-select切换Xcode版本。\n\n您需要提供当前用户的密码来安装它。"
+            "value" : "Xcodes使用一个独立的提权帮助程序来以root身份执行任务。就是那些需要在命令行中用sudo执行的命令。包括安装后准备步骤以及用xcode-select切换Xcode版本。\n\n您需要提供当前用户的密码来安装它。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes 使用一個分開的權限輔助程式以使用 root 身份執行特定工作。這些工作包含了通常需要在命令列使用 sudo 的指令，包含安裝後步驟以及使用 xcode-select 選擇 Xcode 版本。\n\n安裝時，你將會被詢問你的 macOS 帳號密碼。"
+            "value" : "Xcodes 會利用一個分開的具有權限的輔助程式以 root 身份執行特定工作，例如那些在命令列中通常需使用 sudo 的命令，包含安裝程序後的步驟以及使用 xcode-select 選擇 Xcode 版本。\n\n安裝此程式時，你將會需要輸入 macOS 帳號的密碼。"
           }
         }
       }
@@ -2148,7 +2168,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "權限輔助程式"
+            "value" : "具有權限的輔助程式"
           }
         }
       }
@@ -3114,6 +3134,12 @@
             "value" : "Apple Silikon"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3453,7 +3479,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自動建立連接到 Xcode.app 的符號連結"
+            "value" : "自動建立連結至 Xcode.app 的符號連結"
           }
         }
       }
@@ -3565,7 +3591,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "選擇或啟用一個 Xcode 版本時，自動建立一個名為 Xcode.app 的符號連結到該版本的安裝目錄"
+            "value" : "選擇或啟用一個 Xcode 版本時，會自動建立一個名為 Xcode.app 的符號連結，並指向該版本的安裝目錄"
           }
         }
       }
@@ -5512,7 +5538,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple 資料來源是擷取 Apple 開發者網站而來，永遠會顯示最新的可用版本，但比較容易出錯。\n\nXcode Releases 是一個非官方的 Xcodes 發行版本列表。這個來源提供格式良好的資料，包含了 Apple 開發者網站上未列出的額外資訊並且即使 Apple 決定重新設計他們的開發者網站也比較不容易出錯。"
+            "value" : "「Apple 資料來源」會爬取 Apple 開發者網站。此資料來源較容易出錯，且只會顯示最新的可用版本。\n\n「Xcode Releases」是一個非官方的 Xcode 發行版本清單。此資料來源提供彙整好的資料，包含了 Apple 開發者網站上未列出的額外資訊，且不容易因 Apple 網站設計變更而出錯。"
           }
         }
       }
@@ -5845,7 +5871,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 相較 URLSession 可以同時使用最多 16 條連線以 3 ~ 5 倍的速度下載 Xcode。Xcodes 包含了執行檔與其原始碼以遵循他的 GPLv2 授權合約。\n\nURLSession 是系統內建用來發送 URL 連線請求的 Apple API。"
+            "value" : "aria2 可利用多達 16 條連線來下載 Xcode，相較使用 URLSession 快達 3~5 倍。Xcodes 的套件內容中包含了 aria2 執行檔及其原始碼，以遵循其使用的 GPLv2 授權條款。\n\nURLSession 是系統內建用於發起 URL 連線請求的 Apple API。"
           }
         }
       }
@@ -6631,26 +6657,16 @@
             "value" : "Erreur"
           }
         },
-        "zh-Hant" : {
+        "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "錯誤"
-          }
-        }
-      }
-    },
-    "example@icloud.com" : {
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "ornek@icloud.com"
+            "value" : "错误"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "example@icloud.com"
+            "value" : "錯誤"
           }
         }
       }
@@ -6757,7 +6773,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "實驗"
+            "value" : "實驗性功能"
           }
         }
       }
@@ -7425,7 +7441,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "收尾中"
+            "value" : "即將完成"
           }
         }
       }
@@ -7757,7 +7773,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無法與權限輔助程式溝通。"
+            "value" : "無法與具有權限的輔助程式通訊。"
           }
         }
       }
@@ -7869,7 +7885,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "輔助程式已安裝"
+            "value" : "已安裝輔助程式"
           }
         }
       }
@@ -7981,29 +7997,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "輔助程式尚未安裝"
-          }
-        }
-      }
-    },
-    "Hidden" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Masqué"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gizli"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "隱藏"
+            "value" : "尚未安裝輔助程式"
           }
         }
       }
@@ -8345,232 +8339,6 @@
         }
       }
     },
-    "Info" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Informació"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Tietoja"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Informations"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "जानकारी"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "情報"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "정보"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Informacje"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Informação"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Информация"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bilgi"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "信息"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "資訊"
-          }
-        }
-      }
-    },
-    "InfoDescription" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar o ocultar el panell d'informació"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Info-Panel anzeigen oder verbergen"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Show or hide the info pane"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar u ocultar el panel de información"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Näytä tai piilota tietoruutu"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Afficher ou masquer le volet d'informations"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "जानकारी फलक दिखाएँ या छिपाएँ"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostra o nascondi pannello informazioni"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "情報パネルの切り替え"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "정보창 표시 또는 숨기기"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Show or hide the info pane"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Pokaż lub ukryj okno informacji"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Mostrar ou esconder o painel de informações"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Показать или скрыть информационную панель"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Bilgi panelini göster ya da gizle"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Показати або сховати панель інформації"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "显示或隐藏信息面板"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "顯示或隱藏資訊面板"
-          }
-        }
-      }
-    },
     "Install" : {
       "comment" : "Common",
       "localizations" : {
@@ -8674,28 +8442,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "安装"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "安裝"
-          }
-        }
-      }
-    },
-    "INSTALL" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "INSTALLER"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "YÜKLE"
           }
         },
         "zh-Hant" : {
@@ -9832,7 +9578,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壓縮檔「%@」由於缺乏足夠的磁碟空間，無法解壓縮。\n\n請清空更多磁碟空間以確保可以解壓縮該檔案，然後再重新安裝 Xcode %@ 一次。安裝步驟將會從上次停住的地方繼續。"
+            "value" : "由於磁碟空間不足，無法將壓縮檔「%@」解壓縮。\n\n請騰出更多磁碟空間以完成解壓縮，並重新安裝 Xcode %@。安裝步驟將會從上次停住的地方繼續。"
           }
         }
       }
@@ -9939,13 +9685,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安装已完成，但一些前置步骤没有被自动执行。它们将会在您第一次运行Xcode %@时执行。"
+            "value" : "安装已完成，但一些安装后准备步骤没有被自动执行。它们将会在您第一次运行Xcode %@时执行。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安裝已經完成，但有些安裝後步驟沒有自動執行。這些步驟在你第一次啟動 Xcode %@ 的時候會自動執行。"
+            "value" : "已完成安裝，但有些安裝後步驟未完成。這些步驟在首次啟動 Xcode %@ 時會自動執行。"
           }
         }
       }
@@ -10052,13 +9798,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安装已完成，但一些前置步骤没有被自动执行。Xcodes使用一个提权帮助程序来执行这些步骤，但帮助程序似乎没有被安装。您可以从 偏好设置 > 高级 中安装。\n\n这些步骤将会在您第一次运行Xcode %@时执行。"
+            "value" : "安装已完成，但一些安装后准备步骤没有被自动执行。Xcodes使用一个提权帮助程序来执行这些步骤，但帮助程序似乎没有被安装。您可以从 偏好设置 > 高级 中安装。\n\n这些步骤将会在您第一次运行Xcode %@时执行。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安裝已經完成，但有些安裝後步驟沒有自動執行。 Xcodes 需要權限輔助程式來執行這些步驟，但該程式尚未被安裝。你可以在 偏好設定 > 進階中安裝它。\n\n這些步驟在你第一次啟動 Xcode %@ 的時候會自動執行。"
+            "value" : "已完成安裝，但有些安裝後步驟未自動執行。Xcodes 需要具有權限的輔助程式來執行這些步驟，但該程式尚未被安裝。你可以在 偏好設定 > 進階中安裝它。\n\n這些步驟在首次啟動 Xcode %@ 時會自動執行。"
           }
         }
       }
@@ -10284,7 +10030,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下載的 Xcode 含有未預期的簽章。\n簽章人：\n%@\n%@\n預期的簽章人：\n%@\n%@"
+            "value" : "下載的 Xcode 含有未預期的簽章。\n簽章者：\n%@\n%@\n預期的簽章者：\n%@\n%@"
           }
         }
       }
@@ -13117,28 +12863,6 @@
         }
       }
     },
-    "Not Hidden" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Visible"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Gizli Değil"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "未隱藏"
-          }
-        }
-      }
-    },
     "Notification.FinishedInstalling" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -13361,7 +13085,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "有新的版本可用"
+            "value" : "新版本已可供使用"
           }
         }
       }
@@ -13474,7 +13198,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新的 Xcode 版本已經可以下載了"
+            "value" : "新的 Xcode 版本已可供下載。"
           }
         }
       }
@@ -13919,7 +13643,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你的帳號沒有任何已信任的手機號碼，但兩階段認證需要信任的手機號碼。\n\n請參閱 https://support.apple.com/HT204915."
+            "value" : "你的帳號沒有任何已信任的手機號碼，但兩階段認證需要信任的手機號碼。\n\n請參閱 https://support.apple.com/HT204915。"
           }
         }
       }
@@ -14132,22 +13856,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "好"
-          }
-        }
-      }
-    },
-    "OnSelect" : {
-      "localizations" : {
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OnSelect"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OnSelect"
           }
         }
       }
@@ -14566,28 +14274,6 @@
         }
       }
     },
-    "OPEN" : {
-      "localizations" : {
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "OUVRIR"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "AÇ"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "打開"
-          }
-        }
-      }
-    },
     "Open In Rosetta" : {
       "localizations" : {
         "fr" : {
@@ -14600,6 +14286,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rosetta ile Aç"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "在Rosetta中打开"
           }
         },
         "zh-Hant" : {
@@ -14848,6 +14540,12 @@
             "value" : "Yükleme sonrası adımları uygula"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "执行安装后准备步骤"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14862,6 +14560,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Platformlar"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平台"
           }
         },
         "zh-Hant" : {
@@ -14885,6 +14589,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ci-dessous une liste des plateformes installées sur cette machine."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下面是在这台设备上已经安装的平台列表。"
           }
         },
         "zh-Hant" : {
@@ -15220,7 +14930,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "權限輔助程式"
+            "value" : "具有權限的輔助程式"
           }
         }
       }
@@ -15326,13 +15036,13 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes使用一个独立的提权帮助程序来以root身份执行任务。就是那些需要在命令行中用sudo执行的命令。包括一些安装前置步骤以及用xcode-select切换Xcode版本。\n\n您需要提供当前用户的密码来安装它。"
+            "value" : "Xcodes使用一个独立的提权帮助程序来以root身份执行任务。就是那些需要在命令行中用sudo执行的命令。包括一些安装后准备步骤以及用xcode-select切换Xcode版本。\n\n您需要提供当前用户的密码来安装它。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes 使用一個分開的權限輔助程式以使用 root 身份執行特定工作。這些工作包含了通常需要在命令列使用 sudo 的指令，包含安裝後步驟以及使用 xcode-select 選擇 Xcode 版本。\n\n安裝時，你將會被詢問你的 macOS 帳號密碼。"
+            "value" : "Xcodes 會利用一個分開的具有權限的輔助程式以 root 身份執行特定工作，例如那些在命令列中通常需使用 sudo 的命令，包含安裝程序後的步驟以及使用 xcode-select 選擇 Xcode 版本。\n\n安裝此程式時，你將會需要輸入 macOS 帳號的密碼。"
           }
         }
       }
@@ -15438,7 +15148,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "更新"
+            "value" : "重新整理"
           }
         }
       }
@@ -15776,119 +15486,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "發行日期"
-          }
-        }
-      }
-    },
-    "ReleaseNotes" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notes de la versió"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Release-Notes"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Release Notes"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notas del lanzamiento"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Julkaisutiedot"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notes de Mise à Jour"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "रिलीज नोट्स"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Note di Rilascio"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "リリースノート"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "릴리즈 노트"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Release Notes"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notatki wydania"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Notas de lançamento"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Примечания к выпуску"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Yayınlanma Notları"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Деталі релізу"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "更新说明"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "版本附註"
           }
         }
       }
@@ -16437,232 +16034,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SDK 清單"
-          }
-        }
-      }
-    },
-    "Search" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cercar..."
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suchen ..."
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Search..."
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Buscar..."
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Etsi..."
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Rechercher..."
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "खोज..."
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Cerca..."
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "検索…"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "검색하기..."
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zoeken..."
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Szukaj..."
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Procurar..."
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Поиск..."
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Ara..."
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Пошук..."
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "搜索…"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "搜尋⋯"
-          }
-        }
-      }
-    },
-    "SearchDescription" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Llistat de cerca"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Suchliste"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Search list"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lista de búsqueda"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Hakulista"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Liste de recherche"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "खोज सूची"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lista Ricerca"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "一覧の検索"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "목록 검색하기"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Zoek lijst"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Przeszukaj listę"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Lista de procura"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Поиск по списку"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Arama listesi"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Список знайденого"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "搜索列表"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "搜尋列表"
           }
         }
       }
@@ -17666,6 +17037,12 @@
             "value" : "Support Xcodes"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支持Xcodes"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17782,7 +17159,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "移動封存檔到垃圾桶"
+            "value" : "正在將封存檔移動至垃圾桶"
           }
         }
       }
@@ -18793,6 +18170,12 @@
             "value" : "Xcode"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18809,20 +18192,16 @@
             "value" : "Xcodes"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes"
-          }
-        }
-      }
-    },
-    "XCODES RULES!" : {
-      "localizations" : {
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "XCODES RULES!"
           }
         }
       }

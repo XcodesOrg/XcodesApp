@@ -26,18 +26,20 @@ struct NavigationSplitViewWrapper<Sidebar, Detail>: View where Sidebar: View, De
                 
                 if #available(macOS 14, *) {
                     sidebar
-                        .toolbar(removing: .sidebarToggle)
+                        .navigationSplitViewColumnWidth(min: 250, ideal: 300)
                 } else {
                     sidebar
                 }
             } detail: {
                 detail
             }
+            .navigationSplitViewStyle(.balanced)
         } else {
             // Alternative code for earlier versions of OS.
             NavigationView {
                 // The first column is the sidebar.
                 sidebar
+                    .frame(minWidth: 250)
                 detail
             }
             .navigationViewStyle(.columns)
