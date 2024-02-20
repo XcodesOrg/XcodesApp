@@ -43,9 +43,11 @@ struct UpdatesPreferencePane: View {
                     Button("CheckNow") {
                         updater.checkForUpdates()
                     }
+                    .padding(.top)
                     
                     Text(String(format: localizeString("LastChecked"), lastUpdatedString))
                         .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
@@ -140,7 +142,9 @@ struct UpdatesPreferencePane_Previews: PreviewProvider {
         Group {
             UpdatesPreferencePane()
                 .environmentObject(AppState())
-                .frame(maxWidth: 500)
+                .environmentObject(ObservableUpdater())
+                .frame(maxWidth: 600)
+                .frame(minHeight: 300)
         }
     }
 }

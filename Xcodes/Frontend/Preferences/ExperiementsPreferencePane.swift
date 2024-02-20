@@ -18,8 +18,6 @@ struct ExperimentsPreferencePane: View {
                 .fixedSize(horizontal: false, vertical: true)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
-            Divider()
         }
     }
     
@@ -29,7 +27,7 @@ struct ExperimentsPreferencePane: View {
             string: string,
             attributes: [
                 .font: NSFont.preferredFont(forTextStyle: .footnote, options: [:]),
-                .foregroundColor: NSColor.labelColor
+                .foregroundColor: NSColor.secondaryLabelColor
             ]
         )
         attributedString.addAttribute(.link, value: URL(string: "https://twitter.com/_saagarjha")!, range: NSRange(string.range(of: "@_saagarjha")!, in: string))
@@ -43,7 +41,7 @@ struct ExperimentsPreferencePane_Previews: PreviewProvider {
         Group {
             ExperimentsPreferencePane()
                 .environmentObject(AppState())
-                .frame(maxWidth: 500)
+                .frame(maxWidth: 600)
         }
     }
 }

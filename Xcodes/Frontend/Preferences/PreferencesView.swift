@@ -39,6 +39,6 @@ struct PreferencesView: View {
                 .tag(Tabs.experiment)
         }
         .padding(20)
-        .frame(width: 500)
+        .frame(width: 600)
     }
 }
