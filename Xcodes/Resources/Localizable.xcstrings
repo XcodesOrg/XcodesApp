@@ -5478,7 +5478,8 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple数据源是从Apple开发者网站爬取的。它会及时反应最新版本，但较为脆弱。\n\nXcode Releases是一个非官方的Xcode版本列表。它提供了良好格式化的数据，包含了不便从Apple直接获得的附加信息，且更不容易在Apple开发者网站无法访问时出现问题。"
+            "value" : "Apple数据源通过对苹果开发者网站进行抓取来获取数据。它始终显示最新的可用版本，但更容易受到影响，不稳定。\n\n
+Xcode Releases是一个非官方的Xcode版本列表。它提供了良好格式化的数据，包含了不便从Apple直接获得的附加信息，且更不容易在Apple开发者网站无法访问时出现问题。"
           }
         },
         "zh-Hant" : {
