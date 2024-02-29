@@ -73,7 +73,7 @@ struct XcodeListViewRow: View {
         if let icon = xcode.icon {
             Image(nsImage: icon)
         } else {
-            Image("xcode")
+            Image(xcode.version.isPrerelease ? "xcode-beta" : "xcode")
                 .resizable()
                 .frame(width: 32, height: 32)
                 .opacity(0.2)
