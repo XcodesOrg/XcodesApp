@@ -30,9 +30,6 @@ struct XcodeListViewRow: View {
                     Text(verbatim: path.string)
                         .font(.caption)
                         .foregroundColor(.secondary)
-                } else {
-                    Text(verbatim: "")
-                        .font(.caption)
                 }
             }
 
