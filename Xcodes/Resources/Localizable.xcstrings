@@ -1227,7 +1227,7 @@
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bist du sicher das du %@ löschen möchtest?"
+            "value" : "Bist du sicher, dass du %@ löschen möchtest?"
           }
         },
         "en" : {
