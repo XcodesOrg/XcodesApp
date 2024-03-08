@@ -10,7 +10,7 @@ struct AcknowledgmentsView: View {
             )!
             .addingAttribute(.foregroundColor, value: NSColor.labelColor)
         )
-        .frame(minWidth: 500, minHeight: 500)
+        .frame(minWidth: 600, minHeight: 500)
     }
 }
 

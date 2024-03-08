@@ -38,6 +38,7 @@ struct AdvancedPreferencePane: View {
                     }
                     Text("InstallPathDescription")
                         .font(.footnote)
+                        .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -73,6 +74,7 @@ struct AdvancedPreferencePane: View {
                     }
                     Text("LocalCachePathDescription")
                         .font(.footnote)
+                        .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
@@ -94,6 +96,7 @@ struct AdvancedPreferencePane: View {
                     
                     Text(appState.onSelectActionType.detailedDescription)
                         .font(.footnote)
+                        .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
                         .frame(height: 20)
@@ -102,6 +105,7 @@ struct AdvancedPreferencePane: View {
                         .disabled(appState.createSymLinkOnSelectDisabled)
                     Text("AutomaticallyCreateSymbolicLinkDescription")
                         .font(.footnote)
+                        .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .fixedSize(horizontal: false, vertical: true)
@@ -114,6 +118,7 @@ struct AdvancedPreferencePane: View {
                         .disabled(appState.createSymLinkOnSelectDisabled)
                     Text("ShowOpenInRosettaDescription")
                         .font(.footnote)
+                        .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
                 .groupBoxStyle(PreferencesGroupBoxStyle())
@@ -128,16 +133,18 @@ struct AdvancedPreferencePane: View {
                     case .installed:
                         Text("HelperInstalled")
                     case .notInstalled:
-                        HStack {
-                            Text("HelperNotInstalled")
+                        VStack(alignment: .leading) {
                             Button("InstallHelper") {
                                 appState.installHelperIfNecessary()
                             }
+                            Text("HelperNotInstalled")
+                                .font(.footnote)
                         }
                     }
                     
                     Text("PrivilegedHelperDescription")
                         .font(.footnote)
+                        .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                     
                     Spacer()
@@ -153,9 +160,9 @@ struct AdvancedPreferencePane_Previews: PreviewProvider {
         Group {
             AdvancedPreferencePane()
                 .environmentObject(AppState())
-                .frame(maxWidth: 500)
+                .frame(maxWidth: 600)
         }
-        .frame(width: 500, height: 700, alignment: .center)
+        .frame(width: 600, height: 700, alignment: .center)
     }
 }
 
@@ -163,11 +170,8 @@ struct AdvancedPreferencePane_Previews: PreviewProvider {
 struct PreferencesGroupBoxStyle: GroupBoxStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(alignment: .top, spacing: 20) {
-            HStack {
-                Spacer()
-                configuration.label
-            }
-            .frame(width: 120)
+            configuration.label
+                .frame(width: 180, alignment: .trailing)
             
             VStack(alignment: .leading) {
                 configuration.content
