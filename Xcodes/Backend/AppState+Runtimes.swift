@@ -15,10 +15,10 @@ extension AppState {
                     var updatedRuntime = runtime
                     
                     // This loops through and matches up the simulatorVersion to the mappings
-                    let simulatorBuildUpdate = downloadableRuntimes.sdkToSimulatorMappings.first { SDKToSimulatorMapping in
+                    let simulatorBuildUpdate = downloadableRuntimes.sdkToSimulatorMappings.filter { SDKToSimulatorMapping in
                         SDKToSimulatorMapping.simulatorBuildUpdate == runtime.simulatorVersion.buildUpdate
                     }
-                    updatedRuntime.sdkBuildUpdate = simulatorBuildUpdate?.sdkBuildUpdate
+                    updatedRuntime.sdkBuildUpdate = simulatorBuildUpdate.map { $0.sdkBuildUpdate }
                     return updatedRuntime
                 }
     
