@@ -16516,6 +16516,16 @@
         }
       }
     },
+    "ReleaseNotes" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Release Notes"
+          }
+        }
+      }
+    },
     "ReleaseNotes.help" : {
       "localizations" : {
         "ca" : {
