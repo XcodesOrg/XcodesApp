@@ -116,7 +116,8 @@ public struct Shell {
         return AsyncThrowingStream<Progress, Error> { continuation in
  
             Task {
-                var progress = Progress()
+                // Assume progress will not have data races, so we manually opt-out isolation checks.
+                nonisolated(unsafe) var progress = Progress()
                 progress.kind = .file
                 progress.fileOperationKind = .downloading
                 
