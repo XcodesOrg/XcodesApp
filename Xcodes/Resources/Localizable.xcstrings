@@ -15,6 +15,12 @@
             "value" : ""
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -32,6 +38,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
@@ -60,6 +72,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ %3$@"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ %2$@ %3$@"
@@ -174,7 +192,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ Сповіщення Заборонено ⚠️\n\nВідкрийте будьласка Налаштування Сповіщень та надайте дозвіл Xcodes для отримання дозволу."
+            "value" : "⚠️ Сповіщення Заборонено ⚠️\n\nВідкрийте будь ласка Налаштування Сповіщень та надайте дозвіл для Xcodes, якщо ви бажаєте отримувати сповіщення."
           }
         },
         "zh-Hans" : {
@@ -293,7 +311,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сповіщення Дозволено. Ви будете отримувати сповіщення від Xcodes."
+            "value" : "Сповіщення Дозволено.\nВи будете отримувати сповіщення від Xcodes."
           }
         },
         "zh-Hans" : {
@@ -629,7 +647,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Акивний/Обрати"
+            "value" : "Активний / Вибраний"
           }
         },
         "zh-Hans" : {
@@ -979,7 +997,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Увесь прогрес буде скасовано."
+            "value" : "Будь-який прогрес буде втрачено."
           }
         },
         "zh-Hans" : {
@@ -1097,7 +1115,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зупинити встановлення"
+            "value" : "Скасувати інсталяцію"
           }
         },
         "zh-Hans" : {
@@ -1140,6 +1158,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode %@ sürümünü yüklemeyi durdurmak istediğine emin misin?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чи дійсно ви хочете скасувати інсталяцію Xcode %@?"
           }
         },
         "zh-Hans" : {
@@ -1253,7 +1277,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Впевнені що хочете скасувати встановлення Xcode %@?"
+            "value" : "Чи дійсно ви хочете скасувати інсталяцію Xcode %@?"
           }
         },
         "zh-Hans" : {
@@ -1291,6 +1315,12 @@
             "value" : "Supprimer"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видалити"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1318,6 +1348,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Êtes-vous sûr de vouloir supprimer %@ ?"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чи дійсно ви хочете видалити %@?"
           }
         },
         "zh-Hans" : {
@@ -1431,7 +1467,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вдалося встановити Xcode"
+            "value" : "Не вдалося інсталювати Xcode"
           }
         },
         "zh-Hans" : {
@@ -1669,7 +1705,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ вимагає як мінімум MacOS %@, але у вас MacOS %@, всеодно продовжити?"
+            "value" : "Xcode %@ вимагає щонайменше macOS %@, але у вас macOS %@, всеодно продовжити?"
           }
         },
         "zh-Hans" : {
@@ -1788,7 +1824,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мінімальні вимоги не задоволені"
+            "value" : "Мінімальні вимоги не виконані"
           }
         },
         "zh-Hans" : {
@@ -2027,7 +2063,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вдалося встановити \"privilege helper\""
+            "value" : "Не вдалося інсталювати \"Privileged Helper\""
           }
         },
         "zh-Hans" : {
@@ -2145,7 +2181,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes використовує спеціальний \"privilege helper\" щоб запускати задачі як суперюзер. Це включає наприклад sudo в терміналі, та кроки після інсталяції або перемикання версії Xcode за допомогою xcode-select.\n\nЗараз буде запит на ваш пароль від Мак щоб встановити цей хелпер."
+            "value" : "Xcodes використовує спеціальний \"Privileged Helper\" для запуску задач від імені root. Це включає, наприклад, sudo в терміналі, та кроки після інсталяції або перемикання версії Xcode за допомогою xcode-select.\n\nБуде запит на ваш пароль від Mac щоб інсталювати цей помічник."
           }
         },
         "zh-Hans" : {
@@ -2503,7 +2539,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode.app вже існує, і це не символічна ссилка"
+            "value" : "Xcode.app вже існує, і це не символічне посилання"
           }
         },
         "zh-Hans" : {
@@ -2623,7 +2659,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вдалося створити символічну ссилку"
+            "value" : "Не вдалося створити символічне посилання"
           }
         },
         "zh-Hans" : {
@@ -2683,6 +2719,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "\"%@\" dosyası bulunamadı."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вдалося знайти файл \"%@\"."
           }
         },
         "zh-Hans" : {
@@ -2913,7 +2955,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode буде просто переміщено до Кошика, без очищення."
+            "value" : "Xcode буде просто переміщено до Кошика, без повного видалення."
           }
         },
         "zh-Hans" : {
@@ -3296,6 +3338,12 @@
             "value" : "Apple Silikon"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Silicon"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3641,7 +3689,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Автоматично створювати символічну ссилку Xcode.app"
+            "value" : "Автоматично створювати символічне посилання Xcode.app"
           }
         },
         "zh-Hans" : {
@@ -3759,7 +3807,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Обираючи Акивний Xcode, спробувати створити символічну ссилку Xcode.app що вказує на обрану версію. Ссилка буде розміщена у папці інсталяції Xcode"
+            "value" : "Створювати символічне посилання Xcode.app що вказує на обрану версію при зміні активного Xcode. \nСимволічне посилання буде розміщено у папці інсталяції Xcode"
           }
         },
         "zh-Hans" : {
@@ -3877,7 +3925,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Автоматично встановлювати нові версії Xcode"
+            "value" : "Автоматично інсталювати нові версії Xcode"
           }
         },
         "zh-Hans" : {
@@ -4226,7 +4274,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Відміна"
+            "value" : "Скасувати"
           }
         },
         "zh-Hans" : {
@@ -4456,7 +4504,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Автоматично перевіряти наявність оновлень."
+            "value" : "Автоматично перевіряти наявність оновлень"
           }
         },
         "zh-Hans" : {
@@ -5362,6 +5410,12 @@
             "value" : "URL'yi kopyala"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопіювати URL"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5477,7 +5531,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Створити символічну ссилку як Xcode.app"
+            "value" : "Створити символічне посилання як Xcode.app"
           }
         },
         "zh-Hans" : {
@@ -5577,7 +5631,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Створити символічну ссилку як Xcode-Beta.app"
+            "value" : "Створити символічне посилання як Xcode-Beta.app"
           }
         },
         "zh-Hans" : {
@@ -5689,7 +5743,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Джерело інформації"
+            "value" : "Джерело"
           }
         },
         "zh-Hans" : {
@@ -5808,7 +5862,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple – cканування порталу Apple Developer у пошуку доступних версій Xcode. Створюючи список усих нових релізів, але це не завжи спрацьовує.\n\nXcode Releases – це не офіційний список релізів Xcode. Він являє собою відформатований список, що також має додаткову інформацію не завжди доступну напряму з сайту Apple, і менш ймовірно що він зламається якщо Apple випустить редизайн Developer Portal"
+            "value" : "Apple — сканування Apple Developer Portal у пошуку доступних версій Xcode. Надає список усіх нових релізів, але є менш надійним.\n\nXcode Releases — це неофіційний список релізів Xcode. Він є більш структурованим та надає додаткову інформацію (що не завжди доступна напряму від Apple), і менш ймовірно зламається якщо Apple оновить Developer Portal."
           }
         },
         "zh-Hans" : {
@@ -6159,7 +6213,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 може використовувати до 16 з'єднань, завантажуючи Xcode у 3-5 разів швидше ніж URLSession. Вона поставляється у вигляді бінарника та коду, відповідно до вимог її GPLv2 ліцензії.\n\nURLSession – це завантажувач по замовчуванню від Apple"
+            "value" : "aria2 може використовувати до 16 з'єднань, завантажуючи Xcode у 3-5 разів швидше ніж URLSession. Вона поставляється у вигляді бінарника та коду, відповідно до вимог її GPLv2 ліцензії.\n\nURLSession — це завантажувач за-умовчанням від Apple"
           }
         },
         "zh-Hans" : {
@@ -6279,7 +6333,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Скачування"
+            "value" : "Викачування"
           }
         },
         "zh-Hans" : {
@@ -6398,7 +6452,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не знайдено інформації для закачування"
+            "value" : "Не знайдено інформації для викачування"
           }
         },
         "zh-Hans" : {
@@ -6517,7 +6571,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Закачка: %d%% готово"
+            "value" : "Викачано: %d%%"
           }
         },
         "zh-Hans" : {
@@ -7005,6 +7059,12 @@
             "value" : "Erreur"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Помилка"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7346,7 +7406,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Завдяки @_saagarjha, цей експеримент може пришвидшити розпаковку майже на 70%. Подробиці про unxip тут – https://github.com/saagarjha/unxip"
+            "value" : "Завдяки @_saagarjha, цей експеримент може пришвидшити розпаковку майже на 70%. \n\nПодробиці про unxip тут — https://github.com/saagarjha/unxip"
           }
         },
         "zh-Hans" : {
@@ -7694,7 +7754,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Фільтрувати встановлені версії"
+            "value" : "Фільтрувати інстальовані версії"
           }
         },
         "zh-Hans" : {
@@ -7926,7 +7986,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Основне"
+            "value" : "Загальне"
           }
         },
         "zh-Hans" : {
@@ -8163,7 +8223,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Помилка з'єднання з \"privileged helper\"."
+            "value" : "Помилка комунікації з \"Privileged Helper\"."
           }
         },
         "zh-Hans" : {
@@ -8281,7 +8341,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Helper встановлено"
+            "value" : "Helper інстальовано"
           }
         },
         "zh-Hans" : {
@@ -8399,7 +8459,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Helper не встановлено"
+            "value" : "Helper не інстальовано"
           }
         },
         "zh-Hans" : {
@@ -8636,7 +8696,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Буває що prerelease та release насправді ідентичні (то й же Build). У такому разі Xcodes будуть показувати обидві версії разом"
+            "value" : "Буває що RC та Release насправді ідентичні (однаковий Build). У такому випадку Xcodes буде показувати обидві версії разом."
           }
         },
         "zh-Hans" : {
@@ -8754,7 +8814,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Також встановлювати prerelease/beta версії"
+            "value" : "Також інсталювати RC / Beta версії"
           }
         },
         "zh-Hans" : {
@@ -8873,7 +8933,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Встановити"
+            "value" : "Інсталювати"
           }
         },
         "zh-Hans" : {
@@ -8992,7 +9052,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Викачаний Xcode не зміг пройти перевірку коду підпису (code signing verification) з наступним повідомленням:\n%@"
+            "value" : "Викачаний Xcode не зміг пройти перевірку підпису (code signing verification) з наступним повідомленням:\n%@"
           }
         },
         "zh-Hans" : {
@@ -9112,7 +9172,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Архів \"%@\" пошкожено і не можливо розпакувати."
+            "value" : "Архів \"%@\" пошкоджено, його не можливо розпакувати."
           }
         },
         "zh-Hans" : {
@@ -9231,7 +9291,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode провалив перевірку безпеки (security assessment) з наступним повідомленням:\n%@\nВін залишиться установлений в %@ якщо ви все ж наважитесь його використовувати."
+            "value" : "Xcode не пройшов перевірку безпеки (security assessment) з наступним повідомленням:\n%@\n\nВін залишиться інстальованим в %@, на випадок якщо ви забажаєте його використовувати."
           }
         },
         "zh-Hans" : {
@@ -9350,7 +9410,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Помилка при переміщенні Xcode в %@."
+            "value" : "Помилка при переміщенні Xcode до %@."
           }
         },
         "zh-Hans" : {
@@ -9469,7 +9529,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ не є вірним номером версії."
+            "value" : "%@ не є коректним номером версії."
           }
         },
         "zh-Hans" : {
@@ -9588,7 +9648,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вистачає sudo паролю. Спробуйте ще раз."
+            "value" : "Не вистачає паролю. Спробуйте ще раз."
           }
         },
         "zh-Hans" : {
@@ -9707,7 +9767,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вистачає юзернейму чи паролю. Спробуйте ще раз."
+            "value" : "Не вистачає імені користувача чи паролю. Спробуйте ще раз."
           }
         },
         "zh-Hans" : {
@@ -9826,7 +9886,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Немає доступних релізних версій."
+            "value" : "Немає доступних Release версій."
           }
         },
         "zh-Hans" : {
@@ -9945,7 +10005,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Немає доступного пререлізу."
+            "value" : "Немає доступних RC версій."
           }
         },
         "zh-Hans" : {
@@ -10064,7 +10124,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Архів \"%@\" не можливо розпакувати, так як бракує місця.\n\nПочистіть файлове сховище щоб вистачило місця на розпаковку Архіву, та спробуйте встановити Xcode %@ знову."
+            "value" : "Архів \"%@\" не можливо розпакувати, так як бракує місця.\n\nЗвільніть файлове сховище щоб вистачило місця на розпаковку Архіву, та спробуйте інсталювати Xcode %@ знову."
           }
         },
         "zh-Hans" : {
@@ -10302,7 +10362,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Установку завершено. Але деякі post-install кроки не виконано автоматично. Xcodes виконує цю роботу за допомогою \"privileged helper\", який схоже що не встановлено. Ви можете встановити його за доромогою Налаштування > Додатково.\n\nЦі кроки буде виконано коли ви вперше запустите Xcode %@."
+            "value" : "Інсталяцію завершено. Але деякі кроки після інсталяції не було виконано автоматично. Xcodes виконує цю роботу за допомогою \"Privileged Helper\", який схоже що не інстальовано. Ви можете встановити його за допомогою Налаштування > Додатково.\n\nЦі кроки буде виконано коли ви вперше запустите Xcode %@."
           }
         },
         "zh-Hans" : {
@@ -10540,7 +10600,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Викачаний Xcode має неочікуваний код підпису (code signing identity).\nМає:\n%@\n%@\nОчікується:\n%@\n%@"
+            "value" : "Викачаний Xcode має неочікуваний підпис (code signing identity).\nМає:\n%@\n%@\nОчікується:\n%@\n%@"
           }
         },
         "zh-Hans" : {
@@ -10659,7 +10719,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode (поки що) не підтримує свою установку у %@ форматі."
+            "value" : "Xcodes (поки що) не підтримує свою установку у %@ форматі."
           }
         },
         "zh-Hans" : {
@@ -10778,7 +10838,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ вже встановлено в %@"
+            "value" : "%@ вже інстальовано до %@"
           }
         },
         "zh-Hans" : {
@@ -10897,7 +10957,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ не встановлено."
+            "value" : "%@ не інстальовано."
           }
         },
         "zh-Hans" : {
@@ -11135,7 +11195,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Встановити цю версію"
+            "value" : "Інсталювати цю версію"
           }
         },
         "zh-Hans" : {
@@ -11218,6 +11278,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Yükleme Klasörü"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Шлях інсталяції"
           }
         },
         "zh-Hans" : {
@@ -11329,7 +11395,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Встановити Install helper"
+            "value" : "Інсталювати Helper"
           }
         },
         "zh-Hans" : {
@@ -11406,6 +11472,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes bir klasörü arayıp oraya yükler. Varsayılan(ve önerilen) yöntem /Uygulamalar klasöründe tutmaktır. Xcode'un bulunduğu ortamdaki herhangi bir değişiklik başka bir uygulamanın/servisin çalışmasını durdurabilir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes шукає інсталяції та встановлює нові версії у вказану директорію. За-умовчанням,до /Applications (рекомендується). \nБудь-які зміни шляху розташування Xcode можуть призвести до втрати дієздатності інших застосунків / сервісів. "
           }
         },
         "zh-Hans" : {
@@ -11866,7 +11938,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сюди зберігаються тимчасові закачки встановлюваних версій Xcode"
+            "value" : "Xcodes кешує доступні версії Xcode та тимчасові файли викачувань нових версій в цю директорію"
           }
         },
         "zh-Hans" : {
@@ -12216,7 +12288,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Потрібен macOS %@ чи новіший"
+            "value" : "Необхідна macOS %@ чи новіша"
           }
         },
         "zh-Hans" : {
@@ -12926,7 +12998,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes GitHub Repo"
+            "value" : "Xcodes GitHub репозіторій"
           }
         },
         "zh-Hans" : {
@@ -13162,7 +13234,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Запит на нову Фічу"
+            "value" : "Запит на новий функціонал"
           }
         },
         "zh-Hans" : {
@@ -13631,7 +13703,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Встановлено"
+            "value" : "Інстальовано"
           }
         },
         "zh-Hans" : {
@@ -13870,7 +13942,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нові версії Xcode доступні до завантаження."
+            "value" : "Доступні нові версії Xcode"
           }
         },
         "zh-Hans" : {
@@ -14655,6 +14727,12 @@
             "value" : "Uygulama ismini Xcode-X.X.X.app gibi tut."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зберігати імʼя як Xcode-X.X.X.app"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14732,6 +14810,12 @@
             "value" : "Seçildiğinde, ismi Xcode-13.4.1.app örneğindeki gibi tutar."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При виборі, зберігати імʼя як версію, наприклад,\nXcode-13.4.1.app"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14801,6 +14885,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Her zaman Xcode.app şeklinde ismi değiştir"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завжди змінювати імʼя на Xcode.app"
           }
         },
         "zh-Hans" : {
@@ -14878,6 +14968,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seçildiğinde, aktif olan Xcode'u Xcode.app olarak isimlendirmeye çalışır ve eski Xcode ismine sürüm ismi ekler."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При виборі, автоматично перейменовувати активний Xcode на Xcode.app, змінюючи імʼя попереднього Xcode.app на його версію."
           }
         },
         "zh-Hans" : {
@@ -15018,6 +15114,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rosetta ile Aç"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запустити через Rosetta"
           }
         },
         "zh-Hans" : {
@@ -15284,6 +15386,12 @@
             "value" : "Yükleme sonrası adımları uygula"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Виконати пост-інсталяційні кроки"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15304,6 +15412,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Platformlar"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Платформи"
           }
         },
         "zh-Hans" : {
@@ -15333,6 +15447,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ci-dessous une liste des plateformes installées sur cette machine."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нижче наведений список платформ що доступні на цій машині"
           }
         },
         "zh-Hans" : {
@@ -15792,7 +15912,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes використовує спеціальний \"privilege helper\" щоб запускати задачі як суперюзер. Це включає наприклад sudo в терміналі, та кроки після інсталяції або перемикання версії Xcode за допомогою xcode-select.\n\nБуде запит на ваш пароль від Мак щоб встановити цей хелпер."
+            "value" : "Xcodes використовує спеціальний \"Privileged Helper\" для запуску задач від імені root. Це включає, наприклад, sudo в терміналі, та кроки після інсталяції або перемикання версії Xcode за допомогою xcode-select.\n\nБуде запит на ваш пароль від Mac щоб інсталювати цей помічник."
           }
         },
         "zh-Hans" : {
@@ -16141,7 +16261,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Release"
+            "value" : "Реліз"
           }
         },
         "zh-Hans" : {
@@ -16837,7 +16957,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SDKs"
+            "value" : "SDK"
           }
         },
         "zh-Hans" : {
@@ -17359,6 +17479,12 @@
             "value" : "Rosetta ile açma seçeneğini göster"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показувати опцію \"Запустити через Rosetta\""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17409,6 +17535,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rosetta ile açma opsiyonu diğer uygun \"Açma\" fonksiyonlarını gösterecektir. Not: Bu sadece Apple Silikon makinelerinde gözükecektir."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опція \"Запустити через Rosetta\" зʼявиться там де наразі знаходиться функція \"Запустити\".\nПримітка: Доступно лише для Apple Silicon машин."
           }
         },
         "zh-Hans" : {
@@ -17520,7 +17652,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Логін"
+            "value" : "Увійти"
           }
         },
         "zh-Hans" : {
@@ -17875,7 +18007,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зупинити встановлення"
+            "value" : "Зупинити інсталяцію"
           }
         },
         "zh-Hans" : {
@@ -17905,6 +18037,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support Xcodes"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підтримати Xcodes"
           }
         },
         "zh-Hans" : {
@@ -18486,7 +18624,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Оновлено о"
+            "value" : "Оновлено"
           }
         },
         "zh-Hans" : {
@@ -18717,7 +18855,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Під час розпаковки Unxip використовувати експериментальний метод."
+            "value" : "Експериментальний метод розпаковки"
           }
         },
         "zh-Hans" : {
@@ -19094,6 +19232,12 @@
             "value" : "Xcode"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19111,6 +19255,12 @@
           }
         },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes"
