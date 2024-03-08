@@ -19,6 +19,7 @@ struct InfoPane: View {
                             Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                                 .font(.title)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .textSelection(.enabled)
                         }
                         InfoPaneControls(xcode: xcode)
                     }
