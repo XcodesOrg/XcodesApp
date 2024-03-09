@@ -16752,6 +16752,17 @@
         }
       }
     },
+    "ReleasePlusNewBetas" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Release & New Betas"
+          }
+        }
+      }
+    },
     "Required" : {
       "localizations" : {
         "ca" : {
