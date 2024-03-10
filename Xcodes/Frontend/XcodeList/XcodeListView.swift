@@ -43,6 +43,35 @@ struct XcodeListView: View {
             XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
         }
         .listStyle(.sidebar)
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            PlatformsPocket()
+                .padding(.horizontal)
+                .padding(.vertical, 8)
+        }
+    }
+}
+
+struct PlatformsPocket: View {
+    @SwiftUI.Environment(\.openWindow) private var openWindow
+   
+    var body: some View {
+        Button(action: {
+            openWindow(id: "platforms")
+        }
+        ) {
+            HStack(spacing: 5) {
+                Image(systemName: "square.3.layers.3d")
+                    .font(.title3.weight(.medium))
+                Text("PlatformsDescription")
+            }
+            .font(.body.weight(.medium))
+            .padding(.horizontal)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.quaternary.opacity(0.75))
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+        }
+        .buttonStyle(.plain)
     }
 }
 

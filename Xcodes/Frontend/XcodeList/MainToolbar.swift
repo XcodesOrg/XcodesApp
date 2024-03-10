@@ -5,7 +5,6 @@ struct MainToolbarModifier: ViewModifier {
     @Binding var category: XcodeListCategory
     @Binding var isInstalledOnly: Bool
     @Binding var isShowingInfoPane: Bool
-    @SwiftUI.Environment(\.openWindow) private var openWindow
 
     func body(content: Content) -> some View {
         content
@@ -69,13 +68,6 @@ struct MainToolbarModifier: ViewModifier {
                 }
             }
             .help("FilterInstalledDescription")
-
-            Button(action: {
-                openWindow(id: "platforms")
-            }) {
-                Label("Platforms", systemImage: "square.3.layers.3d")
-            }
-            .help("PlatformsDescription")
         }
     }
 }
