@@ -3,7 +3,19 @@
   "strings" : {
     "" : {
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : ""
@@ -14,12 +26,30 @@
             "state" : "translated",
             "value" : ""
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
         }
       }
     },
     "%@" : {
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
@@ -30,11 +60,23 @@
             "state" : "translated",
             "value" : ""
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
         }
       }
     },
     "%@ %@ %@" : {
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ %3$@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "new",
@@ -47,10 +89,22 @@
             "value" : "%1$@ %2$@ %3$@"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ %3$@"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : ""
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ %3$@"
           }
         }
       }
@@ -67,6 +121,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚠️ Zugriff verweigert ⚠️\n\nBitte öffne Deine Benachrichtigungs-Einstellungen und wähle Xcodes aus, wenn Du den Zugriff erlauben möchtest."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ Άρνηση Πρόσβασης ⚠️\n\nΑνοίξτε τις Ρυθμίσεις Γνωστοποιήσεων και επιλέξτε το Xcodes αν επιθυμείτε να επιτρέψετε την πρόσβαση."
           }
         },
         "en" : {
@@ -150,7 +210,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ Сповіщення Заборонено ⚠️\n\nВідкрийте будьласка Налаштування Сповіщень та надайте дозвіл Xcodes для отримання дозволу."
+            "value" : "⚠️ Сповіщення Заборонено ⚠️\n\nВідкрийте будь ласка Налаштування Сповіщень та надайте дозвіл для Xcodes, якщо ви бажаєте отримувати сповіщення."
           }
         },
         "zh-Hans" : {
@@ -162,7 +222,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "⚠️ 通知已停用 ⚠️\n\n如果你想要啟用通知，請打開你的通知設定並選擇 Xcodes。"
+            "value" : "⚠️ 權限不足⚠️\n\n如果你想要啟用通知，請打開系統的通知設定並選擇 Xcodes。"
           }
         }
       }
@@ -180,6 +240,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Zugriff erlaubt. Du empfängst jetzt Benachrichtigungen von Xcodes."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η πρόσβαση εκχωρήθηκε. Θα λαμβάνετε γνωστοποιήσεις από το Xcode's."
           }
         },
         "en" : {
@@ -263,7 +329,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сповіщення Дозволено. Ви будете отримувати сповіщення від Xcodes."
+            "value" : "Сповіщення Дозволено.\nВи будете отримувати сповіщення від Xcodes."
           }
         },
         "zh-Hans" : {
@@ -275,7 +341,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通知已啟用。你將會開始收到來自 Xcodes 的通知。"
+            "value" : "已核准權限。你可以收到來自 Xcodes 的通知。"
           }
         }
       }
@@ -292,6 +358,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anerkennungen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναγνωρίσεις"
           }
         },
         "es" : {
@@ -400,6 +472,12 @@
             "value" : "Aktiv"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενεργή"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -487,7 +565,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "啟用中"
+            "value" : "已啟用"
           }
         }
       }
@@ -504,6 +582,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktiv/Auswählen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενεργή/Επιλεγμένη"
           }
         },
         "es" : {
@@ -581,7 +665,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Акивний/Обрати"
+            "value" : "Активний / Вибраний"
           }
         },
         "zh-Hans" : {
@@ -611,6 +695,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dies ist die aktive Version"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτή είναι η ενεργή έκδοση"
           }
         },
         "en" : {
@@ -706,7 +796,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "這是啟用中版本"
+            "value" : "這個版本已經啟用"
           }
         }
       }
@@ -724,6 +814,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erweitert"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προηγμένες"
           }
         },
         "es" : {
@@ -832,6 +928,12 @@
             "value" : "Jeglicher Fortschritt wird verworfen."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όποια πρόοδος θα απορριφθεί."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -913,7 +1015,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Увесь прогрес буде скасовано."
+            "value" : "Будь-який прогрес буде втрачено."
           }
         },
         "zh-Hans" : {
@@ -925,7 +1027,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "所有已進行的安裝步驟將被放棄。"
+            "value" : "將放棄既有進度。"
           }
         }
       }
@@ -942,6 +1044,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Installation anhalten"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διακοπή εγκατάστασης"
           }
         },
         "en" : {
@@ -1025,7 +1133,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зупинити встановлення"
+            "value" : "Скасувати інсталяцію"
           }
         },
         "zh-Hans" : {
@@ -1046,10 +1154,10 @@
       "comment" : "Cancel Runtime Install",
       "extractionState" : "manual",
       "localizations" : {
-        "de" : {
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bist du sicher, dass Du die Installation von Xcode %@ anhalten möchtest?"
+            "value" : "Είστε βέβαιοι ότι θέλετε να διακόψετε την εγκατάσταση του Xcode %@;"
           }
         },
         "en" : {
@@ -1070,10 +1178,22 @@
             "value" : "Xcode %@ sürümünü yüklemeyi durdurmak istediğine emin misin?"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чи дійсно ви хочете скасувати інсталяцію Xcode %@?"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "你确定要停止安装Xcode %@吗？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你確定要停止安裝 Xcode %@ 嗎？"
           }
         }
       }
@@ -1092,6 +1212,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bist du sicher, dass Du die Installation von Xcode %@ anhalten möchtest?"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Είστε βέβαιοι ότι θέλετε να διακόψετε την εγκατάσταση του Xcode %@;"
           }
         },
         "en" : {
@@ -1175,7 +1301,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Впевнені що хочете скасувати встановлення Xcode %@?"
+            "value" : "Чи дійсно ви хочете скасувати інсталяцію Xcode %@?"
           }
         },
         "zh-Hans" : {
@@ -1187,7 +1313,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你確定你想要停止安裝 Xcode %@？"
+            "value" : "你確定要停止安裝 Xcode %@ 嗎？"
           }
         }
       }
@@ -1195,10 +1321,10 @@
     "Alert.DeletePlatform.PrimaryButton" : {
       "extractionState" : "manual",
       "localizations" : {
-        "de" : {
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Löschen"
+            "value" : "Διαγραφή"
           }
         },
         "en" : {
@@ -1213,10 +1339,22 @@
             "value" : "Supprimer"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видалити"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "删除"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "刪除"
           }
         }
       }
@@ -1224,10 +1362,10 @@
     "Alert.DeletePlatform.Title" : {
       "extractionState" : "manual",
       "localizations" : {
-        "de" : {
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Bist du sicher, dass du %@ löschen möchtest?"
+            "value" : "Θέλετε σίγουρα να διαγράψετε το %@;"
           }
         },
         "en" : {
@@ -1242,10 +1380,22 @@
             "value" : "Êtes-vous sûr de vouloir supprimer %@ ?"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Чи дійсно ви хочете видалити %@?"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "你确定要删除%@吗？"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你確定要刪除 %@ 嗎？"
           }
         }
       }
@@ -1264,6 +1414,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Installation von Xcode nicht möglich"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν είναι δυνατή η εγκατάσταση του Xcode"
           }
         },
         "en" : {
@@ -1347,7 +1503,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вдалося встановити Xcode"
+            "value" : "Не вдалося інсталювати Xcode"
           }
         },
         "zh-Hans" : {
@@ -1377,6 +1533,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Installation des archivierten Xcodes nicht möglich"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδυναμία εγκατάστασης αρχειοθετημένου Xcode"
           }
         },
         "en" : {
@@ -1492,6 +1654,12 @@
             "value" : "Xcode %@ erfordert macOS %@ aber es läuft nur macOS %@. Möchtest Du es trotzdem installieren?"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Xcode %@ απαιτεί macOS %@, όμως το λειτουργικό σας σύστημα είναι macOS %@, εξακολουθείτε να θέλετε να το εγκαταστήσετε;"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1573,7 +1741,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ вимагає як мінімум MacOS %@, але у вас MacOS %@, всеодно продовжити?"
+            "value" : "Xcode %@ вимагає щонайменше macOS %@, але у вас macOS %@, всеодно продовжити?"
           }
         },
         "zh-Hans" : {
@@ -1603,6 +1771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Minimalanforderungen nicht erfüllt"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν ικανοποιούνται οι ελάχιστες απαιτήσεις συστήματος"
           }
         },
         "en" : {
@@ -1686,7 +1860,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Мінімальні вимоги не задоволені"
+            "value" : "Мінімальні вимоги не виконані"
           }
         },
         "zh-Hans" : {
@@ -1717,6 +1891,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ausführung von Post-Installationsschritten nicht möglich"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδυναμία εκτέλεσης μετά-εγκαταστατικών βημάτων"
           }
         },
         "en" : {
@@ -1832,6 +2012,12 @@
             "value" : "Installation des Helfers nicht möglich"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδυναμία εγκατάστασης του βοηθητικού εργαλείου"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1913,7 +2099,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вдалося встановити \"privilege helper\""
+            "value" : "Не вдалося інсталювати \"Privileged Helper\""
           }
         },
         "zh-Hans" : {
@@ -1942,6 +2128,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes verwendet einen separaten privilegierten Helfer, um Aufgaben als root zu erledigen. Das sind Dinge, die sudo in der Kommandozeile erfordern würden, einschließlich Post-Installationsschritte sowie das Umstellen von Xcode-Versionen mit xcode-select.\n\nUm ihn zu installieren, erfolgt eine Aufforderung zur Eingabe des Passworts für Dein macOS-Benutzerkonto."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Xcodes χρησιμοποιεί ένα ξεχωριστό εργαλείο με δικαιώματα ώστε να εκτελέσει εργασίες ως root. Αυτές είναι εργασίες που θα απαιτούσαν sudo στη γραμμή εντολών, συμπεριλαμβανομένων μετά-εγκαταστατικών βημάτων και αλλαγής μεταξύ εκδόσεων του Xcode με το xcode-select.\n\nΘα σας ζητηθεί το συνθηματικό του λογαριασμού σας στο macOS για την εγκατάσταση του."
           }
         },
         "en" : {
@@ -2025,7 +2217,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes використовує спеціальний \"privilege helper\" щоб запускати задачі як суперюзер. Це включає наприклад sudo в терміналі, та кроки після інсталяції або перемикання версії Xcode за допомогою xcode-select.\n\nЗараз буде запит на ваш пароль від Мак щоб встановити цей хелпер."
+            "value" : "Xcodes використовує спеціальний \"Privileged Helper\" для запуску задач від імені root. Це включає, наприклад, sudo в терміналі, та кроки після інсталяції або перемикання версії Xcode за допомогою xcode-select.\n\nБуде запит на ваш пароль від Mac щоб інсталювати цей помічник."
           }
         },
         "zh-Hans" : {
@@ -2037,7 +2229,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes 使用一個分開的權限輔助程式以使用 root 身份執行特定工作。這些工作包含了通常需要在命令列使用 sudo 的指令，包含安裝後步驟以及使用 xcode-select 選擇 Xcode 版本。\n\n安裝時，你將會被詢問你的 macOS 帳號密碼。"
+            "value" : "Xcodes 會利用一個分開的具有權限的輔助程式以 root 身份執行特定工作，例如那些在命令列中通常需使用 sudo 的命令，包含安裝程序後的步驟以及使用 xcode-select 選擇 Xcode 版本。\n\n安裝此程式時，你將會需要輸入 macOS 帳號的密碼。"
           }
         }
       }
@@ -2055,6 +2247,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Privilegierter Helfer"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βοηθητικό Εργαλείο με δικαιώματα"
           }
         },
         "en" : {
@@ -2150,7 +2348,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "權限輔助程式"
+            "value" : "具有權限的輔助程式"
           }
         }
       }
@@ -2169,6 +2367,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Auswahl von Xcode nicht möglich"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδυναμία επιλογής του Xcode"
           }
         },
         "en" : {
@@ -2284,6 +2488,12 @@
             "value" : "Xcode.app existiert und ist kein symbolischer Link"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Xcode.app υπάρχει και δεν είναι συμβολικός σύνδεσμος"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2365,7 +2575,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode.app вже існує, і це не символічна ссилка"
+            "value" : "Xcode.app вже існує, і це не символічне посилання"
           }
         },
         "zh-Hans" : {
@@ -2377,7 +2587,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode.app 已經存在，但並不是一個 Symlink"
+            "value" : "Xcode.app 已經存在，而且不是符號連結"
           }
         }
       }
@@ -2396,6 +2606,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erstellung des symbolischen Links nicht möglich"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδυναμία δημιουργίας συμβολικού συνδέσμου"
           }
         },
         "en" : {
@@ -2479,7 +2695,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вдалося створити символічну ссилку"
+            "value" : "Не вдалося створити символічне посилання"
           }
         },
         "zh-Hans" : {
@@ -2491,7 +2707,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無法建立 Symlink"
+            "value" : "無法建立符號連結"
           }
         }
       }
@@ -2503,6 +2719,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Datei \"%@\" konnte nicht gefunden werden."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το αρχείο «%@» δεν βρέθηκε."
           }
         },
         "en" : {
@@ -2535,10 +2757,22 @@
             "value" : "\"%@\" dosyası bulunamadı."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Не вдалося знайти файл \"%@\"."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "无法找到文件\"%@\"."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "找不到「%@」檔案。"
           }
         }
       }
@@ -2556,6 +2790,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die Deinstallation von Xcode ist nicht möglich"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδυναμία απεγκατάστασης του Xcode"
           }
         },
         "en" : {
@@ -2670,6 +2910,12 @@
             "value" : "Die Anwendung wird in den Papierkorb verschoben, dieser wird aber nicht geleert."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Θα μετακινηθεί στον Κάδο, αλλά δεν θα γίνει άδειασμα."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2751,7 +2997,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode буде просто переміщено до Кошика, без очищення."
+            "value" : "Xcode буде просто переміщено до Кошика, без повного видалення."
           }
         },
         "zh-Hans" : {
@@ -2763,7 +3009,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "它將會被移到垃圾桶，但不會被清除。"
+            "value" : "將移到垃圾桶，但垃圾桶不會清空。"
           }
         }
       }
@@ -2782,6 +3028,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode %@ deinstallieren?"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απεγκατάσταση του Xcode %@;"
           }
         },
         "en" : {
@@ -2898,6 +3150,12 @@
             "value" : "Update des ausgewählten Xcodes nicht möglich"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδυναμία ενημέρωσης του επιλεγμένου Xcode"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3010,6 +3268,12 @@
             "value" : "Alle"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όλα"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3104,16 +3368,34 @@
     },
     "Apple Silicon" : {
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Silicon"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple Silikon"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Silicon"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : ""
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Silicon"
           }
         }
       }
@@ -3130,6 +3412,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple-ID:"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AppleID:"
           }
         },
         "en" : {
@@ -3244,6 +3532,12 @@
             "value" : "Xcodes.app-Updates"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενημερώσεις του Xcodes.app"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3356,6 +3650,12 @@
             "value" : "Symbolischen Link zur Xcode.app automatisch erstellen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτόματη δημιουργία συμβολικού συνδέσμου προς το Xcode.app"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3437,7 +3737,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Автоматично створювати символічну ссилку Xcode.app"
+            "value" : "Автоматично створювати символічне посилання Xcode.app"
           }
         },
         "zh-Hans" : {
@@ -3449,7 +3749,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "自動建立 Symlink 至 Xcode.app"
+            "value" : "自動建立連結至 Xcode.app 的符號連結"
           }
         }
       }
@@ -3466,6 +3766,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beim Umstellen einer Xcode-Version auf Aktiv/Ausgewählt versuchen einen symbolischen Link namens Xcode.app im Installationsverzeichnis zu erstellen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Όταν ορίζετε μια έκδοση του Xcode ως Ενεργή/Επιλεγμένη, θα γίνεται προσπάθεια δημιουργίας ενός συμβολικού συνδέσμου με το όνομα Xcode.app στον φάκελο της εγκατάστασης"
           }
         },
         "en" : {
@@ -3549,7 +3855,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Обираючи Акивний Xcode, спробувати створити символічну ссилку Xcode.app що вказує на обрану версію. Ссилка буде розміщена у папці інсталяції Xcode"
+            "value" : "Створювати символічне посилання Xcode.app що вказує на обрану версію при зміні активного Xcode. \nСимволічне посилання буде розміщено у папці інсталяції Xcode"
           }
         },
         "zh-Hans" : {
@@ -3561,7 +3867,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "當你選擇/啟用一個 Xcode 版本，自動建立一個名為 Xcode.app 的 Symlink 到該版本的安裝目錄"
+            "value" : "選擇或啟用一個 Xcode 版本時，會自動建立一個名為 Xcode.app 的符號連結，並指向該版本的安裝目錄"
           }
         }
       }
@@ -3578,6 +3884,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neue Versionen von Xcode automatisch installieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτόματη εγκατάσταση νέων εκδόσεων του Xcode"
           }
         },
         "en" : {
@@ -3661,7 +3973,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Автоматично встановлювати нові версії Xcode"
+            "value" : "Автоматично інсталювати нові версії Xcode"
           }
         },
         "zh-Hans" : {
@@ -3688,6 +4000,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Beta"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Beta"
@@ -3805,6 +4123,12 @@
             "value" : "Nur Beta"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μόνο Beta"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3898,7 +4222,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "只看測試版"
+            "value" : "只顯示測試版"
           }
         }
       }
@@ -3915,6 +4239,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abbrechen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ακύρωση"
           }
         },
         "es" : {
@@ -3992,7 +4322,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Відміна"
+            "value" : "Скасувати"
           }
         },
         "zh-Hans" : {
@@ -4021,6 +4351,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ändern"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αλλαγή"
           }
         },
         "es" : {
@@ -4110,7 +4446,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "變更"
+            "value" : "更改"
           }
         }
       }
@@ -4127,6 +4463,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Automatisch auf App-Updates prüfen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτόματος έλεγχος για ενημερώσεις"
           }
         },
         "en" : {
@@ -4210,7 +4552,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Автоматично перевіряти наявність оновлень."
+            "value" : "Автоматично перевіряти наявність оновлень"
           }
         },
         "zh-Hans" : {
@@ -4240,6 +4582,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Sicherheitsprüfung"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επαλήθευση ασφαλείας"
           }
         },
         "en" : {
@@ -4354,6 +4702,12 @@
             "value" : "Jetzt prüfen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έλεγχος Τώρα"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4466,6 +4820,12 @@
             "value" : "Schließen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κλείσιμο"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4570,6 +4930,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kompatibilität"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συμβατότητα"
           }
         },
         "es" : {
@@ -4678,6 +5044,12 @@
             "value" : "Compiler"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Compilers"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4784,6 +5156,12 @@
             "value" : "Fortfahren"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνέχεια"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4888,6 +5266,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pfad kopieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγραφή διαδρομής"
           }
         },
         "en" : {
@@ -5002,6 +5386,12 @@
             "value" : "URL kopieren"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγραφή διεύθυνσης URL"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5068,6 +5458,12 @@
             "value" : "URL'yi kopyala"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопіювати URL"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5077,7 +5473,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "複製 URL"
+            "value" : "拷貝 URL"
           }
         }
       }
@@ -5094,6 +5490,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Symlink als Xcode.app erstellen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δημιουργία συμβολικού συνδέσμου ως Xcode.app"
           }
         },
         "en" : {
@@ -5177,7 +5579,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Створити символічну ссилку як Xcode.app"
+            "value" : "Створити символічне посилання як Xcode.app"
           }
         },
         "zh-Hans" : {
@@ -5189,7 +5591,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "製作 Xcode-Beta.app 的 Symlink"
+            "value" : "製作 Xcode.app 符號連結"
           }
         }
       }
@@ -5200,6 +5602,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Symlink als Xcode-Beta.app erstellen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δημιουργία συμβολικού συνδέσμου ως Xcode-Beta.app"
           }
         },
         "en" : {
@@ -5271,13 +5679,19 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Створити символічну ссилку як Xcode-Beta.app"
+            "value" : "Створити символічне посилання як Xcode-Beta.app"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "以Xcode-Beta.app创建软链接"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "製作 Xcode-Beta.app 符號連結"
           }
         }
       }
@@ -5294,6 +5708,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Datenquelle"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πηγή δεδομένων"
           }
         },
         "en" : {
@@ -5377,7 +5797,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Джерело інформації"
+            "value" : "Джерело"
           }
         },
         "zh-Hans" : {
@@ -5407,6 +5827,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η πηγή δεδομένων «Apple» αντλεί δεδομένα από τον ιστότοπο «Apple Developer». Εμφανίζει πάντα τις πιο πρόσφατες διαθέσιμες εκδόσεις, αλλά είναι πιο εύθραστη ως πηγή.\n\nΗ επιλογή «Xcode Releases» είναι μια ανεπίσημη λίστα απο εκδόσεις του Xcode. Παρέχεται ως μια καλοδιατηρημένη λίστα δεδομένων, περιέχει επιπλέον πληροφορίες οι οποίες δεν είναι άμεσα διαθέσιμες απο την Apple και έχει λιγότερες πιθανότητες να υπολειτουργήσει σε περίπτωση που η Apple επανασχεδιάσει τον ιστότοπο της."
           }
         },
         "en" : {
@@ -5490,7 +5916,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple – cканування порталу Apple Developer у пошуку доступних версій Xcode. Створюючи список усих нових релізів, але це не завжи спрацьовує.\n\nXcode Releases – це не офіційний список релізів Xcode. Він являє собою відформатований список, що також має додаткову інформацію не завжди доступну напряму з сайту Apple, і менш ймовірно що він зламається якщо Apple випустить редизайн Developer Portal"
+            "value" : "Apple — сканування Apple Developer Portal у пошуку доступних версій Xcode. Надає список усіх нових релізів, але є менш надійним.\n\nXcode Releases — це неофіційний список релізів Xcode. Він є більш структурованим та надає додаткову інформацію (що не завжди доступна напряму від Apple), і менш ймовірно зламається якщо Apple оновить Developer Portal."
           }
         },
         "zh-Hans" : {
@@ -5502,7 +5928,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple 資料來源是擷取 Apple 開發者網站而來，永遠會顯示最新的可用版本，但比較容易出錯。\n\nXcode Releases 是一個非官方的 Xcodes 發行版本列表。這個來源提供格式良好的資料，包含了 Apple 開發者網站上未列出的額外資訊並且即使 Apple 決定重新設計他們的開發者網站也比較不容易出錯。"
+            "value" : "「Apple 資料來源」會爬取 Apple 開發者網站。此資料來源較容易出錯，且只會顯示最新的可用版本。\n\n「Xcode Releases」是一個非官方的 Xcode 發行版本清單。此資料來源提供彙整好的資料，包含了 Apple 開發者網站上未列出的額外資訊，且不容易因 Apple 網站設計變更而出錯。"
           }
         }
       }
@@ -5521,6 +5947,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Gib den %d-stelligen Code von einem Deiner Vertrauensgeräte ein:"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εισάγετε τον %d-ψήφιο κωδικό από μία από τις έμπιστες συσκευές σας:"
           }
         },
         "en" : {
@@ -5635,6 +6067,12 @@
             "value" : "Downloader"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloader"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5742,6 +6180,12 @@
             "value" : "aria2 verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Es ist zusammen mit seinem Quellcode in Xcode enthalten, um seiner GPLv2-Lizenz nachzukommen.\n\nURLSession ist Apples Standard-API für URL-Requests."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το aria2 χρησσιμοποιεί έως και 16 συνδέσεις για να κατεβάσει το Xcode 3-5 φορές ταχύτερα απο το URLSession. Συμπεριλαμβάνεται ως εκτελέσιμο μαζί τον πηγαίο του κώδικα στο Xcodes ώστε να συμμορφώνεται με την άδεια χρήσης του GPLv2.\n\nΤο URLSession είναι το προεπιλεγμένο API για την εκτέλεση των URL requests."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5823,7 +6267,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 може використовувати до 16 з'єднань, завантажуючи Xcode у 3-5 разів швидше ніж URLSession. Вона поставляється у вигляді бінарника та коду, відповідно до вимог її GPLv2 ліцензії.\n\nURLSession – це завантажувач по замовчуванню від Apple"
+            "value" : "aria2 може використовувати до 16 з'єднань, завантажуючи Xcode у 3-5 разів швидше ніж URLSession. Вона поставляється у вигляді бінарника та коду, відповідно до вимог її GPLv2 ліцензії.\n\nURLSession — це завантажувач за-умовчанням від Apple"
           }
         },
         "zh-Hans" : {
@@ -5835,7 +6279,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 相較 URLSession 可以同時使用最多 16 條連線以 3 ~ 5 倍的速度下載 Xcode。Xcodes 包含了執行檔與其原始碼以遵循他的 GPLv2 授權合約。\n\nURLSession 是系統內建用來發送 URL 連線請求的 Apple API。"
+            "value" : "aria2 可利用多達 16 條連線來下載 Xcode，相較使用 URLSession 快達 3~5 倍。Xcodes 的套件內容中包含了 aria2 執行檔及其原始碼，以遵循其使用的 GPLv2 授權條款。\n\nURLSession 是系統內建用於發起 URL 連線請求的 Apple API。"
           }
         }
       }
@@ -5854,6 +6298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Herunterladen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λήψη"
           }
         },
         "en" : {
@@ -5937,7 +6387,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Скачування"
+            "value" : "Викачування"
           }
         },
         "zh-Hans" : {
@@ -5967,6 +6417,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keine Download-Informationen gefunden"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Δεν βρέθηκαν πληροφορίες λήψης"
           }
         },
         "en" : {
@@ -6050,7 +6506,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не знайдено інформації для закачування"
+            "value" : "Не знайдено інформації для викачування"
           }
         },
         "zh-Hans" : {
@@ -6080,6 +6536,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Download: %d%% vollständig"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λήψη: %d%% ολοκλήρωση"
           }
         },
         "en" : {
@@ -6163,7 +6625,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Закачка: %d%% готово"
+            "value" : "Викачано: %d%%"
           }
         },
         "zh-Hans" : {
@@ -6187,6 +6649,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Downloads"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λήψεις"
           }
         },
         "es" : {
@@ -6281,6 +6749,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Download-Größe"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μέγεθος λήψης"
           }
         },
         "en" : {
@@ -6393,6 +6867,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benachrichtigungen einschalten"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενεργοποίηση Γνωστοποιήσεων"
           }
         },
         "en" : {
@@ -6508,6 +6988,12 @@
             "value" : "Gib den %1$d-stelligen Code ein der an '%2$@' gesendet wurde."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εισάγετε τον %2$d-ψήφιο κωδικού που εστάλη στο %2$@:"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6609,6 +7095,12 @@
     "Error" : {
       "extractionState" : "manual",
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σφάλμα"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6621,10 +7113,22 @@
             "value" : "Erreur"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Помилка"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "错误"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "錯誤"
           }
         }
       }
@@ -6642,6 +7146,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Experimente"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πειράματα"
           }
         },
         "es" : {
@@ -6731,7 +7241,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "實驗"
+            "value" : "實驗性功能"
           }
         }
       }
@@ -6748,6 +7258,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schnellerer Unxip"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ταχύτερο Unxip"
           }
         },
         "en" : {
@@ -6863,6 +7379,12 @@
             "value" : "Dank an @_saagarjha, dieses Experiment kann die Unxipping-Geschwindigkeit bis zu 70% auf einigen Systemen beschleunigen.\n\nMehr Informationen wie dies erreicht wird sind über das Unxip-Repo erhältlich - https://github.com/saagarjha/unxip"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χάριν στο χρήστη @_saagarjha, αυτή η πειραματική λειτουργία μπορεί να αυξήσει την ταχύτητα αποσυμπίεσης (unxipping) έως και 70% σε κάποια συστήματα.\n\nΓια περισσότερες πληροφορίες σχετικά με το πως επιτυγχάνεται αυτό μπορείτε να επισκεφθείτε το unxip repo - https://github.com/saagarjha/unxip"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6944,7 +7466,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Завдяки @_saagarjha, цей експеримент може пришвидшити розпаковку майже на 70%. Подробиці про unxip тут – https://github.com/saagarjha/unxip"
+            "value" : "Завдяки @_saagarjha, цей експеримент може пришвидшити розпаковку майже на 70%. \n\nПодробиці про unxip тут — https://github.com/saagarjha/unxip"
           }
         },
         "zh-Hans" : {
@@ -6973,6 +7495,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filter"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φίλτρο"
           }
         },
         "es" : {
@@ -7079,6 +7607,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Verfügbare Versionen filtern"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φιλτράρισμα διαθέσιμων εκδόσεων"
           }
         },
         "en" : {
@@ -7193,6 +7727,12 @@
             "value" : "Installierte Versionen filtern"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φιλτράρισμα εγκατεστημένων εκδόσεων"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7274,7 +7814,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Фільтрувати встановлені версії"
+            "value" : "Фільтрувати інстальовані версії"
           }
         },
         "zh-Hans" : {
@@ -7304,6 +7844,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abschließen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γίνεται ολοκλήρωση"
           }
         },
         "en" : {
@@ -7399,7 +7945,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "收尾中"
+            "value" : "即將完成"
           }
         }
       }
@@ -7417,6 +7963,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Allgemein"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γενικές"
           }
         },
         "es" : {
@@ -7494,7 +8046,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Основне"
+            "value" : "Загальне"
           }
         },
         "zh-Hans" : {
@@ -7523,6 +8075,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GitHub-Repo"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub Repo"
           }
         },
         "en" : {
@@ -7638,6 +8196,12 @@
             "value" : "Kommunikation mit privilegiertem Helfer nicht möglich."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδυναμία επικοινωνίας με το βοηθητικό εργαλείο."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7719,7 +8283,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Помилка з'єднання з \"privileged helper\"."
+            "value" : "Помилка комунікації з \"Privileged Helper\"."
           }
         },
         "zh-Hans" : {
@@ -7731,7 +8295,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "無法與權限輔助程式溝通。"
+            "value" : "無法與具有權限的輔助程式通訊。"
           }
         }
       }
@@ -7748,6 +8312,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Helfer ist installiert"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το βοηθητικό εργαλείο δεν είναι εγκατεστημένο"
           }
         },
         "en" : {
@@ -7831,7 +8401,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Helper встановлено"
+            "value" : "Helper інстальовано"
           }
         },
         "zh-Hans" : {
@@ -7843,7 +8413,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "輔助程式已安裝"
+            "value" : "已安裝輔助程式"
           }
         }
       }
@@ -7860,6 +8430,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Helfer ist nicht installiert"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το βοηθητικό εργαλείο δεν είναι εγκατεστημένο"
           }
         },
         "en" : {
@@ -7943,7 +8519,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Helper не встановлено"
+            "value" : "Helper не інстальовано"
           }
         },
         "zh-Hans" : {
@@ -7955,7 +8531,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "輔助程式尚未安裝"
+            "value" : "尚未安裝輔助程式"
           }
         }
       }
@@ -7973,6 +8549,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Identische Builds"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πανομοιότυπες Εκδόσεις"
           }
         },
         "en" : {
@@ -8087,6 +8669,12 @@
             "value" : "Manchmal sind Prerelease- and Release-Version der exakt gleich Build. Xcodes zeigt diese beiden Versionen automatisch zusammen an."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κάποιες φορές οι προεκδόσεις και εκδόσεις κυκλοφορίας είναι ακριβώς ίδιες. Το Xcodes θα εμφανίσει αυτόματα αυτές τις εκδόσεις μαζί."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8168,7 +8756,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Буває що prerelease та release насправді ідентичні (то й же Build). У такому разі Xcodes будуть показувати обидві версії разом"
+            "value" : "Буває що RC та Release насправді ідентичні (однаковий Build). У такому випадку Xcodes буде показувати обидві версії разом."
           }
         },
         "zh-Hans" : {
@@ -8180,7 +8768,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "有時候預先發行版與正式版的建制版本號會相同，Xcodes 會自動將這些版本整理在一起。"
+            "value" : "有時候預先發行版與正式版的建置版本號會相同，Xcodes 會自動將這些版本整理在一起。"
           }
         }
       }
@@ -8197,6 +8785,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Prerelease-/Beta-Versionen einschließen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συμπερίληψη προεκδόσεων/beta"
           }
         },
         "en" : {
@@ -8280,7 +8874,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Також встановлювати prerelease/beta версії"
+            "value" : "Також інсталювати RC / Beta версії"
           }
         },
         "zh-Hans" : {
@@ -8310,6 +8904,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Installieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εγκατάσταση"
           }
         },
         "en" : {
@@ -8393,7 +8993,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Встановити"
+            "value" : "Інсталювати"
           }
         },
         "zh-Hans" : {
@@ -8423,6 +9023,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die heruntergeladene Version von Xcode hat die Code-Signing-Prüfung nicht bestanden, mit folgendem Hinweis:\n%@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποτυχία επαλήθευσης ψηφιακής υπογραφής για το ληφθέν Xcode: \n%@"
           }
         },
         "en" : {
@@ -8506,7 +9112,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Викачаний Xcode не зміг пройти перевірку коду підпису (code signing verification) з наступним повідомленням:\n%@"
+            "value" : "Викачаний Xcode не зміг пройти перевірку підпису (code signing verification) з наступним повідомленням:\n%@"
           }
         },
         "zh-Hans" : {
@@ -8537,6 +9143,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Das Archiv \"%@\" ist beschädigt und kann nicht entpackt werden."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το αρχείο αρχειοθέτησης «%@» είναι κατεστραμμένο και δεν μπορεί να αποσυμπιεστεί."
           }
         },
         "en" : {
@@ -8620,7 +9232,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Архів \"%@\" пошкожено і не можливо розпакувати."
+            "value" : "Архів \"%@\" пошкоджено, його не можливо розпакувати."
           }
         },
         "zh-Hans" : {
@@ -8632,7 +9244,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壓縮檔 \"%@\" 已經損壞並無法解壓縮。"
+            "value" : "壓縮檔「%@」已經損壞並無法解壓縮。"
           }
         }
       }
@@ -8650,6 +9262,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die Sicherheitsprüfung für Xcode %@ ist mit folgender Meldung gescheitert:\n%@\nXcode bleibt unter %@ installiert, für den Fall, dass es dennoch verwendet werden soll."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Xcode %@ απέτυχε κατά την αξιολόγηση ασφαλείας του με το ακόλουθο μήνυμα:\n%@\nΠαραμένει εγκατεστημένο στο %@ αν θέλετε να το χρησιμοποιήσετε παρ' όλα αυτά."
           }
         },
         "en" : {
@@ -8733,7 +9351,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode провалив перевірку безпеки (security assessment) з наступним повідомленням:\n%@\nВін залишиться установлений в %@ якщо ви все ж наважитесь його використовувати."
+            "value" : "Xcode не пройшов перевірку безпеки (security assessment) з наступним повідомленням:\n%@\n\nВін залишиться інстальованим в %@, на випадок якщо ви забажаєте його використовувати."
           }
         },
         "zh-Hans" : {
@@ -8763,6 +9381,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Das Bewegen von Xcode in das %@-Verzeichnis ist nicht möglich."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αδυναμία μετακίνησης του Xcode στον φάκελο %@."
           }
         },
         "en" : {
@@ -8846,7 +9470,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Помилка при переміщенні Xcode в %@."
+            "value" : "Помилка при переміщенні Xcode до %@."
           }
         },
         "zh-Hans" : {
@@ -8876,6 +9500,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ ist keine gültige Versionsnummer."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η έκδοση %@ δεν είναι έγκυρη."
           }
         },
         "en" : {
@@ -8959,7 +9589,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ не є вірним номером версії."
+            "value" : "%@ не є коректним номером версії."
           }
         },
         "zh-Hans" : {
@@ -8989,6 +9619,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Passwort fehlt. Bitte erneut versuchen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λείπει το συνθηματικό. Δοκιμάστε ξανά."
           }
         },
         "en" : {
@@ -9072,7 +9708,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вистачає sudo паролю. Спробуйте ще раз."
+            "value" : "Не вистачає паролю. Спробуйте ще раз."
           }
         },
         "zh-Hans" : {
@@ -9102,6 +9738,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benutzername oder ein Passwort fehlt. Bitte erneut versuchen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Λείπει το όνομα χρήστη ή το συνθηματικό. Δοκιμάστε ξανά."
           }
         },
         "en" : {
@@ -9185,7 +9827,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Не вистачає юзернейму чи паролю. Спробуйте ще раз."
+            "value" : "Не вистачає імені користувача чи паролю. Спробуйте ще раз."
           }
         },
         "zh-Hans" : {
@@ -9215,6 +9857,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keine Nicht-Prerelease-Versionen verfügbar."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Καμία προέκδοση διαθέσιμη."
           }
         },
         "en" : {
@@ -9298,7 +9946,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Немає доступних релізних версій."
+            "value" : "Немає доступних Release версій."
           }
         },
         "zh-Hans" : {
@@ -9328,6 +9976,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Keine Prerelease-Versions verfügbar."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Καμία προέκδοση διαθέσιμη."
           }
         },
         "en" : {
@@ -9411,7 +10065,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Немає доступного пререлізу."
+            "value" : "Немає доступних RC версій."
           }
         },
         "zh-Hans" : {
@@ -9441,6 +10095,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Das Archiv \"%@\" kann nicht entpackt werden, da auf dem aktuellen Volume nicht genügend freier Speicherplatz verfügbar ist.\n\nBitte stelle mehr Platz zur Verfügung, um das Archiv zu entpacken und installiere danach Xcode %@ erneut, um die Installation von dort zu beginnen wo sie beendet wurde."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το αρχείο αρχειοθέτησης «%@» δεν μπορεί να αποσυμπιεστεί καθώς δεν έχει αρκετός διαθέσιμος χώρος σε αυτόν τον τόμο."
           }
         },
         "en" : {
@@ -9524,7 +10184,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Архів \"%@\" не можливо розпакувати, так як бракує місця.\n\nПочистіть файлове сховище щоб вистачило місця на розпаковку Архіву, та спробуйте встановити Xcode %@ знову."
+            "value" : "Архів \"%@\" не можливо розпакувати, так як бракує місця.\n\nЗвільніть файлове сховище щоб вистачило місця на розпаковку Архіву, та спробуйте інсталювати Xcode %@ знову."
           }
         },
         "zh-Hans" : {
@@ -9536,7 +10196,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "壓縮檔 \"%@\" 由於缺乏足夠的磁碟空間，無法解壓縮。\n\n請清空更多磁碟空間以確保可以解壓縮該檔案，然後再重新安裝 Xcode %@ 一次。安裝步驟將會從上次停住的地方繼續。"
+            "value" : "由於磁碟空間不足，無法將壓縮檔「%@」解壓縮。\n\n請騰出更多磁碟空間以完成解壓縮，並重新安裝 Xcode %@。安裝步驟將會從上次停住的地方繼續。"
           }
         }
       }
@@ -9554,6 +10214,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die Installation ist abgeschlossen, allerdings wurden einige Post-Installationsschritte nicht automatisch ausgeführt. Diese werden beim ersten Start von Xcode %@ ausgeführt."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η εγκατάσταση ολοκληρώθηκε, αλλά κάποια μετά-εγκαταστατικά βήματα δεν εκτελέστηκαν αυτόματα. Αυτά τα βήματα θα πραγματοποιηθούν κατά την πρώτη εκκίνηση του Xcode %@."
           }
         },
         "en" : {
@@ -9649,7 +10315,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安裝已經完成，但有些安裝後步驟沒有自動執行。這些步驟在你第一次啟動 Xcode %@ 的時候會自動執行。"
+            "value" : "已完成安裝，但有些安裝後步驟未完成。這些步驟在首次啟動 Xcode %@ 時會自動執行。"
           }
         }
       }
@@ -9667,6 +10333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Die Installation ist abgeschlossen, allerdings wurden einige Post-Installationsschritte nicht automatisch ausgeführt. Xcodes führt diese Schritte mittels eines privilegierten Helfers aus, welcher aber nicht installiert zu sein scheint. Er kann über Einstellungen > Erweitert installiert werden. Diese Schritte werden beim ersten Start von Xcode %@ ausgeführt."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η εγκατάσταση ολοκληρώθηκε, αλλά κάποια μετά-εγκαταστατικά βήματα δεν εκτελέστηκαν αυτόματα. Το Xcodes εκτελεί αυτά τα βήματα μέσω ενός εργαλείου με δικαιώματα, το οποίο φαίνεται ως μη εγκατεστημένο. Μπορείτε να το εγκαταστήσετε πηγαίνοντας στο «Ρυθμίσεις» > «Προηγμένες».\n\nΑυτά τα βήματα θα πραγματοποιηθούν κατά την πρώτη εκκίνηση του Xcode %@."
           }
         },
         "en" : {
@@ -9750,7 +10422,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Установку завершено. Але деякі post-install кроки не виконано автоматично. Xcodes виконує цю роботу за допомогою \"privileged helper\", який схоже що не встановлено. Ви можете встановити його за доромогою Налаштування > Додатково.\n\nЦі кроки буде виконано коли ви вперше запустите Xcode %@."
+            "value" : "Інсталяцію завершено. Але деякі кроки після інсталяції не було виконано автоматично. Xcodes виконує цю роботу за допомогою \"Privileged Helper\", який схоже що не інстальовано. Ви можете встановити його за допомогою Налаштування > Додатково.\n\nЦі кроки буде виконано коли ви вперше запустите Xcode %@."
           }
         },
         "zh-Hans" : {
@@ -9762,7 +10434,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "安裝已經完成，但有些安裝後步驟沒有自動執行。 Xcodes 需要權限輔助程式來執行這些步驟，但該程式尚未被安裝。你可以在 偏好設定 > 進階中安裝它。\n\n這些步驟在你第一次啟動 Xcode %@ 的時候會自動執行。"
+            "value" : "已完成安裝，但有些安裝後步驟未自動執行。Xcodes 需要具有權限的輔助程式來執行這些步驟，但該程式尚未被安裝。你可以在 偏好設定 > 進階中安裝它。\n\n這些步驟在首次啟動 Xcode %@ 時會自動執行。"
           }
         }
       }
@@ -9780,6 +10452,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kann Version %@ nicht finden."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η έκδοση %@ δεν βρέθηκε."
           }
         },
         "en" : {
@@ -9895,6 +10573,12 @@
             "value" : "Die heruntergeladene Version von Xcode hat nicht die erwartete Code-Signing-Identity.\nErhalten:\n%@\n%@\nErwartet:\n%@\n%@"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το ληφθέν Xcode δεν έχει την αναμενόμενη ταυτότητα υπογραφής κώδικα.\nΥπάρχουσα:\n%@\n%@\nΑναμενόμενη:\n%@\n%@"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9976,7 +10660,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Викачаний Xcode має неочікуваний код підпису (code signing identity).\nМає:\n%@\n%@\nОчікується:\n%@\n%@"
+            "value" : "Викачаний Xcode має неочікуваний підпис (code signing identity).\nМає:\n%@\n%@\nОчікується:\n%@\n%@"
           }
         },
         "zh-Hans" : {
@@ -9988,7 +10672,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下載的 Xcode 含有未預期的簽章。\n簽章人：\n%@\n%@\n預期的簽章人：\n%@\n%@"
+            "value" : "下載的 Xcode 含有未預期的簽章。\n簽章者：\n%@\n%@\n預期的簽章者：\n%@\n%@"
           }
         }
       }
@@ -10006,6 +10690,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes unterstützt (bislang) nicht die Installation von Xcode per %@-Dateiformat."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Xcodes δεν υποστηρίζει (ακόμη) την εγκατάσταση του Xcode από αρχεία τύπου %@."
           }
         },
         "en" : {
@@ -10089,7 +10779,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode (поки що) не підтримує свою установку у %@ форматі."
+            "value" : "Xcodes (поки що) не підтримує свою установку у %@ форматі."
           }
         },
         "zh-Hans" : {
@@ -10119,6 +10809,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ ist bereits installiert unter %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το %@ είναι ήδη εγκατεστημένο στο %@"
           }
         },
         "en" : {
@@ -10202,7 +10898,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ вже встановлено в %@"
+            "value" : "%@ вже інстальовано до %@"
           }
         },
         "zh-Hans" : {
@@ -10214,7 +10910,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ 已經安裝於 %@"
+            "value" : "%@ 已經在 %@ 安裝"
           }
         }
       }
@@ -10232,6 +10928,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ ist nicht installiert."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το %@ δεν είναι εγκατεστημένο."
           }
         },
         "en" : {
@@ -10315,7 +11017,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ не встановлено."
+            "value" : "%@ не інстальовано."
           }
         },
         "zh-Hans" : {
@@ -10327,7 +11029,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%@ 沒有被安裝。"
+            "value" : "%@ 尚未安裝。"
           }
         }
       }
@@ -10346,6 +11048,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Schritt %1$d von %2$d: %3$@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βήμα %1$d από %2$d: %3$@"
           }
         },
         "en" : {
@@ -10460,6 +11168,12 @@
             "value" : "Diese Version installieren"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εγκατάσταση αυτής της έκδοσης"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10541,7 +11255,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Встановити цю версію"
+            "value" : "Інсталювати цю версію"
           }
         },
         "zh-Hans" : {
@@ -10570,6 +11284,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Installationsverzeichnis"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φάκελος Εγκατάστασης"
           }
         },
         "en" : {
@@ -10620,10 +11340,22 @@
             "value" : "Yükleme Klasörü"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Шлях інсталяції"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "安装目录"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安裝目錄"
           }
         }
       }
@@ -10640,6 +11372,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Helfer installieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εγκατάσταση βοηθητικού εργαλείου"
           }
         },
         "en" : {
@@ -10723,7 +11461,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Встановити Install helper"
+            "value" : "Інсталювати Helper"
           }
         },
         "zh-Hans" : {
@@ -10752,6 +11490,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes sucht and installiert in ein einzelnes Verzeichnis. Standard (und empfohlen beizubehalten) ist /Programme. Änderungen am Speicherort von Xcode können dazu führen, dass andere Apps/Dienste aufhören zu funktionieren. "
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Xcodes αναζητά και εγκαθιστά σε ένα και μόνο φάκελο. Κατά προεπιλογή (όπως και συνίσταται) αυτός είναι ο «Εφαρμογές». Όποιες αλλαγές στην τοποθεσία του Xcode μπορεί να έχει ως αποτέλεσμα την προβληματική λειτουργία άλλων εφαρμογών/υπηρεσιών."
           }
         },
         "en" : {
@@ -10796,10 +11540,22 @@
             "value" : "Xcodes bir klasörü arayıp oraya yükler. Varsayılan(ve önerilen) yöntem /Uygulamalar klasöründe tutmaktır. Xcode'un bulunduğu ortamdaki herhangi bir değişiklik başka bir uygulamanın/servisin çalışmasını durdurabilir."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes шукає інсталяції та встановлює нові версії у вказану директорію. За-умовчанням,до /Applications (рекомендується). \nБудь-які зміни шляху розташування Xcode можуть призвести до втрати дієздатності інших застосунків / сервісів. "
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes会在一个目录中检索及安装。默认（推荐）保持/Applications。任何对Xcode存储位置的变更都可能会导致其他App或服务停止工作。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes 搜尋並安裝軟體到這一個路徑。預設值是 /Applications（也不建議改動）。更改 Xcode 的安裝位置可能導致其他應用程式或服務停止運作。"
           }
         }
       }
@@ -10817,6 +11573,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Letzte Prüfung: %@"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τελευταίος έλεγχος: %@"
           }
         },
         "en" : {
@@ -10931,6 +11693,12 @@
             "value" : "Lizenz"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άδεια χρήσης"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11018,7 +11786,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "軟體許可證"
+            "value" : "授權條款"
           }
         }
       }
@@ -11035,6 +11803,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lokaler Cache-Pfad"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διαδρομή Τοπικής Cache"
           }
         },
         "en" : {
@@ -11149,6 +11923,12 @@
             "value" : "Xcodes speichert verfügbare Xcode-Versionen zwischen und lädt neue Versionen temporär in ein Verzeichnis."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Xcodes χρησιμοποιεί cache περιεχομένου για τις διαθέσιμες εκδόσεις του Xcode και κάνει προσωρινές λήψεις νέων εκδόσεων σε κάποιον φάκελο"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11230,7 +12010,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Сюди зберігаються тимчасові закачки встановлюваних версій Xcode"
+            "value" : "Xcodes кешує доступні версії Xcode та тимчасові файли викачувань нових версій в цю директорію"
           }
         },
         "zh-Hans" : {
@@ -11260,6 +12040,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Login"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Είσοδος"
           }
         },
         "es" : {
@@ -11366,6 +12152,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Login öffnen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα Εισόδου"
           }
         },
         "en" : {
@@ -11481,6 +12273,12 @@
             "value" : "Erfordert macOS %@ oder neuer"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απαιτείται macOS %@ ή μεταγενέστερη έκδοση"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11562,7 +12360,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Потрібен macOS %@ чи новіший"
+            "value" : "Необхідна macOS %@ чи новіша"
           }
         },
         "zh-Hans" : {
@@ -11591,6 +12389,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktivieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ορισμός ως ενεργής"
           }
         },
         "en" : {
@@ -11703,6 +12507,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Dies zur aktiven Version machen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ορισμός ως ενεργής έκδοσης"
           }
         },
         "en" : {
@@ -11818,6 +12628,12 @@
             "value" : "Über Xcodes"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πληροφορίες για το Xcodes"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11929,6 +12745,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes Anerkennungen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναγνωρίσεις του Xcodes"
           }
         },
         "en" : {
@@ -12043,6 +12865,12 @@
             "value" : "Prüfe auf Updates..."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έλεγχος για ενημερώσεις..."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12155,6 +12983,12 @@
             "value" : "Xcodes GitHub-Repo"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes GitHub Repo"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12236,7 +13070,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes GitHub Repo"
+            "value" : "Xcodes GitHub репозіторій"
           }
         },
         "zh-Hans" : {
@@ -12265,6 +13099,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bug melden"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αναφορά σφάλματος"
           }
         },
         "en" : {
@@ -12379,6 +13219,12 @@
             "value" : "Neues Feature anfordern"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αίτημα για νέα δυνατότητα"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12460,7 +13306,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Запит на нову Фічу"
+            "value" : "Запит на новий функціонал"
           }
         },
         "zh-Hans" : {
@@ -12490,6 +13336,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "In %@ bewegen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μετακίνηση σε %@"
           }
         },
         "en" : {
@@ -12605,6 +13457,12 @@
             "value" : "Nie"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ποτέ"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12717,6 +13575,12 @@
             "value" : "Nächstes"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επόμενο"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12824,6 +13688,12 @@
             "value" : "Installation beendet"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η εγκατάσταση ολοκληρώθηκε"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12905,7 +13775,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Встановлено"
+            "value" : "Інстальовано"
           }
         },
         "zh-Hans" : {
@@ -12936,6 +13806,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neue Version verfügbar"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νέα έκδοση είναι διαθέσιμη"
           }
         },
         "en" : {
@@ -13031,7 +13907,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "有新的版本可用"
+            "value" : "新版本已可供使用"
           }
         }
       }
@@ -13049,6 +13925,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neue Xcode-Versionen stehen zum Download bereit."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νέες εκδόσεις του Xcode είναι διαθέσιμες για λήψη."
           }
         },
         "en" : {
@@ -13132,7 +14014,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Нові версії Xcode доступні до завантаження."
+            "value" : "Доступні нові версії Xcode"
           }
         },
         "zh-Hans" : {
@@ -13144,7 +14026,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "新的 Xcode 版本已經可以下載了"
+            "value" : "新的 Xcode 版本已可供下載。"
           }
         }
       }
@@ -13163,6 +14045,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Neue Xcode-Versionen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Νέες εκδόσεις του Xcode"
           }
         },
         "en" : {
@@ -13277,6 +14165,12 @@
             "value" : "Benachrichtigungen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γνωστοποιήσεις"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13381,6 +14275,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Benachrichtigungs-Einstellungen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ρυθμίσεις γνωστοποιήσεων"
           }
         },
         "en" : {
@@ -13496,6 +14396,12 @@
             "value" : "Dein Account verfügt über keine vertrauenswürdigen Telefonnummern, diese sind aber für Zwei-Faktor-Authentifizierung erforderlich.\n\nInformationen dazu unter https://support.apple.com/HT204915."
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ο λογαριασμός σας δεν έχει κάποιους αξιόπιστους τηλεφωνικούς αριθμούς, όμως απαιτούνται για τον έλεγχο ταυτότητας δύο παραγόντων.\n\nΔείτε https://support.apple.com/HT204915."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13589,7 +14495,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "你的帳號沒有任何已信任的手機號碼，但兩階段認證需要信任的手機號碼。\n\n請參閱 https://support.apple.com/HT204915."
+            "value" : "你的帳號沒有任何已信任的手機號碼，但兩階段認證需要信任的手機號碼。\n\n請參閱 https://support.apple.com/HT204915。"
           }
         }
       }
@@ -13606,6 +14512,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kein Xcode ausgewählt"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Καμία επιλογή Xcode"
           }
         },
         "en" : {
@@ -13701,7 +14613,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "沒有已選取的 Xcode"
+            "value" : "未選取 Xcode"
           }
         }
       }
@@ -13715,6 +14627,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
@@ -13821,6 +14739,12 @@
             "value" : "Name beibehalten als Xcode-X.X.X.app"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διατήρηση ονόματος ως Xcode-X.X.X.app"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13875,10 +14799,22 @@
             "value" : "Uygulama ismini Xcode-X.X.X.app gibi tut."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Зберігати імʼя як Xcode-X.X.X.app"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "保持名称为Xcode-X.X.X.app"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "保留 Xcode-X.X.X.app 名稱"
           }
         }
       }
@@ -13896,6 +14832,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bei Auswahl wird der Name mit Version beibehalten, z. B. Xcode-13.4.1.app"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατά την επιλογή, θα διατηρηθεί το όνομα και η έκδοση π.χ. Xcode-13.4.1.app"
           }
         },
         "en" : {
@@ -13946,10 +14888,22 @@
             "value" : "Seçildiğinde, ismi Xcode-13.4.1.app örneğindeki gibi tutar."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При виборі, зберігати імʼя як версію, наприклад,\nXcode-13.4.1.app"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "选中时，将会保持各版本的名称。例如Xcode-13.4.1.app。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇時，會保留有版本的檔名，如 Xcode-13.4.1.app"
           }
         }
       }
@@ -13961,6 +14915,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Immer in Xcode.app umbenennen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μετονομασία πάντα σε Xcode.app"
           }
         },
         "en" : {
@@ -14011,10 +14971,22 @@
             "value" : "Her zaman Xcode.app şeklinde ismi değiştir"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завжди змінювати імʼя на Xcode.app"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "总是重命名为Xcode.app"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "總是重新命名為 Xcode.app"
           }
         }
       }
@@ -14032,6 +15004,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Bei Auswahl wird versucht das aktive Xcode in Xcode.app umzubenennen. Die vorherige Xcode.app wird dazu in den Versionsnamen umbenannt."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατά την επιλογή, θα γίνει αυτόματα προσπάθεια μετονομασίας του ενεργού Xcode σε Xcode.app, μετονομάζοντας το προηγούμενο Xcode.app στο αντίστοιχο όνομα της έκδοσής του."
           }
         },
         "en" : {
@@ -14082,10 +15060,22 @@
             "value" : "Seçildiğinde, aktif olan Xcode'u Xcode.app olarak isimlendirmeye çalışır ve eski Xcode ismine sürüm ismi ekler."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "При виборі, автоматично перейменовувати активний Xcode на Xcode.app, змінюючи імʼя попереднього Xcode.app на його версію."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "选中时，会自动尝试重命名活跃的Xcode为Xcode.app，将之前的Xcode.app重命名为包含版本的名称。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "選擇時，會自動嘗試將目前啟用的 Xcode 重新命名為 Xcode.app，而將先前的 Xcode.app 重新命名為有版本的檔名。"
           }
         }
       }
@@ -14102,6 +15092,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Öffnen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα"
           }
         },
         "es" : {
@@ -14198,6 +15194,12 @@
     },
     "Open In Rosetta" : {
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα με Rosetta"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14210,10 +15212,22 @@
             "value" : "Rosetta ile Aç"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Запустити через Rosetta"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "在Rosetta中打开"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "使用 Rosetta 打開"
           }
         }
       }
@@ -14230,6 +15244,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Diese Version öffnen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα αυτής της έκδοσης"
           }
         },
         "en" : {
@@ -14344,6 +15364,12 @@
             "value" : "Passwort:"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνθηματικό:"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14444,10 +15470,10 @@
     },
     "Perform post-install steps" : {
       "localizations" : {
-        "de" : {
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Führe Post-Installationsschritte durch"
+            "value" : "Εκτέλεση μετά-εγκαταστατικών βημάτων"
           }
         },
         "fr" : {
@@ -14462,20 +15488,32 @@
             "value" : "Yükleme sonrası adımları uygula"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Виконати пост-інсталяційні кроки"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "执行安装后准备步骤"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "執行安裝後步驟"
           }
         }
       }
     },
     "Platforms" : {
       "localizations" : {
-        "de" : {
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Plattformen"
+            "value" : "Πλατφόρμες"
           }
         },
         "tr" : {
@@ -14484,7 +15522,19 @@
             "value" : "Platformlar"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Платформи"
+          }
+        },
         "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "平台"
+          }
+        },
+        "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "平台"
@@ -14495,10 +15545,10 @@
     "PlatformsList.Title" : {
       "extractionState" : "manual",
       "localizations" : {
-        "de" : {
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hier siehst du eine Liste der auf diesem Rechner installierten Plattformen."
+            "value" : "Ακολουθεί λίστα με τις πλατφόρμες που είναι εγκατεστημένες σε αυτό το σύστημα."
           }
         },
         "en" : {
@@ -14513,10 +15563,22 @@
             "value" : "Ci-dessous une liste des plateformes installées sur cette machine."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Нижче наведений список платформ що доступні на цій машині"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "下面是在这台设备上已经安装的平台列表。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下列是本機器安裝的平台名單。"
           }
         }
       }
@@ -14533,6 +15595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Einstellungen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Προτιμήσεις"
           }
         },
         "es" : {
@@ -14639,6 +15707,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Einstellungen öffnen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα Προτιμήσεων"
           }
         },
         "en" : {
@@ -14753,6 +15827,12 @@
             "value" : "Privilegierter Helfer"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Βοηθητικό Εργαλείο με δικαιώματα"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14846,7 +15926,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "權限輔助程式"
+            "value" : "具有權限的輔助程式"
           }
         }
       }
@@ -14863,6 +15943,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes verwendet einen separaten privilegierten Helfer, um Aufgaben als root zu erledigen. Das sind Dinge, die sudo in der Kommandozeile erfordern würden, einschließlich Post-Installationsschritte sowie das Umstellen von Xcode-Versionen mit xcode-select.\n\nUm ihn zu installieren, erfolgt eine Aufforderung zur Eingabe des Passworts für Dein macOS-Benutzerkonto."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Xcodes χρησιμοποιεί ένα ξεχωριστό εργαλείο με δικαιώματα ώστε να εκτελέσει εργασίες ως root. Αυτές είναι εργασίες που θα απαιτούσαν sudo στη γραμμή εντολών, συμπεριλαμβανομένων μετά-εγκαταστατικών βημάτων και αλλαγής μεταξύ εκδόσεων του Xcode με το xcode-select.\n\nΘα σας ζητηθεί το συνθηματικό του λογαριασμού σας στο macOS για την εγκατάσταση του."
           }
         },
         "en" : {
@@ -14946,7 +16032,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes використовує спеціальний \"privilege helper\" щоб запускати задачі як суперюзер. Це включає наприклад sudo в терміналі, та кроки після інсталяції або перемикання версії Xcode за допомогою xcode-select.\n\nБуде запит на ваш пароль від Мак щоб встановити цей хелпер."
+            "value" : "Xcodes використовує спеціальний \"Privileged Helper\" для запуску задач від імені root. Це включає, наприклад, sudo в терміналі, та кроки після інсталяції або перемикання версії Xcode за допомогою xcode-select.\n\nБуде запит на ваш пароль від Mac щоб інсталювати цей помічник."
           }
         },
         "zh-Hans" : {
@@ -14958,7 +16044,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes 使用一個分開的權限輔助程式以使用 root 身份執行特定工作。這些工作包含了通常需要在命令列使用 sudo 的指令，包含安裝後步驟以及使用 xcode-select 選擇 Xcode 版本。\n\n安裝時，你將會被詢問你的 macOS 帳號密碼。"
+            "value" : "Xcodes 會利用一個分開的具有權限的輔助程式以 root 身份執行特定工作，例如那些在命令列中通常需使用 sudo 的命令，包含安裝程序後的步驟以及使用 xcode-select 選擇 Xcode 版本。\n\n安裝此程式時，你將會需要輸入 macOS 帳號的密碼。"
           }
         }
       }
@@ -14975,6 +16061,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aktualisieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανανέωση"
           }
         },
         "es" : {
@@ -15064,7 +16156,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "更新"
+            "value" : "重新整理"
           }
         }
       }
@@ -15081,6 +16173,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode-Liste aktualisieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανανέωση λίστας των Xcode"
           }
         },
         "en" : {
@@ -15196,6 +16294,12 @@
             "value" : "Release"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κυκλοφορία"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15277,7 +16381,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Release"
+            "value" : "Реліз"
           }
         },
         "zh-Hans" : {
@@ -15306,6 +16410,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Release-Datum"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ημερομηνία κυκλοφορίας"
           }
         },
         "en" : {
@@ -15420,6 +16530,12 @@
             "value" : "Release-Notes anzeigen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σημειώσεις κυκλοφορίας"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15532,6 +16648,12 @@
             "value" : "Nur Release"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εκδόσεις κυκλοφορίας μόνο"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15625,7 +16747,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "只看正式版"
+            "value" : "只顯示正式版"
           }
         }
       }
@@ -15642,6 +16764,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erforderlich"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απαιτείται"
           }
         },
         "es" : {
@@ -15750,6 +16878,12 @@
             "value" : "Im Finder anzeigen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποκάλυψη στο Finder"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15843,7 +16977,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "顯示於 Finder"
+            "value" : "在 Finder 中顯示"
           }
         }
       }
@@ -15857,6 +16991,12 @@
           }
         },
         "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SDKs"
+          }
+        },
+        "el" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "SDKs"
@@ -15937,7 +17077,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SDKs"
+            "value" : "SDK"
           }
         },
         "zh-Hans" : {
@@ -15949,7 +17089,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "SDKs"
+            "value" : "SDK 清單"
           }
         }
       }
@@ -15966,6 +17106,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Auswählen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επιλογή"
           }
         },
         "es" : {
@@ -16074,6 +17220,12 @@
             "value" : "Ausgewählt"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επιλεγμένα"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16179,6 +17331,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wähle eine vertrauenswürdige Telefonnummer aus, um einen %d-stelligen Code via SMS zum empfangen:"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επιλέξτε έναν αξιόπιστο τηλεφωνικό αριθμό για να λάβετε έναν %d-ψήφιο κωδικό με SMS:"
           }
         },
         "en" : {
@@ -16293,6 +17451,12 @@
             "value" : "SMS senden"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποστολή SMS"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16393,6 +17557,12 @@
     },
     "ShowOpenInRosetta" : {
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εμφάνιση της επιλογής «Άνοιγμα με Rosetta»"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16429,16 +17599,34 @@
             "value" : "Rosetta ile açma seçeneğini göster"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Показувати опцію \"Запустити через Rosetta\""
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "显示“在Rosetta中打开”选项"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "顯示「使用 Rosetta 打開」選項"
           }
         }
       }
     },
     "ShowOpenInRosettaDescription" : {
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η επιλογή «Άνοιγμα με Rosetta» θα εμφανίζεται όπου είναι διαθέσιμες οι υπόλοιπες επιλογές «Άνοιγμα». Σημείωση: Θα εμφανίζεται μόνο σε συστήματα με Apple Silicon."
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16475,10 +17663,22 @@
             "value" : "Rosetta ile açma opsiyonu diğer uygun \"Açma\" fonksiyonlarını gösterecektir. Not: Bu sadece Apple Silikon makinelerinde gözükecektir."
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Опція \"Запустити через Rosetta\" зʼявиться там де наразі знаходиться функція \"Запустити\".\nПримітка: Доступно лише для Apple Silicon машин."
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "“在Rosetta中打开”将会在有其他“打开”方式可用时显示。注：此选项只会在Apple Silicon设备上显示。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "「使用 Rosetta 打開」選項會在「打開」選項所在的區塊顯示。注意：這個選項只會在 Apple Silicon 機器顯示。"
           }
         }
       }
@@ -16495,6 +17695,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Anmelden"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Σύνδεση"
           }
         },
         "en" : {
@@ -16578,7 +17784,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Логін"
+            "value" : "Увійти"
           }
         },
         "zh-Hans" : {
@@ -16608,6 +17814,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mit Deiner Apple-ID anmelden."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνδεθείτε με το Apple ID σας."
           }
         },
         "en" : {
@@ -16703,7 +17915,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "登入您的Apple ID"
+            "value" : "使用您的 Apple ID 登入。"
           }
         }
       }
@@ -16720,6 +17932,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abmelden"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποσύνδεση"
           }
         },
         "en" : {
@@ -16834,6 +18052,12 @@
             "value" : "Installation stoppen"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Διακοπή εγκατάστασης"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16915,7 +18139,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Зупинити встановлення"
+            "value" : "Зупинити інсталяцію"
           }
         },
         "zh-Hans" : {
@@ -16935,16 +18159,34 @@
     "Support.Xcodes" : {
       "extractionState" : "manual",
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Υποστηρίξτε το Xcodes"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support Xcodes"
           }
         },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Підтримати Xcodes"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "支持Xcodes"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "支持 Xcodes"
           }
         }
       }
@@ -16962,6 +18204,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Archiv in den Papierkorb bewegen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μετακίνηση αρχειοθήκης στον Κάδο"
           }
         },
         "en" : {
@@ -17057,7 +18305,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "移動封存檔到垃圾桶"
+            "value" : "正在將封存檔移動至垃圾桶"
           }
         }
       }
@@ -17075,6 +18323,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Entpacken (Dies kann etwas dauern)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αποσυμπίεση (Ίσως χρειαστεί λίγος χρόνος)"
           }
         },
         "en" : {
@@ -17189,6 +18443,12 @@
             "value" : "Deinstallieren"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απεγκατάσταση"
+          }
+        },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17293,6 +18553,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unxip-Experiment"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Πείραμα Unxip"
           }
         },
         "en" : {
@@ -17409,6 +18675,12 @@
             "value" : "Aktualisiert am"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Τελευταία ενημέρωση"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17490,7 +18762,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Оновлено о"
+            "value" : "Оновлено"
           }
         },
         "zh-Hans" : {
@@ -17520,6 +18792,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Updates"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ενημερώσεις"
           }
         },
         "es" : {
@@ -17628,6 +18906,12 @@
             "value" : "Beim Unxipping, Experiment verwenden"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Χρήση πειραματικού εργαλείου κατά το unxipping"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17709,7 +18993,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Під час розпаковки Unxip використовувати експериментальний метод."
+            "value" : "Експериментальний метод розпаковки"
           }
         },
         "zh-Hans" : {
@@ -17738,6 +19022,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Versionen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Εκδόσεις"
           }
         },
         "es" : {
@@ -17846,6 +19136,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Version %@ (%@)"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Έκδοση %@ (%@)"
           }
         },
         "en" : {
@@ -17962,6 +19258,12 @@
             "value" : "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻"
           }
         },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨🏻‍💻👩🏼‍💻 Χαρούμενο WWDC %@! 👨🏽‍💻🧑🏻‍💻"
+          }
+        },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18051,12 +19353,30 @@
             "state" : "translated",
             "value" : "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻"
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨🏻‍💻👩🏼‍💻 慶祝 WWDC %@！👨🏽‍💻🧑🏻‍💻"
+          }
         }
       }
     },
     "Xcode" : {
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode"
+          }
+        },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode"
@@ -18067,12 +19387,30 @@
             "state" : "translated",
             "value" : ""
           }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode"
+          }
         }
       }
     },
     "Xcodes" : {
       "localizations" : {
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes"
+          }
+        },
         "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes"
@@ -18082,6 +19420,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : ""
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes"
           }
         }
       }

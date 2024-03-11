@@ -19,7 +19,7 @@ struct PlatformsView: View {
         let builds = xcode.sdks?.allBuilds()
         let runtimes = builds?.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
-                $0.sdkBuildUpdate == sdkBuild
+                $0.sdkBuildUpdate?.contains(sdkBuild) ?? false
             }
         }
 

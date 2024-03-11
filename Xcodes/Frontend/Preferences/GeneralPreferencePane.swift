@@ -29,7 +29,7 @@ struct GeneralPreferencePane_Previews: PreviewProvider {
         Group {
             GeneralPreferencePane()
                 .environmentObject(AppState())
-                .frame(maxWidth: 500)
+                .frame(maxWidth: 600)
         }
     }
 }

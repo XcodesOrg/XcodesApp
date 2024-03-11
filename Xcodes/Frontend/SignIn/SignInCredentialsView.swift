@@ -1,9 +1,14 @@
 import SwiftUI
 
 struct SignInCredentialsView: View {
+    private enum FocusedField {
+        case username, password
+    }
+    
     @EnvironmentObject var appState: AppState
     @State private var username: String = ""
     @State private var password: String = ""
+    @FocusState private var focusedField: FocusedField?
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -16,11 +21,13 @@ struct SignInCredentialsView: View {
                 TextField(text: $username) {
                     Text(verbatim: "example@icloud.com")
                 }
+                .focused($focusedField, equals: .username)
             }
             HStack {
                 Text("Password")
                     .frame(minWidth: 100, alignment: .trailing)
                 SecureField("Required", text: $password)
+                    .focused($focusedField, equals: .password)
             }
             if appState.authError != nil {
                 HStack {

@@ -18,7 +18,9 @@ struct SDKsView: View {
         } else {
             VStack(alignment: .leading) {
                 Text("SDKs").font(.headline)
-                Text(content).font(.subheadline)
+                Text(content)
+                    .font(.subheadline)
+                    .textSelection(.enabled)
             }
         }
     }

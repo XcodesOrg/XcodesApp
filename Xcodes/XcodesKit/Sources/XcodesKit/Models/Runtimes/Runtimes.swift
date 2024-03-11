@@ -30,7 +30,7 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     
     // dynamically updated - not decoded
     public var installState: RuntimeInstallState = .notInstalled
-    public var sdkBuildUpdate: String?
+    public var sdkBuildUpdate: [String]?
     
     enum CodingKeys: CodingKey {
         case category

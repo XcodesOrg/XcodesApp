@@ -19,6 +19,7 @@ struct InfoPane: View {
                             Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                                 .font(.title)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .textSelection(.enabled)
                         }
                         InfoPaneControls(xcode: xcode)
                     }
@@ -146,12 +147,12 @@ var xcodeDict: [XcodePreviewName: Xcode] = [
 var downloadableRuntimes: [DownloadableRuntime] = {
     var runtimes = try! JSONDecoder().decode([DownloadableRuntime].self, from: Current.files.contents(atPath: Path.runtimeCacheFile.string)!)
     // set iOS to installed
-    let iOSIndex = runtimes.firstIndex { $0.sdkBuildUpdate == "19E239" }!
+    let iOSIndex = 0//runtimes.firstIndex { $0.sdkBuildUpdate.contains == "19E239" }!
     var iOSRuntime = runtimes[iOSIndex]
     iOSRuntime.installState = .installed
     runtimes[iOSIndex] = iOSRuntime
     
-    let watchOSIndex = runtimes.firstIndex { $0.sdkBuildUpdate == "20R362" }!
+    let watchOSIndex = 0//runtimes.firstIndex { $0.sdkBuildUpdate.first == "20R362" }!
     var runtime = runtimes[watchOSIndex]
     runtime.installState = .installing(
         RuntimeInstallationStep.downloading(
