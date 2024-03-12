@@ -34,25 +34,13 @@ struct MainToolbarModifier: ViewModifier {
                 case .all:
                     Label("All", systemImage: "line.horizontal.3.decrease.circle")
                 case .release:
-                    if #available(macOS 11.3, *) {
                         Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleAndIconLabelStyle())
+                            .labelStyle(.trailingIcon)
                             .foregroundColor(.accentColor)
-                    } else {
-                        Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleOnlyLabelStyle())
-                            .foregroundColor(.accentColor)
-                    }
                 case .beta:
-                    if #available(macOS 11.3, *) {
-                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleAndIconLabelStyle())
-                            .foregroundColor(.accentColor)
-                    } else {
-                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleOnlyLabelStyle())
-                            .foregroundColor(.accentColor)
-                    }
+                    Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        .labelStyle(.trailingIcon)
+                        .foregroundColor(.accentColor)
                 }
             }
             .help("FilterAvailableDescription")
