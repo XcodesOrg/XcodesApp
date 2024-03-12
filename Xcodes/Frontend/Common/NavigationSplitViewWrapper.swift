@@ -20,7 +20,6 @@ struct NavigationSplitViewWrapper<Sidebar, Detail>: View where Sidebar: View, De
     }
     
     var body: some View {
-        // Use the latest API available
         NavigationSplitView {
             if #available(macOS 14, *) {
                 sidebar
