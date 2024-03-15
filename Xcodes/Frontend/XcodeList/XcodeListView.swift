@@ -45,7 +45,8 @@ struct XcodeListView: View {
         .listStyle(.sidebar)
         .safeAreaInset(edge: .bottom, spacing: 0) {
             PlatformsPocket()
-                .padding()
+                .padding(.horizontal)
+                .padding(.vertical, 8)
         }
     }
 }
@@ -54,19 +55,21 @@ struct PlatformsPocket: View {
     @SwiftUI.Environment(\.openWindow) private var openWindow
    
     var body: some View {
-        Button(action: { 
-            openWindow(id: "platforms") }
+        Button(action: {
+            openWindow(id: "platforms")
+        }
         ) {
-            VStack(spacing: 5) {
+            HStack(spacing: 5) {
                 Image(systemName: "square.3.layers.3d")
-                    .font(.title)
-                Text("Platforms")
-                    .font(.callout)
+                    .font(.title3.weight(.medium))
+                Text("PlatformsDescription")
             }
-            .frame(width: 70, height: 70)
-            .background(.quaternary)
-            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-            
+            .font(.body.weight(.medium))
+            .padding(.horizontal)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(.quaternary.opacity(0.75))
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
         .buttonStyle(.plain)
     }

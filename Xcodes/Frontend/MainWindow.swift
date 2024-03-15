@@ -16,7 +16,7 @@ struct MainWindow: View {
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
-  
+
     var body: some View {
         NavigationSplitViewWrapper {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
