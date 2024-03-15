@@ -30,9 +30,6 @@ struct XcodeListViewRow: View {
                     Text(verbatim: path.string)
                         .font(.caption)
                         .foregroundColor(.secondary)
-                } else {
-                    Text(verbatim: "")
-                        .font(.caption)
                 }
             }
 
@@ -42,6 +39,7 @@ struct XcodeListViewRow: View {
                 .padding(.trailing, 16)
             installControl(for: xcode)
         }
+        .padding(.vertical, 4)
         .contextMenu {
             switch xcode.installState {
             case .notInstalled:
@@ -75,9 +73,10 @@ struct XcodeListViewRow: View {
         if let icon = xcode.icon {
             Image(nsImage: icon)
         } else {
-            Color.clear
+            Image(xcode.version.isPrerelease ? "xcode-beta" : "xcode")
+                .resizable()
                 .frame(width: 32, height: 32)
-                .foregroundColor(.secondary)
+                .opacity(0.2)
         }
     }
 
