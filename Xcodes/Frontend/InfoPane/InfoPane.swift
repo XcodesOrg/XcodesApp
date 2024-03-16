@@ -14,7 +14,7 @@ struct InfoPane: View {
                 VStack {
                     VStack(spacing: 5) {
                         HStack {
-                            IconView(installState: xcode.installState)
+                            IconView(xcode: xcode)
                             
                             Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                                 .font(.title)

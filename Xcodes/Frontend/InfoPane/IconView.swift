@@ -6,17 +6,18 @@
 //  Copyright © 2023 Robots and Pencils. All rights reserved.
 //
 
-import SwiftUI
 import Path
+import SwiftUI
+import Version
 
 struct IconView: View {
-    let installState: XcodeInstallState
+    let xcode: Xcode
 
     var body: some View {
-        if case let .installed(path) = installState {
+        if case let .installed(path) = xcode.installState {
             Image(nsImage: NSWorkspace.shared.icon(forFile: path.string))
         } else {
-            Image(systemName: "app.fill")
+            Image(xcode.version.isPrerelease ? "xcode-beta" : "xcode")
                 .resizable()
                 .frame(width: 32, height: 32)
                 .foregroundColor(.secondary)
@@ -25,13 +26,19 @@ struct IconView: View {
 }
 
 #Preview("Installed") {
-  IconView(installState: XcodeInstallState.installed(Path("/Applications/Xcode.app")!))
-    .frame(width: 300, height: 100)
-    .padding()
+    IconView(xcode: Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil))
+        .frame(width: 300, height: 100)
+        .padding()
+}
+
+#Preview("Installed") {
+    IconView(xcode: Xcode(version: Version("12.3.0")!, installState: .notInstalled, selected: true, icon: nil))
+        .frame(width: 300, height: 100)
+        .padding()
 }
 
 #Preview("Not Installed") {
-  IconView(installState: XcodeInstallState.notInstalled)
-    .frame(width: 300, height: 100)
-    .padding()
+    IconView(xcode: Xcode(version: Version("12.0.0-1234A")!, installState: .notInstalled, selected: false, icon: nil))
+        .frame(width: 300, height: 100)
+        .padding()
 }
