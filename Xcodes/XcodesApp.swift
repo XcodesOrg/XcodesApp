@@ -169,9 +169,5 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 }
 
 func localizeString(_ key: String, comment: String = "") -> String {
-    if #available(macOS 12, *) {
-        return String(localized: String.LocalizationValue(key))
-    } else {
-        return NSLocalizedString(key, comment: comment)
-    }
+    return String(localized: String.LocalizationValue(key))
 }
