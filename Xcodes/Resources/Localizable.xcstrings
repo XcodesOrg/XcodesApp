@@ -1154,6 +1154,12 @@
       "comment" : "Cancel Runtime Install",
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bist du sicher, dass Du die Installation von Xcode %@ anhalten möchtest?"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1321,6 +1327,12 @@
     "Alert.DeletePlatform.PrimaryButton" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Löschen"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1362,6 +1374,12 @@
     "Alert.DeletePlatform.Title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bist du sicher, dass du %@ löschen möchtest?"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15470,6 +15488,12 @@
     },
     "Perform post-install steps" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Führe Post-Installationsschritte durch"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15510,6 +15534,12 @@
     },
     "Platforms" : {
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Plattformen"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15555,6 +15585,12 @@
     "PlatformsList.Title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hier siehst du eine Liste der auf diesem Rechner installierten Plattformen."
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
