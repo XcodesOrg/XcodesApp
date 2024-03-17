@@ -65,7 +65,7 @@ struct PlatformsPocket: View {
                 Text("PlatformsDescription")
             }
             .font(.body.weight(.medium))
-            .padding(.horizontal)
+            .padding(.horizontal, 7) // this can't be > 8 or nil or it messes up the entire sidebar - https://github.com/XcodesOrg/XcodesApp/issues/534 Go ahead - you do you SwiftUI!
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(.quaternary.opacity(0.75))
