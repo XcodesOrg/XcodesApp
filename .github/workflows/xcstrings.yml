@@ -15,7 +15,7 @@ jobs:
 
     - name: Clone SwiftPolyglot
       run: git clone https://github.com/appdecostudio/SwiftPolyglot.git
-
+      
     - name: validate translations
       run: |
         swift build --package-path ./SwiftPolyglot --configuration release
