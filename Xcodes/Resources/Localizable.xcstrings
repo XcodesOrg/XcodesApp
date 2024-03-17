@@ -37,6 +37,12 @@
     },
     "%@" : {
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1154,6 +1160,12 @@
       "comment" : "Cancel Runtime Install",
       "extractionState" : "manual",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1172,10 +1184,70 @@
             "value" : "Are you sure you want to stop the installation of Xcode %@?"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Êtes-vous sûr de vouloir arrêter l'installation de Xcode %@ ?"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to stop the installation of Xcode %@?"
           }
         },
         "tr" : {
@@ -1327,6 +1399,12 @@
     "Alert.DeletePlatform.PrimaryButton" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1345,10 +1423,76 @@
             "value" : "Delete"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Supprimer"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete"
           }
         },
         "uk" : {
@@ -1374,6 +1518,12 @@
     "Alert.DeletePlatform.Title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1392,10 +1542,76 @@
             "value" : "Are you sure you want to delete %@?"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Êtes-vous sûr de vouloir supprimer %@ ?"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Are you sure you want to delete %@?"
           }
         },
         "uk" : {
@@ -2733,6 +2949,12 @@
     "Alert.Uninstall.Error.Message.FileNotFound" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find file \"%@\"."
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2751,10 +2973,34 @@
             "value" : "Could not find file \"%@\"."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find file \"%@\"."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find file \"%@\"."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Impossible de trouver le fichier \"%@\"."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find file \"%@\"."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find file \"%@\"."
           }
         },
         "ja" : {
@@ -2763,10 +3009,34 @@
             "value" : "ファイル \"%@\" が見つかりませんでした。"
           }
         },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find file \"%@\"."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find file \"%@\"."
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nie znaleziono pliku \"%@\"."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find file \"%@\"."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Could not find file \"%@\"."
           }
         },
         "tr" : {
@@ -3386,6 +3656,12 @@
     },
     "Apple Silicon" : {
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Silicon"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5422,6 +5698,12 @@
             "value" : "Copiar URL"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy URL"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5462,6 +5744,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kopiuj adres URL"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy URL"
           }
         },
         "ru" : {
@@ -5616,6 +5904,12 @@
     },
     "CreateSymLinkBeta" : {
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Symlink as Xcode-Beta.app"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5676,10 +5970,22 @@
             "value" : "Xcode-Beta.app과 같은 Symlink 만들기"
           }
         },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Symlink as Xcode-Beta.app"
+          }
+        },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Utwórz Symlink jako Xcode-Beta.app"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Symlink as Xcode-Beta.app"
           }
         },
         "ru" : {
@@ -6663,6 +6969,12 @@
     "Downloads" : {
       "comment" : "Download Preference Pane",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloads"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7113,6 +7425,12 @@
     "Error" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7129,6 +7447,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Erreur"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error"
           }
         },
         "uk" : {
@@ -11322,16 +11646,40 @@
             "value" : "Directorio de instalación"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Directory"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Répertoire d'installation"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Directory"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Directory"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "インストール先"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Directory"
           }
         },
         "nl" : {
@@ -11344,6 +11692,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Katalog instalacji"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Directory"
           }
         },
         "ru" : {
@@ -11522,16 +11876,46 @@
             "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes recherche et installe dans un répertoire spécifique. Par défaut, il est recommandé de laisser /Applications. Tout changement modifiant l'emplacement de Xcode risque de provoquer des dysfonctionnements aux autres apps/services."
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodesは1つのディレクトリを検索し、そこにインストールします。デフォルト (推奨) は /Applications です。Xcodeの格納場所を変更すると、他のアプリケーションやサービスが動作しなくなる可能性があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
           }
         },
         "nl" : {
@@ -11544,6 +11928,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes wyszukuje i instaluje w jednym katalogu. Domyślnie (i zalecane) jest to /Applications. Wszelkie zmiany w miejscu przechowywania Xcode mogą spowodować, że inne aplikacje/usługi przestaną działać."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
           }
         },
         "ru" : {
@@ -14775,16 +15165,40 @@
             "value" : "Mantener el nombre como Xcode-X.X.X.app"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep name as Xcode-X.X.X.app"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ne rien faire"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep name as Xcode-X.X.X.app"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep name as Xcode-X.X.X.app"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "名前をXcode-X.X.X.appのまま維持する"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Keep name as Xcode-X.X.X.app"
           }
         },
         "nl" : {
@@ -14870,16 +15284,40 @@
             "value" : "Al seleccionar, mantener el nombre como la versión p.ej. Xcode-13.4.1.app"
           }
         },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lors de la sélection, gardera le numéro de version. Exemple: Xcode-13.4.1.app"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "選択時、バージョン付きの名前を維持します。例) Xcode-13.4.1.app"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
           }
         },
         "nl" : {
@@ -14892,6 +15330,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Po wybraniu, nazwa pozostanie w formacie z numerem wersji, np. Xcode-13.4.1.app"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
           }
         },
         "ru" : {
@@ -14929,6 +15373,12 @@
     "OnSelectRenameXcode" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always rename to Xcode.app"
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14947,16 +15397,46 @@
             "value" : "Always rename to Xcode.app"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always rename to Xcode.app"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always rename to Xcode.app"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Toujours renommer en Xcode.app"
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always rename to Xcode.app"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always rename to Xcode.app"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "名前を常にXcode.appに変更する"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Always rename to Xcode.app"
           }
         },
         "nl" : {
@@ -15036,16 +15516,46 @@
             "value" : "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Lors de la sélection, toujours essayer de renommer la version active de Xcode en Xcode.app, en renommant l'ancienne Xcode.app avec le nom de version."
           }
         },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "選択時、自動的にアクティブなXcodeをXcode.appに、以前のXcode.appをバージョン付きの名前に変更します。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name."
           }
         },
         "nl" : {
@@ -15574,7 +16084,97 @@
     },
     "PlatformsDescription" : {
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
+        "uk" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Installed Platforms"
@@ -15585,6 +16185,12 @@
     "PlatformsList.Title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15603,10 +16209,76 @@
             "value" : "Below are a list of platforms that are installed on this machine. "
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ci-dessous une liste des plateformes installées sur cette machine."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Below are a list of platforms that are installed on this machine. "
           }
         },
         "uk" : {
@@ -17615,16 +18287,40 @@
             "value" : "Show Open In Rosetta option"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Open In Rosetta option"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Open In Rosetta option"
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Afficher l'option Ouvrir avec Rosetta"
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Open In Rosetta option"
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rosettaで開くオプションを表示する"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Open In Rosetta option"
           }
         },
         "pl" : {
@@ -17637,6 +18333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Mostrar opçao abrir com Rosetta"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Open In Rosetta option"
           }
         },
         "tr" : {
@@ -17679,16 +18381,40 @@
             "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+          }
+        },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ouvrir avec Rosetta s'affichera d'autres options \"Ouvrir\" sont disponibles. Note: Uniquement pour les machines Apple Silicon."
           }
         },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+          }
+        },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Rosettaで開くオプションは \"開く\" 機能が利用できる場所に表示されます。注意: これはApple Siliconマシンにのみ表示されます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
           }
         },
         "pl" : {
@@ -17701,6 +18427,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Opção de abrir com o Rosetta será mostrar onde outras opções \"Abrir\" estão disponíveis. Nota: Isso só será mostrado pra máquinas Apple Silicon."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
           }
         },
         "tr" : {
@@ -18205,6 +18937,18 @@
     "Support.Xcodes" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18212,6 +18956,72 @@
           }
         },
         "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Support Xcodes"
+          }
+        },
+        "tr" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Support Xcodes"
