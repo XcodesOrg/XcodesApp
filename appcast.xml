@@ -8,7 +8,7 @@
             
                 
                     <item>
-                        <title>v2.1.0 - I'm just Xcodes</title>
+                        <title>v2.1.1 - I'm just Xcodes</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
 
@@ -54,7 +54,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
   <li>Bump ruby/setup-ruby from 1.169.0 to 1.171.0 (#495) @dependabot</li>
 </ul>
 
-<!-- sparkle:edSignature=2flyh4IQE3Rmg1cHs0Zbddv4JrYVv91sg2sH4bxY6cl8RBUXLYhvSJ1u7Hz5dCbc2qUD9E1AjGyD3fclHD5oDQ== -->
+<!-- sparkle:edSignature=kChtCsch/u+2D023oWCVJYd4m9KbQRQ7o+P5TAuO3GZ/GWo2SK6zmreSLqPOBVgLoAuowy9Vm+rbZjVJamS7Dg== -->
 ]]></description>
                         <pubDate>Sun, 17 Mar 2024 00:43:52 +0000</pubDate>
                         
@@ -66,11 +66,11 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
                                 
 
                                 <enclosure
-                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.1.0b24/Xcodes.zip"
-                                    sparkle:version="24"
-                                    sparkle:shortVersionString="2.1.0"
-                                    sparkle:edSignature="2flyh4IQE3Rmg1cHs0Zbddv4JrYVv91sg2sH4bxY6cl8RBUXLYhvSJ1u7Hz5dCbc2qUD9E1AjGyD3fclHD5oDQ=="
-                                    length="12440800"
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.1.1b25/Xcodes.zip"
+                                    sparkle:version="25"
+                                    sparkle:shortVersionString="2.1.1"
+                                    sparkle:edSignature="kChtCsch/u+2D023oWCVJYd4m9KbQRQ7o+P5TAuO3GZ/GWo2SK6zmreSLqPOBVgLoAuowy9Vm+rbZjVJamS7Dg=="
+                                    length="12330029"
                                     type="application/octet-stream" />
                             
                         
