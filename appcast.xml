@@ -6,6 +6,77 @@
         <language>en</language>
         
             
+                
+                    <item>
+                        <title>v2.1.0 - I'm just Xcodes</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Replace AttributedText with markdown to fix the layout issues (#531) @huihuisang</li>
+  <li>replace default icon in info page (#530) @huihuisang</li>
+  <li>Improve Filter Button style (#526) @chickdan</li>
+  <li>Improve the layout of the sidebar (#504) @huihuisang</li>
+  <li>Improve signing experience when using non-english keyboard (#521) @LiYanan2004</li>
+  <li>Improvements in the layout of the Settings window (#506) @alladinian</li>
+  <li>Allow selecting text for version info (#503) @clementpadovani</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>fix runtime not appearing when multiple runtimes exist for same build (#523) @MattKiazyk</li>
+  <li>fix: adds back in sidebar toggle button so users don’t get stuck (#499) @MattKiazyk</li>
+</ul>
+
+<h2 id="-localization">🌎 Localization</h2>
+
+<ul>
+  <li>chore: cleanup some localizeable.xcstrings (#532) @MattKiazyk</li>
+  <li>Updated german localization (#519) @Schr0eder</li>
+  <li>l10n(zh-Hant): Update translation for 2.0.2 (#502) @pan93412</li>
+  <li>Update Ukrainian localisation (#510) @kikiwora</li>
+  <li>Greek language localization (#505) @alladinian</li>
+  <li>Update zh_Hans Localizations. And more. (#482) @megabitsenmzq</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Remove outdated version checks (#527) @chickdan</li>
+  <li>Bump ruby/setup-ruby from 1.171.0 to 1.172.0 (#509) @dependabot</li>
+  <li>Bump actions/cache from 4.0.0 to 4.0.1 (#515) @dependabot</li>
+  <li>Bump release-drafter/release-drafter from 5 to 6 (#497) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.169.0 to 1.171.0 (#495) @dependabot</li>
+</ul>
+
+<!-- sparkle:edSignature=2flyh4IQE3Rmg1cHs0Zbddv4JrYVv91sg2sH4bxY6cl8RBUXLYhvSJ1u7Hz5dCbc2qUD9E1AjGyD3fclHD5oDQ== -->
+]]></description>
+                        <pubDate>Sun, 17 Mar 2024 00:43:52 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.1.0b24/Xcodes.zip"
+                                    sparkle:version="24"
+                                    sparkle:shortVersionString="2.1.0"
+                                    sparkle:edSignature="2flyh4IQE3Rmg1cHs0Zbddv4JrYVv91sg2sH4bxY6cl8RBUXLYhvSJ1u7Hz5dCbc2qUD9E1AjGyD3fclHD5oDQ=="
+                                    length="12440800"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
         
             
                 
