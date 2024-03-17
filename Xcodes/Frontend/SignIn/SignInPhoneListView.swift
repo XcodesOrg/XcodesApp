@@ -1,5 +1,5 @@
-import SwiftUI
 import AppleAPI
+import SwiftUI
 
 struct SignInPhoneListView: View {
     @EnvironmentObject var appState: AppState
@@ -7,12 +7,12 @@ struct SignInPhoneListView: View {
     @State private var selectedPhoneNumberID: AuthOptionsResponse.TrustedPhoneNumber.ID?
     let authOptions: AuthOptionsResponse
     let sessionData: AppleSessionData
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             if let phoneNumbers = authOptions.trustedPhoneNumbers, !phoneNumbers.isEmpty {
                 Text(String(format: localizeString("SelectTrustedPhone"), authOptions.securityCode.length))
-                
+
                 List(phoneNumbers, selection: $selectedPhoneNumberID) {
                     Text($0.numberWithDialCode)
                 }
@@ -22,19 +22,18 @@ struct SignInPhoneListView: View {
                     }
                 }
             } else {
-                AttributedText(
-                    NSAttributedString(string: localizeString("NoTrustedPhones"))
-                        .convertingURLsToLinkAttributes()
-                )
+                Text("NoTrustedPhones")
+                    .font(.callout)
                 Spacer()
             }
-            
+
             HStack {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
                 Spacer()
                 ProgressButton(isInProgress: appState.isProcessingAuthRequest,
-                               action: { appState.requestSMS(to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!, authOptions: authOptions, sessionData: sessionData) }) {
+                               action: { appState.requestSMS(to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!, authOptions: authOptions, sessionData: sessionData) })
+                {
                     Text("Continue")
                 }
                 .keyboardShortcut(.defaultAction)
@@ -54,9 +53,10 @@ struct SignInPhoneListView_Previews: PreviewProvider {
             SignInPhoneListView(
                 isPresented: .constant(true),
                 authOptions: AuthOptionsResponse(
-                    trustedPhoneNumbers: [.init(id: 0, numberWithDialCode: "(•••) •••-••90")], 
+                    trustedPhoneNumbers: [.init(id: 0, numberWithDialCode: "(•••) •••-••90")],
                     trustedDevices: nil,
-                    securityCode: .init(length: 6)),
+                    securityCode: .init(length: 6)
+                ),
                 sessionData: AppleSessionData(serviceKey: "", sessionID: "", scnt: "")
             )
             .environmentObject(AppState())
@@ -64,9 +64,10 @@ struct SignInPhoneListView_Previews: PreviewProvider {
             SignInPhoneListView(
                 isPresented: .constant(true),
                 authOptions: AuthOptionsResponse(
-                    trustedPhoneNumbers: [], 
+                    trustedPhoneNumbers: [],
                     trustedDevices: nil,
-                    securityCode: .init(length: 6)),
+                    securityCode: .init(length: 6)
+                ),
                 sessionData: AppleSessionData(serviceKey: "", sessionID: "", scnt: "")
             )
             .environmentObject(AppState())

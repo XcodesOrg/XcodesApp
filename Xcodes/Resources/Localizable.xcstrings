@@ -5838,115 +5838,115 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La font de dades d'Apple rebusca dins la pàgina web de desenvolupadors d'Apple. Això farà que sempre mostri les últimes versions disponibles, però també és una opció més inestable.\n\nXcode Releases es una llista no oficial de les versions d'Xcode. Està formada per dades ben composades, conté informació extra que no està disponible llegint les dades oficials d'Apple i és menys probable que es trenqui si Apple decideix redissenyar el seu portal de desenvolupadors."
+            "value" : "La font de dades d'Apple rebusca dins la pàgina web de desenvolupadors d'Apple. Això farà que sempre mostri les últimes versions disponibles, però també és una opció més inestable.\n\n[Xcode Releases](https://xcodereleases.com) es una llista no oficial de les versions d'Xcode. Està formada per dades ben composades, conté informació extra que no està disponible llegint les dades oficials d'Apple i és menys probable que es trenqui si Apple decideix redissenyar el seu portal de desenvolupadors."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\nXcode Releases ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten."
+            "value" : "Die Apple-Datenquelle liest die Apple Developer-Website aus. Sie zeigt immer die neuesten Releases an, die verfügbar sind, ist allerdings etwas instabiler.\n\n[Xcode Releases](https://xcodereleases.com) ist eine inoffizielle Liste von Xcode-Veröffentlichungen. Sie wird als formatierte Daten bereitgestellt, enthält Extrainformationen die nicht ohne weiteres von Apple erhältlich sind und ist mit höherer Wahrscheinlichkeit weiter verfügbar, sollte Apple seine Entwickler-Website neu gestalten."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Η πηγή δεδομένων «Apple» αντλεί δεδομένα από τον ιστότοπο «Apple Developer». Εμφανίζει πάντα τις πιο πρόσφατες διαθέσιμες εκδόσεις, αλλά είναι πιο εύθραστη ως πηγή.\n\nΗ επιλογή «Xcode Releases» είναι μια ανεπίσημη λίστα απο εκδόσεις του Xcode. Παρέχεται ως μια καλοδιατηρημένη λίστα δεδομένων, περιέχει επιπλέον πληροφορίες οι οποίες δεν είναι άμεσα διαθέσιμες απο την Apple και έχει λιγότερες πιθανότητες να υπολειτουργήσει σε περίπτωση που η Apple επανασχεδιάσει τον ιστότοπο της."
+            "value" : "Η πηγή δεδομένων «Apple» αντλεί δεδομένα από τον ιστότοπο «Apple Developer». Εμφανίζει πάντα τις πιο πρόσφατες διαθέσιμες εκδόσεις, αλλά είναι πιο εύθραστη ως πηγή.\n\nΗ επιλογή «[Xcode Releases](https://xcodereleases.com)» είναι μια ανεπίσημη λίστα απο εκδόσεις του Xcode. Παρέχεται ως μια καλοδιατηρημένη λίστα δεδομένων, περιέχει επιπλέον πληροφορίες οι οποίες δεν είναι άμεσα διαθέσιμες απο την Apple και έχει λιγότερες πιθανότητες να υπολειτουργήσει σε περίπτωση που η Apple επανασχεδιάσει τον ιστότοπο της."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "The Apple data source scrapes the Apple Developer website. It will always show the latest releases that are available, but is more fragile.\n\nXcode Releases is an unofficial list of Xcode releases. It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website."
+            "value" : "The Apple data source scrapes the Apple Developer website. It will always show the latest releases that are available, but is more fragile.\n\n[Xcode Releases](https://xcodereleases.com) is an unofficial list of [Xcode Releases](https://xcodereleases.com). It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La fuente de datos de Apple la extrae de el sitio web de Apple Developer. Siempre mostrará los últimos lanzamientos disponibles, pero es más frágil.\n\nXcode Releases es una lista no oficial de lanzamientos de Xcode. Se proporciona como datos bien estructurados, contiene información adicional que no está disponible fácilmente en Apple y es menos probable que se rompa si Apple rediseña su sitio web para desarrolladores."
+            "value" : "La fuente de datos de Apple la extrae de el sitio web de Apple Developer. Siempre mostrará los últimos lanzamientos disponibles, pero es más frágil.\n\n[Xcode Releases](https://xcodereleases.com) es una lista no oficial de lanzamientos de Xcode. Se proporciona como datos bien estructurados, contiene información adicional que no está disponible fácilmente en Apple y es menos probable que se rompa si Apple rediseña su sitio web para desarrolladores."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Applen tietolähde kaappaa Apple Developer -sivuston. Se näyttää aina uusimmat saatavilla olevat julkaisut, mutta se on herkempi hajoamiselle.\n\nXcode Releases on epävirallinen luettelo Xcode-julkaisuista. Se toimitetaan hyvin muotoiltuina tietoina, sisältää lisätietoa, jota ei ole helposti saatavilla Applelta, ja se ei todennäköisesti hajoa, jos Apple suunnittelee uudelleen kehittäjäsivustonsa."
+            "value" : "Applen tietolähde kaappaa Apple Developer -sivuston. Se näyttää aina uusimmat saatavilla olevat julkaisut, mutta se on herkempi hajoamiselle.\n\n[Xcode Releases](https://xcodereleases.com) on epävirallinen luettelo Xcode-julkaisuista. Se toimitetaan hyvin muotoiltuina tietoina, sisältää lisätietoa, jota ei ole helposti saatavilla Applelta, ja se ei todennäköisesti hajoa, jos Apple suunnittelee uudelleen kehittäjäsivustonsa."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La source de données Apple analyse le site Web de développeurs d'Apple. Elle contient les dernières versions disponibles, mais est plus fragile.\n\nXcode Releases est une liste non officielle des versions de Xcode. Elle contient des informations supplémentaires qui ne sont pas facilement disponibles auprès d'Apple et est moins susceptible de se briser si Apple refait son site Web de développeurs."
+            "value" : "La source de données Apple analyse le site Web de développeurs d'Apple. Elle contient les dernières versions disponibles, mais est plus fragile.\n\n[Xcode Releases](https://xcodereleases.com) est une liste non officielle des versions de Xcode. Elle contient des informations supplémentaires qui ne sont pas facilement disponibles auprès d'Apple et est moins susceptible de se briser si Apple refait son site Web de développeurs."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple डेटा स्रोत Apple डेवलपर वेबसाइट को स्क्रैप करता है। यह हमेशा नवीनतम रिलीज दिखाएगा जो उपलब्ध हैं, लेकिन अधिक नाजुक है।\n\nXcode Releases Xcode रिलीज़ की एक अनौपचारिक सूची है। यह सुव्यवस्थित डेटा के रूप में प्रदान किया जाता है, इसमें अतिरिक्त जानकारी होती है जो Apple से आसानी से उपलब्ध नहीं होती है, और यदि Apple अपनी डेवलपर वेबसाइट को फिर से डिज़ाइन करता है तो इसके टूटने की संभावना कम होती है।"
+            "value" : "Apple डेटा स्रोत Apple डेवलपर वेबसाइट को स्क्रैप करता है। यह हमेशा नवीनतम रिलीज दिखाएगा जो उपलब्ध हैं, लेकिन अधिक नाजुक है।\n\n[Xcode Releases](https://xcodereleases.com) Xcode रिलीज़ की एक अनौपचारिक सूची है। यह सुव्यवस्थित डेटा के रूप में प्रदान किया जाता है, इसमें अतिरिक्त जानकारी होती है जो Apple से आसानी से उपलब्ध नहीं होती है, और यदि Apple अपनी डेवलपर वेबसाइट को फिर से डिज़ाइन करता है तो इसके टूटने की संभावना कम होती है।"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "La sorgente dati Apple controlla il sito sviluppatori Apple. Mostra sempre le ultime versioni disponibili, ma è più fragile. Xcode Releases è una lista non ufficiale di versioni di Xcode. E' disponibile con un formato ben strutturato, contiene più in formazioni che non vengono rilasciate da Apple ed è più difficile che smetta di funzionare se Apple ristruttura il suo sito sviluppatori."
+            "value" : "La sorgente dati Apple controlla il sito sviluppatori Apple. Mostra sempre le ultime versioni disponibili, ma è più fragile. [Xcode Releases](https://xcodereleases.com) è una lista non ufficiale di versioni di Xcode. E' disponibile con un formato ben strutturato, contiene più in formazioni che non vengono rilasciate da Apple ed è più difficile che smetta di funzionare se Apple ristruttura il suo sito sviluppatori."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\nXcode Releasesは、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。"
+            "value" : "Appleのデータソースは、Apple Developerのウェブサイトをスクレイピングしています。常に最新のリリースが表示されますが、比較的壊れやすくなっています。\n\n[Xcode Releases](https://xcodereleases.com)は、非公式なXcodeのリリース一覧です。この一覧は整形されたデータとして提供されます。Appleからは簡単に入手できない特別な情報を含んでおり、AppleがDeveloper ウェブサイトを再設計しても壊れにくくなっています。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple 데이터 소스는 Apple Developer 웹사이트를 스크랩합니다. Apple Developer에는 항상 사용 가능한 최신 출시 버전이 표시되지만 취약한 면이 있습니다.\n\nXcode Releases는 비공식적인 Xcode 출시 버전 목록입니다. Xcode Releases에서는 정리된 데이터를 제공하며, Apple에서 쉽게 구할 수 없는 정보를 포함하며 Apple이 Apple Developer를 재설계할 경우에도 안전할 수 있습니다."
+            "value" : "Apple 데이터 소스는 Apple Developer 웹사이트를 스크랩합니다. Apple Developer에는 항상 사용 가능한 최신 출시 버전이 표시되지만 취약한 면이 있습니다.\n\n[Xcode Releases](https://xcodereleases.com)는 비공식적인 Xcode 출시 버전 목록입니다. [Xcode Releases](https://xcodereleases.com)에서는 정리된 데이터를 제공하며, Apple에서 쉽게 구할 수 없는 정보를 포함하며 Apple이 Apple Developer를 재설계할 경우에도 안전할 수 있습니다."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "De Apple databron scraped de Apple Developer website. Dit zal altijd de laatste nieuwe versies tonen die beschikbaar zijn, maar is meer foutgevoelig.\n\nXcode Releases is een onofficiële lijst van Xcode releases. Deze lijst wordt gepresenteerd als gevalideerde data en bevat extra informatie die niet beschikbaar is vanuit Apple. Deze databron is minder foutgevoelig en niet afhankelijk van wanneer Apple de developer website aanpast."
+            "value" : "De Apple databron scraped de Apple Developer website. Dit zal altijd de laatste nieuwe versies tonen die beschikbaar zijn, maar is meer foutgevoelig.\n\n[Xcode Releases](https://xcodereleases.com) is een onofficiële lijst van [Xcode Releases](https://xcodereleases.com). Deze lijst wordt gepresenteerd als gevalideerde data en bevat extra informatie die niet beschikbaar is vanuit Apple. Deze databron is minder foutgevoelig en niet afhankelijk van wanneer Apple de developer website aanpast."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Źródło danych Apple przeszukuje stronę internetową Apple Developer. Zawsze wyświetla najnowsze dostępne wydania, ale jest bardziej podatne na problemy.\n\nXcode Releases to nieoficjalna lista wydań Xcode. Udostępnia ona dobrze sformatowane dane, zawiera dodatkowe informacje, które nie są łatwo dostępne w Apple, i jest mniej podatna na problemy, gdy Apple zmienia swoją stronę dla deweloperów."
+            "value" : "Źródło danych Apple przeszukuje stronę internetową Apple Developer. Zawsze wyświetla najnowsze dostępne wydania, ale jest bardziej podatne na problemy.\n\n[Xcode Releases](https://xcodereleases.com) to nieoficjalna lista wydań Xcode. Udostępnia ona dobrze sformatowane dane, zawiera dodatkowe informacje, które nie są łatwo dostępne w Apple, i jest mniej podatna na problemy, gdy Apple zmienia swoją stronę dla deweloperów."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "A fonte de dados da Apple copia o site Apple Developer. Sempre mostrará os lançamentos mais recentes que estão disponíveis, porém é mais frágil.\n\nLançamentos do Xcode (Xcode Releases) é uma lista de lançamentos do Xcode não-oficial. É provido como dado formatado, contem informação extra que não está prontamente disponível pela Apple, e é menos provável que quebre se a Apple redesenhar o seu site de desenvolvedores."
+            "value" : "A fonte de dados da Apple copia o site Apple Developer. Sempre mostrará os lançamentos mais recentes que estão disponíveis, porém é mais frágil.\n\nLançamentos do Xcode ([Xcode Releases](https://xcodereleases.com)) é uma lista de lançamentos do Xcode não-oficial. É provido como dado formatado, contem informação extra que não está prontamente disponível pela Apple, e é menos provável que quebre se a Apple redesenhar o seu site de desenvolvedores."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Источник данных Apple применяет технологию \"веб-скрейпинга\" к веб-сайту Apple для разработчиков. Он всегда показывает последние доступные выпуски, но является менее стабильным источником данных.\n\nXcode Releases — это неофициальный список выпусков Xcode. Он предоставляется в виде удобно структурированных данных, содержит дополнительную информацию, которую не всегда можно получить от Apple и который с меньшей вероятностью перестанет работать, если Apple изменит дизайн своего веб-сайта для разработчиков."
+            "value" : "Источник данных Apple применяет технологию \"веб-скрейпинга\" к веб-сайту Apple для разработчиков. Он всегда показывает последние доступные выпуски, но является менее стабильным источником данных.\n\n[Xcode Releases](https://xcodereleases.com) — это неофициальный список выпусков Xcode. Он предоставляется в виде удобно структурированных данных, содержит дополнительную информацию, которую не всегда можно получить от Apple и который с меньшей вероятностью перестанет работать, если Apple изменит дизайн своего веб-сайта для разработчиков."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple veri kaynağı Apple'ın geliştirici sitesini inceliyor. Uygun olan en son sürümleri gösterir, ama biraz daha hassastır.\n\nXcode Releases, Xcode sürümlerinin bulunduğu resmi olmayan bir listedir. Data düzenli bir formata sahip bilgileri barındırır, Apple tarafında olmayan ek bilgileri içerir ve Apple'ın ileride sitesini değiştireceği için bozabileceği bir kaynak değildir."
+            "value" : "Apple veri kaynağı Apple'ın geliştirici sitesini inceliyor. Uygun olan en son sürümleri gösterir, ama biraz daha hassastır.\n\n[Xcode Releases](https://xcodereleases.com), Xcode sürümlerinin bulunduğu resmi olmayan bir listedir. Data düzenli bir formata sahip bilgileri barındırır, Apple tarafında olmayan ek bilgileri içerir ve Apple'ın ileride sitesini değiştireceği için bozabileceği bir kaynak değildir."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple — сканування Apple Developer Portal у пошуку доступних версій Xcode. Надає список усіх нових релізів, але є менш надійним.\n\nXcode Releases — це неофіційний список релізів Xcode. Він є більш структурованим та надає додаткову інформацію (що не завжди доступна напряму від Apple), і менш ймовірно зламається якщо Apple оновить Developer Portal."
+            "value" : "Apple — сканування Apple Developer Portal у пошуку доступних версій Xcode. Надає список усіх нових релізів, але є менш надійним.\n\n[Xcode Releases](https://xcodereleases.com) — це неофіційний список релізів Xcode. Він є більш структурованим та надає додаткову інформацію (що не завжди доступна напряму від Apple), і менш ймовірно зламається якщо Apple оновить Developer Portal."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple数据源是从Apple开发者网站爬取的。它会及时反应最新版本，但较为脆弱。\n\nXcode Releases是一个非官方的Xcode版本列表。它提供了良好格式化的数据，包含了不便从Apple直接获得的附加信息，且更不容易在Apple开发者网站无法访问时出现问题。"
+            "value" : "Apple数据源是从Apple开发者网站爬取的。它会及时反应最新版本，但较为脆弱。\n\n[Xcode Releases](https://xcodereleases.com)是一个非官方的Xcode版本列表。它提供了良好格式化的数据，包含了不便从Apple直接获得的附加信息，且更不容易在Apple开发者网站无法访问时出现问题。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "「Apple 資料來源」會爬取 Apple 開發者網站。此資料來源較容易出錯，且只會顯示最新的可用版本。\n\n「Xcode Releases」是一個非官方的 Xcode 發行版本清單。此資料來源提供彙整好的資料，包含了 Apple 開發者網站上未列出的額外資訊，且不容易因 Apple 網站設計變更而出錯。"
+            "value" : "「Apple 資料來源」會爬取 Apple 開發者網站。此資料來源較容易出錯，且只會顯示最新的可用版本。\n\n「[Xcode Releases](https://xcodereleases.com)」是一個非官方的 Xcode 發行版本清單。此資料來源提供彙整好的資料，包含了 Apple 開發者網站上未列出的額外資訊，且不容易因 Apple 網站設計變更而出錯。"
           }
         }
       }
@@ -6189,115 +6189,115 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 utilitza fins a 16 connexions simultànies per a descarregar l'Xcode 3-5x vegades més de pressa que URLSesson. A més de l'executable, està empaquestat amb el seu codi font dins Xcodes per complir amb la llicència GPLv2.\n\nURLSession is la opció per defecte de l'API d'Apple per a fer crides URL."
+            "value" : "[aria2](https://github.com/aria2/aria2) utilitza fins a 16 connexions simultànies per a descarregar l'Xcode 3-5x vegades més de pressa que URLSesson. A més de l'executable, està empaquestat amb el seu codi font dins Xcodes per complir amb la llicència GPLv2.\n\nURLSession is la opció per defecte de l'API d'Apple per a fer crides URL."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Es ist zusammen mit seinem Quellcode in Xcode enthalten, um seiner GPLv2-Lizenz nachzukommen.\n\nURLSession ist Apples Standard-API für URL-Requests."
+            "value" : "[aria2](https://github.com/aria2/aria2) verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Es ist zusammen mit seinem Quellcode in Xcode enthalten, um seiner GPLv2-Lizenz nachzukommen.\n\nURLSession ist Apples Standard-API für URL-Requests."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Το aria2 χρησσιμοποιεί έως και 16 συνδέσεις για να κατεβάσει το Xcode 3-5 φορές ταχύτερα απο το URLSession. Συμπεριλαμβάνεται ως εκτελέσιμο μαζί τον πηγαίο του κώδικα στο Xcodes ώστε να συμμορφώνεται με την άδεια χρήσης του GPLv2.\n\nΤο URLSession είναι το προεπιλεγμένο API για την εκτέλεση των URL requests."
+            "value" : "Το [aria2](https://github.com/aria2/aria2) χρησσιμοποιεί έως και 16 συνδέσεις για να κατεβάσει το Xcode 3-5 φορές ταχύτερα απο το URLSession. Συμπεριλαμβάνεται ως εκτελέσιμο μαζί τον πηγαίο του κώδικα στο Xcodes ώστε να συμμορφώνεται με την άδεια χρήσης του GPLv2.\n\nΤο URLSession είναι το προεπιλεγμένο API για την εκτέλεση των URL requests."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.\n\nURLSession is the default Apple API for making URL requests."
+            "value" : "[aria2](https://github.com/aria2/aria2) uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 usa hasta 16 conexiones para descargar Xcode de 3 a 5 veces más rápido que URLSession. Se incluye como un ejecutable junto con su código fuente dentro de Xcodes para cumplir con su licencia GPLv2.\n\nURLSession es la API predeterminada de Apple para realizar solicitudes de URL."
+            "value" : "[aria2](https://github.com/aria2/aria2) usa hasta 16 conexiones para descargar Xcode de 3 a 5 veces más rápido que URLSession. Se incluye como un ejecutable junto con su código fuente dentro de Xcodes para cumplir con su licencia GPLv2.\n\nURLSession es la API predeterminada de Apple para realizar solicitudes de URL."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 käyttää jopa 16 yhteyttä ladatakseen Xcoden 3–5 kertaa nopeammin kuin URLSession. Se on niputettu suoritettavaksi tiedostoksi ja sen lähdekoodiin Xcodesissa GPLv2-lisenssin noudattamiseksi.\n\nURLSession on Applen oletussovellusliittymä URL-pyyntöjen tekemiseen.."
+            "value" : "[aria2](https://github.com/aria2/aria2) käyttää jopa 16 yhteyttä ladatakseen Xcoden 3–5 kertaa nopeammin kuin URLSession. Se on niputettu suoritettavaksi tiedostoksi ja sen lähdekoodiin Xcodesissa GPLv2-lisenssin noudattamiseksi.\n\nURLSession on Applen oletussovellusliittymä URL-pyyntöjen tekemiseen.."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 utilise jusqu'à 16 connexions pour télécharger Xcode de 3 à 5 fois plus rapidement que URLSession. aria2 est fourni sous forme d'exécutable avec son code source dans Xcodes pour se conformer à sa licence GPLv2.\n\nURLSession est l'API d'Apple utilisée par défaut pour effectuer des requêtes d'URL."
+            "value" : "[aria2](https://github.com/aria2/aria2) utilise jusqu'à 16 connexions pour télécharger Xcode de 3 à 5 fois plus rapidement que URLSession. [aria2](https://github.com/aria2/aria2) est fourni sous forme d'exécutable avec son code source dans Xcodes pour se conformer à sa licence GPLv2.\n\nURLSession est l'API d'Apple utilisée par défaut pour effectuer des requêtes d'URL."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 URLSession की तुलना में Xcode 3-5x तेजी से डाउनलोड करने के लिए 16 कनेक्शन तक का उपयोग करता है। इसे अपने GPLv2 लाइसेंस का अनुपालन करने के लिए Xcodes के भीतर अपने स्रोत कोड के साथ एक निष्पादन योग्य के रूप में बंडल किया गया है।\n\nURL अनुरोध करने के लिए URLSession डिफ़ॉल्ट Apple API है।"
+            "value" : "[aria2](https://github.com/aria2/aria2) URLSession की तुलना में Xcode 3-5x तेजी से डाउनलोड करने के लिए 16 कनेक्शन तक का उपयोग करता है। इसे अपने GPLv2 लाइसेंस का अनुपालन करने के लिए Xcodes के भीतर अपने स्रोत कोड के साथ एक निष्पादन योग्य के रूप में बंडल किया गया है।\n\nURL अनुरोध करने के लिए URLSession डिफ़ॉल्ट Apple API है।"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 usa fino a 16 connessioni per scaricar Xcode da 3 a 5 volte più veloce di URLSession. E' incluso come eseguibile assieme ai suoi sogenti dentro Xcodes per rispettare la sua licenza GPLv2. \n\nURLSession è l'API di default di Apple per fare richieste a URL remote."
+            "value" : "[aria2](https://github.com/aria2/aria2) usa fino a 16 connessioni per scaricar Xcode da 3 a 5 volte più veloce di URLSession. E' incluso come eseguibile assieme ai suoi sogenti dentro Xcodes per rispettare la sua licenza GPLv2. \n\nURLSession è l'API di default di Apple per fare richieste a URL remote."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 は、最大16個の接続を使用して、Xcode を URLSession の3-5 倍のスピードでダウンロードします。GPLv2 ライセンスに準拠するため、Xcodes 内にソースコードと一緒に実行ファイルとしてバンドルされています。\n\nURLSession は、URLリクエストを行うための Apple のデフォルト API です。"
+            "value" : "[aria2](https://github.com/aria2/aria2) は、最大16個の接続を使用して、Xcode を URLSession の3-5 倍のスピードでダウンロードします。GPLv2 ライセンスに準拠するため、Xcodes 内にソースコードと一緒に実行ファイルとしてバンドルされています。\n\nURLSession は、URLリクエストを行うための Apple のデフォルト API です。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2는 최대 16 개의 연결을 사용하여 URLSession보다 3~5배 더 빠르게 Xcode를 다운로드합니다. GPLv2 라이센스를 준수하기 위해 Xcodes 내 소스 코드와 함께 실행 파일 번들로 제공됩니다.\n\nURLSession은 URL 요청을 만들기 위한 기본 Apple API입니다."
+            "value" : "[aria2](https://github.com/aria2/aria2)는 최대 16 개의 연결을 사용하여 URLSession보다 3~5배 더 빠르게 Xcode를 다운로드합니다. GPLv2 라이센스를 준수하기 위해 Xcodes 내 소스 코드와 함께 실행 파일 번들로 제공됩니다.\n\nURLSession은 URL 요청을 만들기 위한 기본 Apple API입니다."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 gebruikt tot 16 verbindingen om Xcode 3-5x sneller te downloaden dan met URLSession. Het is gebundeld als een executable samen met de broncode binnen Xcodes om te voldoen aan de GPLv2 licentie.\n\nURLSession is de standaard Apple API voor het maken van URL verzoeken."
+            "value" : "[aria2](https://github.com/aria2/aria2) gebruikt tot 16 verbindingen om Xcode 3-5x sneller te downloaden dan met URLSession. Het is gebundeld als een executable samen met de broncode binnen Xcodes om te voldoen aan de GPLv2 licentie.\n\nURLSession is de standaard Apple API voor het maken van URL verzoeken."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 używa do pobierania do 16 połączeń, co pozwala na pobieranie Xcode 3-5x szybciej niż URLSession. Jest on dostarczany jako plik wykonywalny wraz ze swoim kodem źródłowym w ramach Xcodes w celu przestrzegania jego licencji GPLv2.\n\nURLSession to domyślne API Apple do tworzenia żądań URL."
+            "value" : "[aria2](https://github.com/aria2/aria2) używa do pobierania do 16 połączeń, co pozwala na pobieranie Xcode 3-5x szybciej niż URLSession. Jest on dostarczany jako plik wykonywalny wraz ze swoim kodem źródłowym w ramach Xcodes w celu przestrzegania jego licencji GPLv2.\n\nURLSession to domyślne API Apple do tworzenia żądań URL."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 usa até 16 conexões para baixar o Xcode 3-5x mais rápido que URLSession. Está empacotado como um executável junto com o seu código fonte dentro do Xcodes para conformar com a licensa GPLv2.\n\nURLSession é a API padrão da Apple para performar requisições URL."
+            "value" : "[aria2](https://github.com/aria2/aria2) usa até 16 conexões para baixar o Xcode 3-5x mais rápido que URLSession. Está empacotado como um executável junto com o seu código fonte dentro do Xcodes para conformar com a licensa GPLv2.\n\nURLSession é a API padrão da Apple para performar requisições URL."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 использует до 16 подключений для загрузки Xcode в 3-5 раз быстрее, чем URLSession. Он поставляется в виде исполняемого файла вместе с исходным кодом в Xcodes, чтобы соответствовать лицензии GPLv2.\n\nURLSession — это API Apple по умолчанию для выполнения запросов по сети."
+            "value" : "[aria2](https://github.com/aria2/aria2) использует до 16 подключений для загрузки Xcode в 3-5 раз быстрее, чем URLSession. Он поставляется в виде исполняемого файла вместе с исходным кодом в Xcodes, чтобы соответствовать лицензии GPLv2.\n\nURLSession — это API Apple по умолчанию для выполнения запросов по сети."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 16ya kadar bağlantı kullanarak Xcode'u URLSession'a göre 3-5 kat daha hızlı indirir. Çalıştırılabilir bir dosya olarak Bundle'a dahildir ve kaynak dosyaları GPLv2 lisansıyla uyumlu olması açısından Xcode içerisinde yer alır.\n\nURLSession Apple'ın URL istekleri oluşturmak için sunduğu varsayılan API'dır."
+            "value" : "[aria2](https://github.com/aria2/aria2) 16ya kadar bağlantı kullanarak Xcode'u URLSession'a göre 3-5 kat daha hızlı indirir. Çalıştırılabilir bir dosya olarak Bundle'a dahildir ve kaynak dosyaları GPLv2 lisansıyla uyumlu olması açısından Xcode içerisinde yer alır.\n\nURLSession Apple'ın URL istekleri oluşturmak için sunduğu varsayılan API'dır."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 може використовувати до 16 з'єднань, завантажуючи Xcode у 3-5 разів швидше ніж URLSession. Вона поставляється у вигляді бінарника та коду, відповідно до вимог її GPLv2 ліцензії.\n\nURLSession — це завантажувач за-умовчанням від Apple"
+            "value" : "[aria2](https://github.com/aria2/aria2) може використовувати до 16 з'єднань, завантажуючи Xcode у 3-5 разів швидше ніж URLSession. Вона поставляється у вигляді бінарника та коду, відповідно до вимог її GPLv2 ліцензії.\n\nURLSession — це завантажувач за-умовчанням від Apple"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2使用最高16线程，能提供3至5倍的下载速度。它与它的源代码被一同打包在Xcodes中以符合GPLv2授权。\n\nURLSession是用于发起URL请求的默认Apple API。"
+            "value" : "[aria2](https://github.com/aria2/aria2)使用最高16线程，能提供3至5倍的下载速度。它与它的源代码被一同打包在Xcodes中以符合GPLv2授权。\n\nURLSession是用于发起URL请求的默认Apple API。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "aria2 可利用多達 16 條連線來下載 Xcode，相較使用 URLSession 快達 3~5 倍。Xcodes 的套件內容中包含了 aria2 執行檔及其原始碼，以遵循其使用的 GPLv2 授權條款。\n\nURLSession 是系統內建用於發起 URL 連線請求的 Apple API。"
+            "value" : "[aria2](https://github.com/aria2/aria2) 可利用多達 16 條連線來下載 Xcode，相較使用 URLSession 快達 3~5 倍。Xcodes 的套件內容中包含了 [aria2](https://github.com/aria2/aria2) 執行檔及其原始碼，以遵循其使用的 GPLv2 授權條款。\n\nURLSession 是系統內建用於發起 URL 連線請求的 Apple API。"
           }
         }
       }
@@ -7388,115 +7388,115 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gràcies a @_saagarjha, aquest experiment pot incrementar la velocitat de l'unxip en un 70% en alguns sistemes.\n\nMés informació sobre com s'aconsegueix pot ser consultada en el seu repositori - https://github.com/saagarjha/unxip"
+            "value" : "Gràcies a [@_saagarjha](https://twitter.com/_saagarjha), aquest experiment pot incrementar la velocitat de l'unxip en un 70% en alguns sistemes.\n\nMés informació sobre com s'aconsegueix pot ser consultada en el seu repositori - https://github.com/saagarjha/unxip"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dank an @_saagarjha, dieses Experiment kann die Unxipping-Geschwindigkeit bis zu 70% auf einigen Systemen beschleunigen.\n\nMehr Informationen wie dies erreicht wird sind über das Unxip-Repo erhältlich - https://github.com/saagarjha/unxip"
+            "value" : "Dank an [@_saagarjha](https://twitter.com/_saagarjha), dieses Experiment kann die Unxipping-Geschwindigkeit bis zu 70% auf einigen Systemen beschleunigen.\n\nMehr Informationen wie dies erreicht wird sind über das Unxip-Repo erhältlich - https://github.com/saagarjha/unxip"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Χάριν στο χρήστη @_saagarjha, αυτή η πειραματική λειτουργία μπορεί να αυξήσει την ταχύτητα αποσυμπίεσης (unxipping) έως και 70% σε κάποια συστήματα.\n\nΓια περισσότερες πληροφορίες σχετικά με το πως επιτυγχάνεται αυτό μπορείτε να επισκεφθείτε το unxip repo - https://github.com/saagarjha/unxip"
+            "value" : "Χάριν στο χρήστη [@_saagarjha](https://twitter.com/_saagarjha), αυτή η πειραματική λειτουργία μπορεί να αυξήσει την ταχύτητα αποσυμπίεσης (unxipping) έως και 70% σε κάποια συστήματα.\n\nΓια περισσότερες πληροφορίες σχετικά με το πως επιτυγχάνεται αυτό μπορείτε να επισκεφθείτε το unxip repo - https://github.com/saagarjha/unxip"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Thanks to @_saagarjha, this experiment can increase unxipping speed by up to 70% for some systems.\n\nMore information on how this is accomplished can be seen on the unxip repo - https://github.com/saagarjha/unxip"
+            "value" : "Thanks to [@_saagarjha](https://twitter.com/_saagarjha), this experiment can increase unxipping speed by up to 70% for some systems.\n\nMore information on how this is accomplished can be seen on the unxip repo - https://github.com/saagarjha/unxip"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gracias a @_saagarjha, este experimento puede aumentar la velocidad de liberación hasta en un 70 % para algunos sistemas.\n\nPuede ver más información sobre cómo se logra esto en el repositorio de unxip: https://github.com/saagarjha/unxip"
+            "value" : "Gracias a [@_saagarjha](https://twitter.com/_saagarjha), este experimento puede aumentar la velocidad de liberación hasta en un 70 % para algunos sistemas.\n\nPuede ver más información sobre cómo se logra esto en el repositorio de unxip: https://github.com/saagarjha/unxip"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "@_saagarjhan ansiosta tämä kokeilu voi nostaa purkamisnopeutta jopa 70 % joissakin järjestelmissä.\n\nLisätietoja siitä, miten tämä tehdään, on unxip-repossa - https://github.com/saagarjha/unxip"
+            "value" : "[@_saagarjha](https://twitter.com/_saagarjha)n ansiosta tämä kokeilu voi nostaa purkamisnopeutta jopa 70 % joissakin järjestelmissä.\n\nLisätietoja siitä, miten tämä tehdään, on unxip-repossa - https://github.com/saagarjha/unxip"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grâce à @_saagarjha, cette expérimentation peut augmenter jusqu'à 70% la vitesse de décompression pour certains systèmes.\n\nPour plus d'informations sur la façon dont cela est accompli, consultez le dépôt GitHub unxip - https://github.com/saagarjha/unxip"
+            "value" : "Grâce à [@_saagarjha](https://twitter.com/_saagarjha), cette expérimentation peut augmenter jusqu'à 70% la vitesse de décompression pour certains systèmes.\n\nPour plus d'informations sur la façon dont cela est accompli, consultez le dépôt GitHub unxip - https://github.com/saagarjha/unxip"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "@_saagarjha के लिए धन्यवाद, यह प्रयोग कुछ प्रणालियों के लिए 70% तक की गति को बढ़ा सकता है।\n\nइसे कैसे पूरा किया जाता है, इस बारे में अधिक जानकारी अनएक्सआईपी रेपो पर देखी जा सकती है - https://github.com/saagarjha/unxip"
+            "value" : "[@_saagarjha](https://twitter.com/_saagarjha) के लिए धन्यवाद, यह प्रयोग कुछ प्रणालियों के लिए 70% तक की गति को बढ़ा सकता है।\n\nइसे कैसे पूरा किया जाता है, इस बारे में अधिक जानकारी अनएक्सआईपी रेपो पर देखी जा सकती है - https://github.com/saagarjha/unxip"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Grazie a @_saagarjha, questa versione sperimentale può incrementare la velocità di unxipping fino al 70% in certi sistemi.\n\nMaggiori informazioni su come questo è possibile sono disponibili nel repository unxip - https://github.com/saagarjha/unxip"
+            "value" : "Grazie a [@_saagarjha](https://twitter.com/_saagarjha), questa versione sperimentale può incrementare la velocità di unxipping fino al 70% in certi sistemi.\n\nMaggiori informazioni su come questo è possibile sono disponibili nel repository unxip - https://github.com/saagarjha/unxip"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "@_saagarjha さんの方法で、一部のシステムで Unxip の速度が最大70%向上します。\n\n方法の詳細については、 unxipのリポジトリ (https://github.com/saagarjha/unxip)をご覧ください。"
+            "value" : "[@_saagarjha](https://twitter.com/_saagarjha) さんの方法で、一部のシステムで Unxip の速度が最大70%向上します。\n\n方法の詳細については、 unxipのリポジトリ (https://github.com/saagarjha/unxip)をご覧ください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "@_saagarjha님 덕분에 이 실험 기능을 이용하면 일부 시스템에서 압축 해제 속도를 최대 70%까지 향상시킬 수 있습니다.\n\n이를 수행하는 방법에 대한 자세한 내용은 unxip 저장소 (https://github.com/saagarjha/unxip)에서 확인할 수 있습니다."
+            "value" : "[@_saagarjha](https://twitter.com/_saagarjha)님 덕분에 이 실험 기능을 이용하면 일부 시스템에서 압축 해제 속도를 최대 70%까지 향상시킬 수 있습니다.\n\n이를 수행하는 방법에 대한 자세한 내용은 unxip 저장소 (https://github.com/saagarjha/unxip)에서 확인할 수 있습니다."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dankzij @_saagarjha, kan met dit experiment het uitpakken van Xcode tot 70% sneller gaan op sommige systemen.\n\nMeer informatie over hoe dit mogelijk wordt gemaakt kan worden gevonden op de unxip repo - https://github.com/saagarjha/unxip"
+            "value" : "Dankzij [@_saagarjha](https://twitter.com/_saagarjha), kan met dit experiment het uitpakken van Xcode tot 70% sneller gaan op sommige systemen.\n\nMeer informatie over hoe dit mogelijk wordt gemaakt kan worden gevonden op de unxip repo - https://github.com/saagarjha/unxip"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dzięki @_saagarjha, wersja eksperymentalna może zwiększyć prędkość rozpakowywania o nawet 70% dla niektórych systemów.\n\nWięcej informacji na temat tego, jak to jest osiągane, można znaleźć w repozytorium unxip - https://github.com/saagarjha/unxip"
+            "value" : "Dzięki [@_saagarjha](https://twitter.com/_saagarjha), wersja eksperymentalna może zwiększyć prędkość rozpakowywania o nawet 70% dla niektórych systemów.\n\nWięcej informacji na temat tego, jak to jest osiągane, można znaleźć w repozytorium unxip - https://github.com/saagarjha/unxip"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Graças à @_saagarjha, esse experimento pode acelerar o unxip em até 70% para algum sistemas.\n\nMais informações sobre como isso ocorre pode ser encontrada no repositório do unxip - https://github.com/saagarjha/unxip"
+            "value" : "Graças à [@_saagarjha](https://twitter.com/_saagarjha), esse experimento pode acelerar o unxip em até 70% para algum sistemas.\n\nMais informações sobre como isso ocorre pode ser encontrada no repositório do unxip - https://github.com/saagarjha/unxip"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Благодаря @_saagarjha этот эксперимент может увеличить скорость распаковки до 70% на некоторых системах.\n\nДополнительную информацию о том, как достигается такой результат, можно прочесть в репозитории unxip — https://github.com/saagarjha/unxip. "
+            "value" : "Благодаря [@_saagarjha](https://twitter.com/_saagarjha) этот эксперимент может увеличить скорость распаковки до 70% на некоторых системах.\n\nДополнительную информацию о том, как достигается такой результат, можно прочесть в репозитории unxip — https://github.com/saagarjha/unxip. "
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "@_saagarjha sayesinde bu deney bazı sistemlerde unxip sürecini %70'e kadar hızlandırabilir.\n\nBu işlemin nasıl yapıldığına dair ayrıntılara unxip repo .- https://github.com/saagarjha/unxip adresinden bakabilirsiniz"
+            "value" : "[@_saagarjha](https://twitter.com/_saagarjha) sayesinde bu deney bazı sistemlerde unxip sürecini %70'e kadar hızlandırabilir.\n\nBu işlemin nasıl yapıldığına dair ayrıntılara unxip repo .- https://github.com/saagarjha/unxip adresinden bakabilirsiniz"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Завдяки @_saagarjha, цей експеримент може пришвидшити розпаковку майже на 70%. \n\nПодробиці про unxip тут — https://github.com/saagarjha/unxip"
+            "value" : "Завдяки [@_saagarjha](https://twitter.com/_saagarjha), цей експеримент може пришвидшити розпаковку майже на 70%. \n\nПодробиці про unxip тут — https://github.com/saagarjha/unxip"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "感谢@_saagarjha，此实验性功能可在部分系统上将xip解压速度提高70%。\n\n请从此仓库获取关于其实现细节的信息：https://github.com/saagarjha/unxip"
+            "value" : "感谢[@_saagarjha](https://twitter.com/_saagarjha)，此实验性功能可在部分系统上将xip解压速度提高70%。\n\n请从此仓库获取关于其实现细节的信息：https://github.com/saagarjha/unxip"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "感謝 @_saagarjha 的努力，這個試驗版本可以在某些系統上加快 70% 的解壓縮速度。\n\n更多關於這項成就是如何達成的資訊，請參閱 unxip 的 repo - https://github.com/saagarjha/unxip"
+            "value" : "感謝 [@_saagarjha](https://twitter.com/_saagarjha) 的努力，這個試驗版本可以在某些系統上加快 70% 的解壓縮速度。\n\n更多關於這項成就是如何達成的資訊，請參閱 unxip 的 repo - https://github.com/saagarjha/unxip"
           }
         }
       }
