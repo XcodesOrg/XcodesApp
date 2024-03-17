@@ -63,11 +63,11 @@ struct PlatformsPocket: View {
                 Image(systemName: "square.3.layers.3d")
                     .font(.title3.weight(.medium))
                 Text("PlatformsDescription")
+								Spacer()
             }
             .font(.body.weight(.medium))
             .padding(.horizontal)
             .padding(.vertical, 12)
-            .frame(maxWidth: .infinity, alignment: .leading)
             .background(.quaternary.opacity(0.75))
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
