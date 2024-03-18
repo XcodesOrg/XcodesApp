@@ -41,7 +41,7 @@ struct MainWindow: View {
                     UnselectedView()
                 }
             }
-            .padding()
+            .contentPadding()
             .toolbar {
                 ToolbarItemGroup {
                     Button(action: { appState.presentedSheet = .signIn }, label: {
