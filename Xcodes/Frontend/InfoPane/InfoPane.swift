@@ -9,6 +9,16 @@ import struct XCModel.SDKs
 struct InfoPane: View {
     let xcode: Xcode
     var body: some View {
+        if #available(macOS 14.0, *) {
+            mainContent
+                .contentMargins(10, for: .scrollContent)
+        } else {
+            mainContent
+                .padding()
+        }
+    }
+    
+    private var mainContent: some View {
         ScrollView(.vertical) {
             HStack(alignment: .top) {
                 VStack {
@@ -24,8 +34,7 @@ struct InfoPane: View {
                         InfoPaneControls(xcode: xcode)
                     }
                     .xcodesBackground()
-               
-                
+                    
                     VStack {
                         Text("Platforms")
                             .font(.title3)
@@ -34,6 +43,7 @@ struct InfoPane: View {
                     }
                     .xcodesBackground()
                 }
+                .frame(minWidth: 380)
                 
                 VStack(alignment: .leading) {
                     ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
@@ -67,13 +77,13 @@ struct InfoPane: View {
 #Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
 
 private func makePreviewContent(for index: Int) -> some View {
-  let name = XcodePreviewName.allCases[index]
+    let name = XcodePreviewName.allCases[index]
     return InfoPane(xcode: xcodeDict[name]!)
         .environmentObject(configure(AppState()) {
-          $0.allXcodes = [xcodeDict[name]!]
+            $0.allXcodes = [xcodeDict[name]!]
         })
         .frame(width: 300, height: 400)
-            .padding()
+        .padding()
 }
 
 enum XcodePreviewName: String, CaseIterable, Identifiable {
@@ -82,7 +92,7 @@ enum XcodePreviewName: String, CaseIterable, Identifiable {
     case Populated_Uninstalled
     case Basic_Installed
     case Basic_Installing
-
+    
     var id: XcodePreviewName { self }
 }
 
@@ -164,7 +174,7 @@ var downloadableRuntimes: [DownloadableRuntime] = {
                 $0.completedUnitCount = 848_444_920
                 $0.throughput = 9_211_681
             }
-            )
+        )
     )
     runtimes[watchOSIndex] = runtime
     
