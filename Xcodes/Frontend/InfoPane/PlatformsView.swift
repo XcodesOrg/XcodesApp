@@ -40,33 +40,33 @@ struct PlatformsView: View {
                 Text("\(runtime.visibleIdentifier)")
                     .font(.headline)
                 pathIfAvailable(xcode: xcode, runtime: runtime)
+					
+					if runtime.installState == .notInstalled {
+						// TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
+						if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
+							EmptyView()
+						} else {
+							HStack {
+								Spacer()
+								DownloadRuntimeButton(runtime: runtime)
+							}
+						}
+					}
+					
                 Spacer()
                 Text(runtime.downloadFileSizeString)
                     .font(.subheadline)
+						  .frame(width: 70, alignment: .trailing)
             }
-            switch runtime.installState {
-            case .installed:
-                EmptyView()
-            case .notInstalled:
-                // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
-                if let path = appState.runtimeInstallPath(xcode: xcode, runtime: runtime) {
-                    EmptyView()
-                } else {
-                    HStack {
-                        Spacer()
-                        DownloadRuntimeButton(runtime: runtime)
-                    }
-                }
-                
-            case .installing(let installationStep):
-                HStack(alignment: .top, spacing: 5){
-                    RuntimeInstallationStepDetailView(installationStep: installationStep)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Spacer()
-                    CancelRuntimeInstallButton(runtime: runtime)
-                }
-                
-            }
+			  
+			  if case let .installing(installationStep) = runtime.installState {
+				  HStack(alignment: .top, spacing: 5){
+					  RuntimeInstallationStepDetailView(installationStep: installationStep)
+						  .fixedSize(horizontal: false, vertical: true)
+					  Spacer()
+					  CancelRuntimeInstallButton(runtime: runtime)
+				  }
+			  }
         }
     }
     
