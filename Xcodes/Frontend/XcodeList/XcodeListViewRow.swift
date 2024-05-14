@@ -105,12 +105,10 @@ struct XcodeListViewRow: View {
         switch xcode.installState {
         case .installed:
             Button("Open") { appState.open(xcode: xcode) }
-                .textCase(.uppercase)
                 .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))
                 .help("OpenDescription")
         case .notInstalled:
             InstallButton(xcode: xcode)
-                .textCase(.uppercase)
                 .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
         case let .installing(installationStep):
             InstallationStepRowView(
