@@ -14,9 +14,9 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Clone SwiftPolyglot
-      run: git clone https://github.com/appdecostudio/SwiftPolyglot.git
+      run: git clone --branch 0.3.1 -- https://github.com/appdecostudio/SwiftPolyglot.git ../SwiftPolyglot
       
     - name: validate translations
       run: |
-        swift build --package-path ./SwiftPolyglot --configuration release
-        swift run --package-path ./SwiftPolyglot swiftpolyglot "ca,de,el,es,fi,fr,hi,it,ja,ko,nl,pl,pt-BR,ru,tr,uk,zh-Hans,zh-Hant" --errorOnMissing
+        swift build --package-path ../SwiftPolyglot --configuration release
+        swift run --package-path ../SwiftPolyglot swiftpolyglot "ca,de,el,es,fi,fr,hi,it,ja,ko,nl,pl,pt-BR,ru,tr,uk,zh-Hans,zh-Hant" --errorOnMissing
