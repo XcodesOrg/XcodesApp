@@ -55,8 +55,8 @@ The following languages are supported because of the following community users!
 Want to add more languages? Simply create a PR with the updated strings file.
 
 ## Installation
-v1.X - requires MacOS 11 or newer
-v2.X - requires MacOS 13
+v1.X - requires macOS 11 or newer
+v2.X - requires macOS 13
 
 ### Install with Homebrew
 

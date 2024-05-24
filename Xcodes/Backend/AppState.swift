@@ -408,7 +408,7 @@ class AppState: ObservableObject {
     func checkMinVersionAndInstall(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
         
-        // Check to see if users MacOS is supported
+        // Check to see if users macOS is supported
         if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
             if hasMinSupportedOS(requiredMacOSVersion: requiredMacOSVersion) {
                 // prompt

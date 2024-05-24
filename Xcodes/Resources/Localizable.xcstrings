@@ -2107,7 +2107,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "L'Xcode %@ necessita MacOS %@, però tu estàs utilitzant MacOS %@, vols instal·lar-lo igualment?"
+            "value" : "L'Xcode %@ necessita macOS %@, però tu estàs utilitzant macOS %@, vols instal·lar-lo igualment?"
           }
         },
         "de" : {
@@ -2125,13 +2125,13 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ requires MacOS %@, but you are running MacOS %@, do you still want to install it?"
+            "value" : "Xcode %@ requires macOS %@, but you are running macOS %@, do you still want to install it?"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ requiere MacOS %@, pero está ejecutando MacOS %@, ¿aún desea instalarlo?"
+            "value" : "Xcode %@ requiere macOS %@, pero está ejecutando macOS %@, ¿aún desea instalarlo?"
           }
         },
         "fi" : {
@@ -2143,19 +2143,19 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ nécessite MacOS %@, mais vous utilisez MacOS %@, voulez-vous toujours l'installer ?"
+            "value" : "Xcode %@ nécessite macOS %@, mais vous utilisez macOS %@, voulez-vous toujours l'installer ?"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ को MacOS %@ की आवश्यकता है, लेकिन आप MacOS %@ चला रहे हैं, क्या आप अभी भी इसे स्थापित करना चाहते हैं?"
+            "value" : "Xcode %@ को macOS %@ की आवश्यकता है, लेकिन आप macOS %@ चला रहे हैं, क्या आप अभी भी इसे स्थापित करना चाहते हैं?"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ richiede MacOS %@, ma la tua versione di MacOS è %@, vuoi installarlo comunque?"
+            "value" : "Xcode %@ richiede macOS %@, ma la tua versione di macOS è %@, vuoi installarlo comunque?"
           }
         },
         "ja" : {
@@ -2167,13 +2167,13 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@는 MacOS %@이(가) 필요하지만 MacOS %@을(를) 실행 중입니다. 그래도 설치하시겠습니까?"
+            "value" : "Xcode %@는 macOS %@이(가) 필요하지만 macOS %@을(를) 실행 중입니다. 그래도 설치하시겠습니까?"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ vereist MacOS %@, maar jouw MacOS versie is %@, wil je doorgaan met installeren?"
+            "value" : "Xcode %@ vereist macOS %@, maar jouw macOS versie is %@, wil je doorgaan met installeren?"
           }
         },
         "pl" : {
@@ -2185,7 +2185,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ requere MacOS %@, mas você está rodando MacOS %@, você ainda quer instalá-lo?"
+            "value" : "Xcode %@ requere macOS %@, mas você está rodando macOS %@, você ainda quer instalá-lo?"
           }
         },
         "ru" : {
@@ -2215,13 +2215,13 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ 需要 MacOS %@，但你正在使用 MacOS %@，你確定還要繼續安裝嗎？"
+            "value" : "Xcode %@ 需要 macOS %@，但你正在使用 macOS %@，你確定還要繼續安裝嗎？"
           }
         }
       }
     },
     "Alert.MinSupported.Title" : {
-      "comment" : "Min MacOS Supported",
+      "comment" : "Min macOS Supported",
       "localizations" : {
         "ca" : {
           "stringUnit" : {
@@ -13760,7 +13760,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Repositori de Github d'Xcodes"
+            "value" : "Repositori de GitHub d'Xcodes"
           }
         },
         "de" : {
@@ -13808,7 +13808,7 @@
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes Repository di Github"
+            "value" : "Xcodes Repository di GitHub"
           }
         },
         "ja" : {
