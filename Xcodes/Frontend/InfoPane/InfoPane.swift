@@ -75,6 +75,7 @@ struct InfoPane: View {
 #Preview(XcodePreviewName.allCases[2].rawValue) { makePreviewContent(for: 2) }
 #Preview(XcodePreviewName.allCases[3].rawValue) { makePreviewContent(for: 3) }
 #Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
+#Preview(XcodePreviewName.allCases[5].rawValue) { makePreviewContent(for: 5) }
 
 private func makePreviewContent(for index: Int) -> some View {
     let name = XcodePreviewName.allCases[index]
@@ -82,7 +83,7 @@ private func makePreviewContent(for index: Int) -> some View {
         .environmentObject(configure(AppState()) {
             $0.allXcodes = [xcodeDict[name]!]
         })
-        .frame(width: 300, height: 400)
+        .frame(width: 600, height: 400)
         .padding()
 }
 
@@ -92,6 +93,7 @@ enum XcodePreviewName: String, CaseIterable, Identifiable {
     case Populated_Uninstalled
     case Basic_Installed
     case Basic_Installing
+    case Basic_Unarchiving
     
     var id: XcodePreviewName { self }
 }
@@ -147,6 +149,14 @@ var xcodeDict: [XcodePreviewName: Xcode] = [
                 $0.throughput = 9_211_681
             }
         )),
+        selected: false,
+        icon: nil,
+        sdks: nil,
+        compilers: nil
+    ),
+    .Basic_Unarchiving: .init(
+        version: _versionWithMeta,
+        installState: .installing(.unarchiving),
         selected: false,
         icon: nil,
         sdks: nil,
