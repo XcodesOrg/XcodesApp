@@ -639,7 +639,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Acknowledgements"
+            "value" : "법적 고지"
           }
         },
         "nl" : {
@@ -1451,7 +1451,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+            "value" : "Xcode %@ 설치를 중지하시겠습니까?"
           }
         },
         "nl" : {
@@ -1690,7 +1690,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete"
+            "value" : "삭제"
           }
         },
         "nl" : {
@@ -1809,7 +1809,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to delete %@?"
+            "value" : "%@을(를) 삭제하시겠습니까?"
           }
         },
         "nl" : {
@@ -3240,7 +3240,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not find file \"%@\"."
+            "value" : "\"%@\" 파일을 찾을 수 없습니다."
           }
         },
         "nl" : {
@@ -7800,7 +7800,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error"
+            "value" : "오류"
           }
         },
         "nl" : {
@@ -12057,7 +12057,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install Directory"
+            "value" : "설치 경로"
           }
         },
         "nl" : {
@@ -12293,7 +12293,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+            "value" : "Xcodes는 단일 경로를 탐색하고 설치를 수행합니다. 이 경로는 기본적으로 /Applications이며, 이 경로를 유지하는 것을 권장합니다. 경로를 변경하면 다른 앱/서비스가 정상적으로 동작하지 않을 수 있습니다."
           }
         },
         "nl" : {
@@ -15582,7 +15582,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Keep name as Xcode-X.X.X.app"
+            "value" : "앱 이름을 Xcode-X.X.X.app 형태로 유지하기"
           }
         },
         "nl" : {
@@ -15701,7 +15701,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
+            "value" : "앱 이름에 버전을 포함하여 Xcode-13.4.1.app과 같은 형식을 유지합니다."
           }
         },
         "nl" : {
@@ -15820,7 +15820,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Always rename to Xcode.app"
+            "value" : "앱 이름을 Xcode.app으로 변경하기"
           }
         },
         "nl" : {
@@ -15939,7 +15939,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name."
+            "value" : "기본 버전으로 선택한 Xcode의 앱 이름을 Xcode.app으로 변경하고, 이전 Xcode.app의 이름은 버전을 포함한 형식으로 변경합니다."
           }
         },
         "nl" : {
@@ -16163,7 +16163,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open In Rosetta"
+            "value" : "Rosetta를 사용하여 열기"
           }
         },
         "nl" : {
@@ -16511,7 +16511,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Perform post-install steps"
+            "value" : "설치 후 단계 수행"
           }
         },
         "nl" : {
@@ -16623,7 +16623,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Platforms"
+            "value" : "플랫폼"
           }
         },
         "nl" : {
@@ -16741,7 +16741,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Installed Platforms"
+            "value" : "설치된 플랫폼 보기"
           }
         },
         "nl" : {
@@ -16860,7 +16860,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Below are a list of platforms that are installed on this machine. "
+            "value" : "현재 기기에 설치된 플랫폼 목록입니다."
           }
         },
         "nl" : {
@@ -18950,7 +18950,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show Open In Rosetta option"
+            "value" : "'Rosetta를 사용하여 열기' 옵션 표시하기"
           }
         },
         "nl" : {
@@ -19068,7 +19068,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "다른 '열기' 옵션이 가능한 경우 'Rosetta를 사용하여 열기' 옵션을 함께 표시합니다. (이 옵션은 Apple Silicon 기기에서 표시됩니다.)"
           }
         },
         "nl" : {
@@ -19660,7 +19660,7 @@
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support Xcodes"
+            "value" : "Xcodes 후원하기"
           }
         },
         "nl" : {
