@@ -90,7 +90,7 @@ extension AppState {
         // sets a proper cookie for runtimes
         try await validateADCSession(path: runtime.downloadPath)
         
-        let downloader = Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2
+        let downloader = Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2
         
         let url = URL(string: runtime.source)!
         let expectedRuntimePath = Path.xcodesApplicationSupport/"\(url.lastPathComponent)"

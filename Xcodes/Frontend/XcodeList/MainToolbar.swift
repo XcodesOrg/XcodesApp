@@ -44,6 +44,7 @@ struct MainToolbarModifier: ViewModifier {
                 }
             }
             .help("FilterAvailableDescription")
+            .disabled(category.isManaged)
 
             Button(action: {
                 isInstalledOnly.toggle()
