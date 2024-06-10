@@ -11,7 +11,7 @@ public struct DownloadableRuntimesResponse: Codable {
 public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     public let category: Category
     public let simulatorVersion: SimulatorVersion
-    public let source: String
+    public let source: String?
     public let dictionaryVersion: Int
     public let contentType: ContentType
     public let platform: Platform
@@ -21,11 +21,14 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     public let hostRequirements: HostRequirements?
     public let name: String
     public let authentication: Authentication?
-    public var url: URL {
-        return URL(string: source)!
+    public var url: URL? {
+        if let source {
+            return URL(string: source)!
+        }
+        return nil
     }
-    public var downloadPath: String {
-        url.path
+    public var downloadPath: String? {
+        url?.path
     }
     
     // dynamically updated - not decoded
@@ -117,6 +120,7 @@ extension DownloadableRuntime {
     public enum ContentType: String, Codable {
         case diskImage = "diskImage"
         case package = "package"
+        case cryptexDiskImage = "cryptexDiskImage"
     }
 
     public enum Platform: String, Codable {

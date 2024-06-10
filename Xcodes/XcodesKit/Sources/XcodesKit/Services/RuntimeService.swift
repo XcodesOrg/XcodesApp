@@ -22,9 +22,14 @@ public struct RuntimeService {
         
         // Apple gives a plist for download
         let (data, _) = try await networkService.requestData(urlRequest, validators: [])
-        let decodedResponse = try PropertyListDecoder().decode(DownloadableRuntimesResponse.self, from: data)
-
-        return decodedResponse
+        do {
+            let decodedResponse = try PropertyListDecoder().decode(DownloadableRuntimesResponse.self, from: data)
+            return decodedResponse
+        } catch {
+            print("error: \(error)")
+            throw error
+        }
+        
     }
     
     public func installedRuntimes() async throws -> [InstalledRuntime] {
