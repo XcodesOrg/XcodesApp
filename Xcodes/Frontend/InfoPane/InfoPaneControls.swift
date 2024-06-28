@@ -25,6 +25,7 @@ struct InfoPaneControls: View {
             case .installing(let installationStep):
                 HStack(alignment: .top) {
                     InstallationStepDetailView(installationStep: installationStep)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                     CancelInstallButton(xcode: xcode)
                 }
             case .installed(_):
@@ -39,6 +40,7 @@ struct InfoPaneControls: View {
 #Preview(XcodePreviewName.allCases[2].rawValue) { makePreviewContent(for: 2) }
 #Preview(XcodePreviewName.allCases[3].rawValue) { makePreviewContent(for: 3) }
 #Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
+#Preview(XcodePreviewName.allCases[5].rawValue) { makePreviewContent(for: 5) }
 
 private func makePreviewContent(for index: Int) -> some View {
   let name = XcodePreviewName.allCases[index]
@@ -47,6 +49,6 @@ private func makePreviewContent(for index: Int) -> some View {
     .environmentObject(configure(AppState()) {
       $0.allXcodes = [xcodeDict[name]!]
     })
-    .frame(width: 300)
+    .frame(width: 500)
     .padding()
 }
