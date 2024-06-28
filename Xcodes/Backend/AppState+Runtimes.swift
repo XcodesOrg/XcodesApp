@@ -57,6 +57,9 @@ extension AppState {
                         self.setInstallationStep(of: runtime, to: .installing)
                     }
                     switch runtime.contentType {
+                    case .cryptexDiskImage:
+                        // not supported yet (do we need to for old packages?)
+                        throw "Installing via cryptexDiskImage not support - please install manually from \(downloadedURL.description)"
                     case .package:
                         // not supported yet (do we need to for old packages?)
                         throw "Installing via package not support - please install manually from \(downloadedURL.description)"
@@ -80,19 +83,31 @@ extension AppState {
                 Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
                 DispatchQueue.main.async {
                     self.error = error
-                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+                    if let error = error as? String {
+                        self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error)
+                    } else {
+                        self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+                    }
                 }
             }
         }
     }
     
     func downloadRunTimeFull(runtime: DownloadableRuntime) async throws -> URL {
+        guard let source = runtime.source else {
+            throw "Invalid runtime source"
+        }
+        
+        guard let downloadPath = runtime.downloadPath else {
+            throw "Invalid runtime downloadPath"
+        }
+    
         // sets a proper cookie for runtimes
-        try await validateADCSession(path: runtime.downloadPath)
+        try await validateADCSession(path: downloadPath)
         
         let downloader = Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2
         
-        let url = URL(string: runtime.source)!
+        let url = URL(string: source)!
         let expectedRuntimePath = Path.xcodesApplicationSupport/"\(url.lastPathComponent)"
         // aria2 downloads directly to the destination (instead of into /tmp first) so we need to make sure that the download isn't incomplete
         let aria2DownloadMetadataPath = expectedRuntimePath.parent/(expectedRuntimePath.basename() + ".aria2")
@@ -123,9 +138,15 @@ extension AppState {
     }
 
     public func downloadRuntimeWithAria2(_ runtime: DownloadableRuntime, to destination: Path, aria2Path: Path) -> AsyncThrowingStream<Progress, Error> {
-        let cookies = AppleAPI.Current.network.session.configuration.httpCookieStorage?.cookies(for: runtime.url) ?? []
+        guard let url = runtime.url else {
+            return AsyncThrowingStream<Progress, Error> { continuation in
+                continuation.finish(throwing: "Invalid or non existant runtime url")
+            }
+        }
+        
+        let cookies = AppleAPI.Current.network.session.configuration.httpCookieStorage?.cookies(for: url) ?? []
     
-        return Current.shell.downloadWithAria2Async(aria2Path, runtime.url, destination, cookies)
+        return Current.shell.downloadWithAria2Async(aria2Path, url, destination, cookies)
     }
     
     
@@ -140,7 +161,10 @@ extension AppState {
         runtimePublishers[runtime.identifier] = nil
         
         // If the download is cancelled by the user, clean up the download files that aria2 creates.
-        let url = URL(string: runtime.source)!
+        guard let source = runtime.source else {
+            return
+        }
+        let url = URL(string: source)!
         let expectedRuntimePath = Path.xcodesApplicationSupport/"\(url.lastPathComponent)"
         let aria2DownloadMetadataPath = expectedRuntimePath.parent/(expectedRuntimePath.basename() + ".aria2")
    
