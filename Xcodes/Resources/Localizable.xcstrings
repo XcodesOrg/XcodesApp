@@ -3,6 +3,12 @@
   "strings" : {
     "" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " "
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -115,6 +121,12 @@
     },
     "%@" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -227,6 +239,12 @@
     },
     "%@ %@ %@" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@%2$@%3$@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -345,6 +363,12 @@
     },
     "AccessDenied" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ تم الرفض  ⚠️  فضلا قوم بفتح اعدادات الاشعارات واختار  تحديث الXcode الذي تريده ثم اعطي اذن بالسماح"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -464,6 +488,12 @@
     "AccessGranted" : {
       "comment" : "Notifications",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لقد تم منح الوصول. سوف تتلقى إشعارات من Xcodes."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -582,6 +612,12 @@
     },
     "Acknowledgements" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شكر وتقدير"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -694,6 +730,12 @@
     },
     "Active" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نشط"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -806,6 +848,12 @@
     },
     "Active/Select" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نشط/اختر"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -919,6 +967,12 @@
     "ActiveVersionDescription" : {
       "comment" : "List",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هذا التحديث النشط"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1038,6 +1092,12 @@
     "Advanced" : {
       "comment" : "Advanced Preference Pane",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "متقدم"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1150,6 +1210,12 @@
     },
     "Alert.CancelInstall.Message" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم تجاهل أي تقدم."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1268,6 +1334,12 @@
     },
     "Alert.CancelInstall.PrimaryButton" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إيقاف التثبيت"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1388,6 +1460,12 @@
       "comment" : "Cancel Runtime Install",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل أنت متأكد أنك تريد إيقاف تثبيت Xcode %@؟"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1508,6 +1586,12 @@
       "comment" : "Cancel Install",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل أنت متأكد أنك تريد إيقاف تثبيت Xcode %@؟"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1627,6 +1711,12 @@
     "Alert.DeletePlatform.PrimaryButton" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسح"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1746,6 +1836,12 @@
     "Alert.DeletePlatform.Title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هل أنت متأكد أنك تريد حذف ٪@؟"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1866,6 +1962,12 @@
       "comment" : "Install",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قادر على تثبيت Xcode"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1985,6 +2087,12 @@
     "Alert.InstallArchive.Error.Title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قادر على تثبيت Xcode المؤرشفة"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2104,6 +2212,12 @@
     "Alert.MinSupported.Message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتطلب Xcode %@ نظام التشغيل macOS %@، ولكنك تستخدم نظام التشغيل macOS %@، فهل مازلت ترغب في تثبيته؟"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2223,6 +2337,12 @@
     "Alert.MinSupported.Title" : {
       "comment" : "Min macOS Supported",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم استيفاء الحد الأدنى من المتطلبات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2343,6 +2463,12 @@
       "comment" : "Post install",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قادر على تنفيذ خطوات ما بعد التثبيت"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2462,6 +2588,12 @@
     "Alert.PrivilegedHelper.Error.Title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قادر على تثبيت المساعد"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2580,6 +2712,12 @@
     },
     "Alert.PrivilegedHelper.Message" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يستخدم Xcodes مساعدًا متميزًا منفصلاً لأداء المهام كجذر. هذه هي الأشياء التي تتطلب استخدام Sudo في سطر الأوامر، بما في ذلك خطوات ما بعد التثبيت وتبديل إصدارات Xcode باستخدام xcode-select.\n\nسيُطلب منك كلمة مرور حساب macOS لتثبيته."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2699,6 +2837,12 @@
     "Alert.PrivilegedHelper.Title" : {
       "comment" : "Privileged Helper",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مساعد مميز"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2819,6 +2963,12 @@
       "comment" : "Active/Select",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قادر على تحديد Xcode"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2938,6 +3088,12 @@
     "Alert.SymLink.Message" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode.app موجود وليس رابطًا رمزيًا"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3058,6 +3214,12 @@
       "comment" : "Symbolic Links",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قادر على إنشاء رابط رمزي"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3177,6 +3339,12 @@
     "Alert.Uninstall.Error.Message.FileNotFound" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يمكن ايجاد الملف \"%@\"."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3296,6 +3464,12 @@
     "Alert.Uninstall.Error.Title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قادر على إلغاء تثبيت Xcode"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3414,6 +3588,12 @@
     },
     "Alert.Uninstall.Message" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيتم نقله إلى سلة المهملات، ولكن لن يتم إفراغه."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3534,6 +3714,12 @@
       "comment" : "Uninstall",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إلغاء تثبيت Xcode %@؟"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3654,6 +3840,12 @@
       "comment" : "Update",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قادر على تحديث Xcode المحدد"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3772,6 +3964,12 @@
     },
     "All" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الجميع"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3884,6 +4082,12 @@
     },
     "Apple Silicon" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أبل السيليكون"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3996,6 +4200,12 @@
     },
     "AppleID" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ايميل ابل :"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4114,6 +4324,12 @@
     },
     "AppUpdates" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحديثات Xcodes.app"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4232,6 +4448,12 @@
     },
     "AutomaticallyCreateSymbolicLink" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إنشاء رابط رمزي إلى Xcode.app تلقائيًا"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4350,6 +4572,12 @@
     },
     "AutomaticallyCreateSymbolicLinkDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند جعل إصدار Xcode نشطًا/محددًا، حاول إنشاء رابط رمزي باسم Xcode.app في دليل التثبيت"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4468,6 +4696,12 @@
     },
     "AutomaticInstallNewVersion" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تثبيت الإصدارات الجديدة من Xcode تلقائيًا"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4587,6 +4821,12 @@
     "Beta" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تجربية"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4705,6 +4945,12 @@
     },
     "BetaOnly" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تجربية فقط"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4823,6 +5069,12 @@
     },
     "Cancel" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الغاء"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4935,6 +5187,12 @@
     },
     "Change" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغير"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5047,6 +5305,12 @@
     },
     "CheckForAppUpdates" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التحقق تلقائيًا من تحديثات التطبيق"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5166,6 +5430,12 @@
     "CheckingSecurity" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصريح امني"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5284,6 +5554,12 @@
     },
     "CheckNow" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افحص الان"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5402,6 +5678,12 @@
     },
     "Close" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اغلق"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5514,6 +5796,12 @@
     },
     "Compatibility" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التوافق"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5626,6 +5914,12 @@
     },
     "Compilers" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المحرر"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5738,6 +6032,12 @@
     },
     "Continue" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استمرار"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5850,6 +6150,12 @@
     },
     "CopyPath" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ المسار"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5968,6 +6274,12 @@
     },
     "CopyReleaseNoteURL" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ الرابط"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6086,6 +6398,12 @@
     },
     "CreateSymLink" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم بإنشاء رابط رمزي كـ Xcode.app"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6204,6 +6522,12 @@
     },
     "CreateSymLinkBeta" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أنشئ رابطًا رمزيًا باسم Xcode-Beta.app"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6322,6 +6646,12 @@
     },
     "DataSource" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مصدر البيانات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6441,6 +6771,12 @@
     "DataSourceDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يقوم مصدر بيانات Apple بإلغاء موقع Apple Developer. سيُظهر دائمًا أحدث الإصدارات المتوفرة، ولكنها أكثر هشاشة.\n\n[إصدارات Xcode](https://xcodereleases.com) هي قائمة غير رسمية لـ [إصدارات Xcode](https://xcodereleases.com). يتم تقديمها كبيانات جيدة الإعداد، وتحتوي على معلومات إضافية لا تتوفر بسهولة من Apple، ومن غير المرجح أن تتعطل إذا أعادت Apple تصميم موقع الويب الخاص بالمطورين."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6561,6 +6897,12 @@
       "comment" : "SMS/2FA",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أدخل الرمز المكون من %d من أحد أجهزتك الموثوقة:"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6679,6 +7021,12 @@
     },
     "Downloader" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أداة التنزيل"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6792,6 +7140,12 @@
     "DownloaderDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يستخدم [aria2](https://github.com/aria2/aria2) ما يصل إلى 16 اتصالًا لتنزيل Xcode بسرعة أكبر بمعدل 3 إلى 5 مرات من URLSession. تم تجميعه كملف قابل للتنفيذ مع كود المصدر الخاص به داخل Xcodes ليتوافق مع ترخيص GPLv2 الخاص به.\n\nURLSession هو واجهة برمجة تطبيقات Apple الافتراضية لتقديم طلبات URL."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6912,6 +7266,12 @@
       "comment" : "Installation Steps",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Downloading"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7031,6 +7391,12 @@
     "DownloadingError" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم العثور على معلومات التنزيل"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7150,6 +7516,12 @@
     "DownloadingPercentDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التنزيل: اكتمل %d%%"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7269,6 +7641,12 @@
     "Downloads" : {
       "comment" : "Download Preference Pane",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التحميلات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7381,6 +7759,12 @@
     },
     "DownloadSize" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حجم التنزيل"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7499,6 +7883,12 @@
     },
     "EnableNotifications" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تمكين الإخطارات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7618,6 +8008,12 @@
     "EnterDigitCodeDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أدخل الرمز المكون من %1$d الذي تم إرساله إلى %2$@:"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7737,6 +8133,12 @@
     "Error" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطأ"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7856,6 +8258,12 @@
     "Experiments" : {
       "comment" : "Experiment Preference Pane",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التجارب"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7968,6 +8376,12 @@
     },
     "FasterUnxip" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فك الضغط بشكل أسرع"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8087,6 +8501,12 @@
     "FasterUnxipDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بفضل [@_saagarjha](https://twitter.com/_saagarjha)، يمكن لهذه التجربة زيادة سرعة فك الضغط بنسبة تصل إلى 70% لبعض الأنظمة.\n\nيمكن الاطلاع على مزيد من المعلومات حول كيفية تحقيق ذلك في unxip repo - https://github.com/saagarjha/unxip"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8205,6 +8625,12 @@
     },
     "Filter" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصفيه"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8317,6 +8743,12 @@
     },
     "FilterAvailableDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصفية الإصدارات المتاحة"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8435,6 +8867,12 @@
     },
     "FilterInstalledDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تصفية الإصدارات المثبتة"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8554,6 +8992,12 @@
     "Finishing" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الانتهاء"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8673,6 +9117,12 @@
     "General" : {
       "comment" : "General Preference Pane",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عام"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8785,6 +9235,12 @@
     },
     "GithubRepo" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مستودع GitHub"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8904,6 +9360,12 @@
     "HelperClient.error" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غير قادر على التواصل مع المساعد المميز."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9022,6 +9484,12 @@
     },
     "HelperInstalled" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تثبيت المساعد"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9140,6 +9608,12 @@
     },
     "HelperNotInstalled" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم تثبيت المساعد"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9259,6 +9733,12 @@
     "IdenticalBuilds" : {
       "comment" : "Info Pane",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بنيات متطابقة"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9377,6 +9857,12 @@
     },
     "IdenticalBuilds.help" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "في بعض الأحيان يكون الإصدار التجريبي وإصدار الإصدار هو نفس الإصدار تمامًا. ستعرض Xcodes هذه الإصدارات معًا تلقائيًا."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9495,6 +9981,12 @@
     },
     "IncludePreRelease" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تضمين الإصدارات التجريبية/التجريبية"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9614,6 +10106,12 @@
     "Install" : {
       "comment" : "Common",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تثبيت"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9733,6 +10231,12 @@
     "InstallationError.CodesignVerifyFailed" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فشل التحقق من توقيع رمز Xcode الذي تم تنزيله بالإخراج التالي:\n%@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9853,6 +10357,12 @@
       "comment" : "InstallationErrors",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الأرشيف \"%@\" تالف ولا يمكن توسيعه."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9972,6 +10482,12 @@
     "InstallationError.FailedSecurityAssessment" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فشل Xcode %@ في تقييم الأمان الخاص به بالنتيجة التالية:\n%@\nويظل مثبتًا في %@ إذا كنت ترغب في استخدامه على أي حال."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10091,6 +10607,12 @@
     "InstallationError.FailedToMoveXcodeToApplications" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فشل في نقل Xcode إلى الدليل %@."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10210,6 +10732,12 @@
     "InstallationError.InvalidVersion" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ليس رقم إصدار صالح."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10329,6 +10857,12 @@
     "InstallationError.MissingSudoerPassword" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كلمة المرور مفقودة. حاول مرة اخرى."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10448,6 +10982,12 @@
     "InstallationError.MissingUsernameOrPassword" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اسم المستخدم أو كلمة المرور مفقودة. حاول مرة اخرى."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10567,6 +11107,12 @@
     "InstallationError.NoNonPrereleaseVersionAvailable" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا توجد إصدارات غير تجريبية متاحة."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10686,6 +11232,12 @@
     "InstallationError.NoPrereleaseVersionAvailable" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا توجد إصدارات تجريبية متاحة."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10805,6 +11357,12 @@
     "InstallationError.NotEnoughFreeSpaceToExpandArchive" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يمكن توسيع الأرشيف \"%@\" لأن المجلد الحالي لا يحتوي على مساحة خالية كافية.\n\nقم بتوفير مساحة أكبر لتوسيع الأرشيف ثم قم بتثبيت Xcode %@ مرة أخرى لبدء التثبيت من حيث توقف."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10924,6 +11482,12 @@
     "InstallationError.PostInstallStepsNotPerformed.Installed" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتمل التثبيت، ولكن لم يتم تنفيذ بعض خطوات ما بعد التثبيت تلقائيًا. سيتم تنفيذ ذلك عند تشغيل Xcode %@ لأول مرة."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11043,6 +11607,12 @@
     "InstallationError.PostInstallStepsNotPerformed.NotInstalled" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اكتمل التثبيت، ولكن لم يتم تنفيذ بعض خطوات ما بعد التثبيت تلقائيًا. يقوم Xcodes بتنفيذ هذه الخطوات باستخدام مساعد مميز، والذي يبدو أنه لم يتم تثبيته. يمكنك تثبيته من التفضيلات > المتقدم.\n\nسيتم تنفيذ هذه الخطوات عند تشغيل Xcode %@ لأول مرة."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11162,6 +11732,12 @@
     "InstallationError.UnavailableVersion" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تعذر العثور على الإصدار %@."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11281,6 +11857,12 @@
     "InstallationError.UnexpectedCodeSigningIdentity" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يحتوي Xcode الذي تم تنزيله على هوية توقيع الرمز المتوقعة.\nيملك:\n%@\n%@\nمُتوقع:\n%@\n%@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11400,6 +11982,12 @@
     "InstallationError.UnsupportedFileFormat" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يدعم Xcodes (حتى الآن) تثبيت Xcode من تنسيق الملف %@."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11519,6 +12107,12 @@
     "InstallationError.VersionAlreadyInstalled" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ مثبت بالفعل في %@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11638,6 +12232,12 @@
     "InstallationError.VersionNotInstalled" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ غير مثبت."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11758,6 +12358,12 @@
       "comment" : "So if changing order, make sure the positional specficier is retained. ex: \"%3$@: Step %1$d of %2$d\"",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Step %1$d of %2$d: %3$@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11876,6 +12482,12 @@
     },
     "InstallDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تثبيت هذا الإصدار"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11994,6 +12606,12 @@
     },
     "InstallDirectory" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دليل التركيب"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12112,6 +12730,12 @@
     },
     "InstallHelper" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تثبيت المساعد"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12230,6 +12854,12 @@
     },
     "InstallPathDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يقوم Xcodes بالبحث والتثبيت في دليل واحد. بشكل افتراضي (والموصى به) هو الاحتفاظ بهذا /Applications.online. قد تؤدي أي تغييرات في مكان تخزين Xcode إلى توقف التطبيقات/الخدمات الأخرى عن العمل."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12349,6 +12979,12 @@
     "LastChecked" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آخر فحص: %@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12467,6 +13103,12 @@
     },
     "License" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "License"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12579,6 +13221,12 @@
     },
     "LocalCachePath" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسار ذاكرة التخزين المؤقت المحلية"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12697,6 +13345,12 @@
     },
     "LocalCachePathDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يقوم Xcodes بتخزين إصدارات Xcode المتوفرة مؤقتًا وتنزيل الإصدارات الجديدة مؤقتًا إلى الدليل"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12816,6 +13470,12 @@
     "Login" : {
       "comment" : "ToolBar",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الدخول"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12928,6 +13588,12 @@
     },
     "LoginDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Login"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13047,6 +13713,12 @@
     "MacOSRequirement" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يتطلب نظام التشغيل macOS %@ أو أحدث"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13165,6 +13837,12 @@
     },
     "MakeActive" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make active"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13283,6 +13961,12 @@
     },
     "MakeActiveVersionDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اجعل هذا هو الإصدار النشط"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13402,6 +14086,12 @@
     "Menu.About" : {
       "comment" : "Menu",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "About Xcodes"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13521,6 +14211,12 @@
     "Menu.Acknowledgements" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "شكر وتقدير Xcodes"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13639,6 +14335,12 @@
     },
     "Menu.CheckForUpdates" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحقق من وجود تحديثات..."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13757,6 +14459,12 @@
     },
     "Menu.GitHubRepo" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مستودعات GitHub Xcodes"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13875,6 +14583,12 @@
     },
     "Menu.ReportABug" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإبلاغ عن خطأ"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13993,6 +14707,12 @@
     },
     "Menu.RequestNewFeature" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Request a New Feature"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14112,6 +14832,12 @@
     "Moving" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Moving to %@"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14231,6 +14957,12 @@
     "Never" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "أبداً"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14349,6 +15081,12 @@
     },
     "Next" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التالي"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14462,6 +15200,12 @@
     "Notification.FinishedInstalling" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انهاء التثبيت"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14582,6 +15326,12 @@
       "comment" : "Notifications",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New version is available"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14701,6 +15451,12 @@
     "Notification.NewXcodeVersion.Body" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إصدارات Xcode الجديدة متاحة للتنزيل."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14821,6 +15577,12 @@
       "comment" : "Notifications",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إصدارات Xcode الجديدة"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14939,6 +15701,12 @@
     },
     "Notifications" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إشعارات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15051,6 +15819,12 @@
     },
     "NotificationSettings" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إعدادات الإشعار"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15170,6 +15944,12 @@
     "NoTrustedPhones" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لا يحتوي حسابك على أي أرقام هواتف موثوقة، ولكنها مطلوبة للمصادقة الثنائية.\n\nراجع https://support.apple.com/HT204915."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15288,6 +16068,12 @@
     },
     "NoXcodeSelected" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يتم تحديد Xcode"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15406,6 +16192,12 @@
     },
     "OK" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "OK"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15519,6 +16311,12 @@
     "OnSelectDoNothing" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "احتفظ بالاسم كـ Xcode-X.X.X.app"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15638,6 +16436,12 @@
     "OnSelectDoNothingDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15757,6 +16561,12 @@
     "OnSelectRenameXcode" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "قم دائمًا بإعادة التسمية إلى Xcode.app"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15876,6 +16686,12 @@
     "OnSelectRenameXcodeDescription" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند التحديد، سيحاول تلقائيًا إعادة تسمية Xcode النشط إلى Xcode.app، وإعادة تسمية Xcode.app السابق إلى اسم الإصدار."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15994,6 +16810,12 @@
     },
     "Open" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16106,6 +16928,12 @@
     },
     "Open In Rosetta" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فتح في روزيتا"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16218,6 +17046,12 @@
     },
     "OpenDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح هذا الإصدار"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16336,6 +17170,12 @@
     },
     "Password" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "كلمة المرور:"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16454,6 +17294,12 @@
     },
     "Perform post-install steps" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تنفيذ خطوات ما بعد التثبيت"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16566,6 +17412,12 @@
     },
     "Platforms" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المنصات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16678,6 +17530,12 @@
     },
     "PlatformsDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installed Platforms"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16797,6 +17655,12 @@
     "PlatformsList.Title" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فيما يلي قائمة بالأنظمة الأساسية المثبتة على هذا الجهاز."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16915,6 +17779,12 @@
     },
     "Preferences" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التفضيلات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17027,6 +17897,12 @@
     },
     "PreferencesDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح التفضيلات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17145,6 +18021,12 @@
     },
     "PrivilegedHelper" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مساعد مميز"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17263,6 +18145,12 @@
     },
     "PrivilegedHelperDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يستخدم Xcodes مساعدًا متميزًا منفصلاً لأداء المهام كجذر. هذه هي الأشياء التي تتطلب استخدام Sudo في سطر الأوامر، بما في ذلك خطوات ما بعد التثبيت وتبديل إصدارات Xcode باستخدام xcode-select.\n\nسيُطلب منك كلمة مرور حساب macOS لتثبيته."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17381,6 +18269,12 @@
     },
     "Refresh" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ينعش"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17493,6 +18387,12 @@
     },
     "RefreshDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تحديث قائمة Xcode"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17612,6 +18512,12 @@
     "Release" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اصدار"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17730,6 +18636,12 @@
     },
     "ReleaseDate" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاريخ الاصدار"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17848,6 +18760,12 @@
     },
     "ReleaseNotes.help" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عرض ملاحظات الإصدار"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17966,6 +18884,12 @@
     },
     "ReleaseOnly" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الإصدار فقط"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18084,6 +19008,12 @@
     },
     "Required" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مطلوب"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18196,6 +19126,12 @@
     },
     "RevealInFinder" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تظهر في البحث"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18314,6 +19250,12 @@
     },
     "SDKs" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SDKs"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18426,6 +19368,12 @@
     },
     "Select" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدد"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18538,6 +19486,12 @@
     },
     "Selected" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "المحدد"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18651,6 +19605,12 @@
     "SelectTrustedPhone" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدد رقم هاتف موثوقًا به لتلقي رمز مكون من %d عبر رسالة نصية قصيرة:"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18769,6 +19729,12 @@
     },
     "SendSMS" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Send SMS"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18887,6 +19853,12 @@
     },
     "ShowOpenInRosetta" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إظهار خيار فتح في Rosetta"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19005,6 +19977,12 @@
     },
     "ShowOpenInRosettaDescription" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سيُظهر خيار \"فتح في Rosetta\" الأماكن التي تتوفر فيها وظائف \"فتح\" أخرى. ملاحظة: سيظهر هذا فقط لأجهزة Apple Silicon."
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19123,6 +20101,12 @@
     },
     "SignIn" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الدخول"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19242,6 +20226,12 @@
     "SignInWithApple" : {
       "comment" : "SignIn",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الدخول بواسطة ابل "
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19360,6 +20350,12 @@
     },
     "SignOut" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تسجيل الخروج"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19478,6 +20474,12 @@
     },
     "StopInstallation" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "وقف التثبيت"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19597,6 +20599,12 @@
     "Support.Xcodes" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "xcodesدعم "
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19716,6 +20724,12 @@
     "TrashingArchive" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نقل الأرشيف إلى سلة المهملات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19835,6 +20849,12 @@
     "Unarchiving" : {
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إلغاء الأرشفة (قد يستغرق هذا بعض الوقت)"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19953,6 +20973,12 @@
     },
     "Uninstall" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الغاء التثبيت"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20065,6 +21091,12 @@
     },
     "UnxipExperiment" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تجربة فك الضغط"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20185,6 +21217,12 @@
       "comment" : "MainWindow",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم التحديث في"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20304,6 +21342,12 @@
     "Updates" : {
       "comment" : "Updates Preference Pane",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "التحديثات"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20416,6 +21460,12 @@
     },
     "UseUnxipExperiment" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عند فك الضغط استخدم التجربة"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20534,6 +21584,12 @@
     },
     "Versions" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Versions"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20648,6 +21704,12 @@
       "comment" : "About",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إصدار ٪@ (٪@)"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20768,6 +21830,12 @@
       "comment" : "WWDC",
       "extractionState" : "manual",
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨🏻‍💻👩🏼‍💻 سعيد WWDC %@! 👨🏽‍💻🧑🏻‍💻"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20886,6 +21954,12 @@
     },
     "Xcode" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20998,6 +22072,12 @@
     },
     "Xcodes" : {
       "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes"
+          }
+        },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
