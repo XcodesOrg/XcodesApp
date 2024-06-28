@@ -227,6 +227,7 @@ extension AppState {
                                     self.error = error
                                     self.presentedAlert = .generic(title: localizeString("Alert.InstallArchive.Error.Title"), message: error.legibleLocalizedDescription)
                                 }
+                                resetDockProgressTracking()
                             })
                             .catch { _ in
                                 Just(installedXcode)
@@ -473,19 +474,24 @@ extension AppState {
     // MARK: - Dock Progress Tracking
     
     private func setupDockProgress() {
-        DockProgress.progressInstance = nil
-        DockProgress.style = .bar
+        Task { @MainActor in
+            DockProgress.progressInstance = nil
+            DockProgress.style = .bar
+            
+            let progress = Progress(totalUnitCount: AppState.totalProgressUnits)
+            progress.kind = .file
+            progress.fileOperationKind = .downloading
+            overallProgress = progress
+            
+            DockProgress.progressInstance = overallProgress
+        }
         
-        let progress = Progress(totalUnitCount: AppState.totalProgressUnits)
-        progress.kind = .file
-        progress.fileOperationKind = .downloading
-        overallProgress = progress
-        
-        DockProgress.progressInstance = overallProgress
     }
     
     func resetDockProgressTracking() {
-        DockProgress.progress = 1 // Only way to completely remove overlay with DockProgress is setting progress to complete
+        Task { @MainActor in
+            DockProgress.progress = 1 // Only way to completely remove overlay with DockProgress is setting progress to complete
+        }
     }
     
     // MARK: - 

@@ -1529,7 +1529,7 @@
 			repositoryURL = "https://github.com/sindresorhus/DockProgress";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 3.2.0;
+				minimumVersion = 4.3.1;
 			};
 		};
 		E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
