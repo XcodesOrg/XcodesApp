@@ -8,6 +8,77 @@
             
                 
                     <item>
+                        <title>v2.2.0 - Nobody likes a bully </title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<p>⚠️ Xcodes does not support downloading of iOS 18 runtimes do to the change in the way Apple is downloading them. ⚠️</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Left Align Unarchiving Pane (#564) @LePips</li>
+  <li>InfoPane UI Tweaks (#540) @marlonjames71</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Fix runtime downloading (#585) @MattKiazyk</li>
+  <li>Fix broken DockProgress Bar (#545) @Kyle-Ye</li>
+</ul>
+
+<h2 id="-localization">🌎 Localization</h2>
+
+<ul>
+  <li>Update Korean localisation (#568) @floydkim</li>
+  <li>ADD: Added Arabic Localizations To Xcodes (#576) @MohamediosDev</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>fix: Update GitHub URLs in help menu (#581) @Person2099</li>
+  <li>Resolve concurrency check warning on Swift 5.10 (#522) @LiYanan2004</li>
+  <li>Bump ruby/setup-ruby from 1.173.0 to 1.177.1 (#563) @dependabot</li>
+  <li>chore: lossless png compression (#560) @mikeirvingweb</li>
+  <li>Update README.md (#548) @alladinian</li>
+  <li>fix: product name casings (#559) @mikeirvingweb</li>
+  <li>Set explicit SwiftPolyglot tag and update clone path (#547) @roddymunro</li>
+  <li>Bump ruby/setup-ruby from 1.172.0 to 1.173.0 (#542) @dependabot</li>
+  <li>Bump actions/cache from 4.0.1 to 4.0.2 (#543) @dependabot</li>
+  <li>adds localization validation on PR’s  (#533) @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=ETmgl1OlCxLtl4FuncZOkMByft+lNTNywGws2ewQClp2NpT4bX6UWwGXmQ3hG4PnQRwOM5mkqNkglBOSWirpBQ== -->
+]]></description>
+                        <pubDate>Fri, 28 Jun 2024 15:49:59 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.2.0b27/Xcodes.zip"
+                                    sparkle:version="27"
+                                    sparkle:shortVersionString="2.2.0"
+                                    sparkle:edSignature="ETmgl1OlCxLtl4FuncZOkMByft+lNTNywGws2ewQClp2NpT4bX6UWwGXmQ3hG4PnQRwOM5mkqNkglBOSWirpBQ=="
+                                    length="12440485"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v2.1.2 - I'm just Xcodes</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
