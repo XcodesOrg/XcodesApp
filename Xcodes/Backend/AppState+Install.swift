@@ -13,8 +13,8 @@ extension AppState {
     
     // check to see if we should auto install for the user
     public func autoInstallIfNeeded() {
-        guard let storageValue = UserDefaults.standard.object(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
-        
+        guard let storageValue = Current.defaults.get(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
+
         if autoInstallType == .none { return }
         
         // get newest xcode version

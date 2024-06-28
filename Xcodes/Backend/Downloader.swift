@@ -13,4 +13,6 @@ public enum Downloader: String, CaseIterable, Identifiable, CustomStringConverti
         case .aria2: return "aria2"
         }
     }
+
+    var isManaged: Bool { PreferenceKey.downloader.isManaged() }
 }

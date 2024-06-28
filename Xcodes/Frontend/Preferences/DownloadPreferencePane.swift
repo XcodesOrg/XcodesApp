@@ -19,7 +19,7 @@ struct DownloadPreferencePane: View {
                     }
                     .labelsHidden()
                     .fixedSize()
-                    
+
                     Text("DataSourceDescription")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
@@ -27,7 +27,8 @@ struct DownloadPreferencePane: View {
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
+            .disabled(dataSource.isManaged)
+
             GroupBox(label: Text("Downloader")) {
                 VStack(alignment: .leading) {
                     Picker("Downloader", selection: $downloader) {
@@ -38,7 +39,7 @@ struct DownloadPreferencePane: View {
                     }
                     .labelsHidden()
                     .fixedSize()
-                    
+
                     Text("DownloaderDescription")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
@@ -46,6 +47,7 @@ struct DownloadPreferencePane: View {
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
+            .disabled(downloader.isManaged)
         }
     }
 }

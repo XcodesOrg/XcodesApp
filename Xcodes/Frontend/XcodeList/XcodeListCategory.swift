@@ -14,4 +14,6 @@ enum XcodeListCategory: String, CaseIterable, Identifiable, CustomStringConverti
             case .beta: return localizeString("Beta")
         }
     }
+
+    var isManaged: Bool { PreferenceKey.xcodeListCategory.isManaged() }
 }
