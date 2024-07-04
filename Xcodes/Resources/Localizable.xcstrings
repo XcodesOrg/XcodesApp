@@ -1547,7 +1547,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+            "value" : "Tem certeza que deseja interromper a instalação do Xcode %@?"
           }
         },
         "ru" : {
@@ -1798,7 +1798,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete"
+            "value" : "Remover"
           }
         },
         "ru" : {
@@ -2299,7 +2299,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode %@ requere macOS %@, mas você está rodando macOS %@, você ainda quer instalá-lo?"
+            "value" : "Xcode %@ requer macOS %@, mas você está rodando macOS %@, você ainda quer instalá-lo?"
           }
         },
         "ru" : {
@@ -3426,7 +3426,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not find file \"%@\"."
+            "value" : "Não foi possível encontrar o arquivo \"%@\"."
           }
         },
         "ru" : {
@@ -6609,7 +6609,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create Symlink as Xcode-Beta.app"
+            "value" : "Criar Symlink como Xcode-Beta.app"
           }
         },
         "ru" : {
@@ -8220,7 +8220,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error"
+            "value" : "Erro"
           }
         },
         "ru" : {
@@ -8339,7 +8339,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Experiments"
+            "value" : "Experimentos"
           }
         },
         "ru" : {
@@ -12693,7 +12693,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install Directory"
+            "value" : "Diretório de Instalação"
           }
         },
         "ru" : {
@@ -12941,7 +12941,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+            "value" : "O Xcodes pesquisa e instala em um único diretório. Por padrão (e recomendado) é manter este /Applications. Quaisquer alterações no local onde o Xcode está armazenado podem fazer com que outros aplicativos/serviços parem de funcionar."
           }
         },
         "ru" : {
@@ -16523,7 +16523,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
+            "value" : "Ao selecionar, manterá o nome conforme a versão, por exemplo. Xcode-13.4.1.app"
           }
         },
         "ru" : {
@@ -17009,7 +17009,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open In Rosetta"
+            "value" : "Abrir com Rosetta"
           }
         },
         "ru" : {
@@ -17375,7 +17375,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Perform post-install steps"
+            "value" : "Execute as etapas pós-instalação"
           }
         },
         "ru" : {
@@ -17493,7 +17493,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Platforms"
+            "value" : "Plataformas"
           }
         },
         "ru" : {
@@ -17617,7 +17617,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Installed Platforms"
+            "value" : "Plataformas Instaladas"
           }
         },
         "ru" : {
@@ -17742,7 +17742,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Below are a list of platforms that are installed on this machine. "
+            "value" : "Abaixo está uma lista de plataformas instaladas nesta máquina."
           }
         },
         "ru" : {
@@ -18599,7 +18599,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Release"
+            "value" : "Lançamento"
           }
         },
         "ru" : {
@@ -18971,7 +18971,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Somente release"
+            "value" : "Somente lançamento"
           }
         },
         "ru" : {
@@ -20686,7 +20686,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support Xcodes"
+            "value" : "Apoie Xcodes"
           }
         },
         "ru" : {
@@ -21547,7 +21547,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Quando performar unxipping, use experiment"
+            "value" : "Quando executar unxipping, use experimentos"
           }
         },
         "ru" : {
