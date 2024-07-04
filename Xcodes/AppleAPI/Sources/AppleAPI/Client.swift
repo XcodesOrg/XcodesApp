@@ -331,15 +331,15 @@ public enum TwoFactorOption: Equatable {
 public struct AuthOptionsResponse: Equatable, Decodable {
     public let trustedPhoneNumbers: [TrustedPhoneNumber]?
     public let trustedDevices: [TrustedDevice]?
-    public let securityCode: SecurityCodeInfo
+    public let securityCode: SecurityCodeInfo?
     public let noTrustedDevices: Bool?
     public let serviceErrors: [ServiceError]?
     
     public init(
         trustedPhoneNumbers: [AuthOptionsResponse.TrustedPhoneNumber]?, 
         trustedDevices: [AuthOptionsResponse.TrustedDevice]?, 
-        securityCode: AuthOptionsResponse.SecurityCodeInfo, 
-        noTrustedDevices: Bool? = nil, 
+        securityCode: AuthOptionsResponse.SecurityCodeInfo? = nil,
+        noTrustedDevices: Bool? = nil,
         serviceErrors: [ServiceError]? = nil
     ) {
         self.trustedPhoneNumbers = trustedPhoneNumbers
