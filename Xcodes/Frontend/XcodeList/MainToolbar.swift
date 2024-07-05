@@ -33,17 +33,17 @@ struct MainToolbarModifier: ViewModifier {
                 switch category {
                 case .all:
                     Label("All", systemImage: "line.horizontal.3.decrease.circle")
+                        .help("FilterAvailableDescription")
                 case .release:
-                        Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(.trailingIcon)
-                            .foregroundColor(.accentColor)
+                    Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        .foregroundColor(.accentColor)
+                        .help("ReleaseOnly")
                 case .beta:
                     Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                        .labelStyle(.trailingIcon)
                         .foregroundColor(.accentColor)
+                        .help("BetaOnly")
                 }
             }
-            .help("FilterAvailableDescription")
 
             Button(action: {
                 isInstalledOnly.toggle()
