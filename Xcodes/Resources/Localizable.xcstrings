@@ -1553,7 +1553,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+            "value" : "Вы уверены, что хотите остановить установку Xcode %@?"
           }
         },
         "tr" : {
@@ -1804,7 +1804,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete"
+            "value" : "Удалить"
           }
         },
         "tr" : {
@@ -1929,7 +1929,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to delete %@?"
+            "value" : "Вы уверены, что хотите удалить %@?"
           }
         },
         "tr" : {
@@ -3432,7 +3432,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not find file \"%@\"."
+            "value" : "Не удалось найти файл «%@»."
           }
         },
         "tr" : {
@@ -8226,7 +8226,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error"
+            "value" : "Ошибка"
           }
         },
         "tr" : {
@@ -17015,7 +17015,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open In Rosetta"
+            "value" : "Открыть в Rosetta"
           }
         },
         "tr" : {
@@ -17499,7 +17499,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Platforms"
+            "value" : "Платформы"
           }
         },
         "tr" : {
@@ -17623,7 +17623,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Installed Platforms"
+            "value" : "Установленные платформы"
           }
         },
         "tr" : {
@@ -19946,7 +19946,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Show Open In Rosetta option"
+            "value" : "Показать опцию «Открыть в Rosetta»"
           }
         },
         "tr" : {
@@ -20070,7 +20070,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "Опция «Открыть в Rosetta» будет показана там, где доступны другие функции «Открыть». Примечание: опция будет отображаться только для компьютеров Apple Silicon."
           }
         },
         "tr" : {
@@ -20692,7 +20692,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support Xcodes"
+            "value" : "Поддержать Xcodes"
           }
         },
         "tr" : {
@@ -21310,7 +21310,7 @@
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Обновлено в"
+            "value" : "Обновлено"
           }
         },
         "tr" : {
