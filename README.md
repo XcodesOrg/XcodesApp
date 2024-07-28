@@ -57,6 +57,7 @@ Want to add more languages? Simply create a PR with the updated strings file.
 ## Installation
 v1.X - requires macOS 11 or newer
 v2.X - requires macOS 13
+
 **Important:** For the first time download your Apple account must agree to the Apple Developer Agreement https://github.com/XcodesOrg/XcodesApp/issues/215#issuecomment-1117091473
 
 ### Install with Homebrew
