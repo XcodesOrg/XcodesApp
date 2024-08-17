@@ -61,7 +61,7 @@ struct CancelInstallButton: View {
     
     var body: some View {
         Button(action: cancelInstall) {
-            Image(systemName: "xmark.circle.fill")
+            Label("Cancel", systemImage: "xmark")
         }
         .help(localizeString("StopInstallation"))
         .buttonStyle(.plain)
