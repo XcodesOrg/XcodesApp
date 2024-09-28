@@ -65,6 +65,15 @@
         }
       },
       {
+        "package": "LibFido2Swift",
+        "repositoryURL": "https://github.com/kinoroy/LibFido2Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "fc558a5e86adb8d404758d83fbc01fd02d99f1b1",
+          "version": "0.1.1"
+        }
+      },
+      {
         "package": "Path.swift",
         "repositoryURL": "https://github.com/mxcl/Path.swift",
         "state": {

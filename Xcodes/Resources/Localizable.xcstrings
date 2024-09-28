@@ -17410,6 +17410,9 @@
         }
       }
     },
+    "PIN" : {
+
+    },
     "Platforms" : {
       "localizations" : {
         "ar" : {
@@ -19362,6 +19365,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SDK 清單"
+          }
+        }
+      }
+    },
+    "SecurityKeyPinDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Insert your physical security key and enter the PIN"
+          }
+        }
+      }
+    },
+    "SecurityKeyTouchDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touch your security key to verify that it’s you"
           }
         }
       }

@@ -9,6 +9,7 @@ import Version
 import os.log
 import DockProgress
 import XcodesKit
+import LibFido2Swift
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
@@ -318,6 +319,67 @@ class AppState: ObservableObject {
                 }
             )
             .store(in: &cancellables)
+    }
+    
+    var fido2: FIDO2?
+    
+    func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
+        self.presentedSheet = .securityKeyTouchToConfirm
+        
+        guard let fsaChallenge = authOptions.fsaChallenge else {
+            // This shouldn't happen
+            // we shouldn't have called this method without setting the fsaChallenge
+            // so this is an assertionFailure
+            assertionFailure()
+            self.authError = "Something went wrong. Please file a bug report"
+            return
+        }
+        
+        // The challenge is encoded in Base64URL encoding
+        let challengeUrl = fsaChallenge.challenge
+        let challenge = FIDO2.base64urlToBase64(base64url: challengeUrl)
+        let origin = "https://idmsa.apple.com"
+        let rpId = "apple.com"
+        // Allowed creds is sent as a comma separated string
+        let validCreds = fsaChallenge.allowedCredentials.split(separator: ",").map(String.init)
+
+        Task {
+            do {
+                let fido2 = FIDO2()
+                self.fido2 = fido2
+                let response = try fido2.respondToChallenge(args: ChallengeArgs(rpId: rpId, validCredentials: validCreds, devPin: pinCode, challenge: challenge, origin: origin))
+            
+                Task { @MainActor in
+                    self.isProcessingAuthRequest = true
+                }
+                
+                let respData = try JSONEncoder().encode(response)
+                client.submitChallenge(response: respData, sessionData: AppleSessionData(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt))
+                    .receive(on: DispatchQueue.main)
+                    .handleEvents(
+                        receiveOutput: { authenticationState in
+                            self.authenticationState = authenticationState
+                        },
+                        receiveCompletion: { completion in
+                            self.handleAuthenticationFlowCompletion(completion)
+                            self.isProcessingAuthRequest = false
+                        }
+                    ).sink(
+                        receiveCompletion: { _ in },
+                        receiveValue: { _ in }
+                    ).store(in: &cancellables)
+            } catch FIDO2Error.canceledByUser {
+                // User cancelled the auth flow
+                // we don't have to show an error
+                // because the sheet will already be dismissed
+            } catch {
+                authError = error
+            }
+        }
+    }
+    
+    func cancelSecurityKeyAssertationRequest() {
+        self.fido2?.cancel()
     }
     
     private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
