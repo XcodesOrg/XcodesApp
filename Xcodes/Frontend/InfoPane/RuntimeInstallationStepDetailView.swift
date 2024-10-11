@@ -26,8 +26,12 @@ struct RuntimeInstallationStepDetailView: View {
                 )
                 
             case .installing, .trashingArchive:
-                ProgressView()
-                    .scaleEffect(0.5)
+                ObservingProgressIndicator(
+                    Progress(),
+                    controlSize: .regular,
+                    style: .bar,
+                    showsAdditionalDescription: false
+                )
             }
         }
     }
