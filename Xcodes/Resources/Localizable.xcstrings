@@ -17411,7 +17411,14 @@
       }
     },
     "PIN" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PIN"
+          }
+        }
+      }
     },
     "Platforms" : {
       "localizations" : {
