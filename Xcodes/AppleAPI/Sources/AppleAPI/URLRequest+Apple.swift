@@ -107,7 +107,7 @@ public extension URLRequest {
         return request
     }
     
-    static func resposndToChallenge(serviceKey: String, sessionID: String, scnt: String, response: Data) -> URLRequest {
+    static func respondToChallenge(serviceKey: String, sessionID: String, scnt: String, response: Data) -> URLRequest {
         var request = URLRequest(url: .keyAuth)
         request.allHTTPHeaderFields = request.allHTTPHeaderFields ?? [:]
         request.allHTTPHeaderFields?["X-Apple-ID-Session-Id"] = sessionID

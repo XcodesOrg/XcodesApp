@@ -198,7 +198,7 @@ public class Client {
     
     public func submitChallenge(response: Data, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
         Result {
-            URLRequest.resposndToChallenge(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, response: response)
+            URLRequest.respondToChallenge(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, response: response)
         }
         .publisher
         .flatMap { request in
