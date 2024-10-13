@@ -10,12 +10,12 @@ struct SignIn2FAView: View {
     
     var body: some View {
         VStack(alignment: .leading) {
-            Text(String(format: localizeString("DigitCodeDescription"), authOptions.securityCode.length))
+            Text(String(format: localizeString("DigitCodeDescription"), authOptions.securityCode!.length))
                 .fixedSize(horizontal: true, vertical: false)
             
             HStack {
                 Spacer()
-                PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode.length) {
+                PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode!.length) {
                     appState.submitSecurityCode(.device(code: $0), sessionData: sessionData)
                 }
                 Spacer()
@@ -32,7 +32,7 @@ struct SignIn2FAView: View {
                     Text("Continue")
                 }
                 .keyboardShortcut(.defaultAction)
-                .disabled(code.count != authOptions.securityCode.length)
+                .disabled(code.count != authOptions.securityCode!.length)
             }
             .frame(height: 25)
         }

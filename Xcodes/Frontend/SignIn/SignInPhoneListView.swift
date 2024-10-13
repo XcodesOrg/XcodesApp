@@ -11,7 +11,7 @@ struct SignInPhoneListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             if let phoneNumbers = authOptions.trustedPhoneNumbers, !phoneNumbers.isEmpty {
-                Text(String(format: localizeString("SelectTrustedPhone"), authOptions.securityCode.length))
+                Text(String(format: localizeString("SelectTrustedPhone"), authOptions.securityCode!.length))
 
                 List(phoneNumbers, selection: $selectedPhoneNumberID) {
                     Text($0.numberWithDialCode)

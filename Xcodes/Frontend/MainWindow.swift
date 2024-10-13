@@ -76,6 +76,9 @@ struct MainWindow: View {
             case .twoFactor(let secondFactorData):
                 secondFactorView(secondFactorData)
                     .environmentObject(appState)
+            case .securityKeyTouchToConfirm:
+                SignInSecurityKeyTouchView(isPresented: $appState.presentedSheet.isNotNil)
+                    .environmentObject(appState)
             }
         }
         .alert(item: $appState.presentedAlert, content: { presentedAlert in
@@ -107,6 +110,8 @@ struct MainWindow: View {
             SignInSMSView(isPresented: $appState.presentedSheet.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsPendingChoice:
             SignInPhoneListView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+        case .securityKey:
+            SignInSecurityKeyPinView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         }
     }
 

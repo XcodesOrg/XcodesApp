@@ -9,6 +9,7 @@ public extension URL {
     static let trust = URL(string: "https://idmsa.apple.com/appleauth/auth/2sv/trust")!
     static let federate = URL(string: "https://idmsa.apple.com/appleauth/auth/federate")!
     static let olympusSession = URL(string: "https://appstoreconnect.apple.com/olympus/v1/session")!
+    static let keyAuth = URL(string: "https://idmsa.apple.com/appleauth/auth/verify/security/key")!
 }
 
 public extension URLRequest {
@@ -103,6 +104,19 @@ public extension URLRequest {
         case .sms(let code, let phoneNumberId):
             request.httpBody = try JSONEncoder().encode(SMSSecurityCodeRequest(securityCode: .init(code: code), phoneNumber: .init(id: phoneNumberId)))
         }
+        return request
+    }
+    
+    static func respondToChallenge(serviceKey: String, sessionID: String, scnt: String, response: Data) -> URLRequest {
+        var request = URLRequest(url: .keyAuth)
+        request.allHTTPHeaderFields = request.allHTTPHeaderFields ?? [:]
+        request.allHTTPHeaderFields?["X-Apple-ID-Session-Id"] = sessionID
+        request.allHTTPHeaderFields?["X-Apple-Widget-Key"] = serviceKey
+        request.allHTTPHeaderFields?["scnt"] = scnt
+        request.allHTTPHeaderFields?["Accept"] = "application/json"
+        request.allHTTPHeaderFields?["Content-Type"] = "application/json"
+        request.httpMethod = "POST"
+        request.httpBody = response
         return request
     }
 

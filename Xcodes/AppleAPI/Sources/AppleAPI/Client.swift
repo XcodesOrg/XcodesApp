@@ -118,7 +118,7 @@ public class Client {
                 case .twoStep:
                     return Fail(error: AuthenticationError.accountUsesTwoStepAuthentication)
                         .eraseToAnyPublisher()
-                case .twoFactor:
+                case .twoFactor, .securityKey:
                     return self.handleTwoFactor(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, authOptions: authOptions)
                         .eraseToAnyPublisher()
                 case .unknown:
@@ -139,7 +139,10 @@ public class Client {
         // SMS wasn't sent automatically because user needs to choose a phone to send to
         } else if authOptions.canFallBackToSMS {
             option = .smsPendingChoice
-        // Code is shown on trusted devices
+            // Code is shown on trusted devices
+        } else if authOptions.fsaChallenge != nil {
+            option = .securityKey
+            // User needs to use a physical security key to respond to the challenge
         } else {
             option = .codeSent
         }
@@ -191,6 +194,33 @@ public class Client {
                 }
         }
         .eraseToAnyPublisher()
+    }
+    
+    public func submitChallenge(response: Data, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
+        Result {
+            URLRequest.respondToChallenge(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, response: response)
+        }
+        .publisher
+        .flatMap { request in
+            Current.network.dataTask(with: request)
+                .mapError { $0 as Error }
+                .tryMap { (data, response) throws -> (Data, URLResponse) in
+                    guard let urlResponse = response as? HTTPURLResponse else { return (data, response) }
+                    switch urlResponse.statusCode {
+                    case 200..<300:
+                        return (data, urlResponse)
+                    case 400, 401:
+                        throw AuthenticationError.incorrectSecurityCode
+                    case 412:
+                        throw AuthenticationError.appleIDAndPrivacyAcknowledgementRequired
+                    case let code:
+                        throw AuthenticationError.badStatusCode(statusCode: code, data: data, response: urlResponse)
+                    }
+                }
+                .flatMap { (data, response) -> AnyPublisher<AuthenticationState, Error> in
+                    self.updateSession(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
+                }
+        }.eraseToAnyPublisher()
     }
     
     // MARK: - Session
@@ -326,27 +356,37 @@ public enum TwoFactorOption: Equatable {
     case smsSent(AuthOptionsResponse.TrustedPhoneNumber)
     case codeSent
     case smsPendingChoice
+    case securityKey
+}
+
+public struct FSAChallenge: Equatable, Decodable {
+    public let challenge: String
+    public let keyHandles: [String]
+    public let allowedCredentials: String
 }
 
 public struct AuthOptionsResponse: Equatable, Decodable {
     public let trustedPhoneNumbers: [TrustedPhoneNumber]?
     public let trustedDevices: [TrustedDevice]?
-    public let securityCode: SecurityCodeInfo
+    public let securityCode: SecurityCodeInfo?
     public let noTrustedDevices: Bool?
     public let serviceErrors: [ServiceError]?
+    public let fsaChallenge: FSAChallenge?
     
     public init(
         trustedPhoneNumbers: [AuthOptionsResponse.TrustedPhoneNumber]?, 
         trustedDevices: [AuthOptionsResponse.TrustedDevice]?, 
         securityCode: AuthOptionsResponse.SecurityCodeInfo, 
         noTrustedDevices: Bool? = nil, 
-        serviceErrors: [ServiceError]? = nil
+        serviceErrors: [ServiceError]? = nil,
+        fsaChallenge: FSAChallenge? = nil
     ) {
         self.trustedPhoneNumbers = trustedPhoneNumbers
         self.trustedDevices = trustedDevices
         self.securityCode = securityCode
         self.noTrustedDevices = noTrustedDevices
         self.serviceErrors = serviceErrors
+        self.fsaChallenge = fsaChallenge
     }
     
     public var kind: Kind {
@@ -354,6 +394,8 @@ public struct AuthOptionsResponse: Equatable, Decodable {
             return .twoStep
         } else if trustedPhoneNumbers != nil {
             return .twoFactor
+        } else if fsaChallenge != nil {
+            return .securityKey
         } else {
             return .unknown
         }
@@ -416,7 +458,7 @@ public struct AuthOptionsResponse: Equatable, Decodable {
     }
     
     public enum Kind: Equatable {
-        case twoStep, twoFactor, unknown
+        case twoStep, twoFactor, securityKey, unknown
     }
 }
 
