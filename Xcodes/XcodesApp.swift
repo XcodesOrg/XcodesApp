@@ -11,7 +11,7 @@ struct XcodesApp: App {
     @StateObject private var updater = ObservableUpdater()
 
     var body: some Scene {
-        WindowGroup("Xcodes") {
+        Window("Xcodes", id: "main") {
             MainWindow()
                 .environmentObject(appState)
                 .environmentObject(updater)
@@ -166,10 +166,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_: Notification) {}
-    
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        true
-    }
 }
 
 func localizeString(_ key: String, comment: String = "") -> String {
