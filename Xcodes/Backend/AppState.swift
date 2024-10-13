@@ -436,6 +436,11 @@ class AppState: ObservableObject {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
 
         installationPublishers[id] = signInIfNeeded()
+            .handleEvents(
+                receiveSubscription: { [unowned self] _ in
+                    self.setInstallationStep(of: availableXcode.version, to: .authenticating)
+                }
+            )
             .flatMap { [unowned self] in
                 // signInIfNeeded might finish before the user actually authenticates if UI is involved. 
                 // This publisher will wait for the @Published authentication state to change to authenticated or unauthenticated before finishing,
