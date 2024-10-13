@@ -8154,7 +8154,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Εισάγετε τον %2$d-ψήφιο κωδικού που εστάλη στο %2$@:"
+            "value" : "Εισάγετε τον %1$d-ψήφιο κωδικού που εστάλη στο %2$@:"
           }
         },
         "en" : {
@@ -17890,7 +17890,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Installed Platforms"
+            "value" : "已安装的平台"
           }
         },
         "zh-Hant" : {
