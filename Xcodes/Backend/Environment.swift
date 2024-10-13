@@ -196,6 +196,77 @@ public struct Shell {
         return Process.run(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
     }
     
+    public var downloadRuntime: (String, String) -> AsyncThrowingStream<Progress, Error> = { platform, version in
+        return AsyncThrowingStream<Progress, Error> { continuation in
+            Task {
+                // Assume progress will not have data races, so we manually opt-out isolation checks.
+                nonisolated(unsafe) var progress = Progress()
+                progress.kind = .file
+                progress.fileOperationKind = .downloading
+                
+                let process = Process()
+                let xcodeBuildPath = Path.root.usr.bin.join("xcodebuild").url
+                
+                process.executableURL = xcodeBuildPath
+                process.arguments = [
+                    "-downloadPlatform",
+                    "\(platform)",
+                    "-buildVersion",
+                    "\(version)"
+                ]
+                
+                let stdOutPipe = Pipe()
+                process.standardOutput = stdOutPipe
+                let stdErrPipe = Pipe()
+                process.standardError = stdErrPipe
+                
+                let observer = NotificationCenter.default.addObserver(
+                    forName: .NSFileHandleDataAvailable,
+                    object: nil,
+                    queue: OperationQueue.main
+                ) { note in
+                    guard
+                        // This should always be the case for Notification.Name.NSFileHandleDataAvailable
+                        let handle = note.object as? FileHandle,
+                        handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
+                    else { return }
+                    
+                    defer { handle.waitForDataInBackgroundAndNotify() }
+                    
+                    let string = String(decoding: handle.availableData, as: UTF8.self)
+                   
+                    // TODO: fix warning. ObservingProgressView is currently tied to an updating progress
+                    progress.updateFromXcodebuild(text: string)
+                    
+                    continuation.yield(progress)
+                }
+                
+                stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+                stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
+                
+                continuation.onTermination = { @Sendable _ in
+                    process.terminate()
+                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                }
+                
+                do {
+                    try process.run()
+                } catch {
+                    continuation.finish(throwing: error)
+                }
+                
+                process.waitUntilExit()
+                
+                NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                
+                guard process.terminationReason == .exit, process.terminationStatus == 0 else {
+                    continuation.finish(throwing: ProcessExecutionError(process: process, standardOutput: "", standardError: ""))
+                    return
+                }
+                continuation.finish()
+            }
+        }
+    }
 }
 
 public struct Files {

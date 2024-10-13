@@ -70,5 +70,38 @@ extension Progress {
         }
         
     }
+    
+    func updateFromXcodebuild(text: String) {
+        self.totalUnitCount = 100
+        self.completedUnitCount = 0
+        self.localizedAdditionalDescription = "" // to not show the addtional 
+
+        do {
+            
+            let downloadPattern = #"(\d+\.\d+)% \(([\d.]+ (?:MB|GB)) of ([\d.]+ GB)\)"#
+            let downloadRegex = try NSRegularExpression(pattern: downloadPattern)
+
+            // Search for matches in the text
+            if let match = downloadRegex.firstMatch(in: text, range: NSRange(text.startIndex..., in: text)) {
+                // Extract the percentage - simpler then trying to extract size MB/GB and convert to bytes.
+                if let percentRange = Range(match.range(at: 1), in: text), let percentDouble = Double(text[percentRange]) {
+                    let percent = Int64(percentDouble.rounded())
+                    self.completedUnitCount = percent
+                }
+            }
+            
+            // "Downloading tvOS 18.1 Simulator (22J5567a): Installing..." or
+            // "Downloading tvOS 18.1 Simulator (22J5567a): Installing (registering download)..."
+            if text.range(of: "Installing") != nil {
+                // sets the progress to indeterminite to show animating progress
+                self.totalUnitCount = 0
+                self.completedUnitCount = 0
+            }
+
+        } catch {
+            Logger.appState.error("Invalid regular expression")
+        }
+        
+    }
 }
 
