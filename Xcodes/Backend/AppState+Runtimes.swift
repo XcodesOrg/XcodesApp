@@ -4,6 +4,7 @@ import OSLog
 import Combine
 import Path
 import AppleAPI
+import Version
 
 extension AppState {
     func updateDownloadableRuntimes() {
@@ -48,6 +49,69 @@ extension AppState {
     }
     
     func downloadRuntime(runtime: DownloadableRuntime) {
+        guard let selectedXcode = self.allXcodes.first(where: { $0.selected }) else {
+            Logger.appState.error("No selected Xcode")
+            DispatchQueue.main.async {
+                self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: "No selected Xcode. Please make an Xcode active")
+            }
+            return
+        }
+        // new runtimes
+        if runtime.contentType == .cryptexDiskImage {
+            // only selected xcodes > 16.1 beta 3 can download runtimes via a xcodebuild -downloadPlatform version
+            // only Runtimes coming from cryptexDiskImage can be downloaded via xcodebuild
+            if selectedXcode.version > Version(major: 16, minor: 0, patch: 0) {
+                downloadRuntimeViaXcodeBuild(runtime: runtime)
+            } else {
+                // not supported
+                Logger.appState.error("Trying to download a runtime we can't download")
+                DispatchQueue.main.async {
+                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: "Sorry. Apple only supports downloading runtimes iOS 18+, tvOS 18+, watchOS 11+, visionOS 2+ with Xcode 16.1+. Please download and make active.")
+                }
+                return
+            }
+        } else {
+            downloadRuntimeObseleteWay(runtime: runtime)
+        }
+    }
+    
+    func downloadRuntimeViaXcodeBuild(runtime: DownloadableRuntime) {
+        runtimePublishers[runtime.identifier] = Task {
+            do {
+                for try await progress in Current.shell.downloadRuntime(runtime.platform.shortName, runtime.simulatorVersion.buildUpdate) {
+                    if progress.isIndeterminate {
+                        DispatchQueue.main.async {
+                            self.setInstallationStep(of: runtime, to: .installing, postNotification: false)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.setInstallationStep(of: runtime, to: .downloading(progress: progress), postNotification: false)
+                        }
+                    }
+                  
+                }
+                Logger.appState.debug("Done downloading runtime - \(runtime.name)")
+                DispatchQueue.main.async {
+                    guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
+                    self.downloadableRuntimes[index].installState = .installed
+                    self.update()
+                }
+                
+            } catch {
+                    Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self.error = error
+                        if let error = error as? String {
+                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error)
+                        } else {
+                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+                        }
+                    }
+                }
+        }
+    }
+    
+    func downloadRuntimeObseleteWay(runtime: DownloadableRuntime) {
         runtimePublishers[runtime.identifier] = Task {
             do {
                 let downloadedURL = try await downloadRunTimeFull(runtime: runtime)
