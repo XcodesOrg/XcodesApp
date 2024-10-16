@@ -151,11 +151,6 @@ struct AdvancedPreferencePane: View {
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
-            GroupBox(label: Text("Misc")) {
-                Toggle("TerminateAfterLastWindowClosed", isOn: $appState.terminateAfterLastWindowClosed)
-            }
-            .groupBoxStyle(PreferencesGroupBoxStyle())
         }
     }
 }
