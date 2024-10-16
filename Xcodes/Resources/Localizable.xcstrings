@@ -14829,6 +14829,28 @@
         }
       }
     },
+    "Misc" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Misc"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "杂项"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "雜項"
+          }
+        }
+      }
+    },
     "Moving" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -20717,6 +20739,28 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "支持 Xcodes"
+          }
+        }
+      }
+    },
+    "TerminateAfterLastWindowClosed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminate App after last window is closed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "在最后一个窗口关闭后终止App"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "needs_review",
+            "value" : "在最後一個窗口關閉後終止 App"
           }
         }
       }

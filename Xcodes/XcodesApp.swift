@@ -166,6 +166,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_: Notification) {}
+    
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
+    }
 }
 
 func localizeString(_ key: String, comment: String = "") -> String {
