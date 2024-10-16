@@ -11,6 +11,23 @@ import DockProgress
 import XcodesKit
 import LibFido2Swift
 
+enum PreferenceKey: String {
+    case installPath
+    case localPath
+    case unxipExperiment
+    case createSymLinkOnSelect
+    case onSelectActionType
+    case showOpenInRosettaOption
+    case autoInstallation
+    case SUEnableAutomaticChecks
+    case includePrereleaseVersions
+    case downloader
+    case dataSource
+    case xcodeListCategory
+
+    func isManaged() -> Bool { UserDefaults.standard.objectIsForced(forKey: self.rawValue) }
+}
+
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
     internal let runtimeService = RuntimeService()
@@ -67,18 +84,24 @@ class AppState: ObservableObject {
         }
     }
     
+    var disableLocalPathChange: Bool { PreferenceKey.localPath.isManaged() }
+
     @Published var installPath = "" {
         didSet {
             Current.defaults.set(installPath, forKey: "installPath")
         }
     }
-    
+
+    var disableInstallPathChange: Bool { PreferenceKey.installPath.isManaged() }
+
     @Published var unxipExperiment = false {
         didSet {
             Current.defaults.set(unxipExperiment, forKey: "unxipExperiment")
         }
     }
     
+    var disableUnxipExperiment: Bool { PreferenceKey.unxipExperiment.isManaged() }
+
     @Published var createSymLinkOnSelect = false {
         didSet {
             Current.defaults.set(createSymLinkOnSelect, forKey: "createSymLinkOnSelect")
@@ -86,7 +109,7 @@ class AppState: ObservableObject {
     }
     
     var createSymLinkOnSelectDisabled: Bool {
-        return onSelectActionType == .rename
+        return onSelectActionType == .rename || PreferenceKey.createSymLinkOnSelect.isManaged()
     }
     
     @Published var onSelectActionType = SelectedActionType.none {
@@ -99,6 +122,8 @@ class AppState: ObservableObject {
         }
     }
     
+    var onSelectActionTypeDisabled: Bool { PreferenceKey.onSelectActionType.isManaged() }
+
     @Published var showOpenInRosettaOption = false {
         didSet {
             Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
@@ -179,8 +204,8 @@ class AppState: ObservableObject {
     // MARK: Timer
     /// Runs a timer every 6 hours when app is open to check if it needs to auto install any xcodes
     func setupAutoInstallTimer() {
-        guard let storageValue = UserDefaults.standard.object(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
-        
+        guard let storageValue = Current.defaults.get(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
+
         if autoInstallType == .none { return }
         
         autoInstallTimer = Timer.scheduledTimer(withTimeInterval: 60*60*6, repeats: true) { [weak self] _ in
@@ -546,7 +571,7 @@ class AppState: ObservableObject {
                     .mapError { $0 as Error }
             }
             .flatMap { [unowned self] in
-                self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2)
+                self.install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
             }
             .receive(on: DispatchQueue.main)
             .sink(
@@ -572,7 +597,7 @@ class AppState: ObservableObject {
     func installWithoutLogin(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
         
-        installationPublishers[id] = self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2)
+        installationPublishers[id] = self.install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { [unowned self] completion in

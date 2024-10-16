@@ -13,6 +13,7 @@ struct ExperimentsPreferencePane: View {
                         "UseUnxipExperiment",
                         isOn: $appState.unxipExperiment
                     )
+                    .disabled(appState.disableUnxipExperiment)
                     Text("FasterUnxipDescription")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
