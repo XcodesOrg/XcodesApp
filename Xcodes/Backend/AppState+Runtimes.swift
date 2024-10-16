@@ -66,7 +66,7 @@ extension AppState {
                 // not supported
                 Logger.appState.error("Trying to download a runtime we can't download")
                 DispatchQueue.main.async {
-                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: "Sorry. Apple only supports downloading runtimes iOS 18+, tvOS 18+, watchOS 11+, visionOS 2+ with Xcode 16.1+. Please download and make active.")
+                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: localizeString("Alert.Install.Error.Need.Xcode16.1"))
                 }
                 return
             }
@@ -76,9 +76,12 @@ extension AppState {
     }
     
     func downloadRuntimeViaXcodeBuild(runtime: DownloadableRuntime) {
-        runtimePublishers[runtime.identifier] = Task {
+        
+        let downloadRuntimeTask = Current.shell.downloadRuntime(runtime.platform.shortName, runtime.simulatorVersion.buildUpdate)
+        runtimePublishers[runtime.identifier] = Task { [weak self] in
+            guard let self = self else { return }
             do {
-                for try await progress in Current.shell.downloadRuntime(runtime.platform.shortName, runtime.simulatorVersion.buildUpdate) {
+                for try await progress in downloadRuntimeTask {
                     if progress.isIndeterminate {
                         DispatchQueue.main.async {
                             self.setInstallationStep(of: runtime, to: .installing, postNotification: false)
@@ -91,6 +94,7 @@ extension AppState {
                   
                 }
                 Logger.appState.debug("Done downloading runtime - \(runtime.name)")
+                
                 DispatchQueue.main.async {
                     guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
                     self.downloadableRuntimes[index].installState = .installed

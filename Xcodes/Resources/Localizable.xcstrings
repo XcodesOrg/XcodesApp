@@ -1958,6 +1958,131 @@
         }
       }
     },
+    "Alert.Install.Error.Need.Xcode16.1" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        }
+      }
+    },
     "Alert.Install.Error.Title" : {
       "comment" : "Install",
       "extractionState" : "manual",
