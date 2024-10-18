@@ -130,6 +130,12 @@ class AppState: ObservableObject {
         }
     }
     
+    @Published var terminateAfterLastWindowClosed = false {
+        didSet {
+            Current.defaults.set(terminateAfterLastWindowClosed, forKey: "terminateAfterLastWindowClosed")
+        }
+    }
+    
     // MARK: - Runtimes
     
     @Published var downloadableRuntimes: [DownloadableRuntime] = []
@@ -199,6 +205,7 @@ class AppState: ObservableObject {
         onSelectActionType = SelectedActionType(rawValue: Current.defaults.string(forKey: "onSelectActionType") ?? "none") ?? .none
         installPath = Current.defaults.string(forKey: "installPath") ?? Path.defaultInstallDirectory.string
         showOpenInRosettaOption = Current.defaults.bool(forKey: "showOpenInRosettaOption") ?? false
+        terminateAfterLastWindowClosed = Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
     }
     
     // MARK: Timer

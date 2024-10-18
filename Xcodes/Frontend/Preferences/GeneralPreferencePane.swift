@@ -20,6 +20,12 @@ struct GeneralPreferencePane: View {
                 NotificationsView().environmentObject(appState)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
+            Divider()
+            
+            GroupBox(label: Text("Misc")) {
+                Toggle("TerminateAfterLastWindowClosed", isOn: $appState.terminateAfterLastWindowClosed)
+            }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
         }
     }
 }
