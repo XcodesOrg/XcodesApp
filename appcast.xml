@@ -8,6 +8,80 @@
             
                 
                     <item>
+                        <title>v2.3.0 - Welcome back runtimes</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<p>2.3.0 brings back the ability to download <strong>all</strong> runtimes. Starting with iOS 18, tvOS 18, watchOS 11, visionOS 2, Apple removed the direct downloads and instead used the same architecture that is used in downloading OS updates. This change brings more security but also turns it into a black box.</p>
+
+<p>Fortunately, starting with Xcode 16.1 Beta 3, <code class="language-plaintext highlighter-rouge">xcodebuild</code> provides a way to download a single version using the new way. In order for Xcodes to work, you must have at least Xcode 16.1 beta 3 + installed and selected.</p>
+
+<p>Thanks to the Apple engineer who added that into <code class="language-plaintext highlighter-rouge">xcodebuild</code>. 🙏</p>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>allow cancelling of runtime downloads, cleanup (#628) @MattKiazyk</li>
+  <li>Terminate Xcodes app after last window closed (#621) @Kyle-Ye</li>
+  <li>Disallow changes to managed preferences (#569) @abiligiri</li>
+  <li>Implement Security Key Auth  (#617) @kinoroy</li>
+  <li>feat: support downloading of cryptex (ex iOS 18+) runtimes (#622) (Xcode 16 Beta 3+ required) @MattKiazyk</li>
+  <li>Add <code class="language-plaintext highlighter-rouge">authenticating</code> to the <code class="language-plaintext highlighter-rouge">XcodeInstallationStep</code> (#613) @chuganzy</li>
+</ul>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Update label for Cancel Install Button (#603) @LiYanan2004</li>
+</ul>
+
+<h2 id="-localization">🌎 Localization</h2>
+
+<ul>
+  <li>Update Localizable.xcstrings for Russian language (3) (#598) @duffpod</li>
+  <li>Update translation in zh-Hant (#593) @pan93412</li>
+  <li>Fix one Greek localization. Add one zh_Hans localization. (#609) @megabitsenmzq</li>
+</ul>
+
+<h2 id="-maintenance">🧰 Maintenance</h2>
+
+<ul>
+  <li>Bump ruby/setup-ruby from 1.190.0 to 1.197.0 (#629) @dependabot</li>
+  <li>Bump actions/cache from 4.0.2 to 4.1.1 (#625) @dependabot</li>
+  <li>Bump ruby/setup-ruby from 1.177.1 to 1.190.0 (#601) @dependabot</li>
+  <li>chore: update sparkle framework (#624) @MattKiazyk</li>
+  <li>chore: set CI to MacOS 14, Xcode 16 (#623) @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=3RFJhxjS+sRFNOvF58p0tsv0EUV8t01z/GNess+wS6OJBI30VoPRF8EecHpRPhmqCaE+BvGVrG0tKEWj+ovpCw== -->
+]]></description>
+                        <pubDate>Fri, 18 Oct 2024 14:12:33 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.3.0b28/Xcodes.zip"
+                                    sparkle:version="28"
+                                    sparkle:shortVersionString="2.3.0"
+                                    sparkle:edSignature="3RFJhxjS+sRFNOvF58p0tsv0EUV8t01z/GNess+wS6OJBI30VoPRF8EecHpRPhmqCaE+BvGVrG0tKEWj+ovpCw=="
+                                    length="16586976"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v2.2.0 - Nobody likes a bully </title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
