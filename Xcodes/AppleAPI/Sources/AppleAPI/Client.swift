@@ -1,5 +1,8 @@
 import Foundation
 import Combine
+import SRP
+import Crypto
+import CommonCrypto
 
 public class Client {
     private static let authTypes = ["sa", "hsa", "non-sa", "hsa2"]
@@ -8,6 +11,144 @@ public class Client {
 
     // MARK: - Login
 
+    public func srpLogin(accountName: String, password: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
+        var serviceKey: String!
+        
+        let config = SRPConfiguration<SHA256>(.N2048)
+        let client = SRPClient(configuration: config)
+        let clientKeys = client.generateKeys()
+       
+        return Current.network.dataTask(with: URLRequest.itcServiceKey)
+            .map(\.data)
+            .decode(type: ServiceKeyResponse.self, decoder: JSONDecoder())
+            .flatMap { serviceKeyResponse -> AnyPublisher<(String, String), Swift.Error> in
+                serviceKey = serviceKeyResponse.authServiceKey
+                
+                // Fixes issue https://github.com/RobotsAndPencils/XcodesApp/issues/360
+                // On 2023-02-23, Apple added a custom implementation of hashcash to their auth flow
+                // Without this addition, Apple ID's would get set to locked
+                return self.loadHashcash(accountName: accountName, serviceKey: serviceKey)
+                    .map { return (serviceKey, $0)}
+                    .eraseToAnyPublisher()
+            }
+            .flatMap { (serviceKey, hashcash) -> AnyPublisher<(String, String, ServerSRPInitResponse), Swift.Error> in
+                
+                return Current.network.dataTask(with: URLRequest.SRPInit(serviceKey: serviceKey, a: clientKeys.private.hex, accountName: accountName))
+                    .map(\.data)
+                    .decode(type: ServerSRPInitResponse.self, decoder: JSONDecoder())
+                    .map { return (serviceKey, hashcash, $0) }
+                    .eraseToAnyPublisher()
+            }
+            .flatMap { (serviceKey, hashcash, srpInit) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+                
+                guard let decodedB = Data(base64Encoded: srpInit.b) else {
+                    return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                        .eraseToAnyPublisher()
+                }
+                
+                guard let decodedSalt = Data(base64Encoded: srpInit.salt) else {
+                    return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                        .eraseToAnyPublisher()
+                }
+
+                let iterations = srpInit.iteration
+                let serverPublic = SRPKey([UInt8](decodedB))
+                
+                guard let encryptedPassword = self.pbkdf2(password: password, saltData: decodedSalt, keyByteCount: 32, prf: CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256), rounds: iterations) else {
+                    return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                        .eraseToAnyPublisher()
+                }
+                
+                 
+                let encryptedPasswordArray = encryptedPassword.hexEncodedString()
+                 
+                print("EncryptedPassword: \(encryptedPasswordArray)")
+                print("EncryptedPassword: \([UInt8](encryptedPassword))")
+                do {
+                    
+                    // this calculates "S"
+                    let clientSharedSecret = try client.calculateSharedSecret(
+                        encryptedPassword: encryptedPasswordArray,
+                        salt: [UInt8](decodedSalt),
+                        clientKeys: clientKeys,
+                        serverPublicKey: serverPublic
+                    )
+                    print("SharedSecret: \(clientSharedSecret)")
+                    
+                    let m1 = client.calculateClientProof(
+                        username: accountName,
+                        salt: [UInt8](decodedSalt),
+                        clientPublicKey: clientKeys.public,
+                        serverPublicKey: serverPublic,
+                        sharedSecret: clientSharedSecret
+                    )
+
+                    let m2 = client.serverProof(clientProof: m1, clientKeys: clientKeys, sharedSecret: clientSharedSecret)
+                   
+                    
+                    print("M1: \(Data(m1).base64EncodedString())")
+                    print("M2: \(Data(m2).base64EncodedString())")
+                    
+                    return Current.network.dataTask(with: URLRequest.SRPComplete(serviceKey: serviceKey, hashcash: hashcash, accountName: accountName, c: srpInit.c, m1: Data(m1).base64EncodedString(), m2: Data(m2).base64EncodedString()))
+                        .mapError { $0 as Swift.Error }
+                        .eraseToAnyPublisher()
+                } catch {
+                    print("Error: calculateSharedSecret \(error)")
+                    return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                        .eraseToAnyPublisher()
+                }
+            }
+            .flatMap { result -> AnyPublisher<AuthenticationState, Swift.Error> in
+                let (data, response) = result
+                return Just(data)
+                    .decode(type: SignInResponse.self, decoder: JSONDecoder())
+                    .flatMap { responseBody -> AnyPublisher<AuthenticationState, Swift.Error> in
+                        let httpResponse = response as! HTTPURLResponse
+                        
+                        switch httpResponse.statusCode {
+                        case 200:
+                            return Current.network.dataTask(with: URLRequest.olympusSession)
+                                .map { _ in AuthenticationState.authenticated }
+                                .mapError { $0 as Swift.Error }
+                                .eraseToAnyPublisher()
+                        case 401:
+                            return Fail(error: AuthenticationError.invalidUsernameOrPassword(username: accountName))
+                                .eraseToAnyPublisher()
+                        case 403:
+                            let errorMessage = responseBody.serviceErrors?.first?.description.replacingOccurrences(of: "-20209: ", with: "") ?? ""
+                            return Fail(error: AuthenticationError.accountLocked(errorMessage))
+                                .eraseToAnyPublisher()
+                        case 409:
+                            return self.handleTwoStepOrFactor(data: data, response: response, serviceKey: serviceKey)
+                        case 412 where Client.authTypes.contains(responseBody.authType ?? ""):
+                            return Fail(error: AuthenticationError.appleIDAndPrivacyAcknowledgementRequired)
+                                .eraseToAnyPublisher()
+                        default:
+                            return Fail(error: AuthenticationError.unexpectedSignInResponse(statusCode: httpResponse.statusCode,
+                                                                 message: responseBody.serviceErrors?.map { $0.description }.joined(separator: ", ")))
+                                .eraseToAnyPublisher()
+                        }
+                    }
+                    .eraseToAnyPublisher()
+            }
+//            .map(\.data)
+//            .decode(type: ServerSRPInitResponse.self, decoder: JSONDecoder())
+//        
+//        
+//           
+//            .flatMap { result -> AnyPublisher<AuthenticationState, Swift.Error> in
+//                return ("")
+//            }
+//            .flatMap { serverResponse -> AnyPublisher<AuthenticationState, Error> in
+//                print(serverResponse)
+//                return Fail(error: AuthenticationError.accountUsesTwoStepAuthentication)
+//                    .eraseToAnyPublisher()
+//            }
+            .mapError { $0 as Swift.Error }
+            .eraseToAnyPublisher()
+    }
+    
+    
     public func login(accountName: String, password: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
         var serviceKey: String!
 
@@ -257,6 +398,32 @@ public class Client {
             .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }
+    
+    private func pbkdf2(password: String, saltData: Data, keyByteCount: Int, prf: CCPseudoRandomAlgorithm, rounds: Int) -> Data? {
+        guard let passwordData = password.data(using: .utf8) else { return nil }
+        
+        var derivedKeyData = Data(repeating: 0, count: keyByteCount)
+        let derivedCount = derivedKeyData.count
+        let derivationStatus: Int32 = derivedKeyData.withUnsafeMutableBytes { derivedKeyBytes in
+            let keyBuffer: UnsafeMutablePointer<UInt8> =
+                derivedKeyBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+            return saltData.withUnsafeBytes { saltBytes -> Int32 in
+                let saltBuffer: UnsafePointer<UInt8> = saltBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                return CCKeyDerivationPBKDF(
+                    CCPBKDFAlgorithm(kCCPBKDF2),
+                    password,
+                    passwordData.count,
+                    saltBuffer,
+                    saltData.count,
+                    prf,
+                    UInt32(rounds),
+                    keyBuffer,
+                    derivedCount)
+            }
+        }
+        return derivationStatus == kCCSuccess ? derivedKeyData : nil
+    }
+
 }
 
 // MARK: - Types
@@ -282,6 +449,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case notDeveloperAppleId
     case notAuthorized
     case invalidResult(resultString: String?)
+    case srpInvalidPublicKey
     
     public var errorDescription: String? {
         switch self {
@@ -316,6 +484,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             return "You are not authorized. Please Sign in with your Apple ID first."
         case let .invalidResult(resultString):
             return resultString ?? "If you continue to have problems, please submit a bug report in the Help menu."
+        case .srpInvalidPublicKey:
+            return "Invalid Key"
         }
     }
 }
@@ -494,4 +664,24 @@ public struct AppleProvider: Decodable, Equatable {
 
 public struct AppleUser: Decodable, Equatable {
     public let fullName: String
+}
+
+public struct ServerSRPInitResponse: Decodable {
+    let iteration: Int
+    let salt: String
+    let b: String
+    let c: String
+}
+
+
+
+extension String {
+    func base64ToU8Array() -> Data {
+        return Data(base64Encoded: self) ?? Data()
+    }
+}
+extension Data {
+    func hexEncodedString() -> String {
+        return map { String(format: "%02hhx", $0) }.joined()
+    }
 }

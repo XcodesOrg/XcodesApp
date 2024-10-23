@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -122,6 +122,7 @@
 		E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */; };
 		E84E4F542B333864003F3959 /* PlatformsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F532B333864003F3959 /* PlatformsListView.swift */; };
 		E84E4F572B335094003F3959 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E84E4F562B335094003F3959 /* OrderedCollections */; };
+		E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */ = {isa = PBXBuildFile; productRef = E862D43A2CC8B26F00BAA376 /* SRP */; };
 		E86671272B309D2F0048559A /* PlatformsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86671262B309D2F0048559A /* PlatformsView.swift */; };
 		E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87AB3C42939B65E00D72F43 /* Hardware.swift */; };
 		E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DD6EA25D053FA00D86808 /* Progress+.swift */; };
@@ -358,6 +359,7 @@
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
 				E83FDC442CBB649100679C6B /* Sparkle in Frameworks */,
+				E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */,
 				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
 				E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */,
 				E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */,
@@ -723,6 +725,7 @@
 				E84E4F562B335094003F3959 /* OrderedCollections */,
 				E83FDC432CBB649100679C6B /* Sparkle */,
 				334A932B2CA885A400A5E079 /* LibFido2Swift */,
+				E862D43A2CC8B26F00BAA376 /* SRP */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -812,6 +815,7 @@
 				E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */,
 				33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */,
+				E862D4392CC8B26F00BAA376 /* XCLocalSwiftPackageReference "xcodes-srp" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -1480,6 +1484,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		E862D4392CC8B26F00BAA376 /* XCLocalSwiftPackageReference "xcodes-srp" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "xcodes-srp";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -1645,6 +1656,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
+		};
+		E862D43A2CC8B26F00BAA376 /* SRP */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SRP;
 		};
 		E8C0EB19291EF43E0081528A /* XcodesKit */ = {
 			isa = XCSwiftPackageProductDependency;

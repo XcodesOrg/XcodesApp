@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "big-num",
+        "repositoryURL": "https://github.com/adam-fowler/big-num",
+        "state": {
+          "branch": null,
+          "revision": "5c5511ad06aeb2b97d0868f7394e14a624bfb1c7",
+          "version": "2.0.2"
+        }
+      },
+      {
         "package": "CombineExpectations",
         "repositoryURL": "https://github.com/groue/CombineExpectations",
         "state": {
@@ -98,6 +107,15 @@
           "branch": null,
           "revision": "a902f1823a7ff3c9ab2fba0f992396b948eda307",
           "version": "1.0.5"
+        }
+      },
+      {
+        "package": "swift-crypto",
+        "repositoryURL": "https://github.com/apple/swift-crypto",
+        "state": {
+          "branch": null,
+          "revision": "ddb07e896a2a8af79512543b1c7eb9797f8898a5",
+          "version": "1.1.7"
         }
       },
       {
