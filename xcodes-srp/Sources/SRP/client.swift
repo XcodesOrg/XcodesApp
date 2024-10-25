@@ -1,182 +1,224 @@
-import BigNum
+
+import Foundation
+import BigInt
 import Crypto
 
-/// Manages the client side of Secure Remote Password
-///
-/// Secure Remote Password (SRP) provides username and password authentication without needing to provide your password to the server. The server
-/// has a cryptographic verifier that is derived from the password and a salt that was used to generate this verifier. Both client and server
-/// generate a shared secret then the client sends a proof they have the secret and if it is correct the server will do the same to verify the
-/// server as well.
-///
-/// This version is compliant with SRP version  6a and RFC 5054.
-///
-/// Reference reading
-/// - https://tools.ietf.org/html/rfc2945
-/// - https://tools.ietf.org/html/rfc5054
-///
-public struct SRPClient<H: HashFunction> {
-    /// configuration. This needs to be the same as the server configuration
-    public let configuration: SRPConfiguration<H>
-    
-    /// Initialise a SRPClient object
-    /// - Parameter configuration: configuration to use
-    public init(configuration: SRPConfiguration<H>) {
-        self.configuration = configuration
-    }
-    
-    /// Initiate the authentication process
-    /// - Returns: An authentication state. The A value from this state should be sent to the server
-    public func generateKeys() -> SRPKeyPair {
-        var a = BigNum()
-        var A = BigNum()
-        repeat {
-            a = BigNum(bytes: SymmetricKey(size: .bits256))
-            A = configuration.g.power(a, modulus: configuration.N)
-        } while A % configuration.N == BigNum(0)
+/// SRP Client; the party that initializes the authentication and
+/// must proof possession of the correct password.
+public class SRPClient<H: HashFunction> {
+    let a: BigUInt
+    let A: BigUInt
 
-        return SRPKeyPair(public: SRPKey(A), private: SRPKey(a))
-    }
-    
-    /// return shared secret given the username, password, B value and salt from the server
-    /// - Parameters:
-    ///   - username: user identifier
-    ///   - password: password
-    ///   - salt: salt
-    ///   - clientKeys: client public/private keys
-    ///   - serverPublicKey: server public key
-    /// - Throws: `nullServerKey`
-    /// - Returns: shared secret
-    public func calculateSharedSecret(username: String, password: String, salt: [UInt8], clientKeys: SRPKeyPair, serverPublicKey: SRPKey) throws -> SRPKey {
-        let message = [UInt8]("\(username):\(password)".utf8)
-        let sharedSecret = try calculateSharedSecret(message: message, salt: salt, clientKeys: clientKeys, serverPublicKey: serverPublicKey)
-        return SRPKey(sharedSecret)
+    let group: Group
+    typealias impl = Implementation<H> // swiftlint:disable:this type_name
+
+    let username: String
+    var password: String?
+    var precomputedX: BigUInt?
+
+    public var HAMK: Data?
+    var K: Data?
+
+    /// Whether the session is authenticated, i.e. the password
+    /// was verified by the server and proof of a valid session
+    /// key was provided by the server. If `true`, `sessionKey`
+    /// is also available.
+    public private(set) var isAuthenticated = false
+
+    private init(
+        username: String,
+        group: Group = .N2048,
+        privateKey: Data? = nil)
+    {
+        self.username = username
+        self.group = group
+        if let privateKey = privateKey {
+            a = BigUInt(privateKey)
+        } else {
+            a = BigUInt(Curve25519.KeyAgreement.PrivateKey().rawRepresentation)
+        }
+        // A = g^a % N
+        A = group.g.power(a, modulus: group.N)
     }
 
-    /// return shared secret given the username, password, B value and salt from the server
-    /// - Parameters:
-    ///   - username: user identifier
-    ///   - password: password
-    ///   - salt: salt
-    ///   - clientKeys: client public/private keys
-    ///   - serverPublicKey: server public key
-    /// - Throws: `nullServerKey`
-    /// - Returns: shared secret
-    public func calculateSharedSecret(encryptedPassword: String, salt: [UInt8], clientKeys: SRPKeyPair, serverPublicKey: SRPKey) throws -> SRPKey {
-        let message = [UInt8](":\(encryptedPassword)".utf8)
-        let sharedSecret = try calculateSharedSecret(message: message, salt: salt, clientKeys: clientKeys, serverPublicKey: serverPublicKey)
-        return SRPKey(sharedSecret)
-    }
-    
-    
-    /// calculate proof of shared secret to send to server
-    /// - Parameters:
-    ///   - clientPublicKey: client public key
-    ///   - serverPublicKey: server public key
-    ///   - sharedSecret: shared secret
-    /// - Returns: The client verification code which should be passed to the server
-    public func calculateSimpleClientProof(clientPublicKey: SRPKey, serverPublicKey: SRPKey, sharedSecret: SRPKey) -> [UInt8] {
-        // get verification code
-        return SRP<H>.calculateSimpleClientProof(clientPublicKey: clientPublicKey, serverPublicKey: serverPublicKey, sharedSecret: sharedSecret)
-    }
-    
-    /// If the server returns that the client verification code was valiid it will also return a server verification code that the client can use to verify the server is correct
+    /// Initialize the Client SRP party with a password.
     ///
     /// - Parameters:
-    ///   - code: Verification code returned by server
-    ///   - state: Authentication state
-    /// - Throws: `requiresVerificationKey`, `invalidServerCode`
-    public func verifySimpleServerProof(serverProof: [UInt8], clientProof: [UInt8], clientKeys: SRPKeyPair, sharedSecret: SRPKey) throws {
-        // get out version of server proof
-        let HAMS = SRP<H>.calculateSimpleServerVerification(clientPublicKey: clientKeys.public, clientProof: clientProof, sharedSecret: sharedSecret)
-        // is it the same
-        guard serverProof == HAMS else { throw SRPClientError.invalidServerCode }
+    ///   - username: user's username.
+    ///   - password: user's password.
+    ///   - group: which `Group` to use, must be the same for the
+    ///       server as well as the pre-stored verificationKey.
+    ///   - privateKey: (optional) custom private key (a); if providing
+    ///       the private key of the `Client`, make sure to provide a
+    ///       good random key of at least 32 bytes. Default is to
+    ///       generate a private key of 128 bytes. You MUST not re-use
+    ///       the private key between sessions.
+    public convenience init(
+        username: String,
+        password: String,
+        group: Group = .N2048,
+        privateKey: Data? = nil)
+    {
+        self.init(username: username, group: group, privateKey: privateKey)
+        self.password = password
     }
 
-    /// calculate proof of shared secret to send to server
-    /// - Parameters:
-    ///   - username: username
-    ///   - salt: The salt value associated with the user returned by the server
-    ///   - clientPublicKey: client public key
-    ///   - serverPublicKey: server public key
-    ///   - sharedSecret: shared secret
-    /// - Returns: The client verification code which should be passed to the server
-    public func calculateClientProof(username: String, salt: [UInt8], clientPublicKey: SRPKey, serverPublicKey: SRPKey, sharedSecret: SRPKey) -> [UInt8] {
-
-        let hashSharedSecret = [UInt8](H.hash(data: sharedSecret.bytes))
-
-        // get verification code
-        return SRP<H>.calculateClientProof(configuration: configuration, username: username, salt: salt, clientPublicKey: clientPublicKey, serverPublicKey: serverPublicKey, hashSharedSecret: hashSharedSecret)
-    }
-
-    /// If the server returns that the client verification code was valiid it will also return a server verification code that the client can use to verify the server is correct
+    /// Initialize the Client SRP party with a precomputed x.
     ///
     /// - Parameters:
-    ///   - code: Verification code returned by server
-    ///   - state: Authentication state
-    /// - Throws: `requiresVerificationKey`, `invalidServerCode`
-    public func verifyServerProof(serverProof: [UInt8], clientProof: [UInt8], clientKeys: SRPKeyPair, sharedSecret: SRPKey) throws {
-        let hashSharedSecret = [UInt8](H.hash(data: sharedSecret.bytes))
-        // get out version of server proof
-        let HAMK = SRP<H>.calculateServerVerification(clientPublicKey: clientKeys.public, clientProof: clientProof, sharedSecret: hashSharedSecret)
-        // is it the same
-        guard serverProof == HAMK else { throw SRPClientError.invalidServerCode }
+    ///   - username: user's username.
+    ///   - precomputedX: precomputed SRP x.
+    ///   - group: which `Group` to use, must be the same for the
+    ///       server as well as the pre-stored verificationKey.
+    ///   - privateKey: (optional) custom private key (a); if providing
+    ///       the private key of the `Client`, make sure to provide a
+    ///       good random key of at least 32 bytes. Default is to
+    ///       generate a private key of 128 bytes. You MUST not re-use
+    ///       the private key between sessions.
+    public convenience init(
+        username: String,
+        precomputedX: Data,
+        group: Group = .N2048,
+        privateKey: Data? = nil)
+    {
+        self.init(username: username, group: group, privateKey: privateKey)
+        self.precomputedX = BigUInt(precomputedX)
     }
 
-     
-    /// If the server returns that the client verification code was valiid it will also return a server verification code that the client can use to verify the server is correct
+    /// Starts authentication. This method is a no-op.
+    ///
+    /// - Returns: `publicKey` (A)
+    public func startAuthentication() -> Data {
+        return publicKey
+    }
+
+    /// Process the challenge provided by the server. This sets the `sessionKey`
+    /// and generates proof that it generated the correct key from the password
+    /// and the challenge. After the server has also proven the validity of their
+    /// key, the `sessionKey` can be used.
     ///
     /// - Parameters:
-    ///   - code: Verification code returned by server
-    ///   - state: Authentication state
-    /// - Throws: `requiresVerificationKey`, `invalidServerCode`
-    public func serverProof(clientProof: [UInt8], clientKeys: SRPKeyPair, sharedSecret: SRPKey) -> [UInt8] {
-        let hashSharedSecret = [UInt8](H.hash(data: sharedSecret.bytes))
+    ///   - salt: user-specific salt (s)
+    ///   - publicKey: server's public key (B)
+    /// - Returns: key proof (M)
+    /// - Throws: `AuthenticationFailure.invalidPublicKey` if the server's
+    ///     public key is invalid (i.e. B % N is zero).
+    public func processChallenge(salt: Data, publicKey serverPublicKey: Data, isEncryptedPassword: Bool, encryptedPassword: String? = nil) throws -> Data {
+        let H = impl.H
+        let N = group.N
+
+        let B = BigUInt(serverPublicKey)
+
+        guard B % N != 0 else {
+            throw AuthenticationFailure.invalidPublicKey
+        }
+
+        let u = impl.calculate_u(group: group, A: publicKey, B: serverPublicKey)
+        let k = impl.calculate_k(group: group)
         
-        return SRP<H>.calculateServerVerification(clientPublicKey: clientKeys.public, clientProof: clientProof, sharedSecret: hashSharedSecret)
+        let x = self.precomputedX ?? (isEncryptedPassword ? impl.calculate_x(salt: salt, username: "", password: encryptedPassword!) : impl.calculate_x(salt: salt, username: username, password: password!))
+        let v = calculate_v(group: group, x: x)
+
+        // shared secret
+        // S = (B - kg^x) ^ (a + ux)
+        // Note that v = g^x, and that B - kg^x might become negative, which
+        // cannot be stored in BigUInt. So we'll add N to B_ and make sure kv
+        // isn't greater than N.
+        let S = (B + N - k * v % N).power(a + u * x, modulus: N)
+
+        // session key
+        K = H(S.serialize())
+
+        // client verification
+        let M = impl.calculate_M(group: group, username: username, salt: salt, A: publicKey, B: serverPublicKey, K: K!)
+
+        // server verification
+        HAMK = impl.calculate_HAMK(A: publicKey, M: M, K: K!)
+        return M
     }
-    
-    /// Generate salt and password verifier from username and password. When creating your user instead of passing your password to the server, you
-    /// pass the salt and password verifier values. In this way the server never knows your password so can never leak it.
+
+    /// After the server has verified that the password is correct,
+    /// it will send proof of the derived session key. This is verified
+    /// on our end and finalizes the authentication session. After this
+    /// step, the `sessionKey` is available.
     ///
-    /// - Parameters:
-    ///   - username: username
-    ///   - password: user password
-    /// - Returns: tuple containing salt and password verifier
-    public func generateSaltAndVerifier(username: String, password: String) -> (salt: [UInt8], verifier: SRPKey) {
-        let salt = [UInt8].random(count: 16)
-        let verifier = generatePasswordVerifier(username: username, password: password, salt: salt)
-        return (salt: salt, verifier: SRPKey(verifier))
+    /// - Parameter HAMK: proof of the server that it derived the same
+    ///     session key.
+    /// - Throws:
+    ///    - `AuthenticationFailure.missingChallenge` if this method
+    ///      is called before calling `processChallenge`.
+    ///    - `AuthenticationFailure.keyProofMismatch` if the proof
+    ///      doesn't match our own.
+    public func verifySession(keyProof serverKeyProof: Data) throws {
+        guard let HAMK = HAMK else {
+            throw AuthenticationFailure.missingChallenge
+        }
+        guard HAMK == serverKeyProof else {
+            throw AuthenticationFailure.keyProofMismatch
+        }
+        isAuthenticated = true
+    }
+
+    /// The client's public key (A). For every authentication
+    /// session a new public key is generated.
+    public var publicKey: Data {
+        return A.serialize()
+    }
+
+    /// The client's private key (a). For every authentication
+    /// session a new random private key is generated.
+    public var privateKey: Data {
+        return a.serialize()
+    }
+
+    /// The session key (K) that is exchanged during authentication.
+    /// This key can be used to encrypt further communication
+    /// between client and server.
+    public var sessionKey: Data? {
+        guard isAuthenticated else {
+            return nil
+        }
+        return K
     }
 }
 
-extension SRPClient {
-    /// return shared secret given the username, password, B value and salt from the server
-    func calculateSharedSecret(message: [UInt8], salt: [UInt8], clientKeys: SRPKeyPair, serverPublicKey: SRPKey) throws -> BigNum {
-        guard serverPublicKey.number % configuration.N != BigNum(0) else { throw SRPClientError.nullServerKey }
+/// Possible authentication failure modes.
+public enum AuthenticationFailure: Error {
+    /// Security breach: the provided public key is empty (i.e. PK % N is zero).
+    case invalidPublicKey
 
-        // calculate u = H(clientPublicKey | serverPublicKey)
-        let u = SRP<H>.calculateU(clientPublicKey: clientKeys.public.bytes, serverPublicKey: serverPublicKey.bytes, pad: configuration.sizeN)
+    /// Invalid client state: call `processChallenge` before `verifySession`.
+    case missingChallenge
 
-        guard u != 0 else { throw SRPClientError.nullServerKey }
-        
-        let x = BigNum(bytes: [UInt8](H.hash(data: salt + H.hash(data: message))))
-        
-        // calculate S = (B - k*g^x)^(a+u*x)
-        let S = (serverPublicKey.number - configuration.k * configuration.g.power(x, modulus: configuration.N)).power(clientKeys.private.number + u * x, modulus: configuration.N)
-        
-        return S
+    /// Failed authentication: the key proof didn't match our own.
+    case keyProofMismatch
+}
+
+extension AuthenticationFailure: CustomStringConvertible {
+    /// A textual representation of this instance.
+    ///
+    /// Instead of accessing this property directly, convert an instance of any
+    /// type to a string by using the `String(describing:)` initializer.
+    public var description: String {
+        switch self {
+        case .invalidPublicKey: return "security breach - the provided public key is invalid"
+        case .missingChallenge: return "invalid client state - call `processChallenge` before `verifySession`"
+        case .keyProofMismatch: return "failed authentication - the key proof didn't match our own"
+        }
     }
-    
-    /// generate password verifier
-    public func generatePasswordVerifier(username: String, password: String, salt: [UInt8]) -> BigNum {
-        let message = "\(username):\(password)"
-        return generatePasswordVerifier(message: [UInt8](message.utf8), salt: salt)
+}
+func ^ (lhs: Data, rhs: Data) -> Data? {
+    guard lhs.count == rhs.count else { return nil }
+    var result = Data(count: lhs.count)
+    for index in lhs.indices {
+        result[index] = lhs[index] ^ rhs[index]
     }
-    
-    /// generate password verifier
-    public func generatePasswordVerifier(message: [UInt8], salt: [UInt8]) -> BigNum {
-        let x = BigNum(bytes: [UInt8](H.hash(data: salt + H.hash(data: message))))
-        let verifier = configuration.g.power(x, modulus: configuration.N)
-        return verifier
-    }
+    return result
+}
+
+// Removed in Xcode 8 beta 3
+func + (lhs: Data, rhs: Data) -> Data {
+    var result = lhs
+    result.append(rhs)
+    return result
 }

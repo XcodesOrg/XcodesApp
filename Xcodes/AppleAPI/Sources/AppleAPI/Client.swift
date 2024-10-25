@@ -4,6 +4,7 @@ import SRP
 import Crypto
 import CommonCrypto
 
+
 public class Client {
     private static let authTypes = ["sa", "hsa", "non-sa", "hsa2"]
 
@@ -14,9 +15,8 @@ public class Client {
     public func srpLogin(accountName: String, password: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
         var serviceKey: String!
         
-        let config = SRPConfiguration<SHA256>(.N2048)
-        let client = SRPClient(configuration: config)
-        let clientKeys = client.generateKeys()
+        let client = SRPClient<SHA256>(username: accountName, password: password)
+        let a = client.startAuthentication()
        
         return Current.network.dataTask(with: URLRequest.itcServiceKey)
             .map(\.data)
@@ -33,13 +33,14 @@ public class Client {
             }
             .flatMap { (serviceKey, hashcash) -> AnyPublisher<(String, String, ServerSRPInitResponse), Swift.Error> in
                 
-                return Current.network.dataTask(with: URLRequest.SRPInit(serviceKey: serviceKey, a: clientKeys.private.hex, accountName: accountName))
+                return Current.network.dataTask(with: URLRequest.SRPInit(serviceKey: serviceKey, a: a.base64EncodedString(), accountName: accountName))
                     .map(\.data)
                     .decode(type: ServerSRPInitResponse.self, decoder: JSONDecoder())
                     .map { return (serviceKey, hashcash, $0) }
                     .eraseToAnyPublisher()
             }
             .flatMap { (serviceKey, hashcash, srpInit) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+                print("SRP INIT REsponse: \(srpInit)")
                 
                 guard let decodedB = Data(base64Encoded: srpInit.b) else {
                     return Fail(error: AuthenticationError.srpInvalidPublicKey)
@@ -52,46 +53,29 @@ public class Client {
                 }
 
                 let iterations = srpInit.iteration
-                let serverPublic = SRPKey([UInt8](decodedB))
                 
-                guard let encryptedPassword = self.pbkdf2(password: password, saltData: decodedSalt, keyByteCount: 32, prf: CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256), rounds: iterations) else {
-                    return Fail(error: AuthenticationError.srpInvalidPublicKey)
-                        .eraseToAnyPublisher()
-                }
-                
-                 
-                let encryptedPasswordArray = encryptedPassword.hexEncodedString()
-                 
-                print("EncryptedPassword: \(encryptedPasswordArray)")
-                print("EncryptedPassword: \([UInt8](encryptedPassword))")
                 do {
                     
-                    // this calculates "S"
-                    let clientSharedSecret = try client.calculateSharedSecret(
-                        encryptedPassword: encryptedPasswordArray,
-                        salt: [UInt8](decodedSalt),
-                        clientKeys: clientKeys,
-                        serverPublicKey: serverPublic
-                    )
-                    print("SharedSecret: \(clientSharedSecret)")
+                    guard let encryptedPassword = self.pbkdf2(password: password, saltData: decodedSalt, keyByteCount: 32, prf: CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256), rounds: iterations) else {
+                        return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                            .eraseToAnyPublisher()
+                    }
                     
-                    let m1 = client.calculateClientProof(
-                        username: accountName,
-                        salt: [UInt8](decodedSalt),
-                        clientPublicKey: clientKeys.public,
-                        serverPublicKey: serverPublic,
-                        sharedSecret: clientSharedSecret
-                    )
-
-                    let m2 = client.serverProof(clientProof: m1, clientKeys: clientKeys, sharedSecret: clientSharedSecret)
-                   
+//                    let m1 = try client.processChallenge(salt: decodedSalt, publicKey: decodedB, isEncryptedPassword: true, encryptedPassword: encryptedPassword.hexEncodedString())
+                    let encryptedPasswordString = String(data: encryptedPassword, encoding: .utf8)
+                    let m1 = try client.processChallenge(salt: decodedSalt, publicKey: decodedB, isEncryptedPassword: true, encryptedPassword: encryptedPasswordString)
                     
-                    print("M1: \(Data(m1).base64EncodedString())")
-                    print("M2: \(Data(m2).base64EncodedString())")
+                    guard let m2 = client.HAMK else {
+                        return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                            .eraseToAnyPublisher()
+                    }
                     
-                    return Current.network.dataTask(with: URLRequest.SRPComplete(serviceKey: serviceKey, hashcash: hashcash, accountName: accountName, c: srpInit.c, m1: Data(m1).base64EncodedString(), m2: Data(m2).base64EncodedString()))
-                        .mapError { $0 as Swift.Error }
-                        .eraseToAnyPublisher()
+                    print("m1: \(m1.base64EncodedString())")
+                    print("m2: \(m2.base64EncodedString())")
+                
+                    return Current.network.dataTask(with: URLRequest.SRPComplete(serviceKey: serviceKey, hashcash: hashcash, accountName: accountName, c: srpInit.c, m1: m1.base64EncodedString(), m2: m2.base64EncodedString()))
+                            .mapError { $0 as Swift.Error }
+                            .eraseToAnyPublisher()
                 } catch {
                     print("Error: calculateSharedSecret \(error)")
                     return Fail(error: AuthenticationError.srpInvalidPublicKey)
