@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - main
+  pull_request:
+    branches:
+    - main
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  macOS:
+    runs-on: macOS-latest
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+    - name: Build
+      run: swift build
+    - name: Run tests
+      run: swift test
+
+  linux:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        image: ['swift:5.9', 'swift:5.10', 'swift:6.0']
+    container:
+      image: ${{ matrix.image }}
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 1
+    - name: Test
+      run: swift test --parallel --enable-code-coverage

@@ -11,12 +11,12 @@
         }
       },
       {
-        "package": "BigInt",
-        "repositoryURL": "https://github.com/attaswift/BigInt",
+        "package": "big-num",
+        "repositoryURL": "https://github.com/adam-fowler/big-num",
         "state": {
           "branch": null,
-          "revision": "793a7fac0bfc318e85994bf6900652e827aef33e",
-          "version": "5.4.1"
+          "revision": "5c5511ad06aeb2b97d0868f7394e14a624bfb1c7",
+          "version": "2.0.2"
         }
       },
       {

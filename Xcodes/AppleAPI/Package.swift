@@ -12,13 +12,15 @@ let package = Package(
             name: "AppleAPI",
             targets: ["AppleAPI"]),
     ],
-    dependencies: [],
+    dependencies: [
+        .package(name: "swift-srp", path: "swift-srp-main")
+    ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages this package depends on.
         .target(
             name: "AppleAPI",
-            dependencies: []),
+            dependencies: [.product(name: "SRP", package: "swift-srp")]),
         .testTarget(
             name: "AppleAPITests",
             dependencies: ["AppleAPI"]),

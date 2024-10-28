@@ -15,9 +15,10 @@ public class Client {
     public func srpLogin(accountName: String, password: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
         var serviceKey: String!
         
-        let client = SRPClient<SHA256>(username: accountName, password: password)
-        let a = client.startAuthentication()
-       
+        let client = SRPClient(configuration: SRPConfiguration<SHA256>(.N2048))
+        let clientKeys = client.generateKeys()
+        let a = clientKeys.public
+
         return Current.network.dataTask(with: URLRequest.itcServiceKey)
             .map(\.data)
             .decode(type: ServiceKeyResponse.self, decoder: JSONDecoder())
@@ -33,7 +34,7 @@ public class Client {
             }
             .flatMap { (serviceKey, hashcash) -> AnyPublisher<(String, String, ServerSRPInitResponse), Swift.Error> in
                 
-                return Current.network.dataTask(with: URLRequest.SRPInit(serviceKey: serviceKey, a: a.base64EncodedString(), accountName: accountName))
+                return Current.network.dataTask(with: URLRequest.SRPInit(serviceKey: serviceKey, a: Data(a.bytes).base64EncodedString(), accountName: accountName))
                     .map(\.data)
                     .decode(type: ServerSRPInitResponse.self, decoder: JSONDecoder())
                     .map { return (serviceKey, hashcash, $0) }
@@ -62,18 +63,16 @@ public class Client {
                     }
                     
 //                    let m1 = try client.processChallenge(salt: decodedSalt, publicKey: decodedB, isEncryptedPassword: true, encryptedPassword: encryptedPassword.hexEncodedString())
-                    let encryptedPasswordString = String(data: encryptedPassword, encoding: .utf8)
-                    let m1 = try client.processChallenge(salt: decodedSalt, publicKey: decodedB, isEncryptedPassword: true, encryptedPassword: encryptedPasswordString)
+                    let encryptedPasswordString = encryptedPassword.base64EncodedString()
+                    let sharedSecret = try client.calculateSharedSecret(password: encryptedPassword, salt: [UInt8](decodedSalt), clientKeys: clientKeys, serverPublicKey: .init([UInt8](decodedB)))
+//                    let m1 = try client.processChallenge(salt: decodedSalt, publicKey: decodedB, encryptedPassword: encryptedPasswordString)
                     
-                    guard let m2 = client.HAMK else {
-                        return Fail(error: AuthenticationError.srpInvalidPublicKey)
-                            .eraseToAnyPublisher()
-                    }
-                    
-                    print("m1: \(m1.base64EncodedString())")
-                    print("m2: \(m2.base64EncodedString())")
-                
-                    return Current.network.dataTask(with: URLRequest.SRPComplete(serviceKey: serviceKey, hashcash: hashcash, accountName: accountName, c: srpInit.c, m1: m1.base64EncodedString(), m2: m2.base64EncodedString()))
+                    let m1 = client.calculateClientProof(username: accountName, salt: [UInt8](decodedSalt), clientPublicKey: a, serverPublicKey: .init([UInt8](decodedB)), sharedSecret: .init(sharedSecret.bytes))
+                    let m2 = client.calculateServerProof(clientPublicKey: a, clientProof: m1, sharedSecret: .init([UInt8](sharedSecret.bytes)))
+                    print("m1: \(Data(m1).base64EncodedString())")
+                    print("m2: \(Data(m2).base64EncodedString())")
+
+                    return Current.network.dataTask(with: URLRequest.SRPComplete(serviceKey: serviceKey, hashcash: hashcash, accountName: accountName, c: srpInit.c, m1: Data(m1).base64EncodedString(), m2: Data(m2).base64EncodedString()))
                             .mapError { $0 as Swift.Error }
                             .eraseToAnyPublisher()
                 } catch {
@@ -382,10 +381,19 @@ public class Client {
             .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }
-    
+
+    func sha256(data : Data) -> Data {
+        var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
+        data.withUnsafeBytes {
+            _ = CC_SHA256($0.baseAddress, CC_LONG(data.count), &hash)
+        }
+        return Data(hash)
+    }
+
     private func pbkdf2(password: String, saltData: Data, keyByteCount: Int, prf: CCPseudoRandomAlgorithm, rounds: Int) -> Data? {
         guard let passwordData = password.data(using: .utf8) else { return nil }
-        
+        let hashedPasswordData = sha256(data: passwordData)
+
         var derivedKeyData = Data(repeating: 0, count: keyByteCount)
         let derivedCount = derivedKeyData.count
         let derivationStatus: Int32 = derivedKeyData.withUnsafeMutableBytes { derivedKeyBytes in
@@ -393,16 +401,19 @@ public class Client {
                 derivedKeyBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
             return saltData.withUnsafeBytes { saltBytes -> Int32 in
                 let saltBuffer: UnsafePointer<UInt8> = saltBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
-                return CCKeyDerivationPBKDF(
-                    CCPBKDFAlgorithm(kCCPBKDF2),
-                    password,
-                    passwordData.count,
-                    saltBuffer,
-                    saltData.count,
-                    prf,
-                    UInt32(rounds),
-                    keyBuffer,
-                    derivedCount)
+                return hashedPasswordData.withUnsafeBytes { hashedPasswordBytes -> Int32 in
+                    let passwordBuffer: UnsafePointer<UInt8> = hashedPasswordBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    return CCKeyDerivationPBKDF(
+                        CCPBKDFAlgorithm(kCCPBKDF2),
+                        passwordBuffer,
+                        hashedPasswordData.count,
+                        saltBuffer,
+                        saltData.count,
+                        prf,
+                        UInt32(rounds),
+                        keyBuffer,
+                        derivedCount)
+                }
             }
         }
         return derivationStatus == kCCSuccess ? derivedKeyData : nil
