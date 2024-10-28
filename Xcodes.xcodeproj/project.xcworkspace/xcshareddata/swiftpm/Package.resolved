@@ -119,6 +119,15 @@
         }
       },
       {
+        "package": "swift-srp",
+        "repositoryURL": "https://github.com/abiligiri/swift-srp",
+        "state": {
+          "branch": null,
+          "revision": "ca452b0b557021ca8af305bbce504bcd13d32b15",
+          "version": "1.1.0"
+        }
+      },
+      {
         "package": "SwiftSoup",
         "repositoryURL": "https://github.com/scinfu/SwiftSoup",
         "state": {

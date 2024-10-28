@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -819,7 +819,6 @@
 				E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */,
 				33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */,
-				15F5B8912CCF44B700705E2F /* XCLocalSwiftPackageReference "swift-srp-main" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -1487,13 +1486,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCLocalSwiftPackageReference section */
-		15F5B8912CCF44B700705E2F /* XCLocalSwiftPackageReference "swift-srp-main" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "swift-srp-main";
-		};
-/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCRemoteSwiftPackageReference section */
 		33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */ = {
