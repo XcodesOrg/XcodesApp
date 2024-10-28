@@ -62,7 +62,7 @@ public class Client {
                     }
                     
 //                    let m1 = try client.processChallenge(salt: decodedSalt, publicKey: decodedB, isEncryptedPassword: true, encryptedPassword: encryptedPassword.hexEncodedString())
-                    let encryptedPasswordString = String(data: encryptedPassword, encoding: .utf8)
+                    let encryptedPasswordString = encryptedPassword.base64EncodedString()
                     let m1 = try client.processChallenge(salt: decodedSalt, publicKey: decodedB, isEncryptedPassword: true, encryptedPassword: encryptedPasswordString)
                     
                     guard let m2 = client.HAMK else {
@@ -385,7 +385,8 @@ public class Client {
     
     private func pbkdf2(password: String, saltData: Data, keyByteCount: Int, prf: CCPseudoRandomAlgorithm, rounds: Int) -> Data? {
         guard let passwordData = password.data(using: .utf8) else { return nil }
-        
+        let hashedPassword = SHA256.hash(data: passwordData)
+
         var derivedKeyData = Data(repeating: 0, count: keyByteCount)
         let derivedCount = derivedKeyData.count
         let derivationStatus: Int32 = derivedKeyData.withUnsafeMutableBytes { derivedKeyBytes in
@@ -393,16 +394,19 @@ public class Client {
                 derivedKeyBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
             return saltData.withUnsafeBytes { saltBytes -> Int32 in
                 let saltBuffer: UnsafePointer<UInt8> = saltBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
-                return CCKeyDerivationPBKDF(
-                    CCPBKDFAlgorithm(kCCPBKDF2),
-                    password,
-                    passwordData.count,
-                    saltBuffer,
-                    saltData.count,
-                    prf,
-                    UInt32(rounds),
-                    keyBuffer,
-                    derivedCount)
+                return hashedPassword.withUnsafeBytes { passwordBytes -> Int32 in
+                    let passwordBuffer: UnsafePointer<UInt8> = passwordBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    return CCKeyDerivationPBKDF(
+                        CCPBKDFAlgorithm(kCCPBKDF2),
+                        passwordBuffer,
+                        passwordBytes.count,
+                        saltBuffer,
+                        saltData.count,
+                        prf,
+                        UInt32(rounds),
+                        keyBuffer,
+                        derivedCount)
+                }
             }
         }
         return derivationStatus == kCCSuccess ? derivedKeyData : nil

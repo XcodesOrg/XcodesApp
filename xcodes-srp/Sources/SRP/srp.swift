@@ -93,7 +93,9 @@ enum Implementation<HF: HashFunction> {
 
     //M1 = H(H(N) XOR H(g) | H(I) | s | A | B | K)
     static func calculate_M(group: Group, username: String, salt: Data, A: Data, B: Data, K: Data) -> Data {
-        let HN_xor_Hg = (H(group.N.serialize()) ^ H(group.g.serialize()))!
+        let serializedN = group.N.serialize()
+        let sizeN = serializedN.count
+        let HN_xor_Hg = (H(serializedN) ^ H(pad(group.g.serialize(), to: sizeN)))!
         let HI = H(username.data(using: .utf8)!)
         return H(HN_xor_Hg + HI + salt + A + B + K)
     }
@@ -111,7 +113,12 @@ enum Implementation<HF: HashFunction> {
 
     //x = H(s | H(I | ":" | P))
     static func calculate_x(salt: Data, username: String, password: String) -> BigUInt {
-        return BigUInt(H(salt + H("\(username):\(password)".data(using: .utf8)!)))
+        if username.count > 0 {
+            return BigUInt(H(salt + H("\(username):\(password)".data(using: .utf8)!)))
+        }
+
+        let passwordData = Data(base64Encoded: password.data(using: .utf8)!)!
+        return BigUInt(H(salt + H(Data([0x3A]) + passwordData)))
     }
 }
 
