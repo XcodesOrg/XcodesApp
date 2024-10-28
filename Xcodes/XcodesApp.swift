@@ -15,6 +15,8 @@ struct XcodesApp: App {
             MainWindow()
                 .environmentObject(appState)
                 .environmentObject(updater)
+                .environment(\.locale, Locale(identifier: Current.defaults.string(forKey: "appLanguage") ?? "en"))
+//                .environment(\.layoutDirection, Current.defaults.string(forKey: "appLanguage") ?? "en" == "fa" ? .rightToLeft : .leftToRight)
                 // This is intentionally used on a View, and not on a WindowGroup,
                 // so that it's triggered when an individual window's phase changes instead of all window phases.
                 // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup.
@@ -73,6 +75,8 @@ struct XcodesApp: App {
         PreferencesView()
           .environmentObject(appState)
           .environmentObject(updater)
+          .environment(\.locale, Locale(identifier: Current.defaults.string(forKey: "appLanguage") ?? "en"))
+          .environment(\.layoutDirection, Current.defaults.string(forKey: "appLanguage") ?? "en" == "fa" ? .rightToLeft : .leftToRight)
           .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
               alert(for: presentedAlert)
           })
@@ -81,6 +85,9 @@ struct XcodesApp: App {
         Window("Platforms", id: "platforms") {
             PlatformsListView()
                 .environmentObject(appState)
+                .environmentObject(updater)
+                .environment(\.locale, Locale(identifier: Current.defaults.string(forKey: "appLanguage") ?? "en"))
+                .environment(\.layoutDirection, Current.defaults.string(forKey: "appLanguage") ?? "en" == "fa" ? .rightToLeft : .leftToRight)
                 .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
                     alert(for: presentedAlert)
                 })
