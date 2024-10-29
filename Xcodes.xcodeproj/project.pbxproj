@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15F5B8902CCF09B900705E2F /* CryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5B88F2CCF09B900705E2F /* CryptoKit.framework */; };
 		33027E342CA8C18800CB387C /* LibFido2Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 334A932B2CA885A400A5E079 /* LibFido2Swift */; };
 		3328073F2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */; };
 		332807412CA5EA820036F691 /* SignInSecurityKeyTouchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */; };
@@ -122,6 +123,7 @@
 		E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */; };
 		E84E4F542B333864003F3959 /* PlatformsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F532B333864003F3959 /* PlatformsListView.swift */; };
 		E84E4F572B335094003F3959 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E84E4F562B335094003F3959 /* OrderedCollections */; };
+		E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */ = {isa = PBXBuildFile; productRef = E862D43A2CC8B26F00BAA376 /* SRP */; };
 		E86671272B309D2F0048559A /* PlatformsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86671262B309D2F0048559A /* PlatformsView.swift */; };
 		E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87AB3C42939B65E00D72F43 /* Hardware.swift */; };
 		E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DD6EA25D053FA00D86808 /* Progress+.swift */; };
@@ -195,6 +197,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		15F5B88F2CCF09B900705E2F /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
 		3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSecurityKeyPinView.swift; sourceTree = "<group>"; };
 		332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSecurityKeyTouchView.swift; sourceTree = "<group>"; };
 		36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadPreferencePane.swift; sourceTree = "<group>"; };
@@ -351,6 +354,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15F5B8902CCF09B900705E2F /* CryptoKit.framework in Frameworks */,
 				33027E342CA8C18800CB387C /* LibFido2Swift in Frameworks */,
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
@@ -358,6 +362,7 @@
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
 				E83FDC442CBB649100679C6B /* Sparkle in Frameworks */,
+				E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */,
 				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
 				E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */,
 				E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */,
@@ -414,6 +419,7 @@
 		CA538A12255A4F7C00E64DD7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15F5B88F2CCF09B900705E2F /* CryptoKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -723,6 +729,7 @@
 				E84E4F562B335094003F3959 /* OrderedCollections */,
 				E83FDC432CBB649100679C6B /* Sparkle */,
 				334A932B2CA885A400A5E079 /* LibFido2Swift */,
+				E862D43A2CC8B26F00BAA376 /* SRP */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -1645,6 +1652,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
+		};
+		E862D43A2CC8B26F00BAA376 /* SRP */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SRP;
 		};
 		E8C0EB19291EF43E0081528A /* XcodesKit */ = {
 			isa = XCSwiftPackageProductDependency;

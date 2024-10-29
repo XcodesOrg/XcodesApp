@@ -290,7 +290,7 @@ class AppState: ObservableObject {
         Current.defaults.set(username, forKey: "username")
         
         isProcessingAuthRequest = true
-        return client.login(accountName: username, password: password)
+        return client.srpLogin(accountName: username, password: password)
             .receive(on: DispatchQueue.main)
             .handleEvents(
                 receiveOutput: { authenticationState in 
