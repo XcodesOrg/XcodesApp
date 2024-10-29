@@ -120,11 +120,11 @@
       },
       {
         "package": "swift-srp",
-        "repositoryURL": "https://github.com/abiligiri/swift-srp",
+        "repositoryURL": "https://github.com/xcodesOrg/swift-srp",
         "state": {
-          "branch": null,
-          "revision": "ca452b0b557021ca8af305bbce504bcd13d32b15",
-          "version": "1.1.0"
+          "branch": "main",
+          "revision": "543aa0122a0257b992f6c7d62d18a26e3dffb8fe",
+          "version": null
         }
       },
       {
