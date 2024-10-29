@@ -8,6 +8,54 @@
             
                 
                     <item>
+                        <title>v2.4.0 - Now with 100% more login</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<p>Big shout out to @abiligiri 🎉  for getting the new Apple SRP login changes over the line! 🙏</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Support SRP Login (#640) @MattKiazyk</li>
+  <li>Add support for SRP Login (#638) @abiligiri</li>
+</ul>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Add preference keys for ‘Restrict allowed versions’ &amp; hide ‘Support Xcodes’ (#632) @abiligiri</li>
+</ul>
+
+<!-- sparkle:edSignature=sAWbFqtV6k5AZNsQ82sBhH/Rcy2cr6kU3UmWY2a5n1edM2/JhKekv2l3E1aGr6WLxvBuo+NvDw5pOM2R6ymIDA== -->
+]]></description>
+                        <pubDate>Tue, 29 Oct 2024 03:37:31 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.4.0b29/Xcodes.zip"
+                                    sparkle:version="29"
+                                    sparkle:shortVersionString="2.4.0"
+                                    sparkle:edSignature="sAWbFqtV6k5AZNsQ82sBhH/Rcy2cr6kU3UmWY2a5n1edM2/JhKekv2l3E1aGr6WLxvBuo+NvDw5pOM2R6ymIDA=="
+                                    length="17882451"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v2.3.0 - Welcome back runtimes</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
