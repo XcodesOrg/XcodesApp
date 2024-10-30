@@ -515,6 +515,36 @@ extension AppState {
             }
         }
     }
+    
+    func updateACToken(_ token: String) {
+       // if let cookieStorage = AppleAPI.Current.network.session.configuration.httpCookieStorage {
+        print (AppleAPI.Current.network.session.configuration.httpCookieStorage)
+        let cookie = HTTPCookie(properties: [
+            .domain: "appstoreconnect.apple.com",
+            .path: "/olympus/v1/session",
+            .name: "myacinfo",
+            .value: token,
+            .secure: "TRUE",
+            .expires: Date(timeIntervalSinceNow: 31556926)
+        ])!
+        
+        AppleAPI.Current.network.session.configuration.httpCookieStorage?.setCookie(cookie)
+        
+        validateSession()
+            .sink(
+                receiveCompletion: { _ in
+                    self.authenticationState = .authenticated
+                },
+                receiveValue: { _ in }
+            )
+            .store(in: &cancellables)
+        
+          
+           print (AppleAPI.Current.network.session.configuration.httpCookieStorage)
+        
+        
+       
+    }
 }
 
 extension AppState {
