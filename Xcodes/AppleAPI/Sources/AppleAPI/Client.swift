@@ -313,6 +313,7 @@ public class Client {
         let hashedPasswordDataRaw = sha256(data: passwordData)
         let hashedPasswordData = switch srpProtocol {
         case .s2k: hashedPasswordDataRaw
+        // the legacy s2k_fo protocol requires hex-encoding the digest before performing PBKDF2.
         case .s2k_fo: Data(hashedPasswordDataRaw.hexEncodedString().lowercased().utf8)
         }
 
