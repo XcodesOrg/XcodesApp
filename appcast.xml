@@ -8,6 +8,48 @@
             
                 
                     <item>
+                        <title>v2.4.1 - Now with 101% more login</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<p>Thanks to @kabiroberai this release should fix any users that still had the bad username/password after updating to 2.4.0</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-bug-fixes">🐛 Bug Fixes</h2>
+
+<ul>
+  <li>Fix handling of s2k_fo (#650) @kabiroberai</li>
+  <li>
+    <!-- sparkle:edSignature=LB+RKW0Im5Sm2ciIhYOXKOf4MTFSmnXkvGS36X/AXABhME2dwDiobJnxAe3TIqGFKb6Ulvf53x8ENL3YXIrWCA== -->
+  </li>
+</ul>
+]]></description>
+                        <pubDate>Tue, 05 Nov 2024 03:55:43 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.4.1b30/Xcodes.zip"
+                                    sparkle:version="30"
+                                    sparkle:shortVersionString="2.4.1"
+                                    sparkle:edSignature="LB+RKW0Im5Sm2ciIhYOXKOf4MTFSmnXkvGS36X/AXABhME2dwDiobJnxAe3TIqGFKb6Ulvf53x8ENL3YXIrWCA=="
+                                    length="17884512"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v2.4.0 - Now with 100% more login</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
