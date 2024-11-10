@@ -357,7 +357,7 @@ class AppState: ObservableObject {
     
     var fido2: FIDO2?
     
-    func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
+    func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String?, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
         self.presentedSheet = .securityKeyTouchToConfirm
         
         guard let fsaChallenge = authOptions.fsaChallenge else {
