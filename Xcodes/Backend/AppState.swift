@@ -410,6 +410,10 @@ class AppState: ObservableObject {
         }
     }
 
+    func fido2DeviceIsPresent() -> Bool {
+        fido2.hasDeviceAttached()
+    }
+
     func fido2DeviceNeedsPin() -> Bool {
         do {
             return try fido2.deviceHasPin()
