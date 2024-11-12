@@ -409,6 +409,15 @@ class AppState: ObservableObject {
             }
         }
     }
+
+    func fido2DeviceNeedsPin() -> Bool {
+        do {
+            return try fido2.deviceHasPin()
+        } catch {
+            authError = error
+            return true
+        }
+    }
     
     func cancelSecurityKeyAssertationRequest() {
         self.fido2.cancel()
