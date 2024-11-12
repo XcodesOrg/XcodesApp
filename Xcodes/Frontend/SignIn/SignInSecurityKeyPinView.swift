@@ -32,6 +32,9 @@ struct SignInSecurityKeyPinView: View {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
                 Spacer()
+
+                Button("PIN not set", action: submitWithoutPinCode)
+
                 ProgressButton(isInProgress: appState.isProcessingAuthRequest,
                                action: submitPinCode) {
                     Text("Continue")
@@ -49,6 +52,10 @@ struct SignInSecurityKeyPinView: View {
     
     func submitPinCode() {
         appState.createAndSubmitSecurityKeyAssertationWithPinCode(pin, sessionData: sessionData, authOptions: authOptions)
+    }
+
+    func submitWithoutPinCode() {
+        appState.createAndSubmitSecurityKeyAssertationWithPinCode(nil, sessionData: sessionData, authOptions: authOptions)
     }
 }
 
