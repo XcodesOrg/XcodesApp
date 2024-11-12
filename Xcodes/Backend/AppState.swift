@@ -305,11 +305,17 @@ class AppState: ObservableObject {
     }
     
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
-        self.presentedSheet = .twoFactor(.init(
-            option: option,
-            authOptions: authOptions,
-            sessionData: AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        ))
+        let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
+
+        if option == .securityKey, fido2DeviceIsPresent() && !fido2DeviceNeedsPin() {
+            createAndSubmitSecurityKeyAssertationWithPinCode(nil, sessionData: sessionData, authOptions: authOptions)
+        } else {
+            self.presentedSheet = .twoFactor(.init(
+                option: option,
+                authOptions: authOptions,
+                sessionData: sessionData
+            ))
+        }
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
