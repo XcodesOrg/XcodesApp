@@ -1493,7 +1493,7 @@
 			repositoryURL = "https://github.com/kinoroy/LibFido2Swift.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.3;
+				minimumVersion = 0.1.4;
 			};
 		};
 		CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */ = {
