@@ -405,7 +405,9 @@ class AppState: ObservableObject {
                 // we don't have to show an error
                 // because the sheet will already be dismissed
             } catch {
-                authError = error
+                Task { @MainActor in
+                    authError = error
+                }
             }
         }
     }
@@ -418,7 +420,10 @@ class AppState: ObservableObject {
         do {
             return try fido2.deviceHasPin()
         } catch {
-            authError = error
+            Task { @MainActor in
+                authError = error
+            }
+
             return true
         }
     }
