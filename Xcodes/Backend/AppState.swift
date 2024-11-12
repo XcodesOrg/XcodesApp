@@ -355,8 +355,8 @@ class AppState: ObservableObject {
             .store(in: &cancellables)
     }
     
-    var fido2: FIDO2?
-    
+    private lazy var fido2 = FIDO2()
+
     func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String?, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
         self.presentedSheet = .securityKeyTouchToConfirm
         
@@ -379,8 +379,6 @@ class AppState: ObservableObject {
 
         Task {
             do {
-                let fido2 = FIDO2()
-                self.fido2 = fido2
                 let response = try fido2.respondToChallenge(args: ChallengeArgs(rpId: rpId, validCredentials: validCreds, devPin: pinCode, challenge: challenge, origin: origin))
             
                 Task { @MainActor in
@@ -413,7 +411,7 @@ class AppState: ObservableObject {
     }
     
     func cancelSecurityKeyAssertationRequest() {
-        self.fido2?.cancel()
+        self.fido2.cancel()
     }
     
     private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
