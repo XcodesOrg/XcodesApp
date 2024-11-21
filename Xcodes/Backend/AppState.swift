@@ -26,6 +26,7 @@ enum PreferenceKey: String {
     case xcodeListCategory
     case allowedMajorVersions
     case hideSupportXcodes
+    case usePrivilegeHelperForFileOperations
 
     func isManaged() -> Bool { UserDefaults.standard.objectIsForced(forKey: self.rawValue) }
 }
@@ -69,7 +70,14 @@ class AppState: ObservableObject {
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var presentedAlert: XcodesAlert?
     @Published var presentedPreferenceAlert: XcodesPreferencesAlert?
+
     @Published var helperInstallState: HelperInstallState = .notInstalled
+    @Published var usePrivilegedHelperForFileOperations: Bool = false {
+        didSet {
+            Current.defaults.set(usePrivilegedHelperForFileOperations, forKey: PreferenceKey.usePrivilegeHelperForFileOperations.rawValue)
+        }
+    }
+
     /// Whether the user is being prepared for the helper installation alert with an explanation.
     /// This closure will be performed after the user chooses whether or not to proceed.
     @Published var isPreparingUserForActionRequiringHelper: ((Bool) -> Void)?
@@ -150,6 +158,7 @@ class AppState: ObservableObject {
     internal var runtimePublishers: [String: Task<(), any Error>] = [:]
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
+    private var createSymLinkPublisher: AnyCancellable?
     private var autoInstallTimer: Timer?
     
     // MARK: - Dock Progress Tracking
@@ -702,23 +711,26 @@ class AppState: ObservableObject {
             return
         }
 
-        guard
-            var installedXcodePath = xcode.installedPath,
-            selectPublisher == nil
-        else { return }
-       
-        if onSelectActionType == .rename {
-            guard let newDestinationXcodePath = renameToXcode(xcode: xcode) else { return }
-            installedXcodePath = newDestinationXcodePath
-        }
+        guard selectPublisher == nil else { return }
         
         selectPublisher = installHelperIfNecessary()
-            .flatMap {
-                Current.helper.switchXcodePath(installedXcodePath.string)
+            .flatMap { [unowned self] _ -> AnyPublisher<String, Error> in
+                if onSelectActionType == .rename {
+                    return self.renameToXcode(xcode: xcode)
+                }
+
+                return Future { promise in
+                    promise(.success(xcode.installedPath!.string))
+                }
+                .eraseToAnyPublisher()
+            }
+            .flatMap { path in
+                Current.helper.switchXcodePath(path)
             }
             .flatMap { [unowned self] _ in
                 self.updateSelectedXcodePath()
             }
+            .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { [unowned self] completion in
                     if case let .failure(error) = completion {
@@ -769,66 +781,97 @@ class AppState: ObservableObject {
         guard let installedXcodePath = xcode.installedPath else { return }
         
         let destinationPath: Path = Path.installDirectory/"Xcode\(isBeta ? "-Beta" : "").app"
-        
-        // does an Xcode.app file exist?
-        if FileManager.default.fileExists(atPath: destinationPath.string) {
-            do {
-                // if it's not a symlink, error because we don't want to delete an actual xcode.app file
-                let attributes: [FileAttributeKey : Any]? = try? FileManager.default.attributesOfItem(atPath: destinationPath.string)
-                
-                if attributes?[.type] as? FileAttributeType == FileAttributeType.typeSymbolicLink {
-                    try FileManager.default.removeItem(atPath: destinationPath.string)
-                    Logger.appState.info("Successfully deleted old symlink")
-                } else {
-                    self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: localizeString("Alert.SymLink.Message"))
-                    return
-                }
-            } catch {
-                self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.localizedDescription)
+
+        createSymLinkPublisher = installHelperIfNecessary()
+            .flatMap {
+                Current.helper.createSymbolicLink(installedXcodePath.string, destinationPath.string)
             }
-        }
-        
-        do {
-            try FileManager.default.createSymbolicLink(atPath: destinationPath.string, withDestinationPath: installedXcodePath.string)
-            Logger.appState.info("Successfully created symbolic link with Xcode\(isBeta ? "-Beta": "").app")
-        } catch {
-            Logger.appState.error("Unable to create symbolic Link")
-            self.error = error
-            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
-        }
+            .sink(
+                receiveCompletion: { [unowned self] completion in
+                    if case let .failure(error) = completion {
+                        if let error = error as? CustomNSError {
+                            switch error.errorCode {
+                            case XPCDelegateError.Code.destinationIsNotASymbolicLink.rawValue:
+                                self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: localizeString("Alert.SymLink.Message"))
+                            default:
+                                self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+                            }
+                        } else {
+                            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message:
+                                                            error.legibleLocalizedDescription)
+                        }
+                    }
+
+                    self.createSymLinkPublisher = nil
+                },
+                receiveValue: { _ in }
+            )
     }
-    
-    func renameToXcode(xcode: Xcode) -> Path? {
-        guard let installedXcodePath = xcode.installedPath else { return nil }
-        
-        let destinationPath: Path = Path.installDirectory/"Xcode.app"
-        
-        // rename any old named `Xcode.app` to the Xcodes versioned named files
-        if FileManager.default.fileExists(atPath: destinationPath.string) {
-            if let originalXcode = Current.files.installedXcode(destination: destinationPath) {
-                let newName = "Xcode-\(originalXcode.version.descriptionWithoutBuildMetadata).app"
-                Logger.appState.debug("Found Xcode.app - renaming back to \(newName)")
-                do {
-                    try destinationPath.rename(to: newName)
-                } catch {
-                    Logger.appState.error("Unable to create rename Xcode.app back to original")
-                    self.error = error
-                    // TODO UPDATE MY ERROR STRING
-                    self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+
+    enum RenameXcodeError: Error {
+        case xcodeInstallPathIsNil
+        case xcodeAppNotFound
+        case originalXcodeNameNotFound
+        case renameFailure(Error)
+    }
+
+    func renameToXcode(xcode: Xcode) -> AnyPublisher<String, Error> {
+        guard let installedXcodePath = xcode.installedPath else {
+            return Fail(error: RenameXcodeError.xcodeInstallPathIsNil)
+                .eraseToAnyPublisher()
+        }
+
+        var cancellables: Set<AnyCancellable> = []
+
+        return Future<String, Error> { promise in
+            let destinationPath: Path = Path.installDirectory/"Xcode.app"
+            // rename any old named `Xcode.app` to the Xcodes versioned named files
+            guard FileManager.default.fileExists(atPath: destinationPath.string) else {
+                promise(.success(destinationPath.string))
+                return
+            }
+
+            guard let originalXcode = Current.files.installedXcode(destination: destinationPath) else {
+                promise(.failure(RenameXcodeError.xcodeAppNotFound))
+                return
+            }
+
+            let newName = "Xcode-\(originalXcode.version.descriptionWithoutBuildMetadata).app"
+            Logger.appState.debug("Found Xcode.app - renaming back to \(newName)")
+
+            Current.helper.rename(destinationPath.string, "\(Path.installDirectory)/\(newName)")
+                .sink { completion in
+                    if case let .failure(error) = completion {
+                        promise(.failure(error))
+                        return
+                    }
+
+                    promise(.success(destinationPath.string))
+                } receiveValue: { _ in
+                    Void()
                 }
+                .store(in: &cancellables)
+        }
+        .flatMap { destinationPath in
+            return Future<String, Error> { promise in
+                Current.helper.rename(installedXcodePath.string, destinationPath)
+                    .sink { completion in
+                        if case let .failure(error) = completion {
+                            promise(.failure(error))
+                            return
+                        }
+
+                        promise(.success(destinationPath))
+                    } receiveValue: { _ in
+                        Void()
+                    }
+                    .store(in: &cancellables)
             }
         }
-        // rename passed in xcode to xcode.app
-        Logger.appState.debug("Found Xcode.app - renaming back to Xcode.app")
-        do {
-            return try installedXcodePath.rename(to: "Xcode.app")
-        } catch {
-            Logger.appState.error("Unable to create rename Xcode.app back to original")
-            self.error = error
-            // TODO UPDATE MY ERROR STRING
-            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+        .mapError { error in
+            return RenameXcodeError.renameFailure(error)
         }
-        return nil
+        .eraseToAnyPublisher()
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {
@@ -931,17 +974,11 @@ class AppState: ObservableObject {
     // MARK: - Private
     
     private func uninstallXcode(path: Path) -> AnyPublisher<Void, Error> {
-        return Deferred {
-            Future { promise in
-                do {
-                    try Current.files.trashItem(at: path.url)
-                    promise(.success(()))
-                } catch {
-                    promise(.failure(error))
-                }
+    return installHelperIfNecessary()
+            .flatMap { _ in
+                Current.helper.remove(path.string)
             }
-        }
-        .eraseToAnyPublisher()
+            .eraseToAnyPublisher()
     }
 
     /// removes saved username and credentials stored in keychain
