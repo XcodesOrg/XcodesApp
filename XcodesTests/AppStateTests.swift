@@ -157,6 +157,15 @@ class AppStateTests: XCTestCase {
         // Helper is already installed
         subject.helperInstallState = .installed
 
+        Current.helper.moveApp = { _,_ in
+            return Deferred {
+                Future { promise in
+                    promise(.success(()))
+                }
+            }
+            .eraseToAnyPublisher()
+        }
+
         let allXcodesRecorder = subject.$allXcodes.record()
         let installRecorder = subject.install(
             .version(AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)),
@@ -266,6 +275,15 @@ class AppStateTests: XCTestCase {
         }
         // Helper is already installed
         subject.helperInstallState = .installed
+
+        Current.helper.moveApp = { _,_ in
+            return Deferred {
+                Future { promise in
+                    promise(.success(()))
+                }
+            }
+            .eraseToAnyPublisher()
+        }
 
         let allXcodesRecorder = subject.$allXcodes.record()
         let installRecorder = subject.install(

@@ -2,7 +2,6 @@ import Foundation
 import os.log
 
 class XPCDelegate: NSObject, NSXPCListenerDelegate, HelperXPCProtocol {
-
     // MARK: - NSXPCListenerDelegate
     
     func listener(_ listener: NSXPCListener, shouldAcceptNewConnection newConnection: NSXPCConnection) -> Bool {
@@ -51,6 +50,26 @@ class XPCDelegate: NSObject, NSXPCListenerDelegate, HelperXPCProtocol {
     func runFirstLaunch(absoluteXcodePath: String, completion: @escaping (Error?) -> Void) {
         run(url: URL(fileURLWithPath: absoluteXcodePath + "/Contents/Developer/usr/bin/xcodebuild"), arguments: ["-runFirstLaunch"], completion: completion)
     }
+
+    func moveApp(at source: String, to destination: String, completion: @escaping ((any Error)?) -> Void) {
+        Logger.xpcDelegate.info("\(#function)")
+        FileOperations.moveApp(at: source, to: destination, completion: completion)
+    }
+
+    func createSymbolicLink(source: String, destination: String, completion: @escaping ((any Error)?) -> Void) {
+        Logger.xpcDelegate.info("\(#function)")
+        FileOperations.createSymbolicLink(source: source, destination: destination, completion: completion)
+    }
+
+    func rename(source: String, destination: String, completion: @escaping ((any Error)?) -> Void) {
+        Logger.xpcDelegate.info("\(#function)")
+        FileOperations.rename(source: source, destination: destination, completion: completion)
+    }
+
+    func remove(path: String, completion: @escaping ((any Error)?) -> Void) {
+        Logger.xpcDelegate.info("\(#function)")
+        FileOperations.remove(path: path, completion: completion)
+    }
 }
 
 // MARK: - Run
@@ -67,36 +86,5 @@ private func run(url: URL, arguments: [String], completion: @escaping (Error?) -
         completion(nil)
     } catch {
         completion(error)
-    }
-}
-
-
-// MARK: - Errors
-
-struct XPCDelegateError: CustomNSError {    
-    enum Code: Int {
-        case invalidXcodePath
-    }
-
-    let code: Code
-    
-    init(_ code: Code) {
-        self.code = code
-    }
-    
-    // MARK: - CustomNSError
-    
-    static var errorDomain: String { "XPCDelegateError" }
-    
-    var errorCode: Int { code.rawValue }
-    
-    var errorUserInfo: [String : Any] {
-        switch code {
-        case .invalidXcodePath:
-            return [
-                NSLocalizedDescriptionKey: "Invalid Xcode path.",
-                NSLocalizedFailureReasonErrorKey: "Xcode path must be absolute."
-            ]
-        }
     }
 }

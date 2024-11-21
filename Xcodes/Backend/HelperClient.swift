@@ -302,8 +302,163 @@ final class HelperClient {
                         }
                       })
         .eraseToAnyPublisher()
-    }    
-    
+    }
+
+    var usePrivilegedHelperForFileOperations: Bool {
+        Current.defaults.bool(forKey: PreferenceKey.usePrivilegeHelperForFileOperations.rawValue) ?? false
+    }
+
+    func moveApp(at source:String, to destination: String) -> AnyPublisher<Void, Error> {
+        if !usePrivilegedHelperForFileOperations {
+            return Deferred {
+                Future { promise in
+                    FileOperations.moveApp(at: source, to: destination) { error in
+                        if let error = error {
+                            promise(.failure(error))
+                        }
+                        promise(.success(()))
+                    }
+                }
+            }
+            .eraseToAnyPublisher()
+        }
+
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+        guard
+            let helper = self.helper(errorSubject: connectionErrorSubject)
+        else {
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
+                .eraseToAnyPublisher()
+        }
+
+        return Deferred {
+            Future { promise in
+                helper.moveApp(at: source, to: destination) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    }
+                    promise(.success(()))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func createSymbolicLink(source: String, destination: String) -> AnyPublisher<Void, Error> {
+        if !usePrivilegedHelperForFileOperations {
+            return Deferred {
+                Future { promise in
+                    FileOperations.createSymbolicLink(source: source, destination: destination) { error in
+                        if let error = error {
+                            promise(.failure(error))
+                        }
+                        promise(.success(()))
+                    }
+                }
+            }
+            .eraseToAnyPublisher()
+        }
+
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+
+        guard
+            let helper = self.helper(errorSubject: connectionErrorSubject)
+        else {
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
+                .eraseToAnyPublisher()
+        }
+
+        return Deferred {
+            Future { promise in
+                helper.createSymbolicLink(source: source, destination: destination) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    }
+                    promise(.success(()))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func rename(source: String, destination: String) -> AnyPublisher<Void, Error> {
+        if !usePrivilegedHelperForFileOperations {
+            return Deferred {
+                Future { promise in
+                    FileOperations.rename(source: source, destination: destination) { error in
+                        if let error = error {
+                            promise(.failure(error))
+                        }
+                        promise(.success(()))
+                    }
+                }
+            }
+            .eraseToAnyPublisher()
+        }
+
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+
+        guard
+            let helper = self.helper(errorSubject: connectionErrorSubject)
+        else {
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
+                .eraseToAnyPublisher()
+        }
+
+        return Deferred {
+            Future { promise in
+                helper.rename(source: source, destination: destination) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    }
+                    promise(.success(()))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
+    func remove(path: String) -> AnyPublisher<Void, Error> {
+        if !usePrivilegedHelperForFileOperations {
+            return Deferred {
+                Future { promise in
+                    FileOperations.remove(path: path) { error in
+                        if let error = error {
+                            promise(.failure(error))
+                        }
+                        promise(.success(()))
+                    }
+                }
+            }
+            .eraseToAnyPublisher()
+        }
+
+        let connectionErrorSubject = PassthroughSubject<String, Error>()
+
+        guard
+            let helper = self.helper(errorSubject: connectionErrorSubject)
+        else {
+            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
+                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
+                .eraseToAnyPublisher()
+        }
+
+        return Deferred {
+            Future { promise in
+                helper.remove(path: path) { error in
+                    if let error = error {
+                        promise(.failure(error))
+                    }
+                    promise(.success(()))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
+    }
+
     // MARK: - Install
     // From https://github.com/securing/SimpleXPCApp/
     

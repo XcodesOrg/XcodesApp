@@ -151,6 +151,9 @@ struct AdvancedPreferencePane: View {
                         .fixedSize(horizontal: false, vertical: true)
                     
                     Spacer()
+
+                    Toggle("UsePrivilegedHelperForFileOperations", isOn: $appState.usePrivilegedHelperForFileOperations)
+                        .disabled(PreferenceKey.usePrivilegeHelperForFileOperations.isManaged())
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())

@@ -422,6 +422,7 @@ public struct Defaults {
 }
 
 private let helperClient = HelperClient()
+
 public struct Helper {
     var install: () throws -> Void = helperClient.install
     var checkIfLatestHelperIsInstalled: () -> AnyPublisher<Bool, Never> = helperClient.checkIfLatestHelperIsInstalled
@@ -431,4 +432,8 @@ public struct Helper {
     var addStaffToDevelopersGroup: () -> AnyPublisher<Void, Error> = helperClient.addStaffToDevelopersGroup
     var acceptXcodeLicense: (_ absoluteXcodePath: String) ->  AnyPublisher<Void, Error> = helperClient.acceptXcodeLicense
     var runFirstLaunch: (_ absoluteXcodePath: String) -> AnyPublisher<Void, Error> = helperClient.runFirstLaunch
+    var moveApp: (_ absoluteSourcePath: String, _ absoluteDestinationPath: String) -> AnyPublisher<Void, Error> = helperClient.moveApp(at:to:)
+    var createSymbolicLink: (_ absoluteSourcePath: String, _ absoluteDestinationPath: String) -> AnyPublisher<Void, Error> = helperClient.createSymbolicLink(source:destination:)
+    var rename: (_ absoluteSourcePath: String, _ absoluteDestinationPath: String) -> AnyPublisher<Void, Error> = helperClient.rename(source:destination:)
+    var remove: (_ absolutePath: String) -> AnyPublisher<Void, Error> = helperClient.remove(path:)
 }
