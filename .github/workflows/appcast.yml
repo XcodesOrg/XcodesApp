@@ -23,7 +23,7 @@ jobs:
           ${{ runner.os }}-gems-
           
     - name: Setup Ruby, JRuby and TruffleRuby
-      uses: ruby/setup-ruby@v1.197.0
+      uses: ruby/setup-ruby@v1.204.0
       with:
         ruby-version: '3.0'
 
