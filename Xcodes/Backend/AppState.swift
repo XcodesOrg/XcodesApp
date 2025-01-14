@@ -738,18 +738,64 @@ class AppState: ObservableObject {
     func open(xcode: Xcode, openInRosetta: Bool? = false) {
         switch xcode.installState {
         case let .installed(path):
-            let config = NSWorkspace.OpenConfiguration.init()
-            if (openInRosetta ?? false) {
-                config.architecture = CPU_TYPE_X86_64
+            if isCompatibleWithCurrentOSVersion(xcode: xcode) {
+                let config = NSWorkspace.OpenConfiguration.init()
+                if (openInRosetta ?? false) {
+                    config.architecture = CPU_TYPE_X86_64
+                }
+                config.allowsRunningApplicationSubstitution = false
+                NSWorkspace.shared.openApplication(at: path.url, configuration: config)
+            } else {
+                run(xcode: xcode, path: path)
             }
-            config.allowsRunningApplicationSubstitution = false
-            NSWorkspace.shared.openApplication(at: path.url, configuration: config)
         default:
             Logger.appState.error("\(xcode.id) is not installed")
             return
         }
     }
-    
+
+    private func isCompatibleWithCurrentOSVersion(xcode: Xcode) -> Bool {
+        guard
+            let requiredVersion = Version(tolerant: xcode.requiredMacOSVersion ?? "")
+        else {
+            return true
+        }
+
+        let currentVersion = ProcessInfo.processInfo.operatingSystemVersion
+        let currentMajor = currentVersion.majorVersion
+
+        return currentMajor == requiredVersion.major
+    }
+
+    private func run(xcode: Xcode, path: Path) {
+        let binaryPath = path
+            .url
+            .appending(path: "Contents")
+            .appending(path: "MacOS")
+            .appending(path: "Xcode")
+
+        // Check if the binary file exists
+        guard FileManager.default.fileExists(atPath: binaryPath.path) else {
+            Logger.appState.debug("Binary file does not exist at \(binaryPath.path)")
+            return
+        }
+
+        // Set up the process to run the binary
+        let process = Process()
+        process.executableURL = binaryPath
+
+        // Redirect standard output and error to avoid displaying a terminal window
+        process.standardOutput = nil
+        process.standardError = nil
+
+        do {
+            try process.run()
+            Logger.appState.debug("Binary file launched successfully.")
+        } catch {
+            Logger.appState.error("Failed to launch binary file: \(error.localizedDescription)")
+        }
+    }
+
     func copyPath(xcode: Xcode) {
         guard let installedXcodePath = xcode.installedPath else { return }
         
