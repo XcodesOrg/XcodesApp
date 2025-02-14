@@ -4,7 +4,7 @@ import Path
 import Version
 import SwiftSoup
 import struct XCModel.Xcode
-import AppleAPI
+import XcodesLoginKit
 import XcodesKit
 
 extension AppState {

@@ -1,5 +1,5 @@
 import Foundation
-import AppleAPI
+import XcodesLoginKit
 
 enum XcodesSheet: Identifiable {
     case signIn

@@ -1,5 +1,5 @@
 import AppKit
-import AppleAPI
+import XcodesLoginKit
 import Combine
 import Path
 import LegibleError
@@ -9,7 +9,6 @@ import Version
 import os.log
 import DockProgress
 import XcodesKit
-import LibFido2Swift
 
 enum PreferenceKey: String {
     case installPath
@@ -31,7 +30,7 @@ enum PreferenceKey: String {
 }
 
 class AppState: ObservableObject {
-    private let client = AppleAPI.Client()
+    private let client = XcodesLoginKit.Client()
     internal let runtimeService = RuntimeService()
    
     // MARK: - Published Properties
@@ -258,50 +257,40 @@ class AppState: ObservableObject {
     }
     
     func signInIfNeeded() -> AnyPublisher<Void, Error> {
-        validateSession()
-            .catch { (error) -> AnyPublisher<Void, Error> in
-                guard
-                    let username = self.savedUsername,
-                    let password = try? Current.keychain.getString(username)
-                else {
-                    return Fail(error: error) 
-                        .eraseToAnyPublisher()
-                }
-
-                return self.signIn(username: username, password: password)
-                    .map { _ in Void() }
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
+        return validateSession()
+//            .catch { (error) -> AnyPublisher<Void, Error> in
+//                guard
+//                    let username = self.savedUsername,
+//                    let password = try? Current.keychain.getString(username)
+//                else {
+//                    return Fail(error: error) 
+//                        .eraseToAnyPublisher()
+//                }
+//
+//                return self.signIn(username: username, password: password)
+//                    //.map { _ in Void() }
+//                    .eraseToAnyPublisher()
+//            }
+//            .eraseToAnyPublisher()
     }
     
     func signIn(username: String, password: String) {
         authError = nil
-        signIn(username: username, password: password)
-            .sink(
-                receiveCompletion: { _ in },
-                receiveValue: { _ in }
-            )
-            .store(in: &cancellables)
-    }
-    
-    func signIn(username: String, password: String) -> AnyPublisher<AuthenticationState, Error> {
         try? Current.keychain.set(password, key: username)
         Current.defaults.set(username, forKey: "username")
-        
         isProcessingAuthRequest = true
-        return client.srpLogin(accountName: username, password: password)
-            .receive(on: DispatchQueue.main)
-            .handleEvents(
-                receiveOutput: { authenticationState in 
-                    self.authenticationState = authenticationState
-                },
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingAuthRequest = false
-                }
-            )
-            .eraseToAnyPublisher()
+        
+        Task { @MainActor in
+            do {
+                let authenticationState = try await client.srpLogin(accountName: username, password: password)
+                handleAuthenticationFlowCompletion(authenticationState)
+                isProcessingAuthRequest = false
+            } catch {
+                Logger.appState.error("Error signing in: \(error, privacy: .public)")
+                authError = error
+                self.isProcessingAuthRequest = false
+            }
+        }
     }
     
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
@@ -314,21 +303,18 @@ class AppState: ObservableObject {
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
         isProcessingAuthRequest = true
-        client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingAuthRequest = false
-                }, 
-                receiveValue: { authenticationState in 
-                    self.authenticationState = authenticationState
-                    if case let AuthenticationState.waitingForSecondFactor(option, authOptions, sessionData) = authenticationState {
-                        self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
-                    }
-                }
-            )
-            .store(in: &cancellables)
+        Task {
+            do {
+                let authenticationState = try await client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
+                self.handleAuthenticationFlowCompletion(authenticationState)
+                self.isProcessingAuthRequest = false
+                
+            } catch {
+                Logger.appState.error("Error requesting SMS: \(error, privacy: .public)")
+                authError = error
+                self.isProcessingAuthRequest = false
+            }
+        }
     }
     
     func choosePhoneNumberForSMS(authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {
@@ -341,101 +327,67 @@ class AppState: ObservableObject {
     
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
         isProcessingAuthRequest = true
-        client.submitSecurityCode(code, sessionData: sessionData)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingAuthRequest = false
-                },
-                receiveValue: { authenticationState in
-                    self.authenticationState = authenticationState
-                }
-            )
-            .store(in: &cancellables)
-    }
-    
-    var fido2: FIDO2?
-    
-    func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
-        self.presentedSheet = .securityKeyTouchToConfirm
         
-        guard let fsaChallenge = authOptions.fsaChallenge else {
-            // This shouldn't happen
-            // we shouldn't have called this method without setting the fsaChallenge
-            // so this is an assertionFailure
-            assertionFailure()
-            self.authError = "Something went wrong. Please file a bug report"
-            return
-        }
-        
-        // The challenge is encoded in Base64URL encoding
-        let challengeUrl = fsaChallenge.challenge
-        let challenge = FIDO2.base64urlToBase64(base64url: challengeUrl)
-        let origin = "https://idmsa.apple.com"
-        let rpId = "apple.com"
-        // Allowed creds is sent as a comma separated string
-        let validCreds = fsaChallenge.allowedCredentials.split(separator: ",").map(String.init)
-
         Task {
             do {
-                let fido2 = FIDO2()
-                self.fido2 = fido2
-                let response = try fido2.respondToChallenge(args: ChallengeArgs(rpId: rpId, validCredentials: validCreds, devPin: pinCode, challenge: challenge, origin: origin))
-            
-                Task { @MainActor in
-                    self.isProcessingAuthRequest = true
-                }
-                
-                let respData = try JSONEncoder().encode(response)
-                client.submitChallenge(response: respData, sessionData: AppleSessionData(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt))
-                    .receive(on: DispatchQueue.main)
-                    .handleEvents(
-                        receiveOutput: { authenticationState in
-                            self.authenticationState = authenticationState
-                        },
-                        receiveCompletion: { completion in
-                            self.handleAuthenticationFlowCompletion(completion)
-                            self.isProcessingAuthRequest = false
-                        }
-                    ).sink(
-                        receiveCompletion: { _ in },
-                        receiveValue: { _ in }
-                    ).store(in: &cancellables)
-            } catch FIDO2Error.canceledByUser {
-                // User cancelled the auth flow
-                // we don't have to show an error
-                // because the sheet will already be dismissed
+                let authenticationState = try await client.submitSecurityCode(code, sessionData: sessionData)
+                self.handleAuthenticationFlowCompletion(authenticationState)
+                self.isProcessingAuthRequest = false
             } catch {
+                Logger.appState.error("ERROR SUBMITTING SECURITYCODE: \(error, privacy: .public)")
                 authError = error
+                self.isProcessingAuthRequest = false
+            }
+        }
+    }
+    
+    func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
+        isProcessingAuthRequest = true
+        self.presentedSheet = .securityKeyTouchToConfirm
+        
+        Task {
+            do {
+                let authenticationState = try await client.submitSecurityKeyPinCode(pinCode, sessionData: sessionData, authOptions: authOptions)
+                self.handleAuthenticationFlowCompletion(authenticationState)
+                self.isProcessingAuthRequest = false
+                
+            } catch {
+                print("ERROR Requesting SMS: \(error)")
+                authError = error
+                self.isProcessingAuthRequest = false
             }
         }
     }
     
     func cancelSecurityKeyAssertationRequest() {
-        self.fido2?.cancel()
+        self.client.cancelSecurityKeyAssertationRequest()
     }
-    
-    private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
-        switch completion {
-        case let .failure(error):
-            // remove saved username and any stored keychain password if authentication fails so it doesn't try again.
-            clearLoginCredentials()
-            Logger.appState.error("Authentication error: \(error.legibleDescription)")
-            self.authError = error
-        case .finished:
-            switch self.authenticationState {
-                case .authenticated, .unauthenticated, .notAppleDeveloper:
-                self.presentedSheet = nil
-            case let .waitingForSecondFactor(option, authOptions, sessionData):
-                self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
-            }
+
+    private func handleAuthenticationFlowCompletion(_ authenticationState: AuthenticationState) {
+        self.authenticationState = authenticationState
+        
+        switch authenticationState {
+        case .unauthenticated:
+            authError = AuthenticationError.notAuthorized
+        case let .waitingForSecondFactor(twoFactorOption, authOptionsResponse, appleSessionData):
+            self.presentedSheet = .twoFactor(.init(
+                option: twoFactorOption,
+                authOptions: authOptionsResponse,
+                sessionData: AppleSessionData(serviceKey: appleSessionData.serviceKey, sessionID: appleSessionData.sessionID, scnt: appleSessionData.scnt)
+            ))
+        case .authenticated(let appleSession):
+            Logger.appState.info("SUCCESSFULLY LOGGED IN - WELCOME: \(appleSession.user.fullName ?? "")")
+            self.presentedSheet = nil
+            break
+        case .notAppleDeveloper:
+            authError = AuthenticationError.notDeveloperAppleId
         }
     }
     
     func signOut() {
         clearLoginCredentials()
-        AppleAPI.Current.network.session.configuration.httpCookieStorage?.removeCookies(since: .distantPast)
+        // TODO FIX ME
+        //client.signout()
         authenticationState = .unauthenticated
     }
     

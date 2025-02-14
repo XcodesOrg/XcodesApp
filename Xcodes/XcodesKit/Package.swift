@@ -14,7 +14,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService", branch: "main"),
+        .package(url: "https://github.com/XcodesOrg/AsyncHTTPNetworkService", branch: "main"),
         .package(url: "https://github.com/mxcl/Path.swift", from: "1.0.0"),
     ],
     targets: [

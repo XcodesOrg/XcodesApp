@@ -1,5 +1,5 @@
 import SwiftUI
-import AppleAPI
+import XcodesLoginKit
 
 struct SignInSMSView: View {
     @EnvironmentObject var appState: AppState

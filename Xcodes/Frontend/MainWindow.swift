@@ -117,7 +117,7 @@ struct MainWindow: View {
 
     @ViewBuilder
     private func signInView() -> some View {
-        if appState.authenticationState == .authenticated {
+        if case .authenticated(_) = appState.authenticationState {
             VStack {
                 SignedInView()
                     .padding(32)

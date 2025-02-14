@@ -1,4 +1,4 @@
-import AppleAPI
+import XcodesLoginKit
 import SwiftUI
 
 struct DownloadPreferencePane: View {

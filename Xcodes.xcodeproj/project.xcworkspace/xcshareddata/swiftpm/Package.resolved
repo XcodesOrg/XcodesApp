@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "AsyncNetworkService",
-        "repositoryURL": "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService",
+        "repositoryURL": "https://github.com/XcodesOrg/AsyncHTTPNetworkService",
         "state": {
           "branch": "main",
-          "revision": "97770856c4e429f880d4b4dd68cfaf286dc00c30",
+          "revision": "12e225af8b5dc25afcfabfcf582a165b0581ab19",
           "version": null
         }
       },
@@ -78,8 +78,8 @@
         "repositoryURL": "https://github.com/kinoroy/LibFido2Swift.git",
         "state": {
           "branch": null,
-          "revision": "b77e5c6451bea69d15615d6578936b11777d9a6c",
-          "version": "0.1.2"
+          "revision": "94d496d6f850dcbb3e8c4a27cd7eeabfad9f14e3",
+          "version": "0.1.4"
         }
       },
       {
@@ -143,6 +143,15 @@
           "branch": null,
           "revision": "087c91fedc110f9f833b14ef4c32745dabca8913",
           "version": "1.0.3"
+        }
+      },
+      {
+        "package": "XcodesLoginKit",
+        "repositoryURL": "https://github.com/XcodesOrg/XcodesLoginKit",
+        "state": {
+          "branch": "main",
+          "revision": "3a6f2b82c47aea17c510f0326849734a08a74eae",
+          "version": null
         }
       }
     ]

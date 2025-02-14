@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import Path
 import AppleAPI
+import XcodesLoginKit
 import KeychainAccess
 import XcodesKit
 /**

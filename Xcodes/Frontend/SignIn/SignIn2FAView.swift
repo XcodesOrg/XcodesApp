@@ -1,5 +1,5 @@
 import SwiftUI
-import AppleAPI
+import XcodesLoginKit
 
 struct SignIn2FAView: View {
     @EnvironmentObject var appState: AppState
