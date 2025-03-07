@@ -275,7 +275,7 @@ class AppStateUpdateTests: XCTestCase {
         /*
          Obtaind by running fastlane spaceauth --verbose -u anand.appleseed@example.com with some custom logging
 
-         Starting SIRP Apple ID login
+         Starting SIRP Apple Account login
          a: {"a":"VLEKLa+n2cyeYNWbECm45CuS4kCdCxodlTDGlW1FKaUyOrv/RbtN2sM0pVE12zI7k3VkocPC3rN5DZBIkahR6I8JHj/J97dtTvzsR+aNRWTYCT2HGP1PBI0QArp3eitAbFqTWI4+Zw+oOnV8+AYdH/wjbq7gOK4C4dvIHE+FzRwIlmguPb5qu2r47R9W3y1msVdoUGlFBOMOMb7Gyq7F0MaEIFH63lNzGomwq74mfss/cFqurd6fxU+Y7tdVTPZw1GWyBEPiXWpk8sNm2zE+S6zWo5tOsICprU75IC9galh1igfzN7VNe0SUFLNFTbFK+Bb1SFAOrAbBZOmyOG5uSQ==","accountName":"anand.appleseed@example.com","protocols":["s2k","s2k_fo"]}
          Received SIRP signin init response: {"iteration"=>20309, "salt"=>"fIjNflgqSJXACWwwvhDU+w==", "protocol"=>"s2k", "b"=>"PMbU75wwG6rDTySXn2ASWyfQuPoW5ham15SzIscpInwOPE2uk7sePsW4ra0dHcLDUMFQn/LgBggIKOo7YZ9hf1VReiAzXwSKSHdJHjHUURTC2eNpANGUPO1qzuXYgc/MP3MR+GipKHsz+KTLT+8wLjNaiCIHsL/7evJBMw9QqiwhyXlAIm5mGZfhdTVbGpLz2/QzrFmI6pUTrHpio6m1Q74DH3FBxxIeiIcuEdGdeVt9iUweowBRyf2woasTvSV1fbMQbl+lsWPwzt/a73+J30eOGFdSubqSVYh2pV0OLqRz7zPzJars12teCWUV+0WUIaxb14Mp7tlmqcTPuqZe9w==", "c"=>"d-533-eccbc4e9-9564-11ef-84a6-018111c8cc60:PRN"}
          encrypted_password: 40532b4de9353fc537dc62ee84eacebd7ecb5ec26efca98bd01b0380e302100f 32

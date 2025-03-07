@@ -4334,37 +4334,37 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple-ID:"
+            "value" : "Apple-Account:"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "fr" : {
@@ -4376,73 +4376,73 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple ID:"
+            "value" : "Apple Account:"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple ID:"
+            "value" : "Apple Account:"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "AppleID:"
+            "value" : "Apple Account:"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple ID:"
+            "value" : "Apple Account:"
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple ID："
+            "value" : "Apple Account："
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple ID："
+            "value" : "Apple Account："
           }
         }
       }
@@ -13819,7 +13819,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple ID"
+            "value" : "Apple Account"
           }
         },
         "zh-Hans" : {
@@ -13943,7 +13943,7 @@
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Показати Apple ID"
+            "value" : "Показати Apple Account"
           }
         },
         "zh-Hans" : {
@@ -20983,25 +20983,25 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inicia sessió amb el teu Apple ID."
+            "value" : "Inicia sessió amb el teu Apple Account."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mit Deiner Apple-ID anmelden."
+            "value" : "Mit Deiner Apple-Account anmelden."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Συνδεθείτε με το Apple ID σας."
+            "value" : "Συνδεθείτε με το Apple Account σας."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sign in with your Apple ID."
+            "value" : "Sign in with your Apple Account."
           }
         },
         "es" : {
@@ -21013,7 +21013,7 @@
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Kirjaudu sisään Apple ID:lläsi."
+            "value" : "Kirjaudu sisään Apple Account:lläsi."
           }
         },
         "fr" : {
@@ -21025,73 +21025,73 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "अपनी Apple ID से साइन इन करें."
+            "value" : "अपनी Apple Account से साइन इन करें."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Entra con il tuo Apple ID."
+            "value" : "Entra con il tuo Apple Account."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple IDでサインインしてください。"
+            "value" : "Apple Accountでサインインしてください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple ID로 로그인하세요."
+            "value" : "Apple Account로 로그인하세요."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Log in met je Apple ID."
+            "value" : "Log in met je Apple Account."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zaloguj się przy użyciu Apple ID."
+            "value" : "Zaloguj się przy użyciu Apple Account."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Entrar com o seu Apple ID."
+            "value" : "Entrar com o seu Apple Account."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Войти со своим Apple ID."
+            "value" : "Войти со своим Apple Account."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple ID ile Giriş Yap."
+            "value" : "Apple Account ile Giriş Yap."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Вхід з вашим Apple ID."
+            "value" : "Вхід з вашим Apple Account."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用您的Apple ID登录。"
+            "value" : "使用您的Apple Account登录。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "使用您的 Apple ID 登入。"
+            "value" : "使用您的 Apple Account 登入。"
           }
         }
       }

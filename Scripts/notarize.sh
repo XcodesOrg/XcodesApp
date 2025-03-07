@@ -5,8 +5,8 @@
 # Uploads to Apple's notarization service, polls until it completes, staples the ticket to the built app, then creates a new zip.
 #
 # Requires four arguments:
-#   - Apple ID username
-#   - Apple ID app-specific password (store this in your Keychain and use the @keychain:$NAME syntax to prevent your password from being added to your shell history)
+#   - Apple Account username
+#   - Apple Account app-specific password (store this in your Keychain and use the @keychain:$NAME syntax to prevent your password from being added to your shell history)
 #   - App Store Connect provider name
 #   - Path to .app to upload
 #
