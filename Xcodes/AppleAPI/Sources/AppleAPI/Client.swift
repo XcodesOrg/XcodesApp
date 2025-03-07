@@ -27,7 +27,7 @@ public class Client {
                 
                 // Fixes issue https://github.com/RobotsAndPencils/XcodesApp/issues/360
                 // On 2023-02-23, Apple added a custom implementation of hashcash to their auth flow
-                // Without this addition, Apple ID's would get set to locked
+                // Without this addition, Apple Account's would get set to locked
                 return self.loadHashcash(accountName: accountName, serviceKey: serviceKey)
                     .map { return (serviceKey, $0)}
                     .eraseToAnyPublisher()
@@ -387,7 +387,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
                 \(message != nil ? ("Message: " + message!) : "")
                 """
         case .appleIDAndPrivacyAcknowledgementRequired:
-            return "You must sign in to https://appstoreconnect.apple.com and acknowledge the Apple ID & Privacy agreement."
+            return "You must sign in to https://appstoreconnect.apple.com and acknowledge the Apple Account & Privacy agreement."
         case .accountUsesTwoStepAuthentication:
             return "Received a response from Apple that indicates this account has two-step authentication enabled. xcodes currently only supports the newer two-factor authentication, though. Please consider upgrading to two-factor authentication, or explain why this isn't an option for you by making a new feature request in the Help menu."
         case .accountUsesUnknownAuthenticationKind:
@@ -399,7 +399,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
         case .notDeveloperAppleId:
             return "You are not registered as an Apple Developer.  Please visit Apple Developer Registration. https://developer.apple.com/register/"
         case .notAuthorized:
-            return "You are not authorized. Please Sign in with your Apple ID first."
+            return "You are not authorized. Please Sign in with your Apple Account first."
         case let .invalidResult(resultString):
             return resultString ?? "If you continue to have problems, please submit a bug report in the Help menu."
         case .srpInvalidPublicKey:

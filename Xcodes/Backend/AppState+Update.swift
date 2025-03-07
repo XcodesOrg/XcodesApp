@@ -76,7 +76,7 @@ extension AppState {
         case .apple:
             return signInIfNeeded()
                 .flatMap { [unowned self] in
-                    // this will check to see if the Apple ID is a valid Apple Developer or not.
+                    // this will check to see if the Apple Account is a valid Apple Developer or not.
                     // If it's not, we can't use the Apple source to get xcode info.
                     self.validateSession()
                 }

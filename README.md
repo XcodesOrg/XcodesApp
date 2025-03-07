@@ -18,7 +18,7 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 - List all available Xcode versions from [Xcode Releases'](https://xcodereleases.com) data or the Apple Developer website.
 - Install any Xcode version, **fully automated** from start to finish. Xcodes uses [`aria2`](https://aria2.github.io), which uses up to 16 connections to download 3-5x faster than URLSession.
 - Automatically resumes installs if network errors.
-- Apple ID required to download Xcode versions.
+- Apple Account required to download Xcode versions.
 - Just click a button to make a version active with `xcode-select`.
 - View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
 - Dark/Light Mode supported
