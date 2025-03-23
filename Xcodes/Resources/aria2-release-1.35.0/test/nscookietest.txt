@@ -1,0 +1,9 @@
+# name=this is a omment line;
+localhost	FALSE	/	TRUE	2147483647	JSESSIONID	123456789
+
+expired	FALSE	/	FALSE	1000	user	me
+
+192.168.0.1	TRUE	/cgi-bin	FALSE	0	passwd	secret
+badformat
+something	FALSE	/	FALSE	1463304912.5	TAX	1000
+.example.org	TRUE	/	FALSE	2147483647.123	novalue	

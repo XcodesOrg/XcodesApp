@@ -1,0 +1,47 @@
+wslay 1.0.0
+===========
+
+Release Note
+------------
+
+This release fixes several build issues.  Most changes were introduced
+by contributors.  Thank you for all the contributions in this project.
+Because wslay is very stable since the previous release (more than 2
+years ago), we mark this release 1.0.0.
+
+Changes
+-------
+
+* Fix NULL check in wslay_frame_context_init.
+
+  Patch from Witchakorn Kamolpornwijit
+
+* the examples uses epoll and thus only be built on linux
+
+  Patch from Kazuho Oku
+
+* build: allow one to build out-of-tree documentation
+
+  Patch from Vincent Bernat
+
+* build: fix `./configure` when nettle is not present
+
+  `PKG_CHECK_MODULES` will fail unless we give it an action to execute
+  on failure. When nettle is not available, we set `have_nettle` to
+  `no`.
+
+  Patch from Vincent Bernat
+
+* Adds the ability to override the version header include with a
+  define.  This enables projects to set the build version from the
+  compile environment and avoid the need to generate the version
+  header.
+
+  Patch from Ben Vanik
+
+* Improve http_handshake in fork-echoserver.
+
+  Patch from Gurjeet Singh
+
+* Don't send any pending control frame other than Close control frame
+  after Close is queued.

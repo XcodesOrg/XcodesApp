@@ -1,0 +1,53 @@
+aria2 1.35.0
+============
+
+Release Note
+------------
+
+This release fixes several bugs.  See Changes for details.
+
+Changes
+-------
+
+* Update mingw build dependencies
+
+  GH-1469
+
+* Update android build dependencies
+
+  Update android build dependencies.  Use android NDK r20 and build
+  aarch64 binary.
+
+  GH-1467
+
+* Drop SSLv3.0 and TLSv1.0 and add TLSv1.3
+
+  TLSv1.3 support is added for GNUTLS and OpenSSL.
+
+  GH-1385
+
+* Platform: Fix compilation without deprecated OpenSSL APIs
+
+  Patch from Rosen Penev
+
+  GH-1315
+
+* Remove linux getrandom and use C++ stdlib instead
+
+  GH-1306
+
+* Don't send Accept Metalink header if Metalink is disabled
+
+  GH-1300
+
+* gnutls: Fix bug that commonName is always empty
+
+  GH-1214
+
+* Fix openssl API version logic for libressl 2.7.x
+
+  Patch from Ben Chaney
+
+  GH-1213
+
+* Fix build failure when InternalDHKeyExchange is used

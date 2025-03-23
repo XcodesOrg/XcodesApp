@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<metalink version="3.0" xmlns="http://www.metalinker.org/">
+  <publisher>
+    <name>aria2</name>
+    <url>http://aria2.sourceforge.net/</url>
+  </publisher>
+  <description>The high speed download utility</description>
+  <files>
+    <file name="aria2-0.5.2.tar.bz2">
+      <version>0.5.2</version>
+      <language>en-US</language>
+      <os>Linux-x86</os>
+      <verification>
+        <hash type="sha1">a96cf3f0266b91d87d5124cf94326422800b627d</hash>
+        <hash type="md5">fc4d834e89c18c99b2615d902750948c</hash>
+	<signature type="pgp" file="aria2-0.5.2.tar.bz2.sig">
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.9 (GNU/Linux)
+
+ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+ffffffffffffffffffffffff
+fffff
+-----END PGP SIGNATURE-----
+	</signature>
+      </verification>
+      <resources maxconnections="1">
+        <url type="ftp" location="jp" preference="100" maxconnections="1">ftp://ftphost/aria2-0.5.2.tar.bz2</url>
+        <url type="http" location="us" preference="100">http://httphost/aria2-0.5.2.tar.bz2</url>
+      </resources>
+    </file>
+    <file name="aria2-0.5.1.tar.bz2">
+      <size>345689</size>
+      <version>0.5.1</version>
+      <language>ja-JP</language>
+      <os>Linux-m68k</os>
+      <verification>
+        <hash type="sha1">4c255b0ed130f5ea880f0aa061c3da0487e251cc</hash>
+        <hash type="md5">92296e19c406d77d21bda0bb944eac46</hash>
+	<pieces length="262144" type="sha1">
+	  <hash piece="0">179463a88d79cbf0b1923991708aead914f26142</hash>
+	  <hash piece="1">fecf8bc9a1647505fe16746f94e97a477597dbf3</hash>
+	</pieces>
+      </verification>
+      <resources>
+        <url type="ftp" preference="100">ftp://ftphost/aria2-0.5.1.tar.bz2</url>
+        <url type="http" preference="100">http://httphost/aria2-0.5.1.tar.bz2</url>
+      </resources>
+    </file>
+    <file name="NoVerificationHash">
+    <resources>
+    <url type="ftp" preference="100">ftp://host/file</url>
+    </resources>
+    </file>
+    <file name="UnsupportedVerificationHashTypeIncluded">
+      <verification>
+        <hash type="notsupported">92296e19c406d77d21bda0bb944eac46</hash>
+        <hash type="sha1">4c255b0ed130f5ea880f0aa061c3da0487e251cc</hash>
+	<pieces length="262144" type="notsupported">
+	  <hash piece="0">179463a88d79cbf0b1923991708aead914f26142</hash>
+	  <hash piece="1">fecf8bc9a1647505fe16746f94e97a477597dbf3</hash>
+	</pieces>
+	<pieces length="262144" type="sha1">
+	  <hash piece="0">179463a88d79cbf0b1923991708aead914f26142</hash>
+	  <hash piece="1">fecf8bc9a1647505fe16746f94e97a477597dbf3</hash>
+	</pieces>
+      </verification>
+      <resources>
+        <url type="ftp" preference="100">ftp://host/file</url>
+      </resources>
+    </file>
+    <file name="torrent-http.integrated">
+      <resources>
+        <url type="http" preference="100">http://host/torrent-http.integrated</url>
+        <url type="bittorrent" preference="100">http://host/torrent-http.integrated.torrent</url>
+      </resources>
+    </file>
+  </files>
+</metalink>
