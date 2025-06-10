@@ -6,6 +6,46 @@
         <language>en</language>
         
             
+        
+            
+                
+                    <item>
+                        <title>v2.4.2 - or is it v26? </title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<ul>
+  <li>send usernames as lowercase to prevent some login failures (#678) @mahadshahib</li>
+  <li>Support FIDO2 authentication with devices that don’t have a PIN code (#655) @MultiColourPixel</li>
+</ul>
+
+<!-- sparkle:edSignature=7lyLaPMpJ8SZ0CXNh0nZncHh+nj1JPupk1wl1iuE83Junr1bn8k52F+xTNIuP5O5k042IY2YhuPuq2iuClk1AA== -->
+]]></description>
+                        <pubDate>Tue, 10 Jun 2025 03:28:33 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v2.4.2b31/Xcodes.zip"
+                                    sparkle:version="31"
+                                    sparkle:shortVersionString="2.4.2"
+                                    sparkle:edSignature="7lyLaPMpJ8SZ0CXNh0nZncHh+nj1JPupk1wl1iuE83Junr1bn8k52F+xTNIuP5O5k042IY2YhuPuq2iuClk1AA=="
+                                    length="17880251"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
                 
                     <item>
                         <title>v2.4.1 - Now with 101% more login</title>
