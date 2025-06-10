@@ -277,7 +277,7 @@ class AppState: ObservableObject {
     
     func signIn(username: String, password: String) {
         authError = nil
-        signIn(username: username, password: password)
+        signIn(username: username.lowercased(), password: password)
             .sink(
                 receiveCompletion: { _ in },
                 receiveValue: { _ in }
