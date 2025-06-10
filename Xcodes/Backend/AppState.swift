@@ -305,11 +305,17 @@ class AppState: ObservableObject {
     }
     
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
-        self.presentedSheet = .twoFactor(.init(
-            option: option,
-            authOptions: authOptions,
-            sessionData: AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        ))
+        let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
+
+        if option == .securityKey, fido2DeviceIsPresent() && !fido2DeviceNeedsPin() {
+            createAndSubmitSecurityKeyAssertationWithPinCode(nil, sessionData: sessionData, authOptions: authOptions)
+        } else {
+            self.presentedSheet = .twoFactor(.init(
+                option: option,
+                authOptions: authOptions,
+                sessionData: sessionData
+            ))
+        }
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
@@ -355,9 +361,9 @@ class AppState: ObservableObject {
             .store(in: &cancellables)
     }
     
-    var fido2: FIDO2?
-    
-    func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
+    private lazy var fido2 = FIDO2()
+
+    func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String?, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
         self.presentedSheet = .securityKeyTouchToConfirm
         
         guard let fsaChallenge = authOptions.fsaChallenge else {
@@ -379,8 +385,6 @@ class AppState: ObservableObject {
 
         Task {
             do {
-                let fido2 = FIDO2()
-                self.fido2 = fido2
                 let response = try fido2.respondToChallenge(args: ChallengeArgs(rpId: rpId, validCredentials: validCreds, devPin: pinCode, challenge: challenge, origin: origin))
             
                 Task { @MainActor in
@@ -407,13 +411,31 @@ class AppState: ObservableObject {
                 // we don't have to show an error
                 // because the sheet will already be dismissed
             } catch {
+                Task { @MainActor in
+                    authError = error
+                }
+            }
+        }
+    }
+
+    func fido2DeviceIsPresent() -> Bool {
+        fido2.hasDeviceAttached()
+    }
+
+    func fido2DeviceNeedsPin() -> Bool {
+        do {
+            return try fido2.deviceHasPin()
+        } catch {
+            Task { @MainActor in
                 authError = error
             }
+
+            return true
         }
     }
     
     func cancelSecurityKeyAssertationRequest() {
-        self.fido2?.cancel()
+        self.fido2.cancel()
     }
     
     private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {

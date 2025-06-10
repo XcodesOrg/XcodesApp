@@ -237,6 +237,16 @@
         }
       }
     },
+    "%@ (%@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ (%2$@)"
+          }
+        }
+      }
+    },
     "%@ %@ %@" : {
       "localizations" : {
         "ar" : {
@@ -17907,6 +17917,9 @@
           }
         }
       }
+    },
+    "PIN not set" : {
+
     },
     "Platforms" : {
       "localizations" : {
