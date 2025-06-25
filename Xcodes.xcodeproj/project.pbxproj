@@ -115,6 +115,7 @@
 		CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */; };
 		CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */; };
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
+		D93F95C12E0C8C1A00238FB5 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93F95C02E0C8C1A00238FB5 /* TagView.swift */; };
 		E689540325BE8C64000EBCEA /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = E689540225BE8C64000EBCEA /* DockProgress */; };
 		E81D7EA02805250100A205FC /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D7E9F2805250100A205FC /* Collection+.swift */; };
 		E832EAF82B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */; };
@@ -321,6 +322,7 @@
 		CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatesPreferencePane.swift; sourceTree = "<group>"; };
 		CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListViewRow.swift; sourceTree = "<group>"; };
 		CAFFFEEE259CEAC400903F81 /* RingProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingProgressViewStyle.swift; sourceTree = "<group>"; };
+		D93F95C02E0C8C1A00238FB5 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		E81D7E9F2805250100A205FC /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeInstallationStepDetailView.swift; sourceTree = "<group>"; };
 		E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSplitViewWrapper.swift; sourceTree = "<group>"; };
@@ -387,6 +389,7 @@
 		63EAA4E9259944340046AB8F /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D93F95C02E0C8C1A00238FB5 /* TagView.swift */,
 				CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */,
 				63EAA4EA259944450046AB8F /* ProgressButton.swift */,
 				CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */,
@@ -932,6 +935,7 @@
 				E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */,
 				B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */,
 				B0403CFE2ADA712C00137C09 /* InfoPaneControls.swift in Sources */,
+				D93F95C12E0C8C1A00238FB5 /* TagView.swift in Sources */,
 				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
 				332807412CA5EA820036F691 /* SignInSecurityKeyTouchView.swift in Sources */,
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,

@@ -23,7 +23,7 @@ struct PlatformsView: View {
             }
         }
 
-        ForEach(runtimes ?? [], id: \.simulatorVersion.buildUpdate) { runtime in
+        ForEach(runtimes ?? [], id: \.identifier) { runtime in
             runtimeView(runtime: runtime)
                 .frame(minWidth: 200)
                 .padding()
@@ -39,6 +39,9 @@ struct PlatformsView: View {
                 runtime.icon()
                 Text("\(runtime.visibleIdentifier)")
                     .font(.headline)
+                ForEach(runtime.architectures ?? [], id: \.self) { architecture in
+                    TagView(text: architecture)
+                }
                 pathIfAvailable(xcode: xcode, runtime: runtime)
 					
 					if runtime.installState == .notInstalled {
