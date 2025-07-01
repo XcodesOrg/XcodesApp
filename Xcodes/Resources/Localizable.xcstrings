@@ -18506,7 +18506,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PIN not set"
+            "value" : "没有设置 PIN"
           }
         },
         "zh-Hant" : {
