@@ -244,6 +244,12 @@
             "state" : "new",
             "value" : "%1$@ (%2$@)"
           }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ (%2$@)"
+          }
         }
       }
     },
@@ -17919,7 +17925,14 @@
       }
     },
     "PIN not set" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "没有设置 PIN"
+          }
+        }
+      }
     },
     "Platforms" : {
       "localizations" : {
