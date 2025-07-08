@@ -11,7 +11,8 @@ import XcodesKit
 
 struct PlatformsView: View {
     @EnvironmentObject var appState: AppState
-    
+    @AppStorage("selectedRuntimeArchitecture") private var selectedRuntimeArchitecture: RuntimeArchitecture = .arm64
+
     let xcode: Xcode
  
     var body: some View {
@@ -19,17 +20,50 @@ struct PlatformsView: View {
         let builds = xcode.sdks?.allBuilds()
         let runtimes = builds?.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
-                $0.sdkBuildUpdate?.contains(sdkBuild) ?? false
+                $0.sdkBuildUpdate?.contains(sdkBuild) ?? false &&
+                ($0.architectures?.isEmpty ?? true ||
+                $0.architectures?.contains(selectedRuntimeArchitecture.rawValue) ?? false)
             }
         }
-
-        ForEach(runtimes ?? [], id: \.identifier) { runtime in
-            runtimeView(runtime: runtime)
-                .frame(minWidth: 200)
-                .padding()
-                .background(.quinary)
-                .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+        
+        let architectures = Set((runtimes ?? []).flatMap { $0.architectures ?? [] })
+        
+        VStack {
+            HStack {
+                Text("Platforms")
+                    .font(.title3)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if !architectures.isEmpty {
+                    Spacer()
+                    Button {
+                        switch selectedRuntimeArchitecture {
+                        case .arm64: selectedRuntimeArchitecture = .x86_64
+                        case .x86_64: selectedRuntimeArchitecture = .arm64
+                        }
+                    } label: {
+                        switch selectedRuntimeArchitecture {
+                        case .arm64:
+                            Label(selectedRuntimeArchitecture.displayValue, systemImage: "m4.button.horizontal")
+                                .labelStyle(.trailingIcon)
+                        case .x86_64:
+                            Label(selectedRuntimeArchitecture.displayValue, systemImage: "cpu.fill")
+                                .labelStyle(.trailingIcon)
+                        }
+                    }
+                }
+            }
+            
+            ForEach(runtimes ?? [], id: \.identifier) { runtime in
+                runtimeView(runtime: runtime)
+                    .frame(minWidth: 200)
+                    .padding()
+                    .background(.quinary)
+                    .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+            }
         }
+        .xcodesBackground()
+        
+
     }
     
     @ViewBuilder

@@ -35,13 +35,7 @@ struct InfoPane: View {
                     }
                     .xcodesBackground()
                     
-                    VStack {
-                        Text("Platforms")
-                            .font(.title3)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        PlatformsView(xcode: xcode)
-                    }
-                    .xcodesBackground()
+                    PlatformsView(xcode: xcode)
                 }
                 .frame(minWidth: 380)
                 
