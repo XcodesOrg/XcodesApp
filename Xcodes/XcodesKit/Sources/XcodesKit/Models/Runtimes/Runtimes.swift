@@ -12,6 +12,7 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     public let category: Category
     public let simulatorVersion: SimulatorVersion
     public let source: String?
+    public let architectures: [String]?
     public let dictionaryVersion: Int
     public let contentType: ContentType
     public let platform: Platform
@@ -49,10 +50,11 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
         case name
         case authentication
         case sdkBuildUpdate
+        case architectures
     }
 
     var betaNumber: Int? {
-        enum Regex { static let shared = try! NSRegularExpression(pattern: "b[0-9]+$") }
+        enum Regex { static let shared = try! NSRegularExpression(pattern: "b[0-9]+") }
         guard var foundString = Regex.shared.firstString(in: identifier) else { return nil }
         foundString.removeFirst()
         return Int(foundString)!
@@ -94,6 +96,7 @@ public struct SDKToSimulatorMapping: Codable {
     public let sdkBuildUpdate: String
     public let simulatorBuildUpdate: String
     public let sdkIdentifier: String
+    public let downloadableIdentifiers: [String]?
 }
 
 extension DownloadableRuntime {

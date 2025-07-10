@@ -115,6 +115,7 @@
 		CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */; };
 		CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */; };
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
+		D93F95C12E0C8C1A00238FB5 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93F95C02E0C8C1A00238FB5 /* TagView.swift */; };
 		E689540325BE8C64000EBCEA /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = E689540225BE8C64000EBCEA /* DockProgress */; };
 		E81D7EA02805250100A205FC /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D7E9F2805250100A205FC /* Collection+.swift */; };
 		E832EAF82B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */; };
@@ -139,6 +140,7 @@
 		E8DA461125FAF7FB002E85EF /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DA461025FAF7FB002E85EF /* NotificationsView.swift */; };
 		E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */; };
 		E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */; };
+		E8EE58C02E1CC2A50003FA9F /* RuntimeArchitecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EE58BF2E1CC2A50003FA9F /* RuntimeArchitecture.swift */; };
 		E8F44A1E296B4CD7002D6592 /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = E8F44A1D296B4CD7002D6592 /* Path */; };
 		E8FA00542B5B109800769CE0 /* com.xcodesorg.xcodesapp.Helper in Copy Helper */ = {isa = PBXBuildFile; fileRef = CA9FF8AE2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = E8FD5726291EE4AC001E004C /* AsyncNetworkService */; };
@@ -321,6 +323,7 @@
 		CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatesPreferencePane.swift; sourceTree = "<group>"; };
 		CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListViewRow.swift; sourceTree = "<group>"; };
 		CAFFFEEE259CEAC400903F81 /* RingProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingProgressViewStyle.swift; sourceTree = "<group>"; };
+		D93F95C02E0C8C1A00238FB5 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		E81D7E9F2805250100A205FC /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeInstallationStepDetailView.swift; sourceTree = "<group>"; };
 		E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSplitViewWrapper.swift; sourceTree = "<group>"; };
@@ -340,6 +343,7 @@
 		E8D655BF288DD04700A139C2 /* SelectedActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedActionType.swift; sourceTree = "<group>"; };
 		E8DA461025FAF7FB002E85EF /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepDetailView.swift; sourceTree = "<group>"; };
+		E8EE58BF2E1CC2A50003FA9F /* RuntimeArchitecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeArchitecture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -387,6 +391,7 @@
 		63EAA4E9259944340046AB8F /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D93F95C02E0C8C1A00238FB5 /* TagView.swift */,
 				CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */,
 				63EAA4EA259944450046AB8F /* ProgressButton.swift */,
 				CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */,
@@ -657,6 +662,7 @@
 		E8E98A9425D863B100EC89A0 /* InfoPane */ = {
 			isa = PBXGroup;
 			children = (
+				E8EE58BF2E1CC2A50003FA9F /* RuntimeArchitecture.swift */,
 				B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */,
 				B0403CF32AD9381D00137C09 /* SDKsView.swift */,
 				B0403CF52AD9849E00137C09 /* CompilersView.swift */,
@@ -932,9 +938,11 @@
 				E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */,
 				B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */,
 				B0403CFE2ADA712C00137C09 /* InfoPaneControls.swift in Sources */,
+				D93F95C12E0C8C1A00238FB5 /* TagView.swift in Sources */,
 				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
 				332807412CA5EA820036F691 /* SignInSecurityKeyTouchView.swift in Sources */,
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,
+				E8EE58C02E1CC2A50003FA9F /* RuntimeArchitecture.swift in Sources */,
 				CAE4247F259A666100B8B246 /* MainWindow.swift in Sources */,
 				CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */,
 				B0403CF02AD92D7B00137C09 /* ReleaseNotesView.swift in Sources */,

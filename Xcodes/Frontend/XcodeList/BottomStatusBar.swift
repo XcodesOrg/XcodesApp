@@ -34,7 +34,7 @@ struct BottomStatusModifier: ViewModifier {
                             }
                         }
                     }
-                    Text("\(Bundle.main.shortVersion!) (\(Bundle.main.version!))")
+                    Text(verbatim: "\(Bundle.main.shortVersion!) (\(Bundle.main.version!))")
                         .font(.subheadline)
                 }
                 .frame(maxWidth: .infinity, maxHeight: 30, alignment: .leading)
