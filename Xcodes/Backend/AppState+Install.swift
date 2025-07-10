@@ -266,18 +266,27 @@ extension AppState {
                 return Fail(error: error)
                     .eraseToAnyPublisher()
             }
-        .tryMap { output -> URL in
+        .flatMap { output -> AnyPublisher<URL, Swift.Error> in
             self.setInstallationStep(of: availableXcode.version, to: .moving(destination: destination.path))
 
             let xcodeURL = source.deletingLastPathComponent().appendingPathComponent("Xcode.app")
             let xcodeBetaURL = source.deletingLastPathComponent().appendingPathComponent("Xcode-beta.app")
             if Current.files.fileExists(atPath: xcodeURL.path) {
-                try Current.files.moveItem(at: xcodeURL, to: destination)
-            }
-            else if Current.files.fileExists(atPath: xcodeBetaURL.path) {
-                try Current.files.moveItem(at: xcodeBetaURL, to: destination)
+                return Current.helper.moveApp(xcodeURL.path, destination.path)
+                    .map { _ in destination }
+                    .eraseToAnyPublisher()
             }
 
+            else if Current.files.fileExists(atPath: xcodeBetaURL.path) {
+                return Current.helper.moveApp(xcodeBetaURL.path, destination.path)
+                    .map { _ in destination }
+                    .eraseToAnyPublisher()
+            }
+
+            return Fail(error: InstallationError.failedToMoveXcodeToApplications)
+                .eraseToAnyPublisher()
+        }
+        .tryMap { output -> URL in
             return destination
         }
         .handleEvents(receiveCancel: {
