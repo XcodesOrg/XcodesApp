@@ -610,7 +610,11 @@ class AppState: ObservableObject {
                     self.installationPublishers[id] = nil
                     if case let .failure(error) = completion {
                         // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
-                        if error as? AuthenticationError != .invalidSession {
+                        if let error = error as? AuthenticationError, case .notAuthorized = error {
+                            self.error = error
+                            self.presentedAlert = .unauthenticated
+                            
+                        } else if error as? AuthenticationError != .invalidSession {
                             self.error = error
                             self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
                         }

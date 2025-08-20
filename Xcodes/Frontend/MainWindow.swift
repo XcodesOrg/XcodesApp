@@ -188,6 +188,20 @@ struct MainWindow: View {
                     action: { appState.presentedAlert = nil }
                 )
             )
+        case .unauthenticated:
+            return Alert(
+                title: Text("Alert.Install.Error.Title"),
+                message: Text("Alert.Install.AuthError.Message"),
+                primaryButton: .default(
+                    Text("OK"),
+                    action: {
+                        appState.presentedSheet = .signIn
+                    }
+                ),
+                secondaryButton: .cancel(
+                    Text("Cancel")
+                )
+            )
         case let .checkMinSupportedVersion(xcode, deviceVersion):
             return Alert(
                 title: Text("Alert.MinSupported.Title"),

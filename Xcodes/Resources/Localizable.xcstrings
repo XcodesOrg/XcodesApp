@@ -1958,6 +1958,16 @@
         }
       }
     },
+    "Alert.Install.AuthError.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        }
+      }
+    },
     "Alert.Install.Error.Need.Xcode16.1" : {
       "extractionState" : "manual",
       "localizations" : {
