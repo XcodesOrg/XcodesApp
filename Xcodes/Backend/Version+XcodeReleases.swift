@@ -1,11 +1,11 @@
 import Version
-import struct XCModel.Xcode
+import XcodesKit
 
 extension Version {
     /// Initialize a Version from an XcodeReleases' XCModel.Xcode
     ///
     /// This is kinda quick-and-dirty, and it would probably be better for us to adopt something closer to XCModel.Xcode under the hood and map the scraped data to it instead.
-    init?(xcReleasesXcode: XCModel.Xcode) {
+    init?(xcReleasesXcode: XcodeRelease) {
         var versionString = xcReleasesXcode.version.number ?? ""
         
         // Append trailing ".0" in order to get a fully-specified version string

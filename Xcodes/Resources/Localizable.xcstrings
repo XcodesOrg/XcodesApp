@@ -4447,6 +4447,9 @@
         }
       }
     },
+    "AppleSilicon" : {
+
+    },
     "AppUpdates" : {
       "localizations" : {
         "ar" : {
@@ -22102,6 +22105,9 @@
           }
         }
       }
+    },
+    "Universal" : {
+
     },
     "UnxipExperiment" : {
       "localizations" : {

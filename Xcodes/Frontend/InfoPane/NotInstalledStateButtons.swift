@@ -11,7 +11,7 @@ import Version
 
 struct NotInstalledStateButtons: View {
     let downloadFileSizeString: String?
-    let id: Version
+    let id: XcodeID
 
     @EnvironmentObject var appState: AppState
 
@@ -38,7 +38,7 @@ struct NotInstalledStateButtons: View {
 #Preview {
   NotInstalledStateButtons(
     downloadFileSizeString: "1,19 GB",
-    id: Version(major: 12, minor: 3, patch: 0)
+    id: XcodeID(version: Version(major: 12, minor: 3, patch: 0), architectures: nil)
   )
   .padding()
 }

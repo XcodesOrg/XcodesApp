@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import struct XCModel.SDKs
+import XcodesKit
 
 struct SDKsView: View {
     let content: String

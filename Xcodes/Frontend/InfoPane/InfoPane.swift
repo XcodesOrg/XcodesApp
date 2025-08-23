@@ -3,8 +3,6 @@ import XcodesKit
 import Path
 import SwiftUI
 import Version
-import struct XCModel.Compilers
-import struct XCModel.SDKs
 
 struct InfoPane: View {
     let xcode: Xcode
@@ -42,7 +40,7 @@ struct InfoPane: View {
                 VStack(alignment: .leading) {
                     ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
                     CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
-                    IdenticalBuildsView(builds: xcode.identicalBuilds)
+                    IdenticalBuildsView(builds: xcode.identicalBuilds.map { $0.version })
                     SDKandCompilers
                 }
                 .frame(width: 200)

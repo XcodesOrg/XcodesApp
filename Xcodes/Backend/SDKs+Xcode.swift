@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import struct XCModel.SDKs
 import XcodesKit
 import SwiftUI
 

@@ -48,7 +48,6 @@
 		CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF84D2595079F00E47BAF /* ScrollingTextView.swift */; };
 		CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */; };
 		CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8652595130600E47BAF /* View+IsHidden.swift */; };
-		CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */ = {isa = PBXBuildFile; productRef = CA9FF86C25951C6E00E47BAF /* XCModel */; };
 		CA9FF877259528CC00E47BAF /* Version+XcodeReleases.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF876259528CC00E47BAF /* Version+XcodeReleases.swift */; };
 		CA9FF87B2595293E00E47BAF /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF87A2595293E00E47BAF /* DataSource.swift */; };
 		CA9FF88125955C7000E47BAF /* AvailableXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF88025955C7000E47BAF /* AvailableXcode.swift */; };
@@ -363,7 +362,6 @@
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				E689540325BE8C64000EBCEA /* DockProgress in Frameworks */,
-				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
 				E83FDC442CBB649100679C6B /* Sparkle in Frameworks */,
 				E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */,
@@ -726,7 +724,6 @@
 				CABFA9ED2592F0CC00380FEE /* SwiftSoup */,
 				CABFA9F72592F0F900380FEE /* KeychainAccess */,
 				CABFA9FC2592F13300380FEE /* LegibleError */,
-				CA9FF86C25951C6E00E47BAF /* XCModel */,
 				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
 				E689540225BE8C64000EBCEA /* DockProgress */,
 				E8FD5726291EE4AC001E004C /* AsyncNetworkService */,
@@ -816,7 +813,6 @@
 				CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */,
-				CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */,
 				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
 				CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */,
 				E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */,
@@ -1504,14 +1500,6 @@
 				minimumVersion = 0.1.4;
 			};
 		};
-		CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/xcodereleases/data";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RobotsAndPencils/ErrorHandling";
@@ -1606,11 +1594,6 @@
 		334A932B2CA885A400A5E079 /* LibFido2Swift */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LibFido2Swift;
-		};
-		CA9FF86C25951C6E00E47BAF /* XCModel */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */;
-			productName = XCModel;
 		};
 		CAA1CB2C255A5262003FD669 /* AppleAPI */ = {
 			isa = XCSwiftPackageProductDependency;

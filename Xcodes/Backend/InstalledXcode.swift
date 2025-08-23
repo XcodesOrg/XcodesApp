@@ -5,8 +5,12 @@ import Path
 /// A version of Xcode that's already installed
 public struct InstalledXcode: Equatable {
     public let path: Path
+    public let xcodeID: XcodeID
+    
     /// Composed of the bundle short version from Info.plist and the product build version from version.plist
-    public let version: Version
+    public var version: Version {
+        return xcodeID.version
+    }
 
     public init?(path: Path) {
         self.path = path
@@ -32,11 +36,13 @@ public struct InstalledXcode: Equatable {
             prereleaseIdentifiers = ["beta"]
         }
 
-        self.version = Version(major: bundleVersion.major,
+        let version = Version(major: bundleVersion.major,
                                minor: bundleVersion.minor,
                                patch: bundleVersion.patch,
                                prereleaseIdentifiers: prereleaseIdentifiers,
                                buildMetadataIdentifiers: [versionPlist.productBuildVersion].compactMap { $0 })
+        
+        self.xcodeID = XcodeID(version: version, architectures: nil)
     }
 }
 

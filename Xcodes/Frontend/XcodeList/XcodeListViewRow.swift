@@ -21,7 +21,7 @@ struct XcodeListViewRow: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .accessibility(label: Text("IdenticalBuilds"))
-                            .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
+                            .accessibility(value: Text(xcode.identicalBuilds.map(\.version.appleDescription).joined(separator: ", ")))
                             .help("IdenticalBuilds.help")
                     }
                 }
@@ -156,7 +156,7 @@ struct XcodeListViewRow_Previews: PreviewProvider {
             )
 
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [Version("12.0.0-RC+1234A")!], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                xcode: Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [XcodeID(version: Version("12.0.0-RC+1234A")!)], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
                 selected: false,
                 appState: AppState()
             )

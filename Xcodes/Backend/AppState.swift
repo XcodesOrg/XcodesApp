@@ -26,6 +26,7 @@ enum PreferenceKey: String {
     case xcodeListCategory
     case allowedMajorVersions
     case hideSupportXcodes
+    case xcodeListArchitectures
 
     func isManaged() -> Bool { UserDefaults.standard.objectIsForced(forKey: self.rawValue) }
 }
@@ -146,7 +147,7 @@ class AppState: ObservableObject {
     // MARK: - Publisher Cancellables
     
     var cancellables = Set<AnyCancellable>()
-    private var installationPublishers: [Version: AnyCancellable] = [:]
+    private var installationPublishers: [XcodeID: AnyCancellable] = [:]
     internal var runtimePublishers: [String: Task<(), any Error>] = [:]
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
@@ -523,8 +524,8 @@ class AppState: ObservableObject {
     
     // MARK: - Install
     
-    func checkMinVersionAndInstall(id: Xcode.ID) {
-        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+    func checkMinVersionAndInstall(id: XcodeID) {
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id.version }) else { return }
         
         // Check to see if users macOS is supported
         if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
@@ -550,8 +551,8 @@ class AppState: ObservableObject {
         return !ProcessInfo.processInfo.isOperatingSystemAtLeast(xcodeMinimumMacOSVersion)
     }
     
-    func install(id: Xcode.ID) {
-        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+    func install(id: XcodeID) {
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id.version }) else { return }
 
         installationPublishers[id] = signInIfNeeded()
             .handleEvents(
@@ -626,7 +627,7 @@ class AppState: ObservableObject {
     /// Skips using the username/password to log in to Apple, and simply gets a Auth Cookie used in downloading
     /// As of Nov 2022 this was returning a 403 forbidden
     func installWithoutLogin(id: Xcode.ID) {
-        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id.version }) else { return }
         
         installationPublishers[id] = self.install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
             .receive(on: DispatchQueue.main)
@@ -649,7 +650,7 @@ class AppState: ObservableObject {
     }
     
     func cancelInstall(id: Xcode.ID) {
-        guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.version == id.version }) else { return }
 
         // Cancel the publisher
         installationPublishers[id] = nil
@@ -767,7 +768,7 @@ class AppState: ObservableObject {
             config.allowsRunningApplicationSubstitution = false
             NSWorkspace.shared.openApplication(at: path.url, configuration: config)
         default:
-            Logger.appState.error("\(xcode.id) is not installed")
+            Logger.appState.error("\(xcode.id.version) is not installed")
             return
         }
     }
@@ -863,7 +864,7 @@ class AppState: ObservableObject {
                 // If build metadata matches exactly, replace the available version with the installed version.
                 // This should handle Apple versions from /downloads/more which don't have build metadata identifiers. 
                 if let index = adjustedAvailableXcodes.map(\.version).firstIndex(where: { $0.buildMetadataIdentifiers == installedXcode.version.buildMetadataIdentifiers }) {
-                    adjustedAvailableXcodes[index].version = installedXcode.version
+                    adjustedAvailableXcodes[index].xcodeID = installedXcode.xcodeID
                 }
                 // If an installed version is the same as one that's listed online which doesn't have build metadata, replace it with the installed version
                 // Not all prerelease Apple versions available online include build metadata
@@ -871,7 +872,7 @@ class AppState: ObservableObject {
                     availableXcode.version.isEquivalent(to: installedXcode.version) &&
                         availableXcode.version.buildMetadataIdentifiers.isEmpty
                 }) {
-                    adjustedAvailableXcodes[index].version = installedXcode.version
+                    adjustedAvailableXcodes[index].xcodeID = installedXcode.xcodeID
                 }
             }
         }
@@ -888,14 +889,15 @@ class AppState: ObservableObject {
                 // Include this version if there's only one with this build identifier
                 return availableXcodesWithIdenticalBuildIdentifiers.count == 1 ||
                     // Or if there's more than one with this build identifier and this is the release version
-                    availableXcodesWithIdenticalBuildIdentifiers.count > 1 && availableXcode.version.prereleaseIdentifiers.isEmpty
-            }            
+                
+                availableXcodesWithIdenticalBuildIdentifiers.count > 1 && (availableXcode.version.prereleaseIdentifiers.isEmpty || availableXcode.architectures?.count ?? 0 != 0)
+            }
             .map { availableXcode -> Xcode in
                 let installedXcode = installedXcodes.first(where: { installedXcode in
                     availableXcode.version.isEquivalent(to: installedXcode.version) 
                 })
 
-                let identicalBuilds: [Version]
+                let identicalBuilds: [XcodeID]
                 let prereleaseAvailableXcodesWithIdenticalBuildIdentifiers = availableXcodes
                     .filter {
                         return $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers &&
@@ -905,7 +907,7 @@ class AppState: ObservableObject {
                     }
                 // If this is the release version, add the identical builds to it
                 if !prereleaseAvailableXcodesWithIdenticalBuildIdentifiers.isEmpty, availableXcode.version.prereleaseIdentifiers.isEmpty {
-                    identicalBuilds = [availableXcode.version] + prereleaseAvailableXcodesWithIdenticalBuildIdentifiers.map(\.version)
+                    identicalBuilds = [availableXcode.xcodeID] + prereleaseAvailableXcodesWithIdenticalBuildIdentifiers.map(\.xcodeID)
                 } else {
                     identicalBuilds = []
                 }
@@ -926,7 +928,8 @@ class AppState: ObservableObject {
                     releaseDate: availableXcode.releaseDate,
                     sdks: availableXcode.sdks,
                     compilers: availableXcode.compilers,
-                    downloadFileSize: availableXcode.fileSize
+                    downloadFileSize: availableXcode.fileSize,
+                    architectures: availableXcode.architectures
                 )
             }
         

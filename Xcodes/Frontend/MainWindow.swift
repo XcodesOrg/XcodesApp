@@ -15,11 +15,12 @@ struct MainWindow: View {
     // FB8979533 SceneStorage doesn't restore value after app is quit by user
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
+    @AppStorage("xcodeListArchitecture") private var architecture: XcodeListArchitecture = .universal
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
 
     var body: some View {
         NavigationSplitViewWrapper {
-            XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
+            XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly, architecture: architecture)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
                     Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
@@ -31,7 +32,8 @@ struct MainWindow: View {
                 .mainToolbar(
                     category: $category,
                     isInstalledOnly: $isInstalledOnly,
-                    isShowingInfoPane: $isShowingInfoPane
+                    isShowingInfoPane: $isShowingInfoPane,
+                    architecture: $architecture
                 )
         } detail: {
             Group {
@@ -191,11 +193,11 @@ struct MainWindow: View {
         case let .checkMinSupportedVersion(xcode, deviceVersion):
             return Alert(
                 title: Text("Alert.MinSupported.Title"),
-                message: Text(String(format: localizeString("Alert.MinSupported.Message"), xcode.version.descriptionWithoutBuildMetadata, xcode.requiredMacOSVersion ?? "", deviceVersion)),
+                message: Text(String(format: localizeString("Alert.MinSupported.Message"), xcode.xcodeID.version.descriptionWithoutBuildMetadata, xcode.requiredMacOSVersion ?? "", deviceVersion)),
                   primaryButton: .default(
                     Text("Install"),
                     action: {
-                        self.appState.install(id: xcode.version)
+                        self.appState.install(id: xcode.xcodeID)
                     }
                   ),
                   secondaryButton: .cancel(Text("Cancel"))
@@ -223,7 +225,7 @@ struct MainWindow_Previews: PreviewProvider {
         MainWindow().environmentObject({ () -> AppState in
             let a = AppState()
             a.allXcodes = [
-                Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [Version("12.0.0+1234A")!, Version("12.0.0-RC+1234A")!], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [XcodeID(version: Version("12.0.0+1234A")!), XcodeID(version: Version("12.0.0-RC+1234A")!)], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
                 Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil),
                 Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, icon: nil),
                 Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, icon: nil),
