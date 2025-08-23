@@ -525,7 +525,7 @@ class AppState: ObservableObject {
     // MARK: - Install
     
     func checkMinVersionAndInstall(id: XcodeID) {
-        guard let availableXcode = availableXcodes.first(where: { $0.version == id.version }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
         
         // Check to see if users macOS is supported
         if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
@@ -552,7 +552,7 @@ class AppState: ObservableObject {
     }
     
     func install(id: XcodeID) {
-        guard let availableXcode = availableXcodes.first(where: { $0.version == id.version }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
         installationPublishers[id] = signInIfNeeded()
             .handleEvents(
@@ -627,7 +627,7 @@ class AppState: ObservableObject {
     /// Skips using the username/password to log in to Apple, and simply gets a Auth Cookie used in downloading
     /// As of Nov 2022 this was returning a 403 forbidden
     func installWithoutLogin(id: Xcode.ID) {
-        guard let availableXcode = availableXcodes.first(where: { $0.version == id.version }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
         
         installationPublishers[id] = self.install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
             .receive(on: DispatchQueue.main)
@@ -650,7 +650,7 @@ class AppState: ObservableObject {
     }
     
     func cancelInstall(id: Xcode.ID) {
-        guard let availableXcode = availableXcodes.first(where: { $0.version == id.version }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
         // Cancel the publisher
         installationPublishers[id] = nil
@@ -894,7 +894,7 @@ class AppState: ObservableObject {
             }
             .map { availableXcode -> Xcode in
                 let installedXcode = installedXcodes.first(where: { installedXcode in
-                    availableXcode.version.isEquivalent(to: installedXcode.version) 
+                    availableXcode.version.isEquivalent(to: installedXcode.version)
                 })
 
                 let identicalBuilds: [XcodeID]

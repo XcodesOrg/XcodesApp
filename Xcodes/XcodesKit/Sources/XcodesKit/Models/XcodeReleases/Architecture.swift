@@ -8,7 +8,9 @@
 import Foundation
 
 /// The name of an Architecture.
-public enum Architecture: String, Codable, Equatable, Hashable {
+public enum Architecture: String, Codable, Equatable, Hashable, Identifiable {
+    public var id: Self { self }
+    
     /// The Arm64 architecture (Apple Silicon)
     case arm64 = "arm64"
     /// The X86\_64 architecture (64-bit Intel)
@@ -17,4 +19,10 @@ public enum Architecture: String, Codable, Equatable, Hashable {
     case i386 = "i386"
     /// The PowerPC architecture (Motorola)
     case powerPC = "ppc"
+}
+
+extension Array where Element == Architecture {
+    public var isAppleSilicon: Bool {
+        self == [.arm64]
+    }
 }

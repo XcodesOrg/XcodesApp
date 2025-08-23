@@ -24,6 +24,14 @@ struct XcodeListViewRow: View {
                             .accessibility(value: Text(xcode.identicalBuilds.map(\.version.appleDescription).joined(separator: ", ")))
                             .help("IdenticalBuilds.help")
                     }
+                    
+                    if xcode.architectures?.isAppleSilicon ?? false {
+                        Image(systemName: "m4.button.horizontal")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .accessibility(label: Text("AppleSilicon"))
+                            .help("AppleSilicon.help")
+                    }
                 }
 
                 if case let .installed(path) = xcode.installState {

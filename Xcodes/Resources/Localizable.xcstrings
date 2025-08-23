@@ -4450,6 +4450,9 @@
     "AppleSilicon" : {
 
     },
+    "AppleSilicon.help" : {
+
+    },
     "AppUpdates" : {
       "localizations" : {
         "ar" : {
@@ -10480,6 +10483,12 @@
           }
         }
       }
+    },
+    "Install Apple Silicon" : {
+
+    },
+    "Install Universal" : {
+
     },
     "InstallationError.CodesignVerifyFailed" : {
       "extractionState" : "manual",

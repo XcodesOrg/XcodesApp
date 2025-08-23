@@ -20,7 +20,11 @@ struct NotInstalledStateButtons: View {
             Button {
                 appState.checkMinVersionAndInstall(id: id)
             } label: {
-                Text("Install") .help("Install")
+                if id.architectures?.isAppleSilicon ?? false {
+                    Text("Install Apple Silicon").help("Install")
+                } else {
+                    Text("Install Universal").help("Install")
+                }
             }
             
             if let size = downloadFileSizeString {

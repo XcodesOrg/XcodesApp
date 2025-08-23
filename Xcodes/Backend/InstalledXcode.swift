@@ -35,6 +35,9 @@ public struct InstalledXcode: Equatable {
         else if infoPlist.bundleIconName == "XcodeBeta", !prereleaseIdentifiers.contains("beta") {
             prereleaseIdentifiers = ["beta"]
         }
+        
+        // need:
+        // lipo -archs /Applications/Xcode-26.0.0-Beta.3.app/Contents/MacOS/Xcode
 
         let version = Version(major: bundleVersion.major,
                                minor: bundleVersion.minor,

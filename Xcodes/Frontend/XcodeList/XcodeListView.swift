@@ -30,17 +30,8 @@ struct XcodeListView: View {
             xcodes = appState.allXcodes.filter { $0.version.isPrerelease }
         }
         
-        switch architecture {
-        case .appleSilicon:
+        if architecture == .appleSilicon {
             xcodes = xcodes.filter { $0.architectures == [.arm64] }
-        case .universal:
-            xcodes = xcodes.filter {
-                if let architectures = $0.architectures {
-                    return architectures.contains(.x86_64) // we're assuming that if architectures contains x86 then it's universal
-                } else {
-                    return true
-                }
-            }
         }
         
         
