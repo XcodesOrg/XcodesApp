@@ -894,11 +894,13 @@ class AppState: ObservableObject {
             }
             .map { availableXcode -> Xcode in
                 let installedXcode = installedXcodes.first(where: { installedXcode in
-                    if availableXcode.architectures == nil {
-                        return availableXcode.version.isEquivalent(to: installedXcode.version)
-                    } else {
-                        return availableXcode.xcodeID == installedXcode.xcodeID
-                    }
+                    // if we want to have only specific Xcodes as selected instead of the Architecture Equivalent. 
+                   // if availableXcode.architectures == nil {
+//                        return availableXcode.version.isEquivalent(to: installedXcode.version)
+//                    } else {
+//                        return availableXcode.xcodeID == installedXcode.xcodeID
+//                    }
+                    return availableXcode.version.isEquivalent(to: installedXcode.version)
                 })
 
                 let identicalBuilds: [XcodeID]
