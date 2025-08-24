@@ -6,10 +6,14 @@ public typealias ProcessOutput = (status: Int32, out: String, err: String)
 
 extension Process {
     static func run(_ executable: Path, workingDirectory: URL? = nil, input: String? = nil, _ arguments: String...) async throws -> ProcessOutput {
-        return try await run(executable.url, workingDirectory: workingDirectory, input: input, arguments)
+        return try run(executable.url, workingDirectory: workingDirectory, input: input, arguments)
     }
     
-    static func run(_ executable: URL, workingDirectory: URL? = nil, input: String? = nil, _ arguments: [String]) async throws -> ProcessOutput {
+    static func run(_ executable: Path, workingDirectory: URL? = nil, input: String? = nil, _ arguments: String...) throws -> ProcessOutput {
+        return try run(executable.url, workingDirectory: workingDirectory, input: input, arguments)
+    }
+    
+    static func run(_ executable: URL, workingDirectory: URL? = nil, input: String? = nil, _ arguments: [String]) throws -> ProcessOutput {
         
         let process = Process()
         process.currentDirectoryURL = workingDirectory ?? executable.deletingLastPathComponent()

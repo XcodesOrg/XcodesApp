@@ -26,4 +26,8 @@ public struct XcodesShell {
     public var deleteRuntime: (String) async throws -> ProcessOutput = {
         try await Process.run(Path.root.usr.bin.join("xcrun"), "simctl", "runtime", "delete", $0)
     }
+   
+    public var archs: (URL) throws -> ProcessOutput = {
+        try Process.run(Path.root.usr.bin.join("lipo"), "-archs", $0.path)
+    }
 }

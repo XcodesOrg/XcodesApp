@@ -17,18 +17,6 @@ public struct XcodeID: Codable, Hashable, Identifiable {
         self.version = version
         self.architectures = architectures
     }
-    
-    public var architectureString: String {
-        switch architectures {
-        case .some(let architectures):
-            if architectures.isAppleSilicon {
-                return "Apple Silicon"
-            } else {
-                return "Universal"
-            }
-        default: return "Universal"
-        }
-    }
 }
 
 struct Xcode: Identifiable, CustomStringConvertible {

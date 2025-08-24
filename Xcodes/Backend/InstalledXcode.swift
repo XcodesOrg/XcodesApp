@@ -1,6 +1,7 @@
 import Foundation
 import Version
 import Path
+import XcodesKit
 
 /// A version of Xcode that's already installed
 public struct InstalledXcode: Equatable {
@@ -36,16 +37,20 @@ public struct InstalledXcode: Equatable {
             prereleaseIdentifiers = ["beta"]
         }
         
-        // need:
-        // lipo -archs /Applications/Xcode-26.0.0-Beta.3.app/Contents/MacOS/Xcode
-
+        let archsString = try? XcodesKit.Current.shell.archs(path.url.appending(path: "Contents/MacOS/Xcode")).out
+        
+        let architectures = archsString?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: " ")
+            .compactMap { Architecture(rawValue: String($0)) }
+        
         let version = Version(major: bundleVersion.major,
                                minor: bundleVersion.minor,
                                patch: bundleVersion.patch,
                                prereleaseIdentifiers: prereleaseIdentifiers,
                                buildMetadataIdentifiers: [versionPlist.productBuildVersion].compactMap { $0 })
         
-        self.xcodeID = XcodeID(version: version, architectures: nil)
+        self.xcodeID = XcodeID(version: version, architectures: architectures)
     }
 }
 

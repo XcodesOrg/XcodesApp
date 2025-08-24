@@ -894,7 +894,11 @@ class AppState: ObservableObject {
             }
             .map { availableXcode -> Xcode in
                 let installedXcode = installedXcodes.first(where: { installedXcode in
-                    availableXcode.version.isEquivalent(to: installedXcode.version)
+                    if availableXcode.architectures == nil {
+                        return availableXcode.version.isEquivalent(to: installedXcode.version)
+                    } else {
+                        return availableXcode.xcodeID == installedXcode.xcodeID
+                    }
                 })
 
                 let identicalBuilds: [XcodeID]
@@ -913,7 +917,7 @@ class AppState: ObservableObject {
                 }
                 
                 // If the existing install state is "installing", keep it 
-                let existingXcodeInstallState = allXcodes.first { $0.version == availableXcode.version && $0.installState.installing }?.installState
+                let existingXcodeInstallState = allXcodes.first { $0.id == availableXcode.xcodeID && $0.installState.installing }?.installState
                 // Otherwise, determine it from whether there's an installed Xcode
                 let defaultXcodeInstallState: XcodeInstallState = installedXcode.map { .installed($0.path) } ?? .notInstalled
                 
