@@ -22,7 +22,10 @@ struct ProgressIndicator: NSViewRepresentable {
         nsView.doubleValue = doubleValue
         nsView.controlSize = controlSize
         nsView.isIndeterminate = isIndeterminate
+        nsView.usesThreadedAnimation = true
+        
         nsView.style = style
+        nsView.startAnimation(nil)
     }
 }
 

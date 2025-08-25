@@ -22,10 +22,13 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 - Just click a button to make a version active with `xcode-select`.
 - View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
 - Dark/Light Mode supported
+- Security Key Authentication supported 
 
 ## Platforms/Runtimes
 
 - Xcodes supports downloading the Apple runtimes via the app. Simply click on the Platform, and Xcodes will install automatically for you.
+
+**Note: iOS 18+, tvOS 18+, watchOS 11+, visionOS 2+ requires that Xcode 16.1 Beta 3+ be installed and active.** 
 
 ## Experiments
 
@@ -50,13 +53,13 @@ The following languages are supported because of the following community users!
 |Ukranian 🇺🇦 |[@gelosi](https://github.com/gelosi)|Japanese 🇯🇵|[@tatsuz0u](https://github.com/tatsuz0u)|
 |German 🇩🇪|[@drct](https://github.com/drct)|Dutch 🇳🇱|[@jfversluis](https://github/com/jfversluis)|
 |Brazilian Portuguese 🇧🇷|[@brunomunizaf](https://github.com/brunomunizaf)|Polish 🇵🇱|[@jakex7](https://github.com/jakex7)|
-|Catalan|[@ferranabello](https://github.com/ferranabello)|
+|Catalan|[@ferranabello](https://github.com/ferranabello)|Greek 🇬🇷|[@alladinian](https://github.com/alladinian)
 
 Want to add more languages? Simply create a PR with the updated strings file.
 
 ## Installation
-v1.X - requires MacOS 11 or newer
-v2.X - requires MacOS 13
+v1.X - requires macOS 11 or newer
+v2.X - requires macOS 13
 
 ### Install with Homebrew
 
@@ -160,7 +163,8 @@ popd
 # Attach the zip that was created in the Product directory to the release
 # Publish the release
 
-# Update the [Homebrew Cask](https://github.com/RobotsAndPencils/homebrew-cask/blob/master/Casks/xcodes.rb).
+shasum -a 256 xcodes.zip
+# Update the [Homebrew Cask](https://github.com/XcodesOrg/homebrew-cask/blob/master/Casks/x/xcodes.rb).
 ```
 </details>
 

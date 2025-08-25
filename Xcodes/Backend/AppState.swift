@@ -9,6 +9,26 @@ import Version
 import os.log
 import DockProgress
 import XcodesKit
+import LibFido2Swift
+
+enum PreferenceKey: String {
+    case installPath
+    case localPath
+    case unxipExperiment
+    case createSymLinkOnSelect
+    case onSelectActionType
+    case showOpenInRosettaOption
+    case autoInstallation
+    case SUEnableAutomaticChecks
+    case includePrereleaseVersions
+    case downloader
+    case dataSource
+    case xcodeListCategory
+    case allowedMajorVersions
+    case hideSupportXcodes
+
+    func isManaged() -> Bool { UserDefaults.standard.objectIsForced(forKey: self.rawValue) }
+}
 
 class AppState: ObservableObject {
     private let client = AppleAPI.Client()
@@ -66,18 +86,24 @@ class AppState: ObservableObject {
         }
     }
     
+    var disableLocalPathChange: Bool { PreferenceKey.localPath.isManaged() }
+
     @Published var installPath = "" {
         didSet {
             Current.defaults.set(installPath, forKey: "installPath")
         }
     }
-    
+
+    var disableInstallPathChange: Bool { PreferenceKey.installPath.isManaged() }
+
     @Published var unxipExperiment = false {
         didSet {
             Current.defaults.set(unxipExperiment, forKey: "unxipExperiment")
         }
     }
     
+    var disableUnxipExperiment: Bool { PreferenceKey.unxipExperiment.isManaged() }
+
     @Published var createSymLinkOnSelect = false {
         didSet {
             Current.defaults.set(createSymLinkOnSelect, forKey: "createSymLinkOnSelect")
@@ -85,7 +111,7 @@ class AppState: ObservableObject {
     }
     
     var createSymLinkOnSelectDisabled: Bool {
-        return onSelectActionType == .rename
+        return onSelectActionType == .rename || PreferenceKey.createSymLinkOnSelect.isManaged()
     }
     
     @Published var onSelectActionType = SelectedActionType.none {
@@ -98,9 +124,17 @@ class AppState: ObservableObject {
         }
     }
     
+    var onSelectActionTypeDisabled: Bool { PreferenceKey.onSelectActionType.isManaged() }
+
     @Published var showOpenInRosettaOption = false {
         didSet {
             Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
+        }
+    }
+    
+    @Published var terminateAfterLastWindowClosed = false {
+        didSet {
+            Current.defaults.set(terminateAfterLastWindowClosed, forKey: "terminateAfterLastWindowClosed")
         }
     }
     
@@ -173,13 +207,14 @@ class AppState: ObservableObject {
         onSelectActionType = SelectedActionType(rawValue: Current.defaults.string(forKey: "onSelectActionType") ?? "none") ?? .none
         installPath = Current.defaults.string(forKey: "installPath") ?? Path.defaultInstallDirectory.string
         showOpenInRosettaOption = Current.defaults.bool(forKey: "showOpenInRosettaOption") ?? false
+        terminateAfterLastWindowClosed = Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
     }
     
     // MARK: Timer
     /// Runs a timer every 6 hours when app is open to check if it needs to auto install any xcodes
     func setupAutoInstallTimer() {
-        guard let storageValue = UserDefaults.standard.object(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
-        
+        guard let storageValue = Current.defaults.get(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
+
         if autoInstallType == .none { return }
         
         autoInstallTimer = Timer.scheduledTimer(withTimeInterval: 60*60*6, repeats: true) { [weak self] _ in
@@ -242,7 +277,7 @@ class AppState: ObservableObject {
     
     func signIn(username: String, password: String) {
         authError = nil
-        signIn(username: username, password: password)
+        signIn(username: username.lowercased(), password: password)
             .sink(
                 receiveCompletion: { _ in },
                 receiveValue: { _ in }
@@ -255,7 +290,7 @@ class AppState: ObservableObject {
         Current.defaults.set(username, forKey: "username")
         
         isProcessingAuthRequest = true
-        return client.login(accountName: username, password: password)
+        return client.srpLogin(accountName: username, password: password)
             .receive(on: DispatchQueue.main)
             .handleEvents(
                 receiveOutput: { authenticationState in 
@@ -270,11 +305,17 @@ class AppState: ObservableObject {
     }
     
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
-        self.presentedSheet = .twoFactor(.init(
-            option: option,
-            authOptions: authOptions,
-            sessionData: AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        ))
+        let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
+
+        if option == .securityKey, fido2DeviceIsPresent() && !fido2DeviceNeedsPin() {
+            createAndSubmitSecurityKeyAssertationWithPinCode(nil, sessionData: sessionData, authOptions: authOptions)
+        } else {
+            self.presentedSheet = .twoFactor(.init(
+                option: option,
+                authOptions: authOptions,
+                sessionData: sessionData
+            ))
+        }
     }
 
     func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
@@ -318,6 +359,83 @@ class AppState: ObservableObject {
                 }
             )
             .store(in: &cancellables)
+    }
+    
+    private lazy var fido2 = FIDO2()
+
+    func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String?, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
+        self.presentedSheet = .securityKeyTouchToConfirm
+        
+        guard let fsaChallenge = authOptions.fsaChallenge else {
+            // This shouldn't happen
+            // we shouldn't have called this method without setting the fsaChallenge
+            // so this is an assertionFailure
+            assertionFailure()
+            self.authError = "Something went wrong. Please file a bug report"
+            return
+        }
+        
+        // The challenge is encoded in Base64URL encoding
+        let challengeUrl = fsaChallenge.challenge
+        let challenge = FIDO2.base64urlToBase64(base64url: challengeUrl)
+        let origin = "https://idmsa.apple.com"
+        let rpId = "apple.com"
+        // Allowed creds is sent as a comma separated string
+        let validCreds = fsaChallenge.allowedCredentials.split(separator: ",").map(String.init)
+
+        Task {
+            do {
+                let response = try fido2.respondToChallenge(args: ChallengeArgs(rpId: rpId, validCredentials: validCreds, devPin: pinCode, challenge: challenge, origin: origin))
+            
+                Task { @MainActor in
+                    self.isProcessingAuthRequest = true
+                }
+                
+                let respData = try JSONEncoder().encode(response)
+                client.submitChallenge(response: respData, sessionData: AppleSessionData(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt))
+                    .receive(on: DispatchQueue.main)
+                    .handleEvents(
+                        receiveOutput: { authenticationState in
+                            self.authenticationState = authenticationState
+                        },
+                        receiveCompletion: { completion in
+                            self.handleAuthenticationFlowCompletion(completion)
+                            self.isProcessingAuthRequest = false
+                        }
+                    ).sink(
+                        receiveCompletion: { _ in },
+                        receiveValue: { _ in }
+                    ).store(in: &cancellables)
+            } catch FIDO2Error.canceledByUser {
+                // User cancelled the auth flow
+                // we don't have to show an error
+                // because the sheet will already be dismissed
+            } catch {
+                Task { @MainActor in
+                    authError = error
+                }
+            }
+        }
+    }
+
+    func fido2DeviceIsPresent() -> Bool {
+        fido2.hasDeviceAttached()
+    }
+
+    func fido2DeviceNeedsPin() -> Bool {
+        do {
+            return try fido2.deviceHasPin()
+        } catch {
+            Task { @MainActor in
+                authError = error
+            }
+
+            return true
+        }
+    }
+    
+    func cancelSecurityKeyAssertationRequest() {
+        self.fido2.cancel()
     }
     
     private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
@@ -408,7 +526,7 @@ class AppState: ObservableObject {
     func checkMinVersionAndInstall(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
         
-        // Check to see if users MacOS is supported
+        // Check to see if users macOS is supported
         if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
             if hasMinSupportedOS(requiredMacOSVersion: requiredMacOSVersion) {
                 // prompt
@@ -436,6 +554,11 @@ class AppState: ObservableObject {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
 
         installationPublishers[id] = signInIfNeeded()
+            .handleEvents(
+                receiveSubscription: { [unowned self] _ in
+                    self.setInstallationStep(of: availableXcode.version, to: .authenticating)
+                }
+            )
             .flatMap { [unowned self] in
                 // signInIfNeeded might finish before the user actually authenticates if UI is involved. 
                 // This publisher will wait for the @Published authentication state to change to authenticated or unauthenticated before finishing,
@@ -479,7 +602,7 @@ class AppState: ObservableObject {
                     .mapError { $0 as Error }
             }
             .flatMap { [unowned self] in
-                self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2)
+                self.install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
             }
             .receive(on: DispatchQueue.main)
             .sink(
@@ -505,7 +628,7 @@ class AppState: ObservableObject {
     func installWithoutLogin(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.version == id }) else { return }
         
-        installationPublishers[id] = self.install(.version(availableXcode), downloader: Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2)
+        installationPublishers[id] = self.install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
             .receive(on: DispatchQueue.main)
             .sink(
                 receiveCompletion: { [unowned self] completion in

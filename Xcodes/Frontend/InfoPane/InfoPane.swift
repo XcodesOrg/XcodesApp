@@ -9,30 +9,35 @@ import struct XCModel.SDKs
 struct InfoPane: View {
     let xcode: Xcode
     var body: some View {
+        if #available(macOS 14.0, *) {
+            mainContent
+                .contentMargins(10, for: .scrollContent)
+        } else {
+            mainContent
+                .padding()
+        }
+    }
+    
+    private var mainContent: some View {
         ScrollView(.vertical) {
             HStack(alignment: .top) {
                 VStack {
                     VStack(spacing: 5) {
                         HStack {
-                            IconView(installState: xcode.installState)
+                            IconView(xcode: xcode)
                             
                             Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                                 .font(.title)
                                 .frame(maxWidth: .infinity, alignment: .leading)
+                                .textSelection(.enabled)
                         }
                         InfoPaneControls(xcode: xcode)
                     }
                     .xcodesBackground()
-               
-                
-                    VStack {
-                        Text("Platforms")
-                            .font(.title3)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                        PlatformsView(xcode: xcode)
-                    }
-                    .xcodesBackground()
+                    
+                    PlatformsView(xcode: xcode)
                 }
+                .frame(minWidth: 380)
                 
                 VStack(alignment: .leading) {
                     ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
@@ -64,15 +69,16 @@ struct InfoPane: View {
 #Preview(XcodePreviewName.allCases[2].rawValue) { makePreviewContent(for: 2) }
 #Preview(XcodePreviewName.allCases[3].rawValue) { makePreviewContent(for: 3) }
 #Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
+#Preview(XcodePreviewName.allCases[5].rawValue) { makePreviewContent(for: 5) }
 
 private func makePreviewContent(for index: Int) -> some View {
-  let name = XcodePreviewName.allCases[index]
+    let name = XcodePreviewName.allCases[index]
     return InfoPane(xcode: xcodeDict[name]!)
         .environmentObject(configure(AppState()) {
-          $0.allXcodes = [xcodeDict[name]!]
+            $0.allXcodes = [xcodeDict[name]!]
         })
-        .frame(width: 300, height: 400)
-            .padding()
+        .frame(width: 600, height: 400)
+        .padding()
 }
 
 enum XcodePreviewName: String, CaseIterable, Identifiable {
@@ -81,7 +87,8 @@ enum XcodePreviewName: String, CaseIterable, Identifiable {
     case Populated_Uninstalled
     case Basic_Installed
     case Basic_Installing
-
+    case Basic_Unarchiving
+    
     var id: XcodePreviewName { self }
 }
 
@@ -141,17 +148,25 @@ var xcodeDict: [XcodePreviewName: Xcode] = [
         sdks: nil,
         compilers: nil
     ),
+    .Basic_Unarchiving: .init(
+        version: _versionWithMeta,
+        installState: .installing(.unarchiving),
+        selected: false,
+        icon: nil,
+        sdks: nil,
+        compilers: nil
+    ),
 ]
 
 var downloadableRuntimes: [DownloadableRuntime] = {
     var runtimes = try! JSONDecoder().decode([DownloadableRuntime].self, from: Current.files.contents(atPath: Path.runtimeCacheFile.string)!)
     // set iOS to installed
-    let iOSIndex = runtimes.firstIndex { $0.sdkBuildUpdate == "19E239" }!
+    let iOSIndex = 0//runtimes.firstIndex { $0.sdkBuildUpdate.contains == "19E239" }!
     var iOSRuntime = runtimes[iOSIndex]
     iOSRuntime.installState = .installed
     runtimes[iOSIndex] = iOSRuntime
     
-    let watchOSIndex = runtimes.firstIndex { $0.sdkBuildUpdate == "20R362" }!
+    let watchOSIndex = 0//runtimes.firstIndex { $0.sdkBuildUpdate.first == "20R362" }!
     var runtime = runtimes[watchOSIndex]
     runtime.installState = .installing(
         RuntimeInstallationStep.downloading(
@@ -163,7 +178,7 @@ var downloadableRuntimes: [DownloadableRuntime] = {
                 $0.completedUnitCount = 848_444_920
                 $0.throughput = 9_211_681
             }
-            )
+        )
     )
     runtimes[watchOSIndex] = runtime
     

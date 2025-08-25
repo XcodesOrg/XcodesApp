@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "big-num",
+        "repositoryURL": "https://github.com/adam-fowler/big-num",
+        "state": {
+          "branch": null,
+          "revision": "5c5511ad06aeb2b97d0868f7394e14a624bfb1c7",
+          "version": "2.0.2"
+        }
+      },
+      {
         "package": "CombineExpectations",
         "repositoryURL": "https://github.com/groue/CombineExpectations",
         "state": {
@@ -33,8 +42,8 @@
         "repositoryURL": "https://github.com/sindresorhus/DockProgress",
         "state": {
           "branch": null,
-          "revision": "7100b68571e2dafe3a06ad5905b80fc3b0107b4b",
-          "version": "3.2.0"
+          "revision": "d4f23b5a8f5ca0fac393eb7ba78c2fe3e32e52da",
+          "version": "4.3.1"
         }
       },
       {
@@ -65,6 +74,15 @@
         }
       },
       {
+        "package": "LibFido2Swift",
+        "repositoryURL": "https://github.com/kinoroy/LibFido2Swift.git",
+        "state": {
+          "branch": null,
+          "revision": "94d496d6f850dcbb3e8c4a27cd7eeabfad9f14e3",
+          "version": "0.1.4"
+        }
+      },
+      {
         "package": "Path.swift",
         "repositoryURL": "https://github.com/mxcl/Path.swift",
         "state": {
@@ -78,8 +96,8 @@
         "repositoryURL": "https://github.com/sparkle-project/Sparkle/",
         "state": {
           "branch": null,
-          "revision": "47d3d90aee3c52b6f61d04ceae426e607df62347",
-          "version": "2.5.2"
+          "revision": "0ef1ee0220239b3776f433314515fd849025673f",
+          "version": "2.6.4"
         }
       },
       {
@@ -89,6 +107,24 @@
           "branch": null,
           "revision": "a902f1823a7ff3c9ab2fba0f992396b948eda307",
           "version": "1.0.5"
+        }
+      },
+      {
+        "package": "swift-crypto",
+        "repositoryURL": "https://github.com/apple/swift-crypto",
+        "state": {
+          "branch": null,
+          "revision": "ddb07e896a2a8af79512543b1c7eb9797f8898a5",
+          "version": "1.1.7"
+        }
+      },
+      {
+        "package": "swift-srp",
+        "repositoryURL": "https://github.com/xcodesOrg/swift-srp",
+        "state": {
+          "branch": "main",
+          "revision": "543aa0122a0257b992f6c7d62d18a26e3dffb8fe",
+          "version": null
         }
       },
       {

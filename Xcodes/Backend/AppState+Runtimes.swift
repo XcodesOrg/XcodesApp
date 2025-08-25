@@ -4,6 +4,7 @@ import OSLog
 import Combine
 import Path
 import AppleAPI
+import Version
 
 extension AppState {
     func updateDownloadableRuntimes() {
@@ -15,10 +16,10 @@ extension AppState {
                     var updatedRuntime = runtime
                     
                     // This loops through and matches up the simulatorVersion to the mappings
-                    let simulatorBuildUpdate = downloadableRuntimes.sdkToSimulatorMappings.first { SDKToSimulatorMapping in
+                    let simulatorBuildUpdate = downloadableRuntimes.sdkToSimulatorMappings.filter { SDKToSimulatorMapping in
                         SDKToSimulatorMapping.simulatorBuildUpdate == runtime.simulatorVersion.buildUpdate
                     }
-                    updatedRuntime.sdkBuildUpdate = simulatorBuildUpdate?.sdkBuildUpdate
+                    updatedRuntime.sdkBuildUpdate = simulatorBuildUpdate.map { $0.sdkBuildUpdate }
                     return updatedRuntime
                 }
     
@@ -48,6 +49,73 @@ extension AppState {
     }
     
     func downloadRuntime(runtime: DownloadableRuntime) {
+        guard let selectedXcode = self.allXcodes.first(where: { $0.selected }) else {
+            Logger.appState.error("No selected Xcode")
+            DispatchQueue.main.async {
+                self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: "No selected Xcode. Please make an Xcode active")
+            }
+            return
+        }
+        // new runtimes
+        if runtime.contentType == .cryptexDiskImage {
+            // only selected xcodes > 16.1 beta 3 can download runtimes via a xcodebuild -downloadPlatform version
+            // only Runtimes coming from cryptexDiskImage can be downloaded via xcodebuild
+            if selectedXcode.version > Version(major: 16, minor: 0, patch: 0) {
+                downloadRuntimeViaXcodeBuild(runtime: runtime)
+            } else {
+                // not supported
+                Logger.appState.error("Trying to download a runtime we can't download")
+                DispatchQueue.main.async {
+                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: localizeString("Alert.Install.Error.Need.Xcode16.1"))
+                }
+                return
+            }
+        } else {
+            downloadRuntimeObseleteWay(runtime: runtime)
+        }
+    }
+    
+    func downloadRuntimeViaXcodeBuild(runtime: DownloadableRuntime) {
+        
+        let downloadRuntimeTask = Current.shell.downloadRuntime(runtime.platform.shortName, runtime.simulatorVersion.buildUpdate)
+        runtimePublishers[runtime.identifier] = Task { [weak self] in
+            guard let self = self else { return }
+            do {
+                for try await progress in downloadRuntimeTask {
+                    if progress.isIndeterminate {
+                        DispatchQueue.main.async {
+                            self.setInstallationStep(of: runtime, to: .installing, postNotification: false)
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            self.setInstallationStep(of: runtime, to: .downloading(progress: progress), postNotification: false)
+                        }
+                    }
+                  
+                }
+                Logger.appState.debug("Done downloading runtime - \(runtime.name)")
+                
+                DispatchQueue.main.async {
+                    guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
+                    self.downloadableRuntimes[index].installState = .installed
+                    self.update()
+                }
+                
+            } catch {
+                    Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
+                    DispatchQueue.main.async {
+                        self.error = error
+                        if let error = error as? String {
+                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error)
+                        } else {
+                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+                        }
+                    }
+                }
+        }
+    }
+    
+    func downloadRuntimeObseleteWay(runtime: DownloadableRuntime) {
         runtimePublishers[runtime.identifier] = Task {
             do {
                 let downloadedURL = try await downloadRunTimeFull(runtime: runtime)
@@ -57,6 +125,9 @@ extension AppState {
                         self.setInstallationStep(of: runtime, to: .installing)
                     }
                     switch runtime.contentType {
+                    case .cryptexDiskImage:
+                        // not supported yet (do we need to for old packages?)
+                        throw "Installing via cryptexDiskImage not support - please install manually from \(downloadedURL.description)"
                     case .package:
                         // not supported yet (do we need to for old packages?)
                         throw "Installing via package not support - please install manually from \(downloadedURL.description)"
@@ -80,19 +151,31 @@ extension AppState {
                 Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
                 DispatchQueue.main.async {
                     self.error = error
-                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+                    if let error = error as? String {
+                        self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error)
+                    } else {
+                        self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+                    }
                 }
             }
         }
     }
     
     func downloadRunTimeFull(runtime: DownloadableRuntime) async throws -> URL {
+        guard let source = runtime.source else {
+            throw "Invalid runtime source"
+        }
+        
+        guard let downloadPath = runtime.downloadPath else {
+            throw "Invalid runtime downloadPath"
+        }
+    
         // sets a proper cookie for runtimes
-        try await validateADCSession(path: runtime.downloadPath)
+        try await validateADCSession(path: downloadPath)
         
-        let downloader = Downloader(rawValue: UserDefaults.standard.string(forKey: "downloader") ?? "aria2") ?? .aria2
+        let downloader = Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2
         
-        let url = URL(string: runtime.source)!
+        let url = URL(string: source)!
         let expectedRuntimePath = Path.xcodesApplicationSupport/"\(url.lastPathComponent)"
         // aria2 downloads directly to the destination (instead of into /tmp first) so we need to make sure that the download isn't incomplete
         let aria2DownloadMetadataPath = expectedRuntimePath.parent/(expectedRuntimePath.basename() + ".aria2")
@@ -123,9 +206,15 @@ extension AppState {
     }
 
     public func downloadRuntimeWithAria2(_ runtime: DownloadableRuntime, to destination: Path, aria2Path: Path) -> AsyncThrowingStream<Progress, Error> {
-        let cookies = AppleAPI.Current.network.session.configuration.httpCookieStorage?.cookies(for: runtime.url) ?? []
+        guard let url = runtime.url else {
+            return AsyncThrowingStream<Progress, Error> { continuation in
+                continuation.finish(throwing: "Invalid or non existant runtime url")
+            }
+        }
+        
+        let cookies = AppleAPI.Current.network.session.configuration.httpCookieStorage?.cookies(for: url) ?? []
     
-        return Current.shell.downloadWithAria2Async(aria2Path, runtime.url, destination, cookies)
+        return Current.shell.downloadWithAria2Async(aria2Path, url, destination, cookies)
     }
     
     
@@ -140,7 +229,10 @@ extension AppState {
         runtimePublishers[runtime.identifier] = nil
         
         // If the download is cancelled by the user, clean up the download files that aria2 creates.
-        let url = URL(string: runtime.source)!
+        guard let source = runtime.source else {
+            return
+        }
+        let url = URL(string: source)!
         let expectedRuntimePath = Path.xcodesApplicationSupport/"\(url.lastPathComponent)"
         let aria2DownloadMetadataPath = expectedRuntimePath.parent/(expectedRuntimePath.basename() + ".aria2")
    

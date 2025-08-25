@@ -31,6 +31,7 @@ public struct ObservingProgressIndicator: View {
             self.progress = progress
             cancellable = progress.publisher(for: \.fractionCompleted)
                 .combineLatest(progress.publisher(for: \.localizedAdditionalDescription))
+                .combineLatest(progress.publisher(for: \.isIndeterminate))
                 .throttle(for: 1.0, scheduler: DispatchQueue.main, latest: true)
                 .sink { [weak self] _ in self?.objectWillChange.send() }
         }
@@ -77,6 +78,18 @@ struct ObservingProgressBar_Previews: PreviewProvider {
                     $0.totalUnitCount = 11944848484
                     $0.completedUnitCount = 848444920
                     $0.throughput = 9211681
+                },
+                controlSize: .regular,
+                style: .bar,
+                showsAdditionalDescription: true
+            )
+            
+            ObservingProgressIndicator(
+                configure(Progress()) {
+                    $0.kind = .file
+                    $0.fileOperationKind = .downloading
+                    $0.totalUnitCount = 0
+                    $0.completedUnitCount = 0
                 },
                 controlSize: .regular,
                 style: .bar,

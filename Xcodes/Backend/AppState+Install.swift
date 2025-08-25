@@ -13,8 +13,8 @@ extension AppState {
     
     // check to see if we should auto install for the user
     public func autoInstallIfNeeded() {
-        guard let storageValue = UserDefaults.standard.object(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
-        
+        guard let storageValue = Current.defaults.get(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
+
         if autoInstallType == .none { return }
         
         // get newest xcode version
@@ -227,6 +227,7 @@ extension AppState {
                                     self.error = error
                                     self.presentedAlert = .generic(title: localizeString("Alert.InstallArchive.Error.Title"), message: error.legibleLocalizedDescription)
                                 }
+                                resetDockProgressTracking()
                             })
                             .catch { _ in
                                 Just(installedXcode)
@@ -473,19 +474,24 @@ extension AppState {
     // MARK: - Dock Progress Tracking
     
     private func setupDockProgress() {
-        DockProgress.progressInstance = nil
-        DockProgress.style = .bar
+        Task { @MainActor in
+            DockProgress.progressInstance = nil
+            DockProgress.style = .bar
+            
+            let progress = Progress(totalUnitCount: AppState.totalProgressUnits)
+            progress.kind = .file
+            progress.fileOperationKind = .downloading
+            overallProgress = progress
+            
+            DockProgress.progressInstance = overallProgress
+        }
         
-        let progress = Progress(totalUnitCount: AppState.totalProgressUnits)
-        progress.kind = .file
-        progress.fileOperationKind = .downloading
-        overallProgress = progress
-        
-        DockProgress.progressInstance = overallProgress
     }
     
     func resetDockProgressTracking() {
-        DockProgress.progress = 1 // Only way to completely remove overlay with DockProgress is setting progress to complete
+        Task { @MainActor in
+            DockProgress.progress = 1 // Only way to completely remove overlay with DockProgress is setting progress to complete
+        }
     }
     
     // MARK: - 

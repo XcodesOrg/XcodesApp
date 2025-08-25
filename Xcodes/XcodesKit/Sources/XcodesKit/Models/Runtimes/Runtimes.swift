@@ -11,7 +11,8 @@ public struct DownloadableRuntimesResponse: Codable {
 public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     public let category: Category
     public let simulatorVersion: SimulatorVersion
-    public let source: String
+    public let source: String?
+    public let architectures: [String]?
     public let dictionaryVersion: Int
     public let contentType: ContentType
     public let platform: Platform
@@ -21,16 +22,19 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     public let hostRequirements: HostRequirements?
     public let name: String
     public let authentication: Authentication?
-    public var url: URL {
-        return URL(string: source)!
+    public var url: URL? {
+        if let source {
+            return URL(string: source)!
+        }
+        return nil
     }
-    public var downloadPath: String {
-        url.path
+    public var downloadPath: String? {
+        url?.path
     }
     
     // dynamically updated - not decoded
     public var installState: RuntimeInstallState = .notInstalled
-    public var sdkBuildUpdate: String?
+    public var sdkBuildUpdate: [String]?
     
     enum CodingKeys: CodingKey {
         case category
@@ -46,10 +50,11 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
         case name
         case authentication
         case sdkBuildUpdate
+        case architectures
     }
 
     var betaNumber: Int? {
-        enum Regex { static let shared = try! NSRegularExpression(pattern: "b[0-9]+$") }
+        enum Regex { static let shared = try! NSRegularExpression(pattern: "b[0-9]+") }
         guard var foundString = Regex.shared.firstString(in: identifier) else { return nil }
         foundString.removeFirst()
         return Int(foundString)!
@@ -91,6 +96,7 @@ public struct SDKToSimulatorMapping: Codable {
     public let sdkBuildUpdate: String
     public let simulatorBuildUpdate: String
     public let sdkIdentifier: String
+    public let downloadableIdentifiers: [String]?
 }
 
 extension DownloadableRuntime {
@@ -117,6 +123,7 @@ extension DownloadableRuntime {
     public enum ContentType: String, Codable {
         case diskImage = "diskImage"
         case package = "package"
+        case cryptexDiskImage = "cryptexDiskImage"
     }
 
     public enum Platform: String, Codable {

@@ -1,5 +1,9 @@
 import Foundation
 import Combine
+import SRP
+import Crypto
+import CommonCrypto
+
 
 public class Client {
     private static let authTypes = ["sa", "hsa", "non-sa", "hsa2"]
@@ -8,8 +12,12 @@ public class Client {
 
     // MARK: - Login
 
-    public func login(accountName: String, password: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
+    public func srpLogin(accountName: String, password: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
         var serviceKey: String!
+        
+        let client = SRPClient(configuration: SRPConfiguration<SHA256>(.N2048))
+        let clientKeys = client.generateKeys()
+        let a = clientKeys.public
 
         return Current.network.dataTask(with: URLRequest.itcServiceKey)
             .map(\.data)
@@ -24,11 +32,45 @@ public class Client {
                     .map { return (serviceKey, $0)}
                     .eraseToAnyPublisher()
             }
-            .flatMap { (serviceKey, hashcash) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+            .flatMap { (serviceKey, hashcash) -> AnyPublisher<(String, String, ServerSRPInitResponse), Swift.Error> in
+                
+                return Current.network.dataTask(with: URLRequest.SRPInit(serviceKey: serviceKey, a: Data(a.bytes).base64EncodedString(), accountName: accountName))
+                    .map(\.data)
+                    .decode(type: ServerSRPInitResponse.self, decoder: JSONDecoder())
+                    .map { return (serviceKey, hashcash, $0) }
+                    .eraseToAnyPublisher()
+            }
+            .flatMap { (serviceKey, hashcash, srpInit) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+                guard let decodedB = Data(base64Encoded: srpInit.b) else {
+                    return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                        .eraseToAnyPublisher()
+                }
+                
+                guard let decodedSalt = Data(base64Encoded: srpInit.salt) else {
+                    return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                        .eraseToAnyPublisher()
+                }
+
+                let iterations = srpInit.iteration
+                
+                do {
+                    guard let encryptedPassword = self.pbkdf2(password: password, saltData: decodedSalt, keyByteCount: 32, prf: CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256), rounds: iterations, protocol: srpInit.protocol) else {
+                        return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                            .eraseToAnyPublisher()
+                    }
                     
-                return Current.network.dataTask(with: URLRequest.signIn(serviceKey: serviceKey, accountName: accountName, password: password, hashcash: hashcash))
+                    let sharedSecret = try client.calculateSharedSecret(password: encryptedPassword, salt: [UInt8](decodedSalt), clientKeys: clientKeys, serverPublicKey: .init([UInt8](decodedB)))
+                    
+                    let m1 = client.calculateClientProof(username: accountName, salt: [UInt8](decodedSalt), clientPublicKey: a, serverPublicKey: .init([UInt8](decodedB)), sharedSecret: .init(sharedSecret.bytes))
+                    let m2 = client.calculateServerProof(clientPublicKey: a, clientProof: m1, sharedSecret: .init([UInt8](sharedSecret.bytes)))
+
+                    return Current.network.dataTask(with: URLRequest.SRPComplete(serviceKey: serviceKey, hashcash: hashcash, accountName: accountName, c: srpInit.c, m1: Data(m1).base64EncodedString(), m2: Data(m2).base64EncodedString()))
                             .mapError { $0 as Swift.Error }
                             .eraseToAnyPublisher()
+                } catch {
+                    return Fail(error: AuthenticationError.srpInvalidPublicKey)
+                        .eraseToAnyPublisher()
+                }
             }
             .flatMap { result -> AnyPublisher<AuthenticationState, Swift.Error> in
                 let (data, response) = result
@@ -118,7 +160,7 @@ public class Client {
                 case .twoStep:
                     return Fail(error: AuthenticationError.accountUsesTwoStepAuthentication)
                         .eraseToAnyPublisher()
-                case .twoFactor:
+                case .twoFactor, .securityKey:
                     return self.handleTwoFactor(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, authOptions: authOptions)
                         .eraseToAnyPublisher()
                 case .unknown:
@@ -139,7 +181,10 @@ public class Client {
         // SMS wasn't sent automatically because user needs to choose a phone to send to
         } else if authOptions.canFallBackToSMS {
             option = .smsPendingChoice
-        // Code is shown on trusted devices
+            // Code is shown on trusted devices
+        } else if authOptions.fsaChallenge != nil {
+            option = .securityKey
+            // User needs to use a physical security key to respond to the challenge
         } else {
             option = .codeSent
         }
@@ -193,6 +238,33 @@ public class Client {
         .eraseToAnyPublisher()
     }
     
+    public func submitChallenge(response: Data, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
+        Result {
+            URLRequest.respondToChallenge(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, response: response)
+        }
+        .publisher
+        .flatMap { request in
+            Current.network.dataTask(with: request)
+                .mapError { $0 as Error }
+                .tryMap { (data, response) throws -> (Data, URLResponse) in
+                    guard let urlResponse = response as? HTTPURLResponse else { return (data, response) }
+                    switch urlResponse.statusCode {
+                    case 200..<300:
+                        return (data, urlResponse)
+                    case 400, 401:
+                        throw AuthenticationError.incorrectSecurityCode
+                    case 412:
+                        throw AuthenticationError.appleIDAndPrivacyAcknowledgementRequired
+                    case let code:
+                        throw AuthenticationError.badStatusCode(statusCode: code, data: data, response: urlResponse)
+                    }
+                }
+                .flatMap { (data, response) -> AnyPublisher<AuthenticationState, Error> in
+                    self.updateSession(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
+                }
+        }.eraseToAnyPublisher()
+    }
+    
     // MARK: - Session
     
     /// Use the olympus session endpoint to see if the existing session is still valid
@@ -227,6 +299,49 @@ public class Client {
             .mapError { $0 as Error }
             .eraseToAnyPublisher()
     }
+
+    func sha256(data : Data) -> Data {
+        var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
+        data.withUnsafeBytes {
+            _ = CC_SHA256($0.baseAddress, CC_LONG(data.count), &hash)
+        }
+        return Data(hash)
+    }
+
+    private func pbkdf2(password: String, saltData: Data, keyByteCount: Int, prf: CCPseudoRandomAlgorithm, rounds: Int, protocol srpProtocol: SRPProtocol) -> Data? {
+        guard let passwordData = password.data(using: .utf8) else { return nil }
+        let hashedPasswordDataRaw = sha256(data: passwordData)
+        let hashedPasswordData = switch srpProtocol {
+        case .s2k: hashedPasswordDataRaw
+        // the legacy s2k_fo protocol requires hex-encoding the digest before performing PBKDF2.
+        case .s2k_fo: Data(hashedPasswordDataRaw.hexEncodedString().lowercased().utf8)
+        }
+
+        var derivedKeyData = Data(repeating: 0, count: keyByteCount)
+        let derivedCount = derivedKeyData.count
+        let derivationStatus: Int32 = derivedKeyData.withUnsafeMutableBytes { derivedKeyBytes in
+            let keyBuffer: UnsafeMutablePointer<UInt8> =
+                derivedKeyBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+            return saltData.withUnsafeBytes { saltBytes -> Int32 in
+                let saltBuffer: UnsafePointer<UInt8> = saltBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                return hashedPasswordData.withUnsafeBytes { hashedPasswordBytes -> Int32 in
+                    let passwordBuffer: UnsafePointer<UInt8> = hashedPasswordBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                    return CCKeyDerivationPBKDF(
+                        CCPBKDFAlgorithm(kCCPBKDF2),
+                        passwordBuffer,
+                        hashedPasswordData.count,
+                        saltBuffer,
+                        saltData.count,
+                        prf,
+                        UInt32(rounds),
+                        keyBuffer,
+                        derivedCount)
+                }
+            }
+        }
+        return derivationStatus == kCCSuccess ? derivedKeyData : nil
+    }
+
 }
 
 // MARK: - Types
@@ -252,6 +367,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case notDeveloperAppleId
     case notAuthorized
     case invalidResult(resultString: String?)
+    case srpInvalidPublicKey
     
     public var errorDescription: String? {
         switch self {
@@ -286,6 +402,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             return "You are not authorized. Please Sign in with your Apple ID first."
         case let .invalidResult(resultString):
             return resultString ?? "If you continue to have problems, please submit a bug report in the Help menu."
+        case .srpInvalidPublicKey:
+            return "Invalid Key"
         }
     }
 }
@@ -326,27 +444,37 @@ public enum TwoFactorOption: Equatable {
     case smsSent(AuthOptionsResponse.TrustedPhoneNumber)
     case codeSent
     case smsPendingChoice
+    case securityKey
+}
+
+public struct FSAChallenge: Equatable, Decodable {
+    public let challenge: String
+    public let keyHandles: [String]
+    public let allowedCredentials: String
 }
 
 public struct AuthOptionsResponse: Equatable, Decodable {
     public let trustedPhoneNumbers: [TrustedPhoneNumber]?
     public let trustedDevices: [TrustedDevice]?
-    public let securityCode: SecurityCodeInfo
+    public let securityCode: SecurityCodeInfo?
     public let noTrustedDevices: Bool?
     public let serviceErrors: [ServiceError]?
+    public let fsaChallenge: FSAChallenge?
     
     public init(
         trustedPhoneNumbers: [AuthOptionsResponse.TrustedPhoneNumber]?, 
         trustedDevices: [AuthOptionsResponse.TrustedDevice]?, 
         securityCode: AuthOptionsResponse.SecurityCodeInfo, 
         noTrustedDevices: Bool? = nil, 
-        serviceErrors: [ServiceError]? = nil
+        serviceErrors: [ServiceError]? = nil,
+        fsaChallenge: FSAChallenge? = nil
     ) {
         self.trustedPhoneNumbers = trustedPhoneNumbers
         self.trustedDevices = trustedDevices
         self.securityCode = securityCode
         self.noTrustedDevices = noTrustedDevices
         self.serviceErrors = serviceErrors
+        self.fsaChallenge = fsaChallenge
     }
     
     public var kind: Kind {
@@ -354,6 +482,8 @@ public struct AuthOptionsResponse: Equatable, Decodable {
             return .twoStep
         } else if trustedPhoneNumbers != nil {
             return .twoFactor
+        } else if fsaChallenge != nil {
+            return .securityKey
         } else {
             return .unknown
         }
@@ -416,7 +546,7 @@ public struct AuthOptionsResponse: Equatable, Decodable {
     }
     
     public enum Kind: Equatable {
-        case twoStep, twoFactor, unknown
+        case twoStep, twoFactor, securityKey, unknown
     }
 }
 
@@ -452,4 +582,25 @@ public struct AppleProvider: Decodable, Equatable {
 
 public struct AppleUser: Decodable, Equatable {
     public let fullName: String
+}
+
+public struct ServerSRPInitResponse: Decodable {
+    let iteration: Int
+    let salt: String
+    let b: String
+    let c: String
+    let `protocol`: SRPProtocol
+}
+
+
+
+extension String {
+    func base64ToU8Array() -> Data {
+        return Data(base64Encoded: self) ?? Data()
+    }
+}
+extension Data {
+    func hexEncodedString() -> String {
+        return map { String(format: "%02hhx", $0) }.joined()
+    }
 }

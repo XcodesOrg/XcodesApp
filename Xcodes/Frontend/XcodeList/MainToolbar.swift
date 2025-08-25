@@ -5,7 +5,7 @@ struct MainToolbarModifier: ViewModifier {
     @Binding var category: XcodeListCategory
     @Binding var isInstalledOnly: Bool
     @Binding var isShowingInfoPane: Bool
-    
+
     func body(content: Content) -> some View {
         content
             .toolbar { toolbar }
@@ -13,9 +13,8 @@ struct MainToolbarModifier: ViewModifier {
 
     private var toolbar: some ToolbarContent {
         ToolbarItemGroup {
-            
             ProgressButton(
-                isInProgress: appState.isUpdating, 
+                isInProgress: appState.isUpdating,
                 action: appState.update
             ) {
                 Label("Refresh", systemImage: "arrow.clockwise")
@@ -23,6 +22,7 @@ struct MainToolbarModifier: ViewModifier {
             .keyboardShortcut(KeyEquivalent("r"))
             .help("RefreshDescription")
             Spacer()
+
             Button(action: {
                 switch category {
                 case .all: category = .release
@@ -35,39 +35,22 @@ struct MainToolbarModifier: ViewModifier {
                 case .all:
                     Label("All", systemImage: "line.horizontal.3.decrease.circle")
                 case .release:
-                    if #available(macOS 11.3, *) {
                         Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleAndIconLabelStyle())
+                            .labelStyle(.trailingIcon)
                             .foregroundColor(.accentColor)
-                    } else {
-                        Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleOnlyLabelStyle())
-                            .foregroundColor(.accentColor)
-                    }
                 case .beta:
-                    if #available(macOS 11.3, *) {
-                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleAndIconLabelStyle())
-                            .foregroundColor(.accentColor)
-                    } else {
-                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleOnlyLabelStyle())
-                            .foregroundColor(.accentColor)
-                    }
+                    Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        .labelStyle(.trailingIcon)
+                        .foregroundColor(.accentColor)
                 case .releasePlusNewBetas:
-                    if #available(macOS 11.3, *) {
-                        Label("ReleasePlusNewBetas", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleAndIconLabelStyle())
-                            .foregroundColor(.accentColor)
-                    } else {
-                        Label("ReleasePlusNewBetas", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(TitleOnlyLabelStyle())
-                            .foregroundColor(.accentColor)
-                    }
+                    Label("ReleasePlusNewBetas", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        .labelStyle(.trailingIcon)
+                        .foregroundColor(.accentColor)
                 }
             }
             .help("FilterAvailableDescription")
-            
+            .disabled(category.isManaged)
+
             Button(action: {
                 isInstalledOnly.toggle()
             }) {
@@ -76,11 +59,9 @@ struct MainToolbarModifier: ViewModifier {
                         .foregroundColor(.accentColor)
                 } else {
                     Label("Filter", systemImage: "arrow.down.app")
-                        
                 }
             }
             .help("FilterInstalledDescription")
-            
         }
     }
 }
@@ -91,7 +72,7 @@ extension View {
         isInstalledOnly: Binding<Bool>,
         isShowingInfoPane: Binding<Bool>
     ) -> some View {
-        self.modifier(
+        modifier(
             MainToolbarModifier(
                 category: category,
                 isInstalledOnly: isInstalledOnly,

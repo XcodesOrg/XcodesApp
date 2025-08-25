@@ -8,7 +8,8 @@ struct XcodeListView: View {
     private let searchText: String
     private let category: XcodeListCategory
     private let isInstalledOnly: Bool
-    
+    @AppStorage(PreferenceKey.allowedMajorVersions.rawValue) private var allowedMajorVersions = Int.max
+
     init(selectedXcodeID: Binding<Xcode.ID?>, searchText: String, category: XcodeListCategory, isInstalledOnly: Bool) {
         self._selectedXcodeID = selectedXcodeID
         self.searchText = searchText
@@ -36,6 +37,22 @@ struct XcodeListView: View {
             }
         }
         
+        let latestMajor = xcodes.sorted(\.version)
+            .filter { $0.version.isNotPrerelease }
+            .last?
+            .version
+            .major
+
+        xcodes = xcodes.filter {
+            if $0.installState.notInstalled,
+               let latestMajor = latestMajor,
+               $0.version.major < (latestMajor - min(latestMajor,allowedMajorVersions)) {
+                return false
+            }
+
+            return true
+        }
+
         if !searchText.isEmpty {
             xcodes = xcodes.filter { $0.description.contains(searchText) }
         }
@@ -54,7 +71,8 @@ struct XcodeListView: View {
         .listStyle(.sidebar)
         .safeAreaInset(edge: .bottom, spacing: 0) {
             PlatformsPocket()
-                .padding()
+                .padding(.horizontal)
+                .padding(.vertical, 8)
         }
     }
 }
@@ -63,19 +81,21 @@ struct PlatformsPocket: View {
     @SwiftUI.Environment(\.openWindow) private var openWindow
    
     var body: some View {
-        Button(action: { 
-            openWindow(id: "platforms") }
+        Button(action: {
+            openWindow(id: "platforms")
+        }
         ) {
-            VStack(spacing: 5) {
+            HStack(spacing: 5) {
                 Image(systemName: "square.3.layers.3d")
-                    .font(.title)
-                Text("Platforms")
-                    .font(.callout)
+                    .font(.title3.weight(.medium))
+                Text("PlatformsDescription")
+								Spacer()
             }
-            .frame(width: 70, height: 70)
-            .background(.quaternary)
-            .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
-            
+            .font(.body.weight(.medium))
+            .padding(.horizontal)
+            .padding(.vertical, 12)
+            .background(.quaternary.opacity(0.75))
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
         .buttonStyle(.plain)
     }
@@ -93,6 +113,9 @@ struct XcodeListView_Previews: PreviewProvider {
                         Xcode(version: Version("12.2.0")!, installState: .notInstalled, selected: false, icon: nil),
                         Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, icon: nil),
                         Xcode(version: Version("12.0.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                        Xcode(version: Version("10.1.0")!, installState: .notInstalled, selected: false, icon: nil),
+                        Xcode(version: Version("10.0.0")!, installState: .installed(Path("/Applications/Xcode-10.0.0.app")!), selected: false, icon: nil),
+                        Xcode(version: Version("9.0.0")!, installState: .notInstalled, selected: false, icon: nil),
                     ]
                     return a
                 }())

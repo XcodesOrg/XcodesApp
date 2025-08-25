@@ -14,4 +14,6 @@ public enum DataSource: String, CaseIterable, Identifiable, CustomStringConverti
         case .xcodeReleases: return "Xcode Releases"
         }
     }
+
+    var isManaged: Bool { PreferenceKey.dataSource.isManaged() }
 }

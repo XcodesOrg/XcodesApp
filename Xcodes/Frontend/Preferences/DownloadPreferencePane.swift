@@ -18,13 +18,17 @@ struct DownloadPreferencePane: View {
                         }
                     }
                     .labelsHidden()
-                    
-                    AttributedText(dataSourceFootnote)
+                    .fixedSize()
+
+                    Text("DataSourceDescription")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
+            .disabled(dataSource.isManaged)
+
             GroupBox(label: Text("Downloader")) {
                 VStack(alignment: .leading) {
                     Picker("Downloader", selection: $downloader) {
@@ -34,49 +38,27 @@ struct DownloadPreferencePane: View {
                         }
                     }
                     .labelsHidden()
-                    
-                    AttributedText(downloaderFootnote)
+                    .fixedSize()
+
+                    Text("DownloaderDescription")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
-                
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
+            .disabled(downloader.isManaged)
         }
-    }
-    
-    private var dataSourceFootnote: NSAttributedString {
-        let string = localizeString("DataSourceDescription")
-        let attributedString = NSMutableAttributedString(
-            string: string,
-            attributes: [
-                .font: NSFont.preferredFont(forTextStyle: .footnote, options: [:]),
-                .foregroundColor: NSColor.labelColor
-            ]
-        )
-        attributedString.addAttribute(.link, value: URL(string: "https://xcodereleases.com")!, range: NSRange(string.range(of: "Xcode Releases")!, in: string))
-        return attributedString
-    }
-    
-    private var downloaderFootnote: NSAttributedString {
-        let string = localizeString("DownloaderDescription")
-        let attributedString = NSMutableAttributedString(
-            string: string,
-            attributes: [
-                .font: NSFont.preferredFont(forTextStyle: .footnote, options: [:]),
-                .foregroundColor: NSColor.labelColor
-            ]
-        )
-        attributedString.addAttribute(.link, value: URL(string: "https://github.com/aria2/aria2")!, range: NSRange(string.range(of: "aria2")!, in: string))
-        return attributedString
     }
 }
 
 struct DownloadPreferencePane_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            GeneralPreferencePane()
+            DownloadPreferencePane()
                 .environmentObject(AppState())
-                .frame(maxWidth: 500)
+                .frame(maxWidth: 600)
+                .frame(minHeight: 300)
         }
     }
 }

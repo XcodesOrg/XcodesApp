@@ -1,6 +1,6 @@
 import AppleAPI
-import SwiftUI
 import Path
+import SwiftUI
 
 struct ExperimentsPreferencePane: View {
     @EnvironmentObject var appState: AppState
@@ -13,28 +13,16 @@ struct ExperimentsPreferencePane: View {
                         "UseUnxipExperiment",
                         isOn: $appState.unxipExperiment
                     )
-                    AttributedText(unxipFootnote)
+                    .disabled(appState.disableUnxipExperiment)
+                    Text("FasterUnxipDescription")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 .fixedSize(horizontal: false, vertical: true)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
-            Divider()
         }
-    }
-    
-    private var unxipFootnote: NSAttributedString {
-        let string = localizeString("FasterUnxipDescription")
-        let attributedString = NSMutableAttributedString(
-            string: string,
-            attributes: [
-                .font: NSFont.preferredFont(forTextStyle: .footnote, options: [:]),
-                .foregroundColor: NSColor.labelColor
-            ]
-        )
-        attributedString.addAttribute(.link, value: URL(string: "https://twitter.com/_saagarjha")!, range: NSRange(string.range(of: "@_saagarjha")!, in: string))
-        attributedString.addAttribute(.link, value: URL(string: "https://github.com/saagarjha/unxip")!, range: NSRange(string.range(of: "https://github.com/saagarjha/unxip")!, in: string))
-        return attributedString
     }
 }
 
@@ -43,7 +31,7 @@ struct ExperimentsPreferencePane_Previews: PreviewProvider {
         Group {
             ExperimentsPreferencePane()
                 .environmentObject(AppState())
-                .frame(maxWidth: 500)
+                .frame(maxWidth: 600)
         }
     }
 }

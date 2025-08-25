@@ -35,12 +35,11 @@ struct XcodeCommands: Commands {
 
 struct InstallButton: View {
     @EnvironmentObject var appState: AppState
-    @State private var isLoading = false
 
     let xcode: Xcode?
 
     var body: some View {
-        ProgressButton(isInProgress: isLoading) {
+        Button {
             install()
         } label: {
             Text("Install")
@@ -49,7 +48,6 @@ struct InstallButton: View {
     }
 
     private func install() {
-        isLoading = true
         guard let xcode = xcode else { return }
         appState.checkMinVersionAndInstall(id: xcode.id)
     }
@@ -61,7 +59,7 @@ struct CancelInstallButton: View {
     
     var body: some View {
         Button(action: cancelInstall) {
-            Image(systemName: "xmark.circle.fill")
+            Label("Cancel", systemImage: "xmark")
         }
         .help(localizeString("StopInstallation"))
         .buttonStyle(.plain)

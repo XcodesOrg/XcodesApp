@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		15F5B8902CCF09B900705E2F /* CryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5B88F2CCF09B900705E2F /* CryptoKit.framework */; };
+		33027E342CA8C18800CB387C /* LibFido2Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 334A932B2CA885A400A5E079 /* LibFido2Swift */; };
+		3328073F2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */; };
+		332807412CA5EA820036F691 /* SignInSecurityKeyTouchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */; };
 		36741BFD291E4FDB00A85AAE /* DownloadPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */; };
 		36741BFF291E50F500A85AAE /* FileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36741BFE291E50F500A85AAE /* FileError.swift */; };
 		536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD1263C94DE00026CE0 /* SignedInView.swift */; };
@@ -25,6 +29,7 @@
 		B0C6AD042AD6E65700E64698 /* ReleaseDateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */; };
 		B0C6AD0B2AD9178E00E64698 /* IdenticalBuildView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */; };
 		B0C6AD0D2AD91D7900E64698 /* IconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0C6AD0C2AD91D7900E64698 /* IconView.swift */; };
+		BDBAB7452B9FF55800694B0B /* TrailingIconLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBAB7442B9FF55800694B0B /* TrailingIconLabelStyle.swift */; };
 		CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */; };
 		CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */; };
 		CA25192A25A9644800F08414 /* XcodeInstallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA25192925A9644800F08414 /* XcodeInstallState.swift */; };
@@ -110,17 +115,19 @@
 		CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4AB325B7D3AF0064FE51 /* AdvancedPreferencePane.swift */; };
 		CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */; };
 		CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */; };
+		D93F95C12E0C8C1A00238FB5 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D93F95C02E0C8C1A00238FB5 /* TagView.swift */; };
 		E689540325BE8C64000EBCEA /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = E689540225BE8C64000EBCEA /* DockProgress */; };
 		E81D7EA02805250100A205FC /* Collection+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E81D7E9F2805250100A205FC /* Collection+.swift */; };
 		E832EAF82B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */; };
+		E83FDC442CBB649100679C6B /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E83FDC432CBB649100679C6B /* Sparkle */; };
 		E84B7D0D2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */; };
 		E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */; };
 		E84E4F542B333864003F3959 /* PlatformsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F532B333864003F3959 /* PlatformsListView.swift */; };
 		E84E4F572B335094003F3959 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E84E4F562B335094003F3959 /* OrderedCollections */; };
+		E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */ = {isa = PBXBuildFile; productRef = E862D43A2CC8B26F00BAA376 /* SRP */; };
 		E86671272B309D2F0048559A /* PlatformsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86671262B309D2F0048559A /* PlatformsView.swift */; };
 		E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87AB3C42939B65E00D72F43 /* Hardware.swift */; };
 		E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DD6EA25D053FA00D86808 /* Progress+.swift */; };
-		E891A1C42B43ACF900A1B9D1 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = E891A1C32B43ACF900A1B9D1 /* Sparkle */; };
 		E89342FA25EDCC17007CF557 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89342F925EDCC17007CF557 /* NotificationManager.swift */; };
 		E8977EA325C11E1500835F80 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8977EA225C11E1500835F80 /* PreferencesView.swift */; };
 		E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */; };
@@ -133,6 +140,7 @@
 		E8DA461125FAF7FB002E85EF /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DA461025FAF7FB002E85EF /* NotificationsView.swift */; };
 		E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */; };
 		E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */; };
+		E8EE58C02E1CC2A50003FA9F /* RuntimeArchitecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EE58BF2E1CC2A50003FA9F /* RuntimeArchitecture.swift */; };
 		E8F44A1E296B4CD7002D6592 /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = E8F44A1D296B4CD7002D6592 /* Path */; };
 		E8FA00542B5B109800769CE0 /* com.xcodesorg.xcodesapp.Helper in Copy Helper */ = {isa = PBXBuildFile; fileRef = CA9FF8AE2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = E8FD5726291EE4AC001E004C /* AsyncNetworkService */; };
@@ -191,6 +199,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		15F5B88F2CCF09B900705E2F /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
+		3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSecurityKeyPinView.swift; sourceTree = "<group>"; };
+		332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSecurityKeyTouchView.swift; sourceTree = "<group>"; };
 		36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadPreferencePane.swift; sourceTree = "<group>"; };
 		36741BFE291E50F500A85AAE /* FileError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileError.swift; sourceTree = "<group>"; };
 		536CFDD1263C94DE00026CE0 /* SignedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedInView.swift; sourceTree = "<group>"; };
@@ -209,6 +220,7 @@
 		B0C6AD032AD6E65700E64698 /* ReleaseDateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseDateView.swift; sourceTree = "<group>"; };
 		B0C6AD0A2AD9178E00E64698 /* IdenticalBuildView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IdenticalBuildView.swift; sourceTree = "<group>"; };
 		B0C6AD0C2AD91D7900E64698 /* IconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconView.swift; sourceTree = "<group>"; };
+		BDBAB7442B9FF55800694B0B /* TrailingIconLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingIconLabelStyle.swift; sourceTree = "<group>"; };
 		CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommands.swift; sourceTree = "<group>"; };
 		CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateUpdateTests.swift; sourceTree = "<group>"; };
 		CA25192925A9644800F08414 /* XcodeInstallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeInstallState.swift; sourceTree = "<group>"; };
@@ -311,6 +323,7 @@
 		CAFE4ABB25B7D54B0064FE51 /* UpdatesPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdatesPreferencePane.swift; sourceTree = "<group>"; };
 		CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListViewRow.swift; sourceTree = "<group>"; };
 		CAFFFEEE259CEAC400903F81 /* RingProgressViewStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RingProgressViewStyle.swift; sourceTree = "<group>"; };
+		D93F95C02E0C8C1A00238FB5 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		E81D7E9F2805250100A205FC /* Collection+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Collection+.swift"; sourceTree = "<group>"; };
 		E832EAF72B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeInstallationStepDetailView.swift; sourceTree = "<group>"; };
 		E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSplitViewWrapper.swift; sourceTree = "<group>"; };
@@ -330,6 +343,7 @@
 		E8D655BF288DD04700A139C2 /* SelectedActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedActionType.swift; sourceTree = "<group>"; };
 		E8DA461025FAF7FB002E85EF /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepDetailView.swift; sourceTree = "<group>"; };
+		E8EE58BF2E1CC2A50003FA9F /* RuntimeArchitecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeArchitecture.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,12 +358,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				15F5B8902CCF09B900705E2F /* CryptoKit.framework in Frameworks */,
+				33027E342CA8C18800CB387C /* LibFido2Swift in Frameworks */,
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				E689540325BE8C64000EBCEA /* DockProgress in Frameworks */,
 				CA9FF86D25951C6E00E47BAF /* XCModel in Frameworks */,
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
-				E891A1C42B43ACF900A1B9D1 /* Sparkle in Frameworks */,
+				E83FDC442CBB649100679C6B /* Sparkle in Frameworks */,
+				E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */,
 				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
 				E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */,
 				E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */,
@@ -374,12 +391,14 @@
 		63EAA4E9259944340046AB8F /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				D93F95C02E0C8C1A00238FB5 /* TagView.swift */,
 				CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */,
 				63EAA4EA259944450046AB8F /* ProgressButton.swift */,
 				CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */,
 				536CFDD3263C9A8000026CE0 /* XcodesSheet.swift */,
 				53CBAB2B263DCC9100410495 /* XcodesAlert.swift */,
 				E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */,
+				BDBAB7442B9FF55800694B0B /* TrailingIconLabelStyle.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -405,6 +424,7 @@
 		CA538A12255A4F7C00E64DD7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				15F5B88F2CCF09B900705E2F /* CryptoKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -451,6 +471,8 @@
 				CA735108257BF96D00EA9CF8 /* AttributedText.swift */,
 				CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */,
 				CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */,
+				3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */,
+				332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */,
 				CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */,
 				CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */,
 				CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */,
@@ -640,6 +662,7 @@
 		E8E98A9425D863B100EC89A0 /* InfoPane */ = {
 			isa = PBXGroup;
 			children = (
+				E8EE58BF2E1CC2A50003FA9F /* RuntimeArchitecture.swift */,
 				B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */,
 				B0403CF32AD9381D00137C09 /* SDKsView.swift */,
 				B0403CF52AD9849E00137C09 /* CompilersView.swift */,
@@ -710,7 +733,9 @@
 				E8C0EB19291EF43E0081528A /* XcodesKit */,
 				E8F44A1D296B4CD7002D6592 /* Path */,
 				E84E4F562B335094003F3959 /* OrderedCollections */,
-				E891A1C32B43ACF900A1B9D1 /* Sparkle */,
+				E83FDC432CBB649100679C6B /* Sparkle */,
+				334A932B2CA885A400A5E079 /* LibFido2Swift */,
+				E862D43A2CC8B26F00BAA376 /* SRP */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -783,6 +808,7 @@
 				"pt-BR",
 				nl,
 				pl,
+				ar,
 			);
 			mainGroup = CAD2E7952449574E00113D76;
 			packageReferences = (
@@ -797,7 +823,8 @@
 				E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */,
 				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */,
 				E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */,
-				E891A1C22B43ACA400A1B9D1 /* XCRemoteSwiftPackageReference "Sparkle" */,
+				E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */,
+				33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -885,6 +912,7 @@
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
 				CAE4248C259A68B800B8B246 /* Optional+IsNotNil.swift in Sources */,
+				3328073F2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift in Sources */,
 				B0C6AD0D2AD91D7900E64698 /* IconView.swift in Sources */,
 				CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */,
 				B0C6AD042AD6E65700E64698 /* ReleaseDateView.swift in Sources */,
@@ -910,8 +938,11 @@
 				E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */,
 				B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */,
 				B0403CFE2ADA712C00137C09 /* InfoPaneControls.swift in Sources */,
+				D93F95C12E0C8C1A00238FB5 /* TagView.swift in Sources */,
 				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
+				332807412CA5EA820036F691 /* SignInSecurityKeyTouchView.swift in Sources */,
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,
+				E8EE58C02E1CC2A50003FA9F /* RuntimeArchitecture.swift in Sources */,
 				CAE4247F259A666100B8B246 /* MainWindow.swift in Sources */,
 				CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */,
 				B0403CF02AD92D7B00137C09 /* ReleaseNotesView.swift in Sources */,
@@ -919,6 +950,7 @@
 				CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */,
 				E832EAF82B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift in Sources */,
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
+				BDBAB7452B9FF55800694B0B /* TrailingIconLabelStyle.swift in Sources */,
 				E8D655C0288DD04700A139C2 /* SelectedActionType.swift in Sources */,
 				36741BFD291E4FDB00A85AAE /* DownloadPreferencePane.swift in Sources */,
 				E84E4F542B333864003F3959 /* PlatformsListView.swift in Sources */,
@@ -1054,7 +1086,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1074,7 +1106,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1086,7 +1118,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1249,7 +1281,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1307,7 +1339,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 12.0;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -1326,7 +1358,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1338,7 +1370,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
@@ -1354,7 +1386,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 23;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1366,7 +1398,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.4.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
@@ -1464,6 +1496,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kinoroy/LibFido2Swift.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 		CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/xcodereleases/data";
@@ -1525,7 +1565,15 @@
 			repositoryURL = "https://github.com/sindresorhus/DockProgress";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 3.2.0;
+				minimumVersion = 4.3.1;
+			};
+		};
+		E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.4;
 			};
 		};
 		E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
@@ -1534,14 +1582,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.5;
-			};
-		};
-		E891A1C22B43ACA400A1B9D1 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/sparkle-project/Sparkle";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.5.2;
 			};
 		};
 		E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */ = {
@@ -1563,6 +1603,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		334A932B2CA885A400A5E079 /* LibFido2Swift */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LibFido2Swift;
+		};
 		CA9FF86C25951C6E00E47BAF /* XCModel */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CA9FF86B25951C6E00E47BAF /* XCRemoteSwiftPackageReference "data" */;
@@ -1607,15 +1651,19 @@
 			package = E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */;
 			productName = DockProgress;
 		};
+		E83FDC432CBB649100679C6B /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
+		};
 		E84E4F562B335094003F3959 /* OrderedCollections */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */;
 			productName = OrderedCollections;
 		};
-		E891A1C32B43ACF900A1B9D1 /* Sparkle */ = {
+		E862D43A2CC8B26F00BAA376 /* SRP */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E891A1C22B43ACA400A1B9D1 /* XCRemoteSwiftPackageReference "Sparkle" */;
-			productName = Sparkle;
+			productName = SRP;
 		};
 		E8C0EB19291EF43E0081528A /* XcodesKit */ = {
 			isa = XCSwiftPackageProductDependency;

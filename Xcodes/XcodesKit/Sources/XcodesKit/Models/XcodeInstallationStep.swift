@@ -9,6 +9,7 @@ import Foundation
 
 // A numbered step
 public enum XcodeInstallationStep: Equatable, CustomStringConvertible {
+    case authenticating
     case downloading(progress: Progress)
     case unarchiving
     case moving(destination: String)
@@ -22,6 +23,8 @@ public enum XcodeInstallationStep: Equatable, CustomStringConvertible {
 
     public var message: String {
         switch self {
+        case .authenticating:
+            return localizeString("Authenticating")
         case .downloading:
             return localizeString("Downloading")
         case .unarchiving:
@@ -39,16 +42,17 @@ public enum XcodeInstallationStep: Equatable, CustomStringConvertible {
 
     public var stepNumber: Int {
         switch self {
-        case .downloading:      return 1
-        case .unarchiving:      return 2
-        case .moving:           return 3
-        case .trashingArchive:  return 4
-        case .checkingSecurity: return 5
-        case .finishing:        return 6
+        case .authenticating:   return 1
+        case .downloading:      return 2
+        case .unarchiving:      return 3
+        case .moving:           return 4
+        case .trashingArchive:  return 5
+        case .checkingSecurity: return 6
+        case .finishing:        return 7
         }
     }
 
-    public var stepCount: Int { 6 }
+    public var stepCount: Int { 7 }
 }
 
 func localizeString(_ key: String, comment: String = "") -> String {

@@ -11,7 +11,8 @@ import XcodesKit
 
 struct PlatformsView: View {
     @EnvironmentObject var appState: AppState
-    
+    @AppStorage("selectedRuntimeArchitecture") private var selectedRuntimeArchitecture: RuntimeArchitecture = .arm64
+
     let xcode: Xcode
  
     var body: some View {
@@ -19,17 +20,50 @@ struct PlatformsView: View {
         let builds = xcode.sdks?.allBuilds()
         let runtimes = builds?.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
-                $0.sdkBuildUpdate == sdkBuild
+                $0.sdkBuildUpdate?.contains(sdkBuild) ?? false &&
+                ($0.architectures?.isEmpty ?? true ||
+                $0.architectures?.contains(selectedRuntimeArchitecture.rawValue) ?? false)
             }
         }
-
-        ForEach(runtimes ?? [], id: \.simulatorVersion.buildUpdate) { runtime in
-            runtimeView(runtime: runtime)
-                .frame(minWidth: 200)
-                .padding()
-                .background(.quinary)
-                .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+        
+        let architectures = Set((runtimes ?? []).flatMap { $0.architectures ?? [] })
+        
+        VStack {
+            HStack {
+                Text("Platforms")
+                    .font(.title3)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                if !architectures.isEmpty {
+                    Spacer()
+                    Button {
+                        switch selectedRuntimeArchitecture {
+                        case .arm64: selectedRuntimeArchitecture = .x86_64
+                        case .x86_64: selectedRuntimeArchitecture = .arm64
+                        }
+                    } label: {
+                        switch selectedRuntimeArchitecture {
+                        case .arm64:
+                            Label(selectedRuntimeArchitecture.displayValue, systemImage: "m4.button.horizontal")
+                                .labelStyle(.trailingIcon)
+                        case .x86_64:
+                            Label(selectedRuntimeArchitecture.displayValue, systemImage: "cpu.fill")
+                                .labelStyle(.trailingIcon)
+                        }
+                    }
+                }
+            }
+            
+            ForEach(runtimes ?? [], id: \.identifier) { runtime in
+                runtimeView(runtime: runtime)
+                    .frame(minWidth: 200)
+                    .padding()
+                    .background(.quinary)
+                    .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
+            }
         }
+        .xcodesBackground()
+        
+
     }
     
     @ViewBuilder
@@ -39,34 +73,37 @@ struct PlatformsView: View {
                 runtime.icon()
                 Text("\(runtime.visibleIdentifier)")
                     .font(.headline)
+                ForEach(runtime.architectures ?? [], id: \.self) { architecture in
+                    TagView(text: architecture)
+                }
                 pathIfAvailable(xcode: xcode, runtime: runtime)
+					
+					if runtime.installState == .notInstalled {
+						// TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
+						if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
+							EmptyView()
+						} else {
+							HStack {
+								Spacer()
+								DownloadRuntimeButton(runtime: runtime)
+							}
+						}
+					}
+					
                 Spacer()
                 Text(runtime.downloadFileSizeString)
                     .font(.subheadline)
+						  .frame(width: 70, alignment: .trailing)
             }
-            switch runtime.installState {
-            case .installed:
-                EmptyView()
-            case .notInstalled:
-                // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
-                if let path = appState.runtimeInstallPath(xcode: xcode, runtime: runtime) {
-                    EmptyView()
-                } else {
-                    HStack {
-                        Spacer()
-                        DownloadRuntimeButton(runtime: runtime)
-                    }
-                }
-                
-            case .installing(let installationStep):
-                HStack(alignment: .top, spacing: 5){
-                    RuntimeInstallationStepDetailView(installationStep: installationStep)
-                        .fixedSize(horizontal: false, vertical: true)
-                    Spacer()
-                    CancelRuntimeInstallButton(runtime: runtime)
-                }
-                
-            }
+			  
+			  if case let .installing(installationStep) = runtime.installState {
+				  HStack(alignment: .top, spacing: 5){
+					  RuntimeInstallationStepDetailView(installationStep: installationStep)
+						  .fixedSize(horizontal: false, vertical: true)
+					  Spacer()
+					  CancelRuntimeInstallButton(runtime: runtime)
+				  }
+			  }
         }
     }
     

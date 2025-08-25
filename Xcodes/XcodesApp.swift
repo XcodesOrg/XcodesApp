@@ -11,7 +11,7 @@ struct XcodesApp: App {
     @StateObject private var updater = ObservableUpdater()
 
     var body: some Scene {
-        WindowGroup("Xcodes") {
+        Window("Xcodes", id: "main") {
             MainWindow()
                 .environmentObject(appState)
                 .environmentObject(updater)
@@ -51,19 +51,19 @@ struct XcodesApp: App {
 
             CommandGroup(replacing: CommandGroupPlacement.help) {
                 Button("Menu.GitHubRepo") {
-                    let xcodesRepoURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!
+                    let xcodesRepoURL = URL(string: "https://github.com/XcodesOrg/XcodesApp/")!
                     openURL(xcodesRepoURL)
                 }
 
                 Divider()
 
                 Button("Menu.ReportABug") {
-                    let bugReportURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/issues/new?assignees=&labels=bug&template=bug_report.md&title=")!
+                    let bugReportURL = URL(string: "https://github.com/XcodesOrg/XcodesApp/issues/new?assignees=&labels=bug&template=bug_report.md&title=")!
                     openURL(bugReportURL)
                 }
 
                 Button("Menu.RequestNewFeature") {
-                    let featureRequestURL = URL(string: "https://github.com/RobotsAndPencils/XcodesApp/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=")!
+                    let featureRequestURL = URL(string: "https://github.com/XcodesOrg/XcodesApp/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=")!
                     openURL(featureRequestURL)
                 }
             }
@@ -166,12 +166,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_: Notification) {}
+    
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        return Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
+    }
 }
 
 func localizeString(_ key: String, comment: String = "") -> String {
-    if #available(macOS 12, *) {
-        return String(localized: String.LocalizationValue(key))
-    } else {
-        return NSLocalizedString(key, comment: comment)
-    }
+    return String(localized: String.LocalizationValue(key))
 }

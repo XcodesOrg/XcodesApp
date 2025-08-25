@@ -16,11 +16,10 @@ struct MainWindow: View {
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
-  
+
     var body: some View {
         NavigationSplitViewWrapper {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly)
-                .frame(minWidth: 250)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
                     Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
@@ -42,7 +41,6 @@ struct MainWindow: View {
                     UnselectedView()
                 }
             }
-            .padding()
             .toolbar {
                 ToolbarItemGroup {
                     Button(action: { appState.presentedSheet = .signIn }, label: {
@@ -56,11 +54,7 @@ struct MainWindow: View {
                         .help("PreferencesDescription")
                     } else {
                         Button(action: {
-                            if #available(macOS 13, *) {
-                                NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                            } else {
-                                NSApp.sendAction(Selector(("showPreferencesWindow:")), to: nil, from: nil)
-                            }
+                            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
                         }, label: {
                             Label("Preferences", systemImage: "gearshape")
                         })
@@ -81,6 +75,9 @@ struct MainWindow: View {
                     .environmentObject(appState)
             case .twoFactor(let secondFactorData):
                 secondFactorView(secondFactorData)
+                    .environmentObject(appState)
+            case .securityKeyTouchToConfirm:
+                SignInSecurityKeyTouchView(isPresented: $appState.presentedSheet.isNotNil)
                     .environmentObject(appState)
             }
         }
@@ -113,6 +110,8 @@ struct MainWindow: View {
             SignInSMSView(isPresented: $appState.presentedSheet.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsPendingChoice:
             SignInPhoneListView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+        case .securityKey:
+            SignInSecurityKeyPinView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         }
     }
 
