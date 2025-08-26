@@ -29,8 +29,8 @@ struct XcodeListViewRow: View {
                         Image(systemName: "m4.button.horizontal")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
-                            .accessibility(label: Text("AppleSilicon"))
-                            .help("AppleSilicon.help")
+                            .accessibility(label: Text("Apple Silicon"))
+                            .help("Apple Silicon")
                     }
                 }
 
