@@ -149,7 +149,7 @@ class AppStateUpdateTests: XCTestCase {
         )
         
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
-        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[Version("12.4.0+12D4e")!, Version("12.4.0-RC+12D4e")!]])
+        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[XcodeID(version: Version("12.4.0+12D4e")!), XcodeID(version: Version("12.4.0-RC+12D4e")!)]])
     }
     
     func testIdenticalBuilds_DoNotMergeReleaseVersions() {
@@ -234,7 +234,7 @@ class AppStateUpdateTests: XCTestCase {
         )
         
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
-        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[Version("12.4.0+12D4e")!, Version("12.4.0-RC+12D4e")!]])
+        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[XcodeID(version: Version("12.4.0+12D4e")!), XcodeID(version: Version("12.4.0-RC+12D4e")!)]])
     }
     
     func testIdenticalBuilds_AppleDataSource_DoNotMergeVersionsWithoutBuildIdentifiers() {
