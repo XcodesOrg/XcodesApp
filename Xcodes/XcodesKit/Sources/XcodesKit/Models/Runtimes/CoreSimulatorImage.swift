@@ -37,8 +37,10 @@ public struct CoreSimulatorImage: Decodable, Identifiable, Equatable {
 
 public struct CoreSimulatorRuntimeInfo: Decodable {
     public let build: String
+    public let supportedArchitectures: [Architecture]?
     
-    public init(build: String) {
+    public init(build: String, supportedArchitectures: [Architecture]? = nil) {
         self.build = build
+        self.supportedArchitectures = supportedArchitectures
     }
 }

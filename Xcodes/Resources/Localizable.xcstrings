@@ -2083,6 +2083,17 @@
         }
       }
     },
+    "Alert.Install.Error.Need.Xcode26" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        }
+      }
+    },
     "Alert.Install.Error.Title" : {
       "comment" : "Install",
       "extractionState" : "manual",
