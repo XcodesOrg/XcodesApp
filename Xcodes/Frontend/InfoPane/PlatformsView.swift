@@ -43,10 +43,10 @@ struct PlatformsView: View {
                     } label: {
                         switch selectedRuntimeArchitecture {
                         case .arm64:
-                            Label(selectedRuntimeArchitecture.rawValue, systemImage: "m4.button.horizontal")
+                            Label(selectedRuntimeArchitecture.displayString, systemImage: "m4.button.horizontal")
                                 .labelStyle(.trailingIcon)
                         case .x86_64:
-                            Label(selectedRuntimeArchitecture.rawValue, systemImage: "cpu.fill")
+                            Label(selectedRuntimeArchitecture.displayString, systemImage: "cpu.fill")
                                 .labelStyle(.trailingIcon)
                         }
                     }
@@ -74,7 +74,7 @@ struct PlatformsView: View {
                 Text("\(runtime.visibleIdentifier)")
                     .font(.headline)
                 ForEach(runtime.architectures ?? [], id: \.self) { architecture in
-                    TagView(text: architecture.rawValue)
+                    TagView(text: architecture.displayString)
                 }
                 pathIfAvailable(xcode: xcode, runtime: runtime)
                 

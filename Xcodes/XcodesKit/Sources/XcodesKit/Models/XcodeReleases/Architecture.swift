@@ -15,6 +15,15 @@ public enum Architecture: String, Codable, Equatable, Hashable, Identifiable {
     case arm64 = "arm64"
     /// The X86\_64 architecture (64-bit Intel)
     case x86_64 = "x86_64"
+    
+    public var displayString: String {
+        switch self {
+        case .arm64:
+            return "Apple Silicon"
+        case .x86_64:
+            return "Intel"
+        }
+    }
 }
 
 extension Array where Element == Architecture {
