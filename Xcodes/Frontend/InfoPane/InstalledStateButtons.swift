@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Version
-import XCModel
+import XcodesKit
 import Path
 
 struct InstalledStateButtons: View {

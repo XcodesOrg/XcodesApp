@@ -61,7 +61,22 @@ extension AppState {
             // only selected xcodes > 16.1 beta 3 can download runtimes via a xcodebuild -downloadPlatform version
             // only Runtimes coming from cryptexDiskImage can be downloaded via xcodebuild
             if selectedXcode.version > Version(major: 16, minor: 0, patch: 0) {
-                downloadRuntimeViaXcodeBuild(runtime: runtime)
+                
+                if runtime.architectures?.isAppleSilicon ?? false {
+                    if selectedXcode.version > Version(major: 26, minor: 0, patch: 0) {
+                        downloadRuntimeViaXcodeBuild(runtime: runtime)
+                    } else {
+                        // not supported
+                        Logger.appState.error("Trying to download a runtime we can't download")
+                        DispatchQueue.main.async {
+                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: localizeString("Alert.Install.Error.Need.Xcode26"))
+                        }
+                        return
+                    }
+                    
+                } else {
+                    downloadRuntimeViaXcodeBuild(runtime: runtime)
+                }
             } else {
                 // not supported
                 Logger.appState.error("Trying to download a runtime we can't download")
@@ -77,7 +92,8 @@ extension AppState {
     
     func downloadRuntimeViaXcodeBuild(runtime: DownloadableRuntime) {
         
-        let downloadRuntimeTask = Current.shell.downloadRuntime(runtime.platform.shortName, runtime.simulatorVersion.buildUpdate)
+        let downloadRuntimeTask = Current.shell.downloadRuntime(runtime.platform.shortName, runtime.simulatorVersion.buildUpdate, runtime.architectures?.isAppleSilicon ?? false ? Architecture.arm64.rawValue : nil)
+        
         runtimePublishers[runtime.identifier] = Task { [weak self] in
             guard let self = self else { return }
             do {
@@ -258,7 +274,10 @@ extension AppState {
     }
     
     func coreSimulatorInfo(runtime: DownloadableRuntime) -> CoreSimulatorImage? {
-        return installedRuntimes.filter({ $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate }).first
+        return installedRuntimes.filter({
+            $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate &&
+            ((runtime.architectures ?? []).isEmpty ? true :
+            $0.runtimeInfo.supportedArchitectures == runtime.architectures )}).first
     }
     
     func deleteRuntime(runtime: DownloadableRuntime) async throws {

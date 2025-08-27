@@ -5,6 +5,7 @@ struct MainToolbarModifier: ViewModifier {
     @Binding var category: XcodeListCategory
     @Binding var isInstalledOnly: Bool
     @Binding var isShowingInfoPane: Bool
+    @Binding var architectures: XcodeListArchitecture
 
     func body(content: Content) -> some View {
         content
@@ -23,6 +24,24 @@ struct MainToolbarModifier: ViewModifier {
             .help("RefreshDescription")
             Spacer()
 
+            Button(action: {
+                switch architectures {
+                case .universal: architectures = .appleSilicon
+                case .appleSilicon: architectures = .universal
+                }
+            }) {
+                switch architectures {
+                case .universal:
+                    Label("Universal", systemImage: "cpu.fill")
+                case .appleSilicon:
+                        Label("Apple Silicon", systemImage: "m4.button.horizontal")
+                            .labelStyle(.trailingIcon)
+                            .foregroundColor(.accentColor)
+                }
+            }
+            .help("FilterAvailableDescription")
+            .disabled(architectures.isManaged)
+            
             Button(action: {
                 switch category {
                 case .all: category = .release
@@ -65,13 +84,15 @@ extension View {
     func mainToolbar(
         category: Binding<XcodeListCategory>,
         isInstalledOnly: Binding<Bool>,
-        isShowingInfoPane: Binding<Bool>
+        isShowingInfoPane: Binding<Bool>,
+        architecture: Binding<XcodeListArchitecture>
     ) -> some View {
         modifier(
             MainToolbarModifier(
                 category: category,
                 isInstalledOnly: isInstalledOnly,
-                isShowingInfoPane: isShowingInfoPane
+                isShowingInfoPane: isShowingInfoPane,
+                architectures: architecture
             )
         )
     }

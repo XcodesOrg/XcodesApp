@@ -502,7 +502,7 @@ extension AppState {
             self.allXcodes[index].installState = .installing(step)
             
             let xcode = self.allXcodes[index]
-            Current.notificationManager.scheduleNotification(title: xcode.id.appleDescription, body: step.description, category: .normal)
+            Current.notificationManager.scheduleNotification(title: xcode.version.major.description + "." + xcode.version.appleDescription, body: step.description, category: .normal)
         }
     }
     

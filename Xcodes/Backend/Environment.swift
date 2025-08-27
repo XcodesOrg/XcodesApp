@@ -196,7 +196,7 @@ public struct Shell {
         return Process.run(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
     }
     
-    public var downloadRuntime: (String, String) -> AsyncThrowingStream<Progress, Error> = { platform, version in
+    public var downloadRuntime: (String, String, String?) -> AsyncThrowingStream<Progress, Error> = { platform, version, architecture in
         return AsyncThrowingStream<Progress, Error> { continuation in
             Task {
                 // Assume progress will not have data races, so we manually opt-out isolation checks.
@@ -204,7 +204,7 @@ public struct Shell {
                 progress.kind = .file
                 progress.fileOperationKind = .downloading
                 
-                let process = Process()
+                var process = Process()
                 let xcodeBuildPath = Path.root.usr.bin.join("xcodebuild").url
                 
                 process.executableURL = xcodeBuildPath
@@ -214,6 +214,13 @@ public struct Shell {
                     "-buildVersion",
                     "\(version)"
                 ]
+                
+                if let architecture {
+                    process.arguments?.append(contentsOf: [
+                        "-architectureVariant",
+                        "\(architecture)"
+                    ])
+                }
                 
                 let stdOutPipe = Pipe()
                 process.standardOutput = stdOutPipe

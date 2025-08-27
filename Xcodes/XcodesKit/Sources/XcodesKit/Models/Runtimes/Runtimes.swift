@@ -12,7 +12,7 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     public let category: Category
     public let simulatorVersion: SimulatorVersion
     public let source: String?
-    public let architectures: [String]?
+    public let architectures: [Architecture]?
     public let dictionaryVersion: Int
     public let contentType: ContentType
     public let platform: Platform
@@ -170,6 +170,7 @@ public struct InstalledRuntime: Decodable {
     let state: String
     let version: String
     let sizeBytes: Int?
+    let supportedArchitectures: [Architecture]?
 }
 
 extension InstalledRuntime {

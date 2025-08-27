@@ -11,7 +11,7 @@ import XcodesKit
 
 struct PlatformsView: View {
     @EnvironmentObject var appState: AppState
-    @AppStorage("selectedRuntimeArchitecture") private var selectedRuntimeArchitecture: RuntimeArchitecture = .arm64
+    @AppStorage("selectedRuntimeArchitecture") private var selectedRuntimeArchitecture: Architecture = .arm64
 
     let xcode: Xcode
  
@@ -22,7 +22,7 @@ struct PlatformsView: View {
             appState.downloadableRuntimes.filter {
                 $0.sdkBuildUpdate?.contains(sdkBuild) ?? false &&
                 ($0.architectures?.isEmpty ?? true ||
-                $0.architectures?.contains(selectedRuntimeArchitecture.rawValue) ?? false)
+                $0.architectures?.contains(selectedRuntimeArchitecture) ?? false)
             }
         }
         
@@ -43,10 +43,10 @@ struct PlatformsView: View {
                     } label: {
                         switch selectedRuntimeArchitecture {
                         case .arm64:
-                            Label(selectedRuntimeArchitecture.displayValue, systemImage: "m4.button.horizontal")
+                            Label(selectedRuntimeArchitecture.displayString, systemImage: "m4.button.horizontal")
                                 .labelStyle(.trailingIcon)
                         case .x86_64:
-                            Label(selectedRuntimeArchitecture.displayValue, systemImage: "cpu.fill")
+                            Label(selectedRuntimeArchitecture.displayString, systemImage: "cpu.fill")
                                 .labelStyle(.trailingIcon)
                         }
                     }
@@ -74,21 +74,21 @@ struct PlatformsView: View {
                 Text("\(runtime.visibleIdentifier)")
                     .font(.headline)
                 ForEach(runtime.architectures ?? [], id: \.self) { architecture in
-                    TagView(text: architecture)
+                    TagView(text: architecture.displayString)
                 }
                 pathIfAvailable(xcode: xcode, runtime: runtime)
-					
-					if runtime.installState == .notInstalled {
-						// TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
-						if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
-							EmptyView()
-						} else {
-							HStack {
-								Spacer()
-								DownloadRuntimeButton(runtime: runtime)
-							}
-						}
-					}
+                
+                if runtime.installState == .notInstalled {
+                    // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
+                    if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
+                        EmptyView()
+                    } else {
+                        HStack {
+                            Spacer()
+                            DownloadRuntimeButton(runtime: runtime)
+                        }
+                    }
+                }
 					
                 Spacer()
                 Text(runtime.downloadFileSizeString)

@@ -1,12 +1,17 @@
 import Foundation
 import Version
 import Path
+import XcodesKit
 
 /// A version of Xcode that's already installed
 public struct InstalledXcode: Equatable {
     public let path: Path
+    public let xcodeID: XcodeID
+    
     /// Composed of the bundle short version from Info.plist and the product build version from version.plist
-    public let version: Version
+    public var version: Version {
+        return xcodeID.version
+    }
 
     public init?(path: Path) {
         self.path = path
@@ -31,12 +36,21 @@ public struct InstalledXcode: Equatable {
         else if infoPlist.bundleIconName == "XcodeBeta", !prereleaseIdentifiers.contains("beta") {
             prereleaseIdentifiers = ["beta"]
         }
-
-        self.version = Version(major: bundleVersion.major,
+        
+        let archsString = try? XcodesKit.Current.shell.archs(path.url.appending(path: "Contents/MacOS/Xcode")).out
+        
+        let architectures = archsString?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .split(separator: " ")
+            .compactMap { Architecture(rawValue: String($0)) }
+        
+        let version = Version(major: bundleVersion.major,
                                minor: bundleVersion.minor,
                                patch: bundleVersion.patch,
                                prereleaseIdentifiers: prereleaseIdentifiers,
                                buildMetadataIdentifiers: [versionPlist.productBuildVersion].compactMap { $0 })
+        
+        self.xcodeID = XcodeID(version: version, architectures: architectures)
     }
 }
 

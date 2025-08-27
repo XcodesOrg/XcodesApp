@@ -1,11 +1,12 @@
 import Foundation
 import Version
-import struct XCModel.SDKs
-import struct XCModel.Compilers
+import XcodesKit
 
 /// A version of Xcode that's available for installation
 public struct AvailableXcode: Codable {
-    public var version: Version
+    public var version: Version {
+        return xcodeID.version
+    }
     public let url: URL
     public let filename: String
     public let releaseDate: Date?
@@ -14,9 +15,11 @@ public struct AvailableXcode: Codable {
     public let sdks: SDKs?
     public let compilers: Compilers?
     public let fileSize: Int64?
+    public let architectures: [Architecture]?
     public var downloadPath: String {
         return url.path
     }
+    public var xcodeID: XcodeID
 
     public init(
         version: Version,
@@ -27,9 +30,9 @@ public struct AvailableXcode: Codable {
         releaseNotesURL: URL? = nil,
         sdks: SDKs? = nil,
         compilers: Compilers? = nil,
-        fileSize: Int64? = nil
+        fileSize: Int64? = nil,
+        architectures: [Architecture]? = nil
     ) {
-        self.version =  version
         self.url = url
         self.filename = filename
         self.releaseDate = releaseDate
@@ -38,5 +41,7 @@ public struct AvailableXcode: Codable {
         self.sdks = sdks
         self.compilers = compilers
         self.fileSize = fileSize
+        self.architectures = architectures
+        self.xcodeID = XcodeID(version: version, architectures: architectures)
     }
 }

@@ -3,7 +3,6 @@ import Foundation
 import Path
 import Version
 import SwiftSoup
-import struct XCModel.Xcode
 import AppleAPI
 import XcodesKit
 
@@ -211,8 +210,8 @@ extension AppState {
     private func xcodeReleases() -> AnyPublisher<[AvailableXcode], Error> {
         Current.network.dataTask(with: URLRequest(url: URL(string: "https://xcodereleases.com/data.json")!))
             .map(\.data)
-            .decode(type: [XCModel.Xcode].self, decoder: JSONDecoder())
-            .map { xcReleasesXcodes in  
+            .decode(type: [XcodeRelease].self, decoder: JSONDecoder())
+            .map { xcReleasesXcodes in
                 let xcodes = xcReleasesXcodes.compactMap { xcReleasesXcode -> AvailableXcode? in
                     guard
                         let downloadURL = xcReleasesXcode.links?.download?.url,
@@ -233,7 +232,8 @@ extension AppState {
                         requiredMacOSVersion: xcReleasesXcode.requires,
                         releaseNotesURL: xcReleasesXcode.links?.notes?.url,
                         sdks: xcReleasesXcode.sdks,
-                        compilers: xcReleasesXcode.compilers
+                        compilers: xcReleasesXcode.compilers,
+                        architectures: xcReleasesXcode.architectures
                     )
                 }
                 return xcodes

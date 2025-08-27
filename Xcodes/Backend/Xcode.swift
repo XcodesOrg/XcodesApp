@@ -1,14 +1,30 @@
 import AppKit
 import Foundation
 import Version
-import struct XCModel.SDKs
-import struct XCModel.Compilers
 import Path
+import XcodesKit
+
+public struct XcodeID: Codable, Hashable, Identifiable {
+    public let version: Version
+    public let architectures: [Architecture]?
+    
+    public var id: String {
+        let architectures = architectures?.map { $0.rawValue}.joined() ?? ""
+        return version.description + architectures
+    }
+    
+    public init(version: Version, architectures: [Architecture]? = nil) {
+        self.version = version
+        self.architectures = architectures
+    }
+}
 
 struct Xcode: Identifiable, CustomStringConvertible {
-    let version: Version
+    var version: Version {
+        return id.version
+    }
     /// Other Xcode versions that have the same build identifier
-    let identicalBuilds: [Version]
+    let identicalBuilds: [XcodeID]
     var installState: XcodeInstallState
     let selected: Bool
     let icon: NSImage?
@@ -18,10 +34,12 @@ struct Xcode: Identifiable, CustomStringConvertible {
     let sdks: SDKs?
     let compilers: Compilers?
     let downloadFileSize: Int64?
+    let architectures: [Architecture]?
+    let id: XcodeID
     
     init(
         version: Version,
-        identicalBuilds: [Version] = [],
+        identicalBuilds: [XcodeID] = [],
         installState: XcodeInstallState,
         selected: Bool,
         icon: NSImage?,
@@ -30,9 +48,9 @@ struct Xcode: Identifiable, CustomStringConvertible {
         releaseDate: Date? = nil,
         sdks: SDKs? = nil,
         compilers: Compilers? = nil,
-        downloadFileSize: Int64? = nil
+        downloadFileSize: Int64? = nil,
+        architectures: [Architecture]? = nil
     ) {
-        self.version = version
         self.identicalBuilds = identicalBuilds
         self.installState = installState
         self.selected = selected
@@ -43,9 +61,9 @@ struct Xcode: Identifiable, CustomStringConvertible {
         self.sdks = sdks
         self.compilers = compilers
         self.downloadFileSize = downloadFileSize
+        self.architectures = architectures
+        self.id = XcodeID(version: version, architectures: architectures)
     }
-    
-    var id: Version { version }
     
     var description: String {
         version.appleDescription
