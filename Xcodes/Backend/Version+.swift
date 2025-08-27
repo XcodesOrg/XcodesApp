@@ -31,4 +31,9 @@ public extension Version {
 
     var isPrerelease: Bool { prereleaseIdentifiers.isEmpty == false }
     var isNotPrerelease: Bool { prereleaseIdentifiers.isEmpty == true }
+    
+    /// Returns a new Version instance without any `prereleaseIdentifiers` or `buildMetadataIdentifiers`
+    func withoutIdentifiers() -> Version {
+        Version(major, minor, patch)
+    }
 }

@@ -46,7 +46,8 @@ struct MainToolbarModifier: ViewModifier {
                 switch category {
                 case .all: category = .release
                 case .release: category = .beta
-                case .beta: category = .all
+                case .beta: category = .releasePlusNewBetas
+                case .releasePlusNewBetas: category = .all
                 }
             }) {
                 switch category {
@@ -58,6 +59,10 @@ struct MainToolbarModifier: ViewModifier {
                             .foregroundColor(.accentColor)
                 case .beta:
                     Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        .labelStyle(.trailingIcon)
+                        .foregroundColor(.accentColor)
+                case .releasePlusNewBetas:
+                    Label("ReleasePlusNewBetas", systemImage: "line.horizontal.3.decrease.circle.fill")
                         .labelStyle(.trailingIcon)
                         .foregroundColor(.accentColor)
                 }
