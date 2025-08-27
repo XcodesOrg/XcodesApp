@@ -1547,7 +1547,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+            "value" : "Tem certeza que deseja interromper a instalação do Xcode %@?"
           }
         },
         "ru" : {
@@ -1798,7 +1798,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete"
+            "value" : "Remover"
           }
         },
         "ru" : {
@@ -1923,7 +1923,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to delete %@?"
+            "value" : "Tem certeza que deseja remover %@?"
           }
         },
         "ru" : {
@@ -2048,7 +2048,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+            "value" : "A Apple oferece suporte para download somente nos sistemas operacionais iOS 16.0+, watchOS 9.0+, tvOS 16+ e visionOS 1.0+ com Xcode 16.1+. Baixe, ative e tente novamente."
           }
         },
         "ru" : {
@@ -2173,7 +2173,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+            "value" : "A Apple oferece suporte ao download de runtimes do Apple Silicon somente quando o Xcode 26+ estiver selecionado. Selecione e tente baixar novamente ou baixe a compilação universal."
           }
         },
         "ru" : {
@@ -3676,7 +3676,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not find file \"%@\"."
+            "value" : "Não foi possível encontrar o arquivo \"%@\"."
           }
         },
         "ru" : {
@@ -4786,7 +4786,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Authenticating"
+            "value" : "Autenticando"
           }
         },
         "ru" : {
@@ -6736,7 +6736,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copy URL"
+            "value" : "Copiar URL"
           }
         },
         "ru" : {
@@ -6860,7 +6860,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Criar Symlink como Xcode.app"
+            "value" : "Criar link simbólico como Xcode.app"
           }
         },
         "ru" : {
@@ -6984,7 +6984,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create Symlink as Xcode-Beta.app"
+            "value" : "Criar link simbólico como Xcode-Beta.app"
           }
         },
         "ru" : {
@@ -8595,7 +8595,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error"
+            "value" : "Erro"
           }
         },
         "ru" : {
@@ -8714,7 +8714,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Experiments"
+            "value" : "Experimentos"
           }
         },
         "ru" : {
@@ -10686,7 +10686,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install Apple Silicon"
+            "value" : "Instalar Apple Silicon"
           }
         },
         "ru" : {
@@ -10804,7 +10804,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install Universal"
+            "value" : "Instalar Universal"
           }
         },
         "ru" : {
@@ -13304,7 +13304,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install Directory"
+            "value" : "Instalar diretório"
           }
         },
         "ru" : {
@@ -13552,7 +13552,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+            "value" : "Xcodes procura e instala em um diretório único. Por padrão (e recomendado) é mantido no /Applications. Qualquer mudança onde o Xcode é instalado pode resultar na falha de outros aplicativos/serviços."
           }
         },
         "ru" : {
@@ -13795,7 +13795,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Licensa"
+            "value" : "Licença"
           }
         },
         "ru" : {
@@ -15405,7 +15405,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Requerir uma nova funcionalidade"
+            "value" : "Solicitar uma nova funcionalidade"
           }
         },
         "ru" : {
@@ -15529,7 +15529,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Misc"
+            "value" : "Diversos"
           }
         },
         "ru" : {
@@ -16766,7 +16766,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sua conta não possui nenhum telefone confiável, mas é necessário para autenticação de dois fatores.\n\nVer https://support.apple.com/en-ca/HT204915."
+            "value" : "Sua conta não possui nenhum telefone confiável, mas é necessário para autenticação de dois fatores.\n\nVeja https://support.apple.com/en-ca/HT204915."
           }
         },
         "ru" : {
@@ -17258,7 +17258,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
+            "value" : "Quando selecionado, será mantido o nome com a versão ex. Xcode-13.4.1.app"
           }
         },
         "ru" : {
@@ -17744,7 +17744,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open In Rosetta"
+            "value" : "Abrir com Rosetta"
           }
         },
         "ru" : {
@@ -18110,7 +18110,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Perform post-install steps"
+            "value" : "Executar passos pós-instalação"
           }
         },
         "ru" : {
@@ -18358,7 +18358,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PIN not set"
+            "value" : "PIN não definido"
           }
         },
         "ru" : {
@@ -18482,7 +18482,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Platforms"
+            "value" : "Plataformas"
           }
         },
         "ru" : {
@@ -18606,7 +18606,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Installed Platforms"
+            "value" : "Plataformas instaladas"
           }
         },
         "ru" : {
@@ -18731,7 +18731,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Below are a list of platforms that are installed on this machine. "
+            "value" : "Abaixo contém uma lista de plataformas que estão instalada nesse computador."
           }
         },
         "ru" : {
@@ -20457,7 +20457,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Insert your physical security key and enter the PIN"
+            "value" : "Insira sua chave de segurança física e digite o PIN"
           }
         },
         "ru" : {
@@ -20582,7 +20582,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Touch your security key to verify that it’s you"
+            "value" : "Toque na sua chave de segurança para verificar que é você"
           }
         },
         "ru" : {
@@ -21937,7 +21937,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support Xcodes"
+            "value" : "Ajude o Xcodes"
           }
         },
         "ru" : {
@@ -22061,7 +22061,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terminate App after last window is closed"
+            "value" : "Encerrar o aplicativo quando a ultima janela for fechada"
           }
         },
         "ru" : {
