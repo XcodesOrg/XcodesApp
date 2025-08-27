@@ -1958,6 +1958,130 @@
         }
       }
     },
+    "Alert.Install.AuthError.Message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você não está autorizado. Por favor, entre com o seu ID Apple primeiro."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        }
+      }
+    },
     "Alert.Install.Error.Need.Xcode16.1" : {
       "extractionState" : "manual",
       "localizations" : {

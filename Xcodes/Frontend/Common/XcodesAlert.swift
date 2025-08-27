@@ -7,6 +7,7 @@ enum XcodesAlert: Identifiable {
     case privilegedHelper
     case generic(title: String, message: String)
     case checkMinSupportedVersion(xcode: AvailableXcode, macOS: String)
+    case unauthenticated
 
     var id: Int {
         switch self {
@@ -15,6 +16,7 @@ enum XcodesAlert: Identifiable {
         case .generic: return 3
         case .checkMinSupportedVersion: return 4
         case .cancelRuntimeInstall: return 5
+        case .unauthenticated: return 6
         }
     }
 }
