@@ -6,6 +6,49 @@
         <language>en</language>
         
             
+                
+                    <item>
+                        <title>v3.0.0 Beta 1</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h1 id="30-beta-1">3.0 Beta 1</h1>
+
+<p>Some more changes coming - including a new icon 🎉 
+This will be a prerelease to unblock downloading Xcode 26 Beta 5+ that support multiple architecture variants as well as the variants for the runtimes.</p>
+
+<h2 id="changes">Changes</h2>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>Support Showing and Downloading Multiple Xcode Architectures.  (#743) @MattKiazyk</li>
+  <li>Support Xcode 26 multiple Architectures (#730) @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=ksuIzBBt3XPz9+ny5e3MX5ojqkqIlUSmNKO0ITRgtLqcv/S+HC8wuDl7s7kBua46Rh9Tk3GRnYMmYphQmawSAw== -->
+]]></description>
+                        <pubDate>Wed, 27 Aug 2025 03:35:50 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v3.0.0b32/Xcodes.zip"
+                                    sparkle:version="32"
+                                    sparkle:shortVersionString="3.0.0"
+                                    sparkle:edSignature="ksuIzBBt3XPz9+ny5e3MX5ojqkqIlUSmNKO0ITRgtLqcv/S+HC8wuDl7s7kBua46Rh9Tk3GRnYMmYphQmawSAw=="
+                                    length="18161440"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
         
             
                 
