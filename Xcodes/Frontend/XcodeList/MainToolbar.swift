@@ -28,7 +28,7 @@ struct MainToolbarModifier: ViewModifier {
             let isFiltering = isInstalledOnly || category != .all || architectures != .universal
             Menu("Filter", systemImage: "line.horizontal.3.decrease.circle") {
                 Section {
-                    Toggle("Installed Only", isOn: $isInstalledOnly)
+                    Toggle("Installed Only", systemImage: "arrow.down.app", isOn: $isInstalledOnly)            .labelStyle(.titleAndIcon)
                 }
                 .help("FilterInstalledDescription")
                 
@@ -56,7 +56,7 @@ struct MainToolbarModifier: ViewModifier {
                     .help("FilterArchitecturesDescription")
                     .disabled(architectures.isManaged)
                 }
-                .labelStyle(.trailingIcon)
+                .labelStyle(.titleAndIcon)
             }
             .pickerStyle(.inline)
             .symbolVariant(isFiltering ? .fill : .none)
