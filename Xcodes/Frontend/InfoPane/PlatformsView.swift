@@ -35,21 +35,18 @@ struct PlatformsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 if !architectures.isEmpty {
                     Spacer()
-                    Button {
-                        switch selectedRuntimeArchitecture {
-                        case .arm64: selectedRuntimeArchitecture = .x86_64
-                        case .x86_64: selectedRuntimeArchitecture = .arm64
+                    Picker("Architecture", selection: $selectedRuntimeArchitecture) {
+                        ForEach(Architecture.allCases, id: \.self) { arch in
+                            Label(arch.displayString, systemImage: arch.iconName)
+                                .tag(arch)
                         }
-                    } label: {
-                        switch selectedRuntimeArchitecture {
-                        case .arm64:
-                            Label(selectedRuntimeArchitecture.displayString, systemImage: "m4.button.horizontal")
-                                .labelStyle(.trailingIcon)
-                        case .x86_64:
-                            Label(selectedRuntimeArchitecture.displayString, systemImage: "cpu.fill")
-                                .labelStyle(.trailingIcon)
-                        }
+                        .labelStyle(.trailingIcon)
                     }
+                    .pickerStyle(.menu)
+                    .menuStyle(.button)
+                    .buttonStyle(.borderless)
+                    .fixedSize()
+                    .labelsHidden()
                 }
             }
             

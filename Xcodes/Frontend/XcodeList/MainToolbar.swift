@@ -22,60 +22,44 @@ struct MainToolbarModifier: ViewModifier {
             }
             .keyboardShortcut(KeyEquivalent("r"))
             .help("RefreshDescription")
-            Spacer()
-
-            Button(action: {
-                switch architectures {
-                case .universal: architectures = .appleSilicon
-                case .appleSilicon: architectures = .universal
-                }
-            }) {
-                switch architectures {
-                case .universal:
-                    Label("Universal", systemImage: "cpu.fill")
-                case .appleSilicon:
-                        Label("Apple Silicon", systemImage: "m4.button.horizontal")
-                            .labelStyle(.trailingIcon)
-                            .foregroundColor(.accentColor)
-                }
-            }
-            .help("FilterAvailableDescription")
-            .disabled(architectures.isManaged)
             
-            Button(action: {
-                switch category {
-                case .all: category = .release
-                case .release: category = .beta
-                case .beta: category = .all
+            Spacer()
+            
+            let isFiltering = isInstalledOnly || category != .all || architectures != .universal
+            Menu("Filter", systemImage: "line.horizontal.3.decrease.circle") {
+                Section {
+                    Toggle("Installed Only", isOn: $isInstalledOnly)
                 }
-            }) {
-                switch category {
-                case .all:
-                    Label("All", systemImage: "line.horizontal.3.decrease.circle")
-                case .release:
+                .help("FilterInstalledDescription")
+                
+                Section {
+                    Picker("Category", selection: $category) {
+                        Label("All", systemImage: "line.horizontal.3.decrease.circle")
+                            .tag(XcodeListCategory.all)
                         Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(.trailingIcon)
+                            .tag(XcodeListCategory.release)
+                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .tag(XcodeListCategory.beta)
+                    }
+                }
+                .help("FilterAvailableDescription")
+                .disabled(category.isManaged)
+                
+                Section {
+                    Picker("Architecture", selection: $architectures) {
+                        Label("Universal", systemImage: "cpu.fill")
+                            .tag(XcodeListArchitecture.universal)
+                        Label("Apple Silicon", systemImage: "m4.button.horizontal")
                             .foregroundColor(.accentColor)
-                case .beta:
-                    Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                        .labelStyle(.trailingIcon)
-                        .foregroundColor(.accentColor)
+                            .tag(XcodeListArchitecture.appleSilicon)
+                    }
+                    .help("FilterArchitecturesDescription")
+                    .disabled(architectures.isManaged)
                 }
+                .labelStyle(.trailingIcon)
             }
-            .help("FilterAvailableDescription")
-            .disabled(category.isManaged)
-
-            Button(action: {
-                isInstalledOnly.toggle()
-            }) {
-                if isInstalledOnly {
-                    Label("Filter", systemImage: "arrow.down.app.fill")
-                        .foregroundColor(.accentColor)
-                } else {
-                    Label("Filter", systemImage: "arrow.down.app")
-                }
-            }
-            .help("FilterInstalledDescription")
+            .pickerStyle(.inline)
+            .symbolVariant(isFiltering ? .fill : .none)
         }
     }
 }

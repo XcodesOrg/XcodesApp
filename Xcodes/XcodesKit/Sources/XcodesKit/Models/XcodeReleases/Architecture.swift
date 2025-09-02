@@ -8,7 +8,7 @@
 import Foundation
 
 /// The name of an Architecture.
-public enum Architecture: String, Codable, Equatable, Hashable, Identifiable {
+public enum Architecture: String, Codable, Equatable, Hashable, Identifiable, CaseIterable {
     public var id: Self { self }
     
     /// The Arm64 architecture (Apple Silicon)
@@ -22,6 +22,15 @@ public enum Architecture: String, Codable, Equatable, Hashable, Identifiable {
             return "Apple Silicon"
         case .x86_64:
             return "Intel"
+        }
+    }
+    
+    public var iconName: String {
+        switch self {
+            case .arm64:
+                return "m4.button.horizontal"
+            case .x86_64:
+                return "cpu.fill"
         }
     }
 }
