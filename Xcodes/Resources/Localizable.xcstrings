@@ -13304,7 +13304,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Instalar diretório"
+            "value" : "Diretório de instalação"
           }
         },
         "ru" : {
@@ -21191,7 +21191,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostrar opçao abrir com Rosetta"
+            "value" : "Mostrar opção abrir com Rosetta"
           }
         },
         "ru" : {
