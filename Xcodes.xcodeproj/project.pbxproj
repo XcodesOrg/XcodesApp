@@ -696,6 +696,7 @@
 			buildConfigurationList = CAD2E7BC2449575100113D76 /* Build configuration list for PBXNativeTarget "Xcodes" */;
 			buildPhases = (
 				CAD2E79A2449574E00113D76 /* Sources */,
+				05EACA532E76D21100CF1F9D /* Fix libfido2 structure */,
 				CAD2E79B2449574E00113D76 /* Frameworks */,
 				CA9FF8292594F33200E47BAF /* Generate Acknowledgements */,
 				CAD2E79C2449574E00113D76 /* Resources */,
@@ -845,6 +846,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		05EACA532E76D21100CF1F9D /* Fix libfido2 structure */ = {
+			isa = PBXShellScriptBuildPhase;
+			name = "Fix libfido2 structure";
+			shellPath = /bin/sh;
+			shellScript = (
+				"/Users/genesis/Coding/XCode/OpenSourceContributions/XcodesApp/Scripts/fix_libfido2_framework.sh",
+				"",
+			);
+		};
 		CA9FF8292594F33200E47BAF /* Generate Acknowledgements */ = {
 			isa = PBXShellScriptBuildPhase;
 			inputPaths = (
@@ -861,6 +871,7 @@
 				"xcrun -sdk macosx swift run AcknowledgementsGenerator \\",
 				"    -p \"${SRCROOT}/Xcodes.xcodeproj\" \\",
 				"    -o \"${SRCROOT}/Xcodes/Resources/Licenses.rtf\"",
+				"",
 				"",
 				"",
 			);
@@ -1088,7 +1099,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
@@ -1101,7 +1112,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1354,7 +1365,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = 9NP473RSFG;
@@ -1367,7 +1378,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;
@@ -1383,7 +1394,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 32;
+				CURRENT_PROJECT_VERSION = 33;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = 9NP473RSFG;
@@ -1396,7 +1407,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 5.0;

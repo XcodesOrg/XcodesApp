@@ -146,7 +146,7 @@ struct PlatformsPocket: View {
             .font(.body.weight(.medium))
             .padding(.horizontal)
             .padding(.vertical, 12)
-            .background(.quaternary.opacity(0.75))
+            .background(.quaternary.opacity(0.9))
             .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
         .buttonStyle(.plain)
