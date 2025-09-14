@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		05AB7F172E76C96E007C5CFE /* XcodeMajorVersionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05AB7F162E76C96E007C5CFE /* XcodeMajorVersionRow.swift */; };
+		05AB7F192E76CD8C007C5CFE /* XcodeMinorVersionRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05AB7F182E76CD8C007C5CFE /* XcodeMinorVersionRow.swift */; };
 		15F5B8902CCF09B900705E2F /* CryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5B88F2CCF09B900705E2F /* CryptoKit.framework */; };
 		33027E342CA8C18800CB387C /* LibFido2Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 334A932B2CA885A400A5E079 /* LibFido2Swift */; };
 		3328073F2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */; };
@@ -192,6 +194,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		05AB7F162E76C96E007C5CFE /* XcodeMajorVersionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeMajorVersionRow.swift; sourceTree = "<group>"; };
+		05AB7F182E76CD8C007C5CFE /* XcodeMinorVersionRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeMinorVersionRow.swift; sourceTree = "<group>"; };
 		15F5B88F2CCF09B900705E2F /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
 		3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSecurityKeyPinView.swift; sourceTree = "<group>"; };
 		332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSecurityKeyTouchView.swift; sourceTree = "<group>"; };
@@ -476,6 +480,8 @@
 				CA44901E2463AD34003D8213 /* Tag.swift */,
 				CAE42486259A68A300B8B246 /* XcodeListCategory.swift */,
 				CAD2E7A32449574E00113D76 /* XcodeListView.swift */,
+				05AB7F162E76C96E007C5CFE /* XcodeMajorVersionRow.swift */,
+				05AB7F182E76CD8C007C5CFE /* XcodeMinorVersionRow.swift */,
 				CAFFFED7259CDA5000903F81 /* XcodeListViewRow.swift */,
 				E8D0296E284B029800647641 /* BottomStatusBar.swift */,
 			);
@@ -856,6 +862,7 @@
 				"    -p \"${SRCROOT}/Xcodes.xcodeproj\" \\",
 				"    -o \"${SRCROOT}/Xcodes/Resources/Licenses.rtf\"",
 				"",
+				"",
 			);
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -880,6 +887,7 @@
 				CAFBDC4E2599B33D003DCC5A /* MainToolbar.swift in Sources */,
 				CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */,
 				CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */,
+				05AB7F192E76CD8C007C5CFE /* XcodeMinorVersionRow.swift in Sources */,
 				536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */,
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
@@ -918,6 +926,7 @@
 				CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */,
 				B0403CF02AD92D7B00137C09 /* ReleaseNotesView.swift in Sources */,
 				CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */,
+				05AB7F172E76C96E007C5CFE /* XcodeMajorVersionRow.swift in Sources */,
 				CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */,
 				E832EAF82B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift in Sources */,
 				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
