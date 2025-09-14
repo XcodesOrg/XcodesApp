@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Read(//Users/genesis/Library/Developer/Xcode/DerivedData/Xcodes-fcqivmyigvmwinblrqeyzsbmntec/Build/Products/Debug/Xcodes.app/Contents/Frameworks/**)"
-    ],
-    "deny": [],
-    "ask": []
-  }
-}
