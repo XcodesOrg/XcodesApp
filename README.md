@@ -54,6 +54,7 @@ The following languages are supported because of the following community users!
 |German 🇩🇪|[@drct](https://github.com/drct)|Dutch 🇳🇱|[@jfversluis](https://github/com/jfversluis)|
 |Brazilian Portuguese 🇧🇷|[@brunomunizaf](https://github.com/brunomunizaf)|Polish 🇵🇱|[@jakex7](https://github.com/jakex7)|
 |Catalan|[@ferranabello](https://github.com/ferranabello)|Greek 🇬🇷|[@alladinian](https://github.com/alladinian)
+|Thai 🇹🇭|[@neetrath](https://github.com/neetrath)|
 
 Want to add more languages? Simply create a PR with the updated strings file.
 
