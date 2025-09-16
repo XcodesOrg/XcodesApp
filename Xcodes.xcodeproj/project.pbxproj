@@ -703,6 +703,7 @@
 			buildConfigurationList = CAD2E7BC2449575100113D76 /* Build configuration list for PBXNativeTarget "Xcodes" */;
 			buildPhases = (
 				CAD2E79A2449574E00113D76 /* Sources */,
+				D971F84C2E79102E005F84C9 /* Fix libfido2 structure */,
 				CAD2E79B2449574E00113D76 /* Frameworks */,
 				CA9FF8292594F33200E47BAF /* Generate Acknowledgements */,
 				CAD2E79C2449574E00113D76 /* Resources */,
@@ -875,6 +876,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"${SRCROOT}/Xcodes/AcknowledgementsGenerator\"\nxcrun -sdk macosx swift run AcknowledgementsGenerator \\\n    -p \"${SRCROOT}/Xcodes.xcodeproj\" \\\n    -o \"${SRCROOT}/Xcodes/Resources/Licenses.rtf\"\n";
+		};
+		D971F84C2E79102E005F84C9 /* Fix libfido2 structure */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Fix libfido2 structure";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/Scripts/fix_libfido2_framework.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
