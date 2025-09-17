@@ -139,6 +139,7 @@
 		E8DA461125FAF7FB002E85EF /* NotificationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8DA461025FAF7FB002E85EF /* NotificationsView.swift */; };
 		E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAFBC3FF259AC17F00E2A3D8 /* InstallationStepRowView.swift */; };
 		E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */; };
+		E8EEAD1D2E79174F00BE67E8 /* XcodesIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = E8EEAD1C2E79174F00BE67E8 /* XcodesIcon.icon */; };
 		E8F44A1E296B4CD7002D6592 /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = E8F44A1D296B4CD7002D6592 /* Path */; };
 		E8FA00542B5B109800769CE0 /* com.xcodesorg.xcodesapp.Helper in Copy Helper */ = {isa = PBXBuildFile; fileRef = CA9FF8AE2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = E8FD5726291EE4AC001E004C /* AsyncNetworkService */; };
@@ -341,6 +342,7 @@
 		E8D655BF288DD04700A139C2 /* SelectedActionType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedActionType.swift; sourceTree = "<group>"; };
 		E8DA461025FAF7FB002E85EF /* NotificationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationsView.swift; sourceTree = "<group>"; };
 		E8E98A9525D863D700EC89A0 /* InstallationStepDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationStepDetailView.swift; sourceTree = "<group>"; };
+		E8EEAD1C2E79174F00BE67E8 /* XcodesIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = XcodesIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -560,6 +562,7 @@
 		CABFAA1D2592F7F200380FEE /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E8EEAD1C2E79174F00BE67E8 /* XcodesIcon.icon */,
 				CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */,
 				CAA8588025A2B63A00ACF8C0 /* aria2c */,
 				CAA8588A25A2B69300ACF8C0 /* aria2c.LICENSE */,
@@ -703,6 +706,7 @@
 			buildConfigurationList = CAD2E7BC2449575100113D76 /* Build configuration list for PBXNativeTarget "Xcodes" */;
 			buildPhases = (
 				CAD2E79A2449574E00113D76 /* Sources */,
+				D971F84C2E79102E005F84C9 /* Fix libfido2 structure */,
 				CAD2E79B2449574E00113D76 /* Frameworks */,
 				CA9FF8292594F33200E47BAF /* Generate Acknowledgements */,
 				CAD2E79C2449574E00113D76 /* Resources */,
@@ -837,6 +841,7 @@
 			files = (
 				CAD2E7A92449575000113D76 /* Preview Assets.xcassets in Resources */,
 				9DD4FFCB2B13EC1800C974F1 /* Localizable.xcstrings in Resources */,
+				E8EEAD1D2E79174F00BE67E8 /* XcodesIcon.icon in Resources */,
 				CA9FF83F2594FBC000E47BAF /* Licenses.rtf in Resources */,
 				CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */,
 				CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */,
@@ -875,6 +880,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"${SRCROOT}/Xcodes/AcknowledgementsGenerator\"\nxcrun -sdk macosx swift run AcknowledgementsGenerator \\\n    -p \"${SRCROOT}/Xcodes.xcodeproj\" \\\n    -o \"${SRCROOT}/Xcodes/Resources/Licenses.rtf\"\n";
+		};
+		D971F84C2E79102E005F84C9 /* Fix libfido2 structure */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Fix libfido2 structure";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "${SRCROOT}/Scripts/fix_libfido2_framework.sh\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1092,7 +1115,8 @@
 		CA8FB636256E154800469DA5 /* Test */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = XcodesIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/XcodesTest.entitlements;
 				CODE_SIGN_IDENTITY = "-";
@@ -1344,7 +1368,8 @@
 		CAD2E7BD2449575100113D76 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = XcodesIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/Xcodes.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
@@ -1372,7 +1397,8 @@
 		CAD2E7BE2449575100113D76 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = XcodesIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGNING_SUBJECT_ORGANIZATIONAL_UNIT = ZU6GR6B2FY;
 				CODE_SIGN_ENTITLEMENTS = Xcodes/Resources/Xcodes.entitlements;
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
