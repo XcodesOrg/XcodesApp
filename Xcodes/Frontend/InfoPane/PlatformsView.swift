@@ -11,7 +11,7 @@ import XcodesKit
 
 struct PlatformsView: View {
     @EnvironmentObject var appState: AppState
-    @AppStorage("selectedRuntimeArchitecture") private var selectedRuntimeArchitecture: Architecture = .arm64
+    @AppStorage("selectedRuntimeArchitecture") private var selectedVariant: ArchitectureVariant = .universal
 
     let xcode: Xcode
  
@@ -22,7 +22,9 @@ struct PlatformsView: View {
             appState.downloadableRuntimes.filter {
                 $0.sdkBuildUpdate?.contains(sdkBuild) ?? false &&
                 ($0.architectures?.isEmpty ?? true ||
-                $0.architectures?.contains(selectedRuntimeArchitecture) ?? false)
+                 ($0.architectures?.isUniversal ?? false && selectedVariant == .universal) ||
+                 ($0.architectures?.isAppleSilicon ?? false && selectedVariant == .appleSilicon)
+                )
             }
         }
         
@@ -35,8 +37,8 @@ struct PlatformsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 if !architectures.isEmpty {
                     Spacer()
-                    Picker("Architecture", selection: $selectedRuntimeArchitecture) {
-                        ForEach(Architecture.allCases, id: \.self) { arch in
+                    Picker("Architecture", selection: $selectedVariant) {
+                        ForEach(ArchitectureVariant.allCases, id: \.self) { arch in
                             Label(arch.displayString, systemImage: arch.iconName)
                                 .tag(arch)
                         }
@@ -73,6 +75,7 @@ struct PlatformsView: View {
                 ForEach(runtime.architectures ?? [], id: \.self) { architecture in
                     TagView(text: architecture.displayString)
                 }
+               
                 pathIfAvailable(xcode: xcode, runtime: runtime)
                 
                 if runtime.installState == .notInstalled {

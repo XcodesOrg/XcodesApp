@@ -4820,6 +4820,9 @@
         }
       }
     },
+    "Architecture" : {
+
+    },
     "Authenticating" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -5683,6 +5686,9 @@
           }
         }
       }
+    },
+    "Category" : {
+
     },
     "Change" : {
       "localizations" : {
@@ -9239,6 +9245,9 @@
           }
         }
       }
+    },
+    "FilterArchitecturesDescription" : {
+
     },
     "FilterAvailableDescription" : {
       "localizations" : {
@@ -13462,6 +13471,9 @@
           }
         }
       }
+    },
+    "Installed Only" : {
+
     },
     "InstallHelper" : {
       "localizations" : {
