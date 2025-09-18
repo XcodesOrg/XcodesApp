@@ -74,7 +74,7 @@ class AppState: ObservableObject {
     /// Whether the user is being prepared for the helper installation alert with an explanation.
     /// This closure will be performed after the user chooses whether or not to proceed.
     @Published var isPreparingUserForActionRequiringHelper: ((Bool) -> Void)?
-
+    
     // MARK: - Errors
 
     @Published var error: Error?
@@ -137,6 +137,14 @@ class AppState: ObservableObject {
         didSet {
             Current.defaults.set(terminateAfterLastWindowClosed, forKey: "terminateAfterLastWindowClosed")
         }
+    }
+    
+    
+    @Published var appLanguage: String? {
+        didSet {
+            Current.defaults.set(appLanguage, forKey: "appLanguage")
+        }
+        
     }
     
     // MARK: - Runtimes
