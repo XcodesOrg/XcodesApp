@@ -6,17 +6,8 @@ import Version
 
 struct InfoPane: View {
     let xcode: Xcode
-    var body: some View {
-        if #available(macOS 14.0, *) {
-            mainContent
-                .contentMargins(10, for: .scrollContent)
-        } else {
-            mainContent
-                .padding()
-        }
-    }
     
-    private var mainContent: some View {
+    var body: some View {
         ScrollView(.vertical) {
             HStack(alignment: .top) {
                 VStack {
@@ -47,6 +38,7 @@ struct InfoPane: View {
                 
             }
         }
+        .contentPadding(10)
     }
     
     @ViewBuilder
