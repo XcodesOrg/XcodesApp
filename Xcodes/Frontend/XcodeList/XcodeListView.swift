@@ -71,6 +71,7 @@ struct XcodeListView: View {
             PlatformsPocket()
                 .padding(.horizontal)
                 .padding(.vertical, 8)
+           
         }
     }
 }
@@ -83,19 +84,29 @@ struct PlatformsPocket: View {
             openWindow(id: "platforms")
         }
         ) {
-            HStack(spacing: 5) {
-                Image(systemName: "square.3.layers.3d")
-                    .font(.title3.weight(.medium))
-                Text("PlatformsDescription")
-								Spacer()
+            if #available(macOS 26.0, *) {
+                platformsLabel
+                    .glassEffect(in: .rect(cornerRadius: 8, style: .continuous))
+            } else {
+                platformsLabel
+                .background(.quaternary.opacity(0.75))
+                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
             }
-            .font(.body.weight(.medium))
-            .padding(.horizontal)
-            .padding(.vertical, 12)
-            .background(.quaternary.opacity(0.75))
-            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
+           
         }
         .buttonStyle(.plain)
+    }
+    
+    var platformsLabel: some View {
+        HStack(spacing: 5) {
+            Image(systemName: "square.3.layers.3d")
+                .font(.title3.weight(.medium))
+            Text("PlatformsDescription")
+                            Spacer()
+        }
+        .font(.body.weight(.medium))
+        .padding(.horizontal)
+        .padding(.vertical, 12)
     }
 }
 
