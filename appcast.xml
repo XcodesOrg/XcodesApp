@@ -7,6 +7,62 @@
         
             
                 
+                    <item>
+                        <title>3.0.2</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h1 id="v-30-">v 3.0 🎉</h1>
+<p>Ability to install Apple Silicon Architectures for Xcode as well as runtimes. (Xcode 26 required)
+New icon designed by <a href="https://x.com/matthewskiles">Matthew Skiles</a> https://matthewskiles.com/</p>
+
+<p>Thanks to @aerickson14 for getting Fido2 library over the build hump</p>
+
+<h2 id="-enhancements">🚀 Enhancements</h2>
+
+<ul>
+  <li>New Icon - who dis?  (#755) @MattKiazyk</li>
+  <li>Improve filtering UI/UX on Xcode List (#746) @LiYanan2004</li>
+  <li>feat: improve user experience with a redirect window to sign-in (#741) @r1b2ns</li>
+  <li>Support Showing and Downloading Multiple Xcode Architectures.  (#743) @MattKiazyk</li>
+  <li>Support Xcode 26 multiple Architectures (#730) @MattKiazyk</li>
+  <li>fix: xcode 26 check for Apple Silicon installs (#753) @MattKiazyk</li>
+</ul>
+
+<h2 id="-localization">🌎 Localization</h2>
+
+<ul>
+  <li>Add Thai translations (#756) @neetrath</li>
+  <li>Update zh_Hans translations. (#727) @megabitsenmzq</li>
+  <li>Fixes Brazilian Portuguese translations (#744) @leschlogl</li>
+</ul>
+
+<!-- sparkle:edSignature=Wg/SIqHuup55ko99yJl19kuZCx2t4ig+Apa3yuYNK0DCzB8IUDxGOJq/+wQ/xICgSMZRaMyCGiK/UhQA9hMFBw== -->
+]]></description>
+                        <pubDate>Sat, 20 Sep 2025 04:31:44 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v3.0.2b34/Xcodes.zip"
+                                    sparkle:version="34"
+                                    sparkle:shortVersionString="3.0.2"
+                                    sparkle:edSignature="Wg/SIqHuup55ko99yJl19kuZCx2t4ig+Apa3yuYNK0DCzB8IUDxGOJq/+wQ/xICgSMZRaMyCGiK/UhQA9hMFBw=="
+                                    length="34489920"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
             
         
             
