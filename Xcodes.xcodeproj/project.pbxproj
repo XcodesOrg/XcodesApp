@@ -1517,10 +1517,10 @@
 /* Begin XCRemoteSwiftPackageReference section */
 		33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kinoroy/LibFido2Swift.git";
+			repositoryURL = "https://github.com/kinoroy/LibFido2Swift";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.4;
+				branch = main;
+				kind = branch;
 			};
 		};
 		CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */ = {

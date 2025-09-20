@@ -66,11 +66,11 @@
       },
       {
         "package": "LibFido2Swift",
-        "repositoryURL": "https://github.com/kinoroy/LibFido2Swift.git",
+        "repositoryURL": "https://github.com/kinoroy/LibFido2Swift",
         "state": {
-          "branch": null,
+          "branch": "main",
           "revision": "94d496d6f850dcbb3e8c4a27cd7eeabfad9f14e3",
-          "version": "0.1.4"
+          "version": null
         }
       },
       {
