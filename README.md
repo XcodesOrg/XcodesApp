@@ -1,4 +1,4 @@
-<h1><img src="icon.png" align="center" width=50 height=50 /> Xcodes.app</h1>
+<h1><img src="icon.png" align="center" width=50 height=50 /> <img src="IconDark.png" align="center" width=50 height=50 /> <img src="IconMono.png" align="center" width=50 height=50 /> Xcodes.app</h1>
 
 The easiest way to install and switch between multiple versions of Xcode.
 
@@ -23,12 +23,18 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 - View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
 - Dark/Light Mode supported
 - Security Key Authentication supported 
+- Support installing Platforms/Runtimes
+- Support installing Apple Silicon variants
 
 ## Platforms/Runtimes
 
 - Xcodes supports downloading the Apple runtimes via the app. Simply click on the Platform, and Xcodes will install automatically for you.
 
 **Note: iOS 18+, tvOS 18+, watchOS 11+, visionOS 2+ requires that Xcode 16.1 Beta 3+ be installed and active.** 
+
+## Apple Silicon Variants
+
+As of Xcode 26, Apple provides Apple Silicon as well as Universal variants for Xcode versions as well as each runtime. Simply tap on which variant you want installed. To install the Apple Silicon runtime variant Xcode 26 is required to be active.
 
 ## Experiments
 
@@ -61,6 +67,7 @@ Want to add more languages? Simply create a PR with the updated strings file.
 ## Installation
 v1.X - requires macOS 11 or newer
 v2.X - requires macOS 13
+v3.X - requires macOS 13 - architecture variants and updated icon.
 
 ### Install with Homebrew
 
@@ -85,7 +92,7 @@ Xcodes.app and CLI is updated, maintained with contributors like yourself. Even 
 
 ## Development
 
-You'll need macOS 13.5 Ventura and Xcode 15 in order to build and run Xcodes.app.
+You'll need macOS 15.6 Ventura and Xcode 26 in order to build and run Xcodes.app.
 
 `Unxip` and `aria2` must be compiled as a universal binary
 ```
@@ -100,7 +107,6 @@ You'll need macOS 13.5 Ventura and Xcode 15 in order to build and run Xcodes.app
  lipo -archs unxip
 ```
 
-Notable design decisions are recorded in [DECISIONS.md](./DECISIONS.md). The Apple authentication flow is described in [Apple.paw](./Apple.paw), which will allow you to play with the API endpoints that are involved using the [Paw](https://paw.cloud) app.
 
 [`xcode-install`](https://github.com/xcpretty/xcode-install) and [fastlane/spaceship](https://github.com/fastlane/fastlane/tree/master/spaceship) both deserve credit for figuring out the hard parts of what makes this possible.
 
