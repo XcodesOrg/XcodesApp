@@ -4783,7 +4783,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ""
+            "value" : "Apple芯片"
           }
         },
         "zh-Hant" : {
@@ -5055,7 +5055,14 @@
       }
     },
     "Architecture" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "架构"
+          }
+        }
+      }
     },
     "Authenticating" : {
       "extractionState" : "manual",
@@ -5964,7 +5971,14 @@
       }
     },
     "Category" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "类别"
+          }
+        }
+      }
     },
     "Change" : {
       "localizations" : {
@@ -11371,7 +11385,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install Apple Silicon"
+            "value" : "安装Apple芯片版本"
           }
         },
         "zh-Hant" : {
@@ -11495,7 +11509,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install Universal"
+            "value" : "安装通用版本"
           }
         },
         "zh-Hant" : {
@@ -14127,7 +14141,14 @@
       }
     },
     "Installed Only" : {
-
+      "localizations" : {
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅已安装"
+          }
+        }
+      }
     },
     "InstallHelper" : {
       "localizations" : {
@@ -23811,7 +23832,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Universal"
+            "value" : "通用"
           }
         },
         "zh-Hant" : {
