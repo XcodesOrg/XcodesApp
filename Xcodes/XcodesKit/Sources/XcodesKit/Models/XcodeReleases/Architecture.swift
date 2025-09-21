@@ -19,9 +19,9 @@ public enum Architecture: String, Codable, Equatable, Hashable, Identifiable, Ca
     public var displayString: String {
         switch self {
         case .arm64:
-            return "Apple Silicon"
+            return localizeString("Apple Silicon")
         case .x86_64:
-            return "Intel"
+            return localizeString("Intel")
         }
     }
     
@@ -44,9 +44,9 @@ public enum ArchitectureVariant: String, Codable, Equatable, Hashable, Identifia
     public var displayString: String {
         switch self {
         case .appleSilicon:
-            return "Apple Silicon"
+            return localizeString("Apple Silicon")
         case .universal:
-            return "Universal"
+            return localizeString("Universal")
         }
     }
     
