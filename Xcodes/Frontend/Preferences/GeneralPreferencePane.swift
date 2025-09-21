@@ -24,6 +24,7 @@ struct GeneralPreferencePane: View {
             
             GroupBox(label: Text("Misc")) {
                 Toggle("TerminateAfterLastWindowClosed", isOn: $appState.terminateAfterLastWindowClosed)
+                Toggle("EnableCollapsibleList", isOn: $appState.collapsableListEnabled)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }

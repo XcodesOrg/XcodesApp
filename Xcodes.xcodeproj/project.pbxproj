@@ -848,10 +848,12 @@
 /* Begin PBXShellScriptBuildPhase section */
 		05EACA532E76D21100CF1F9D /* Fix libfido2 structure */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			name = "Fix libfido2 structure";
 			shellPath = /bin/sh;
 			shellScript = (
-				"/Users/genesis/Coding/XCode/OpenSourceContributions/XcodesApp/Scripts/fix_libfido2_framework.sh",
+				"./Scripts/fix_libfido2_framework.sh",
+				"",
 				"",
 			);
 		};
@@ -871,6 +873,8 @@
 				"xcrun -sdk macosx swift run AcknowledgementsGenerator \\",
 				"    -p \"${SRCROOT}/Xcodes.xcodeproj\" \\",
 				"    -o \"${SRCROOT}/Xcodes/Resources/Licenses.rtf\"",
+				"",
+				"",
 				"",
 				"",
 				"",
@@ -1060,6 +1064,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1102,7 +1107,7 @@
 				CURRENT_PROJECT_VERSION = 33;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = NO;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Xcodes/Resources/Info.plist;
@@ -1152,7 +1157,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 9NP473RSFG;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
 				MARKETING_VERSION = 2.0.0;
@@ -1179,7 +1184,7 @@
 				CODE_SIGN_STYLE = Manual;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = NO;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
 				MARKETING_VERSION = 2.0.0;
@@ -1207,7 +1212,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CREATE_INFOPLIST_SECTION_IN_BINARY = YES;
 				DEAD_CODE_STRIPPING = YES;
-				DEVELOPMENT_TEAM = 9NP473RSFG;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = "$(SRCROOT)/$(TARGET_NAME)/Info.plist";
 				MARKETING_VERSION = 2.0.0;
@@ -1264,6 +1269,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1333,6 +1339,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
@@ -1368,7 +1375,7 @@
 				CURRENT_PROJECT_VERSION = 33;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
-				DEVELOPMENT_TEAM = 9NP473RSFG;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Xcodes/Resources/Info.plist;
@@ -1397,7 +1404,7 @@
 				CURRENT_PROJECT_VERSION = 33;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
-				DEVELOPMENT_TEAM = 9NP473RSFG;
+				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = Xcodes/Resources/Info.plist;

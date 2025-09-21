@@ -70,53 +70,16 @@ struct XcodeListView: View {
     
     var body: some View {
         List(selection: $selectedXcodeID) {
-            ForEach(majorVersionGroups) { majorVersionGroup in
-                let isMajorExpanded = expandedMajorVersions.contains(majorVersionGroup.majorVersion)
-
-                XcodeMajorVersionRow(
-                    majorVersionGroup: majorVersionGroup,
-                    isExpanded: isMajorExpanded,
-                    onToggleExpanded: {
-                        if isMajorExpanded {
-                            expandedMajorVersions.remove(majorVersionGroup.majorVersion)
-                            // Collapse all minor versions when major version is collapsed
-                            for minorGroup in majorVersionGroup.minorVersionGroups {
-                                expandedMinorVersions.remove(minorGroup.id)
-                            }
-                        } else {
-                            expandedMajorVersions.insert(majorVersionGroup.majorVersion)
-                        }
-                    },
+            if appState.collapsableListEnabled {
+                CollapsableListView(
+                    visibleXcodes: visibleXcodes,
+                    selectedXcodeID: $selectedXcodeID,
                     appState: appState
                 )
-                .tag(majorVersionGroup.selectedVersion?.id)
-
-                if isMajorExpanded {
-                    ForEach(majorVersionGroup.minorVersionGroups) { minorVersionGroup in
-                        let isMinorExpanded = expandedMinorVersions.contains(minorVersionGroup.id)
-
-                        XcodeMinorVersionRow(
-                            minorVersionGroup: minorVersionGroup,
-                            isExpanded: isMinorExpanded,
-                            onToggleExpanded: {
-                                if isMinorExpanded {
-                                    expandedMinorVersions.remove(minorVersionGroup.id)
-                                } else {
-                                    expandedMinorVersions.insert(minorVersionGroup.id)
-                                }
-                            },
-                            appState: appState
-                        )
-                        .tag(minorVersionGroup.selectedVersion?.id)
-
-                        if isMinorExpanded {
-                            ForEach(minorVersionGroup.versions) { xcode in
-                                XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
-                                    .padding(.leading, 40)
-                                    .tag(xcode.id)
-                            }
-                        }
-                    }
+            } else {
+                ForEach(visibleXcodes) { xcode in
+                    XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
+                        .tag(xcode.id)
                 }
             }
         }
@@ -128,6 +91,72 @@ struct XcodeListView: View {
         }
     }
 }
+
+struct CollapsableListView: View {
+    let visibleXcodes: [Xcode]
+    @Binding var selectedXcodeID: Xcode.ID?
+    let appState: AppState
+    
+    @State private var expandedMajorVersions = Set<Int>()
+    @State private var expandedMinorVersions = Set<String>()
+    
+    var majorVersionGroups: [XcodeMajorVersionGroup] {
+        visibleXcodes.groupedByMajorVersion()
+    }
+    
+    var body: some View {
+        ForEach(majorVersionGroups) { majorVersionGroup in
+            let isMajorExpanded = expandedMajorVersions.contains(majorVersionGroup.majorVersion)
+            
+            XcodeMajorVersionRow(
+                majorVersionGroup: majorVersionGroup,
+                isExpanded: isMajorExpanded,
+                onToggleExpanded: {
+                    if isMajorExpanded {
+                        expandedMajorVersions.remove(majorVersionGroup.majorVersion)
+                        // Collapse all minor versions when major version is collapsed
+                        for minorGroup in majorVersionGroup.minorVersionGroups {
+                            expandedMinorVersions.remove(minorGroup.id)
+                        }
+                    } else {
+                        expandedMajorVersions.insert(majorVersionGroup.majorVersion)
+                    }
+                },
+                appState: appState
+            )
+            .tag(majorVersionGroup.selectedVersion?.id)
+            
+            if isMajorExpanded {
+                ForEach(majorVersionGroup.minorVersionGroups) { minorVersionGroup in
+                    let isMinorExpanded = expandedMinorVersions.contains(minorVersionGroup.id)
+                    
+                    XcodeMinorVersionRow(
+                        minorVersionGroup: minorVersionGroup,
+                        isExpanded: isMinorExpanded,
+                        onToggleExpanded: {
+                            if isMinorExpanded {
+                                expandedMinorVersions.remove(minorVersionGroup.id)
+                            } else {
+                                expandedMinorVersions.insert(minorVersionGroup.id)
+                            }
+                        },
+                        appState: appState
+                    )
+                    .tag(minorVersionGroup.selectedVersion?.id)
+                    
+                    if isMinorExpanded {
+                        ForEach(minorVersionGroup.versions) { xcode in
+                            XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
+                                .padding(.leading, 40)
+                                .tag(xcode.id)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 struct PlatformsPocket: View {
     @SwiftUI.Environment(\.openWindow) private var openWindow
@@ -175,3 +204,4 @@ struct XcodeListView_Previews: PreviewProvider {
         .previewLayout(.sizeThatFits)
     }
 }
+

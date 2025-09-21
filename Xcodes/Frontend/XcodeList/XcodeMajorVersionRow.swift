@@ -19,11 +19,11 @@ struct XcodeMajorVersionRow: View {
                     majorVersionIcon
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Xcode \(majorVersionGroup.displayName)")
+                        Text(String(format: localizeString("Xcode %@"), majorVersionGroup.displayName))
                             .font(.body.weight(.medium))
 
                         if let latestRelease = majorVersionGroup.latestRelease {
-                            Text("Latest: \(latestRelease.description)")
+                            Text(String(format: localizeString("Latest: %@"), latestRelease.description))
                                 .font(.caption)
                                 .foregroundColor(.secondary)
                         }
