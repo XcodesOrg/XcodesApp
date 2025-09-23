@@ -8,7 +8,7 @@
 import Foundation
 
 /// The name of an Architecture.
-public enum Architecture: String, Codable, Equatable, Hashable, Identifiable {
+public enum Architecture: String, Codable, Equatable, Hashable, Identifiable, CaseIterable {
     public var id: Self { self }
     
     /// The Arm64 architecture (Apple Silicon)
@@ -24,10 +24,48 @@ public enum Architecture: String, Codable, Equatable, Hashable, Identifiable {
             return "Intel"
         }
     }
+    
+    public var iconName: String {
+        switch self {
+            case .arm64:
+                return "m4.button.horizontal"
+            case .x86_64:
+                return "cpu.fill"
+        }
+    }
+}
+
+public enum ArchitectureVariant: String, Codable, Equatable, Hashable, Identifiable, CaseIterable {
+    public var id: Self { self }
+    
+    case universal
+    case appleSilicon
+    
+    public var displayString: String {
+        switch self {
+        case .appleSilicon:
+            return "Apple Silicon"
+        case .universal:
+            return "Universal"
+        }
+    }
+    
+    public var iconName: String {
+        switch self {
+            case .appleSilicon:
+                return "m4.button.horizontal"
+            case .universal:
+                return "cpu.fill"
+        }
+    }
 }
 
 extension Array where Element == Architecture {
     public var isAppleSilicon: Bool {
         self == [.arm64]
+    }
+    
+    public var isUniversal: Bool {
+        self.contains([.arm64, .x86_64])
     }
 }

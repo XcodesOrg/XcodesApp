@@ -63,7 +63,8 @@ extension AppState {
             if selectedXcode.version > Version(major: 16, minor: 0, patch: 0) {
                 
                 if runtime.architectures?.isAppleSilicon ?? false {
-                    if selectedXcode.version > Version(major: 26, minor: 0, patch: 0) {
+                    // Need Xcode 26 but with some RC/Beta's its simpler to just to greater > 25
+                    if selectedXcode.version > Version(major: 25, minor: 0, patch: 0) {
                         downloadRuntimeViaXcodeBuild(runtime: runtime)
                     } else {
                         // not supported

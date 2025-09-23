@@ -11,7 +11,7 @@ import XcodesKit
 
 struct PlatformsView: View {
     @EnvironmentObject var appState: AppState
-    @AppStorage("selectedRuntimeArchitecture") private var selectedRuntimeArchitecture: Architecture = .arm64
+    @AppStorage("selectedRuntimeArchitecture") private var selectedVariant: ArchitectureVariant = .universal
 
     let xcode: Xcode
  
@@ -22,7 +22,9 @@ struct PlatformsView: View {
             appState.downloadableRuntimes.filter {
                 $0.sdkBuildUpdate?.contains(sdkBuild) ?? false &&
                 ($0.architectures?.isEmpty ?? true ||
-                $0.architectures?.contains(selectedRuntimeArchitecture) ?? false)
+                 ($0.architectures?.isUniversal ?? false && selectedVariant == .universal) ||
+                 ($0.architectures?.isAppleSilicon ?? false && selectedVariant == .appleSilicon)
+                )
             }
         }
         
@@ -35,21 +37,18 @@ struct PlatformsView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                 if !architectures.isEmpty {
                     Spacer()
-                    Button {
-                        switch selectedRuntimeArchitecture {
-                        case .arm64: selectedRuntimeArchitecture = .x86_64
-                        case .x86_64: selectedRuntimeArchitecture = .arm64
+                    Picker("Architecture", selection: $selectedVariant) {
+                        ForEach(ArchitectureVariant.allCases, id: \.self) { arch in
+                            Label(arch.displayString, systemImage: arch.iconName)
+                                .tag(arch)
                         }
-                    } label: {
-                        switch selectedRuntimeArchitecture {
-                        case .arm64:
-                            Label(selectedRuntimeArchitecture.displayString, systemImage: "m4.button.horizontal")
-                                .labelStyle(.trailingIcon)
-                        case .x86_64:
-                            Label(selectedRuntimeArchitecture.displayString, systemImage: "cpu.fill")
-                                .labelStyle(.trailingIcon)
-                        }
+                        .labelStyle(.trailingIcon)
                     }
+                    .pickerStyle(.menu)
+                    .menuStyle(.button)
+                    .buttonStyle(.borderless)
+                    .fixedSize()
+                    .labelsHidden()
                 }
             }
             
@@ -76,6 +75,7 @@ struct PlatformsView: View {
                 ForEach(runtime.architectures ?? [], id: \.self) { architecture in
                     TagView(text: architecture.displayString)
                 }
+               
                 pathIfAvailable(xcode: xcode, runtime: runtime)
                 
                 if runtime.installState == .notInstalled {
