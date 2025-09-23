@@ -10,6 +10,8 @@ struct XcodeListView: View {
     private let architecture: XcodeListArchitecture
     private let isInstalledOnly: Bool
     @AppStorage(PreferenceKey.allowedMajorVersions.rawValue) private var allowedMajorVersions = Int.max
+    @State private var expandedMajorVersions = Set<Int>()
+    @State private var expandedMinorVersions = Set<String>()
 
     init(selectedXcodeID: Binding<Xcode.ID?>, searchText: String, category: XcodeListCategory, isInstalledOnly: Bool, architecture: XcodeListArchitecture) {
         self._selectedXcodeID = selectedXcodeID
@@ -29,12 +31,12 @@ struct XcodeListView: View {
         case .beta:
             xcodes = appState.allXcodes.filter { $0.version.isPrerelease }
         }
-        
+
         if architecture == .appleSilicon {
             xcodes = xcodes.filter { $0.architectures == [.arm64] }
         }
-        
-        
+
+
         let latestMajor = xcodes.sorted(\.version)
             .filter { $0.version.isNotPrerelease }
             .last?
@@ -54,17 +56,32 @@ struct XcodeListView: View {
         if !searchText.isEmpty {
             xcodes = xcodes.filter { $0.description.contains(searchText) }
         }
-        
+
         if isInstalledOnly {
             xcodes = xcodes.filter { $0.installState.installed }
         }
-        
+
         return xcodes
+    }
+
+    var majorVersionGroups: [XcodeMajorVersionGroup] {
+        visibleXcodes.groupedByMajorVersion()
     }
     
     var body: some View {
-        List(visibleXcodes, selection: $selectedXcodeID) { xcode in
-            XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
+        List(selection: $selectedXcodeID) {
+            if appState.collapsableListEnabled {
+                CollapsableListView(
+                    visibleXcodes: visibleXcodes,
+                    selectedXcodeID: $selectedXcodeID,
+                    appState: appState
+                )
+            } else {
+                ForEach(visibleXcodes) { xcode in
+                    XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
+                        .tag(xcode.id)
+                }
+            }
         }
         .listStyle(.sidebar)
         .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -75,6 +92,72 @@ struct XcodeListView: View {
         }
     }
 }
+
+struct CollapsableListView: View {
+    let visibleXcodes: [Xcode]
+    @Binding var selectedXcodeID: Xcode.ID?
+    let appState: AppState
+    
+    @State private var expandedMajorVersions = Set<Int>()
+    @State private var expandedMinorVersions = Set<String>()
+    
+    var majorVersionGroups: [XcodeMajorVersionGroup] {
+        visibleXcodes.groupedByMajorVersion()
+    }
+    
+    var body: some View {
+        ForEach(majorVersionGroups) { majorVersionGroup in
+            let isMajorExpanded = expandedMajorVersions.contains(majorVersionGroup.majorVersion)
+            
+            XcodeMajorVersionRow(
+                majorVersionGroup: majorVersionGroup,
+                isExpanded: isMajorExpanded,
+                onToggleExpanded: {
+                    if isMajorExpanded {
+                        expandedMajorVersions.remove(majorVersionGroup.majorVersion)
+                        // Collapse all minor versions when major version is collapsed
+                        for minorGroup in majorVersionGroup.minorVersionGroups {
+                            expandedMinorVersions.remove(minorGroup.id)
+                        }
+                    } else {
+                        expandedMajorVersions.insert(majorVersionGroup.majorVersion)
+                    }
+                },
+                appState: appState
+            )
+            .tag(majorVersionGroup.selectedVersion?.id)
+            
+            if isMajorExpanded {
+                ForEach(majorVersionGroup.minorVersionGroups) { minorVersionGroup in
+                    let isMinorExpanded = expandedMinorVersions.contains(minorVersionGroup.id)
+                    
+                    XcodeMinorVersionRow(
+                        minorVersionGroup: minorVersionGroup,
+                        isExpanded: isMinorExpanded,
+                        onToggleExpanded: {
+                            if isMinorExpanded {
+                                expandedMinorVersions.remove(minorVersionGroup.id)
+                            } else {
+                                expandedMinorVersions.insert(minorVersionGroup.id)
+                            }
+                        },
+                        appState: appState
+                    )
+                    .tag(minorVersionGroup.selectedVersion?.id)
+                    
+                    if isMinorExpanded {
+                        ForEach(minorVersionGroup.versions) { xcode in
+                            XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
+                                .padding(.leading, 40)
+                                .tag(xcode.id)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 
 struct PlatformsPocket: View {
     @SwiftUI.Environment(\.openWindow) private var openWindow
@@ -92,7 +175,11 @@ struct PlatformsPocket: View {
                 .background(.quaternary.opacity(0.75))
                 .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
             }
-           
+            .font(.body.weight(.medium))
+            .padding(.horizontal)
+            .padding(.vertical, 12)
+            .background(.quaternary.opacity(0.9))
+            .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
         }
         .buttonStyle(.plain)
     }
@@ -132,3 +219,4 @@ struct XcodeListView_Previews: PreviewProvider {
         .previewLayout(.sizeThatFits)
     }
 }
+

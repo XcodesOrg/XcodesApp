@@ -139,6 +139,12 @@ class AppState: ObservableObject {
         }
     }
     
+    @Published var collapsableListEnabled = true {
+        didSet {
+            Current.defaults.set(collapsableListEnabled, forKey: "collapsableListEnabled")
+        }
+    }
+    
     // MARK: - Runtimes
     
     @Published var downloadableRuntimes: [DownloadableRuntime] = []
@@ -209,6 +215,7 @@ class AppState: ObservableObject {
         installPath = Current.defaults.string(forKey: "installPath") ?? Path.defaultInstallDirectory.string
         showOpenInRosettaOption = Current.defaults.bool(forKey: "showOpenInRosettaOption") ?? false
         terminateAfterLastWindowClosed = Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
+        collapsableListEnabled = Current.defaults.bool(forKey: "collapsibleListEnabled") ?? true
     }
     
     // MARK: Timer

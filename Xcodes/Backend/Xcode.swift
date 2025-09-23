@@ -85,5 +85,97 @@ struct Xcode: Identifiable, CustomStringConvertible {
                 return nil
         }
     }
-    
+
+}
+
+struct XcodeMinorVersionGroup: Identifiable {
+    let majorVersion: Int
+    let minorVersion: Int
+    let versions: [Xcode]
+    var isExpanded: Bool = false
+
+    var id: String {
+        "\(majorVersion).\(minorVersion)"
+    }
+
+    var latestRelease: Xcode? {
+        versions
+            .filter { $0.version.isNotPrerelease }
+            .sorted { $0.version < $1.version }
+            .last
+    }
+
+    var displayName: String {
+        "\(majorVersion).\(minorVersion)"
+    }
+
+    var hasInstalled: Bool {
+        versions.contains { $0.installState.installed }
+    }
+
+    var hasInstalling: Bool {
+        versions.contains { $0.installState.installing }
+    }
+
+    var selectedVersion: Xcode? {
+        versions.first { $0.selected }
+    }
+}
+
+struct XcodeMajorVersionGroup: Identifiable {
+    let majorVersion: Int
+    let minorVersionGroups: [XcodeMinorVersionGroup]
+    var isExpanded: Bool = false
+
+    var id: Int {
+        majorVersion
+    }
+
+    var versions: [Xcode] {
+        minorVersionGroups.flatMap { $0.versions }
+    }
+
+    var latestRelease: Xcode? {
+        versions
+            .filter { $0.version.isNotPrerelease }
+            .sorted { $0.version < $1.version }
+            .last
+    }
+
+    var displayName: String {
+        "\(majorVersion)"
+    }
+
+    var hasInstalled: Bool {
+        minorVersionGroups.contains { $0.hasInstalled }
+    }
+
+    var hasInstalling: Bool {
+        minorVersionGroups.contains { $0.hasInstalling }
+    }
+
+    var selectedVersion: Xcode? {
+        minorVersionGroups.compactMap { $0.selectedVersion }.first
+    }
+}
+
+extension Array where Element == Xcode {
+    func groupedByMajorVersion() -> [XcodeMajorVersionGroup] {
+        let majorGroups = Dictionary(grouping: self) { $0.version.major }
+        return majorGroups.map { majorVersion, xcodes in
+            let minorGroups = Dictionary(grouping: xcodes) { $0.version.minor }
+            let minorVersionGroups = minorGroups.map { minorVersion, minorXcodes in
+                XcodeMinorVersionGroup(
+                    majorVersion: majorVersion,
+                    minorVersion: minorVersion,
+                    versions: minorXcodes.sorted { $0.version > $1.version }
+                )
+            }.sorted { $0.minorVersion > $1.minorVersion }
+
+            return XcodeMajorVersionGroup(
+                majorVersion: majorVersion,
+                minorVersionGroups: minorVersionGroups
+            )
+        }.sorted { $0.majorVersion > $1.majorVersion }
+    }
 }
