@@ -183,9 +183,9 @@ class AppStateTests: XCTestCase {
     func test_Install_FullHappyPath_XcodeReleases() throws {
         // Available xcode has build identifier
         subject.allXcodes = [
-            .init(version: Version("0.0.0+ABC123")!, installState: .notInstalled, selected: false, icon: nil),
-            .init(version: Version("0.0.0-Beta.1+DEF456")!, installState: .notInstalled, selected: false, icon: nil),
-            .init(version: Version("0.0.0-Beta.2+GHI789")!, installState: .notInstalled, selected: false, icon: nil)
+            Xcode(version: Version("0.0.0+ABC123")!, installState: .notInstalled, selected: false, icon: nil, architectures: [.arm64]),
+            Xcode(version: Version("0.0.0-Beta.1+DEF456")!, installState: .notInstalled, selected: false, icon: nil, architectures: [.arm64]),
+            Xcode(version: Version("0.0.0-Beta.2+GHI789")!, installState: .notInstalled, selected: false, icon: nil, architectures: [.arm64])
         ]
         
         // It hasn't been downloaded
@@ -269,7 +269,7 @@ class AppStateTests: XCTestCase {
 
         let allXcodesRecorder = subject.$allXcodes.record()
         let installRecorder = subject.install(
-            .version(AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)),
+            .version(AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil, architectures: [.arm64])),
             downloader: .urlSession
         ).record()
         try wait(for: installRecorder.finished, timeout: 1, description: "Finished")

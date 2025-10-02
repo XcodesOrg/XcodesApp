@@ -17,6 +17,11 @@ public struct XcodeID: Codable, Hashable, Identifiable {
         self.version = version
         self.architectures = architectures
     }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+        // First compare versions (using only semVer components) then compare architectures
+        lhs.version.isEquivalent(to: rhs.version) && lhs.architectures == rhs.architectures
+    }
 }
 
 struct Xcode: Identifiable, CustomStringConvertible {

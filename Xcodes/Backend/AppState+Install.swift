@@ -104,7 +104,7 @@ extension AppState {
     private func downloadXcode(availableXcode: AvailableXcode, downloader: Downloader) -> AnyPublisher<(AvailableXcode, URL), Error> {
             self.downloadOrUseExistingArchive(for: availableXcode, downloader: downloader, progressChanged: { [unowned self] progress in
                 DispatchQueue.main.async {
-                    self.setInstallationStep(of: availableXcode.version, to: .downloading(progress: progress))
+                    self.setInstallationStep(of: availableXcode, to: .downloading(progress: progress))
                     self.overallProgress.addChild(progress, withPendingUnitCount: AppState.totalProgressUnits - AppState.unxipProgressWeight)
                 }
             })
@@ -203,9 +203,9 @@ extension AppState {
                     }
                     .flatMap { installedXcode -> AnyPublisher<InstalledXcode, Error> in
                         do {
-                            self.setInstallationStep(of: availableXcode.version, to: .trashingArchive)
+                            self.setInstallationStep(of: availableXcode, to: .trashingArchive)
                             try Current.files.trashItem(at: archiveURL)
-                            self.setInstallationStep(of: availableXcode.version, to: .checkingSecurity)
+                            self.setInstallationStep(of: availableXcode, to: .checkingSecurity)
                             
                             return self.verifySecurityAssessment(of: installedXcode)
                                 .combineLatest(self.verifySigningCertificate(of: installedXcode.path.url))
@@ -217,7 +217,7 @@ extension AppState {
                         }
                     }
                     .flatMap { installedXcode -> AnyPublisher<InstalledXcode, Error> in
-                        self.setInstallationStep(of: availableXcode.version, to: .finishing)
+                        self.setInstallationStep(of: availableXcode, to: .finishing)
 
                         return self.performPostInstallSteps(for: installedXcode)
                             .map { installedXcode }
@@ -249,7 +249,7 @@ extension AppState {
     }
 
     func unarchiveAndMoveXIP(availableXcode: AvailableXcode, at source: URL, to destination: URL) -> AnyPublisher<URL, Swift.Error> {
-        self.setInstallationStep(of: availableXcode.version, to: .unarchiving)
+        self.setInstallationStep(of: availableXcode, to: .unarchiving)
         
         return unxipOrUnxipExperiment(source)
             .catch { error -> AnyPublisher<ProcessOutput, Swift.Error> in
@@ -267,7 +267,7 @@ extension AppState {
                     .eraseToAnyPublisher()
             }
         .tryMap { output -> URL in
-            self.setInstallationStep(of: availableXcode.version, to: .moving(destination: destination.path))
+            self.setInstallationStep(of: availableXcode, to: .moving(destination: destination.path))
 
             let xcodeURL = source.deletingLastPathComponent().appendingPathComponent("Xcode.app")
             let xcodeBetaURL = source.deletingLastPathComponent().appendingPathComponent("Xcode-beta.app")
@@ -495,13 +495,15 @@ extension AppState {
     }
     
     // MARK: - 
-    
-    func setInstallationStep(of version: Version, to step: XcodeInstallationStep) {
+
+    func setInstallationStep(of xcode: AvailableXcode, to step: XcodeInstallationStep) {
         DispatchQueue.main.async {
-            guard let index = self.allXcodes.firstIndex(where: { $0.version.isEquivalent(to: version) }) else { return }
+            guard let index = self.allXcodes.firstIndex(where: { $0.id == xcode.xcodeID }) else { return }
+
             self.allXcodes[index].installState = .installing(step)
             
             let xcode = self.allXcodes[index]
+            
             Current.notificationManager.scheduleNotification(title: xcode.version.major.description + "." + xcode.version.appleDescription, body: step.description, category: .normal)
         }
     }
