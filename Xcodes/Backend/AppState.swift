@@ -557,7 +557,7 @@ class AppState: ObservableObject {
         installationPublishers[id] = signInIfNeeded()
             .handleEvents(
                 receiveSubscription: { [unowned self] _ in
-                    self.setInstallationStep(of: availableXcode.version, to: .authenticating)
+                    self.setInstallationStep(of: availableXcode, to: .authenticating)
                 }
             )
             .flatMap { [unowned self] in
