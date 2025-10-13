@@ -5055,7 +5055,14 @@
       }
     },
     "Architecture" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mimari"
+          }
+        }
+      }
     },
     "Authenticating" : {
       "extractionState" : "manual",
@@ -5964,7 +5971,14 @@
       }
     },
     "Category" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategori"
+          }
+        }
+      }
     },
     "Change" : {
       "localizations" : {
@@ -9697,7 +9711,14 @@
       }
     },
     "FilterArchitecturesDescription" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mimarileri Filtrele"
+          }
+        }
+      }
     },
     "FilterAvailableDescription" : {
       "localizations" : {
@@ -14127,7 +14148,14 @@
       }
     },
     "Installed Only" : {
-
+      "localizations" : {
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sadece Yüklenenler"
+          }
+        }
+      }
     },
     "InstallHelper" : {
       "localizations" : {
