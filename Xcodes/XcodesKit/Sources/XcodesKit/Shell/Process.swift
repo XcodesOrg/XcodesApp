@@ -14,45 +14,76 @@ extension Process {
     }
     
     static func run(_ executable: URL, workingDirectory: URL? = nil, input: String? = nil, _ arguments: [String]) throws -> ProcessOutput {
-        
         let process = Process()
         process.currentDirectoryURL = workingDirectory ?? executable.deletingLastPathComponent()
         process.executableURL = executable
         process.arguments = arguments
         
-        let (stdout, stderr) = (Pipe(), Pipe())
-        process.standardOutput = stdout
-        process.standardError = stderr
+        let outPipe = Pipe()
+        let errPipe = Pipe()
+        process.standardOutput = outPipe
+        process.standardError = errPipe
+        var output = Data()
+        var error = Data()
+
+        let outputLock = NSLock()
+        let errorLock = NSLock()
         
+        outPipe.fileHandleForReading.readabilityHandler = { handle in
+            let data = handle.availableData
+            if !data.isEmpty {
+                outputLock.lock()
+                output.append(data)
+                outputLock.unlock()
+            }
+        }
+        errPipe.fileHandleForReading.readabilityHandler = { handle in
+            let data = handle.availableData
+            if !data.isEmpty {
+                errorLock.lock()
+                error.append(data)
+                errorLock.unlock()
+            }
+        }
+
         if let input = input {
             let inputPipe = Pipe()
-            process.standardInput = inputPipe.fileHandleForReading
-            inputPipe.fileHandleForWriting.write(Data(input.utf8))
+            process.standardInput = inputPipe
+            if let inputData = input.data(using: .utf8) {
+                inputPipe.fileHandleForWriting.write(inputData)
+            }
             inputPipe.fileHandleForWriting.closeFile()
         }
-        
+
         do {
             Logger.subprocess.info("Process.run executable: \(executable), input: \(input ?? ""), arguments: \(arguments.joined(separator: ", "))")
-
             try process.run()
             process.waitUntilExit()
-            
-            let output = String(data: stdout.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-            let error = String(data: stderr.fileHandleForReading.readDataToEndOfFile(), encoding: .utf8) ?? ""
-            
-            Logger.subprocess.info("Process.run output: \(output)")
-            if !error.isEmpty {
-                Logger.subprocess.error("Process.run error: \(error)")
-            }
-
-            guard process.terminationReason == .exit, process.terminationStatus == 0 else {
-                throw ProcessExecutionError(process: process, standardOutput: output, standardError: error)
-            }
-            
-            return (process.terminationStatus, output, error)
         } catch {
+            outPipe.fileHandleForReading.readabilityHandler = nil
+            errPipe.fileHandleForReading.readabilityHandler = nil
             throw error
         }
+        outPipe.fileHandleForReading.readabilityHandler = nil
+        errPipe.fileHandleForReading.readabilityHandler = nil
+
+        outputLock.lock()
+        let outputString = String(data: output, encoding: .utf8) ?? ""
+        outputLock.unlock()
+        errorLock.lock()
+        let errorString = String(data: error, encoding: .utf8) ?? ""
+        errorLock.unlock()
+
+        Logger.subprocess.info("Process.run output: \(outputString)")
+        if !errorString.isEmpty {
+            Logger.subprocess.error("Process.run error: \(errorString)")
+        }
+
+        guard process.terminationReason == .exit, process.terminationStatus == 0 else {
+            throw ProcessExecutionError(process: process, standardOutput: outputString, standardError: errorString)
+        }
+
+        return (process.terminationStatus, outputString, errorString)
     }
     
 }
