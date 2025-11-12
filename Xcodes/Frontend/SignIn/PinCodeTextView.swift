@@ -149,6 +149,34 @@ class PinCodeTextView: NSControl, NSTextFieldDelegate {
         
         let newFieldText = field.stringValue
         
+        // Handle pasting multiple characters (e.g., pasting "123456" from clipboard)
+        if newFieldText.count > 1 {
+            // Filter to alphanumeric characters only
+            let validCharacters = newFieldText.filter { $0.isLetter || $0.isNumber }
+            
+            // Always start from the first field and clear previous content
+            var newCode = Array(repeating: Character?.none, count: numberOfDigits)
+            for (offset, character) in validCharacters.enumerated() {
+                if offset < numberOfDigits {
+                    newCode[offset] = character
+                }
+            }
+            
+            // Update all fields at once to avoid triggering didSet multiple times
+            code = newCode
+            
+            // Move focus to next empty field or the last field if all are filled
+            let nextEmptyIndex = code.firstIndex(where: { $0 == nil }) ?? numberOfDigits - 1
+            if nextEmptyIndex < characterViews.count {
+                window?.makeFirstResponder(characterViews[nextEmptyIndex])
+            } else {
+                resignFirstResponder()
+            }
+            
+            return
+        }
+        
+        // Handle single character input
         let lastCharacter: Character?
         if newFieldText.isEmpty {
             lastCharacter = nil
