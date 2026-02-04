@@ -9,29 +9,24 @@ struct PinCodeTextField: NSViewRepresentable {
     let complete: (String) -> Void
 
     func makeNSView(context: Context) -> NSViewType {
-        let view = PinCodeTextView(numberOfDigits: numberOfDigits, itemSpacing: 10)
+        let view = PinCodeTextView(numberOfDigits: numberOfDigits)
         view.codeDidChange = { c in code = c }
         view.codeDidComplete = { complete($0) }
         return view
     }
     
     func updateNSView(_ nsView: NSViewType, context: Context) {
-        nsView.code = (0..<numberOfDigits).map { index in
-            if index < code.count {
-                let codeIndex = code.index(code.startIndex, offsetBy: index)
-                return code[codeIndex]
-            } else {
-                return nil
-            }
+        if nsView.code != code {
+            nsView.code = code
         }
     }
 }
 
 struct PinCodeTextField_Previews: PreviewProvider {
     struct PreviewContainer: View {
-        @State private var code = "1234567890"
+        @State private var code = ""
         var body: some View {
-            PinCodeTextField(code: $code, numberOfDigits: 11) {
+            PinCodeTextField(code: $code, numberOfDigits: 6) {
                 print("Input is complete \($0)")
             }.padding()
         }
@@ -46,19 +41,28 @@ struct PinCodeTextField_Previews: PreviewProvider {
 
 // MARK: - PinCodeTextView
 
+/// A single text field that accepts a verification code.
+/// Uses a single NSTextField to enable macOS SMS autofill functionality.
 class PinCodeTextView: NSControl, NSTextFieldDelegate {    
-    var code: [Character?] = [] {
+    var code: String = "" {
         didSet {
             guard code != oldValue else { return }
-
-            if let handler = codeDidChange {
-                handler(String(code.compactMap { $0 }))
-            }
-            updateText()
             
-            if code.compactMap({ $0 }).count == numberOfDigits,
-               let handler = codeDidComplete {
-                handler(String(code.compactMap { $0 }))
+            // Ensure code only contains digits and is within length limit
+            let filteredCode = String(code.filter { $0.isNumber }.prefix(numberOfDigits))
+            if filteredCode != code {
+                code = filteredCode
+                return
+            }
+            
+            if textField.stringValue != code {
+                textField.stringValue = code
+            }
+            
+            codeDidChange?(code)
+            
+            if code.count == numberOfDigits {
+                codeDidComplete?(code)
             }
         }
     }
@@ -66,111 +70,78 @@ class PinCodeTextView: NSControl, NSTextFieldDelegate {
     var codeDidComplete: ((String) -> Void)? = nil
 
     private let numberOfDigits: Int
-    private let stackView: NSStackView = .init(frame: .zero)
-    private var characterViews: [PinCodeCharacterTextField] = []
-
+    private let textField: NSTextField
+    
     // MARK: - Initializers
     
-    init(
-        numberOfDigits: Int,
-        itemSpacing: CGFloat
-    ) {
+    init(numberOfDigits: Int) {
         self.numberOfDigits = numberOfDigits
-        super.init(frame: .zero)
-
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.spacing = itemSpacing
-        stackView.orientation = .horizontal
-        stackView.distribution = .fillEqually
-        stackView.alignment = .centerY
-        addSubview(stackView)
-        NSLayoutConstraint.activate([
-            stackView.topAnchor.constraint(equalTo: self.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            stackView.leadingAnchor.constraint(greaterThanOrEqualTo: self.leadingAnchor),
-            stackView.trailingAnchor.constraint(greaterThanOrEqualTo: self.trailingAnchor),
-            stackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-        ])
+        self.textField = NSTextField(frame: .zero)
         
-        self.code = (0..<numberOfDigits).map { _ in nil }
-        self.characterViews = (0..<numberOfDigits).map { _ in
-            let view = PinCodeCharacterTextField()
-            view.translatesAutoresizingMaskIntoConstraints = false
-            view.delegate = self
-            return view
-        }
-        characterViews.forEach { 
-            stackView.addArrangedSubview($0) 
-            stackView.heightAnchor.constraint(equalTo: $0.heightAnchor).isActive = true            
-        }
+        super.init(frame: .zero)
+        
+        setupTextField()
+        setupLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func updateText() {
-        characterViews.enumerated().forEach { (index, item) in
-            if (0..<code.count).contains(index) {
-                let _index = code.index(code.startIndex, offsetBy: index)
-                item.character = code[_index]
-            } else {
-                item.character = nil
-            }
+    private func setupTextField() {
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.delegate = self
+        textField.alignment = .center
+        textField.font = .monospacedDigitSystemFont(ofSize: 32, weight: .medium)
+        textField.placeholderString = String(repeating: "•", count: numberOfDigits)
+        
+        // Enable one-time code autofill
+        if #available(macOS 11.0, *) {
+            textField.contentType = .oneTimeCode
         }
+        
+        // Configure for numeric input
+        textField.allowsEditingTextAttributes = false
+        
+        // Add letter spacing for better readability
+        let formatter = NumberFormatter()
+        formatter.allowsFloats = false
+        formatter.minimum = 0
+        formatter.maximum = NSNumber(value: Int(String(repeating: "9", count: numberOfDigits))!)
+        
+        addSubview(textField)
+    }
+    
+    private func setupLayout() {
+        NSLayoutConstraint.activate([
+            textField.topAnchor.constraint(equalTo: topAnchor),
+            textField.bottomAnchor.constraint(equalTo: bottomAnchor),
+            textField.leadingAnchor.constraint(equalTo: leadingAnchor),
+            textField.trailingAnchor.constraint(equalTo: trailingAnchor),
+            textField.widthAnchor.constraint(greaterThanOrEqualToConstant: CGFloat(numberOfDigits * 30 + 40)),
+            textField.heightAnchor.constraint(greaterThanOrEqualToConstant: 50)
+        ])
     }
     
     // MARK: NSTextFieldDelegate
     
-    func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool {
-        if commandSelector == #selector(deleteBackward(_:)) {
-            // If empty, move to previous or first character view
-            if textView.string.isEmpty {
-                if let lastFieldIndexWithCharacter = code.lastIndex(where: { $0 != nil }) {
-                    window?.makeFirstResponder(characterViews[lastFieldIndexWithCharacter])
-                } else {
-                    window?.makeFirstResponder(characterViews[0])
-                }
-
-                return true
-            }
-        }
-        
-        // Perform default behaviour
-        return false
-    }
-    
     func controlTextDidChange(_ obj: Notification) {
         guard
             let field = obj.object as? NSTextField,
-            isEnabled,
-            let fieldIndex = characterViews.firstIndex(where: { $0 === field })
-        else { return } 
+            field === textField,
+            isEnabled
+        else { return }
         
-        let newFieldText = field.stringValue
+        let newText = field.stringValue
         
-        let lastCharacter: Character?
-        if newFieldText.isEmpty {
-            lastCharacter = nil
-        } else {
-            lastCharacter = newFieldText[newFieldText.index(before: newFieldText.endIndex)]
+        // Filter to only digits
+        let filteredText = String(newText.filter { $0.isNumber }.prefix(numberOfDigits))
+        
+        if filteredText != newText {
+            field.stringValue = filteredText
         }
-
-        code[fieldIndex] = lastCharacter
         
-        if lastCharacter != nil {
-            if fieldIndex >= characterViews.count - 1 {
-                resignFirstResponder()
-            } else {
-                window?.makeFirstResponder(characterViews[fieldIndex + 1])
-            }
-        } else {
-            if let lastFieldIndexWithCharacter = code.lastIndex(where: { $0 != nil }) {
-                window?.makeFirstResponder(characterViews[lastFieldIndexWithCharacter])
-            } else {
-                window?.makeFirstResponder(characterViews[0])
-            }
-        }
+        code = filteredText
     }
     
     // MARK: NSResponder
@@ -180,52 +151,6 @@ class PinCodeTextView: NSControl, NSTextFieldDelegate {
     }
     
     override func becomeFirstResponder() -> Bool {
-        characterViews.first?.becomeFirstResponder() ?? false
-    }
-}
-
-// MARK: - PinCodeCharacterTextField
-
-class PinCodeCharacterTextField: NSTextField {
-    var character: Character? = nil {
-        didSet {
-            stringValue = character.map(String.init) ?? ""
-        }
-    }
-    private var lastSize: NSSize?
-    
-    init() {
-        super.init(frame: .zero)
-
-        wantsLayer = true
-        alignment = .center
-        maximumNumberOfLines = 1
-        font = .boldSystemFont(ofSize: 48)
-        
-        setContentHuggingPriority(.required, for: .vertical)
-        setContentHuggingPriority(.required, for: .horizontal)
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    override func textDidChange(_ notification: Notification) {
-        super.textDidChange(notification)
-        self.invalidateIntrinsicContentSize()
-    }
-    
-    // This is kinda cheating
-    // Assuming that 0 is the widest and tallest character in 0-9
-    override var intrinsicContentSize: NSSize {
-        var size = NSAttributedString(
-            string: "0",
-            attributes: [ .font : self.font! ]
-        )
-        .size()
-        // I guess the cell should probably be doing this sizing in order to take into account everything outside of simply the text's frame, but for some reason I can't find a way to do that which works...
-        size.width += 16
-        size.height += 8
-        return size
+        textField.becomeFirstResponder()
     }
 }
