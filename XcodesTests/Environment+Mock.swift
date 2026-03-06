@@ -18,7 +18,7 @@ extension Shell {
     static var processOutputMock: ProcessOutput = (0, "", "")
 
     static var mock = Shell(
-        unxip: { _ in return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
+        unxip: { _, _ in return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
         spctlAssess: { _ in return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
         codesignVerify: { _ in return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
         buildVersion: { return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },

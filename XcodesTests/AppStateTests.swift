@@ -291,7 +291,7 @@ class AppStateTests: XCTestCase {
     }
 
     func test_Install_NotEnoughFreeSpace() throws {
-        Current.shell.unxip = { _ in
+        Current.shell.unxip = { _, _ in
             Fail(error: ProcessExecutionError(
                     process: Process(),
                     standardOutput: "xip: signing certificate was \"Development Update\" (validation not attempted)", 
