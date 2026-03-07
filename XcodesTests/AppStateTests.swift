@@ -325,4 +325,135 @@ class AppStateTests: XCTestCase {
             XCTFail() 
         }        
     }
+
+    func test_UnarchiveAndMoveXIP_ConcurrentInstalls_DoNotShareExtractionDirectory() throws {
+        enum CollisionError: Error {
+            case extractionDirectoryCollision(String)
+        }
+
+        let stateQueue = DispatchQueue(label: "AppStateTests.ConcurrentInstallState")
+        var existingPaths = Set<String>()
+        var activeExtractionDirectories = Set<String>()
+        var usedExtractionDirectories: [String] = []
+        var failures: [Error] = []
+        var movedDestinations: [String] = []
+        var cancellables = Set<AnyCancellable>()
+
+        Current.files.createDirectory = { directoryURL, _, _ in
+            stateQueue.sync {
+                existingPaths.insert(directoryURL.path)
+            }
+        }
+        Current.files.fileExistsAtPath = { path in
+            stateQueue.sync {
+                existingPaths.contains(path)
+            }
+        }
+        Current.files.moveItem = { source, destination in
+            try stateQueue.sync {
+                guard existingPaths.remove(source.path) != nil else {
+                    throw CocoaError(.fileNoSuchFile)
+                }
+                existingPaths.insert(destination.path)
+            }
+        }
+        Current.files.removeItem = { url in
+            stateQueue.sync {
+                existingPaths.remove(url.path)
+                existingPaths = Set(existingPaths.filter { !$0.hasPrefix(url.path + "/") })
+            }
+        }
+
+        Current.shell.unxip = { _, extractionDirectory in
+            Deferred {
+                Future { promise in
+                    let hasCollision = stateQueue.sync { () -> Bool in
+                        usedExtractionDirectories.append(extractionDirectory.path)
+                        if activeExtractionDirectories.contains(extractionDirectory.path) {
+                            return true
+                        }
+                        activeExtractionDirectories.insert(extractionDirectory.path)
+                        return false
+                    }
+
+                    if hasCollision {
+                        promise(.failure(CollisionError.extractionDirectoryCollision(extractionDirectory.path)))
+                        return
+                    }
+
+                    DispatchQueue.global().asyncAfter(deadline: .now() + 0.05) {
+                        stateQueue.sync {
+                            existingPaths.insert(extractionDirectory.appendingPathComponent("Xcode.app").path)
+                            activeExtractionDirectories.remove(extractionDirectory.path)
+                        }
+                        promise(.success((0, "", "")))
+                    }
+                }
+            }
+            .eraseToAnyPublisher()
+        }
+
+        let sourceDirectory = URL(fileURLWithPath: "/tmp/xcodes-tests", isDirectory: true)
+        let availableXcode16_0 = AvailableXcode(
+            version: Version("16.0.0")!,
+            url: URL(string: "https://developer.apple.com/download/Xcode-16.0.xip")!,
+            filename: "Xcode-16.0.xip",
+            releaseDate: nil
+        )
+        let availableXcode16_1 = AvailableXcode(
+            version: Version("16.1.0")!,
+            url: URL(string: "https://developer.apple.com/download/Xcode-16.1.xip")!,
+            filename: "Xcode-16.1.xip",
+            releaseDate: nil
+        )
+
+        let firstDestination = URL(fileURLWithPath: "/Applications/Xcode-16.0.app")
+        let secondDestination = URL(fileURLWithPath: "/Applications/Xcode-16.1.app")
+
+        let finished = expectation(description: "Both unarchive operations finished")
+        finished.expectedFulfillmentCount = 2
+
+        func subscribe(_ publisher: AnyPublisher<URL, Error>) {
+            publisher
+                .sink(receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        stateQueue.sync {
+                            failures.append(error)
+                        }
+                    }
+                    finished.fulfill()
+                }, receiveValue: { movedURL in
+                    stateQueue.sync {
+                        movedDestinations.append(movedURL.path)
+                    }
+                })
+                .store(in: &cancellables)
+        }
+
+        subscribe(
+            subject.unarchiveAndMoveXIP(
+                availableXcode: availableXcode16_0,
+                at: sourceDirectory.appendingPathComponent("Xcode-16.0.xip"),
+                to: firstDestination
+            )
+        )
+        subscribe(
+            subject.unarchiveAndMoveXIP(
+                availableXcode: availableXcode16_1,
+                at: sourceDirectory.appendingPathComponent("Xcode-16.1.xip"),
+                to: secondDestination
+            )
+        )
+
+        wait(for: [finished], timeout: 2.0)
+
+        XCTAssertTrue(failures.isEmpty, "Expected no extraction directory collisions, but got \(failures)")
+        XCTAssertEqual(Set(movedDestinations), Set([firstDestination.path, secondDestination.path]))
+
+        let expectedExtractionDirectories = Set([
+            sourceDirectory.appendingPathComponent("Xcode-\(availableXcode16_0.version)-extract").path,
+            sourceDirectory.appendingPathComponent("Xcode-\(availableXcode16_1.version)-extract").path
+        ])
+        XCTAssertEqual(Set(usedExtractionDirectories), expectedExtractionDirectories)
+    }
 }
