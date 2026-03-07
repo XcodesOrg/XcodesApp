@@ -25,7 +25,7 @@ public struct Environment {
 public var Current = Environment()
 
 public struct Shell {
-    public var unxip: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.xip, workingDirectory: $0.deletingLastPathComponent(), "--expand", "\($0.path)") }
+    public var unxip: (URL, URL) -> AnyPublisher<ProcessOutput, Error> = { xipURL, workingDirectory in Process.run(Path.root.usr.bin.xip, workingDirectory: workingDirectory, "--expand", "\(xipURL.path)") }
     public var spctlAssess: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.sbin.spctl, "--assess", "--verbose", "--type", "execute", "\($0.path)") }
     public var codesignVerify: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.codesign, "-vv", "-d", "\($0.path)") }
     public var buildVersion: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.sw_vers, "-buildVersion") }
@@ -191,9 +191,9 @@ public struct Shell {
     }
     
     
-    public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
+    public var unxipExperiment: (URL, URL) -> AnyPublisher<ProcessOutput, Error> = { xipURL, workingDirectory in
         let unxipPath = Path(url: Bundle.main.url(forAuxiliaryExecutable: "unxip")!)!
-        return Process.run(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
+        return Process.run(unxipPath.url, workingDirectory: workingDirectory, ["\(xipURL.path)"])
     }
     
     public var downloadRuntime: (String, String, String?) -> AsyncThrowingStream<Progress, Error> = { platform, version, architecture in

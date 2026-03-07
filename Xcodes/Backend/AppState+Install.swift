@@ -250,8 +250,17 @@ extension AppState {
 
     func unarchiveAndMoveXIP(availableXcode: AvailableXcode, at source: URL, to destination: URL) -> AnyPublisher<URL, Swift.Error> {
         self.setInstallationStep(of: availableXcode.version, to: .unarchiving)
-        
-        return unxipOrUnxipExperiment(source)
+
+        // Use a version-specific extraction directory to prevent conflicts when
+        // multiple Xcode versions are installed concurrently. Without this, all
+        // XIP files extract to the same parent directory as "Xcode.app", causing
+        // a race condition where one version’s extracted app gets renamed to
+        // another version’s destination path.
+        let extractionDirectory = source.deletingLastPathComponent()
+            .appendingPathComponent("Xcode-\(availableXcode.version)-extract")
+        try? Current.files.createDirectory(at: extractionDirectory, withIntermediateDirectories: true, attributes: nil)
+
+        return unxipOrUnxipExperiment(source, extractionDirectory: extractionDirectory)
             .catch { error -> AnyPublisher<ProcessOutput, Swift.Error> in
                 if let executionError = error as? ProcessExecutionError {
                    if executionError.standardError.contains("damaged and can’t be expanded") {
@@ -269,8 +278,8 @@ extension AppState {
         .tryMap { output -> URL in
             self.setInstallationStep(of: availableXcode.version, to: .moving(destination: destination.path))
 
-            let xcodeURL = source.deletingLastPathComponent().appendingPathComponent("Xcode.app")
-            let xcodeBetaURL = source.deletingLastPathComponent().appendingPathComponent("Xcode-beta.app")
+            let xcodeURL = extractionDirectory.appendingPathComponent("Xcode.app")
+            let xcodeBetaURL = extractionDirectory.appendingPathComponent("Xcode-beta.app")
             if Current.files.fileExists(atPath: xcodeURL.path) {
                 try Current.files.moveItem(at: xcodeURL, to: destination)
             }
@@ -278,6 +287,7 @@ extension AppState {
                 try Current.files.moveItem(at: xcodeBetaURL, to: destination)
             }
 
+            try? Current.files.removeItem(at: extractionDirectory)
             return destination
         }
         .handleEvents(receiveCancel: {
@@ -287,17 +297,20 @@ extension AppState {
             if Current.files.fileExists(atPath: destination.path) {
                 try? Current.files.removeItem(destination)
             }
+            if Current.files.fileExists(atPath: extractionDirectory.path) {
+                try? Current.files.removeItem(extractionDirectory)
+            }
         })
         .eraseToAnyPublisher()
     }
-    
-    func unxipOrUnxipExperiment(_ source: URL) -> AnyPublisher<ProcessOutput, Error> {
+
+    func unxipOrUnxipExperiment(_ source: URL, extractionDirectory: URL) -> AnyPublisher<ProcessOutput, Error> {
         if unxipExperiment {
             // All hard work done by https://github.com/saagarjha/unxip
             // Compiled to binary with `swiftc -parse-as-library -O unxip.swift`
-            return Current.shell.unxipExperiment(source)
+            return Current.shell.unxipExperiment(source, extractionDirectory)
         } else {
-            return Current.shell.unxip(source)
+            return Current.shell.unxip(source, extractionDirectory)
         }
     }
 
