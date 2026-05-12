@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>com.xcodesorg.xcodesapp.Helper</string>
+	<string>eu.mpwg.xcodes.Helper</string>
 	<key>MachServices</key>
 	<dict>
-		<key>com.xcodesorg.xcodesapp.Helper</key>
+		<key>eu.mpwg.xcodes.Helper</key>
 		<true/>
 	</dict>
 </dict>

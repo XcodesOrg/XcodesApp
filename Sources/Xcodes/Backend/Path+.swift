@@ -2,7 +2,7 @@ import Path
 import Foundation
 
 extension Path {
-    static let defaultXcodesApplicationSupport = Path.applicationSupport/"com.robotsandpencils.XcodesApp"
+    static let defaultXcodesApplicationSupport = Path.applicationSupport/"eu.mpwg.xcodes"
     static var xcodesApplicationSupport: Path {
         guard let savedApplicationSupport = Current.defaults.string(forKey: "localPath") else {
             return defaultXcodesApplicationSupport
@@ -34,7 +34,7 @@ extension Path {
     }
     
     static var xcodesCaches: Path {
-        return caches/"com.xcodesorg.xcodesapp"
+        return caches/"eu.mpwg.xcodes"
     }
     
     @discardableResult

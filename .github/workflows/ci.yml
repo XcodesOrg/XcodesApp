@@ -6,19 +6,21 @@ on:
       - main
     paths:
       - ".github/workflows/ci.yml"
-      - "HelperXPCShared/**"
-      - "Xcodes/**"
+      - "AppleAPI/**"
+      - "Sources/**"
+      - "Tests/**"
       - "Xcodes.xcodeproj/**"
-      - "XcodesTests/**"
-      - "com.xcodesorg.xcodesapp.Helper/**"
+      - "XcodesKit/**"
+      - "project.yml"
   pull_request:
     paths:
       - ".github/workflows/ci.yml"
-      - "HelperXPCShared/**"
-      - "Xcodes/**"
+      - "AppleAPI/**"
+      - "Sources/**"
+      - "Tests/**"
       - "Xcodes.xcodeproj/**"
-      - "XcodesTests/**"
-      - "com.xcodesorg.xcodesapp.Helper/**"
+      - "XcodesKit/**"
+      - "project.yml"
   workflow_dispatch:
 
 permissions:
@@ -33,6 +35,9 @@ env:
   SOURCE_PACKAGES_PATH: .xcode-source-packages
   XCODE_PROJECT: Xcodes.xcodeproj
   XCODE_SCHEME: Xcodes
+  CODE_SIGNING_ALLOWED: NO
+  CODE_SIGNING_REQUIRED: NO
+  CODE_SIGN_IDENTITY: ""
 
 jobs:
   build:
@@ -69,7 +74,7 @@ jobs:
           ${{ env.DERIVED_DATA_PATH }}/Build
           ${{ env.DERIVED_DATA_PATH }}/ModuleCache.noindex
           ${{ env.DERIVED_DATA_PATH }}/SDKStatCaches.noindex
-        key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Xcodes.xcodeproj/project.pbxproj', 'Xcodes.xcodeproj/xcshareddata/xcschemes/*.xcscheme', 'Xcodes.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'HelperXPCShared/**/*.swift', 'Xcodes/**/*.swift', 'Xcodes/Resources/**', 'com.xcodesorg.xcodesapp.Helper/**/*') }}
+        key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Xcodes.xcodeproj/project.pbxproj', 'Xcodes.xcodeproj/xcshareddata/xcschemes/*.xcscheme', 'Xcodes.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Sources/**/*.swift', 'Sources/Xcodes/Resources/**', 'Tests/**/*.swift', 'AppleAPI/**/*.swift', 'XcodesKit/**/*.swift', 'project.yml') }}
         restore-keys: |
           xcodebuild-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-
 
@@ -86,6 +91,8 @@ jobs:
           -clonedSourcePackagesDirPath "${SOURCE_PACKAGES_PATH}" \
           -onlyUsePackageVersionsFromResolvedFile \
           CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGN_IDENTITY="" \
           COMPILER_INDEX_STORE_ENABLE=NO
 
   test:
@@ -125,4 +132,7 @@ jobs:
           -destination "${destination}" \
           -derivedDataPath "${DERIVED_DATA_PATH}-tests" \
           -clonedSourcePackagesDirPath "${SOURCE_PACKAGES_PATH}" \
+          CODE_SIGNING_ALLOWED=NO \
+          CODE_SIGNING_REQUIRED=NO \
+          CODE_SIGN_IDENTITY="" \
           COMPILER_INDEX_STORE_ENABLE=NO

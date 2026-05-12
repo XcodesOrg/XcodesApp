@@ -120,8 +120,8 @@ Follow the steps below to build and release a new version of Xcodes.app. For any
 # Update the version number in Xcode and commit the change, if necessary
 
 # Question: Did anything in XPCHelper change?
-# - com.xcodesorg.xcodesapp.Helper folder and HelperXPCShared
-# - if so, bump the version number in com.xcodesorg.xcodesapp.Helper target.
+# - Sources/PrivilegedHelper and Sources/HelperXPCShared
+# - if so, bump the version number in eu.mpwg.xcodes.Helper target.
 # Note: you do not have to bump the version number if nothing has changed.
 # Note2: If you do bump the version, the end user, must re-install the XPCHelper and give permission again.
 
@@ -129,7 +129,7 @@ Follow the steps below to build and release a new version of Xcodes.app. For any
 scripts/increment_build_number.sh
 
 # Commit the change
-git add Xcodes/Resources/Info.plist
+git add Sources/Xcodes/Resources/Info.plist
 git commit -asm "Increment build number"
 
 # Tag the latest commit

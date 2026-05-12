@@ -14,12 +14,12 @@ updates:
 
   # Maintain SwiftPM dependencies declared by local packages.
   - package-ecosystem: "swift"
-    directory: "/Xcodes/AppleAPI"
+    directory: "/AppleAPI"
     schedule:
       interval: "weekly"
 
   - package-ecosystem: "swift"
-    directory: "/Xcodes/XcodesKit"
+    directory: "/XcodesKit"
     schedule:
       interval: "weekly"
 

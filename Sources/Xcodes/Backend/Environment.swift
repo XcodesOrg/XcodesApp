@@ -373,7 +373,7 @@ public struct Network {
 }
 
 public struct Keychain {
-    private static let service = "com.robotsandpencils.XcodesApp"
+    private static let service = "eu.mpwg.xcodes"
 
     public var getString: (String) throws -> String? = { key in
         let query: [String: Any] = [

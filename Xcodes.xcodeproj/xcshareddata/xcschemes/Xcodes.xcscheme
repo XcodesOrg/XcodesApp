@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "1220"
+   LastUpgradeVersion = "1630"
    version = "1.7">
    <BuildAction
       parallelizeBuildables = "YES"
-      buildImplicitDependencies = "YES">
+      buildImplicitDependencies = "YES"
+      runPostActionsOnFailure = "NO">
       <BuildActionEntries>
          <BuildActionEntry
             buildForTesting = "YES"
@@ -14,7 +15,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAD2E79D2449574E00113D76"
+               BlueprintIdentifier = "ACBEAF23F11BEC57D7212F5D"
                BuildableName = "Xcodes.app"
                BlueprintName = "Xcodes"
                ReferencedContainer = "container:Xcodes.xcodeproj">
@@ -26,19 +27,32 @@
       buildConfiguration = "Test"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
-      shouldUseLaunchSchemeArgsEnv = "YES">
+      shouldUseLaunchSchemeArgsEnv = "YES"
+      onlyGenerateCoverageForSpecifiedTargets = "NO">
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "ACBEAF23F11BEC57D7212F5D"
+            BuildableName = "Xcodes.app"
+            BlueprintName = "Xcodes"
+            ReferencedContainer = "container:Xcodes.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <Testables>
          <TestableReference
-            skipped = "NO">
+            skipped = "NO"
+            parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CAD2E7B22449575100113D76"
+               BlueprintIdentifier = "88A5DC1C3A87E4A46E0805CE"
                BuildableName = "XcodesTests.xctest"
                BlueprintName = "XcodesTests"
                ReferencedContainer = "container:Xcodes.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
+      <CommandLineArguments>
+      </CommandLineArguments>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
@@ -55,12 +69,14 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CAD2E79D2449574E00113D76"
+            BlueprintIdentifier = "ACBEAF23F11BEC57D7212F5D"
             BuildableName = "Xcodes.app"
             BlueprintName = "Xcodes"
             ReferencedContainer = "container:Xcodes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
@@ -72,12 +88,14 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CAD2E79D2449574E00113D76"
+            BlueprintIdentifier = "ACBEAF23F11BEC57D7212F5D"
             BuildableName = "Xcodes.app"
             BlueprintName = "Xcodes"
             ReferencedContainer = "container:Xcodes.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <CommandLineArguments>
+      </CommandLineArguments>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">
@@ -90,12 +108,11 @@
             ActionType = "Xcode.IDEStandardExecutionActionsCore.ExecutionActionType.ShellScriptAction">
             <ActionContent
                title = "Run Script"
-               scriptText = "# https://forums.swift.org/t/swift-package-binary-framework-issue/41922/3&#10;# Remove overzealous copying of Sparkle.framework&#10;set -x&#10;&#10;rm -rf &quot;$ARCHIVE_PRODUCTS_PATH/Applications/$EXECUTABLE_FOLDER_PATH/Sparkle.framework&quot;&#10;rm -rf &quot;$ARCHIVE_PRODUCTS_PATH/Applications/$CONTENTS_FOLDER_PATH/Library/LaunchServices/Sparkle.framework&quot;&#10;"
-               shellToInvoke = "/bin/bash">
+               scriptText = "# https://forums.swift.org/t/swift-package-binary-framework-issue/41922/3&#10;# Remove overzealous copying of Sparkle.framework&#10;set -x&#10;&#10;rm -rf &quot;$ARCHIVE_PRODUCTS_PATH/Applications/$EXECUTABLE_FOLDER_PATH/Sparkle.framework&quot;&#10;rm -rf &quot;$ARCHIVE_PRODUCTS_PATH/Applications/$CONTENTS_FOLDER_PATH/Library/LaunchServices/Sparkle.framework&quot;&#10;">
                <EnvironmentBuildable>
                   <BuildableReference
                      BuildableIdentifier = "primary"
-                     BlueprintIdentifier = "CAD2E79D2449574E00113D76"
+                     BlueprintIdentifier = "ACBEAF23F11BEC57D7212F5D"
                      BuildableName = "Xcodes.app"
                      BlueprintName = "Xcodes"
                      ReferencedContainer = "container:Xcodes.xcodeproj">

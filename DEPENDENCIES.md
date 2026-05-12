@@ -7,7 +7,7 @@ documented owner, reason, and replacement or release plan in this file.
 SwiftPM dependency updates are handled by Dependabot for the Xcode project and
 for each local package. Bundler updates for the AppCast Jekyll site are handled
 by Dependabot as well. Required attributions are maintained statically in
-`Xcodes/Resources/Licenses.md`; update that file when dependencies are added,
+`Sources/Xcodes/Resources/Licenses.md`; update that file when dependencies are added,
 removed, or relicensed.
 
 ## Local Package Boundaries
