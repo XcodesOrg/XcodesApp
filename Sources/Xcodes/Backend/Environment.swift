@@ -204,7 +204,7 @@ public struct Shell {
                 progress.kind = .file
                 progress.fileOperationKind = .downloading
                 
-                var process = Process()
+                let process = Process()
                 let xcodeBuildPath = Path.root.usr.bin.join("xcodebuild").url
                 
                 process.executableURL = xcodeBuildPath

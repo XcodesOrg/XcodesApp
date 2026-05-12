@@ -86,13 +86,13 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     }
 }
 
-public struct SDKToSeedMapping: Codable {
+public struct SDKToSeedMapping: Codable, Sendable {
     public let buildUpdate: String
     public let platform: DownloadableRuntime.Platform
     public let seedNumber: Int
 }
 
-public struct SDKToSimulatorMapping: Codable {
+public struct SDKToSimulatorMapping: Codable, Sendable {
     public let sdkBuildUpdate: String
     public let simulatorBuildUpdate: String
     public let sdkIdentifier: String
@@ -100,33 +100,33 @@ public struct SDKToSimulatorMapping: Codable {
 }
 
 extension DownloadableRuntime {
-    public struct SimulatorVersion: Codable, Hashable {
+    public struct SimulatorVersion: Codable, Hashable, Sendable {
         public let buildUpdate: String
         public let version: String
     }
 
-    public struct HostRequirements: Codable, Hashable {
+    public struct HostRequirements: Codable, Hashable, Sendable {
         let maxHostVersion: String?
         let excludedHostArchitectures: [String]?
         let minHostVersion: String?
         let minXcodeVersion: String?
     }
 
-    public enum Authentication: String, Codable {
+    public enum Authentication: String, Codable, Sendable {
         case virtual = "virtual"
     }
 
-    public enum Category: String, Codable {
+    public enum Category: String, Codable, Sendable {
         case simulator = "simulator"
     }
 
-    public enum ContentType: String, Codable {
+    public enum ContentType: String, Codable, Sendable {
         case diskImage = "diskImage"
         case package = "package"
         case cryptexDiskImage = "cryptexDiskImage"
     }
 
-    public enum Platform: String, Codable {
+    public enum Platform: String, Codable, Sendable {
         case iOS = "com.apple.platform.iphoneos"
         case macOS = "com.apple.platform.macosx"
         case watchOS = "com.apple.platform.watchos"
@@ -156,7 +156,7 @@ extension DownloadableRuntime {
     }
 }
 
-public struct InstalledRuntime: Decodable {
+public struct InstalledRuntime: Decodable, Sendable {
     let build: String
     let deletable: Bool
     let identifier: UUID
@@ -174,13 +174,13 @@ public struct InstalledRuntime: Decodable {
 }
 
 extension InstalledRuntime {
-    enum Kind: String, Decodable {
+    enum Kind: String, Decodable, Sendable {
         case diskImage = "Disk Image"
         case bundled = "Bundled with Xcode"
         case legacyDownload = "Legacy Download"
     }
 
-    enum Platform: String, Decodable {
+    enum Platform: String, Decodable, Sendable {
         case tvOS = "com.apple.platform.appletvsimulator"
         case iOS = "com.apple.platform.iphonesimulator"
         case watchOS = "com.apple.platform.watchsimulator"
@@ -196,4 +196,3 @@ extension InstalledRuntime {
         }
     }
 }
-

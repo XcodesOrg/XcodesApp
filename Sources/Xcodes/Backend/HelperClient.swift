@@ -1,7 +1,12 @@
 import Combine
 import Foundation
 import os.log
+import Security
 import ServiceManagement
+
+@_silgen_name("SMJobBless")
+@discardableResult
+private func legacySMJobBless(_ domain: CFString?, _ executableLabel: CFString, _ auth: AuthorizationRef?, _ error: UnsafeMutablePointer<Unmanaged<CFError>?>?) -> Bool
 
 final class HelperClient {
     private var connection: NSXPCConnection?
@@ -320,7 +325,8 @@ final class HelperClient {
         do {
             let authRef = try authorizationRef(&authRights, nil, [.interactionAllowed, .extendRights, .preAuthorize])
             var cfError: Unmanaged<CFError>?
-            SMJobBless(kSMDomainSystemLaunchd, machServiceName as CFString, authRef, &cfError)
+            // Preserve the existing privileged-helper install flow until the app can migrate to SMAppService packaging.
+            legacySMJobBless(kSMDomainSystemLaunchd, machServiceName as CFString, authRef, &cfError)
             if let error = cfError?.takeRetainedValue() { throw error }
 
             self.connection?.invalidate()

@@ -8,7 +8,7 @@
 import Foundation
 
 /// The name of an Architecture.
-public enum Architecture: String, Codable, Equatable, Hashable, Identifiable, CaseIterable {
+public enum Architecture: String, Codable, Equatable, Hashable, Identifiable, CaseIterable, Sendable {
     public var id: Self { self }
     
     /// The Arm64 architecture (Apple Silicon)
@@ -35,7 +35,7 @@ public enum Architecture: String, Codable, Equatable, Hashable, Identifiable, Ca
     }
 }
 
-public enum ArchitectureVariant: String, Codable, Equatable, Hashable, Identifiable, CaseIterable {
+public enum ArchitectureVariant: String, Codable, Equatable, Hashable, Identifiable, CaseIterable, Sendable {
     public var id: Self { self }
     
     case universal

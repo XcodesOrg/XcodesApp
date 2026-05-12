@@ -55,7 +55,7 @@ struct PlatformsListView: View {
         .task {
             loadRuntimes()
         }
-        .onChange(of: appState.installedRuntimes) { _ in
+        .onChange(of: appState.installedRuntimes) { _, _ in
             loadRuntimes()
         }
     }

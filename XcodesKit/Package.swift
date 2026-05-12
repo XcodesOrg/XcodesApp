@@ -3,6 +3,10 @@
 
 import PackageDescription
 
+let warningsAsErrors: [SwiftSetting] = [
+    .unsafeFlags(["-warnings-as-errors"])
+]
+
 let package = Package(
     name: "XcodesKit",
     platforms: [.macOS(.v13)],
@@ -23,9 +27,11 @@ let package = Package(
             name: "XcodesKit",
             dependencies: [
                 .product(name: "Path", package: "Path.swift")
-            ]),
+            ],
+            swiftSettings: warningsAsErrors),
         .testTarget(
             name: "XcodesKitTests",
-            dependencies: ["XcodesKit"]),
+            dependencies: ["XcodesKit"],
+            swiftSettings: warningsAsErrors),
     ]
 )

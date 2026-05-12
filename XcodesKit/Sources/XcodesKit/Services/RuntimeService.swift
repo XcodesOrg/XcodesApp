@@ -52,8 +52,8 @@ public struct RuntimeService {
     /// Loops through `/Library/Developer/CoreSimulator/images/images.plist` which contains a list of downloaded Simuator Runtimes
     /// This is different then using `simctl` (`installedRuntimes()`) which only returns the installed runtimes for the selected xcode version.
     public func localInstalledRuntimes() async throws -> [CoreSimulatorImage] {
-        guard let path = Path("/Library/Developer/CoreSimulator/images/images.plist") else { throw "Could not find images.plist for CoreSimulators" }
-        guard let infoPlistData = FileManager.default.contents(atPath: path.string) else { throw "Could not get data from \(path.string)" }
+        guard let path = Path("/Library/Developer/CoreSimulator/images/images.plist") else { throw MessageError("Could not find images.plist for CoreSimulators") }
+        guard let infoPlistData = FileManager.default.contents(atPath: path.string) else { throw MessageError("Could not get data from \(path.string)") }
         
         do {
             let infoPlist: CoreSimulatorPlist = try PropertyListDecoder().decode(CoreSimulatorPlist.self, from: infoPlistData)
@@ -99,11 +99,21 @@ public struct RuntimeService {
             _ = try await Current.shell.deleteRuntime(identifier)
         } catch {
             if let executionError = error as? ProcessExecutionError {
-                throw executionError.standardError
+                throw MessageError(executionError.standardError)
             }
             throw error
         }
     }
 }
 
-extension String: Error {}
+public struct MessageError: LocalizedError, Equatable, Sendable {
+    public let message: String
+
+    public init(_ message: String) {
+        self.message = message
+    }
+
+    public var errorDescription: String? {
+        message
+    }
+}

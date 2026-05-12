@@ -303,7 +303,7 @@ class AppStateUpdateTests: XCTestCase {
         let derivedKeyLength: Int = 32
         var keyArray = Array<UInt8>(repeating: 0, count: derivedKeyLength)
 
-        let result:Int32 = keyArray.withUnsafeMutableBytes { keyBytes -> Int32 in
+        let result: Int32 = keyArray.withUnsafeMutableBytes { keyBytes -> Int32 in
             let keyBuffer = UnsafeMutablePointer<UInt8>(keyBytes.baseAddress!.assumingMemoryBound(to: UInt8.self))
             return password.withUnsafeBytes { passwordDigestBytes -> Int32 in
                 let passwordBuffer = UnsafePointer<UInt8>(passwordDigestBytes.baseAddress!.assumingMemoryBound(to: UInt8.self))
@@ -323,6 +323,7 @@ class AppStateUpdateTests: XCTestCase {
                 }
             }
         }
+        XCTAssertEqual(result, Int32(kCCSuccess))
 
         let expectedKey: [UInt8] = [0x40, 0x53, 0x2b, 0x4d, 0xe9, 0x35, 0x3f, 0xc5, 0x37, 0xdc, 0x62, 0xee, 0x84, 0xea, 0xce, 0xbd, 0x7e, 0xcb, 0x5e, 0xc2, 0x6e, 0xfc, 0xa9, 0x8b, 0xd0, 0x1b, 0x03, 0x80, 0xe3, 0x02, 0x10, 0x0f]
 

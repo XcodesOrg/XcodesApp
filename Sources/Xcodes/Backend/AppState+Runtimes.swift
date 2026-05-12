@@ -23,7 +23,7 @@ extension AppState {
                     return updatedRuntime
                 }
     
-                DispatchQueue.main.async {
+                Task { @MainActor in
                     self.downloadableRuntimes = runtimes
                 }
                 try? cacheDownloadableRuntimes(runtimes)
@@ -39,7 +39,7 @@ extension AppState {
                 Logger.appState.info("Loading Installed runtimes")
                 let runtimes = try await self.runtimeService.localInstalledRuntimes()
                 
-                DispatchQueue.main.async {
+                Task { @MainActor in
                     self.installedRuntimes = runtimes
                 }
             } catch {
@@ -51,7 +51,7 @@ extension AppState {
     func downloadRuntime(runtime: DownloadableRuntime) {
         guard let selectedXcode = self.allXcodes.first(where: { $0.selected }) else {
             Logger.appState.error("No selected Xcode")
-            DispatchQueue.main.async {
+            Task { @MainActor in
                 self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: "No selected Xcode. Please make an Xcode active")
             }
             return
@@ -69,7 +69,7 @@ extension AppState {
                     } else {
                         // not supported
                         Logger.appState.error("Trying to download a runtime we can't download")
-                        DispatchQueue.main.async {
+                        Task { @MainActor in
                             self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: localizeString("Alert.Install.Error.Need.Xcode26"))
                         }
                         return
@@ -81,7 +81,7 @@ extension AppState {
             } else {
                 // not supported
                 Logger.appState.error("Trying to download a runtime we can't download")
-                DispatchQueue.main.async {
+                Task { @MainActor in
                     self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: localizeString("Alert.Install.Error.Need.Xcode16.1"))
                 }
                 return
@@ -100,11 +100,11 @@ extension AppState {
             do {
                 for try await progress in downloadRuntimeTask {
                     if progress.isIndeterminate {
-                        DispatchQueue.main.async {
+                        Task { @MainActor in
                             self.setInstallationStep(of: runtime, to: .installing, postNotification: false)
                         }
                     } else {
-                        DispatchQueue.main.async {
+                        Task { @MainActor in
                             self.setInstallationStep(of: runtime, to: .downloading(progress: progress), postNotification: false)
                         }
                     }
@@ -112,7 +112,7 @@ extension AppState {
                 }
                 Logger.appState.debug("Done downloading runtime - \(runtime.name)")
                 
-                DispatchQueue.main.async {
+                Task { @MainActor in
                     guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
                     self.downloadableRuntimes[index].installState = .installed
                     self.update()
@@ -120,13 +120,9 @@ extension AppState {
                 
             } catch {
                     Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
-                    DispatchQueue.main.async {
+                    Task { @MainActor in
                         self.error = error
-                        if let error = error as? String {
-                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error)
-                        } else {
-                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
-                        }
+                        self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
                     }
                 }
         }
@@ -138,25 +134,25 @@ extension AppState {
                 let downloadedURL = try await downloadRunTimeFull(runtime: runtime)
                 if !Task.isCancelled {
                     Logger.appState.debug("Installing runtime: \(runtime.name)")
-                    DispatchQueue.main.async {
+                    Task { @MainActor in
                         self.setInstallationStep(of: runtime, to: .installing)
                     }
                     switch runtime.contentType {
                     case .cryptexDiskImage:
                         // not supported yet (do we need to for old packages?)
-                        throw "Installing via cryptexDiskImage not support - please install manually from \(downloadedURL.description)"
+                        throw MessageError("Installing via cryptexDiskImage not support - please install manually from \(downloadedURL.description)")
                     case .package:
                         // not supported yet (do we need to for old packages?)
-                        throw "Installing via package not support - please install manually from \(downloadedURL.description)"
+                        throw MessageError("Installing via package not support - please install manually from \(downloadedURL.description)")
                     case .diskImage:
                         try await self.installFromImage(dmgURL: downloadedURL)
-                        DispatchQueue.main.async {
+                        Task { @MainActor in
                             self.setInstallationStep(of: runtime, to: .trashingArchive)
                         }
                         try Current.files.removeItem(at: downloadedURL)
                     }
                 
-                    DispatchQueue.main.async {
+                    Task { @MainActor in
                         guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
                         self.downloadableRuntimes[index].installState = .installed
                     }
@@ -166,13 +162,9 @@ extension AppState {
             }
             catch {
                 Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
-                DispatchQueue.main.async {
+                Task { @MainActor in
                     self.error = error
-                    if let error = error as? String {
-                        self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error)
-                    } else {
-                        self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
-                    }
+                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
                 }
             }
         }
@@ -180,11 +172,11 @@ extension AppState {
     
     func downloadRunTimeFull(runtime: DownloadableRuntime) async throws -> URL {
         guard let source = runtime.source else {
-            throw "Invalid runtime source"
+            throw MessageError("Invalid runtime source")
         }
         
         guard let downloadPath = runtime.downloadPath else {
-            throw "Invalid runtime downloadPath"
+            throw MessageError("Invalid runtime downloadPath")
         }
     
         // sets a proper cookie for runtimes
@@ -210,14 +202,14 @@ extension AppState {
         case .aria2:
             let aria2Path = Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!
                 for try await progress in downloadRuntimeWithAria2(runtime, to: expectedRuntimePath, aria2Path: aria2Path) {
-                    DispatchQueue.main.async {
+                    Task { @MainActor in
                         self.setInstallationStep(of: runtime, to: .downloading(progress: progress), postNotification: false)
                     }
                 }
                 Logger.appState.debug("Done downloading runtime")
 
         case .urlSession:
-            throw "Downloading runtimes with URLSession is not supported. Please use aria2"
+            throw MessageError("Downloading runtimes with URLSession is not supported. Please use aria2")
         }
         return expectedRuntimePath.url
     }
@@ -225,7 +217,7 @@ extension AppState {
     public func downloadRuntimeWithAria2(_ runtime: DownloadableRuntime, to destination: Path, aria2Path: Path) -> AsyncThrowingStream<Progress, Error> {
         guard let url = runtime.url else {
             return AsyncThrowingStream<Progress, Error> { continuation in
-                continuation.finish(throwing: "Invalid or non existant runtime url")
+                continuation.finish(throwing: MessageError("Invalid or non existant runtime url"))
             }
         }
         
@@ -286,11 +278,12 @@ extension AppState {
             try await runtimeService.deleteRuntime(identifier: info.uuid)
             
             // give it some time to actually finish deleting before updating
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { [weak self] in
+            let updateInstalledRuntimes = DispatchWorkItem { [weak self] in
                 self?.updateInstalledRuntimes()
             }
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5, execute: updateInstalledRuntimes)
         } else {
-            throw "No simulator found with \(runtime.identifier)"
+            throw MessageError("No simulator found with \(runtime.identifier)")
         }
     }
 }
