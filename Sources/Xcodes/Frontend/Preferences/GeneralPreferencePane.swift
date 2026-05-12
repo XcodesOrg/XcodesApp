@@ -7,8 +7,8 @@ struct GeneralPreferencePane: View {
     var body: some View {
         VStack(alignment: .leading) {
             GroupBox(label: Text("AppleID")) {
-                if appState.authenticationState == .authenticated {
-                    SignedInView()
+                if appState.authenticationStore.authenticationState == .authenticated {
+                    SignedInView(authenticationStore: appState.authenticationStore)
                 } else {
                     Button("SignIn", action: { self.appState.presentedSheet = .signIn })
                 }

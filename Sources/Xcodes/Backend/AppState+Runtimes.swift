@@ -179,7 +179,7 @@ extension AppState {
         }
     
         // sets a proper cookie for runtimes
-        try await validateADCSession(path: downloadPath)
+        try await authenticationStore.validateADCSession(path: downloadPath)
         
         let downloader = Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2
         

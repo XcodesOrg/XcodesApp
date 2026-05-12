@@ -74,6 +74,8 @@ extension Network {
             return Just(())
                 .setFailureType(to: Error.self)
                 .eraseToAnyPublisher()
+        },
+        validateSessionAsync: {
         }
     )
 }

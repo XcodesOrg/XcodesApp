@@ -73,12 +73,21 @@ extension AppState {
     private func updateAvailableXcodes(from dataSource: DataSource) -> AnyPublisher<[AvailableXcode], Error> {
         switch dataSource {
         case .apple:
-            return signInIfNeeded()
-                .flatMap { [unowned self] in
-                    // this will check to see if the Apple ID is a valid Apple Developer or not.
-                    // If it's not, we can't use the Apple source to get xcode info.
-                    self.validateSession()
+            return Future<Void, Error> { promise in
+                nonisolated(unsafe) let promise = promise
+                Task { @MainActor in
+                    do {
+                        try await self.authenticationStore.signInIfNeeded()
+                        // this will check to see if the Apple ID is a valid Apple Developer or not.
+                        // If it's not, we can't use the Apple source to get xcode info.
+                        try await self.authenticationStore.validateSession()
+                        promise(.success(()))
+                    } catch {
+                        promise(.failure(error))
+                    }
                 }
+            }
+            .eraseToAnyPublisher()
                 .flatMap { [unowned self] in self.releasedXcodes().combineLatest(self.prereleaseXcodes()) }
                 .receive(on: DispatchQueue.main)
                 .map { releasedXcodes, prereleaseXcodes in

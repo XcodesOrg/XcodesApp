@@ -1,16 +1,16 @@
 import SwiftUI
 
 struct SignedInView: View {
-    @EnvironmentObject var appState: AppState
+    let authenticationStore: AuthenticationStore
 
     private var username: String {
-        appState.savedUsername ?? ""
+        authenticationStore.savedUsername ?? ""
     }
 
     var body: some View {
         HStack(alignment:.top, spacing: 10) {
             Text(username)
-            Button("SignOut", action: appState.signOut)
+            Button("SignOut", action: authenticationStore.signOut)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -18,7 +18,7 @@ struct SignedInView: View {
 
 struct SignedInView_Previews: PreviewProvider {
     static var previews: some View {
-        SignedInView()
+        SignedInView(authenticationStore: AuthenticationStore())
             .previewLayout(.sizeThatFits)
     }
 }

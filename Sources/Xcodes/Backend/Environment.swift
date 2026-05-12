@@ -468,6 +468,10 @@ public struct Network: @unchecked Sendable {
     public var validateSession: () -> AnyPublisher<Void, Error> = {
         return client.validateSession()
     }
+
+    public var validateSessionAsync: @Sendable () async throws -> Void = {
+        try await client.validateSession()
+    }
 }
 
 public struct Keychain: @unchecked Sendable {

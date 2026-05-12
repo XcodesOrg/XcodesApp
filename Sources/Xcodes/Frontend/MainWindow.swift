@@ -77,7 +77,6 @@ struct MainWindow: View {
                     .environmentObject(appState)
             case .twoFactor(let secondFactorData):
                 secondFactorView(secondFactorData)
-                    .environmentObject(appState)
             }
         }
         .alert(item: $appState.presentedAlert, content: { presentedAlert in
@@ -104,19 +103,19 @@ struct MainWindow: View {
     private func secondFactorView(_ secondFactorData: XcodesSheet.SecondFactorData) -> some View {
         switch secondFactorData.option {
         case .codeSent:
-            SignIn2FAView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+            SignIn2FAView(authenticationStore: appState.authenticationStore, isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsSent(let trustedPhoneNumber):
-            SignInSMSView(isPresented: $appState.presentedSheet.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+            SignInSMSView(authenticationStore: appState.authenticationStore, isPresented: $appState.presentedSheet.isNotNil, trustedPhoneNumber: trustedPhoneNumber, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         case .smsPendingChoice:
-            SignInPhoneListView(isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
+            SignInPhoneListView(authenticationStore: appState.authenticationStore, isPresented: $appState.presentedSheet.isNotNil, authOptions: secondFactorData.authOptions, sessionData: secondFactorData.sessionData)
         }
     }
 
     @ViewBuilder
     private func signInView() -> some View {
-        if appState.authenticationState == .authenticated {
+        if appState.authenticationStore.authenticationState == .authenticated {
             VStack {
-                SignedInView()
+                SignedInView(authenticationStore: appState.authenticationStore)
                     .padding(32)
                 HStack {
                     Spacer()
@@ -126,7 +125,9 @@ struct MainWindow: View {
             }
             .padding()
         } else {
-            SignInCredentialsView()
+            SignInCredentialsView(authenticationStore: appState.authenticationStore) {
+                appState.presentedSheet = nil
+            }
                 .frame(width: 400)
         }
     }

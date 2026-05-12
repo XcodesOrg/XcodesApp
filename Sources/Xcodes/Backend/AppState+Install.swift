@@ -62,7 +62,18 @@ extension AppState {
         
         setupDockProgress()
         
-        return validateSession()
+        return Future<Void, Error> { promise in
+            nonisolated(unsafe) let promise = promise
+            Task { @MainActor in
+                do {
+                    try await self.authenticationStore.validateSession()
+                    promise(.success(()))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
+        }
+        .eraseToAnyPublisher()
             .flatMap { _ in
                 self.getXcodeArchive(installationType, downloader: downloader)
             }

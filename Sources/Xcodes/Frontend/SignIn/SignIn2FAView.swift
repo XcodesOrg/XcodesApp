@@ -2,7 +2,7 @@ import SwiftUI
 import AppleAPI
 
 struct SignIn2FAView: View {
-    @EnvironmentObject var appState: AppState
+    @Bindable var authenticationStore: AuthenticationStore
     @Binding var isPresented: Bool
     @State private var code: String = ""
     let authOptions: AuthOptionsResponse
@@ -16,7 +16,7 @@ struct SignIn2FAView: View {
             HStack {
                 Spacer()
                 PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode!.length) {
-                    appState.submitSecurityCode(.device(code: $0), sessionData: sessionData)
+                    authenticationStore.submitSecurityCode(.device(code: $0), sessionData: sessionData)
                 }
                 Spacer()
             }
@@ -25,10 +25,10 @@ struct SignIn2FAView: View {
             HStack {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
-                Button("SendSMS", action: { appState.choosePhoneNumberForSMS(authOptions: authOptions, sessionData: sessionData) })
+                Button("SendSMS", action: { authenticationStore.choosePhoneNumberForSMS(authOptions: authOptions, sessionData: sessionData) })
                 Spacer()
-                ProgressButton(isInProgress: appState.isProcessingAuthRequest,
-                               action: { appState.submitSecurityCode(.device(code: code), sessionData: sessionData) }) {
+                ProgressButton(isInProgress: authenticationStore.isProcessingAuthRequest,
+                               action: { authenticationStore.submitSecurityCode(.device(code: code), sessionData: sessionData) }) {
                     Text("Continue")
                 }
                 .keyboardShortcut(.defaultAction)
@@ -37,13 +37,14 @@ struct SignIn2FAView: View {
             .frame(height: 25)
         }
         .padding()
-        .emittingError($appState.authError, recoveryHandler: { _ in })
+        .emittingError($authenticationStore.authError, recoveryHandler: { _ in })
     }
 }
 
 struct SignIn2FAView_Previews: PreviewProvider {
     static var previews: some View {
         SignIn2FAView(
+            authenticationStore: AuthenticationStore(),
             isPresented: .constant(true),
             authOptions: AuthOptionsResponse(
                 trustedPhoneNumbers: nil,
@@ -52,6 +53,5 @@ struct SignIn2FAView_Previews: PreviewProvider {
             ),
             sessionData: AppleSessionData(serviceKey: "", sessionID: "", scnt: "")
         )
-            .environmentObject(AppState())
     }
 }

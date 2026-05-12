@@ -108,6 +108,71 @@ public final class Client: Sendable {
             .mapError { $0 as Swift.Error }
             .eraseToAnyPublisher()
     }
+
+    @MainActor
+    public func srpLogin(accountName: String, password: String) async throws -> AuthenticationState {
+        let client = SRPClient(configuration: SRPConfiguration<SHA256>(.N2048))
+        let clientKeys = client.generateKeys()
+        let a = clientKeys.public
+
+        let serviceKeyData = try await data(for: URLRequest.itcServiceKey).0
+        let serviceKey = try JSONDecoder().decode(ServiceKeyResponse.self, from: serviceKeyData).authServiceKey
+        let hashcash = try await loadHashcash(accountName: accountName, serviceKey: serviceKey)
+
+        let srpInitData = try await data(for: URLRequest.SRPInit(serviceKey: serviceKey, a: Data(a.bytes).base64EncodedString(), accountName: accountName)).0
+        let srpInit = try JSONDecoder().decode(ServerSRPInitResponse.self, from: srpInitData)
+
+        guard
+            let decodedB = Data(base64Encoded: srpInit.b),
+            let decodedSalt = Data(base64Encoded: srpInit.salt),
+            let encryptedPassword = pbkdf2(
+                password: password,
+                saltData: decodedSalt,
+                keyByteCount: 32,
+                prf: CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256),
+                rounds: srpInit.iteration,
+                protocol: srpInit.protocol
+            )
+        else {
+            throw AuthenticationError.srpInvalidPublicKey
+        }
+
+        let sharedSecret: SRPKey
+        do {
+            sharedSecret = try client.calculateSharedSecret(
+                password: [UInt8](encryptedPassword),
+                salt: [UInt8](decodedSalt),
+                clientKeys: clientKeys,
+                serverPublicKey: .init([UInt8](decodedB))
+            )
+        } catch {
+            throw AuthenticationError.srpInvalidPublicKey
+        }
+
+        let m1 = client.calculateClientProof(username: accountName, salt: [UInt8](decodedSalt), clientPublicKey: a, serverPublicKey: .init([UInt8](decodedB)), sharedSecret: .init(sharedSecret.bytes))
+        let m2 = client.calculateServerProof(clientPublicKey: a, clientProof: m1, sharedSecret: .init([UInt8](sharedSecret.bytes)))
+
+        let (signInData, signInURLResponse) = try await data(for: URLRequest.SRPComplete(serviceKey: serviceKey, hashcash: hashcash, accountName: accountName, c: srpInit.c, m1: Data(m1).base64EncodedString(), m2: Data(m2).base64EncodedString()))
+        let signInResponse = try JSONDecoder().decode(SignInResponse.self, from: signInData)
+        let httpResponse = signInURLResponse as! HTTPURLResponse
+
+        switch httpResponse.statusCode {
+        case 200:
+            _ = try await data(for: URLRequest.olympusSession)
+            return .authenticated
+        case 401:
+            throw AuthenticationError.invalidUsernameOrPassword(username: accountName)
+        case 403:
+            let errorMessage = signInResponse.serviceErrors?.first?.description.replacingOccurrences(of: "-20209: ", with: "") ?? ""
+            throw AuthenticationError.accountLocked(errorMessage)
+        case 409:
+            return try await handleTwoStepOrFactor(data: signInData, response: signInURLResponse, serviceKey: serviceKey)
+        case 412 where Client.authTypes.contains(signInResponse.authType ?? ""):
+            throw AuthenticationError.appleIDAndPrivacyAcknowledgementRequired
+        default:
+            throw AuthenticationError.unexpectedSignInResponse(statusCode: httpResponse.statusCode, message: signInResponse.serviceErrors?.map { $0.description }.joined(separator: ", "))
+        }
+    }
     
     func loadHashcash(accountName: String, serviceKey: String) -> AnyPublisher<String, Swift.Error> {
         
@@ -147,6 +212,32 @@ public final class Client: Sendable {
     
     }
 
+    @MainActor
+    func loadHashcash(accountName: String, serviceKey: String) async throws -> String {
+        let request = try URLRequest.federate(account: accountName, serviceKey: serviceKey)
+        let (data, response) = try await data(for: request)
+        guard let urlResponse = response as? HTTPURLResponse else {
+            throw AuthenticationError.invalidSession
+        }
+
+        switch urlResponse.statusCode {
+        case 200..<300:
+            guard
+                let bitsString = urlResponse.allHeaderFields["X-Apple-HC-Bits"] as? String,
+                let bits = UInt(bitsString),
+                let challenge = urlResponse.allHeaderFields["X-Apple-HC-Challenge"] as? String,
+                let hashcash = Hashcash().mint(resource: challenge, bits: bits)
+            else {
+                throw AuthenticationError.invalidHashcash
+            }
+            return hashcash
+        case 400, 401:
+            throw AuthenticationError.invalidHashcash
+        case let code:
+            throw AuthenticationError.badStatusCode(statusCode: code, data: data, response: urlResponse)
+        }
+    }
+
     func handleTwoStepOrFactor(data: Data, response: URLResponse, serviceKey: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
         let httpResponse = response as! HTTPURLResponse
         let sessionID = (httpResponse.allHeaderFields["X-Apple-ID-Session-Id"] as! String)
@@ -174,6 +265,27 @@ public final class Client: Sendable {
             }
             .eraseToAnyPublisher()
     }
+
+    @MainActor
+    func handleTwoStepOrFactor(data: Data, response: URLResponse, serviceKey: String) async throws -> AuthenticationState {
+        let httpResponse = response as! HTTPURLResponse
+        let sessionID = httpResponse.allHeaderFields["X-Apple-ID-Session-Id"] as! String
+        let scnt = httpResponse.allHeaderFields["scnt"] as! String
+        let authOptionsData = try await self.data(for: URLRequest.authOptions(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)).0
+        let authOptions = try JSONDecoder().decode(AuthOptionsResponse.self, from: authOptionsData)
+
+        switch authOptions.kind {
+        case .twoStep:
+            throw AuthenticationError.accountUsesTwoStepAuthentication
+        case .twoFactor:
+            return handleTwoFactor(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, authOptions: authOptions)
+        case .securityKey:
+            throw AuthenticationError.accountUsesSecurityKeyAuthentication
+        case .unknown:
+            let possibleResponseString = String(data: data, encoding: .utf8)
+            throw AuthenticationError.accountUsesUnknownAuthenticationKind(possibleResponseString)
+        }
+    }
     
     func handleTwoFactor(serviceKey: String, sessionID: String, scnt: String, authOptions: AuthOptionsResponse) -> AnyPublisher<AuthenticationState, Error> {
         let option: TwoFactorOption
@@ -194,6 +306,22 @@ public final class Client: Sendable {
             .setFailureType(to: Error.self)
             .eraseToAnyPublisher()
     }
+
+    @MainActor
+    func handleTwoFactor(serviceKey: String, sessionID: String, scnt: String, authOptions: AuthOptionsResponse) -> AuthenticationState {
+        let option: TwoFactorOption
+
+        if authOptions.smsAutomaticallySent {
+            option = .smsSent(authOptions.trustedPhoneNumbers!.first!)
+        } else if authOptions.canFallBackToSMS {
+            option = .smsPendingChoice
+        } else {
+            option = .codeSent
+        }
+
+        let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
+        return .waitingForSecondFactor(option, authOptions, sessionData)
+    }
     
     // MARK: - Continue 2FA
     
@@ -208,6 +336,13 @@ public final class Client: Sendable {
         }
         .map { _ in AuthenticationState.waitingForSecondFactor(.smsSent(trustedPhoneNumber), authOptions, sessionData) }
         .eraseToAnyPublisher()
+    }
+
+    @MainActor
+    public func requestSMSSecurityCode(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) async throws -> AuthenticationState {
+        let request = try URLRequest.requestSecurityCode(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, trustedPhoneID: trustedPhoneNumber.id)
+        _ = try await data(for: request)
+        return .waitingForSecondFactor(.smsSent(trustedPhoneNumber), authOptions, sessionData)
     }
     
     public func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
@@ -236,6 +371,25 @@ public final class Client: Sendable {
                 }
         }
         .eraseToAnyPublisher()
+    }
+
+    @MainActor
+    public func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) async throws -> AuthenticationState {
+        let request = try URLRequest.submitSecurityCode(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt, code: code)
+        let (data, response) = try await self.data(for: request)
+        if let urlResponse = response as? HTTPURLResponse {
+            switch urlResponse.statusCode {
+            case 200..<300:
+                break
+            case 400, 401:
+                throw AuthenticationError.incorrectSecurityCode
+            case 412:
+                throw AuthenticationError.appleIDAndPrivacyAcknowledgementRequired
+            case let code:
+                throw AuthenticationError.badStatusCode(statusCode: code, data: data, response: urlResponse)
+            }
+        }
+        return try await updateSession(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
     }
     
     public func submitChallenge(response: Data, sessionData: AppleSessionData) -> AnyPublisher<AuthenticationState, Error> {
@@ -289,6 +443,17 @@ public final class Client: Sendable {
             }
             .eraseToAnyPublisher()
     }
+
+    @MainActor
+    public func validateSession() async throws {
+        let (data, response) = try await self.data(for: URLRequest.olympusSession)
+        let httpResponse = response as! HTTPURLResponse
+        if httpResponse.statusCode == 401 {
+            throw AuthenticationError.notAuthorized
+        }
+
+        _ = try JSONDecoder().decode(AppleSession.self, from: data)
+    }
     
     func updateSession(serviceKey: String, sessionID: String, scnt: String) -> AnyPublisher<AuthenticationState, Error> {
         return Current.network.dataTask(with: URLRequest.trust(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt))
@@ -298,6 +463,18 @@ public final class Client: Sendable {
             }
             .mapError { $0 as Error }
             .eraseToAnyPublisher()
+    }
+
+    @MainActor
+    func updateSession(serviceKey: String, sessionID: String, scnt: String) async throws -> AuthenticationState {
+        _ = try await data(for: URLRequest.trust(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt))
+        _ = try await data(for: URLRequest.olympusSession)
+        return .authenticated
+    }
+
+    @MainActor
+    private func data(for request: URLRequest) async throws -> (Data, URLResponse) {
+        try await Current.network.session.data(for: request)
     }
 
     func sha256(data : Data) -> Data {

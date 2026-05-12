@@ -5,7 +5,8 @@ struct SignInCredentialsView: View {
         case username, password
     }
     
-    @EnvironmentObject var appState: AppState
+    @Bindable var authenticationStore: AuthenticationStore
+    let cancel: () -> Void
     @State private var username: String = ""
     @State private var password: String = ""
     @FocusState private var focusedField: FocusedField?
@@ -29,11 +30,11 @@ struct SignInCredentialsView: View {
                 SecureField("Required", text: $password)
                     .focused($focusedField, equals: .password)
             }
-            if appState.authError != nil {
+            if authenticationStore.authError != nil {
                 HStack {
                     Text("")
                         .frame(minWidth: 100)
-                    Text(appState.authError?.legibleLocalizedDescription ?? "")
+                    Text(authenticationStore.authError?.legibleLocalizedDescription ?? "")
                         .fixedSize(horizontal: false, vertical: true)
                         .foregroundColor(.red)
                 }
@@ -42,13 +43,13 @@ struct SignInCredentialsView: View {
             HStack {
                 Spacer()
                 Button("Cancel") {
-                    appState.authError = nil
-                    appState.presentedSheet = nil
+                    authenticationStore.authError = nil
+                    cancel()
                 }
                     .keyboardShortcut(.cancelAction)
                 ProgressButton(
-                    isInProgress: appState.isProcessingAuthRequest,
-                    action: { appState.signIn(username: username, password: password) },
+                    isInProgress: authenticationStore.isProcessingAuthRequest,
+                    action: { authenticationStore.signIn(username: username, password: password) },
                     label: {
                         Text("Next")
                     }
@@ -64,8 +65,7 @@ struct SignInCredentialsView: View {
 
 struct SignInCredentialsView_Previews: PreviewProvider {
     static var previews: some View {
-        SignInCredentialsView()
-            .environmentObject(AppState())
+        SignInCredentialsView(authenticationStore: AuthenticationStore(), cancel: {})
             .previewLayout(.sizeThatFits)
     }
 }

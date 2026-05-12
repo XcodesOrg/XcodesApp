@@ -20,7 +20,7 @@ final class AppleAPITests: XCTestCase {
         XCTAssertEqual(stamp, "1:10:20230224001754:bb63edf88d2f9c39f23eb4d6f0281158::866")
     }
 
-    static var allTests = [
+    static let allTests = [
         ("testValidHashCashMint", testValidHashCashMint),
         ("testValidHashCashMint2", testValidHashCashMint2),
     ]

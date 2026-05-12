@@ -2,7 +2,6 @@ import AppKit
 import AppleAPI
 import Combine
 import Path
-import Path
 import Version
 import os.log
 import DockProgress
@@ -29,12 +28,11 @@ enum PreferenceKey: String {
 }
 
 class AppState: ObservableObject, @unchecked Sendable {
-    private let client = AppleAPI.Client()
+    let authenticationStore: AuthenticationStore
     internal let runtimeService = RuntimeService()
    
     // MARK: - Published Properties
     
-    @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
             if newValue.count > availableXcodes.count && availableXcodes.count != 0 {
@@ -63,7 +61,6 @@ class AppState: ObservableObject, @unchecked Sendable {
     @Published var updatePublisher: AnyCancellable?
     var isUpdating: Bool { updatePublisher != nil }
     @Published var presentedSheet: XcodesSheet? = nil
-    @Published var isProcessingAuthRequest = false
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var presentedAlert: XcodesAlert?
     @Published var presentedPreferenceAlert: XcodesPreferencesAlert?
@@ -75,7 +72,6 @@ class AppState: ObservableObject, @unchecked Sendable {
     // MARK: - Errors
 
     @Published var error: Error?
-    @Published var authError: Error?
     
     // MARK: Advanced Preferences
     @Published var localPath = "" {
@@ -145,6 +141,7 @@ class AppState: ObservableObject, @unchecked Sendable {
     
     var cancellables = Set<AnyCancellable>()
     private var installationPublishers: [XcodeID: AnyCancellable] = [:]
+    private var installationTasks: [XcodeID: Task<Void, Never>] = [:]
     internal var runtimePublishers: [String: Task<(), any Error>] = [:]
     private var selectPublisher: AnyCancellable?
     private var uninstallPublisher: AnyCancellable?
@@ -168,14 +165,6 @@ class AppState: ObservableObject, @unchecked Sendable {
         Current.defaults.string(forKey: "dataSource").flatMap(DataSource.init(rawValue:)) ?? .default
     }
 
-    var savedUsername: String? {
-        Current.defaults.string(forKey: "username")
-    }
-
-    var hasSavedUsername: Bool {
-        savedUsername != nil
-    }
-    
     var bottomStatusBarMessage: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
@@ -189,7 +178,25 @@ class AppState: ObservableObject, @unchecked Sendable {
     
     // MARK: - Init
     
-    init() {
+    init(authenticationStore: AuthenticationStore = AuthenticationStore()) {
+        self.authenticationStore = authenticationStore
+        authenticationStore.onSecondFactorRequired = { [weak self] option, authOptions, sessionData in
+            self?.presentedSheet = .twoFactor(.init(
+                option: option,
+                authOptions: authOptions,
+                sessionData: sessionData
+            ))
+        }
+        authenticationStore.onAuthenticationStateChanged = { [weak self] state in
+            self?.objectWillChange.send()
+            switch state {
+            case .authenticated, .unauthenticated, .notAppleDeveloper:
+                self?.presentedSheet = nil
+            case .waitingForSecondFactor:
+                break
+            }
+        }
+
         guard !isTesting else { return }
         try? loadCachedAvailableXcodes()
         try? loadCacheDownloadableRuntimes()
@@ -219,165 +226,6 @@ class AppState: ObservableObject, @unchecked Sendable {
             self?.updateIfNeeded()
         }
     }
-    // MARK: - Authentication
-    
-    func validateADCSession(path: String) -> AnyPublisher<Void, Error> {
-        return Current.network.dataTask(with: URLRequest.downloadADCAuth(path: path))
-            .receive(on: DispatchQueue.main)
-            .tryMap { result -> Void in
-                let httpResponse = result.response as! HTTPURLResponse
-                if httpResponse.statusCode == 401 {
-                    throw AuthenticationError.notAuthorized
-                }
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func validateADCSession(path: String) async throws {
-        let result = try await Current.network.dataTaskAsync(with: URLRequest.downloadADCAuth(path: path))
-        let httpResponse = result.1 as! HTTPURLResponse
-        if httpResponse.statusCode == 401 {
-            throw AuthenticationError.notAuthorized
-        }
-    }
-    
-    func validateSession() -> AnyPublisher<Void, Error> {
-        
-        return Current.network.validateSession()
-            .receive(on: DispatchQueue.main)
-            .handleEvents(receiveCompletion: { completion in 
-                if case .failure = completion {
-                    // this is causing some awkwardness with showing an alert with the error and also popping up the sign in view
-                    // self.authenticationState = .unauthenticated
-                    // self.presentedSheet = .signIn
-                }
-            })
-            .eraseToAnyPublisher()
-    }
-    
-    func signInIfNeeded() -> AnyPublisher<Void, Error> {
-        validateSession()
-            .catch { (error) -> AnyPublisher<Void, Error> in
-                guard
-                    let username = self.savedUsername,
-                    let password = try? Current.keychain.getString(username)
-                else {
-                    return Fail(error: error) 
-                        .eraseToAnyPublisher()
-                }
-
-                return self.signIn(username: username, password: password)
-                    .map { _ in Void() }
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
-    
-    func signIn(username: String, password: String) {
-        authError = nil
-        signIn(username: username.lowercased(), password: password)
-            .sink(
-                receiveCompletion: { _ in },
-                receiveValue: { _ in }
-            )
-            .store(in: &cancellables)
-    }
-    
-    func signIn(username: String, password: String) -> AnyPublisher<AuthenticationState, Error> {
-        try? Current.keychain.set(password, key: username)
-        Current.defaults.set(username, forKey: "username")
-        
-        isProcessingAuthRequest = true
-        return client.srpLogin(accountName: username, password: password)
-            .receive(on: DispatchQueue.main)
-            .handleEvents(
-                receiveOutput: { authenticationState in 
-                    self.authenticationState = authenticationState
-                },
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingAuthRequest = false
-                }
-            )
-            .eraseToAnyPublisher()
-    }
-    
-    func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
-        let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-
-        self.presentedSheet = .twoFactor(.init(
-            option: option,
-            authOptions: authOptions,
-            sessionData: sessionData
-        ))
-    }
-
-    func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
-        isProcessingAuthRequest = true
-        client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingAuthRequest = false
-                }, 
-                receiveValue: { authenticationState in 
-                    self.authenticationState = authenticationState
-                    if case let AuthenticationState.waitingForSecondFactor(option, authOptions, sessionData) = authenticationState {
-                        self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
-                    }
-                }
-            )
-            .store(in: &cancellables)
-    }
-    
-    func choosePhoneNumberForSMS(authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {
-        self.presentedSheet = .twoFactor(.init(
-            option: .smsPendingChoice,
-            authOptions: authOptions,
-            sessionData: sessionData
-        ))
-    }
-    
-    func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
-        isProcessingAuthRequest = true
-        client.submitSecurityCode(code, sessionData: sessionData)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingAuthRequest = false
-                },
-                receiveValue: { authenticationState in
-                    self.authenticationState = authenticationState
-                }
-            )
-            .store(in: &cancellables)
-    }
-    
-    private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
-        switch completion {
-        case let .failure(error):
-            // remove saved username and any stored keychain password if authentication fails so it doesn't try again.
-            clearLoginCredentials()
-            Logger.appState.error("Authentication error: \(error.legibleDescription)")
-            self.authError = error
-        case .finished:
-            switch self.authenticationState {
-                case .authenticated, .unauthenticated, .notAppleDeveloper:
-                self.presentedSheet = nil
-            case let .waitingForSecondFactor(option, authOptions, sessionData):
-                self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
-            }
-        }
-    }
-    
-    func signOut() {
-        clearLoginCredentials()
-        AppleAPI.Current.network.session.configuration.httpCookieStorage?.removeCookies(since: .distantPast)
-        authenticationState = .unauthenticated
-    }
-    
     // MARK: - Helper
     
     /// Install the privileged helper if it isn't already installed.
@@ -470,78 +318,60 @@ class AppState: ObservableObject, @unchecked Sendable {
     func install(id: XcodeID) {
         guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
-        installationPublishers[id] = signInIfNeeded()
-            .handleEvents(
-                receiveSubscription: { [unowned self] _ in
-                    self.setInstallationStep(of: availableXcode.version, to: .authenticating)
-                }
-            )
-            .flatMap { [unowned self] in
-                // signInIfNeeded might finish before the user actually authenticates if UI is involved. 
-                // This publisher will wait for the @Published authentication state to change to authenticated or unauthenticated before finishing,
-                // indicating that the user finished what they were doing in the UI.
-                self.$authenticationState
-                    .filter { state in
-                        switch state {
-                            case .authenticated, .unauthenticated, .notAppleDeveloper: return true
-                        case .waitingForSecondFactor: return false
-                        }
-                    }
-                    .prefix(1)
-                    .tryMap { state in
-                        if state == .unauthenticated {
-                            throw AuthenticationError.invalidSession
-                        }
-                        if state == .notAppleDeveloper {
-                            throw AuthenticationError.notDeveloperAppleId
-                        }
-                        return Void()
-                    }
+        installationTasks[id] = Task { @MainActor in
+            do {
+                setInstallationStep(of: availableXcode.version, to: .authenticating)
+                try await authenticationStore.signInIfNeeded()
+                try await validateDownloadSession()
+                startInstallPublisher(for: availableXcode)
+            } catch {
+                handleInstallFailure(error, id: id)
+                installationTasks[id] = nil
             }
-            .flatMap {
-                // This request would've already been made if the Apple data source were being used.
-                // That's not the case for the Xcode Releases data source.
-                // We need the cookies from its response in order to download Xcodes though,
-                // so perform it here first just to be sure.
-                Current.network.dataTask(with: URLRequest.downloads)
-                    .map(\.data)
-                    .decode(type: Downloads.self, decoder: configure(JSONDecoder()) {
-                        $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
-                    })
-                    .tryMap { downloads -> Void in
-                        if downloads.hasError {
-                            throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
-                        }
-                       if downloads.downloads == nil {
-                            throw AuthenticationError.invalidResult(resultString: localizeString("DownloadingError"))
-                        }
-                    }
-                    .mapError { $0 as Error }
-            }
-            .flatMap { [unowned self] in
-                self.install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
-            }
+        }
+    }
+
+    private func validateDownloadSession() async throws {
+        let data = try await Current.network.dataTaskAsync(with: URLRequest.downloads).0
+        let decoder = configure(JSONDecoder()) {
+            $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
+        }
+        let downloads = try decoder.decode(Downloads.self, from: data)
+        if downloads.hasError {
+            throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
+        }
+        if downloads.downloads == nil {
+            throw AuthenticationError.invalidResult(resultString: localizeString("DownloadingError"))
+        }
+    }
+
+    private func startInstallPublisher(for availableXcode: AvailableXcode) {
+        let id = availableXcode.xcodeID
+        installationPublishers[id] = install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
             .receive(on: DispatchQueue.main)
             .sink(
-                receiveCompletion: { [unowned self] completion in 
+                receiveCompletion: { [unowned self] completion in
                     self.installationPublishers[id] = nil
+                    self.installationTasks[id] = nil
                     if case let .failure(error) = completion {
-                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
-                        if let error = error as? AuthenticationError, case .notAuthorized = error {
-                            self.error = error
-                            self.presentedAlert = .unauthenticated
-                            
-                        } else if error as? AuthenticationError != .invalidSession {
-                            self.error = error
-                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
-                        }
-                        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) { 
-                            self.allXcodes[index].installState = .notInstalled
-                        }
+                        self.handleInstallFailure(error, id: id)
                     }
                 },
                 receiveValue: { _ in }
             )
+    }
+
+    private func handleInstallFailure(_ error: Error, id: XcodeID) {
+        if let error = error as? AuthenticationError, case .notAuthorized = error {
+            self.error = error
+            self.presentedAlert = .unauthenticated
+        } else if error as? AuthenticationError != .invalidSession {
+            self.error = error
+            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+        }
+        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) {
+            self.allXcodes[index].installState = .notInstalled
+        }
     }
     
     /// Skips using the username/password to log in to Apple, and simply gets a Auth Cookie used in downloading
@@ -574,6 +404,8 @@ class AppState: ObservableObject, @unchecked Sendable {
 
         // Cancel the publisher
         installationPublishers[id] = nil
+        installationTasks[id]?.cancel()
+        installationTasks[id] = nil
         
         resetDockProgressTracking()
                 
@@ -894,16 +726,6 @@ class AppState: ObservableObject, @unchecked Sendable {
         }
         .eraseToAnyPublisher()
     }
-
-    /// removes saved username and credentials stored in keychain
-    private func clearLoginCredentials() {
-        if let username = savedUsername {
-            try? Current.keychain.remove(username)
-        }
-        Current.defaults.removeObject(forKey: "username")
-
-    }
-
     // MARK: - Nested Types
 
     struct AlertContent: Identifiable {

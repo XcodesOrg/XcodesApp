@@ -2,7 +2,7 @@ import AppleAPI
 import SwiftUI
 
 struct SignInPhoneListView: View {
-    @EnvironmentObject var appState: AppState
+    @Bindable var authenticationStore: AuthenticationStore
     @Binding var isPresented: Bool
     @State private var selectedPhoneNumberID: AuthOptionsResponse.TrustedPhoneNumber.ID?
     let authOptions: AuthOptionsResponse
@@ -31,8 +31,8 @@ struct SignInPhoneListView: View {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
                 Spacer()
-                ProgressButton(isInProgress: appState.isProcessingAuthRequest,
-                               action: { appState.requestSMS(to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!, authOptions: authOptions, sessionData: sessionData) })
+                ProgressButton(isInProgress: authenticationStore.isProcessingAuthRequest,
+                               action: { authenticationStore.requestSMS(to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!, authOptions: authOptions, sessionData: sessionData) })
                 {
                     Text("Continue")
                 }
@@ -43,7 +43,7 @@ struct SignInPhoneListView: View {
         }
         .padding()
         .frame(width: 400, height: 200)
-        .emittingError($appState.authError, recoveryHandler: { _ in })
+        .emittingError($authenticationStore.authError, recoveryHandler: { _ in })
     }
 }
 
@@ -51,6 +51,7 @@ struct SignInPhoneListView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             SignInPhoneListView(
+                authenticationStore: AuthenticationStore(),
                 isPresented: .constant(true),
                 authOptions: AuthOptionsResponse(
                     trustedPhoneNumbers: [.init(id: 0, numberWithDialCode: "(•••) •••-••90")],
@@ -59,9 +60,9 @@ struct SignInPhoneListView_Previews: PreviewProvider {
                 ),
                 sessionData: AppleSessionData(serviceKey: "", sessionID: "", scnt: "")
             )
-            .environmentObject(AppState())
 
             SignInPhoneListView(
+                authenticationStore: AuthenticationStore(),
                 isPresented: .constant(true),
                 authOptions: AuthOptionsResponse(
                     trustedPhoneNumbers: [],
@@ -70,7 +71,6 @@ struct SignInPhoneListView_Previews: PreviewProvider {
                 ),
                 sessionData: AppleSessionData(serviceKey: "", sessionID: "", scnt: "")
             )
-            .environmentObject(AppState())
         }
     }
 }
