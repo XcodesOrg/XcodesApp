@@ -4,13 +4,18 @@ struct AcknowledgmentsView: View {
     
     var body: some View {
         ScrollingTextView(
-            attributedString: NSAttributedString(
-                rtf: try! Data(contentsOf: Bundle.main.url(forResource: "Licenses", withExtension: "rtf")!), 
-                documentAttributes: nil
-            )!
-            .addingAttribute(.foregroundColor, value: NSColor.labelColor)
+            attributedString: Self.licensesAttributedString()
         )
         .frame(minWidth: 600, minHeight: 500)
+    }
+
+    private static func licensesAttributedString() -> NSAttributedString {
+        let url = Bundle.main.url(forResource: "Licenses", withExtension: "md")!
+        let markdown = try! String(contentsOf: url, encoding: .utf8)
+        let attributedString = (try? AttributedString(markdown: markdown))
+            .map(NSAttributedString.init)
+            ?? NSAttributedString(string: markdown)
+        return attributedString.addingAttribute(.foregroundColor, value: NSColor.labelColor)
     }
 }
 

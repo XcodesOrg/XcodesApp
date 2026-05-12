@@ -3,14 +3,11 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		15F5B8902CCF09B900705E2F /* CryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5B88F2CCF09B900705E2F /* CryptoKit.framework */; };
-		33027E342CA8C18800CB387C /* LibFido2Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 334A932B2CA885A400A5E079 /* LibFido2Swift */; };
-		3328073F2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */; };
-		332807412CA5EA820036F691 /* SignInSecurityKeyTouchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */; };
 		36741BFD291E4FDB00A85AAE /* DownloadPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */; };
 		36741BFF291E50F500A85AAE /* FileError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36741BFE291E50F500A85AAE /* FileError.swift */; };
 		536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 536CFDD1263C94DE00026CE0 /* SignedInView.swift */; };
@@ -44,7 +41,7 @@
 		CA61A6E0259835580008926E /* Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA61A6DF259835580008926E /* Xcode.swift */; };
 		CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA735108257BF96D00EA9CF8 /* AttributedText.swift */; };
 		CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */; };
-		CA9FF83F2594FBC000E47BAF /* Licenses.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CA9FF83E2594FBC000E47BAF /* Licenses.rtf */; };
+		CA9FF83F2594FBC000E47BAF /* Licenses.md in Resources */ = {isa = PBXBuildFile; fileRef = CA9FF83E2594FBC000E47BAF /* Licenses.md */; };
 		CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF84D2595079F00E47BAF /* ScrollingTextView.swift */; };
 		CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */; };
 		CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8652595130600E47BAF /* View+IsHidden.swift */; };
@@ -68,7 +65,6 @@
 		CAA8589325A2B77E00ACF8C0 /* aria2c in Copy aria2c */ = {isa = PBXBuildFile; fileRef = CAA8588025A2B63A00ACF8C0 /* aria2c */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */; };
 		CAA858C425A2BE4E00ACF8C0 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */; };
-		CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */ = {isa = PBXBuildFile; productRef = CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */; };
 		CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */; };
 		CAB3AB0E25BCA6C200BF1B04 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7B72449575100113D76 /* AppStateTests.swift */; };
 		CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */; };
@@ -87,12 +83,9 @@
 		CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B42592EEEA00380FEE /* Process.swift */; };
 		CABFA9E42592F08E00380FEE /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9E32592F08E00380FEE /* Version */; };
 		CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9ED2592F0CC00380FEE /* SwiftSoup */; };
-		CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9F72592F0F900380FEE /* KeychainAccess */; };
-		CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9FC2592F13300380FEE /* LegibleError */; };
 		CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2B2592FBFC00380FEE /* Configure.swift */; };
 		CABFAA432593104F00380FEE /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA422593104F00380FEE /* AboutView.swift */; };
 		CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */; };
-		CAC28188259EE27200B8AB0B /* CombineExpectations in Frameworks */ = {isa = PBXBuildFile; productRef = CAC28187259EE27200B8AB0B /* CombineExpectations */; };
 		CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */; };
 		CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */; };
 		CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */; };
@@ -142,7 +135,6 @@
 		E8EEAD1D2E79174F00BE67E8 /* XcodesIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = E8EEAD1C2E79174F00BE67E8 /* XcodesIcon.icon */; };
 		E8F44A1E296B4CD7002D6592 /* Path in Frameworks */ = {isa = PBXBuildFile; productRef = E8F44A1D296B4CD7002D6592 /* Path */; };
 		E8FA00542B5B109800769CE0 /* com.xcodesorg.xcodesapp.Helper in Copy Helper */ = {isa = PBXBuildFile; fileRef = CA9FF8AE2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */ = {isa = PBXBuildFile; productRef = E8FD5726291EE4AC001E004C /* AsyncNetworkService */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -199,8 +191,6 @@
 
 /* Begin PBXFileReference section */
 		15F5B88F2CCF09B900705E2F /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
-		3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSecurityKeyPinView.swift; sourceTree = "<group>"; };
-		332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSecurityKeyTouchView.swift; sourceTree = "<group>"; };
 		36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadPreferencePane.swift; sourceTree = "<group>"; };
 		36741BFE291E50F500A85AAE /* FileError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileError.swift; sourceTree = "<group>"; };
 		536CFDD1263C94DE00026CE0 /* SignedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignedInView.swift; sourceTree = "<group>"; };
@@ -239,7 +229,7 @@
 		CA8FB61C256E115700469DA5 /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; path = .github; sourceTree = "<group>"; };
 		CA8FB64D256E17B100469DA5 /* XcodesTest.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = XcodesTest.entitlements; sourceTree = "<group>"; };
 		CA9FF8242594F10700E47BAF /* AcknowledgementsGenerator */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AcknowledgementsGenerator; path = Xcodes/AcknowledgementsGenerator; sourceTree = "<group>"; };
-		CA9FF83E2594FBC000E47BAF /* Licenses.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Licenses.rtf; sourceTree = "<group>"; };
+		CA9FF83E2594FBC000E47BAF /* Licenses.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = Licenses.md; sourceTree = "<group>"; };
 		CA9FF84D2595079F00E47BAF /* ScrollingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTextView.swift; sourceTree = "<group>"; };
 		CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsView.swift; sourceTree = "<group>"; };
 		CA9FF8652595130600E47BAF /* View+IsHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+IsHidden.swift"; sourceTree = "<group>"; };
@@ -358,16 +348,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				15F5B8902CCF09B900705E2F /* CryptoKit.framework in Frameworks */,
-				33027E342CA8C18800CB387C /* LibFido2Swift in Frameworks */,
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
-				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				E689540325BE8C64000EBCEA /* DockProgress in Frameworks */,
-				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
 				E83FDC442CBB649100679C6B /* Sparkle in Frameworks */,
 				E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */,
-				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
 				E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */,
-				E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */,
 				CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */,
 				CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */,
 				E84E4F572B335094003F3959 /* OrderedCollections in Frameworks */,
@@ -379,7 +364,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAC28188259EE27200B8AB0B /* CombineExpectations in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -469,8 +453,6 @@
 				CA735108257BF96D00EA9CF8 /* AttributedText.swift */,
 				CA73510C257BFCEF00EA9CF8 /* NSAttributedString+.swift */,
 				CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */,
-				3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */,
-				332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */,
 				CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */,
 				CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */,
 				CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */,
@@ -568,7 +550,7 @@
 				CAA8588A25A2B69300ACF8C0 /* aria2c.LICENSE */,
 				CAD2E7A52449575000113D76 /* Assets.xcassets */,
 				CAD2E7AD2449575000113D76 /* Info.plist */,
-				CA9FF83E2594FBC000E47BAF /* Licenses.rtf */,
+				CA9FF83E2594FBC000E47BAF /* Licenses.md */,
 				CAD2E7AE2449575000113D76 /* Xcodes.entitlements */,
 				CA8FB64D256E17B100469DA5 /* XcodesTest.entitlements */,
 				E8CBDB8627ADD92000B22292 /* unxip */,
@@ -722,16 +704,11 @@
 				CAA1CB2C255A5262003FD669 /* AppleAPI */,
 				CABFA9E32592F08E00380FEE /* Version */,
 				CABFA9ED2592F0CC00380FEE /* SwiftSoup */,
-				CABFA9F72592F0F900380FEE /* KeychainAccess */,
-				CABFA9FC2592F13300380FEE /* LegibleError */,
-				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
 				E689540225BE8C64000EBCEA /* DockProgress */,
-				E8FD5726291EE4AC001E004C /* AsyncNetworkService */,
 				E8C0EB19291EF43E0081528A /* XcodesKit */,
 				E8F44A1D296B4CD7002D6592 /* Path */,
 				E84E4F562B335094003F3959 /* OrderedCollections */,
 				E83FDC432CBB649100679C6B /* Sparkle */,
-				334A932B2CA885A400A5E079 /* LibFido2Swift */,
 				E862D43A2CC8B26F00BAA376 /* SRP */,
 			);
 			productName = XcodesMac;
@@ -753,7 +730,6 @@
 			);
 			name = XcodesTests;
 			packageProductDependencies = (
-				CAC28187259EE27200B8AB0B /* CombineExpectations */,
 			);
 			productName = XcodesMacTests;
 			productReference = CAD2E7B32449575100113D76 /* XcodesTests.xctest */;
@@ -767,7 +743,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1140;
-				ORGANIZATIONNAME = "Robots and Pencils";
+				ORGANIZATIONNAME = "Matthias Wallner-Géhri";
 				TargetAttributes = {
 					CA9FF8AD2595967A00E47BAF = {
 						CreatedOnToolsVersion = 12.2;
@@ -782,7 +758,6 @@
 				};
 			};
 			buildConfigurationList = CAD2E7992449574E00113D76 /* Build configuration list for PBXProject "Xcodes" */;
-			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -809,20 +784,16 @@
 				th,
 			);
 			mainGroup = CAD2E7952449574E00113D76;
+			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */,
 				CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
-				CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
-				CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */,
-				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
-				CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */,
 				E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */,
-				E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */,
 				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */,
 				E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */,
-				33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -842,7 +813,7 @@
 				CAD2E7A92449575000113D76 /* Preview Assets.xcassets in Resources */,
 				9DD4FFCB2B13EC1800C974F1 /* Localizable.xcstrings in Resources */,
 				E8EEAD1D2E79174F00BE67E8 /* XcodesIcon.icon in Resources */,
-				CA9FF83F2594FBC000E47BAF /* Licenses.rtf in Resources */,
+				CA9FF83F2594FBC000E47BAF /* Licenses.md in Resources */,
 				CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */,
 				CAD2E7A62449575000113D76 /* Assets.xcassets in Resources */,
 			);
@@ -875,11 +846,11 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(SRCROOT)/Xcodes/Resources/Licenses.rtf",
+				"$(SRCROOT)/Xcodes/Resources/Licenses.md",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "cd \"${SRCROOT}/Xcodes/AcknowledgementsGenerator\"\nxcrun -sdk macosx swift run AcknowledgementsGenerator \\\n    -p \"${SRCROOT}/Xcodes.xcodeproj\" \\\n    -o \"${SRCROOT}/Xcodes/Resources/Licenses.rtf\"\n";
+			shellScript = "cd \"${SRCROOT}/Xcodes/AcknowledgementsGenerator\"\nxcrun -sdk macosx swift run AcknowledgementsGenerator \\\n    -p \"${SRCROOT}/Xcodes.xcodeproj\" \\\n    -o \"${SRCROOT}/Xcodes/Resources/Licenses.md\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -910,7 +881,6 @@
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
 				CAE4248C259A68B800B8B246 /* Optional+IsNotNil.swift in Sources */,
-				3328073F2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift in Sources */,
 				B0C6AD0D2AD91D7900E64698 /* IconView.swift in Sources */,
 				CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */,
 				B0C6AD042AD6E65700E64698 /* ReleaseDateView.swift in Sources */,
@@ -938,7 +908,6 @@
 				B0403CFE2ADA712C00137C09 /* InfoPaneControls.swift in Sources */,
 				D93F95C12E0C8C1A00238FB5 /* TagView.swift in Sources */,
 				53CBAB2C263DCC9100410495 /* XcodesAlert.swift in Sources */,
-				332807412CA5EA820036F691 /* SignInSecurityKeyTouchView.swift in Sources */,
 				CA61A6E0259835580008926E /* Xcode.swift in Sources */,
 				CAE4247F259A666100B8B246 /* MainWindow.swift in Sources */,
 				CA452BB0259FD9770072DFA4 /* ProgressIndicator.swift in Sources */,
@@ -1083,7 +1052,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1115,7 +1084,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
@@ -1139,7 +1108,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1279,7 +1248,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1337,7 +1306,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
@@ -1368,7 +1337,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
@@ -1397,7 +1366,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
@@ -1419,7 +1388,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1442,7 +1411,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1496,68 +1465,28 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kinoroy/LibFido2Swift";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-		CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RobotsAndPencils/ErrorHandling";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.0;
-			};
-		};
 		CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Version";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.3;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.1;
 			};
 		};
 		CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/scinfu/SwiftSoup";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 2.0.0;
-			};
-		};
-		CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 3.2.0;
-			};
-		};
-		CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mxcl/LegibleError";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.1;
-			};
-		};
-		CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/groue/CombineExpectations";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.6.0;
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.9.6;
 			};
 		};
 		E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/DockProgress";
 			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 4.3.1;
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
 			};
 		};
 		E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */ = {
@@ -1565,7 +1494,7 @@
 			repositoryURL = "https://github.com/sparkle-project/Sparkle";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 2.6.4;
+				minimumVersion = 2.9.1;
 			};
 		};
 		E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
@@ -1573,7 +1502,7 @@
 			repositoryURL = "https://github.com/apple/swift-collections.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.5;
+				minimumVersion = 1.5.0;
 			};
 		};
 		E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */ = {
@@ -1581,32 +1510,15 @@
 			repositoryURL = "https://github.com/mxcl/Path.swift";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.0;
-			};
-		};
-		E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService";
-			requirement = {
-				branch = main;
-				kind = branch;
+				minimumVersion = 1.6.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		334A932B2CA885A400A5E079 /* LibFido2Swift */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LibFido2Swift;
-		};
 		CAA1CB2C255A5262003FD669 /* AppleAPI */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = AppleAPI;
-		};
-		CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */;
-			productName = ErrorHandling;
 		};
 		CABFA9E32592F08E00380FEE /* Version */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1617,21 +1529,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */;
 			productName = SwiftSoup;
-		};
-		CABFA9F72592F0F900380FEE /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
-		CABFA9FC2592F13300380FEE /* LegibleError */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */;
-			productName = LegibleError;
-		};
-		CAC28187259EE27200B8AB0B /* CombineExpectations */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */;
-			productName = CombineExpectations;
 		};
 		E689540225BE8C64000EBCEA /* DockProgress */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -1660,11 +1557,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */;
 			productName = Path;
-		};
-		E8FD5726291EE4AC001E004C /* AsyncNetworkService */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */;
-			productName = AsyncNetworkService;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
