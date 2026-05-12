@@ -48,15 +48,15 @@ struct DownloadPreferencePane: View {
 
                     if !Downloader.aria2.isAvailable {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("aria2 ist auf diesem Mac nicht verfügbar. Installiere aria2, um diese Option zu verwenden.")
+                            Text("aria2 is not available on this Mac. Install aria2 to use this option.")
                                 .foregroundStyle(.secondary)
                             HStack(spacing: 8) {
                                 Link("aria2", destination: Aria2UnavailableError.aria2HomepageURL)
                                 Text("·")
                                     .foregroundStyle(.secondary)
-                                Link("Homebrew-Formel", destination: Aria2UnavailableError.homebrewFormulaURL)
+                                Link("Homebrew formula", destination: Aria2UnavailableError.homebrewFormulaURL)
                             }
-                            Text("Am besten installierst du aria2 mit `brew install aria2`.")
+                            Text("The recommended installation command is `brew install aria2`.")
                                 .foregroundStyle(.secondary)
                         }
                         .font(.footnote)

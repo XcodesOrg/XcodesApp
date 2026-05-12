@@ -5,12 +5,12 @@ struct Aria2UnavailableError: LocalizedError {
     static let homebrewFormulaURL = URL(string: "https://formulae.brew.sh/formula/aria2")!
 
     static let installationInstructions = """
-    aria2 ist auf diesem Mac nicht verfügbar. Installiere aria2, um die aria2-Downloader-Option zu verwenden.
+    aria2 is not available on this Mac. Install aria2 to use the aria2 downloader option.
 
-    Weitere Informationen: https://aria2.github.io
-    Homebrew-Formel: https://formulae.brew.sh/formula/aria2
+    More information: https://aria2.github.io
+    Homebrew formula: https://formulae.brew.sh/formula/aria2
 
-    Am besten installierst du aria2 mit:
+    The recommended installation command is:
     brew install aria2
     """
 
