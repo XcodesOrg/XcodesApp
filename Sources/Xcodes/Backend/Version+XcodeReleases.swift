@@ -1,3 +1,4 @@
+import Foundation
 import Version
 import XcodesKit
 
@@ -52,4 +53,3 @@ extension Version {
         return !buildMetadataIdentifiers.isEmpty ? "(\(buildMetadataIdentifiers.joined(separator: " ")))" : ""
     }
 }
-

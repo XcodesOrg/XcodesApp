@@ -1,7 +1,7 @@
 import Foundation
 
-public struct XcodesKitEnvironment {
+public struct XcodesKitEnvironment: Sendable {
     public var shell = XcodesShell()
 }
 
-public var Current = XcodesKitEnvironment()
+public let Current = XcodesKitEnvironment()

@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Version
+import XcodesKit
 
 struct NotInstalledStateButtons: View {
     let downloadFileSizeString: String?

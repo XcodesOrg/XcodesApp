@@ -1,10 +1,14 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
 
 let warningsAsErrors: [SwiftSetting] = [
     .unsafeFlags(["-warnings-as-errors"])
+]
+
+let swift6Settings: [SwiftSetting] = warningsAsErrors + [
+    .swiftLanguageMode(.v6)
 ]
 
 let package = Package(
@@ -28,10 +32,10 @@ let package = Package(
             dependencies: [
                 .product(name: "Path", package: "Path.swift")
             ],
-            swiftSettings: warningsAsErrors),
+            swiftSettings: swift6Settings),
         .testTarget(
             name: "XcodesKitTests",
             dependencies: ["XcodesKit"],
-            swiftSettings: warningsAsErrors),
+            swiftSettings: swift6Settings),
     ]
 )

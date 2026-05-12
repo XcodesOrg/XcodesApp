@@ -7,6 +7,22 @@ import os.log
 import DockProgress
 import XcodesKit
 
+private final class PassthroughSubjectBox<Output, Failure: Error>: @unchecked Sendable {
+    private let subject = PassthroughSubject<Output, Failure>()
+
+    func send(_ value: Output) {
+        subject.send(value)
+    }
+
+    func send(completion: Subscribers.Completion<Failure>) {
+        subject.send(completion: completion)
+    }
+
+    var publisher: AnyPublisher<Output, Failure> {
+        subject.eraseToAnyPublisher()
+    }
+}
+
 /// Downloads and installs Xcodes
 extension AppState {
     
@@ -407,14 +423,14 @@ extension AppState {
             // and the post-install steps need to wait until that is complete.
             // This subject, which completes upon isPreparingUserForActionRequiringHelper being invoked, is used to achieve that.
             // This is not the most straightforward code I've ever written...
-            let helperInstallConsentSubject = PassthroughSubject<Void, Error>()
+            let helperInstallConsentSubject = PassthroughSubjectBox<Void, Error>()
 
             // Need to dispatch this to avoid duplicate alerts, 
             // the second of which will crash when force-unwrapping isPreparingUserForActionRequiringHelper 
             DispatchQueue.main.async {
                 self.isPreparingUserForActionRequiringHelper = { [unowned self] userConsented in
                     if userConsented {
-                        helperInstallConsentSubject.send()
+							helperInstallConsentSubject.send(())
                     } else {
                         Logger.appState.info("User did not consent to installing helper during post-install steps.")
 
@@ -431,7 +447,7 @@ extension AppState {
             unxipProgress.completedUnitCount = AppState.totalProgressUnits
             resetDockProgressTracking()
 
-            return helperInstallConsentSubject
+            return helperInstallConsentSubject.publisher
                 .flatMap { 
                     postInstallPublisher 
                 }

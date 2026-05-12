@@ -3,7 +3,7 @@ import Version
 import XcodesKit
 
 /// A version of Xcode that's available for installation
-public struct AvailableXcode: Codable {
+public struct AvailableXcode: Codable, @unchecked Sendable {
     public var version: Version {
         return xcodeID.version
     }

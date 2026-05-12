@@ -8,7 +8,7 @@
 import Foundation
 
 // A numbered step
-public enum XcodeInstallationStep: Equatable, CustomStringConvertible {
+public enum XcodeInstallationStep: Equatable, CustomStringConvertible, @unchecked Sendable {
     case authenticating
     case downloading(progress: Progress)
     case unarchiving

@@ -1,6 +1,7 @@
 import Path
 import CryptoKit
 import Version
+import XcodesKit
 @testable import Xcodes
 import XCTest
 import CommonCrypto

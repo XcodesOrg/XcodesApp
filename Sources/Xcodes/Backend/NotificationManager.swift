@@ -1,19 +1,21 @@
+import Combine
 import Foundation
 import os.log
 import UserNotifications
+import XcodesKit
 
 /// Representation of the 3 states of the Notifications permission prompt which may either have not been shown, or was shown and denied or accepted
 /// Unknown is value to indicate that we have not yet determined the status and should not be used other than as a default value before determining the actual status
-public enum NotificationPermissionPromptStatus: Int {
+public enum NotificationPermissionPromptStatus: Int, Sendable {
     case unknown, notShown, shownAndDenied, shownAndAccepted
 }
 
-public enum XcodesNotificationCategory: String {
+public enum XcodesNotificationCategory: String, Sendable {
     case normal
     case error
 }
 
-public enum XcodesNotificationType: String, Identifiable, CaseIterable, CustomStringConvertible {
+public enum XcodesNotificationType: String, Identifiable, CaseIterable, CustomStringConvertible, Sendable {
     case newVersionAvailable
     case finishedInstalling
 
@@ -29,7 +31,7 @@ public enum XcodesNotificationType: String, Identifiable, CaseIterable, CustomSt
     }
 }
 
-public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, ObservableObject {
+public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, ObservableObject, @unchecked Sendable {
     private let notificationCenter = UNUserNotificationCenter.current()
     
     @Published var notificationStatus = NotificationPermissionPromptStatus.unknown
@@ -44,7 +46,9 @@ public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, Ob
     public func loadNotificationStatus() {
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { [weak self] (settings) in
             let status = NotificationManager.systemPromptStatusFromSettings(settings)
-            self?.notificationStatus = status
+            Task { @MainActor in
+                self?.notificationStatus = status
+            }
         })
     }
     
@@ -71,7 +75,9 @@ public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, Ob
                 } else {
                     Logger.appState.log("User has \(granted ? "Granted" : "NOT GRANTED") notification permission")
                 }
-                self?.loadNotificationStatus()
+                Task { @MainActor in
+                    self?.loadNotificationStatus()
+                }
             }
         }
     }
@@ -97,4 +103,3 @@ public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, Ob
         completionHandler( [.banner, .badge, .sound])
     }
 }
-

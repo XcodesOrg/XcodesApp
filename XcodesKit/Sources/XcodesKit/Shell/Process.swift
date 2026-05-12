@@ -57,13 +57,19 @@ extension Process {
     
 }
 
-public struct ProcessExecutionError: Error {
-    public let process: Process
+public struct ProcessExecutionError: Error, Sendable {
+    public let terminationStatus: Int32
     public let standardOutput: String
     public let standardError: String
+
+    public init(terminationStatus: Int32, standardOutput: String, standardError: String) {
+        self.terminationStatus = terminationStatus
+        self.standardOutput = standardOutput
+        self.standardError = standardError
+    }
     
     public init(process: Process, standardOutput: String, standardError: String) {
-        self.process = process
+        self.terminationStatus = process.terminationStatus
         self.standardOutput = standardOutput
         self.standardError = standardError
     }

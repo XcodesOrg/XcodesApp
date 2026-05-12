@@ -2,7 +2,7 @@ import Foundation
 import os.log
 
 extension Logger {
-    private static var subsystem = Bundle.main.bundleIdentifier!
+    private static let subsystem = Bundle.main.bundleIdentifier ?? "eu.mpwg.xcodes"
 
     static public let appState = Logger(subsystem: subsystem, category: "appState")
     static public let helperClient = Logger(subsystem: subsystem, category: "helperClient")

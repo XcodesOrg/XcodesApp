@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AboutView: View {
-    let showAcknowledgementsWindow: () -> Void
+    let showAcknowledgementsWindow: @MainActor @Sendable () -> Void
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     
     var body: some View {
@@ -22,7 +22,7 @@ struct AboutView: View {
                     }
                     .buttonStyle(LinkButtonStyle())
                     
-                    Button(action: showAcknowledgementsWindow) {
+                    Button(action: { showAcknowledgementsWindow() }) {
                         Label("Acknowledgements", systemImage: "doc")
                     }
                     .buttonStyle(LinkButtonStyle())

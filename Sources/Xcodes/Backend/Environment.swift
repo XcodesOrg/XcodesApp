@@ -11,7 +11,7 @@ import XcodesKit
  - SeeAlso: https://www.pointfree.co/episodes/ep18-dependency-injection-made-comfortable
  - SeeAlso: https://vimeo.com/291588126
  */
-public struct Environment {
+public struct Environment: @unchecked Sendable {
     public var shell = Shell()
     public var files = Files()
     public var network = Network()
@@ -22,9 +22,35 @@ public struct Environment {
     public var notificationManager = NotificationManager()
 }
 
-public var Current = Environment()
+nonisolated(unsafe) public var Current = Environment()
 
-public struct Shell {
+private final class FuturePromiseBox<Output>: @unchecked Sendable {
+    typealias Promise = (Result<Output, Error>) -> Void
+
+    nonisolated(unsafe) private let promise: Promise
+
+    nonisolated init(_ promise: @escaping Promise) {
+        self.promise = promise
+    }
+
+    nonisolated func resolve(_ result: Result<Output, Error>) {
+        promise(result)
+    }
+}
+
+private final class NotificationObserverBox: @unchecked Sendable {
+    nonisolated(unsafe) private let observer: NSObjectProtocol
+
+    nonisolated init(_ observer: NSObjectProtocol) {
+        self.observer = observer
+    }
+
+    nonisolated func remove() {
+        NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+    }
+}
+
+public struct Shell: @unchecked Sendable {
     public var unxip: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.xip, workingDirectory: $0.deletingLastPathComponent(), "--expand", "\($0.path)") }
     public var spctlAssess: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.sbin.spctl, "--assess", "--verbose", "--type", "execute", "\($0.path)") }
     public var codesignVerify: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.codesign, "-vv", "-d", "\($0.path)") }
@@ -54,11 +80,11 @@ public struct Shell {
         let stdErrPipe = Pipe()
         process.standardError = stdErrPipe
         
-        var progress = Progress()
+        nonisolated(unsafe) var progress = Progress()
         progress.kind = .file
         progress.fileOperationKind = .downloading
         
-        let observer = NotificationCenter.default.addObserver(
+        let observer = NotificationObserverBox(NotificationCenter.default.addObserver(
             forName: .NSFileHandleDataAvailable, 
             object: nil, 
             queue: OperationQueue.main
@@ -74,7 +100,7 @@ public struct Shell {
             let string = String(decoding: handle.availableData, as: UTF8.self)
             
             progress.updateFromAria2(string: string)
-        }
+        })
 
         stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
         stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
@@ -87,25 +113,26 @@ public struct Shell {
 
         let publisher = Deferred {
             Future<Void, Error> { promise in
+                let promiseBox = FuturePromiseBox(promise)
                 DispatchQueue.global(qos: .default).async {
                     process.waitUntilExit()
                     
-                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                    observer.remove()
                     
                     guard process.terminationReason == .exit, process.terminationStatus == 0 else {
                         if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
-                            return promise(.failure(aria2cError))
+                            return promiseBox.resolve(.failure(aria2cError))
                         } else {
-                            return promise(.failure(ProcessExecutionError(process: process, standardOutput: "", standardError: "")))
+                            return promiseBox.resolve(.failure(ProcessExecutionError(process: process, standardOutput: "", standardError: "")))
                         }
                     }
-                    promise(.success(()))
+                    promiseBox.resolve(.success(()))
                 }
             }
         }
         .handleEvents(receiveCancel: {
             process.terminate()
-            NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+            observer.remove()
         })
         .eraseToAnyPublisher()
         
@@ -139,7 +166,7 @@ public struct Shell {
                 let stdErrPipe = Pipe()
                 process.standardError = stdErrPipe
                 
-                let observer = NotificationCenter.default.addObserver(
+                let observer = NotificationObserverBox(NotificationCenter.default.addObserver(
                     forName: .NSFileHandleDataAvailable,
                     object: nil,
                     queue: OperationQueue.main
@@ -157,14 +184,14 @@ public struct Shell {
                     progress.updateFromAria2(string: string)
                     
                     continuation.yield(progress)
-                }
+                })
                 
                 stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
                 stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
                 
                 continuation.onTermination = { @Sendable _ in
                     process.terminate()
-                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                    observer.remove()
                 }
                 
                 do {
@@ -175,7 +202,7 @@ public struct Shell {
                 
                 process.waitUntilExit()
                 
-                NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                observer.remove()
                 
                 guard process.terminationReason == .exit, process.terminationStatus == 0 else {
                     if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
@@ -227,7 +254,7 @@ public struct Shell {
                 let stdErrPipe = Pipe()
                 process.standardError = stdErrPipe
                 
-                let observer = NotificationCenter.default.addObserver(
+                let observer = NotificationObserverBox(NotificationCenter.default.addObserver(
                     forName: .NSFileHandleDataAvailable,
                     object: nil,
                     queue: OperationQueue.main
@@ -246,14 +273,14 @@ public struct Shell {
                     progress.updateFromXcodebuild(text: string)
                     
                     continuation.yield(progress)
-                }
+                })
                 
                 stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
                 stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
                 
                 continuation.onTermination = { @Sendable _ in
                     process.terminate()
-                    NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                    observer.remove()
                 }
                 
                 do {
@@ -264,7 +291,7 @@ public struct Shell {
                 
                 process.waitUntilExit()
                 
-                NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
+                observer.remove()
                 
                 guard process.terminationReason == .exit, process.terminationStatus == 0 else {
                     continuation.finish(throwing: ProcessExecutionError(process: process, standardOutput: "", standardError: ""))
@@ -276,7 +303,7 @@ public struct Shell {
     }
 }
 
-public struct Files {
+public struct Files: @unchecked Sendable {
     public var fileExistsAtPath: (String) -> Bool = { FileManager.default.fileExists(atPath: $0) }
 
     public func fileExists(atPath path: String) -> Bool {
@@ -344,7 +371,7 @@ private func _installedXcodes(destination: Path) -> [InstalledXcode] {
         .compactMap(InstalledXcode.init)
 }
 
-public struct Network {
+public struct Network: @unchecked Sendable {
     private static let client = AppleAPI.Client()
     
     public var dataTask: (URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> = {
@@ -372,7 +399,7 @@ public struct Network {
     }
 }
 
-public struct Keychain {
+public struct Keychain: @unchecked Sendable {
     private static let service = "eu.mpwg.xcodes"
 
     public var getString: (String) throws -> String? = { key in
@@ -452,7 +479,7 @@ public struct Keychain {
     }
 }
 
-public struct Defaults {
+public struct Defaults: @unchecked Sendable {
     public var string: (String) -> String? = { UserDefaults.standard.string(forKey: $0) }
     public func string(forKey key: String) -> String? {
         string(key)
@@ -490,7 +517,7 @@ public struct Defaults {
 }
 
 private let helperClient = HelperClient()
-public struct Helper {
+public struct Helper: @unchecked Sendable {
     var install: () throws -> Void = helperClient.install
     var checkIfLatestHelperIsInstalled: () -> AnyPublisher<Bool, Never> = helperClient.checkIfLatestHelperIsInstalled
     var getVersion: () -> AnyPublisher<String, Error> = helperClient.getVersion

@@ -3,12 +3,13 @@ import Foundation
 import os.log
 import Security
 import ServiceManagement
+import XcodesKit
 
 @_silgen_name("SMJobBless")
 @discardableResult
 private func legacySMJobBless(_ domain: CFString?, _ executableLabel: CFString, _ auth: AuthorizationRef?, _ error: UnsafeMutablePointer<Unmanaged<CFError>?>?) -> Bool
 
-final class HelperClient {
+final class HelperClient: @unchecked Sendable {
     private var connection: NSXPCConnection?
     
     private func currentConnection() -> NSXPCConnection? {

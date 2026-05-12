@@ -1,6 +1,7 @@
 import Path
 import SwiftUI
 import Version
+import XcodesKit
 
 struct XcodeListView: View {
     @EnvironmentObject var appState: AppState

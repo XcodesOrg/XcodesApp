@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum RuntimeInstallationStep: Equatable, CustomStringConvertible, Hashable {
+public enum RuntimeInstallationStep: Equatable, CustomStringConvertible, Hashable, @unchecked Sendable {
     case downloading(progress: Progress)
     case installing
     case trashingArchive

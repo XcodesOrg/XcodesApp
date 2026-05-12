@@ -5,7 +5,7 @@ import Crypto
 import CommonCrypto
 
 
-public class Client {
+public final class Client: Sendable {
     private static let authTypes = ["sa", "hsa", "non-sa", "hsa2"]
 
     public init() {}
@@ -20,7 +20,7 @@ public class Client {
         let a = clientKeys.public
 
         return Current.network.dataTask(with: URLRequest.itcServiceKey)
-            .map(\.data)
+            .map { $0.data }
             .decode(type: ServiceKeyResponse.self, decoder: JSONDecoder())
             .flatMap { serviceKeyResponse -> AnyPublisher<(String, String), Swift.Error> in
                 serviceKey = serviceKeyResponse.authServiceKey
@@ -35,7 +35,7 @@ public class Client {
             .flatMap { (serviceKey, hashcash) -> AnyPublisher<(String, String, ServerSRPInitResponse), Swift.Error> in
                 
                 return Current.network.dataTask(with: URLRequest.SRPInit(serviceKey: serviceKey, a: Data(a.bytes).base64EncodedString(), accountName: accountName))
-                    .map(\.data)
+                    .map { $0.data }
                     .decode(type: ServerSRPInitResponse.self, decoder: JSONDecoder())
                     .map { return (serviceKey, hashcash, $0) }
                     .eraseToAnyPublisher()
@@ -153,7 +153,7 @@ public class Client {
         let scnt = (httpResponse.allHeaderFields["scnt"] as! String)
 
         return Current.network.dataTask(with: URLRequest.authOptions(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt))
-            .map(\.data)
+            .map { $0.data }
             .decode(type: AuthOptionsResponse.self, decoder: JSONDecoder())
             .flatMap { authOptions -> AnyPublisher<AuthenticationState, Error> in
                 switch authOptions.kind {

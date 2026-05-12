@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Path
 import SwiftUI
 import XcodesKit
 
@@ -123,6 +124,7 @@ struct PlatformsView: View {
 
 #Preview(XcodePreviewName.allCases[0].rawValue) { makePreviewContent(for: 0) }
 
+@MainActor
 private func makePreviewContent(for index: Int) -> some View {
     let name = XcodePreviewName.allCases[index]
     let runtimes = downloadableRuntimes

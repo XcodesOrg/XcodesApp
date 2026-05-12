@@ -51,6 +51,7 @@ struct InstalledStateButtons: View {
     .frame(width: 300)
 }
 
+@MainActor
 private let xcode = Xcode(
   version: Version(major: 12, minor: 3, patch: 0),
   installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),

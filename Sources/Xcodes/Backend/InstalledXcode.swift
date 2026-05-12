@@ -4,7 +4,7 @@ import Path
 import XcodesKit
 
 /// A version of Xcode that's already installed
-public struct InstalledXcode: Equatable {
+public struct InstalledXcode: Equatable, @unchecked Sendable {
     public let path: Path
     public let xcodeID: XcodeID
     

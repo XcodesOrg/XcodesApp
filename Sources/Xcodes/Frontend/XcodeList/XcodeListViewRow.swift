@@ -1,6 +1,7 @@
 import Path
 import SwiftUI
 import Version
+import XcodesKit
 
 struct XcodeListViewRow: View {
     let xcode: Xcode

@@ -1,6 +1,18 @@
 import Combine
 import Foundation
 
+private final class DownloadPromiseBox: @unchecked Sendable {
+    nonisolated(unsafe) let promise: (Result<(saveLocation: URL, response: URLResponse), Error>) -> Void
+
+    nonisolated init(_ promise: @escaping (Result<(saveLocation: URL, response: URLResponse), Error>) -> Void) {
+        self.promise = promise
+    }
+
+    nonisolated func resolve(_ result: Result<(saveLocation: URL, response: URLResponse), Error>) {
+        promise(result)
+    }
+}
+
 extension URLSession {
     /**
      - Parameter convertible: A URL or URLRequest.
@@ -22,15 +34,17 @@ extension URLSession {
         // Intentionally not wrapping in Deferred because we need to return the Progress and URLSessionDownloadTask immediately.
         // Probably a sign that this should be implemented differently...
         let promise = Future<(saveLocation: URL, response: URLResponse), Error> { promise in
-            let completionHandler = { (temporaryURL: URL?, response: URLResponse?, error: Error?) in
+            let promiseBox = DownloadPromiseBox(promise)
+
+            let completionHandler: @Sendable (URL?, URLResponse?, Error?) -> Void = { temporaryURL, response, error in
                 if let error = error {
-                    promise(.failure(error))
+                    promiseBox.resolve(.failure(error))
                 } else if let response = response, let temporaryURL = temporaryURL {
                     do {
                         try FileManager.default.moveItem(at: temporaryURL, to: saveLocation)
-                        promise(.success((saveLocation, response)))
+                        promiseBox.resolve(.success((saveLocation, response)))
                     } catch {
-                        promise(.failure(error))
+                        promiseBox.resolve(.failure(error))
                     }
                 } else {
                     fatalError("Expecting either a temporary URL and a response, or an error, but got neither.")

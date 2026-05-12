@@ -1,6 +1,7 @@
 import AppleAPI
 import SwiftUI
 import Path
+import UniformTypeIdentifiers
 
 struct AdvancedPreferencePane: View {
     @EnvironmentObject var appState: AppState

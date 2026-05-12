@@ -3,7 +3,7 @@ import Foundation
 @testable import Xcodes
 
 extension Xcodes.Environment {
-    static var mock = Xcodes.Environment(
+    static let mock = Xcodes.Environment(
         shell: .mock,
         files: .mock,
         network: .mock,
@@ -15,9 +15,9 @@ extension Xcodes.Environment {
 }
 
 extension Shell {
-    static var processOutputMock: ProcessOutput = (0, "", "")
+    static let processOutputMock: ProcessOutput = (0, "", "")
 
-    static var mock = Shell(
+    static let mock = Shell(
         unxip: { _ in return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
         spctlAssess: { _ in return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
         codesignVerify: { _ in return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
@@ -30,7 +30,7 @@ extension Shell {
 }
 
 extension Files {
-    static var mock = Files(
+    static let mock = Files(
         fileExistsAtPath: { _ in return true },
         moveItem: { _, _ in return },
         contentsAtPath: { path in
@@ -55,7 +55,7 @@ extension Files {
 }
 
 extension Network {
-    static var mock = Network(
+    static let mock = Network(
         dataTask: { url in
             Just((data: Data(), response: HTTPURLResponse(url: url.url!, statusCode: 200, httpVersion: nil, headerFields: nil)! as URLResponse))
                 .setFailureType(to: Error.self)
@@ -78,7 +78,7 @@ extension Network {
 }
 
 extension Keychain {
-    static var mock = Keychain(
+    static let mock = Keychain(
         getString: { _ in return nil },
         set: { _, _ in },
         remove: { _ in }
@@ -86,7 +86,7 @@ extension Keychain {
 }
 
 extension Defaults {
-    static var mock = Defaults(
+    static let mock = Defaults(
         string: { _ in nil },
         date: { _ in nil },
         setDate: { _, _ in },
@@ -96,11 +96,11 @@ extension Defaults {
 }
 
 extension Date {
-    static var mock = { Date(timeIntervalSince1970: 1609479735) }
+    static let mock: @Sendable () -> Date = { Date(timeIntervalSince1970: 1609479735) }
 }
 
 extension Helper {
-    static var mock = Helper(
+    static let mock = Helper(
         install: { },
         checkIfLatestHelperIsInstalled: { Just(false).eraseToAnyPublisher() },
         getVersion: { Just("").setFailureType(to: Error.self).eraseToAnyPublisher() },

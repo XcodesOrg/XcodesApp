@@ -4,7 +4,7 @@ import Version
 import Path
 import XcodesKit
 
-public struct XcodeID: Codable, Hashable, Identifiable {
+public struct XcodeID: Codable, Hashable, Identifiable, @unchecked Sendable {
     public let version: Version
     public let architectures: [Architecture]?
     

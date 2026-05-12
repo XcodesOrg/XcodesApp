@@ -8,16 +8,22 @@ import Combine
  - SeeAlso: https://www.pointfree.co/episodes/ep18-dependency-injection-made-comfortable
  - SeeAlso: https://vimeo.com/291588126
  */
-public struct Environment {
+public struct Environment: Sendable {
     public var network = Network()
 }
 
-public var Current = Environment()
+public let Current = Environment()
 
-public struct Network {
+public struct Network: Sendable {
     public var session = URLSession.shared
 
-    public var dataTask: (URLRequest) -> URLSession.DataTaskPublisher = { Current.network.session.dataTaskPublisher(for: $0) }
+    public var dataTask: @Sendable (URLRequest) -> URLSession.DataTaskPublisher
+
+    public init(session: URLSession = .shared) {
+        self.session = session
+        self.dataTask = { session.dataTaskPublisher(for: $0) }
+    }
+
     public func dataTask(with request: URLRequest) -> URLSession.DataTaskPublisher {
         dataTask(request)
     }

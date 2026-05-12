@@ -1,6 +1,6 @@
 import Foundation
 
-public struct DownloadableRuntimesResponse: Codable {
+public struct DownloadableRuntimesResponse: Codable, Sendable {
     public let sdkToSimulatorMappings: [SDKToSimulatorMapping]
     public let sdkToSeedMappings: [SDKToSeedMapping]
     public let refreshInterval: Int
@@ -8,7 +8,7 @@ public struct DownloadableRuntimesResponse: Codable {
     public let version: String
 }
 
-public struct DownloadableRuntime: Codable, Identifiable, Hashable {
+public struct DownloadableRuntime: Codable, Identifiable, Hashable, @unchecked Sendable {
     public let category: Category
     public let simulatorVersion: SimulatorVersion
     public let source: String?

@@ -28,7 +28,7 @@ enum PreferenceKey: String {
     func isManaged() -> Bool { UserDefaults.standard.objectIsForced(forKey: self.rawValue) }
 }
 
-class AppState: ObservableObject {
+class AppState: ObservableObject, @unchecked Sendable {
     private let client = AppleAPI.Client()
     internal let runtimeService = RuntimeService()
    

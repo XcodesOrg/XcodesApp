@@ -7,6 +7,20 @@ import XcodesKit
 
 @testable import Xcodes
 
+private final class TestPromiseBox<Output>: @unchecked Sendable {
+    typealias Promise = (Result<Output, Error>) -> Void
+
+    nonisolated(unsafe) private let promise: Promise
+
+    nonisolated init(_ promise: @escaping Promise) {
+        self.promise = promise
+    }
+
+    nonisolated func resolve(_ result: Result<Output, Error>) {
+        promise(result)
+    }
+}
+
 class AppStateTests: XCTestCase {
     var subject: AppState!
     var cancellables = Set<AnyCancellable>()
@@ -41,7 +55,7 @@ class AppStateTests: XCTestCase {
 
     func test_VerifySecurityAssessment_Fails() throws {
         Current.shell.spctlAssess = { _ in
-            Fail(error: ProcessExecutionError(process: Process(), standardOutput: "stdout", standardError: "stderr")) 
+            Fail(error: ProcessExecutionError(terminationStatus: 1, standardOutput: "stdout", standardError: "stderr"))
                 .eraseToAnyPublisher()
         }
 
@@ -149,13 +163,14 @@ class AppStateTests: XCTestCase {
                 progress,
                 Deferred {
                     Future { promise in
+                        let promiseBox = TestPromiseBox(promise)
                         // Need this to run after the Promise has returned to the caller. This makes the test async, requiring waiting for an expectation.
                         DispatchQueue.main.async {
                             for i in 0...100 {
                                 progress.completedUnitCount = Int64(i)
                             }
-                            promise(.success((saveLocation: saveLocation,
-                                              response: HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!)))
+                            promiseBox.resolve(.success((saveLocation: saveLocation,
+                                                         response: HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!)))
                         }
                     }
                 }
@@ -281,13 +296,14 @@ class AppStateTests: XCTestCase {
                 progress,
                 Deferred {
                     Future { promise in
+                        let promiseBox = TestPromiseBox(promise)
                         // Need this to run after the Promise has returned to the caller. This makes the test async, requiring waiting for an expectation.
                         DispatchQueue.main.async {
                             for i in 0...100 {
                                 progress.completedUnitCount = Int64(i)
                             }
-                            promise(.success((saveLocation: saveLocation,
-                                              response: HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!)))
+                            promiseBox.resolve(.success((saveLocation: saveLocation,
+                                                         response: HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!)))
                         }
                     }
                 }
@@ -361,7 +377,7 @@ class AppStateTests: XCTestCase {
     func test_Install_NotEnoughFreeSpace() throws {
         Current.shell.unxip = { _ in
             Fail(error: ProcessExecutionError(
-                    process: Process(),
+                    terminationStatus: 1,
                     standardOutput: "xip: signing certificate was \"Development Update\" (validation not attempted)", 
                     standardError: "xip: error: The archive “Xcode-12.4.0-Release.Candidate+12D4e.xip” can’t be expanded because the selected volume doesn’t have enough free space."
             ))

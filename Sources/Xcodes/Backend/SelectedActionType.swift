@@ -7,13 +7,13 @@
 //
 
 import Foundation
-public enum SelectedActionType: String, CaseIterable, Identifiable, CustomStringConvertible {
+public enum SelectedActionType: String, CaseIterable, Identifiable, CustomStringConvertible, Sendable {
     case none
     case rename
     
     public var id: Self { self }
     
-    public static var `default` = SelectedActionType.none
+    public static let `default` = SelectedActionType.none
     
     public var description: String {
         switch self {

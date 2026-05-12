@@ -8,7 +8,7 @@
 import Foundation
 import Path
 
-public enum XcodeInstallState: Equatable {
+public enum XcodeInstallState: Equatable, @unchecked Sendable {
     case notInstalled
     case installing(XcodeInstallationStep)
     case installed(Path)

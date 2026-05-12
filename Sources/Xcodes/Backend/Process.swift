@@ -6,6 +6,18 @@ import XcodesKit
 
 public typealias ProcessOutput = (status: Int32, out: String, err: String)
 
+private final class PromiseBox<Output>: @unchecked Sendable {
+    nonisolated(unsafe) let promise: (Result<Output, Error>) -> Void
+
+    nonisolated init(_ promise: @escaping (Result<Output, Error>) -> Void) {
+        self.promise = promise
+    }
+
+    nonisolated func resolve(_ result: Result<Output, Error>) {
+        promise(result)
+    }
+}
+
 extension Process {
     @discardableResult
     static func run(_ executable: any Pathish, workingDirectory: URL? = nil, input: String? = nil, _ arguments: String...) -> AnyPublisher<ProcessOutput, Error> {
@@ -16,6 +28,8 @@ extension Process {
     static func run(_ executable: URL, workingDirectory: URL? = nil, input: String? = nil, _ arguments: [String]) -> AnyPublisher<ProcessOutput, Error> {
         Deferred {
             Future<ProcessOutput, Error> { promise in
+                let promiseBox = PromiseBox(promise)
+
                 DispatchQueue.global().async {
                     let process = Process()
                     process.currentDirectoryURL = workingDirectory ?? executable.deletingLastPathComponent()
@@ -48,18 +62,20 @@ extension Process {
                         }
 
                         guard process.terminationReason == .exit, process.terminationStatus == 0 else {  
+                            let executionError = ProcessExecutionError(process: process, standardOutput: output, standardError: error)
                             DispatchQueue.main.async {
-                                promise(.failure(ProcessExecutionError(process: process, standardOutput: output, standardError: error)))
+                                promiseBox.resolve(.failure(executionError))
                             }
                             return
                         }
                         
+                        let processOutput = (process.terminationStatus, output, error)
                         DispatchQueue.main.async {
-                            promise(.success((process.terminationStatus, output, error)))
+                            promiseBox.resolve(.success(processOutput))
                         }
                     } catch {
                         DispatchQueue.main.async {
-                            promise(.failure(error))
+                            promiseBox.resolve(.failure(error))
                         }
                     }
                 }

@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 
 public extension NSAttributedString {

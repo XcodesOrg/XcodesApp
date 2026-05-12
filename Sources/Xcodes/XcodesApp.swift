@@ -1,6 +1,7 @@
 import AppKit
 import Sparkle
 import SwiftUI
+import XcodesKit
 
 @main
 struct XcodesApp: App {
@@ -122,7 +123,8 @@ struct XcodesApp: App {
     }
 }
 
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, @unchecked Sendable {
+    @MainActor
     private lazy var aboutWindow = configure(NSWindow(
         contentRect: .zero,
         styleMask: [.closable, .resizable, .miniaturizable, .titled],
@@ -130,10 +132,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         defer: false
     )) {
         $0.title = localizeString("About")
-        $0.contentView = NSHostingView(rootView: AboutView(showAcknowledgementsWindow: showAcknowledgementsWindow))
+        $0.contentView = NSHostingView(rootView: AboutView(showAcknowledgementsWindow: { [weak self] in
+            self?.showAcknowledgementsWindow()
+        }))
         $0.isReleasedWhenClosed = false
     }
 
+    @MainActor
     private let acknowledgementsWindow = configure(NSWindow(
         contentRect: .zero,
         styleMask: [.closable, .resizable, .miniaturizable, .titled],
@@ -150,11 +155,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     /// (It's also weird that the main Xcode list window can be opened more than once, there should only be one.)
     /// To work around this, an AppDelegate holds onto a single instance of an NSWindow that is shown here.
     /// FB8954588 Scene / WindowGroup is missing API to limit the number of windows that can be created
+    @MainActor
     func showAboutWindow() {
         aboutWindow.center()
         aboutWindow.makeKeyAndOrderFront(nil)
     }
 
+    @MainActor
     func showAcknowledgementsWindow() {
         acknowledgementsWindow.center()
         acknowledgementsWindow.makeKeyAndOrderFront(nil)
