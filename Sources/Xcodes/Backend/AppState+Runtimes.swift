@@ -199,7 +199,10 @@ extension AppState {
         Logger.appState.info("Downloading \(runtime.visibleIdentifier) with \(downloader)")
         switch downloader {
         case .aria2:
-            let aria2Path = Path(url: Bundle.main.url(forAuxiliaryExecutable: "aria2c")!)!
+            guard let aria2Path = Current.shell.aria2Path() else {
+                throw Aria2UnavailableError()
+            }
+
                 for try await progress in downloadRuntimeWithAria2(runtime, to: expectedRuntimePath, aria2Path: aria2Path) {
                     Task { @MainActor in
                         self.setInstallationStep(of: runtime, to: .downloading(progress: progress), postNotification: false)

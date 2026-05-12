@@ -374,6 +374,85 @@ class AppStateTests: XCTestCase {
         )
     }
 
+    func test_DownloadWithAria2_FailsWhenAria2IsUnavailable() throws {
+        Current.shell.aria2Path = { nil }
+        Current.files.fileExistsAtPath = { _ in false }
+
+        let expectation = expectation(description: "Completion")
+        var completion: Subscribers.Completion<Error>?
+        subject.downloadOrUseExistingArchive(
+            for: AvailableXcode(
+                version: Version("0.0.0")!,
+                url: URL(string: "https://apple.com/xcode.xip")!,
+                filename: "mock.xip",
+                releaseDate: nil
+            ),
+            downloader: .aria2,
+            progressChanged: { _ in }
+        )
+        .sink(
+            receiveCompletion: {
+                completion = $0
+                expectation.fulfill()
+            },
+            receiveValue: { _ in }
+        )
+        .store(in: &cancellables)
+
+        wait(for: [expectation], timeout: 1)
+
+        guard case let .failure(error as Aria2UnavailableError) = completion else {
+            return XCTFail("Expected Aria2UnavailableError")
+        }
+
+        XCTAssertEqual(error.localizedDescription, Aria2UnavailableError.installationInstructions)
+    }
+
+    func test_DownloadWithAria2_UsesSystemAria2WhenAvailable() throws {
+        let aria2Path = Path("/usr/local/bin/aria2c")!
+        Current.shell.aria2Path = { aria2Path }
+        Current.files.fileExistsAtPath = { _ in false }
+
+        var receivedAria2Path: Path?
+        Current.shell.downloadWithAria2 = { path, _, _, _ in
+            receivedAria2Path = path
+            return (
+                Progress(),
+                Just(())
+                    .setFailureType(to: Error.self)
+                    .eraseToAnyPublisher()
+            )
+        }
+
+        let expectation = expectation(description: "Completion")
+        var downloadedURL: URL?
+        subject.downloadOrUseExistingArchive(
+            for: AvailableXcode(
+                version: Version("0.0.0")!,
+                url: URL(string: "https://apple.com/xcode.xip")!,
+                filename: "mock.xip",
+                releaseDate: nil
+            ),
+            downloader: .aria2,
+            progressChanged: { _ in }
+        )
+        .sink(
+            receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    XCTFail("Unexpected failure: \(error)")
+                }
+                expectation.fulfill()
+            },
+            receiveValue: { downloadedURL = $0 }
+        )
+        .store(in: &cancellables)
+
+        wait(for: [expectation], timeout: 1)
+
+        XCTAssertEqual(receivedAria2Path, aria2Path)
+        XCTAssertEqual(downloadedURL, (Path.xcodesApplicationSupport/"Xcode-0.0.0.xip").url)
+    }
+
     func test_Install_NotEnoughFreeSpace() throws {
         Current.shell.unxip = { _ in
             Fail(error: ProcessExecutionError(

@@ -25,7 +25,8 @@ extension Shell {
         xcodeBuildVersion: { _ in return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
         getUserCacheDir: { return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
         touchInstallCheck: { _, _, _ in return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        xcodeSelectPrintPath: { return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() }
+        xcodeSelectPrintPath: { return Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
+        aria2Path: { return nil }
     )
 }
 

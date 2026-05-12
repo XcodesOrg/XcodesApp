@@ -68,7 +68,6 @@
 				Resources/Info.plist,
 				Resources/Xcodes.entitlements,
 				Resources/XcodesTest.entitlements,
-				Resources/aria2c,
 			);
 			target = ACBEAF23F11BEC57D7212F5D /* Xcodes */;
 		};
@@ -247,7 +246,6 @@
 			buildConfigurationList = 51C5B13883251BB2023DFCBE /* Build configuration list for PBXNativeTarget "Xcodes" */;
 			buildPhases = (
 				B4D74CA877F1EF0BF0B279DD /* Sources */,
-				590813A001DB3B2BF5C8AB1A /* Copy command-line tools */,
 				1EE559613D2E7EDA7C51E6FB /* Resources */,
 				532F23957012E9AA1E5518A8 /* Frameworks */,
 				59EAC5B89AD80D4592075A1B /* Embed Dependencies */,
@@ -346,29 +344,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		590813A001DB3B2BF5C8AB1A /* Copy command-line tools */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Sources/Xcodes/Resources/aria2c",
-			);
-			name = "Copy command-line tools";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_FOLDER_PATH)/aria2c",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "set -euo pipefail\n\ndestination=\"$TARGET_BUILD_DIR/$EXECUTABLE_FOLDER_PATH\"\nmkdir -p \"$destination\"\n\nfor tool in aria2c; do\n  source=\"$SRCROOT/Sources/Xcodes/Resources/$tool\"\n  target=\"$destination/$tool\"\n\n  rm -f \"$target\"\n  cp \"$source\" \"$target\"\n  chmod 755 \"$target\"\n\n  if [[ \"${CODE_SIGNING_ALLOWED:-YES}\" != \"NO\" && -n \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" && \"${EXPANDED_CODE_SIGN_IDENTITY}\" != \"-\" ]]; then\n    /usr/bin/codesign --force --sign \"$EXPANDED_CODE_SIGN_IDENTITY\" \"$target\"\n  fi\ndone\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		12AAE30148E577D9CA8E1E75 /* Sources */ = {

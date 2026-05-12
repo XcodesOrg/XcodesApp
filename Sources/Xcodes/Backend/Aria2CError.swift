@@ -1,5 +1,24 @@
 import Foundation
 
+struct Aria2UnavailableError: LocalizedError {
+    static let aria2HomepageURL = URL(string: "https://aria2.github.io")!
+    static let homebrewFormulaURL = URL(string: "https://formulae.brew.sh/formula/aria2")!
+
+    static let installationInstructions = """
+    aria2 ist auf diesem Mac nicht verfügbar. Installiere aria2, um die aria2-Downloader-Option zu verwenden.
+
+    Weitere Informationen: https://aria2.github.io
+    Homebrew-Formel: https://formulae.brew.sh/formula/aria2
+
+    Am besten installierst du aria2 mit:
+    brew install aria2
+    """
+
+    var errorDescription: String? {
+        Self.installationInstructions
+    }
+}
+
 /// A LocalizedError that represents a non-zero exit code from running aria2c.
 struct Aria2CError: LocalizedError {
     var code: Code

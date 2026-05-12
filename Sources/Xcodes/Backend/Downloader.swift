@@ -14,5 +14,12 @@ public enum Downloader: String, CaseIterable, Identifiable, CustomStringConverti
         }
     }
 
+    var isAvailable: Bool {
+        switch self {
+        case .aria2: return Current.shell.aria2Path() != nil
+        case .urlSession: return true
+        }
+    }
+
     var isManaged: Bool { PreferenceKey.downloader.isManaged() }
 }

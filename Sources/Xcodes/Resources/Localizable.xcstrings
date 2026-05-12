@@ -8020,127 +8020,127 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "يستخدم [aria2](https://github.com/aria2/aria2) ما يصل إلى 16 اتصالًا لتنزيل Xcode بسرعة أكبر بمعدل 3 إلى 5 مرات من URLSession. تم تجميعه كملف قابل للتنفيذ مع كود المصدر الخاص به داخل Xcodes ليتوافق مع ترخيص GPLv2 الخاص به.\n\nURLSession هو واجهة برمجة تطبيقات Apple الافتراضية لتقديم طلبات URL."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) utilitza fins a 16 connexions simultànies per a descarregar l'Xcode 3-5x vegades més de pressa que URLSesson. A més de l'executable, està empaquestat amb el seu codi font dins Xcodes per complir amb la llicència GPLv2.\n\nURLSession is la opció per defecte de l'API d'Apple per a fer crides URL."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Es ist zusammen mit seinem Quellcode in Xcode enthalten, um seiner GPLv2-Lizenz nachzukommen.\n\nURLSession ist Apples Standard-API für URL-Requests."
+            "value" : "[aria2](https://aria2.github.io) verwendet bis zu 16 Verbindungen, um Xcode 3-5x schneller als URLSession herunterzuladen. Xcodes verwendet ein systemweit installiertes aria2c und bündelt aria2 nicht. Installiere aria2 am besten mit brew install aria2. Siehe auch die [Homebrew-Formel](https://formulae.brew.sh/formula/aria2).\n\nURLSession ist Apples Standard-API für URL-Requests."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Το [aria2](https://github.com/aria2/aria2) χρησσιμοποιεί έως και 16 συνδέσεις για να κατεβάσει το Xcode 3-5 φορές ταχύτερα απο το URLSession. Συμπεριλαμβάνεται ως εκτελέσιμο μαζί τον πηγαίο του κώδικα στο Xcodes ώστε να συμμορφώνεται με την άδεια χρήσης του GPLv2.\n\nΤο URLSession είναι το προεπιλεγμένο API για την εκτέλεση των URL requests."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) uses up to 16 connections to download Xcode 3-5x faster than URLSession. It's bundled as an executable along with its source code within Xcodes to comply with its GPLv2 license.\n\nURLSession is the default Apple API for making URL requests."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) usa hasta 16 conexiones para descargar Xcode de 3 a 5 veces más rápido que URLSession. Se incluye como un ejecutable junto con su código fuente dentro de Xcodes para cumplir con su licencia GPLv2.\n\nURLSession es la API predeterminada de Apple para realizar solicitudes de URL."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) käyttää jopa 16 yhteyttä ladatakseen Xcoden 3–5 kertaa nopeammin kuin URLSession. Se on niputettu suoritettavaksi tiedostoksi ja sen lähdekoodiin Xcodesissa GPLv2-lisenssin noudattamiseksi.\n\nURLSession on Applen oletussovellusliittymä URL-pyyntöjen tekemiseen.."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) utilise jusqu'à 16 connexions pour télécharger Xcode de 3 à 5 fois plus rapidement que URLSession. [aria2](https://github.com/aria2/aria2) est fourni sous forme d'exécutable avec son code source dans Xcodes pour se conformer à sa licence GPLv2.\n\nURLSession est l'API d'Apple utilisée par défaut pour effectuer des requêtes d'URL."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) URLSession की तुलना में Xcode 3-5x तेजी से डाउनलोड करने के लिए 16 कनेक्शन तक का उपयोग करता है। इसे अपने GPLv2 लाइसेंस का अनुपालन करने के लिए Xcodes के भीतर अपने स्रोत कोड के साथ एक निष्पादन योग्य के रूप में बंडल किया गया है।\n\nURL अनुरोध करने के लिए URLSession डिफ़ॉल्ट Apple API है।"
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) usa fino a 16 connessioni per scaricar Xcode da 3 a 5 volte più veloce di URLSession. E' incluso come eseguibile assieme ai suoi sogenti dentro Xcodes per rispettare la sua licenza GPLv2. \n\nURLSession è l'API di default di Apple per fare richieste a URL remote."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) は、最大16個の接続を使用して、Xcode を URLSession の3-5 倍のスピードでダウンロードします。GPLv2 ライセンスに準拠するため、Xcodes 内にソースコードと一緒に実行ファイルとしてバンドルされています。\n\nURLSession は、URLリクエストを行うための Apple のデフォルト API です。"
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2)는 최대 16 개의 연결을 사용하여 URLSession보다 3~5배 더 빠르게 Xcode를 다운로드합니다. GPLv2 라이센스를 준수하기 위해 Xcodes 내 소스 코드와 함께 실행 파일 번들로 제공됩니다.\n\nURLSession은 URL 요청을 만들기 위한 기본 Apple API입니다."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) gebruikt tot 16 verbindingen om Xcode 3-5x sneller te downloaden dan met URLSession. Het is gebundeld als een executable samen met de broncode binnen Xcodes om te voldoen aan de GPLv2 licentie.\n\nURLSession is de standaard Apple API voor het maken van URL verzoeken."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) używa do pobierania do 16 połączeń, co pozwala na pobieranie Xcode 3-5x szybciej niż URLSession. Jest on dostarczany jako plik wykonywalny wraz ze swoim kodem źródłowym w ramach Xcodes w celu przestrzegania jego licencji GPLv2.\n\nURLSession to domyślne API Apple do tworzenia żądań URL."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) usa até 16 conexões para baixar o Xcode 3-5x mais rápido que URLSession. Está empacotado como um executável junto com o seu código fonte dentro do Xcodes para conformar com a licensa GPLv2.\n\nURLSession é a API padrão da Apple para performar requisições URL."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) использует до 16 подключений для загрузки Xcode в 3-5 раз быстрее, чем URLSession. Он поставляется в виде исполняемого файла вместе с исходным кодом в Xcodes, чтобы соответствовать лицензии GPLv2.\n\nURLSession — это API Apple по умолчанию для выполнения запросов по сети."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) ใช้การเชื่อมต่อสูงสุด 16 ทาง เพื่อดาวน์โหลด Xcode ที่เร็วกว่า URLSession 3-5 เท่า มันถูกรวมเป็นไฟล์ปฏิบัติการพร้อมกับซอร์สโค้ดภายใน Xcodes เพื่อให้สอดคล้องกับใบอนุญาต GPLv2\n\nURLSession คือ API ค่าเริ่มต้นของ Apple สำหรับการส่ง URL requests"
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) 16ya kadar bağlantı kullanarak Xcode'u URLSession'a göre 3-5 kat daha hızlı indirir. Çalıştırılabilir bir dosya olarak Bundle'a dahildir ve kaynak dosyaları GPLv2 lisansıyla uyumlu olması açısından Xcode içerisinde yer alır.\n\nURLSession Apple'ın URL istekleri oluşturmak için sunduğu varsayılan API'dır."
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) може використовувати до 16 з'єднань, завантажуючи Xcode у 3-5 разів швидше ніж URLSession. Вона поставляється у вигляді бінарника та коду, відповідно до вимог її GPLv2 ліцензії.\n\nURLSession — це завантажувач за-умовчанням від Apple"
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2)使用最高16线程，能提供3至5倍的下载速度。它与它的源代码被一同打包在Xcodes中以符合GPLv2授权。\n\nURLSession是用于发起URL请求的默认Apple API。"
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[aria2](https://github.com/aria2/aria2) 可利用多達 16 條連線來下載 Xcode，相較使用 URLSession 快達 3~5 倍。Xcodes 的套件內容中包含了 [aria2](https://github.com/aria2/aria2) 執行檔及其原始碼，以遵循其使用的 GPLv2 授權條款。\n\nURLSession 是系統內建用於發起 URL 連線請求的 Apple API。"
+            "value" : "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
           }
         }
       }

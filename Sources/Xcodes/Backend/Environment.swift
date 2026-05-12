@@ -79,6 +79,35 @@ private func runLibUnxip(_ url: URL) async throws -> ProcessOutput {
     return (0, "", "")
 }
 
+private func systemExecutablePath(named executableName: String) -> Path? {
+    let environmentPaths = ProcessInfo.processInfo.environment["PATH"]?
+        .split(separator: ":")
+        .map(String.init) ?? []
+    let fallbackPaths = [
+        "/opt/homebrew/bin",
+        "/usr/local/bin",
+        "/usr/bin",
+        "/bin",
+        "/usr/sbin",
+        "/sbin",
+    ]
+
+    var seenPaths = Set<String>()
+    for directory in environmentPaths + fallbackPaths where seenPaths.insert(directory).inserted {
+        let candidateURL = URL(fileURLWithPath: directory, isDirectory: true)
+            .appendingPathComponent(executableName)
+
+        guard
+            FileManager.default.isExecutableFile(atPath: candidateURL.path),
+            let candidatePath = Path(url: candidateURL)
+        else { continue }
+
+        return candidatePath
+    }
+
+    return nil
+}
+
 public struct Shell: @unchecked Sendable {
     public var unxip: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.xip, workingDirectory: $0.deletingLastPathComponent(), "--expand", "\($0.path)") }
     public var spctlAssess: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.sbin.spctl, "--assess", "--verbose", "--type", "execute", "\($0.path)") }
@@ -89,6 +118,7 @@ public struct Shell: @unchecked Sendable {
     public var touchInstallCheck: (String, String, String) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin/"touch", "\($0)com.apple.dt.Xcode.InstallCheckCache_\($1)_\($2)") }
 
     public var xcodeSelectPrintPath: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.join("xcode-select"), "-p") }
+    public var aria2Path: () -> Path? = { systemExecutablePath(named: "aria2c") }
     
     public var downloadWithAria2: (Path, URL, Path, [HTTPCookie]) -> (Progress, AnyPublisher<Void, Error>) = { aria2Path, url, destination, cookies in
         let process = Process()

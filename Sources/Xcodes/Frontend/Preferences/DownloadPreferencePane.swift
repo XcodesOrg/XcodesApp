@@ -32,9 +32,10 @@ struct DownloadPreferencePane: View {
             GroupBox(label: Text("Downloader")) {
                 VStack(alignment: .leading) {
                     Picker("Downloader", selection: $downloader) {
-                        ForEach(Downloader.allCases) { downloader in
-                            Text(downloader.description)
-                                .tag(downloader)
+                        ForEach(Downloader.allCases) { option in
+                            Text(option.description)
+                                .tag(option)
+                                .disabled(!option.isAvailable)
                         }
                     }
                     .labelsHidden()
@@ -44,6 +45,23 @@ struct DownloadPreferencePane: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
+
+                    if !Downloader.aria2.isAvailable {
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("aria2 ist auf diesem Mac nicht verfügbar. Installiere aria2, um diese Option zu verwenden.")
+                                .foregroundStyle(.secondary)
+                            HStack(spacing: 8) {
+                                Link("aria2", destination: Aria2UnavailableError.aria2HomepageURL)
+                                Text("·")
+                                    .foregroundStyle(.secondary)
+                                Link("Homebrew-Formel", destination: Aria2UnavailableError.homebrewFormulaURL)
+                            }
+                            Text("Am besten installierst du aria2 mit `brew install aria2`.")
+                                .foregroundStyle(.secondary)
+                        }
+                        .font(.footnote)
+                        .fixedSize(horizontal: false, vertical: true)
+                    }
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
