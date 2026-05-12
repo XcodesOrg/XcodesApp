@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -767,7 +767,7 @@
 			attributes = {
 				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1140;
-				ORGANIZATIONNAME = "Robots and Pencils";
+				ORGANIZATIONNAME = "Matthias Wallner-Géhri";
 				TargetAttributes = {
 					CA9FF8AD2595967A00E47BAF = {
 						CreatedOnToolsVersion = 12.2;
@@ -782,7 +782,6 @@
 				};
 			};
 			buildConfigurationList = CAD2E7992449574E00113D76 /* Build configuration list for PBXProject "Xcodes" */;
-			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -809,6 +808,7 @@
 				th,
 			);
 			mainGroup = CAD2E7952449574E00113D76;
+			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */,
 				CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
@@ -823,6 +823,7 @@
 				E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */,
 				33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1083,7 +1084,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1279,7 +1280,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1337,7 +1338,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
