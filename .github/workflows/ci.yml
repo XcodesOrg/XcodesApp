@@ -4,14 +4,125 @@ on:
   push:
     branches:
       - main
+    paths:
+      - ".github/workflows/ci.yml"
+      - "HelperXPCShared/**"
+      - "Xcodes/**"
+      - "Xcodes.xcodeproj/**"
+      - "XcodesTests/**"
+      - "com.xcodesorg.xcodesapp.Helper/**"
   pull_request:
+    paths:
+      - ".github/workflows/ci.yml"
+      - "HelperXPCShared/**"
+      - "Xcodes/**"
+      - "Xcodes.xcodeproj/**"
+      - "XcodesTests/**"
+      - "com.xcodesorg.xcodesapp.Helper/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  DERIVED_DATA_PATH: .xcode-derived-data
+  SOURCE_PACKAGES_PATH: .xcode-source-packages
+  XCODE_PROJECT: Xcodes.xcodeproj
+  XCODE_SCHEME: Xcodes
 
 jobs:
-  test:
-    runs-on: macos-15
+  build:
+    name: Build
+    runs-on: macos-26
+    timeout-minutes: 20
     steps:
-    - uses: actions/checkout@v4
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 1
+
+    - name: Xcode version
+      id: xcode-version
+      run: |
+        set -euo pipefail
+        xcodebuild -version
+        xcode-select -p
+        cache_version="$(xcodebuild -version | tr '\n' ' ' | sed 's/[[:space:]]*$//')"
+        echo "xcode-cache-version=$cache_version" >> "$GITHUB_OUTPUT"
+
+    - name: Restore SwiftPM cache
+      uses: actions/cache@v5
+      with:
+        path: ${{ env.SOURCE_PACKAGES_PATH }}
+        key: swiftpm-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Xcodes.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+        restore-keys: |
+          swiftpm-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-
+
+    - name: Restore Xcode build cache
+      uses: actions/cache@v5
+      with:
+        path: |
+          ${{ env.DERIVED_DATA_PATH }}/Build
+          ${{ env.DERIVED_DATA_PATH }}/ModuleCache.noindex
+          ${{ env.DERIVED_DATA_PATH }}/SDKStatCaches.noindex
+        key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Xcodes.xcodeproj/project.pbxproj', 'Xcodes.xcodeproj/xcshareddata/xcschemes/*.xcscheme', 'Xcodes.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'HelperXPCShared/**/*.swift', 'Xcodes/**/*.swift', 'Xcodes/Resources/**', 'com.xcodesorg.xcodesapp.Helper/**/*') }}
+        restore-keys: |
+          xcodebuild-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-
+
+    - name: Build app
+      run: |
+        set -euo pipefail
+        destination="platform=macOS,arch=$(uname -m)"
+        xcodebuild build \
+          -project "${XCODE_PROJECT}" \
+          -scheme "${XCODE_SCHEME}" \
+          -configuration Debug \
+          -destination "${destination}" \
+          -derivedDataPath "${DERIVED_DATA_PATH}" \
+          -clonedSourcePackagesDirPath "${SOURCE_PACKAGES_PATH}" \
+          -onlyUsePackageVersionsFromResolvedFile \
+          CODE_SIGNING_ALLOWED=NO \
+          COMPILER_INDEX_STORE_ENABLE=NO
+
+  test:
+    name: Tests
+    runs-on: macos-26
+    timeout-minutes: 20
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        fetch-depth: 1
+
+    - name: Xcode version
+      id: xcode-version
+      run: |
+        set -euo pipefail
+        xcodebuild -version
+        xcode-select -p
+        cache_version="$(xcodebuild -version | tr '\n' ' ' | sed 's/[[:space:]]*$//')"
+        echo "xcode-cache-version=$cache_version" >> "$GITHUB_OUTPUT"
+
+    - name: Restore SwiftPM cache
+      uses: actions/cache@v5
+      with:
+        path: ${{ env.SOURCE_PACKAGES_PATH }}
+        key: swiftpm-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Xcodes.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+        restore-keys: |
+          swiftpm-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-
+
     - name: Run tests
-      env:
-        DEVELOPER_DIR: /Applications/Xcode_16.4.app
-      run: xcodebuild test -scheme Xcodes
+      run: |
+        set -euo pipefail
+        destination="platform=macOS,arch=$(uname -m)"
+        xcodebuild test \
+          -project "${XCODE_PROJECT}" \
+          -scheme "${XCODE_SCHEME}" \
+          -destination "${destination}" \
+          -derivedDataPath "${DERIVED_DATA_PATH}-tests" \
+          -clonedSourcePackagesDirPath "${SOURCE_PACKAGES_PATH}" \
+          COMPILER_INDEX_STORE_ENABLE=NO

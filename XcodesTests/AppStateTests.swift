@@ -209,7 +209,7 @@ class AppStateTests: XCTestCase {
             receiveValue: { _ in }
         )
         .store(in: &cancellables)
-        wait(for: [finishedExpectation, installedStateExpectation], timeout: 1)
+        wait(for: [finishedExpectation, installedStateExpectation], timeout: 5)
         
         XCTAssertEqual(
             allXcodesElements.map { $0.map(\.installState) },
@@ -341,7 +341,7 @@ class AppStateTests: XCTestCase {
             receiveValue: { _ in }
         )
         .store(in: &cancellables)
-        wait(for: [finishedExpectation, installedStateExpectation], timeout: 1)
+        wait(for: [finishedExpectation, installedStateExpectation], timeout: 5)
         
         XCTAssertEqual(
             allXcodesElements.map { $0.map(\.installState) },

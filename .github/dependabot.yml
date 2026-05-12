@@ -5,3 +5,26 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+
+  # Maintain SwiftPM dependencies declared in the Xcode project.
+  - package-ecosystem: "swift"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+
+  # Maintain SwiftPM dependencies declared by local packages.
+  - package-ecosystem: "swift"
+    directory: "/Xcodes/AppleAPI"
+    schedule:
+      interval: "weekly"
+
+  - package-ecosystem: "swift"
+    directory: "/Xcodes/XcodesKit"
+    schedule:
+      interval: "weekly"
+
+  # Maintain the AppCast Jekyll toolchain.
+  - package-ecosystem: "bundler"
+    directory: "/AppCast"
+    schedule:
+      interval: "weekly"
