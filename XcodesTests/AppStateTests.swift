@@ -1,6 +1,5 @@
 import AppleAPI
 import Combine
-import CombineExpectations
 import Path
 import Version
 import XCTest
@@ -10,10 +9,12 @@ import XcodesKit
 
 class AppStateTests: XCTestCase {
     var subject: AppState!
+    var cancellables = Set<AnyCancellable>()
     
     override func setUpWithError() throws {
         Current = .mock
         subject = AppState()
+        cancellables = []
     }
     
     func test_ParseCertificateInfo_Succeeds() throws {
@@ -45,8 +46,19 @@ class AppStateTests: XCTestCase {
         }
 
         let installedXcode = InstalledXcode(path: Path("/Applications/Xcode-0.0.0.app")!)!
-        let recorder = subject.verifySecurityAssessment(of: installedXcode).record()
-        let completion = try wait(for: recorder.completion, timeout: 1, description: "Completion")
+        let expectation = expectation(description: "Completion")
+        var completion: Subscribers.Completion<Error>?
+        subject.verifySecurityAssessment(of: installedXcode)
+            .sink(
+                receiveCompletion: {
+                    completion = $0
+                    expectation.fulfill()
+                },
+                receiveValue: { _ in }
+            )
+            .store(in: &cancellables)
+
+        wait(for: [expectation], timeout: 1)
 
         if case let .failure(error as InstallationError) = completion { 
             XCTAssertEqual(error, InstallationError.failedSecurityAssessment(xcode: installedXcode, output: "stdout\nstderr"))
@@ -62,8 +74,20 @@ class AppStateTests: XCTestCase {
         }
 
         let installedXcode = InstalledXcode(path: Path("/Applications/Xcode-0.0.0.app")!)!
-        let recorder = subject.verifySecurityAssessment(of: installedXcode).record()
-        try wait(for: recorder.finished, timeout: 1, description: "Finished")
+        let expectation = expectation(description: "Finished")
+        subject.verifySecurityAssessment(of: installedXcode)
+            .sink(
+                receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        XCTFail("Unexpected failure: \(error)")
+                    }
+                    expectation.fulfill()
+                },
+                receiveValue: { _ in }
+            )
+            .store(in: &cancellables)
+
+        wait(for: [expectation], timeout: 1)
     }
     
     func test_Install_FullHappyPath_Apple() throws {
@@ -157,14 +181,36 @@ class AppStateTests: XCTestCase {
         // Helper is already installed
         subject.helperInstallState = .installed
 
-        let allXcodesRecorder = subject.$allXcodes.record()
-        let installRecorder = subject.install(
+        var allXcodesElements = [[Xcode]]()
+        let installedStateExpectation = expectation(description: "Installed state")
+        var didObserveInstalledState = false
+        subject.$allXcodes
+            .sink { xcodes in
+                allXcodesElements.append(xcodes)
+                if !didObserveInstalledState,
+                   xcodes.first?.installState == .installed(Path("/Applications/Xcode-0.0.0.app")!) {
+                    didObserveInstalledState = true
+                    installedStateExpectation.fulfill()
+                }
+            }
+            .store(in: &cancellables)
+        let finishedExpectation = expectation(description: "Finished")
+        subject.install(
             .version(AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)),
             downloader: .urlSession
-        ).record()
-        try wait(for: installRecorder.finished, timeout: 1, description: "Finished")
+        )
+        .sink(
+            receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    XCTFail("Unexpected failure: \(error)")
+                }
+                finishedExpectation.fulfill()
+            },
+            receiveValue: { _ in }
+        )
+        .store(in: &cancellables)
+        wait(for: [finishedExpectation, installedStateExpectation], timeout: 1)
         
-        let allXcodesElements = try wait(for: allXcodesRecorder.availableElements, timeout: 1, description: "All Xcodes Elements")
         XCTAssertEqual(
             allXcodesElements.map { $0.map(\.installState) },
             [
@@ -267,14 +313,36 @@ class AppStateTests: XCTestCase {
         // Helper is already installed
         subject.helperInstallState = .installed
 
-        let allXcodesRecorder = subject.$allXcodes.record()
-        let installRecorder = subject.install(
+        var allXcodesElements = [[Xcode]]()
+        let installedStateExpectation = expectation(description: "Installed state")
+        var didObserveInstalledState = false
+        subject.$allXcodes
+            .sink { xcodes in
+                allXcodesElements.append(xcodes)
+                if !didObserveInstalledState,
+                   xcodes.first?.installState == .installed(Path("/Applications/Xcode-0.0.0.app")!) {
+                    didObserveInstalledState = true
+                    installedStateExpectation.fulfill()
+                }
+            }
+            .store(in: &cancellables)
+        let finishedExpectation = expectation(description: "Finished")
+        subject.install(
             .version(AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)),
             downloader: .urlSession
-        ).record()
-        try wait(for: installRecorder.finished, timeout: 1, description: "Finished")
+        )
+        .sink(
+            receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    XCTFail("Unexpected failure: \(error)")
+                }
+                finishedExpectation.fulfill()
+            },
+            receiveValue: { _ in }
+        )
+        .store(in: &cancellables)
+        wait(for: [finishedExpectation, installedStateExpectation], timeout: 1)
         
-        let allXcodesElements = try wait(for: allXcodesRecorder.availableElements, timeout: 1, description: "All Xcodes Elements")
         XCTAssertEqual(
             allXcodesElements.map { $0.map(\.installState) },
             [
@@ -301,7 +369,9 @@ class AppStateTests: XCTestCase {
         }
         let archiveURL = URL(fileURLWithPath: "/Users/user/Library/Application Support/Xcode-0.0.0.xip")
         
-        let recorder = subject.unarchiveAndMoveXIP(
+        let expectation = expectation(description: "Completion")
+        var completion: Subscribers.Completion<Error>?
+        subject.unarchiveAndMoveXIP(
             availableXcode: AvailableXcode(
                 version: Version("0.0.0")!,
                 url: URL(string: "https://developer.apple.com")!, 
@@ -310,9 +380,17 @@ class AppStateTests: XCTestCase {
             ),
             at: archiveURL,
             to: URL(string: "/Applications/Xcode-0.0.0.app")!
-        ).record()
+        )
+        .sink(
+            receiveCompletion: {
+                completion = $0
+                expectation.fulfill()
+            },
+            receiveValue: { _ in }
+        )
+        .store(in: &cancellables)
         
-        let completion = try wait(for: recorder.completion, timeout: 1, description: "Completion")
+        wait(for: [expectation], timeout: 1)
 
         if case let .failure(error as InstallationError) = completion { 
             XCTAssertEqual(

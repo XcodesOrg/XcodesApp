@@ -293,8 +293,9 @@ class AppStateUpdateTests: XCTestCase {
 
         let publicKey = Data(base64Encoded:  "VLEKLa+n2cyeYNWbECm45CuS4kCdCxodlTDGlW1FKaUyOrv/RbtN2sM0pVE12zI7k3VkocPC3rN5DZBIkahR6I8JHj/J97dtTvzsR+aNRWTYCT2HGP1PBI0QArp3eitAbFqTWI4+Zw+oOnV8+AYdH/wjbq7gOK4C4dvIHE+FzRwIlmguPb5qu2r47R9W3y1msVdoUGlFBOMOMb7Gyq7F0MaEIFH63lNzGomwq74mfss/cFqurd6fxU+Y7tdVTPZw1GWyBEPiXWpk8sNm2zE+S6zWo5tOsICprU75IC9galh1igfzN7VNe0SUFLNFTbFK+Bb1SFAOrAbBZOmyOG5uSQ==".data(using: .utf8)!)
 
+        let privateKey = BigNum("23161374166158551996079451276150657702422963034121842124445818241826569345033578345120284496449280736328513302994568402583647660370960353252836732307301957364261384324957527103960720408713825427474127658415917826326829664923997096839970397226662116904369925262192683131695683487505523842260218490007066160096482662715246662018133837725691586205535995663334471723776536640973591229093933458552240634178864509015968350855952558520147559154646484379002445961375384929682566525908284011230815908584648931495968206840416022306138033496705677078512266958633477047047323620540878121579549170392075029336954975132431417099801")!
         let clientKeys = SRPKeyPair(public: .init([UInt8](publicKey!)),
-                              private: .init(BigNum("23161374166158551996079451276150657702422963034121842124445818241826569345033578345120284496449280736328513302994568402583647660370960353252836732307301957364261384324957527103960720408713825427474127658415917826326829664923997096839970397226662116904369925262192683131695683487505523842260218490007066160096482662715246662018133837725691586205535995663334471723776536640973591229093933458552240634178864509015968350855952558520147559154646484379002445961375384929682566525908284011230815908584648931495968206840416022306138033496705677078512266958633477047047323620540878121579549170392075029336954975132431417099801")!))
+                                    private: .init(privateKey.bytes))
 
         let password = sha256(data: "example".data(using: .utf8)!)
         let salt = Data(base64Encoded: "fIjNflgqSJXACWwwvhDU+w==".data(using: .utf8)!)!
@@ -330,11 +331,11 @@ class AppStateUpdateTests: XCTestCase {
         let decodedB = Data(base64Encoded: "PMbU75wwG6rDTySXn2ASWyfQuPoW5ham15SzIscpInwOPE2uk7sePsW4ra0dHcLDUMFQn/LgBggIKOo7YZ9hf1VReiAzXwSKSHdJHjHUURTC2eNpANGUPO1qzuXYgc/MP3MR+GipKHsz+KTLT+8wLjNaiCIHsL/7evJBMw9QqiwhyXlAIm5mGZfhdTVbGpLz2/QzrFmI6pUTrHpio6m1Q74DH3FBxxIeiIcuEdGdeVt9iUweowBRyf2woasTvSV1fbMQbl+lsWPwzt/a73+J30eOGFdSubqSVYh2pV0OLqRz7zPzJars12teCWUV+0WUIaxb14Mp7tlmqcTPuqZe9w==".data(using: .utf8)!)!
 
         let client = SRPClient(configuration: SRPConfiguration<SHA256>(.N2048))
-        let sharedSecret = try client.calculateSharedSecret(password: Data(keyArray), salt: [UInt8](salt), clientKeys: clientKeys, serverPublicKey: .init([UInt8](decodedB)))
+        let sharedSecret = try client.calculateSharedSecret(password: keyArray, salt: [UInt8](salt), clientKeys: clientKeys, serverPublicKey: .init([UInt8](decodedB)))
 
         let accountName = "anand.appleseed@example.com"
-        let m1 = client.calculateClientProof(username: accountName, salt: [UInt8](salt), clientPublicKey: clientKeys.public, serverPublicKey: .init([UInt8](decodedB)), sharedSecret: .init(sharedSecret.bytes))
-        let m2 = client.calculateServerProof(clientPublicKey: clientKeys.public, clientProof: m1, sharedSecret: .init([UInt8](sharedSecret.bytes)))
+        let m1 = client.calculateClientProof(username: accountName, salt: [UInt8](salt), clientPublicKey: clientKeys.public, serverPublicKey: .init([UInt8](decodedB)), sharedSecret: sharedSecret)
+        let m2 = client.calculateServerProof(clientPublicKey: clientKeys.public, clientProof: m1, sharedSecret: sharedSecret)
 
         XCTAssertEqual(Data(m1).base64EncodedString(), "f/Bkq8gBTYxl7SyiRd4SXTyE/jM/g6E0mVyZIQDIsPg=")
         XCTAssertEqual(Data(m2).base64EncodedString(), "R2rgqC9cMAtWiXUImOrvs4oF+ccibf8KaFsZQ22WokM=")

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import AppKit
 
 let arguments = CommandLine.arguments
 guard let projectIndex = arguments.firstIndex(of: "-p"), let projectPath = arguments[safe: projectIndex + 1] else {
@@ -51,6 +50,7 @@ guard let pins = object["pins"] as? [[String: Any]] else {
     print("Invalid pins format")
     exit(EXIT_FAILURE)
 }
+let pinnedPackageNames = Set(pins.compactMap { $0["package"] as? String })
 
 let projectsURL = Xcode.derivedDataURL
 func projectsInfo(at url: URL) throws -> [Xcode.Project] {
@@ -71,7 +71,9 @@ guard let currentProject = projects.first(where: ({ $0.workspacePath == projectP
 }
 
 let checkouts = currentProject.url.deletingLastPathComponent().appendingPathComponent("SourcePackages/checkouts")
-let checkedDependencies = try fileManager.contentsOfDirectory(at: checkouts, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+let checkedDependencies = try fileManager
+    .contentsOfDirectory(at: checkouts, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
+    .filter { pinnedPackageNames.contains($0.lastPathComponent) }
 
 let spmLicences: [Xcode.Project.License] = checkedDependencies.compactMap {
     let supportedFilenames = ["LICENSE", "LICENSE.txt", "LICENSE.md"]
@@ -95,19 +97,18 @@ for case let url as URL in enumerator where url.lastPathComponent.hasSuffix(".LI
     )
 }
 
-let licences = spmLicences + manualLicenses
+let licences = (spmLicences + manualLicenses).sorted { $0.name.localizedStandardCompare($1.name) == .orderedAscending }
 
-let acknowledgementsAttributedString = NSMutableAttributedString()
+var acknowledgements = "# Acknowledgements\n\n"
 for licence in licences {
-    acknowledgementsAttributedString.append(NSAttributedString(string: licence.name + "\n\n", attributes: [.font: NSFont.preferredFont(forTextStyle: .title2)]))
+    acknowledgements.append("## \(licence.name)\n\n")
     let licenseContents = try String(contentsOf: licence.url)
-    acknowledgementsAttributedString.append(NSAttributedString(string: licenseContents + "\n\n", attributes: [.font: NSFont.preferredFont(forTextStyle: .body)]))
+        .trimmingCharacters(in: .whitespacesAndNewlines)
+    acknowledgements.append("~~~text\n")
+    acknowledgements.append(licenseContents)
+    acknowledgements.append("\n~~~\n\n")
 }
 
-guard let data = acknowledgementsAttributedString.rtf(from: NSRange(location: 0, length: acknowledgementsAttributedString.length), documentAttributes: [:]) else {
-    print("Failed to create RTF data")
-    exit(EXIT_FAILURE)
-}
-try data.write(to: URL(fileURLWithPath: outputPath.expandingTildeInPath))
+try acknowledgements.write(to: URL(fileURLWithPath: outputPath.expandingTildeInPath), atomically: true, encoding: .utf8)
 
 print("Licenses have been saved to \(outputPath)")

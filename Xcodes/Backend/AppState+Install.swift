@@ -3,7 +3,6 @@ import Foundation
 import Path
 import AppleAPI
 import Version
-import LegibleError
 import os.log
 import DockProgress
 import XcodesKit

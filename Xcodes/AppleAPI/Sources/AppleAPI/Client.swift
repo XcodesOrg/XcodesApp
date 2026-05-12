@@ -59,7 +59,7 @@ public class Client {
                             .eraseToAnyPublisher()
                     }
                     
-                    let sharedSecret = try client.calculateSharedSecret(password: encryptedPassword, salt: [UInt8](decodedSalt), clientKeys: clientKeys, serverPublicKey: .init([UInt8](decodedB)))
+                    let sharedSecret = try client.calculateSharedSecret(password: [UInt8](encryptedPassword), salt: [UInt8](decodedSalt), clientKeys: clientKeys, serverPublicKey: .init([UInt8](decodedB)))
                     
                     let m1 = client.calculateClientProof(username: accountName, salt: [UInt8](decodedSalt), clientPublicKey: a, serverPublicKey: .init([UInt8](decodedB)), sharedSecret: .init(sharedSecret.bytes))
                     let m2 = client.calculateServerProof(clientPublicKey: a, clientProof: m1, sharedSecret: .init([UInt8](sharedSecret.bytes)))
@@ -160,8 +160,11 @@ public class Client {
                 case .twoStep:
                     return Fail(error: AuthenticationError.accountUsesTwoStepAuthentication)
                         .eraseToAnyPublisher()
-                case .twoFactor, .securityKey:
+                case .twoFactor:
                     return self.handleTwoFactor(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, authOptions: authOptions)
+                        .eraseToAnyPublisher()
+                case .securityKey:
+                    return Fail(error: AuthenticationError.accountUsesSecurityKeyAuthentication)
                         .eraseToAnyPublisher()
                 case .unknown:
                     let possibleResponseString = String(data: data, encoding: .utf8)
@@ -182,9 +185,6 @@ public class Client {
         } else if authOptions.canFallBackToSMS {
             option = .smsPendingChoice
             // Code is shown on trusted devices
-        } else if authOptions.fsaChallenge != nil {
-            option = .securityKey
-            // User needs to use a physical security key to respond to the challenge
         } else {
             option = .codeSent
         }
@@ -361,6 +361,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case unexpectedSignInResponse(statusCode: Int, message: String?)
     case appleIDAndPrivacyAcknowledgementRequired
     case accountUsesTwoStepAuthentication
+    case accountUsesSecurityKeyAuthentication
     case accountUsesUnknownAuthenticationKind(String?)
     case accountLocked(String)
     case badStatusCode(statusCode: Int, data: Data, response: HTTPURLResponse)
@@ -390,6 +391,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             return "You must sign in to https://appstoreconnect.apple.com and acknowledge the Apple ID & Privacy agreement."
         case .accountUsesTwoStepAuthentication:
             return "Received a response from Apple that indicates this account has two-step authentication enabled. xcodes currently only supports the newer two-factor authentication, though. Please consider upgrading to two-factor authentication, or explain why this isn't an option for you by making a new feature request in the Help menu."
+        case .accountUsesSecurityKeyAuthentication:
+            return "This Apple ID requires physical security-key authentication, which Xcodes does not support. Use Apple's passkey-capable sign-in flow outside Xcodes, or sign in with a trusted device code or SMS verification instead."
         case .accountUsesUnknownAuthenticationKind:
             return "Received a response from Apple that indicates this account has two-step or two-factor authentication enabled, but xcodes is unsure how to handle this response. If you continue to have problems, please submit a bug report in the Help menu."
         case let .accountLocked(message):
@@ -444,7 +447,6 @@ public enum TwoFactorOption: Equatable {
     case smsSent(AuthOptionsResponse.TrustedPhoneNumber)
     case codeSent
     case smsPendingChoice
-    case securityKey
 }
 
 public struct FSAChallenge: Equatable, Decodable {

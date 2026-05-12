@@ -1,5 +1,4 @@
 import Foundation
-import AsyncNetworkService
 import Path
 
 extension URL {
@@ -7,21 +6,26 @@ extension URL {
 }
 
 public struct RuntimeService {
-    var networkService: AsyncHTTPNetworkService
+    private var dataForRequest: (URLRequest) async throws -> (Data, URLResponse)
+
     public enum Error: LocalizedError, Equatable {
         case unavailableRuntime(String)
         case failedMountingDMG
     }
 
-    public init() {
-        networkService = AsyncHTTPNetworkService()
+    public init(
+        dataForRequest: @escaping (URLRequest) async throws -> (Data, URLResponse) = { request in
+            try await URLSession.shared.data(for: request)
+        }
+    ) {
+        self.dataForRequest = dataForRequest
     }
     
     public func downloadableRuntimes() async throws -> DownloadableRuntimesResponse {
         let urlRequest = URLRequest(url: .downloadableRuntimes)
         
         // Apple gives a plist for download
-        let (data, _) = try await networkService.requestData(urlRequest, validators: [])
+        let (data, _) = try await dataForRequest(urlRequest)
         do {
             let decodedResponse = try PropertyListDecoder().decode(DownloadableRuntimesResponse.self, from: data)
             return decodedResponse

@@ -14,8 +14,7 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        .package(url: "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService", branch: "main"),
-        .package(url: "https://github.com/mxcl/Path.swift", from: "1.0.0"),
+        .package(url: "https://github.com/mxcl/Path.swift", from: "1.6.0"),
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
@@ -23,7 +22,6 @@ let package = Package(
         .target(
             name: "XcodesKit",
             dependencies: [
-                .product(name: "AsyncNetworkService", package: "AsyncHTTPNetworkService"),
                 .product(name: "Path", package: "Path.swift")
             ]),
         .testTarget(

@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import Path
 import AppleAPI
-import KeychainAccess
+import Security
 import XcodesKit
 /**
  Lightweight dependency injection using global mutable state :P
@@ -373,19 +373,80 @@ public struct Network {
 }
 
 public struct Keychain {
-    private static let keychain = KeychainAccess.Keychain(service: "com.robotsandpencils.XcodesApp")
+    private static let service = "com.robotsandpencils.XcodesApp"
 
-    public var getString: (String) throws -> String? = keychain.getString(_:)
+    public var getString: (String) throws -> String? = { key in
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: key,
+            kSecMatchLimit as String: kSecMatchLimitOne,
+            kSecReturnData as String: true,
+        ]
+
+        var item: CFTypeRef?
+        let status = SecItemCopyMatching(query as CFDictionary, &item)
+
+        switch status {
+        case errSecSuccess:
+            guard let data = item as? Data else { return nil }
+            return String(data: data, encoding: .utf8)
+        case errSecItemNotFound:
+            return nil
+        default:
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(status))
+        }
+    }
+
     public func getString(_ key: String) throws -> String? {
         try getString(key)
     }
 
-    public var set: (String, String) throws -> Void = keychain.set(_:key:)
+    public var set: (String, String) throws -> Void = { value, key in
+        let encodedValue = Data(value.utf8)
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: key,
+        ]
+        let attributes: [String: Any] = [
+            kSecValueData as String: encodedValue,
+        ]
+
+        let updateStatus = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
+        switch updateStatus {
+        case errSecSuccess:
+            return
+        case errSecItemNotFound:
+            var item = query
+            item[kSecValueData as String] = encodedValue
+
+            let addStatus = SecItemAdd(item as CFDictionary, nil)
+            guard addStatus == errSecSuccess else {
+                throw NSError(domain: NSOSStatusErrorDomain, code: Int(addStatus))
+            }
+        default:
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(updateStatus))
+        }
+    }
+
     public func set(_ value: String, key: String) throws {
         try set(value, key)
     }
 
-    public var remove: (String) throws -> Void = keychain.remove(_:)
+    public var remove: (String) throws -> Void = { key in
+        let query: [String: Any] = [
+            kSecClass as String: kSecClassGenericPassword,
+            kSecAttrService as String: service,
+            kSecAttrAccount as String: key,
+        ]
+        let status = SecItemDelete(query as CFDictionary)
+
+        guard status == errSecSuccess || status == errSecItemNotFound else {
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(status))
+        }
+    }
+
     public func remove(_ key: String) throws -> Void {
         try remove(key)
     }

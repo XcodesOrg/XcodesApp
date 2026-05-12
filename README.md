@@ -22,7 +22,7 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 - Just click a button to make a version active with `xcode-select`.
 - View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
 - Dark/Light Mode supported
-- Security Key Authentication supported 
+- Apple ID sign-in supports trusted-device codes and SMS verification. Physical security-key-only Apple Accounts are not supported because native macOS security-key assertions require a `webcredentials` associated domain for the relying party, and Xcodes cannot claim `apple.com`; use Apple's passkey-capable sign-in flow outside this native FIDO2 path instead.
 - Support installing Platforms/Runtimes
 - Support installing Apple Silicon variants
 

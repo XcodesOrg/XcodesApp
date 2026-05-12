@@ -13,7 +13,7 @@ let package = Package(
             targets: ["AppleAPI"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/xcodesOrg/swift-srp", branch: "main")
+        .package(url: "https://github.com/adam-fowler/swift-srp", from: "2.3.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
