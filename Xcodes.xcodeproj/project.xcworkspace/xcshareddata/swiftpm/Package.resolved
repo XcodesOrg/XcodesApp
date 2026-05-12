@@ -1,4 +1,5 @@
 {
+  "originHash" : "a2c0097e5e2199e963c4d1468de84ddf1a9e1ef408f9b7db8c62e18dd32290d6",
   "pins" : [
     {
       "identity" : "big-num",
@@ -82,6 +83,14 @@
       }
     },
     {
+      "identity" : "unxip",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/saagarjha/unxip.git",
+      "state" : {
+        "revision" : "6c3990517fcc4c1db6952fccf4c562fb14097601"
+      }
+    },
+    {
       "identity" : "version",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mxcl/Version",
@@ -91,5 +100,5 @@
       }
     }
   ],
-  "version" : 2
+  "version" : 3
 }

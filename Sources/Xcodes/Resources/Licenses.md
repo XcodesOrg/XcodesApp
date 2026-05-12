@@ -1,5 +1,12 @@
 # Acknowledgements
 
+## libunxip
+
+Xcodes uses libunxip from https://github.com/saagarjha/unxip for the faster
+experimental XIP expansion path.
+
+License: GNU Lesser General Public License v3.0.
+
 ## aria2c
 
 ~~~text

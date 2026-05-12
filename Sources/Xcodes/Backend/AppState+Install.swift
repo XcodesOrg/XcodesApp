@@ -308,8 +308,7 @@ extension AppState {
     
     func unxipOrUnxipExperiment(_ source: URL) -> AnyPublisher<ProcessOutput, Error> {
         if unxipExperiment {
-            // All hard work done by https://github.com/saagarjha/unxip
-            // Compiled to binary with `swiftc -parse-as-library -O unxip.swift`
+            // All hard work done by https://github.com/saagarjha/unxip via libunxip.
             return Current.shell.unxipExperiment(source)
         } else {
             return Current.shell.unxip(source)

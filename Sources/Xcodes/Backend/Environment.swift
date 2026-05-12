@@ -1,9 +1,11 @@
 import Combine
+import Darwin
 import Foundation
 import Path
 import AppleAPI
 import Security
 import XcodesKit
+import libunxip
 /**
  Lightweight dependency injection using global mutable state :P
 
@@ -48,6 +50,33 @@ private final class NotificationObserverBox: @unchecked Sendable {
     nonisolated func remove() {
         NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
     }
+}
+
+private func runLibUnxip(_ url: URL) async throws -> ProcessOutput {
+    let outputDirectory = url.deletingLastPathComponent()
+    let outputDescriptor = open(outputDirectory.path, O_RDONLY | O_DIRECTORY)
+    guard outputDescriptor >= 0 else {
+        throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO)
+    }
+    defer { _ = close(outputDescriptor) }
+
+    let inputDescriptor = open(url.path, O_RDONLY)
+    guard inputDescriptor >= 0 else {
+        throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO)
+    }
+
+    // DataReader wraps this descriptor in DispatchIO, which owns and closes it.
+    let input = DataReader.data(readingFrom: inputDescriptor)
+    for try await _ in Unxip.makeStream(
+        from: .xip(),
+        to: .disk(),
+        input: DataReader(data: input),
+        nil,
+        nil,
+        .init(compress: true, dryRun: false, output: outputDescriptor)
+    ) {}
+
+    return (0, "", "")
 }
 
 public struct Shell: @unchecked Sendable {
@@ -219,8 +248,20 @@ public struct Shell: @unchecked Sendable {
     
     
     public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
-        let unxipPath = Path(url: Bundle.main.url(forAuxiliaryExecutable: "unxip")!)!
-        return Process.run(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
+        Deferred {
+            Future<ProcessOutput, Error> { promise in
+                let promiseBox = FuturePromiseBox(promise)
+                Task.detached(priority: .userInitiated) {
+                    do {
+                        let output = try await runLibUnxip(url)
+                        promiseBox.resolve(.success(output))
+                    } catch {
+                        promiseBox.resolve(.failure(error))
+                    }
+                }
+            }
+        }
+        .eraseToAnyPublisher()
     }
     
     public var downloadRuntime: (String, String, String?) -> AsyncThrowingStream<Progress, Error> = { platform, version, architecture in

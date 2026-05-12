@@ -15,6 +15,7 @@
 		4FC36D017EBEA554CCAFC707 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 43888E7677B19CC28C5D7402 /* OrderedCollections */; };
 		530FC00CDB549D4F9F74BAF7 /* CryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2959825ED03493B277C20B77 /* CryptoKit.framework */; };
 		757BB5EAD48DA84C39B0C94B /* eu.mpwg.xcodes.Helper in Embed Dependencies */ = {isa = PBXBuildFile; fileRef = 956B216AA750563A4E1EA0F7 /* eu.mpwg.xcodes.Helper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		10904F46CEDD8F75E5D58F09 /* libunxip in Frameworks */ = {isa = PBXBuildFile; productRef = 77F87CE62CB7B14117A46F4E /* libunxip */; };
 		C5B2FC4A77390D41B7C34894 /* XcodesKit in Frameworks */ = {isa = PBXBuildFile; productRef = 36F610CDBBDE406B609A8032 /* XcodesKit */; };
 		CD4E48CB6C3891AE95D2A385 /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = 70C3EF03E0AAA54222557AEA /* Version */; };
 		F2B7EC96E5C971E375690E03 /* DockProgress in Frameworks */ = {isa = PBXBuildFile; productRef = 9CDE302DD4909615B7FF93A0 /* DockProgress */; };
@@ -68,7 +69,6 @@
 				Resources/Xcodes.entitlements,
 				Resources/XcodesTest.entitlements,
 				Resources/aria2c,
-				Resources/unxip,
 			);
 			target = ACBEAF23F11BEC57D7212F5D /* Xcodes */;
 		};
@@ -156,6 +156,7 @@
 				4FC36D017EBEA554CCAFC707 /* OrderedCollections in Frameworks */,
 				0525A743F6CE6829F40D2C51 /* Sparkle in Frameworks */,
 				1158B8AEC1C762BEA2B55C7C /* SRP in Frameworks */,
+				10904F46CEDD8F75E5D58F09 /* libunxip in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +272,7 @@
 				43888E7677B19CC28C5D7402 /* OrderedCollections */,
 				424A1B74CD38CCC62313D3DD /* Sparkle */,
 				E0EF53DDADAF70B005B10406 /* SRP */,
+				77F87CE62CB7B14117A46F4E /* libunxip */,
 			);
 			productName = Xcodes;
 			productReference = 2F0162B303870DA95CB0E0AC /* Xcodes.app */;
@@ -305,6 +307,7 @@
 				9BBDDFD5A831FE0A3701C5DA /* XCRemoteSwiftPackageReference "big-num" */,
 				DB2A3156F58055E74A957695 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				875612FA7A84895232023AD9 /* XCRemoteSwiftPackageReference "swift-srp" */,
+				3CA34FFA1C94CC03DF8E6D4E /* XCRemoteSwiftPackageReference "unxip" */,
 				53C62003DF35AC341192831B /* XCLocalSwiftPackageReference "AppleAPI" */,
 				EE07FB20DD6A773F73E9969D /* XCLocalSwiftPackageReference "XcodesKit" */,
 			);
@@ -354,18 +357,16 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Sources/Xcodes/Resources/aria2c",
-				"$(SRCROOT)/Sources/Xcodes/Resources/unxip",
 			);
 			name = "Copy command-line tools";
 			outputFileListPaths = (
 			);
 			outputPaths = (
 				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_FOLDER_PATH)/aria2c",
-				"$(TARGET_BUILD_DIR)/$(EXECUTABLE_FOLDER_PATH)/unxip",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "set -euo pipefail\n\ndestination=\"$TARGET_BUILD_DIR/$EXECUTABLE_FOLDER_PATH\"\nmkdir -p \"$destination\"\n\nfor tool in aria2c unxip; do\n  source=\"$SRCROOT/Sources/Xcodes/Resources/$tool\"\n  target=\"$destination/$tool\"\n\n  rm -f \"$target\"\n  cp \"$source\" \"$target\"\n  chmod 755 \"$target\"\n\n  if [[ \"${CODE_SIGNING_ALLOWED:-YES}\" != \"NO\" && -n \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" && \"${EXPANDED_CODE_SIGN_IDENTITY}\" != \"-\" ]]; then\n    /usr/bin/codesign --force --sign \"$EXPANDED_CODE_SIGN_IDENTITY\" \"$target\"\n  fi\ndone\n";
+			shellScript = "set -euo pipefail\n\ndestination=\"$TARGET_BUILD_DIR/$EXECUTABLE_FOLDER_PATH\"\nmkdir -p \"$destination\"\n\nfor tool in aria2c; do\n  source=\"$SRCROOT/Sources/Xcodes/Resources/$tool\"\n  target=\"$destination/$tool\"\n\n  rm -f \"$target\"\n  cp \"$source\" \"$target\"\n  chmod 755 \"$target\"\n\n  if [[ \"${CODE_SIGNING_ALLOWED:-YES}\" != \"NO\" && -n \"${EXPANDED_CODE_SIGN_IDENTITY:-}\" && \"${EXPANDED_CODE_SIGN_IDENTITY}\" != \"-\" ]]; then\n    /usr/bin/codesign --force --sign \"$EXPANDED_CODE_SIGN_IDENTITY\" \"$target\"\n  fi\ndone\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -923,6 +924,14 @@
 				minimumVersion = 2.9.6;
 			};
 		};
+		3CA34FFA1C94CC03DF8E6D4E /* XCRemoteSwiftPackageReference "unxip" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/saagarjha/unxip.git";
+			requirement = {
+				kind = revision;
+				revision = 6c3990517fcc4c1db6952fccf4c562fb14097601;
+			};
+		};
 		46D8F12FF0973DE6E7D39E0B /* XCRemoteSwiftPackageReference "Path.swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Path.swift";
@@ -989,6 +998,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0725650435EBBDBCBF04D6A2 /* XCRemoteSwiftPackageReference "Version" */;
 			productName = Version;
+		};
+		77F87CE62CB7B14117A46F4E /* libunxip */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3CA34FFA1C94CC03DF8E6D4E /* XCRemoteSwiftPackageReference "unxip" */;
+			productName = libunxip;
 		};
 		763D078214E3089F5DC7A34B /* SwiftSoup */ = {
 			isa = XCSwiftPackageProductDependency;

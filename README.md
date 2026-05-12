@@ -94,18 +94,8 @@ Xcodes.app and CLI is updated, maintained with contributors like yourself. Even 
 
 You'll need macOS 15.6 Ventura and Xcode 26 in order to build and run Xcodes.app.
 
-`Unxip` and `aria2` must be compiled as a universal binary
-```
-# compile for Intel
- swiftc -parse-as-library -O -target x86_64-apple-macos11 unxip.swift
-# compile for M1
- swiftc -parse-as-library -O -target arm64-apple-macos11 unxip.swift
-
-# combine for universal binary
- lipo -create -output unxip unxip_intel unxip_m1  
-# check it
- lipo -archs unxip
-```
+The faster unxip experiment is built from the `libunxip` Swift package.
+`aria2c` is still copied into the app bundle from `Sources/Xcodes/Resources/aria2c`.
 
 
 [`xcode-install`](https://github.com/xcpretty/xcode-install) and [fastlane/spaceship](https://github.com/fastlane/fastlane/tree/master/spaceship) both deserve credit for figuring out the hard parts of what makes this possible.
