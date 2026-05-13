@@ -5,7 +5,7 @@ import Version
 import XcodesKit
 
 struct MainWindow: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @State private var selectedXcodeID: Xcode.ID?
     @State private var searchText: String = ""
     @AppStorage("lastUpdated") private var lastUpdated: Double?
@@ -21,6 +21,8 @@ struct MainWindow: View {
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
 
     var body: some View {
+        @Bindable var appState = appState
+
         NavigationSplitViewWrapper {
             XcodeListView(
                 selectedXcodeID: $selectedXcodeID,
@@ -75,7 +77,7 @@ struct MainWindow: View {
             switch sheet {
             case .signIn:
                 signInView()
-                    .environmentObject(appState)
+                    .environment(appState)
             case let .twoFactor(secondFactorData):
                 secondFactorView(secondFactorData)
             }
@@ -107,14 +109,14 @@ struct MainWindow: View {
         case .codeSent:
             SignIn2FAView(
                 authenticationStore: appState.authenticationStore,
-                isPresented: $appState.presentedSheet.isNotNil,
+                isPresented: presentedSheetIsNotNil,
                 authOptions: secondFactorData.authOptions,
                 sessionData: secondFactorData.sessionData
             )
         case let .smsSent(trustedPhoneNumber):
             SignInSMSView(
                 authenticationStore: appState.authenticationStore,
-                isPresented: $appState.presentedSheet.isNotNil,
+                isPresented: presentedSheetIsNotNil,
                 trustedPhoneNumber: trustedPhoneNumber,
                 authOptions: secondFactorData.authOptions,
                 sessionData: secondFactorData.sessionData
@@ -122,7 +124,7 @@ struct MainWindow: View {
         case .smsPendingChoice:
             SignInPhoneListView(
                 authenticationStore: appState.authenticationStore,
-                isPresented: $appState.presentedSheet.isNotNil,
+                isPresented: presentedSheetIsNotNil,
                 authOptions: secondFactorData.authOptions,
                 sessionData: secondFactorData.sessionData
             )
@@ -134,6 +136,13 @@ struct MainWindow: View {
         SignInView(authenticationStore: appState.authenticationStore) {
             appState.presentedSheet = nil
         }
+    }
+
+    private var presentedSheetIsNotNil: Binding<Bool> {
+        Binding(
+            get: { appState.presentedSheet != nil },
+            set: { if !$0 { appState.presentedSheet = nil } }
+        )
     }
 
     private func alert(for alertType: XcodesAlert) -> Alert {
@@ -176,10 +185,10 @@ struct MainWindow: View {
 
     private func handleHelperAlertResponse(_ userConsented: Bool) {
         let helperAction = appState.isPreparingUserForActionRequiringHelper
-        DispatchQueue.main.async {
-            helperAction?(userConsented)
-            appState.presentedAlert = nil
+        Task {
+            await helperAction?(userConsented)
         }
+        appState.presentedAlert = nil
     }
 
     private func genericAlert(title: String, message: String) -> Alert {
@@ -237,7 +246,7 @@ struct MainWindow: View {
 
 struct MainWindow_Previews: PreviewProvider {
     static var previews: some View {
-        MainWindow().environmentObject({ () -> AppState in
+        MainWindow().environment({ () -> AppState in
             let appState = AppState()
             appState.allXcodes = [
                 Xcode(

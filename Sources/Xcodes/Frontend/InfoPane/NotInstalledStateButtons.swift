@@ -14,7 +14,7 @@ struct NotInstalledStateButtons: View {
     let downloadFileSizeString: String?
     let id: XcodeID
 
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
 
     var body: some View {
         VStack(alignment: .leading) {

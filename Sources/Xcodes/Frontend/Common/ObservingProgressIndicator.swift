@@ -1,4 +1,4 @@
-import Combine
+import Observation
 import SwiftUI
 
 /// A ProgressIndicator that reflects the state of a Progress object.
@@ -9,7 +9,7 @@ public struct ObservingProgressIndicator: View {
     let controlSize: NSControl.ControlSize
     let style: NSProgressIndicator.Style
     let showsAdditionalDescription: Bool
-    @StateObject private var progress: ProgressWrapper
+    @State private var progress: ProgressWrapper
 
     public init(
         _ progress: Progress,
@@ -17,23 +17,40 @@ public struct ObservingProgressIndicator: View {
         style: NSProgressIndicator.Style,
         showsAdditionalDescription: Bool = false
     ) {
-        _progress = StateObject(wrappedValue: ProgressWrapper(progress: progress))
+        _progress = State(wrappedValue: ProgressWrapper(progress: progress))
         self.controlSize = controlSize
         self.style = style
         self.showsAdditionalDescription = showsAdditionalDescription
     }
 
-    class ProgressWrapper: ObservableObject {
+    @MainActor
+    @Observable
+    class ProgressWrapper {
         var progress: Progress
-        var cancellable: AnyCancellable!
+        var fractionCompleted = 0.0
+        var localizedDescription = ""
+        var isIndeterminate = false
+        @ObservationIgnored private var observationTask: Task<Void, Never>?
 
         init(progress: Progress) {
             self.progress = progress
-            cancellable = progress.publisher(for: \.fractionCompleted)
-                .combineLatest(progress.publisher(for: \.localizedAdditionalDescription))
-                .combineLatest(progress.publisher(for: \.isIndeterminate))
-                .throttle(for: 1.0, scheduler: DispatchQueue.main, latest: true)
-                .sink { [weak self] _ in self?.objectWillChange.send() }
+            update()
+            observationTask = Task { [weak self] in
+                while !Task.isCancelled {
+                    self?.update()
+                    try? await Task.sleep(nanoseconds: 250_000_000)
+                }
+            }
+        }
+
+        deinit {
+            observationTask?.cancel()
+        }
+
+        private func update() {
+            fractionCompleted = progress.fractionCompleted
+            localizedDescription = progress.xcodesLocalizedDescription
+            isIndeterminate = progress.isIndeterminate
         }
     }
 
@@ -42,15 +59,15 @@ public struct ObservingProgressIndicator: View {
             ProgressIndicator(
                 minValue: 0.0,
                 maxValue: 1.0,
-                doubleValue: progress.progress.fractionCompleted,
+                doubleValue: progress.fractionCompleted,
                 controlSize: controlSize,
-                isIndeterminate: progress.progress.isIndeterminate,
+                isIndeterminate: progress.isIndeterminate,
                 style: style
             )
-            .help("Downloading: \(Int(progress.progress.fractionCompleted * 100))% complete")
+            .help("Downloading: \(Int(progress.fractionCompleted * 100))% complete")
 
-            if showsAdditionalDescription, progress.progress.xcodesLocalizedDescription.isEmpty == false {
-                Text(progress.progress.xcodesLocalizedDescription)
+            if showsAdditionalDescription, progress.localizedDescription.isEmpty == false {
+                Text(progress.localizedDescription)
                     .font(.subheadline.monospacedDigit())
                     .foregroundColor(.secondary)
             }

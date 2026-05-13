@@ -19,10 +19,13 @@ struct SignInSMSView: View {
             HStack {
                 Spacer()
                 PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode!.length) {
-                    authenticationStore.submitSecurityCode(
-                        .sms(code: $0, phoneNumberId: trustedPhoneNumber.id),
-                        sessionData: sessionData
-                    )
+                    let code = $0
+                    Task {
+                        await authenticationStore.submitSecurityCode(
+                            .sms(code: code, phoneNumberId: trustedPhoneNumber.id),
+                            sessionData: sessionData
+                        )
+                    }
                 }
                 Spacer()
             }
@@ -34,10 +37,12 @@ struct SignInSMSView: View {
                 Spacer()
                 ProgressButton(
                     isInProgress: authenticationStore.isProcessingAuthRequest,
-                    action: { authenticationStore.submitSecurityCode(
-                        .sms(code: code, phoneNumberId: trustedPhoneNumber.id),
-                        sessionData: sessionData
-                    ) },
+                    action: {
+                        await authenticationStore.submitSecurityCode(
+                            .sms(code: code, phoneNumberId: trustedPhoneNumber.id),
+                            sessionData: sessionData
+                        )
+                    },
                     label: {
                         Text("Continue")
                     }

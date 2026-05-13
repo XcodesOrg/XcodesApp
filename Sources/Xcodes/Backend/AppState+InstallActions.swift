@@ -1,5 +1,4 @@
 import AppleAPI
-import Combine
 import Foundation
 import Path
 import XcodesKit
@@ -15,45 +14,30 @@ extension AppState {
             return
         }
 
-        installHelperIfNecessary()
-            .sink(
-                receiveCompletion: { [unowned self] completion in
-                    if case let .failure(error) = completion {
-                        self.error = error
-                        presentedAlert = .generic(
-                            title: "Unable to install helper",
-                            message: error.legibleLocalizedDescription
-                        )
-                    }
-                },
-                receiveValue: {}
-            )
-            .store(in: &cancellables)
-    }
-
-    func installHelperIfNecessary() -> AnyPublisher<Void, Error> {
-        Result {
-            if helperInstallState == .notInstalled {
-                try current.helper.install()
-                checkIfHelperIsInstalled()
+        Task {
+            do {
+                try await installHelperIfNecessary()
+            } catch {
+                self.error = error
+                presentedAlert = .generic(
+                    title: "Unable to install helper",
+                    message: error.legibleLocalizedDescription
+                )
             }
         }
-        .publisher
-        .subscribe(on: DispatchQueue.main)
-        .eraseToAnyPublisher()
     }
 
-    func checkIfHelperIsInstalled() {
-        helperInstallState = .unknown
+    func installHelperIfNecessary() async throws {
+        if helperInstallState == .notInstalled {
+            try await current.helper.install()
+            await checkIfHelperIsInstalled()
+        }
+    }
 
-        current.helper.checkIfLatestHelperIsInstalled()
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveValue: { installed in
-                    self.helperInstallState = installed ? .installed : .notInstalled
-                }
-            )
-            .store(in: &cancellables)
+    func checkIfHelperIsInstalled() async {
+        helperInstallState = .unknown
+        let installed = await current.helper.checkIfLatestHelperIsInstalled()
+        helperInstallState = installed ? .installed : .notInstalled
     }
 
     func checkMinVersionAndInstall(id: XcodeID) {
@@ -86,12 +70,16 @@ extension AppState {
     func install(id: XcodeID) {
         guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
-        installationTasks[id] = Task { @MainActor in
+        installationTasks[id] = Task {
             do {
                 setInstallationStep(of: availableXcode.version, to: .authenticating)
                 try await authenticationStore.signInIfNeeded()
                 try await validateDownloadSession()
-                startInstallPublisher(for: availableXcode)
+                try await install(
+                    .version(availableXcode),
+                    downloader: Downloader(rawValue: current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2
+                )
+                installationTasks[id] = nil
             } catch {
                 handleInstallFailure(error, id: id)
                 installationTasks[id] = nil
@@ -100,7 +88,7 @@ extension AppState {
     }
 
     private func validateDownloadSession() async throws {
-        let data = try await current.network.dataTaskAsync(with: URLRequest.downloads).0
+        let data = try await current.network.data(for: URLRequest.downloads).0
         let decoder = configure(JSONDecoder()) {
             $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
         }
@@ -111,25 +99,6 @@ extension AppState {
         if downloads.downloads == nil {
             throw AuthenticationError.invalidResult(resultString: "No download information found")
         }
-    }
-
-    private func startInstallPublisher(for availableXcode: AvailableXcode) {
-        let id = availableXcode.xcodeID
-        installationPublishers[id] = install(
-            .version(availableXcode),
-            downloader: Downloader(rawValue: current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2
-        )
-        .receive(on: DispatchQueue.main)
-        .sink(
-            receiveCompletion: { [unowned self] completion in
-                installationPublishers[id] = nil
-                installationTasks[id] = nil
-                if case let .failure(error) = completion {
-                    handleInstallFailure(error, id: id)
-                }
-            },
-            receiveValue: { _ in }
-        )
     }
 
     private func handleInstallFailure(_ error: Error, id: XcodeID) {
@@ -148,35 +117,31 @@ extension AppState {
     func installWithoutLogin(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
-        installationPublishers[id] = install(
-            .version(availableXcode),
-            downloader: Downloader(rawValue: current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2
-        )
-        .receive(on: DispatchQueue.main)
-        .sink(
-            receiveCompletion: { [unowned self] completion in
-                installationPublishers[id] = nil
-                if case let .failure(error) = completion {
-                    if error as? AuthenticationError != .invalidSession {
-                        self.error = error
-                        presentedAlert = .generic(
-                            title: "Unable to install Xcode",
-                            message: error.legibleLocalizedDescription
-                        )
-                    }
-                    if let index = allXcodes.firstIndex(where: { $0.id == id }) {
-                        allXcodes[index].installState = .notInstalled
-                    }
+        installationTasks[id] = Task {
+            do {
+                try await install(
+                    .version(availableXcode),
+                    downloader: Downloader(rawValue: current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2
+                )
+            } catch {
+                if error as? AuthenticationError != .invalidSession {
+                    self.error = error
+                    presentedAlert = .generic(
+                        title: "Unable to install Xcode",
+                        message: error.legibleLocalizedDescription
+                    )
                 }
-            },
-            receiveValue: { _ in }
-        )
+                if let index = allXcodes.firstIndex(where: { $0.id == id }) {
+                    allXcodes[index].installState = .notInstalled
+                }
+            }
+            installationTasks[id] = nil
+        }
     }
 
     func cancelInstall(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
-        installationPublishers[id] = nil
         installationTasks[id]?.cancel()
         installationTasks[id] = nil
 

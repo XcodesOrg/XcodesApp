@@ -1,7 +1,7 @@
 import AppKit
 import AppleAPI
-import Combine
 import DockProgress
+import Observation
 import os.log
 import Path
 import Version
@@ -30,13 +30,14 @@ enum PreferenceKey: String {
 }
 
 @MainActor
-class AppState: ObservableObject, @unchecked Sendable {
+@Observable
+class AppState: @unchecked Sendable {
     let authenticationStore: AuthenticationStore
     let runtimeService = RuntimeService()
 
     // MARK: - Published Properties
 
-    @Published var availableXcodes: [AvailableXcode] = [] {
+    var availableXcodes: [AvailableXcode] = [] {
         willSet {
             if newValue.count > availableXcodes.count, availableXcodes.count != 0 {
                 current.notificationManager.scheduleNotification(
@@ -56,8 +57,8 @@ class AppState: ObservableObject, @unchecked Sendable {
         }
     }
 
-    @Published var allXcodes: [Xcode] = []
-    @Published var selectedXcodePath: String? {
+    var allXcodes: [Xcode] = []
+    var selectedXcodePath: String? {
         willSet {
             updateAllXcodes(
                 availableXcodes: availableXcodes,
@@ -67,27 +68,27 @@ class AppState: ObservableObject, @unchecked Sendable {
         }
     }
 
-    @Published var updatePublisher: AnyCancellable?
+    @ObservationIgnored var updateTask: Task<Void, Never>?
     var isUpdating: Bool {
-        updatePublisher != nil
+        updateTask != nil
     }
 
-    @Published var presentedSheet: XcodesSheet?
-    @Published var xcodeBeingConfirmedForUninstallation: Xcode?
-    @Published var presentedAlert: XcodesAlert?
-    @Published var presentedPreferenceAlert: XcodesPreferencesAlert?
-    @Published var helperInstallState: HelperInstallState = .notInstalled
+    var presentedSheet: XcodesSheet?
+    var xcodeBeingConfirmedForUninstallation: Xcode?
+    var presentedAlert: XcodesAlert?
+    var presentedPreferenceAlert: XcodesPreferencesAlert?
+    var helperInstallState: HelperInstallState = .notInstalled
     /// Whether the user is being prepared for the helper installation alert with an explanation.
     /// This closure will be performed after the user chooses whether or not to proceed.
-    @Published var isPreparingUserForActionRequiringHelper: ((Bool) -> Void)?
+    @ObservationIgnored var isPreparingUserForActionRequiringHelper: ((Bool) async -> Void)?
 
     // MARK: - Errors
 
-    @Published var error: Error?
+    var error: Error?
 
     // MARK: Advanced Preferences
 
-    @Published var localPath = "" {
+    var localPath = "" {
         didSet {
             current.defaults.set(localPath, forKey: "localPath")
         }
@@ -97,7 +98,7 @@ class AppState: ObservableObject, @unchecked Sendable {
         PreferenceKey.localPath.isManaged()
     }
 
-    @Published var installPath = "" {
+    var installPath = "" {
         didSet {
             current.defaults.set(installPath, forKey: "installPath")
         }
@@ -107,7 +108,7 @@ class AppState: ObservableObject, @unchecked Sendable {
         PreferenceKey.installPath.isManaged()
     }
 
-    @Published var unxipExperiment = false {
+    var unxipExperiment = false {
         didSet {
             current.defaults.set(unxipExperiment, forKey: "unxipExperiment")
         }
@@ -117,7 +118,7 @@ class AppState: ObservableObject, @unchecked Sendable {
         PreferenceKey.unxipExperiment.isManaged()
     }
 
-    @Published var createSymLinkOnSelect = false {
+    var createSymLinkOnSelect = false {
         didSet {
             current.defaults.set(createSymLinkOnSelect, forKey: "createSymLinkOnSelect")
         }
@@ -127,7 +128,7 @@ class AppState: ObservableObject, @unchecked Sendable {
         onSelectActionType == .rename || PreferenceKey.createSymLinkOnSelect.isManaged()
     }
 
-    @Published var onSelectActionType = SelectedActionType.none {
+    var onSelectActionType = SelectedActionType.none {
         didSet {
             current.defaults.set(onSelectActionType.rawValue, forKey: "onSelectActionType")
 
@@ -141,7 +142,7 @@ class AppState: ObservableObject, @unchecked Sendable {
         PreferenceKey.onSelectActionType.isManaged()
     }
 
-    @Published var showOpenInRosettaOption = false {
+    var showOpenInRosettaOption = false {
         didSet {
             current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
         }
@@ -149,18 +150,16 @@ class AppState: ObservableObject, @unchecked Sendable {
 
     // MARK: - Runtimes
 
-    @Published var downloadableRuntimes: [DownloadableRuntime] = []
-    @Published var installedRuntimes: [CoreSimulatorImage] = []
+    var downloadableRuntimes: [DownloadableRuntime] = []
+    var installedRuntimes: [CoreSimulatorImage] = []
 
-    // MARK: - Publisher Cancellables
+    // MARK: - Tasks
 
-    var cancellables = Set<AnyCancellable>()
-    var installationPublishers: [XcodeID: AnyCancellable] = [:]
-    var installationTasks: [XcodeID: Task<Void, Never>] = [:]
-    var runtimePublishers: [String: Task<Void, any Error>] = [:]
-    var selectPublisher: AnyCancellable?
-    var uninstallPublisher: AnyCancellable?
-    private var autoInstallTimer: Timer?
+    @ObservationIgnored var installationTasks: [XcodeID: Task<Void, Never>] = [:]
+    @ObservationIgnored var runtimeTasks: [String: Task<Void, any Error>] = [:]
+    @ObservationIgnored var selectTask: Task<Void, Never>?
+    @ObservationIgnored var uninstallTask: Task<Void, Never>?
+    @ObservationIgnored private var autoInstallTimer: Timer?
 
     // MARK: - Dock Progress Tracking
 
@@ -206,7 +205,6 @@ class AppState: ObservableObject, @unchecked Sendable {
             ))
         }
         authenticationStore.onAuthenticationStateChanged = { [weak self] state in
-            self?.objectWillChange.send()
             switch state {
             case .authenticated, .unauthenticated, .notAppleDeveloper:
                 self?.presentedSheet = nil
@@ -218,7 +216,7 @@ class AppState: ObservableObject, @unchecked Sendable {
         guard !isTesting else { return }
         try? loadCachedAvailableXcodes()
         try? loadCacheDownloadableRuntimes()
-        checkIfHelperIsInstalled()
+        Task { await checkIfHelperIsInstalled() }
         setupAutoInstallTimer()
         setupDefaults()
     }
@@ -244,8 +242,8 @@ class AppState: ObservableObject, @unchecked Sendable {
         if autoInstallType == .none { return }
 
         autoInstallTimer = Timer.scheduledTimer(withTimeInterval: 60 * 60 * 6, repeats: true) { [weak self] _ in
-            Task { @MainActor in
-                self?.updateIfNeeded()
+            Task {
+                await self?.updateIfNeeded()
             }
         }
     }

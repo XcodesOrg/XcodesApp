@@ -1,5 +1,5 @@
-import Combine
 import Foundation
+import Observation
 import os.log
 import UserNotifications
 import XcodesKit
@@ -35,10 +35,11 @@ public enum XcodesNotificationType: String, Identifiable, CaseIterable, CustomSt
     }
 }
 
-public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, ObservableObject, @unchecked Sendable {
+@Observable
+public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, @unchecked Sendable {
     private let notificationCenter = UNUserNotificationCenter.current()
 
-    @Published var notificationStatus = NotificationPermissionPromptStatus.unknown
+    var notificationStatus = NotificationPermissionPromptStatus.unknown
 
     override public init() {
         super.init()
@@ -50,8 +51,8 @@ public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, Ob
     public func loadNotificationStatus() {
         UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { [weak self] settings in
             let status = NotificationManager.systemPromptStatusFromSettings(settings)
-            Task { @MainActor in
-                self?.notificationStatus = status
+            Task {
+                await self?.updateNotificationStatus(status)
             }
         })
     }
@@ -72,18 +73,26 @@ public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, Ob
 
     public func requestAccess() {
         notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, error in
-            DispatchQueue.main.async {
-                if let error {
-                    // Handle the error here.
-                    Logger.appState.error("Error requesting notification accesss: \(error.legibleLocalizedDescription)")
-                } else {
-                    Logger.appState.log("User has \(granted ? "Granted" : "NOT GRANTED") notification permission")
-                }
-                Task { @MainActor in
-                    self?.loadNotificationStatus()
-                }
+            Task {
+                await self?.handleAuthorizationResponse(granted: granted, error: error)
             }
         }
+    }
+
+    @MainActor
+    private func updateNotificationStatus(_ status: NotificationPermissionPromptStatus) {
+        notificationStatus = status
+    }
+
+    @MainActor
+    private func handleAuthorizationResponse(granted: Bool, error: Error?) {
+        if let error {
+            // Handle the error here.
+            Logger.appState.error("Error requesting notification accesss: \(error.legibleLocalizedDescription)")
+        } else {
+            Logger.appState.log("User has \(granted ? "Granted" : "NOT GRANTED") notification permission")
+        }
+        loadNotificationStatus()
     }
 
     func scheduleNotification(title: String?, body: String, category: XcodesNotificationCategory) {

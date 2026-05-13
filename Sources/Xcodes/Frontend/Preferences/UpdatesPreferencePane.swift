@@ -1,14 +1,16 @@
 import AppleAPI
-import Combine
+import Observation
 import Sparkle
 import SwiftUI
 
 struct UpdatesPreferencePane: View {
-    @EnvironmentObject var updater: ObservableUpdater
+    @SwiftUI.Environment(ObservableUpdater.self) private var updater
 
     @AppStorage("autoInstallation") var autoInstallationType: AutoInstallationType = .none
 
     var body: some View {
+        @Bindable var updater = updater
+
         VStack(alignment: .leading, spacing: 20) {
             GroupBox(label: Text("Versions")) {
                 VStack(alignment: .leading) {
@@ -76,20 +78,21 @@ struct UpdatesPreferencePane: View {
 }
 
 @MainActor
-class ObservableUpdater: ObservableObject {
+@Observable
+class ObservableUpdater {
     private let updater: SPUUpdater
     private let updaterDelegate = UpdaterDelegate()
 
-    @Published var automaticallyChecksForUpdates = false {
+    var automaticallyChecksForUpdates = false {
         didSet {
             updater.automaticallyChecksForUpdates = automaticallyChecksForUpdates
         }
     }
 
-    private var automaticallyChecksForUpdatesObservation: NSKeyValueObservation?
-    @Published var lastUpdateCheckDate: Date?
-    private var lastUpdateCheckDateObservation: NSKeyValueObservation?
-    @Published var includePrereleaseVersions = false {
+    @ObservationIgnored private var automaticallyChecksForUpdatesObservation: NSKeyValueObservation?
+    var lastUpdateCheckDate: Date?
+    @ObservationIgnored private var lastUpdateCheckDateObservation: NSKeyValueObservation?
+    var includePrereleaseVersions = false {
         didSet {
             current.defaults.set(includePrereleaseVersions, forKey: "includePrereleaseVersions")
 
@@ -132,8 +135,8 @@ class ObservableUpdater: ObservableObject {
                     let automaticallyChecksForUpdates = change.newValue,
                     change.newValue != change.oldValue
                 else { return }
-                Task { @MainActor in
-                    self?.automaticallyChecksForUpdates = automaticallyChecksForUpdates
+                Task {
+                    await self?.updateAutomaticallyChecksForUpdates(automaticallyChecksForUpdates)
                 }
             }
         )
@@ -142,12 +145,22 @@ class ObservableUpdater: ObservableObject {
             options: [.initial, .new, .old],
             changeHandler: { [weak self] _, change in
                 let lastUpdateCheckDate = change.newValue ?? nil
-                Task { @MainActor in
-                    self?.lastUpdateCheckDate = lastUpdateCheckDate
+                Task {
+                    await self?.updateLastUpdateCheckDate(lastUpdateCheckDate)
                 }
             }
         )
         includePrereleaseVersions = current.defaults.bool(forKey: "includePrereleaseVersions") ?? false
+    }
+
+    @MainActor
+    private func updateAutomaticallyChecksForUpdates(_ value: Bool) {
+        automaticallyChecksForUpdates = value
+    }
+
+    @MainActor
+    private func updateLastUpdateCheckDate(_ value: Date?) {
+        lastUpdateCheckDate = value
     }
 
     func checkForUpdates() {
@@ -177,8 +190,8 @@ struct UpdatesPreferencePane_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             UpdatesPreferencePane()
-                .environmentObject(AppState())
-                .environmentObject(ObservableUpdater())
+                .environment(AppState())
+                .environment(ObservableUpdater())
                 .frame(maxWidth: 600)
                 .frame(minHeight: 300)
         }

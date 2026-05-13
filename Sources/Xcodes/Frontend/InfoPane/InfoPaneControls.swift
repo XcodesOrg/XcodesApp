@@ -49,7 +49,7 @@ private func makePreviewContent(for index: Int) -> some View {
     let name = XcodePreviewName.allCases[index]
 
     return InfoPaneControls(xcode: xcodeDict[name]!)
-        .environmentObject(configure(AppState()) {
+        .environment(configure(AppState()) {
             $0.allXcodes = [xcodeDict[name]!]
         })
         .frame(width: 500)

@@ -1,5 +1,4 @@
 import AppleAPI
-import Combine
 import Foundation
 import Path
 import SwiftSoup
@@ -22,13 +21,10 @@ extension AppState {
         guard
             isReadyForUpdate
         else {
-            updatePublisher = updateSelectedXcodePath()
-                .sink(
-                    receiveCompletion: { _ in
-                        self.updatePublisher = nil
-                    },
-                    receiveValue: { _ in }
-                )
+            updateTask = Task {
+                await updateSelectedXcodePath()
+                updateTask = nil
+            }
             return
         }
         update() as Void
@@ -36,93 +32,54 @@ extension AppState {
 
     func update() {
         guard !isUpdating else { return }
-        updateDownloadableRuntimes()
-        updateInstalledRuntimes()
-        updatePublisher = updateSelectedXcodePath()
-            .flatMap { _ in
-                self.updateAvailableXcodes(from: self.dataSource)
+        updateTask = Task {
+            do {
+                async let downloadableRuntimes: Void = updateDownloadableRuntimes()
+                async let installedRuntimes: Void = updateInstalledRuntimes()
+                await updateSelectedXcodePath()
+                _ = try await updateAvailableXcodes(from: dataSource)
+                _ = await (downloadableRuntimes, installedRuntimes)
+                current.defaults.setDate(current.date(), forKey: "lastUpdated")
+            } catch {
+                if error as? AuthenticationError != .invalidSession {
+                    self.error = error
+                    presentedAlert = .generic(
+                        title: "Unable to update selected Xcode",
+                        message: error.legibleLocalizedDescription
+                    )
+                }
             }
-            .sink(
-                receiveCompletion: { [unowned self] completion in
-                    switch completion {
-                    case let .failure(error):
-                        // Prevent setting the app state error if it is an invalid session, we will present the sign in
-                        // view instead
-                        if error as? AuthenticationError != .invalidSession {
-                            self.error = error
-                            presentedAlert = .generic(
-                                title: "Unable to update selected Xcode",
-                                message: error.legibleLocalizedDescription
-                            )
-                        }
-                    case .finished:
-                        current.defaults.setDate(current.date(), forKey: "lastUpdated")
-                    }
-
-                    updatePublisher = nil
-                },
-                receiveValue: { _ in }
-            )
+            updateTask = nil
+        }
     }
 
-    func updateSelectedXcodePath() -> AnyPublisher<Void, Never> {
-        current.shell.xcodeSelectPrintPath()
-            .handleEvents(receiveOutput: { output in self.selectedXcodePath = output.out })
-            // Ignore xcode-select failures
-            .map { _ in () }
-            .catch { _ in Just(()) }
-            .eraseToAnyPublisher()
+    func updateSelectedXcodePath() async {
+        do {
+            selectedXcodePath = try await current.shell.xcodeSelectPrintPath().out
+        } catch {
+            // Ignore xcode-select failures.
+        }
     }
 
-    private func updateAvailableXcodes(from dataSource: DataSource) -> AnyPublisher<[AvailableXcode], Error> {
+    private func updateAvailableXcodes(from dataSource: DataSource) async throws -> [AvailableXcode] {
         switch dataSource {
         case .apple:
-            Future<Void, Error> { promise in
-                nonisolated(unsafe) let promise = promise
-                Task { @MainActor in
-                    do {
-                        try await self.authenticationStore.signInIfNeeded()
-                        // this will check to see if the Apple ID is a valid Apple Developer or not.
-                        // If it's not, we can't use the Apple source to get xcode info.
-                        try await self.authenticationStore.validateSession()
-                        promise(.success(()))
-                    } catch {
-                        promise(.failure(error))
-                    }
-                }
-            }
-            .eraseToAnyPublisher()
-            .flatMap { [unowned self] in releasedXcodes().combineLatest(prereleaseXcodes()) }
-            .receive(on: DispatchQueue.main)
-            .map { releasedXcodes, prereleaseXcodes in
-                // Starting with Xcode 11 beta 6, developer.apple.com/download and developer.apple.com/download/more
-                // both list some pre-release versions of Xcode.
-                // Previously pre-release versions only appeared on developer.apple.com/download.
-                // /download/more doesn't include build numbers, so we trust that if the version number and prerelease
-                // /identifiers are the same that they're the same build.
-                // If an Xcode version is listed on both sites then prefer the one on /download because the build
-                // metadata is used to compare against installed Xcodes.
-                releasedXcodes.filter { releasedXcode in
-                    prereleaseXcodes.contains { $0.version.isEquivalent(to: releasedXcode.version) } == false
-                } + prereleaseXcodes
-            }
-            .handleEvents(
-                receiveOutput: { xcodes in
-                    self.availableXcodes = xcodes
-                    try? self.cacheAvailableXcodes(xcodes)
-                }
-            )
-            .eraseToAnyPublisher()
+            try await authenticationStore.signInIfNeeded()
+            try await authenticationStore.validateSession()
+            async let released = releasedXcodes()
+            async let prerelease = prereleaseXcodes()
+            let (releasedXcodes, prereleaseXcodes) = try await (released, prerelease)
+            let xcodes = releasedXcodes.filter { releasedXcode in
+                prereleaseXcodes.contains { $0.version.isEquivalent(to: releasedXcode.version) } == false
+            } + prereleaseXcodes
+            availableXcodes = xcodes
+            try? cacheAvailableXcodes(xcodes)
+            return xcodes
         case .xcodeReleases:
-            xcodeReleases()
-                .receive(on: DispatchQueue.main)
-                .handleEvents(
-                    receiveOutput: { xcodes in
-                        self.availableXcodes = xcodes
-                        try? self.cacheAvailableXcodes(xcodes)
-                    }
-                )
-                .eraseToAnyPublisher()
+            let xcodes = try await xcodeReleases()
+            availableXcodes = xcodes
+            try? cacheAvailableXcodes(xcodes)
+            return xcodes
         }
     }
 }
@@ -166,48 +123,41 @@ extension AppState {
 extension AppState {
     // MARK: - Apple
 
-    private func releasedXcodes() -> AnyPublisher<[AvailableXcode], Swift.Error> {
-        current.network.dataTask(with: URLRequest.downloads)
-            .map(\.data)
-            .decode(type: Downloads.self, decoder: configure(JSONDecoder()) {
-                $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
-            })
-            .tryMap { downloads -> [AvailableXcode] in
-                if downloads.hasError {
-                    throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
-                }
-                guard let downloadList = downloads.downloads else {
-                    throw AuthenticationError.invalidResult(resultString: "No download information found")
-                }
-                return downloadList
-                    .filter { $0.name.range(of: "^Xcode [0-9]", options: .regularExpression) != nil }
-                    .compactMap { download -> AvailableXcode? in
-                        let urlPrefix = URL(string: "https://download.developer.apple.com/")!
-                        guard
-                            let xcodeFile = download.files
-                                .first(where: { $0.remotePath.hasSuffix("dmg") || $0.remotePath.hasSuffix("xip") }),
-                            let version = Version(xcodeVersion: download.name)
-                        else { return nil }
+    private func releasedXcodes() async throws -> [AvailableXcode] {
+        let data = try await current.network.data(for: URLRequest.downloads).0
+        let downloads = try configure(JSONDecoder()) {
+            $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
+        }.decode(Downloads.self, from: data)
+        if downloads.hasError {
+            throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
+        }
+        guard let downloadList = downloads.downloads else {
+            throw AuthenticationError.invalidResult(resultString: "No download information found")
+        }
+        return downloadList
+            .filter { $0.name.range(of: "^Xcode [0-9]", options: .regularExpression) != nil }
+            .compactMap { download -> AvailableXcode? in
+                let urlPrefix = URL(string: "https://download.developer.apple.com/")!
+                guard
+                    let xcodeFile = download.files
+                        .first(where: { $0.remotePath.hasSuffix("dmg") || $0.remotePath.hasSuffix("xip") }),
+                    let version = Version(xcodeVersion: download.name)
+                else { return nil }
 
-                        let url = urlPrefix.appendingPathComponent(xcodeFile.remotePath)
-                        return AvailableXcode(
-                            version: version,
-                            url: url,
-                            filename: String(xcodeFile.remotePath.suffix(fromLast: "/")),
-                            releaseDate: download.dateModified,
-                            fileSize: xcodeFile.fileSize
-                        )
-                    }
+                let url = urlPrefix.appendingPathComponent(xcodeFile.remotePath)
+                return AvailableXcode(
+                    version: version,
+                    url: url,
+                    filename: String(xcodeFile.remotePath.suffix(fromLast: "/")),
+                    releaseDate: download.dateModified,
+                    fileSize: xcodeFile.fileSize
+                )
             }
-            .eraseToAnyPublisher()
     }
 
-    private func prereleaseXcodes() -> AnyPublisher<[AvailableXcode], Error> {
-        current.network.dataTask(with: URLRequest.download)
-            .tryMap { data, _ -> [AvailableXcode] in
-                try self.parsePrereleaseXcodes(from: data)
-            }
-            .eraseToAnyPublisher()
+    private func prereleaseXcodes() async throws -> [AvailableXcode] {
+        let data = try await current.network.data(for: URLRequest.download).0
+        return try parsePrereleaseXcodes(from: data)
     }
 
     private func parsePrereleaseXcodes(from data: Data) throws -> [AvailableXcode] {
@@ -245,36 +195,33 @@ extension AppState {
 extension AppState {
     // MARK: - XcodeReleases
 
-    private func xcodeReleases() -> AnyPublisher<[AvailableXcode], Error> {
-        current.network.dataTask(with: URLRequest(url: URL(string: "https://xcodereleases.com/data.json")!))
-            .map(\.data)
-            .decode(type: [XcodeRelease].self, decoder: JSONDecoder())
-            .map { xcReleasesXcodes in
-                xcReleasesXcodes.compactMap { xcReleasesXcode -> AvailableXcode? in
-                    guard
-                        let downloadURL = xcReleasesXcode.links?.download?.url,
-                        let version = Version(xcReleasesXcode: xcReleasesXcode)
-                    else { return nil }
+    private func xcodeReleases() async throws -> [AvailableXcode] {
+        let xcodeReleasesURL = URL(string: "https://xcodereleases.com/data.json")!
+        let data = try await current.network.data(for: URLRequest(url: xcodeReleasesURL)).0
+        let xcReleasesXcodes = try JSONDecoder().decode([XcodeRelease].self, from: data)
+        return xcReleasesXcodes.compactMap { xcReleasesXcode -> AvailableXcode? in
+            guard
+                let downloadURL = xcReleasesXcode.links?.download?.url,
+                let version = Version(xcReleasesXcode: xcReleasesXcode)
+            else { return nil }
 
-                    let releaseDate = Calendar(identifier: .gregorian).date(from: DateComponents(
-                        year: xcReleasesXcode.date.year,
-                        month: xcReleasesXcode.date.month,
-                        day: xcReleasesXcode.date.day
-                    ))
+            let releaseDate = Calendar(identifier: .gregorian).date(from: DateComponents(
+                year: xcReleasesXcode.date.year,
+                month: xcReleasesXcode.date.month,
+                day: xcReleasesXcode.date.day
+            ))
 
-                    return AvailableXcode(
-                        version: version,
-                        url: downloadURL,
-                        filename: String(downloadURL.path.suffix(fromLast: "/")),
-                        releaseDate: releaseDate,
-                        requiredMacOSVersion: xcReleasesXcode.requires,
-                        releaseNotesURL: xcReleasesXcode.links?.notes?.url,
-                        sdks: xcReleasesXcode.sdks,
-                        compilers: xcReleasesXcode.compilers,
-                        architectures: xcReleasesXcode.architectures
-                    )
-                }
-            }
-            .eraseToAnyPublisher()
+            return AvailableXcode(
+                version: version,
+                url: downloadURL,
+                filename: String(downloadURL.path.suffix(fromLast: "/")),
+                releaseDate: releaseDate,
+                requiredMacOSVersion: xcReleasesXcode.requires,
+                releaseNotesURL: xcReleasesXcode.links?.notes?.url,
+                sdks: xcReleasesXcode.sdks,
+                compilers: xcReleasesXcode.compilers,
+                architectures: xcReleasesXcode.architectures
+            )
+        }
     }
 }

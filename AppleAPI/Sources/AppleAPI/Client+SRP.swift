@@ -1,4 +1,3 @@
-import Combine
 import Crypto
 import Foundation
 import SRP
@@ -27,55 +26,6 @@ extension Client {
     func srpLoginSession() -> SRPLoginSession {
         let client = SRPClient(configuration: SRPConfiguration<SHA256>(.N2048))
         return SRPLoginSession(client: client, clientKeys: client.generateKeys())
-    }
-
-    func serviceKeyAndHashcashPublisher(accountName: String) -> AnyPublisher<(String, String), Swift.Error> {
-        current.network.dataTask(with: URLRequest.itcServiceKey)
-            .map(\.data)
-            .decode(type: ServiceKeyResponse.self, decoder: JSONDecoder())
-            .flatMap { serviceKeyResponse -> AnyPublisher<(String, String), Swift.Error> in
-                let serviceKey = serviceKeyResponse.authServiceKey
-                return self.loadHashcash(accountName: accountName, serviceKey: serviceKey)
-                    .map { (serviceKey, $0) }
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
-
-    func srpInitPublisher(
-        accountName: String,
-        serviceKey: String,
-        hashcash: String,
-        session: SRPLoginSession
-    ) -> AnyPublisher<SRPInitContext, Swift.Error> {
-        current.network.dataTask(with: srpInitRequest(
-            accountName: accountName,
-            serviceKey: serviceKey,
-            session: session
-        ))
-        .map(\.data)
-        .decode(type: ServerSRPInitResponse.self, decoder: JSONDecoder())
-        .map { SRPInitContext(serviceKey: serviceKey, hashcash: hashcash, response: $0) }
-        .eraseToAnyPublisher()
-    }
-
-    func srpCompletePublisher(
-        context: SRPInitContext,
-        session: SRPLoginSession,
-        accountName: String,
-        password: String
-    ) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> {
-        Result {
-            try srpCompleteRequest(
-                context: context,
-                session: session,
-                accountName: accountName,
-                password: password
-            )
-        }
-        .publisher
-        .flatMap { current.network.dataTask(with: $0).mapError { $0 as Swift.Error } }
-        .eraseToAnyPublisher()
     }
 
     @MainActor

@@ -4,7 +4,7 @@ import Version
 import XcodesKit
 
 struct XcodeListView: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @Binding var selectedXcodeID: Xcode.ID?
     private let searchText: String
     private let category: XcodeListCategory
@@ -123,7 +123,7 @@ struct XcodeListView_Previews: PreviewProvider {
                 isInstalledOnly: false,
                 architecture: .appleSilicon
             )
-            .environmentObject({ () -> AppState in
+            .environment({ () -> AppState in
                 let appState = AppState()
                 appState.allXcodes = [
                     Xcode(

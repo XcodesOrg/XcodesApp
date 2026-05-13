@@ -19,3 +19,33 @@ custom_rules:
     regex: "\\b(?:localizeString|NSLocalizedString)\\s*\\(|\\bString\\s*\\(\\s*(?:localized|format)\\s*:"
     message: "Use plain Swift strings instead of localization helpers or String(format:)."
     severity: error
+  no_combine:
+    name: "No Combine"
+    regex: "(?:\\bimport\\s+Combine\\b|\\bAnyPublisher\\b|\\bAnyCancellable\\b|\\bPassthroughSubject\\b|\\bCurrentValueSubject\\b|\\bFuture\\b|\\bDeferred\\b|\\bJust\\b|\\bFail\\b|\\bSubscribers\\b|\\.sink\\s*\\(|\\.eraseToAnyPublisher\\s*\\(|\\.store\\s*\\(\\s*in:|\\.publisher\\b|dataTaskPublisher\\s*\\()"
+    message: "Use Swift concurrency and Observation instead of Combine publishers or subscriptions."
+    severity: error
+  no_legacy_observation:
+    name: "No legacy observation"
+    regex: "(?:\\bObservableObject\\b|@Published\\b|@StateObject\\b|@ObservedObject\\b|@EnvironmentObject\\b)"
+    message: "Use the Observation framework with @Observable, @State, @Environment(Type.self), and @Bindable."
+    severity: error
+  no_dispatch_queue:
+    name: "No DispatchQueue"
+    regex: "\\bDispatchQueue\\b"
+    message: "Use Swift concurrency primitives such as Task, async let, TaskGroup, or MainActor instead of DispatchQueue."
+    severity: error
+  no_whole_function_task:
+    name: "No whole-function Task wrapper"
+    regex: "(?s)\\bfunc\\s+[^\\{]+\\{\\s*Task\\s*(?:\\{|<|\\{\\s*@MainActor)"
+    message: "Do not make a function body just start a Task. Make the operation async or keep only the UI boundary in Task."
+    severity: error
+  no_task_mainactor:
+    name: "No Task MainActor closure"
+    regex: "Task\\s*\\{\\s*@MainActor"
+    message: "Do not use Task { @MainActor in ... }. Call a named @MainActor async function from Task instead."
+    severity: error
+  no_thread_sleep:
+    name: "No Thread.sleep"
+    regex: "\\bThread\\.sleep\\s*\\("
+    message: "Do not block threads. Use Task.sleep or an async continuation instead."
+    severity: error

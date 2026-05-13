@@ -77,7 +77,7 @@ final class AuthenticationStore {
     }
 
     func validateADCSession(path: String) async throws {
-        let result = try await current.network.dataTaskAsync(with: URLRequest.downloadADCAuth(path: path))
+        let result = try await current.network.data(for: URLRequest.downloadADCAuth(path: path))
         guard let httpResponse = result.1 as? HTTPURLResponse else {
             throw AuthenticationError.invalidSession
         }
@@ -87,7 +87,7 @@ final class AuthenticationStore {
     }
 
     func validateSession() async throws {
-        try await current.network.validateSessionAsync()
+        try await current.network.validateSession()
     }
 
     func signInIfNeeded() async throws {
@@ -132,16 +132,6 @@ final class AuthenticationStore {
         }
     }
 
-    func signIn(username: String, password: String) {
-        Task {
-            do {
-                _ = try await signIn(username: username, password: password)
-            } catch {
-                handleAuthenticationError(error)
-            }
-        }
-    }
-
     func handleTwoFactorOption(
         _ option: TwoFactorOption,
         authOptions: AuthOptionsResponse,
@@ -157,23 +147,21 @@ final class AuthenticationStore {
         to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber,
         authOptions: AuthOptionsResponse,
         sessionData: AppleSessionData
-    ) {
-        Task {
-            do {
-                _ = try await runAuthenticationRequest {
-                    guard let legacyClient else {
-                        throw AuthenticationError.invalidSession
-                    }
-
-                    return try await legacyClient.requestSMS(
-                        to: trustedPhoneNumber,
-                        authOptions: authOptions,
-                        sessionData: sessionData
-                    )
+    ) async {
+        do {
+            _ = try await runAuthenticationRequest {
+                guard let legacyClient else {
+                    throw AuthenticationError.invalidSession
                 }
-            } catch {
-                handleAuthenticationError(error)
+
+                return try await legacyClient.requestSMS(
+                    to: trustedPhoneNumber,
+                    authOptions: authOptions,
+                    sessionData: sessionData
+                )
             }
+        } catch {
+            handleAuthenticationError(error)
         }
     }
 
@@ -181,19 +169,17 @@ final class AuthenticationStore {
         onSecondFactorRequired?(.smsPendingChoice, authOptions, sessionData)
     }
 
-    func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
-        Task {
-            do {
-                _ = try await runAuthenticationRequest {
-                    guard let legacyClient else {
-                        throw AuthenticationError.invalidSession
-                    }
-
-                    return try await legacyClient.submitSecurityCode(code, sessionData: sessionData)
+    func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) async {
+        do {
+            _ = try await runAuthenticationRequest {
+                guard let legacyClient else {
+                    throw AuthenticationError.invalidSession
                 }
-            } catch {
-                handleAuthenticationError(error)
+
+                return try await legacyClient.submitSecurityCode(code, sessionData: sessionData)
             }
+        } catch {
+            handleAuthenticationError(error)
         }
     }
 

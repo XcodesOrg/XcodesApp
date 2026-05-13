@@ -15,14 +15,14 @@ struct XcodesApp: App {
     @SwiftUI.Environment(\.scenePhase) private var scenePhase: ScenePhase
     @SwiftUI.Environment(\.openWindow) private var openWindow
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
-    @StateObject private var appState = AppState()
-    @StateObject private var updater = ObservableUpdater()
+    @State private var appState = AppState()
+    @State private var updater = ObservableUpdater()
 
     var body: some Scene {
         Window("Xcodes", id: "main") {
             MainWindow()
-                .environmentObject(appState)
-                .environmentObject(updater)
+                .environment(appState)
+                .environment(updater)
                 // This is intentionally used on a View, and not on a WindowGroup,
                 // so that it's triggered when an individual window's phase changes instead of all window phases.
                 // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup.
@@ -31,7 +31,9 @@ struct XcodesApp: App {
                     guard !isTesting else { return }
                     if case .active = newScenePhase {
                         appState.updateIfNeeded()
-                        appState.updateInstalledRuntimes()
+                        Task {
+                            await appState.updateInstalledRuntimes()
+                        }
                     }
                 }
         }
@@ -75,17 +77,19 @@ struct XcodesApp: App {
         }
         #if os(macOS)
             Settings {
+                @Bindable var appState = appState
                 PreferencesView()
-                    .environmentObject(appState)
-                    .environmentObject(updater)
+                    .environment(appState)
+                    .environment(updater)
                     .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
                         alert(for: presentedAlert)
                     })
             }
 
             Window("Platforms", id: "platforms") {
+                @Bindable var appState = appState
                 PlatformsListView()
-                    .environmentObject(appState)
+                    .environment(appState)
                     .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
                         alert(for: presentedAlert)
                     })

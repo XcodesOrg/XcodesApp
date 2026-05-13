@@ -11,7 +11,7 @@ struct AppleBrowserAuthenticationClient: BrowserAuthenticationClient {
 
     init(
         cookieStorage: (any CookieStoring)? = AppleAPI.current.network.session.configuration.httpCookieStorage,
-        validateSession: @escaping () async throws -> Void = { try await current.network.validateSessionAsync() }
+        validateSession: @escaping () async throws -> Void = { try await current.network.validateSession() }
     ) {
         self.cookieStorage = cookieStorage
         self.validateSession = validateSession

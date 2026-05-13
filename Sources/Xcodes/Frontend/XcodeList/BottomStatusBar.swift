@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 struct BottomStatusModifier: ViewModifier {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @AppStorage(PreferenceKey.hideSupportXcodes.rawValue) var hideSupportXcodes = false
 
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
@@ -58,7 +58,7 @@ struct BottomStatusBarPreviews: PreviewProvider {
         Group {
             HStack {}
                 .bottomStatusBar()
-                .environmentObject({ () -> AppState in
+                .environment({ () -> AppState in
                     return AppState()
                 }())
                 .defaultAppStorage({ () -> UserDefaults in
@@ -69,7 +69,7 @@ struct BottomStatusBarPreviews: PreviewProvider {
 
             HStack {}
                 .bottomStatusBar()
-                .environmentObject({ () -> AppState in
+                .environment({ () -> AppState in
                     return AppState()
                 }())
                 .defaultAppStorage({ () -> UserDefaults in

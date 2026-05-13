@@ -16,7 +16,10 @@ struct SignIn2FAView: View {
             HStack {
                 Spacer()
                 PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode!.length) {
-                    authenticationStore.submitSecurityCode(.device(code: $0), sessionData: sessionData)
+                    let code = $0
+                    Task {
+                        await authenticationStore.submitSecurityCode(.device(code: code), sessionData: sessionData)
+                    }
                 }
                 Spacer()
             }
@@ -35,10 +38,12 @@ struct SignIn2FAView: View {
                 Spacer()
                 ProgressButton(
                     isInProgress: authenticationStore.isProcessingAuthRequest,
-                    action: { authenticationStore.submitSecurityCode(
-                        .device(code: code),
-                        sessionData: sessionData
-                    ) },
+                    action: {
+                        await authenticationStore.submitSecurityCode(
+                            .device(code: code),
+                            sessionData: sessionData
+                        )
+                    },
                     label: {
                         Text("Continue")
                     }

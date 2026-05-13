@@ -11,7 +11,7 @@ import SwiftUI
 import XcodesKit
 
 struct PlatformsView: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @AppStorage("selectedRuntimeArchitecture") private var selectedVariant: ArchitectureVariant = .universal
 
     let xcode: Xcode
@@ -124,7 +124,7 @@ private func makePreviewContent(for index: Int) -> some View {
     let runtimes = downloadableRuntimes
 
     return PlatformsView(xcode: xcodeDict[name]!)
-        .environmentObject({ () -> AppState in
+        .environment({ () -> AppState in
             let appState = AppState()
             appState.allXcodes = [xcodeDict[name]!]
             appState.installedRuntimes = installedRuntimes

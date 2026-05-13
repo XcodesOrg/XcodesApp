@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 
 /**
@@ -17,14 +16,14 @@ public let current = Environment()
 public struct Network: Sendable {
     public var session = URLSession.shared
 
-    public var dataTask: @Sendable (URLRequest) -> URLSession.DataTaskPublisher
+    public var data: @Sendable (URLRequest) async throws -> (Data, URLResponse)
 
     public init(session: URLSession = .shared) {
         self.session = session
-        dataTask = { session.dataTaskPublisher(for: $0) }
+        data = { try await session.data(for: $0) }
     }
 
-    public func dataTask(with request: URLRequest) -> URLSession.DataTaskPublisher {
-        dataTask(request)
+    public func data(for request: URLRequest) async throws -> (Data, URLResponse) {
+        try await data(request)
     }
 }

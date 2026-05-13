@@ -47,7 +47,8 @@ private struct InnerAttributedStringText: NSViewRepresentable {
     func updateNSView(_ label: NSTextView, context _: NSViewRepresentableContext<Self>) {
         // This must happen on the next run loop so that we don't update the view hierarchy while already in the middle
         // of an update
-        DispatchQueue.main.async {
+        Task {
+            await Task.yield()
             label.textStorage?.setAttributedString(attributedString)
             // Calculates the height based on the current frame
             label.layoutManager?.ensureLayout(for: label.textContainer!)

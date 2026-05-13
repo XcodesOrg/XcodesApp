@@ -1,4 +1,3 @@
-import Combine
 import Darwin
 import Foundation
 import libunxip
@@ -6,13 +5,13 @@ import Path
 import XcodesKit
 
 public struct Shell: @unchecked Sendable {
-    public var unxip: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(
+    public var unxip: (URL) async throws -> ProcessOutput = { try await Process.run(
         Path.root.usr.bin.xip,
         workingDirectory: $0.deletingLastPathComponent(),
         "--expand",
         "\($0.path)"
     ) }
-    public var spctlAssess: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(
+    public var spctlAssess: (URL) async throws -> ProcessOutput = { try await Process.run(
         Path.root.usr.sbin.spctl,
         "--assess",
         "--verbose",
@@ -20,57 +19,41 @@ public struct Shell: @unchecked Sendable {
         "execute",
         "\($0.path)"
     ) }
-    public var codesignVerify: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(
+    public var codesignVerify: (URL) async throws -> ProcessOutput = { try await Process.run(
         Path.root.usr.bin.codesign,
         "-vv",
         "-d",
         "\($0.path)"
     ) }
-    public var buildVersion: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(
+    public var buildVersion: () async throws -> ProcessOutput = { try await Process.run(
         Path.root.usr.bin.sw_vers,
         "-buildVersion"
     ) }
-    public var xcodeBuildVersion: (InstalledXcode) -> AnyPublisher<ProcessOutput, Error> = { Process.run(
+    public var xcodeBuildVersion: (InstalledXcode) async throws -> ProcessOutput = { try await Process.run(
         Path.root.usr.libexec.PlistBuddy,
         "-c",
         "Print :ProductBuildVersion",
         "\($0.path.string)/Contents/version.plist"
     ) }
-    public var getUserCacheDir: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(
+    public var getUserCacheDir: () async throws -> ProcessOutput = { try await Process.run(
         Path.root.usr.bin.getconf,
         "DARWIN_USER_CACHE_DIR"
     ) }
-    public var touchInstallCheck: (String, String, String) -> AnyPublisher<ProcessOutput, Error> = { Process.run(
+    public var touchInstallCheck: (String, String, String) async throws -> ProcessOutput = { try await Process.run(
         Path.root.usr.bin / "touch",
         "\($0)com.apple.dt.Xcode.InstallCheckCache_\($1)_\($2)"
     ) }
-    public var xcodeSelectPrintPath: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(
+    public var xcodeSelectPrintPath: () async throws -> ProcessOutput = { try await Process.run(
         Path.root.usr.bin.join("xcode-select"),
         "-p"
     ) }
     public var aria2Path: () -> Path? = { systemExecutablePath(named: "aria2c") }
 
     public var downloadWithAria2: (Path, URL, Path, [HTTPCookie])
-        -> (Progress, AnyPublisher<Void, Error>) = aria2Download
-    public var downloadWithAria2Async: (Path, URL, Path, [HTTPCookie])
         -> AsyncThrowingStream<Progress, Error> = aria2DownloadStream
-    public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = unxipPublisher
+    public var unxipExperiment: (URL) async throws -> ProcessOutput = runLibUnxip
     public var downloadRuntime: (String, String, String?)
         -> AsyncThrowingStream<Progress, Error> = runtimeDownloadStream
-}
-
-private final class FuturePromiseBox<Output>: @unchecked Sendable {
-    typealias Promise = (Result<Output, Error>) -> Void
-
-    private nonisolated(unsafe) let promise: Promise
-
-    nonisolated init(_ promise: @escaping Promise) {
-        self.promise = promise
-    }
-
-    nonisolated func resolve(_ result: Result<Output, Error>) {
-        promise(result)
-    }
 }
 
 private final class NotificationObserverBox: @unchecked Sendable {
@@ -83,29 +66,6 @@ private final class NotificationObserverBox: @unchecked Sendable {
     nonisolated func remove() {
         NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
     }
-}
-
-private func aria2Download(
-    aria2Path: Path,
-    url: URL,
-    destination: Path,
-    cookies: [HTTPCookie]
-) -> (Progress, AnyPublisher<Void, Error>) {
-    let process = configuredAria2Process(aria2Path: aria2Path, url: url, destination: destination, cookies: cookies)
-    let pipes = attachPipes(to: process)
-    let progress = downloadProgress()
-    let observer = observeProcessOutput(pipes: pipes) { progress.updateFromAria2(string: $0) }
-
-    startReading(pipes)
-
-    do {
-        try process.run()
-    } catch {
-        observer.remove()
-        return (progress, Fail(error: error).eraseToAnyPublisher())
-    }
-
-    return (progress, processSuccessPublisher(process: process, observer: observer, aria2Errors: true))
 }
 
 private func aria2DownloadStream(
@@ -129,7 +89,7 @@ private func aria2DownloadStream(
                 continuation.yield(progress)
             }
 
-            runDownloadProcess(process, observer: observer, continuation: continuation)
+            runDownloadProcess(process, observer: observer, continuation: continuation, aria2Errors: true)
         }
     }
 }
@@ -153,26 +113,9 @@ private func runtimeDownloadStream(
                 continuation.yield(progress)
             }
 
-            runDownloadProcess(process, observer: observer, continuation: continuation)
+            runDownloadProcess(process, observer: observer, continuation: continuation, aria2Errors: false)
         }
     }
-}
-
-private func unxipPublisher(url: URL) -> AnyPublisher<ProcessOutput, Error> {
-    Deferred {
-        Future<ProcessOutput, Error> { promise in
-            let promiseBox = FuturePromiseBox(promise)
-            Task.detached(priority: .userInitiated) {
-                do {
-                    let output = try await runLibUnxip(url)
-                    promiseBox.resolve(.success(output))
-                } catch {
-                    promiseBox.resolve(.failure(error))
-                }
-            }
-        }
-    }
-    .eraseToAnyPublisher()
 }
 
 func configuredAria2Process(
@@ -274,32 +217,11 @@ private func startReading(_ pipes: ProcessPipes) {
     pipes.stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
 }
 
-private func processSuccessPublisher(
-    process: Process,
-    observer: NotificationObserverBox,
-    aria2Errors: Bool
-) -> AnyPublisher<Void, Error> {
-    Deferred {
-        Future<Void, Error> { promise in
-            let promiseBox = FuturePromiseBox(promise)
-            DispatchQueue.global(qos: .default).async {
-                process.waitUntilExit()
-                observer.remove()
-                promiseBox.resolve(processCompletionResult(process: process, aria2Errors: aria2Errors))
-            }
-        }
-    }
-    .handleEvents(receiveCancel: {
-        process.terminate()
-        observer.remove()
-    })
-    .eraseToAnyPublisher()
-}
-
 private func runDownloadProcess(
     _ process: Process,
     observer: NotificationObserverBox,
-    continuation: AsyncThrowingStream<Progress, Error>.Continuation
+    continuation: AsyncThrowingStream<Progress, Error>.Continuation,
+    aria2Errors: Bool
 ) {
     continuation.onTermination = { @Sendable _ in
         process.terminate()
@@ -317,7 +239,7 @@ private func runDownloadProcess(
     process.waitUntilExit()
     observer.remove()
 
-    switch processCompletionResult(process: process, aria2Errors: false) {
+    switch processCompletionResult(process: process, aria2Errors: aria2Errors) {
     case .success:
         continuation.finish()
     case .failure(let error):

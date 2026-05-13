@@ -1,5 +1,4 @@
 import AppKit
-import Combine
 import Foundation
 import os.log
 import Path
@@ -9,26 +8,22 @@ extension AppState {
     func uninstall(xcode: Xcode) {
         guard
             let installedXcodePath = xcode.installedPath,
-            uninstallPublisher == nil
+            uninstallTask == nil
         else { return }
 
-        uninstallPublisher = uninstallXcode(path: installedXcodePath)
-            .flatMap { [unowned self] _ in
-                updateSelectedXcodePath()
+        uninstallTask = Task {
+            do {
+                try current.files.trashItem(at: installedXcodePath.url)
+                await updateSelectedXcodePath()
+            } catch {
+                self.error = error
+                presentedAlert = .generic(
+                    title: "Unable to uninstall Xcode",
+                    message: error.legibleLocalizedDescription
+                )
             }
-            .sink(
-                receiveCompletion: { [unowned self] completion in
-                    if case let .failure(error) = completion {
-                        self.error = error
-                        presentedAlert = .generic(
-                            title: "Unable to uninstall Xcode",
-                            message: error.legibleLocalizedDescription
-                        )
-                    }
-                    uninstallPublisher = nil
-                },
-                receiveValue: { _ in }
-            )
+            uninstallTask = nil
+        }
     }
 
     func reveal(_ path: Path?) {
@@ -54,7 +49,7 @@ extension AppState {
 
         guard
             var installedXcodePath = xcode.installedPath,
-            selectPublisher == nil
+            selectTask == nil
         else { return }
 
         if onSelectActionType == .rename {
@@ -62,30 +57,23 @@ extension AppState {
             installedXcodePath = newDestinationXcodePath
         }
 
-        selectPublisher = installHelperIfNecessary()
-            .flatMap {
-                current.helper.switchXcodePath(installedXcodePath.string)
+        selectTask = Task {
+            do {
+                try await installHelperIfNecessary()
+                try await current.helper.switchXcodePath(installedXcodePath.string)
+                await updateSelectedXcodePath()
+                if createSymLinkOnSelect {
+                    createSymbolicLink(xcode: xcode)
+                }
+            } catch {
+                self.error = error
+                presentedAlert = .generic(
+                    title: "Unable to select Xcode",
+                    message: error.legibleLocalizedDescription
+                )
             }
-            .flatMap { [unowned self] _ in
-                updateSelectedXcodePath()
-            }
-            .sink(
-                receiveCompletion: { [unowned self] completion in
-                    if case let .failure(error) = completion {
-                        self.error = error
-                        presentedAlert = .generic(
-                            title: "Unable to select Xcode",
-                            message: error.legibleLocalizedDescription
-                        )
-                    } else {
-                        if createSymLinkOnSelect {
-                            createSymbolicLink(xcode: xcode)
-                        }
-                    }
-                    selectPublisher = nil
-                },
-                receiveValue: { _ in }
-            )
+            selectTask = nil
+        }
     }
 
     func open(xcode: Xcode, openInRosetta: Bool? = false) {
@@ -195,17 +183,4 @@ extension AppState {
         return nil
     }
 
-    private func uninstallXcode(path: Path) -> AnyPublisher<Void, Error> {
-        Deferred {
-            Future { promise in
-                do {
-                    try current.files.trashItem(at: path.url)
-                    promise(.success(()))
-                } catch {
-                    promise(.failure(error))
-                }
-            }
-        }
-        .eraseToAnyPublisher()
-    }
 }

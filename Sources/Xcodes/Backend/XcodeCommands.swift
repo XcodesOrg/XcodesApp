@@ -25,7 +25,7 @@ struct XcodeCommands: Commands {
 
                 UninstallCommand()
             }
-            .environmentObject(appState)
+            .environment(appState)
         }
     }
 }
@@ -35,7 +35,7 @@ struct XcodeCommands: Commands {
 // These are used for both context menus and commands
 
 struct InstallButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
 
     let xcode: Xcode?
 
@@ -55,7 +55,7 @@ struct InstallButton: View {
 }
 
 struct CancelInstallButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let xcode: Xcode?
 
     var body: some View {
@@ -73,7 +73,7 @@ struct CancelInstallButton: View {
 }
 
 struct CancelRuntimeInstallButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let runtime: DownloadableRuntime?
 
     var body: some View {
@@ -90,7 +90,7 @@ struct CancelRuntimeInstallButton: View {
 }
 
 struct SelectButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let xcode: Xcode?
 
     var body: some View {
@@ -112,7 +112,7 @@ struct SelectButton: View {
 }
 
 struct OpenButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let xcode: Xcode?
 
     var openInRosetta: Bool {
@@ -146,7 +146,7 @@ struct OpenButton: View {
 }
 
 struct UninstallButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let xcode: Xcode?
 
     var body: some View {
@@ -161,7 +161,7 @@ struct UninstallButton: View {
 }
 
 struct RevealButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let xcode: Xcode?
 
     var body: some View {
@@ -178,7 +178,7 @@ struct RevealButton: View {
 }
 
 struct CopyPathButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let xcode: Xcode?
 
     var body: some View {
@@ -197,7 +197,7 @@ struct CopyPathButton: View {
 struct CopyReleaseNoteButton: View {
     let url: URL?
 
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
 
     var body: some View {
         Button(action: copyReleaseNote) {
@@ -213,7 +213,7 @@ struct CopyReleaseNoteButton: View {
 }
 
 struct CreateSymbolicLinkButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let xcode: Xcode?
 
     var body: some View {
@@ -230,7 +230,7 @@ struct CreateSymbolicLinkButton: View {
 }
 
 struct DownloadRuntimeButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let runtime: DownloadableRuntime?
 
     var body: some View {
@@ -247,7 +247,7 @@ struct DownloadRuntimeButton: View {
 }
 
 struct CreateSymbolicBetaLinkButton: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     let xcode: Xcode?
 
     var body: some View {
@@ -266,7 +266,7 @@ struct CreateSymbolicBetaLinkButton: View {
 // MARK: - Commands
 
 struct InstallCommand: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {
@@ -282,7 +282,7 @@ struct InstallCommand: View {
 }
 
 struct SelectCommand: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {
@@ -293,7 +293,7 @@ struct SelectCommand: View {
 }
 
 struct OpenCommand: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {
@@ -304,7 +304,7 @@ struct OpenCommand: View {
 }
 
 struct RevealCommand: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {
@@ -315,7 +315,7 @@ struct RevealCommand: View {
 }
 
 struct CopyPathCommand: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {
@@ -326,7 +326,7 @@ struct CopyPathCommand: View {
 }
 
 struct UninstallCommand: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {
@@ -337,7 +337,7 @@ struct UninstallCommand: View {
 }
 
 struct CreateSymbolicLinkCommand: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
 
     var body: some View {

@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 import os.log
 import Path
@@ -8,18 +7,6 @@ public struct ProcessOutput: Sendable {
     let status: Int32
     let out: String
     let err: String
-}
-
-private final class PromiseBox<Output>: @unchecked Sendable {
-    let promise: (Result<Output, Error>) -> Void
-
-    init(_ promise: @escaping (Result<Output, Error>) -> Void) {
-        self.promise = promise
-    }
-
-    func resolve(_ result: Result<Output, Error>) {
-        promise(result)
-    }
 }
 
 private struct ProcessConfiguration {
@@ -35,8 +22,8 @@ extension Process {
         workingDirectory: URL? = nil,
         input: String? = nil,
         _ arguments: String...
-    ) -> AnyPublisher<ProcessOutput, Error> {
-        run(executable.url, workingDirectory: workingDirectory, input: input, arguments)
+    ) async throws -> ProcessOutput {
+        try await run(executable.url, workingDirectory: workingDirectory, input: input, arguments)
     }
 
     @discardableResult
@@ -45,31 +32,16 @@ extension Process {
         workingDirectory: URL? = nil,
         input: String? = nil,
         _ arguments: [String]
-    ) -> AnyPublisher<ProcessOutput, Error> {
-        Deferred {
-            Future<ProcessOutput, Error> { promise in
-                let promiseBox = PromiseBox(promise)
-
-                DispatchQueue.global().async {
-                    do {
-                        let processOutput = try executeProcess(
-                            executable: executable,
-                            workingDirectory: workingDirectory,
-                            input: input,
-                            arguments: arguments
-                        )
-                        DispatchQueue.main.async {
-                            promiseBox.resolve(.success(processOutput))
-                        }
-                    } catch {
-                        DispatchQueue.main.async {
-                            promiseBox.resolve(.failure(error))
-                        }
-                    }
-                }
-            }
+    ) async throws -> ProcessOutput {
+        try await Task.detached(priority: .userInitiated) {
+            try executeProcess(
+                executable: executable,
+                workingDirectory: workingDirectory,
+                input: input,
+                arguments: arguments
+            )
         }
-        .eraseToAnyPublisher()
+        .value
     }
 
     private static func executeProcess(

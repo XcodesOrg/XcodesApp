@@ -3,9 +3,11 @@ import Path
 import SwiftUI
 
 struct ExperimentsPreferencePane: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
 
     var body: some View {
+        @Bindable var appState = appState
+
         VStack(alignment: .leading, spacing: 20) {
             GroupBox(label: Text("Faster Unxip")) {
                 VStack(alignment: .leading) {
@@ -33,7 +35,7 @@ struct ExperimentsPreferencePane_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ExperimentsPreferencePane()
-                .environmentObject(AppState())
+                .environment(AppState())
                 .frame(maxWidth: 600)
         }
     }

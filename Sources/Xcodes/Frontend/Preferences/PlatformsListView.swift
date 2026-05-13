@@ -12,7 +12,7 @@ import SwiftUI
 import XcodesKit
 
 struct PlatformsListView: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @State private var runtimes: OrderedDictionary<DownloadableRuntime.Platform, [DownloadableRuntime]> = [:]
     @State private var selectedRuntime: DownloadableRuntime?
 
@@ -75,7 +75,7 @@ struct PlatformsListView: View {
 
 #Preview {
     PlatformsListView()
-        .environmentObject({ () -> AppState in
+        .environment({ () -> AppState in
             let appState = AppState()
 
             appState.installedRuntimes = installedRuntimes

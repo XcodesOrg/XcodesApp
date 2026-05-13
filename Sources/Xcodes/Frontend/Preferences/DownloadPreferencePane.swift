@@ -2,7 +2,7 @@ import AppleAPI
 import SwiftUI
 
 struct DownloadPreferencePane: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
 
     @AppStorage("dataSource") var dataSource: DataSource = .xcodeReleases
     @AppStorage("downloader") var downloader: Downloader = .aria2
@@ -80,7 +80,7 @@ struct DownloadPreferencePane_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             DownloadPreferencePane()
-                .environmentObject(AppState())
+                .environment(AppState())
                 .frame(maxWidth: 600)
                 .frame(minHeight: 300)
         }

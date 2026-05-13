@@ -1,4 +1,3 @@
-import Combine
 import CommonCrypto
 import Crypto
 import Foundation
@@ -25,41 +24,6 @@ public final class Client: Sendable {
     public init() {}
 
     // MARK: - Login
-
-    public func srpLogin(accountName: String, password: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
-        let session = srpLoginSession()
-
-        return serviceKeyAndHashcashPublisher(accountName: accountName)
-            .flatMap { serviceKey, hashcash -> AnyPublisher<SRPInitContext, Swift.Error> in
-                self.srpInitPublisher(
-                    accountName: accountName,
-                    serviceKey: serviceKey,
-                    hashcash: hashcash,
-                    session: session
-                )
-            }
-            .flatMap { context -> AnyPublisher<(SRPInitContext, URLSession.DataTaskPublisher.Output), Swift.Error> in
-                self.srpCompletePublisher(
-                    context: context,
-                    session: session,
-                    accountName: accountName,
-                    password: password
-                )
-                .map { output in (context, output) }
-                .eraseToAnyPublisher()
-            }
-            .flatMap { context, result -> AnyPublisher<AuthenticationState, Swift.Error> in
-                let (data, response) = result
-                return self.authenticationStatePublisher(
-                    data: data,
-                    response: response,
-                    accountName: accountName,
-                    serviceKey: context.serviceKey
-                )
-            }
-            .mapError { $0 as Swift.Error }
-            .eraseToAnyPublisher()
-    }
 
     @MainActor
     public func srpLogin(accountName: String, password: String) async throws -> AuthenticationState {

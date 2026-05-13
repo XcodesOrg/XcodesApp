@@ -2,7 +2,7 @@ import AppleAPI
 import SwiftUI
 
 struct GeneralPreferencePane: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -17,7 +17,7 @@ struct GeneralPreferencePane: View {
             Divider()
 
             GroupBox(label: Text("Notifications")) {
-                NotificationsView().environmentObject(appState)
+                NotificationsView().environment(appState)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
@@ -28,7 +28,7 @@ struct GeneralPreferencePane_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             GeneralPreferencePane()
-                .environmentObject(AppState())
+                .environment(AppState())
                 .frame(maxWidth: 600)
         }
     }

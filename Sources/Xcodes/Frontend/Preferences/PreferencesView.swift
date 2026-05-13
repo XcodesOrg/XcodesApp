@@ -5,30 +5,30 @@ struct PreferencesView: View {
         case general, updates, advanced, experiment
     }
 
-    @EnvironmentObject var appState: AppState
-    @EnvironmentObject var updater: ObservableUpdater
+    @SwiftUI.Environment(AppState.self) private var appState
+    @SwiftUI.Environment(ObservableUpdater.self) private var updater
 
     var body: some View {
         TabView {
             GeneralPreferencePane()
-                .environmentObject(appState)
+                .environment(appState)
                 .tabItem {
                     Label("General", systemImage: "gearshape")
                 }
                 .tag(Tabs.general)
             UpdatesPreferencePane()
-                .environmentObject(updater)
+                .environment(updater)
                 .tabItem {
                     Label("Updates", systemImage: "arrow.triangle.2.circlepath.circle")
                 }
                 .tag(Tabs.updates)
             DownloadPreferencePane()
-                .environmentObject(appState)
+                .environment(appState)
                 .tabItem {
                     Label("Downloads", systemImage: "icloud.and.arrow.down")
                 }
             AdvancedPreferencePane()
-                .environmentObject(appState)
+                .environment(appState)
                 .tabItem {
                     Label("Advanced", systemImage: "gearshape.2")
                 }

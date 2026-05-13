@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MainToolbarModifier: ViewModifier {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
     @Binding var category: XcodeListCategory
     @Binding var isInstalledOnly: Bool
     @Binding var isShowingInfoPane: Bool
@@ -16,10 +16,11 @@ struct MainToolbarModifier: ViewModifier {
         ToolbarItemGroup {
             ProgressButton(
                 isInProgress: appState.isUpdating,
-                action: appState.update
-            ) {
-                Label("Refresh", systemImage: "arrow.clockwise")
-            }
+                action: { appState.update() },
+                label: {
+                    Label("Refresh", systemImage: "arrow.clockwise")
+                }
+            )
             .keyboardShortcut(KeyEquivalent("r"))
             .help("Refresh Xcode List")
 

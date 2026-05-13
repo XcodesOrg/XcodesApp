@@ -1,12 +1,11 @@
-import Combine
 import Foundation
 import Path
 import Version
 
 extension AppState {
-    func persistOrCleanUpResumeData(at path: Path, for completion: Subscribers.Completion<some Any>) {
-        switch completion {
-        case .finished:
+    func persistOrCleanUpResumeData(at path: Path, for result: Result<Void, Error>) {
+        switch result {
+        case .success:
             try? current.files.removeItem(at: path.url)
         case let .failure(error):
             guard let resumeData = (error as NSError).userInfo[NSURLSessionDownloadTaskResumeData] as? Data

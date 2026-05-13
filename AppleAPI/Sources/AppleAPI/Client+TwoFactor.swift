@@ -1,52 +1,6 @@
-import Combine
 import Foundation
 
 extension Client {
-    func handleTwoStepOrFactor(
-        data: Data,
-        response: URLResponse,
-        serviceKey: String
-    ) -> AnyPublisher<AuthenticationState, Swift.Error> {
-        guard
-            let httpResponse = response as? HTTPURLResponse,
-            let sessionID = httpResponse.allHeaderFields["X-Apple-ID-Session-Id"] as? String,
-            let scnt = httpResponse.allHeaderFields["scnt"] as? String
-        else {
-            return Fail(error: AuthenticationError.invalidSession).eraseToAnyPublisher()
-        }
-
-        return current.network.dataTask(with: URLRequest.authOptions(
-            serviceKey: serviceKey,
-            sessionID: sessionID,
-            scnt: scnt
-        ))
-        .map(\.data)
-        .decode(type: AuthOptionsResponse.self, decoder: JSONDecoder())
-        .flatMap { authOptions -> AnyPublisher<AuthenticationState, Error> in
-            switch authOptions.kind {
-            case .twoStep:
-                return Fail(error: AuthenticationError.accountUsesTwoStepAuthentication)
-                    .eraseToAnyPublisher()
-            case .twoFactor:
-                return self.handleTwoFactor(
-                    serviceKey: serviceKey,
-                    sessionID: sessionID,
-                    scnt: scnt,
-                    authOptions: authOptions
-                )
-                .eraseToAnyPublisher()
-            case .securityKey:
-                return Fail(error: AuthenticationError.accountUsesSecurityKeyAuthentication)
-                    .eraseToAnyPublisher()
-            case .unknown:
-                let possibleResponseString = String(data: data, encoding: .utf8)
-                return Fail(error: AuthenticationError.accountUsesUnknownAuthenticationKind(possibleResponseString))
-                    .eraseToAnyPublisher()
-            }
-        }
-        .eraseToAnyPublisher()
-    }
-
     @MainActor
     func handleTwoStepOrFactor(
         data: Data,
@@ -85,31 +39,6 @@ extension Client {
         }
     }
 
-    func handleTwoFactor(
-        serviceKey: String,
-        sessionID: String,
-        scnt: String,
-        authOptions: AuthOptionsResponse
-    ) -> AnyPublisher<AuthenticationState, Error> {
-        let option: TwoFactorOption
-        if authOptions.smsAutomaticallySent {
-            guard let trustedPhoneNumber = authOptions.trustedPhoneNumbers?.first else {
-                return Fail(error: AuthenticationError.missingTrustedPhoneNumber)
-                    .eraseToAnyPublisher()
-            }
-            option = .smsSent(trustedPhoneNumber)
-        } else if authOptions.canFallBackToSMS {
-            option = .smsPendingChoice
-        } else {
-            option = .codeSent
-        }
-
-        let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
-        return Just(AuthenticationState.waitingForSecondFactor(option, authOptions, sessionData))
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
-    }
-
     @MainActor
     func handleTwoFactor(
         serviceKey: String,
@@ -135,28 +64,6 @@ extension Client {
 
     // MARK: - Continue 2FA
 
-    public func requestSMSSecurityCode(
-        to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber,
-        authOptions: AuthOptionsResponse,
-        sessionData: AppleSessionData
-    ) -> AnyPublisher<AuthenticationState, Error> {
-        Result {
-            try URLRequest.requestSecurityCode(
-                serviceKey: sessionData.serviceKey,
-                sessionID: sessionData.sessionID,
-                scnt: sessionData.scnt,
-                trustedPhoneID: trustedPhoneNumber.id
-            )
-        }
-        .publisher
-        .flatMap { request in
-            current.network.dataTask(with: request)
-                .mapError { $0 as Error }
-        }
-        .map { _ in AuthenticationState.waitingForSecondFactor(.smsSent(trustedPhoneNumber), authOptions, sessionData) }
-        .eraseToAnyPublisher()
-    }
-
     @MainActor
     public func requestSMSSecurityCode(
         to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber,
@@ -171,46 +78,6 @@ extension Client {
         )
         _ = try await data(for: request)
         return .waitingForSecondFactor(.smsSent(trustedPhoneNumber), authOptions, sessionData)
-    }
-
-    public func submitSecurityCode(
-        _ code: SecurityCode,
-        sessionData: AppleSessionData
-    ) -> AnyPublisher<AuthenticationState, Error> {
-        Result {
-            try URLRequest.submitSecurityCode(
-                serviceKey: sessionData.serviceKey,
-                sessionID: sessionData.sessionID,
-                scnt: sessionData.scnt,
-                code: code
-            )
-        }
-        .publisher
-        .flatMap { request in
-            current.network.dataTask(with: request)
-                .mapError { $0 as Error }
-                .tryMap { data, response throws -> (Data, URLResponse) in
-                    guard let urlResponse = response as? HTTPURLResponse else { return (data, response) }
-                    switch urlResponse.statusCode {
-                    case 200 ..< 300:
-                        return (data, urlResponse)
-                    case 400, 401:
-                        throw AuthenticationError.incorrectSecurityCode
-                    case 412:
-                        throw AuthenticationError.appleIDAndPrivacyAcknowledgementRequired
-                    case let code:
-                        throw AuthenticationError.badStatusCode(statusCode: code, data: data, response: urlResponse)
-                    }
-                }
-                .flatMap { _, _ -> AnyPublisher<AuthenticationState, Error> in
-                    self.updateSession(
-                        serviceKey: sessionData.serviceKey,
-                        sessionID: sessionData.sessionID,
-                        scnt: sessionData.scnt
-                    )
-                }
-        }
-        .eraseToAnyPublisher()
     }
 
     @MainActor
@@ -242,45 +109,6 @@ extension Client {
             sessionID: sessionData.sessionID,
             scnt: sessionData.scnt
         )
-    }
-
-    public func submitChallenge(
-        response: Data,
-        sessionData: AppleSessionData
-    ) -> AnyPublisher<AuthenticationState, Error> {
-        Result {
-            URLRequest.respondToChallenge(
-                serviceKey: sessionData.serviceKey,
-                sessionID: sessionData.sessionID,
-                scnt: sessionData.scnt,
-                response: response
-            )
-        }
-        .publisher
-        .flatMap { request in
-            current.network.dataTask(with: request)
-                .mapError { $0 as Error }
-                .tryMap { data, response throws -> (Data, URLResponse) in
-                    guard let urlResponse = response as? HTTPURLResponse else { return (data, response) }
-                    switch urlResponse.statusCode {
-                    case 200 ..< 300:
-                        return (data, urlResponse)
-                    case 400, 401:
-                        throw AuthenticationError.incorrectSecurityCode
-                    case 412:
-                        throw AuthenticationError.appleIDAndPrivacyAcknowledgementRequired
-                    case let code:
-                        throw AuthenticationError.badStatusCode(statusCode: code, data: data, response: urlResponse)
-                    }
-                }
-                .flatMap { _, _ -> AnyPublisher<AuthenticationState, Error> in
-                    self.updateSession(
-                        serviceKey: sessionData.serviceKey,
-                        sessionID: sessionData.sessionID,
-                        scnt: sessionData.scnt
-                    )
-                }
-        }.eraseToAnyPublisher()
     }
 
 }

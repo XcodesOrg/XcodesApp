@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 import os.log
 import Security
@@ -14,7 +13,10 @@ func legacySMJobBless(
     _ error: UnsafeMutablePointer<Unmanaged<CFError>?>?
 ) -> Bool
 
-final class HelperClient: @unchecked Sendable {
+actor HelperClient {
+    private let installedHelperURL = URL(fileURLWithPath: "/Library/PrivilegedHelperTools")
+        .appendingPathComponent(machServiceName)
+
     var connection: NSXPCConnection?
 
     func currentConnection() -> NSXPCConnection? {
@@ -25,9 +27,8 @@ final class HelperClient: @unchecked Sendable {
         let connection = NSXPCConnection(machServiceName: machServiceName, options: .privileged)
         connection.remoteObjectInterface = NSXPCInterface(with: HelperXPCProtocol.self)
         connection.invalidationHandler = {
-            self.connection?.invalidationHandler = nil
-            DispatchQueue.main.async {
-                self.connection = nil
+            Task {
+                self.clearConnection()
             }
         }
 
@@ -37,16 +38,21 @@ final class HelperClient: @unchecked Sendable {
         return self.connection
     }
 
-    func helper(errorSubject: PassthroughSubject<String, Error>) -> HelperXPCProtocol? {
+    private func clearConnection() {
+        connection?.invalidationHandler = nil
+        connection = nil
+    }
+
+    func helper(errorHandler: @escaping @Sendable (Error) -> Void) -> HelperXPCProtocol? {
         guard
             let helper = currentConnection()?.remoteObjectProxyWithErrorHandler({ error in
-                errorSubject.send(completion: .failure(error))
+                errorHandler(error)
             }) as? HelperXPCProtocol
         else { return nil }
         return helper
     }
 
-    func checkIfLatestHelperIsInstalled() -> AnyPublisher<Bool, Never> {
+    func checkIfLatestHelperIsInstalled() async -> Bool {
         Logger.helperClient.info(#function)
 
         let helperURL = Bundle.main.bundleURL
@@ -55,72 +61,90 @@ final class HelperClient: @unchecked Sendable {
             let helperBundleInfo = CFBundleCopyInfoDictionaryForURL(helperURL as CFURL) as? [String: Any],
             let bundledHelperVersion = helperBundleInfo["CFBundleShortVersionString"] as? String
         else {
-            return Just(false)
-                .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") })
-                .eraseToAnyPublisher()
+            Logger.helperClient.info("\(#function): false")
+            return false
         }
 
-        return getVersion()
-            .map { installedHelperVersion in installedHelperVersion == bundledHelperVersion }
-            .catch { _ in Just(false) }
-            // Failure is Never, so don't bother logging completion
-            .handleEvents(receiveOutput: {
-                Logger.helperClient.info("\(#function): \(String(describing: $0), privacy: .public)")
-            })
-            .eraseToAnyPublisher()
+        guard FileManager.default.fileExists(atPath: installedHelperURL.path) else {
+            Logger.helperClient.info("\(#function): false")
+            return false
+        }
+
+        do {
+            let isInstalled = try await getVersion() == bundledHelperVersion
+            Logger.helperClient.info("\(#function): \(String(describing: isInstalled), privacy: .public)")
+            return isInstalled
+        } catch {
+            Logger.helperClient.error("\(#function): \(String(describing: error))")
+            return false
+        }
     }
 
-    func getVersion() -> AnyPublisher<String, Error> {
+    func getVersion() async throws -> String {
         Logger.helperClient.info(#function)
 
-        let connectionErrorSubject = PassthroughSubject<String, Error>()
-        guard
-            let helper = helper(errorSubject: connectionErrorSubject)
-        else {
-            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
-                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))")
-                })
-                .eraseToAnyPublisher()
-        }
+        return try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<String, Error>) in
+            let box = ContinuationBox(continuation)
+            let timeoutTask = Task {
+                try? await Task.sleep(nanoseconds: 1_000_000_000)
+                box.resume(throwing: HelperClientError.timedOut)
+            }
 
-        return Deferred {
-            Future { promise in
-                helper.getVersion { version in
-                    promise(.success(version))
-                }
+            guard let helper = self.helper(errorHandler: {
+                timeoutTask.cancel()
+                box.resume(throwing: $0)
+            }) else {
+                timeoutTask.cancel()
+                box.resume(throwing: HelperClientError.failedToCreateRemoteObjectProxy)
+                return
+            }
+            helper.getVersion { version in
+                timeoutTask.cancel()
+                box.resume(returning: version)
             }
         }
-        // Take values, but fail when connectionErrorSubject fails
-        .zip(
-            connectionErrorSubject
-                .prepend("")
-                .map { _ in () }
-        )
-        .map(\.0)
-        .handleEvents(
-            receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0), privacy: .public)") },
-            receiveCompletion: { completion in
-                switch completion {
-                case .finished:
-                    Logger.helperClient.info("\(#function): finished")
-                case let .failure(error):
-                    Logger.helperClient.error("\(#function): \(String(describing: error))")
-                }
-            }
-        )
-        .eraseToAnyPublisher()
     }
 
 }
 
+final class ContinuationBox<Output: Sendable>: @unchecked Sendable {
+    private let lock = NSLock()
+    private var continuation: CheckedContinuation<Output, Error>?
+
+    init(_ continuation: CheckedContinuation<Output, Error>) {
+        self.continuation = continuation
+    }
+
+    func resume(returning value: Output) {
+        lock.lock()
+        let continuation = continuation
+        self.continuation = nil
+        lock.unlock()
+
+        continuation?.resume(returning: value)
+    }
+
+    func resume(throwing error: Error) {
+        lock.lock()
+        let continuation = continuation
+        self.continuation = nil
+        lock.unlock()
+
+        continuation?.resume(throwing: error)
+    }
+}
+
 enum HelperClientError: LocalizedError {
     case failedToCreateRemoteObjectProxy
+    case timedOut
     case message(String)
 
     var errorDescription: String? {
         switch self {
         case .failedToCreateRemoteObjectProxy:
             "Unable to communicate with privileged helper."
+        case .timedOut:
+            "Timed out communicating with privileged helper."
         case let .message(message):
             message
         }

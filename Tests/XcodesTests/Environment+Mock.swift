@@ -1,9 +1,8 @@
-import Combine
 import Foundation
 @testable import Xcodes
 
-extension Xcodes.Environment {
-    static let mock = Xcodes.Environment(
+extension Xcodes.XcodesEnvironment {
+    static let mock = Xcodes.XcodesEnvironment(
         shell: .mock,
         files: .mock,
         network: .mock,
@@ -18,16 +17,16 @@ extension Shell {
     static let processOutputMock = ProcessOutput(status: 0, out: "", err: "")
 
     static let mock = Shell(
-        unxip: { _ in Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        spctlAssess: { _ in Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        codesignVerify: { _ in Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        buildVersion: { Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        xcodeBuildVersion: { _ in Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        getUserCacheDir: { Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
+        unxip: { _ in Shell.processOutputMock },
+        spctlAssess: { _ in Shell.processOutputMock },
+        codesignVerify: { _ in Shell.processOutputMock },
+        buildVersion: { Shell.processOutputMock },
+        xcodeBuildVersion: { _ in Shell.processOutputMock },
+        getUserCacheDir: { Shell.processOutputMock },
         touchInstallCheck: { _, _, _ in
-            Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher()
+            Shell.processOutputMock
         },
-        xcodeSelectPrintPath: { Just(Shell.processOutputMock).setFailureType(to: Error.self).eraseToAnyPublisher() },
+        xcodeSelectPrintPath: { Shell.processOutputMock },
         aria2Path: { nil }
     )
 }
@@ -57,33 +56,27 @@ extension Files {
 
 extension Network {
     static let mock = Network(
-        dataTask: { url in
-            Just((
-                data: Data(),
-                response: HTTPURLResponse(
-                    url: url.url!,
+        data: { request in
+            (
+                Data(),
+                HTTPURLResponse(
+                    url: request.url!,
                     statusCode: 200,
                     httpVersion: nil,
                     headerFields: nil
                 )! as URLResponse
-            ))
-            .setFailureType(to: Error.self)
-            .eraseToAnyPublisher()
+            )
         },
         downloadTask: { url, saveLocation, _ in
             (
                 Progress(),
-                Just((saveLocation, HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!))
-                    .setFailureType(to: Error.self)
-                    .eraseToAnyPublisher()
+                Task {
+                    (saveLocation, HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)!)
+                }
             )
         },
         validateSession: {
-            Just(())
-                .setFailureType(to: Error.self)
-                .eraseToAnyPublisher()
-        },
-        validateSessionAsync: {}
+        }
     )
 }
 
@@ -112,12 +105,12 @@ extension Date {
 extension Helper {
     static let mock = Helper(
         install: {},
-        checkIfLatestHelperIsInstalled: { Just(false).eraseToAnyPublisher() },
-        getVersion: { Just("").setFailureType(to: Error.self).eraseToAnyPublisher() },
-        switchXcodePath: { _ in Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        devToolsSecurityEnable: { Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        addStaffToDevelopersGroup: { Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        acceptXcodeLicense: { _ in Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() },
-        runFirstLaunch: { _ in Just(()).setFailureType(to: Error.self).eraseToAnyPublisher() }
+        checkIfLatestHelperIsInstalled: { false },
+        getVersion: { "" },
+        switchXcodePath: { _ in },
+        devToolsSecurityEnable: {},
+        addStaffToDevelopersGroup: {},
+        acceptXcodeLicense: { _ in },
+        runFirstLaunch: { _ in }
     )
 }

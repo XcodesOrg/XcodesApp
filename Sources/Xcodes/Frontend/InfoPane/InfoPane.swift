@@ -73,7 +73,7 @@ struct InfoPane: View {
 private func makePreviewContent(for index: Int) -> some View {
     let name = XcodePreviewName.allCases[index]
     return InfoPane(xcode: xcodeDict[name]!)
-        .environmentObject(configure(AppState()) {
+        .environment(configure(AppState()) {
             $0.allXcodes = [xcodeDict[name]!]
         })
         .frame(width: 600, height: 400)

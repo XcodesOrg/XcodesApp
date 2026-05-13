@@ -14,7 +14,7 @@ import XcodesKit
 struct InstalledStateButtons: View {
     let xcode: Xcode
 
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
 
     var body: some View {
         VStack(alignment: .leading) {
@@ -44,7 +44,7 @@ struct InstalledStateButtons: View {
 
 #Preview {
     InstalledStateButtons(xcode: xcode)
-        .environmentObject(configure(AppState()) {
+        .environment(configure(AppState()) {
             $0.allXcodes = [xcode]
         })
         .padding()

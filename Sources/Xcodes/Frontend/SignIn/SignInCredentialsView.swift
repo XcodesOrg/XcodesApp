@@ -49,7 +49,13 @@ struct SignInCredentialsView: View {
                 .keyboardShortcut(.cancelAction)
                 ProgressButton(
                     isInProgress: authenticationStore.isProcessingAuthRequest,
-                    action: { authenticationStore.signIn(username: username, password: password) },
+                    action: {
+                        do {
+                            _ = try await authenticationStore.signIn(username: username, password: password)
+                        } catch {
+                            // AuthenticationStore publishes the error for the sheet.
+                        }
+                    },
                     label: {
                         Text("Next")
                     }

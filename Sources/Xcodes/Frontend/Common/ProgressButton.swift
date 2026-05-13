@@ -10,11 +10,15 @@ import SwiftUI
 
 struct ProgressButton<Label: View>: View {
     let isInProgress: Bool
-    let action: () -> Void
+    let action: () async -> Void
     @ViewBuilder let label: () -> Label
 
     var body: some View {
-        Button(action: action) {
+        Button {
+            Task {
+                await action()
+            }
+        } label: {
             // This might look like a strange way to switch between the label and the progress view.
             // Doing it this way, so that the label is hidden but still has the same frame and is in the view hierarchy
             // makes sure that the button's frame doesn't change when isInProgress changes.

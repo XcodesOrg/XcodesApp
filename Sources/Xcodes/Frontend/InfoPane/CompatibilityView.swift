@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct CompatibilityView: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
 
     let requiredMacOSVersion: String?
 
@@ -39,5 +39,5 @@ struct CompatibilityView: View {
 #Preview {
     CompatibilityView(requiredMacOSVersion: "10.15.4")
         .padding()
-        .environmentObject(AppState())
+        .environment(AppState())
 }

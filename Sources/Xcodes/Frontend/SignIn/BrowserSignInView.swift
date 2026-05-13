@@ -66,7 +66,7 @@ struct BrowserSignInView: View {
             .keyboardShortcut(.cancelAction)
             ProgressButton(
                 isInProgress: authenticationStore.isProcessingAuthRequest,
-                action: { finishBrowserSignIn() },
+                action: finishBrowserSignIn,
                 label: {
                     Text("Continue")
                 }
@@ -77,17 +77,15 @@ struct BrowserSignInView: View {
         .frame(height: 25)
     }
 
-    private func finishBrowserSignIn() {
-        Task {
-            guard let cookieStore else { return }
+    private func finishBrowserSignIn() async {
+        guard let cookieStore else { return }
 
-            let cookies = await cookieStore.allCookies()
-            do {
-                _ = try await authenticationStore.signInWithBrowser(cookies: cookies)
-                cancel()
-            } catch {
-                // AuthenticationStore publishes the error for the sheet.
-            }
+        let cookies = await cookieStore.allCookies()
+        do {
+            _ = try await authenticationStore.signInWithBrowser(cookies: cookies)
+            cancel()
+        } catch {
+            // AuthenticationStore publishes the error for the sheet.
         }
     }
 }

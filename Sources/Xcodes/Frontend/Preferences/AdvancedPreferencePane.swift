@@ -4,9 +4,11 @@ import SwiftUI
 import UniformTypeIdentifiers
 
 struct AdvancedPreferencePane: View {
-    @EnvironmentObject var appState: AppState
+    @SwiftUI.Environment(AppState.self) private var appState
 
     var body: some View {
+        @Bindable var appState = appState
+
         VStack(alignment: .leading, spacing: 20) {
             GroupBox(label: Text("Install Directory")) {
                 VStack(alignment: .leading) {
@@ -171,7 +173,7 @@ struct AdvancedPreferencePane_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             AdvancedPreferencePane()
-                .environmentObject(AppState())
+                .environment(AppState())
                 .frame(maxWidth: 600)
         }
         .frame(width: 600, height: 700, alignment: .center)

@@ -6,7 +6,7 @@ import XcodesKit
 
 extension HelperClient {
     // From https://github.com/securing/SimpleXPCApp/
-    func install() throws {
+    func install() async throws {
         Logger.helperClient.info(#function)
 
         var authItem = kSMRightBlessPrivilegedHelper.withCString { name in

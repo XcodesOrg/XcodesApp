@@ -35,11 +35,13 @@ struct SignInPhoneListView: View {
                 Spacer()
                 ProgressButton(
                     isInProgress: authenticationStore.isProcessingAuthRequest,
-                    action: { authenticationStore.requestSMS(
-                        to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!,
-                        authOptions: authOptions,
-                        sessionData: sessionData
-                    ) },
+                    action: {
+                        await authenticationStore.requestSMS(
+                            to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!,
+                            authOptions: authOptions,
+                            sessionData: sessionData
+                        )
+                    },
                     label: {
                         Text("Continue")
                     }

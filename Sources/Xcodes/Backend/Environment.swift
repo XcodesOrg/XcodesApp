@@ -1,5 +1,4 @@
 import AppleAPI
-import Combine
 import Foundation
 import Path
 import Security
@@ -12,7 +11,7 @@ import XcodesKit
  - SeeAlso: https://www.pointfree.co/episodes/ep18-dependency-injection-made-comfortable
  - SeeAlso: https://vimeo.com/291588126
  */
-public struct Environment: @unchecked Sendable {
+public struct XcodesEnvironment: @unchecked Sendable {
     public var shell = Shell()
     public var files = Files()
     public var network = Network()
@@ -27,9 +26,9 @@ private final class CurrentEnvironmentStorage: @unchecked Sendable {
     static let shared = CurrentEnvironmentStorage()
 
     private let lock = NSRecursiveLock()
-    private var environment = Environment()
+    private var environment = XcodesEnvironment()
 
-    var value: Environment {
+    var value: XcodesEnvironment {
         get {
             lock.withLock { environment }
         }
@@ -41,7 +40,7 @@ private final class CurrentEnvironmentStorage: @unchecked Sendable {
     }
 }
 
-public var current: Environment {
+public var current: XcodesEnvironment {
     get {
         CurrentEnvironmentStorage.shared.value
     }
@@ -134,41 +133,31 @@ private func _installedXcodes(destination: Path) -> [InstalledXcode] {
 public struct Network: @unchecked Sendable {
     private static let client = AppleAPI.Client()
 
-    public var dataTask: (URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> = {
-        AppleAPI.current.network.session.dataTaskPublisher(for: $0)
-            .mapError { $0 as Error }
-            .eraseToAnyPublisher()
-    }
-
-    public func dataTask(with request: URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
-        dataTask(request)
-    }
-
-    public func dataTaskAsync(with request: URLRequest) async throws -> (Data, URLResponse) {
+    public var data: @Sendable (URLRequest) async throws -> (Data, URLResponse) = { request in
         try await AppleAPI.current.network.session.data(for: request)
+    }
+
+    public func data(for request: URLRequest) async throws -> (Data, URLResponse) {
+        try await data(request)
     }
 
     public var downloadTask: (URL, URL, Data?) -> (
         Progress,
-        AnyPublisher<(saveLocation: URL, response: URLResponse), Error>
-    ) = { AppleAPI.current.network.session.downloadTask(with: $0, to: $1, resumingWith: $2) }
+        Task<(saveLocation: URL, response: URLResponse), Error>
+    ) = { AppleAPI.current.network.session.downloadTaskAsync(with: $0, to: $1, resumingWith: $2) }
 
     public func downloadTask(
         with url: URL,
         to saveLocation: URL,
         resumingWith resumeData: Data?
-    ) -> (progress: Progress, publisher: AnyPublisher<
+    ) -> (progress: Progress, task: Task<
         (saveLocation: URL, response: URLResponse),
         Error
     >) {
         downloadTask(url, saveLocation, resumeData)
     }
 
-    public var validateSession: () -> AnyPublisher<Void, Error> = {
-        client.validateSession()
-    }
-
-    public var validateSessionAsync: @Sendable () async throws -> Void = {
+    public var validateSession: @Sendable () async throws -> Void = {
         try await client.validateSession()
     }
 }
@@ -292,12 +281,12 @@ public struct Defaults: @unchecked Sendable {
 
 private let helperClient = HelperClient()
 public struct Helper: @unchecked Sendable {
-    var install: () throws -> Void = helperClient.install
-    var checkIfLatestHelperIsInstalled: () -> AnyPublisher<Bool, Never> = helperClient.checkIfLatestHelperIsInstalled
-    var getVersion: () -> AnyPublisher<String, Error> = helperClient.getVersion
-    var switchXcodePath: (_ absolutePath: String) -> AnyPublisher<Void, Error> = helperClient.switchXcodePath
-    var devToolsSecurityEnable: () -> AnyPublisher<Void, Error> = helperClient.devToolsSecurityEnable
-    var addStaffToDevelopersGroup: () -> AnyPublisher<Void, Error> = helperClient.addStaffToDevelopersGroup
-    var acceptXcodeLicense: (_ absoluteXcodePath: String) -> AnyPublisher<Void, Error> = helperClient.acceptXcodeLicense
-    var runFirstLaunch: (_ absoluteXcodePath: String) -> AnyPublisher<Void, Error> = helperClient.runFirstLaunch
+    var install: () async throws -> Void = helperClient.install
+    var checkIfLatestHelperIsInstalled: () async -> Bool = helperClient.checkIfLatestHelperIsInstalled
+    var getVersion: () async throws -> String = helperClient.getVersion
+    var switchXcodePath: (_ absolutePath: String) async throws -> Void = helperClient.switchXcodePath
+    var devToolsSecurityEnable: () async throws -> Void = helperClient.devToolsSecurityEnable
+    var addStaffToDevelopersGroup: () async throws -> Void = helperClient.addStaffToDevelopersGroup
+    var acceptXcodeLicense: (_ absoluteXcodePath: String) async throws -> Void = helperClient.acceptXcodeLicense
+    var runFirstLaunch: (_ absoluteXcodePath: String) async throws -> Void = helperClient.runFirstLaunch
 }

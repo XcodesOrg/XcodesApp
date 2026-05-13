@@ -1,4 +1,3 @@
-import Combine
 import Foundation
 import Path
 import XcodesKit
@@ -7,46 +6,40 @@ let xcodeTeamIdentifier = Bundle.main.object(forInfoDictionaryKey: "APP_STORE_TE
 let xcodeCertificateAuthority = ["Software Signing", "Apple Code Signing Certification Authority", "Apple Root CA"]
 
 extension AppState {
-    func verifySecurityAssessment(of xcode: InstalledXcode) -> AnyPublisher<Void, Error> {
-        current.shell.spctlAssess(xcode.path.url)
-            .catch { (error: Swift.Error) -> AnyPublisher<ProcessOutput, Error> in
-                var output = ""
-                if let executionError = error as? ProcessExecutionError {
-                    output = [executionError.standardOutput, executionError.standardError].joined(separator: "\n")
-                }
-                return Fail(error: InstallationError.failedSecurityAssessment(xcode: xcode, output: output))
-                    .eraseToAnyPublisher()
+    func verifySecurityAssessment(of xcode: InstalledXcode) async throws {
+        do {
+            _ = try await current.shell.spctlAssess(xcode.path.url)
+        } catch {
+            var output = ""
+            if let executionError = error as? ProcessExecutionError {
+                output = [executionError.standardOutput, executionError.standardError].joined(separator: "\n")
             }
-            .map { _ in () }
-            .eraseToAnyPublisher()
+            throw InstallationError.failedSecurityAssessment(xcode: xcode, output: output)
+        }
     }
 
-    internal func verifySigningCertificate(of url: URL) -> AnyPublisher<Void, Error> {
-        current.shell.codesignVerify(url)
-            .catch { error -> AnyPublisher<ProcessOutput, Error> in
-                var output = ""
-                if let executionError = error as? ProcessExecutionError {
-                    output = [executionError.standardOutput, executionError.standardError].joined(separator: "\n")
-                }
-                return Fail(error: InstallationError.codesignVerifyFailed(output: output))
-                    .eraseToAnyPublisher()
+    internal func verifySigningCertificate(of url: URL) async throws {
+        let output: ProcessOutput
+        do {
+            output = try await current.shell.codesignVerify(url)
+        } catch {
+            var output = ""
+            if let executionError = error as? ProcessExecutionError {
+                output = [executionError.standardOutput, executionError.standardError].joined(separator: "\n")
             }
-            .map { output -> CertificateInfo in
-                // codesign prints to stderr
-                return self.parseCertificateInfo(output.err)
-            }
-            .tryMap { cert in
-                guard
-                    cert.teamIdentifier == xcodeTeamIdentifier,
-                    cert.authority == xcodeCertificateAuthority
-                else { throw InstallationError.unexpectedCodeSigningIdentity(
-                    identifier: cert.teamIdentifier,
-                    certificateAuthority: cert.authority
-                ) }
+            throw InstallationError.codesignVerifyFailed(output: output)
+        }
 
-                return ()
-            }
-            .eraseToAnyPublisher()
+        let cert = parseCertificateInfo(output.err)
+        guard
+            cert.teamIdentifier == xcodeTeamIdentifier,
+            cert.authority == xcodeCertificateAuthority
+        else {
+            throw InstallationError.unexpectedCodeSigningIdentity(
+                identifier: cert.teamIdentifier,
+                certificateAuthority: cert.authority
+            )
+        }
     }
 
     struct CertificateInfo {

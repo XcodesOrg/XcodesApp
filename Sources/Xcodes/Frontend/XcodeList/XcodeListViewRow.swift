@@ -74,7 +74,17 @@ struct XcodeListViewRow: View {
                 #if DEBUG
                     Divider()
                     Button("Perform post-install steps") {
-                        appState.performPostInstallSteps(for: InstalledXcode(path: path)!) as Void
+                        Task {
+                            do {
+                                try await appState.performPostInstallSteps(for: InstalledXcode(path: path)!)
+                            } catch {
+                                appState.error = error
+                                appState.presentedAlert = .generic(
+                                    title: "Unable to perform post install steps",
+                                    message: error.legibleLocalizedDescription
+                                )
+                            }
+                        }
                     }
                 #endif
             }
