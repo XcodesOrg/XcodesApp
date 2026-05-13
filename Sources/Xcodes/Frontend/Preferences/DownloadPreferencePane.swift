@@ -3,15 +3,15 @@ import SwiftUI
 
 struct DownloadPreferencePane: View {
     @EnvironmentObject var appState: AppState
-    
+
     @AppStorage("dataSource") var dataSource: DataSource = .xcodeReleases
     @AppStorage("downloader") var downloader: Downloader = .aria2
-    
+
     var body: some View {
         VStack(alignment: .leading) {
-            GroupBox(label: Text("DataSource")) {
+            GroupBox(label: Text("Data Source")) {
                 VStack(alignment: .leading) {
-                    Picker("DataSource", selection: $dataSource) {
+                    Picker("Data Source", selection: $dataSource) {
                         ForEach(DataSource.allCases) { dataSource in
                             Text(dataSource.description)
                                 .tag(dataSource)
@@ -20,10 +20,13 @@ struct DownloadPreferencePane: View {
                     .labelsHidden()
                     .fixedSize()
 
-                    Text("DataSourceDescription")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                    Text(
+                        // swiftlint:disable:next line_length
+                        "The Apple data source scrapes the Apple Developer website. It will always show the latest releases that are available, but is more fragile.\n\n[Xcode Releases](https://xcodereleases.com) is an unofficial list of [Xcode Releases](https://xcodereleases.com). It's provided as well-formed data, contains extra information that is not readily available from Apple, and is less likely to break if Apple redesigns their developer website."
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
@@ -41,10 +44,13 @@ struct DownloadPreferencePane: View {
                     .labelsHidden()
                     .fixedSize()
 
-                    Text("DownloaderDescription")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                    Text(
+                        // swiftlint:disable:next line_length
+                        "[aria2](https://aria2.github.io) uses up to 16 connections to download Xcode 3-5x faster than URLSession. Xcodes uses a system-installed aria2c and does not bundle aria2. Install aria2 with Homebrew: brew install aria2. See the [Homebrew formula](https://formulae.brew.sh/formula/aria2).\n\nURLSession is the default Apple API for making URL requests."
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
 
                     if !Downloader.aria2.isAvailable {
                         VStack(alignment: .leading, spacing: 4) {

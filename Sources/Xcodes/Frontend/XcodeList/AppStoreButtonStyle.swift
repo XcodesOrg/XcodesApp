@@ -3,55 +3,50 @@ import SwiftUI
 struct AppStoreButtonStyle: ButtonStyle {
     var primary: Bool
     var highlighted: Bool
-    
+
     private struct AppStoreButton: View {
         @SwiftUI.Environment(\.isEnabled) var isEnabled
         var configuration: ButtonStyle.Configuration
         var primary: Bool
         var highlighted: Bool
-        
+
         var textColor: Color {
             if isEnabled {
                 if primary {
                     if highlighted {
-                        return Color.accentColor
+                        Color.accentColor
+                    } else {
+                        Color.white
                     }
-                    else {
-                        return Color.white
-                    }
-                }
-                else {
-                    return Color.accentColor
+                } else {
+                    Color.accentColor
                 }
             } else {
                 if primary {
                     if highlighted {
-                        return Color(.disabledControlTextColor)
+                        Color(.disabledControlTextColor)
+                    } else {
+                        Color.white
                     }
-                    else {
-                        return Color.white
-                    }
-                }
-                else {
+                } else {
                     if highlighted {
-                        return Color.white
-                    }
-                    else {
-                        return Color(.disabledControlTextColor)
+                        Color.white
+                    } else {
+                        Color(.disabledControlTextColor)
                     }
                 }
             }
         }
-        
+
         func background(isPressed: Bool) -> some View {
             Group {
                 if isEnabled {
                     if primary {
                         Capsule()
                             .fill(
-                                highlighted ?
-                                    Color.white :
-                                    Color.accentColor
+                                highlighted
+                                    ? Color.white
+                                    : Color.accentColor
                             )
                             .brightness(isPressed ? -0.25 : 0)
                     } else {
@@ -65,17 +60,16 @@ struct AppStoreButtonStyle: ButtonStyle {
                     if primary {
                         Capsule()
                             .fill(
-                                highlighted ?
-                                    Color.white :
-                                    Color(.disabledControlTextColor)
+                                highlighted
+                                    ? Color.white
+                                    : Color(.disabledControlTextColor)
                             )
                             .brightness(isPressed ? -0.25 : 0)
-                    } else {
-                        EmptyView()
                     }
                 }
             }
         }
+
         var body: some View {
             configuration.label
                 .font(Font.caption.weight(.bold))
@@ -86,7 +80,7 @@ struct AppStoreButtonStyle: ButtonStyle {
                 .padding(1)
         }
     }
-    
+
     func makeBody(configuration: ButtonStyle.Configuration) -> some View {
         AppStoreButton(configuration: configuration, primary: primary, highlighted: highlighted)
     }
@@ -97,50 +91,50 @@ struct AppStoreButtonStyle_Previews: PreviewProvider {
         Group {
             ForEach([ColorScheme.light, .dark], id: \.self) { colorScheme in
                 Group {
-                    Button{ } label: {
+                    Button {} label: {
                         Text(verbatim: "OPEN")
                     }
-                        .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: false))
-                        .padding()
-                        .background(Color(.textBackgroundColor))
-                        .previewDisplayName("Primary")
-                    Button{ } label: {
+                    .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: false))
+                    .padding()
+                    .background(Color(.textBackgroundColor))
+                    .previewDisplayName("Primary")
+                    Button {} label: {
                         Text(verbatim: "OPEN")
                     }
-                        .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: true))
-                        .padding()
-                        .background(Color(.controlAccentColor))
-                        .previewDisplayName("Primary, Highlighted")
-                    Button{ } label: {
+                    .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: true))
+                    .padding()
+                    .background(Color(.controlAccentColor))
+                    .previewDisplayName("Primary, Highlighted")
+                    Button {} label: {
                         Text(verbatim: "OPEN")
                     }
-                        .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: false))
-                        .padding()
-                        .disabled(true)
-                        .background(Color(.textBackgroundColor))
-                        .previewDisplayName("Primary, Disabled")
-                    Button{ } label: {
+                    .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: false))
+                    .padding()
+                    .disabled(true)
+                    .background(Color(.textBackgroundColor))
+                    .previewDisplayName("Primary, Disabled")
+                    Button {} label: {
                         Text(verbatim: "INSTALL")
                     }
-                        .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
-                        .padding()
-                        .background(Color(.textBackgroundColor))
-                        .previewDisplayName("Secondary")
-                    Button{ } label: {
+                    .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
+                    .padding()
+                    .background(Color(.textBackgroundColor))
+                    .previewDisplayName("Secondary")
+                    Button {} label: {
                         Text(verbatim: "INSTALL")
                     }
-                        .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: true))
-                        .padding()
-                        .background(Color(.controlAccentColor))
-                        .previewDisplayName("Secondary, Highlighted")
-                    Button{ } label: {
+                    .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: true))
+                    .padding()
+                    .background(Color(.controlAccentColor))
+                    .previewDisplayName("Secondary, Highlighted")
+                    Button {} label: {
                         Text(verbatim: "INSTALL")
                     }
-                        .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
-                        .padding()
-                        .disabled(true)
-                        .background(Color(.textBackgroundColor))
-                        .previewDisplayName("Secondary, Disabled")
+                    .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
+                    .padding()
+                    .disabled(true)
+                    .background(Color(.textBackgroundColor))
+                    .previewDisplayName("Secondary, Disabled")
                 }
                 .environment(\.colorScheme, colorScheme)
             }

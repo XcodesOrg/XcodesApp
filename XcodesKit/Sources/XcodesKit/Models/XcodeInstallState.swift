@@ -1,6 +1,6 @@
 //
-//  InstallState.swift
-//  
+//  XcodeInstallState.swift
+//
 //
 //  Created by Matt Kiazyk on 2023-06-06.
 //
@@ -15,20 +15,22 @@ public enum XcodeInstallState: Equatable, @unchecked Sendable {
 
     var notInstalled: Bool {
         switch self {
-        case .notInstalled: return true
-        default: return false
+        case .notInstalled: true
+        default: false
         }
     }
+
     var installing: Bool {
         switch self {
-        case .installing: return true
-        default: return false
+        case .installing: true
+        default: false
         }
     }
+
     var installed: Bool {
         switch self {
-        case .installed: return true
-        default: return false
+        case .installed: true
+        default: false
         }
     }
 }

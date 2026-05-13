@@ -1,25 +1,24 @@
 import AppleAPI
-import SwiftUI
 import Path
+import SwiftUI
 import UniformTypeIdentifiers
 
 struct AdvancedPreferencePane: View {
     @EnvironmentObject var appState: AppState
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            
-            GroupBox(label: Text("InstallDirectory")) {
+            GroupBox(label: Text("Install Directory")) {
                 VStack(alignment: .leading) {
                     HStack(alignment: .top, spacing: 5) {
                         Text(appState.installPath).font(.footnote)
                             .fixedSize(horizontal: false, vertical: true)
                             .lineLimit(2)
-                        Button(action: { appState.reveal(path: appState.installPath) }) {
+                        Button(action: { appState.reveal(path: appState.installPath) }, label: {
                             Image(systemName: "arrow.right.circle.fill")
-                        }
+                        })
                         .buttonStyle(PlainButtonStyle())
-                        .help("RevealInFinder")
+                        .help("Reveal in Finder")
                         .fixedSize()
                     }
                     Button("Change") {
@@ -30,33 +29,35 @@ struct AdvancedPreferencePane: View {
                         panel.canCreateDirectories = true
                         panel.allowedContentTypes = [.folder]
                         panel.directoryURL = URL(fileURLWithPath: appState.installPath)
-                        
+
                         if panel.runModal() == .OK {
-                            
                             guard let pathURL = panel.url, let path = Path(url: pathURL) else { return }
-                            self.appState.installPath = path.string
+                            appState.installPath = path.string
                         }
                     }
                     .disabled(appState.disableInstallPathChange)
-                    Text("InstallPathDescription")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                    Text(
+                        // swiftlint:disable:next line_length
+                        "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
-            GroupBox(label: Text("LocalCachePath")) {
+
+            GroupBox(label: Text("Local Cache Path")) {
                 VStack(alignment: .leading) {
                     HStack(alignment: .top, spacing: 5) {
                         Text(appState.localPath).font(.footnote)
                             .fixedSize(horizontal: false, vertical: true)
                             .lineLimit(2)
-                        Button(action: { appState.reveal(path: appState.localPath) }) {
+                        Button(action: { appState.reveal(path: appState.localPath) }, label: {
                             Image(systemName: "arrow.right.circle.fill")
-                        }
+                        })
                         .buttonStyle(PlainButtonStyle())
-                        .help("RevealInFinder")
+                        .help("Reveal in Finder")
                         .fixedSize()
                     }
                     Button("Change") {
@@ -67,26 +68,24 @@ struct AdvancedPreferencePane: View {
                         panel.canCreateDirectories = true
                         panel.allowedContentTypes = [.folder]
                         panel.directoryURL = URL(fileURLWithPath: appState.localPath)
-                        
+
                         if panel.runModal() == .OK {
-                            
                             guard let pathURL = panel.url, let path = Path(url: pathURL) else { return }
-                            self.appState.localPath = path.string
+                            appState.localPath = path.string
                         }
                     }
                     .disabled(appState.disableLocalPathChange)
-                    Text("LocalCachePathDescription")
+                    Text("Xcodes caches available Xcode versions and temporary downloads new versions to a directory")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                         .fixedSize(horizontal: false, vertical: true)
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
+
             GroupBox(label: Text("Active/Select")) {
                 VStack(alignment: .leading) {
                     Picker(selection: $appState.onSelectActionType) {
-                        
                         Text(SelectedActionType.none.description)
                             .tag(SelectedActionType.none)
                         Text(SelectedActionType.rename.description)
@@ -104,53 +103,62 @@ struct AdvancedPreferencePane: View {
                         .fixedSize(horizontal: false, vertical: true)
                     Spacer()
                         .frame(height: 20)
-                    
-                    Toggle("AutomaticallyCreateSymbolicLink", isOn: $appState.createSymLinkOnSelect)
+
+                    Toggle("Automatically create symbolic link to Xcode.app", isOn: $appState.createSymLinkOnSelect)
                         .disabled(appState.createSymLinkOnSelectDisabled)
-                    Text("AutomaticallyCreateSymbolicLinkDescription")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                    Text(
+                        // swiftlint:disable:next line_length
+                        "When making an Xcode version Active/Selected, try and create a symbolic link named Xcode.app in the installation directory"
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
                 .fixedSize(horizontal: false, vertical: true)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
-            
+
             if Hardware.isAppleSilicon() {
                 GroupBox(label: Text("Apple Silicon")) {
-                    Toggle("ShowOpenInRosetta", isOn: $appState.showOpenInRosettaOption)
+                    Toggle("Show Open In Rosetta option", isOn: $appState.showOpenInRosettaOption)
                         .disabled(appState.createSymLinkOnSelectDisabled)
-                    Text("ShowOpenInRosettaDescription")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                    Text(
+                        // swiftlint:disable:next line_length
+                        "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
                 .groupBoxStyle(PreferencesGroupBoxStyle())
             }
-            
-            GroupBox(label: Text("PrivilegedHelper")) {
+
+            GroupBox(label: Text("Privileged Helper")) {
                 VStack(alignment: .leading, spacing: 8) {
                     switch appState.helperInstallState {
                     case .unknown:
                         ProgressView()
                             .scaleEffect(0.5, anchor: .center)
                     case .installed:
-                        Text("HelperInstalled")
+                        Text("Helper is installed")
                     case .notInstalled:
                         VStack(alignment: .leading) {
-                            Button("InstallHelper") {
+                            Button("Install helper") {
                                 appState.installHelperIfNecessary()
                             }
-                            Text("HelperNotInstalled")
+                            Text("Helper is not installed")
                                 .font(.footnote)
                         }
                     }
-                    
-                    Text("PrivilegedHelperDescription")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
-                    
+
+                    Text(
+                        // swiftlint:disable:next line_length
+                        "Xcodes uses a separate privileged helper to perform tasks as root. These are things that would require sudo on the command line, including post-install steps and switching Xcode versions with xcode-select.\n\nYou'll be prompted for your macOS account password to install it."
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+
                     Spacer()
                 }
             }
@@ -170,13 +178,13 @@ struct AdvancedPreferencePane_Previews: PreviewProvider {
     }
 }
 
-// A group style for the preferences
+/// A group style for the preferences
 struct PreferencesGroupBoxStyle: GroupBoxStyle {
     func makeBody(configuration: Configuration) -> some View {
         HStack(alignment: .top, spacing: 20) {
             configuration.label
                 .frame(width: 180, alignment: .trailing)
-            
+
             VStack(alignment: .leading) {
                 configuration.content
             }

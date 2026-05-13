@@ -1,5 +1,5 @@
-import Foundation
 import Combine
+import Foundation
 
 /**
  Lightweight dependency injection using global mutable state :P
@@ -12,7 +12,7 @@ public struct Environment: Sendable {
     public var network = Network()
 }
 
-public let Current = Environment()
+public let current = Environment()
 
 public struct Network: Sendable {
     public var session = URLSession.shared
@@ -21,7 +21,7 @@ public struct Network: Sendable {
 
     public init(session: URLSession = .shared) {
         self.session = session
-        self.dataTask = { session.dataTaskPublisher(for: $0) }
+        dataTask = { session.dataTaskPublisher(for: $0) }
     }
 
     public func dataTask(with request: URLRequest) -> URLSession.DataTaskPublisher {

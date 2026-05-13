@@ -15,22 +15,20 @@ struct PlatformsView: View {
     @AppStorage("selectedRuntimeArchitecture") private var selectedVariant: ArchitectureVariant = .universal
 
     let xcode: Xcode
- 
+
     var body: some View {
-        
         let builds = xcode.sdks?.allBuilds()
         let runtimes = builds?.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
                 $0.sdkBuildUpdate?.contains(sdkBuild) ?? false &&
-                ($0.architectures?.isEmpty ?? true ||
-                 ($0.architectures?.isUniversal ?? false && selectedVariant == .universal) ||
-                 ($0.architectures?.isAppleSilicon ?? false && selectedVariant == .appleSilicon)
-                )
+                    ($0.architectures?.isEmpty ?? true ||
+                        ($0.architectures?.isUniversal ?? false && selectedVariant == .universal) ||
+                        ($0.architectures?.isAppleSilicon ?? false && selectedVariant == .appleSilicon))
             }
         }
-        
+
         let architectures = Set((runtimes ?? []).flatMap { $0.architectures ?? [] })
-        
+
         VStack {
             HStack {
                 Text("Platforms")
@@ -52,7 +50,7 @@ struct PlatformsView: View {
                     .labelsHidden()
                 }
             }
-            
+
             ForEach(runtimes ?? [], id: \.identifier) { runtime in
                 runtimeView(runtime: runtime)
                     .frame(minWidth: 200)
@@ -62,11 +60,8 @@ struct PlatformsView: View {
             }
         }
         .xcodesBackground()
-        
-
     }
-    
-    @ViewBuilder
+
     func runtimeView(runtime: DownloadableRuntime) -> some View {
         VStack(spacing: 10) {
             HStack {
@@ -76,11 +71,12 @@ struct PlatformsView: View {
                 ForEach(runtime.architectures ?? [], id: \.self) { architecture in
                     TagView(text: architecture.displayString)
                 }
-               
+
                 pathIfAvailable(xcode: xcode, runtime: runtime)
-                
+
                 if runtime.installState == .notInstalled {
-                    // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
+                    // Follow-up: Update downloadableRuntimes with the appropriate installState so this path check can
+                    // be removed.
                     if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
                         EmptyView()
                     } else {
@@ -90,34 +86,32 @@ struct PlatformsView: View {
                         }
                     }
                 }
-					
+
                 Spacer()
                 Text(runtime.downloadFileSizeString)
                     .font(.subheadline)
-						  .frame(width: 70, alignment: .trailing)
+                    .frame(width: 70, alignment: .trailing)
             }
-			  
-			  if case let .installing(installationStep) = runtime.installState {
-				  HStack(alignment: .top, spacing: 5){
-					  RuntimeInstallationStepDetailView(installationStep: installationStep)
-						  .fixedSize(horizontal: false, vertical: true)
-					  Spacer()
-					  CancelRuntimeInstallButton(runtime: runtime)
-				  }
-			  }
+
+            if case let .installing(installationStep) = runtime.installState {
+                HStack(alignment: .top, spacing: 5) {
+                    RuntimeInstallationStepDetailView(installationStep: installationStep)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                    CancelRuntimeInstallButton(runtime: runtime)
+                }
+            }
         }
     }
-    
+
     @ViewBuilder
     func pathIfAvailable(xcode: Xcode, runtime: DownloadableRuntime) -> some View {
         if let path = appState.runtimeInstallPath(xcode: xcode, runtime: runtime) {
-            Button(action: { appState.reveal(path: path.string) }) {
+            Button(action: { appState.reveal(path: path.string) }, label: {
                 Image(systemName: "arrow.right.circle.fill")
-            }
+            })
             .buttonStyle(PlainButtonStyle())
-            .help("RevealInFinder")
-        } else {
-            EmptyView()
+            .help("Reveal in Finder")
         }
     }
 }
@@ -131,13 +125,13 @@ private func makePreviewContent(for index: Int) -> some View {
 
     return PlatformsView(xcode: xcodeDict[name]!)
         .environmentObject({ () -> AppState in
-            let a = AppState()
-            a.allXcodes = [xcodeDict[name]!]
-            a.installedRuntimes = installedRuntimes
-            a.downloadableRuntimes = runtimes
-        
-            return a
-          
+            let appState = AppState()
+            appState.allXcodes = [xcodeDict[name]!]
+            appState.installedRuntimes = installedRuntimes
+            appState.downloadableRuntimes = runtimes
+
+            return appState
+
         }())
         .frame(width: 300)
         .padding()

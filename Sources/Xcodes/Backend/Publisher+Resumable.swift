@@ -16,7 +16,7 @@ func attemptResumableTask<T>(
                     attempts < maximumRetryCount,
                     let resumeData = (error as NSError).userInfo[NSURLSessionDownloadTaskResumeData] as? Data
                 else { return Fail(error: error).eraseToAnyPublisher() }
-                
+
                 return attempt(with: resumeData)
                     .delay(for: .seconds(delayBeforeRetry), scheduler: DispatchQueue.main)
                     .eraseToAnyPublisher()
@@ -27,11 +27,11 @@ func attemptResumableTask<T>(
 }
 
 ///// Attempt and retry a task up to `maximumRetryCount` times
-//func attemptRetryableTask<T>(
+// func attemptRetryableTask<T>(
 //    maximumRetryCount: Int = 3,
 //    delayBeforeRetry: DispatchTimeInterval = .seconds(2),
 //    _ body: @escaping () -> AnyPublisher<T, Error>
-//) -> AnyPublisher<T, Error> {
+// ) -> AnyPublisher<T, Error> {
 //    var attempts = 0
 //    func attempt() -> Promise<T> {
 //        attempts += 1
@@ -41,4 +41,4 @@ func attemptResumableTask<T>(
 //        }
 //    }
 //    return attempt()
-//}
+// }

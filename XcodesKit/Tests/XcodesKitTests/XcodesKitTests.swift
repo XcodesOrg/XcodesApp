@@ -1,5 +1,7 @@
-import XCTest
+// swiftlint:disable:next blanket_disable_command
+// swiftlint:disable function_body_length
 @testable import XcodesKit
+import XCTest
 
 final class XcodesKitTests: XCTestCase {
     func testDownloadableRuntimesDecodesPropertyListFromDataLoader() async throws {

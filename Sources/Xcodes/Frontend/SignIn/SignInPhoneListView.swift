@@ -11,7 +11,9 @@ struct SignInPhoneListView: View {
     var body: some View {
         VStack(alignment: .leading) {
             if let phoneNumbers = authOptions.trustedPhoneNumbers, !phoneNumbers.isEmpty {
-                Text(String(format: localizeString("SelectTrustedPhone"), authOptions.securityCode!.length))
+                Text(
+                    "Select a trusted phone number to receive a \(authOptions.securityCode!.length) digit code via SMS:"
+                )
 
                 List(phoneNumbers, selection: $selectedPhoneNumberID) {
                     Text($0.numberWithDialCode)
@@ -31,11 +33,17 @@ struct SignInPhoneListView: View {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
                 Spacer()
-                ProgressButton(isInProgress: authenticationStore.isProcessingAuthRequest,
-                               action: { authenticationStore.requestSMS(to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!, authOptions: authOptions, sessionData: sessionData) })
-                {
-                    Text("Continue")
-                }
+                ProgressButton(
+                    isInProgress: authenticationStore.isProcessingAuthRequest,
+                    action: { authenticationStore.requestSMS(
+                        to: authOptions.trustedPhoneNumbers!.first { $0.id == selectedPhoneNumberID }!,
+                        authOptions: authOptions,
+                        sessionData: sessionData
+                    ) },
+                    label: {
+                        Text("Continue")
+                    }
+                )
                 .keyboardShortcut(.defaultAction)
                 .disabled(selectedPhoneNumberID == nil)
             }

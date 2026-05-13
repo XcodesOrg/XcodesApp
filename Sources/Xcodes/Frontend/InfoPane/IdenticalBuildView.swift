@@ -20,11 +20,14 @@ struct IdenticalBuildsView: View {
         } else {
             VStack(alignment: .leading) {
                 HStack {
-                    Text("IdenticalBuilds")
+                    Text("Identical Builds")
                     Image(systemName: "square.fill.on.square.fill")
                         .foregroundColor(.secondary)
                         .accessibility(hidden: true)
-                        .help("IdenticalBuilds.help")
+                        .help(
+                            // swiftlint:disable:next line_length
+                            "Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together."
+                        )
                 }
                 .font(.headline)
 
@@ -43,8 +46,8 @@ struct IdenticalBuildsView: View {
 
     init(builds: [Version]) {
         self.builds = builds
-        self.isEmpty = builds.isEmpty
-        self.accessibilityDescription = builds
+        isEmpty = builds.isEmpty
+        accessibilityDescription = builds
             .map(\.appleDescription)
             .joined(separator: ", ")
     }
@@ -53,11 +56,11 @@ struct IdenticalBuildsView: View {
 let builds: [Version] = [.init(xcodeVersion: "15.0")!, .init(xcodeVersion: "15.1")!]
 
 #Preview("Has Some Builds") {
-  IdenticalBuildsView(builds: builds)
-    .padding()
+    IdenticalBuildsView(builds: builds)
+        .padding()
 }
 
 #Preview("No Build") {
-  IdenticalBuildsView(builds: [])
-    .padding()
+    IdenticalBuildsView(builds: [])
+        .padding()
 }

@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct NavigationSplitViewWrapper<Sidebar, Detail>: View where Sidebar: View, Detail: View {
+struct NavigationSplitViewWrapper<Sidebar: View, Detail: View>: View {
     private var sidebar: Sidebar
     private var detail: Detail
-    
+
     init(
         @ViewBuilder sidebar: () -> Sidebar,
-        @ViewBuilder detail:  () -> Detail
+        @ViewBuilder detail: () -> Detail
     ) {
         self.sidebar = sidebar()
         self.detail = detail()
     }
-    
+
     var body: some View {
         NavigationSplitView {
             if #available(macOS 14, *) {

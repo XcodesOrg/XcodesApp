@@ -1,11 +1,13 @@
-import Foundation
 import AppleAPI
+import Foundation
 
 enum XcodesSheet: Identifiable {
     case signIn
     case twoFactor(SecondFactorData)
 
-    var id: Int { Kind(self).hashValue }
+    var id: Int {
+        XcodesSheetKind(self).hashValue
+    }
 
     struct SecondFactorData {
         let option: TwoFactorOption
@@ -14,26 +16,24 @@ enum XcodesSheet: Identifiable {
     }
 }
 
-extension XcodesSheet {
-    private enum Kind: Hashable {
-        case signIn, twoFactor(TwoFactorOption)
+private enum XcodesSheetKind: Hashable {
+    case signIn, twoFactor(XcodesSheetSecondFactorKind)
 
-        enum TwoFactorOption {
-            case smsSent
-            case codeSent
-            case smsPendingChoice
-        }
-
-        init(_ sheet: XcodesSheet) {
-            switch sheet {
-            case .signIn: self = .signIn
-            case .twoFactor(let data):
-                switch data.option {
-                case .smsSent: self = .twoFactor(.smsSent)
-                case .smsPendingChoice: self = .twoFactor(.smsPendingChoice)
-                case .codeSent: self = .twoFactor(.codeSent)
-                }
+    init(_ sheet: XcodesSheet) {
+        switch sheet {
+        case .signIn: self = .signIn
+        case let .twoFactor(data):
+            switch data.option {
+            case .smsSent: self = .twoFactor(.smsSent)
+            case .smsPendingChoice: self = .twoFactor(.smsPendingChoice)
+            case .codeSent: self = .twoFactor(.codeSent)
             }
         }
     }
+}
+
+private enum XcodesSheetSecondFactorKind {
+    case smsSent
+    case codeSent
+    case smsPendingChoice
 }

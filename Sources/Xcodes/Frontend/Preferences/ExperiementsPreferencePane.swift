@@ -4,20 +4,23 @@ import SwiftUI
 
 struct ExperimentsPreferencePane: View {
     @EnvironmentObject var appState: AppState
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 20) {
-            GroupBox(label: Text("FasterUnxip")) {
+            GroupBox(label: Text("Faster Unxip")) {
                 VStack(alignment: .leading) {
                     Toggle(
-                        "UseUnxipExperiment",
+                        "When unxipping, use experiment",
                         isOn: $appState.unxipExperiment
                     )
                     .disabled(appState.disableUnxipExperiment)
-                    Text("FasterUnxipDescription")
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-                        .fixedSize(horizontal: false, vertical: true)
+                    Text(
+                        // swiftlint:disable:next line_length
+                        "Thanks to [@_saagarjha](https://twitter.com/_saagarjha), this experiment can increase unxipping speed by up to 70% for some systems.\n\nMore information on how this is accomplished can be seen on the unxip repo - https://github.com/saagarjha/unxip"
+                    )
+                    .font(.footnote)
+                    .foregroundStyle(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
                 .fixedSize(horizontal: false, vertical: true)
             }

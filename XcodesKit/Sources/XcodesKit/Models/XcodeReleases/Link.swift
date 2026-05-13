@@ -24,7 +24,7 @@ public struct Link: Codable {
 public struct Links: Codable {
     public let download: Link?
     public let notes: Link?
-    
+
     public init(download: Link? = nil, notes: Link? = nil) {
         self.download = download
         self.notes = notes

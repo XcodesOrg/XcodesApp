@@ -26,9 +26,14 @@ struct IconView: View {
 }
 
 #Preview("Installed") {
-    IconView(xcode: Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil))
-        .frame(width: 300, height: 100)
-        .padding()
+    IconView(xcode: Xcode(
+        version: Version("12.3.0")!,
+        installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
+        selected: true,
+        icon: nil
+    ))
+    .frame(width: 300, height: 100)
+    .padding()
 }
 
 #Preview("Installed") {

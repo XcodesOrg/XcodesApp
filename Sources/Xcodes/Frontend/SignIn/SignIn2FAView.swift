@@ -1,5 +1,5 @@
-import SwiftUI
 import AppleAPI
+import SwiftUI
 
 struct SignIn2FAView: View {
     @Bindable var authenticationStore: AuthenticationStore
@@ -7,12 +7,12 @@ struct SignIn2FAView: View {
     @State private var code: String = ""
     let authOptions: AuthOptionsResponse
     let sessionData: AppleSessionData
-    
+
     var body: some View {
         VStack(alignment: .leading) {
-            Text(String(format: localizeString("DigitCodeDescription"), authOptions.securityCode!.length))
+            Text("Enter the \(authOptions.securityCode!.length) digit code from one of your trusted devices:")
                 .fixedSize(horizontal: true, vertical: false)
-            
+
             HStack {
                 Spacer()
                 PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode!.length) {
@@ -21,16 +21,28 @@ struct SignIn2FAView: View {
                 Spacer()
             }
             .padding()
-            
+
             HStack {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
-                Button("SendSMS", action: { authenticationStore.choosePhoneNumberForSMS(authOptions: authOptions, sessionData: sessionData) })
+                Button(
+                    "SendSMS",
+                    action: { authenticationStore.choosePhoneNumberForSMS(
+                        authOptions: authOptions,
+                        sessionData: sessionData
+                    ) }
+                )
                 Spacer()
-                ProgressButton(isInProgress: authenticationStore.isProcessingAuthRequest,
-                               action: { authenticationStore.submitSecurityCode(.device(code: code), sessionData: sessionData) }) {
-                    Text("Continue")
-                }
+                ProgressButton(
+                    isInProgress: authenticationStore.isProcessingAuthRequest,
+                    action: { authenticationStore.submitSecurityCode(
+                        .device(code: code),
+                        sessionData: sessionData
+                    ) },
+                    label: {
+                        Text("Continue")
+                    }
+                )
                 .keyboardShortcut(.defaultAction)
                 .disabled(code.count != authOptions.securityCode!.length)
             }

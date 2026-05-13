@@ -1,0 +1,21 @@
+included:
+  - AppleAPI
+  - Sources
+  - Tests
+  - XcodesKit
+
+excluded:
+  - .build
+  - build
+  - AppleAPI/.build
+  - XcodesKit/.build
+  - DerivedData
+  - SourcePackages
+  - Xcodes.xcodeproj
+
+custom_rules:
+  plain_strings_only:
+    name: "Plain strings only"
+    regex: "\\b(?:localizeString|NSLocalizedString)\\s*\\(|\\bString\\s*\\(\\s*(?:localized|format)\\s*:"
+    message: "Use plain Swift strings instead of localization helpers or String(format:)."
+    severity: error

@@ -3,6 +3,14 @@ import Sparkle
 import SwiftUI
 import XcodesKit
 
+private enum HelpMenuURL {
+    static let xcodesRepo = URL(string: "https://github.com/XcodesOrg/XcodesApp/")!
+    // swiftlint:disable:next line_length
+    static let bugReport = URL(string: "https://github.com/XcodesOrg/XcodesApp/issues/new?assignees=&labels=bug&template=bug_report.md&title=")!
+    // swiftlint:disable:next line_length
+    static let featureRequest = URL(string: "https://github.com/XcodesOrg/XcodesApp/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=")!
+}
+
 @main
 struct XcodesApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate: AppDelegate
@@ -19,7 +27,7 @@ struct XcodesApp: App {
                 // This is intentionally used on a View, and not on a WindowGroup,
                 // so that it's triggered when an individual window's phase changes instead of all window phases.
                 // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup.
-                // FB8954581 ScenePhase read from App doesn't return a value on launch
+                // FB8954581 ScenePhase read from App doesn't return appState value on launch
                 .onChange(of: scenePhase) { _, newScenePhase in
                     guard !isTesting else { return }
                     if case .active = newScenePhase {
@@ -30,12 +38,12 @@ struct XcodesApp: App {
         }
         .commands {
             CommandGroup(replacing: .appInfo) {
-                Button("Menu.About") {
+                Button("About Xcodes") {
                     appDelegate.showAboutWindow()
                 }
             }
             CommandGroup(after: .appInfo) {
-                Button("Menu.CheckForUpdates") {
+                Button("Check for Updates...") {
                     updater.checkForUpdates()
                 }
             }
@@ -51,67 +59,63 @@ struct XcodesApp: App {
             XcodeCommands(appState: appState)
 
             CommandGroup(replacing: CommandGroupPlacement.help) {
-                Button("Menu.GitHubRepo") {
-                    let xcodesRepoURL = URL(string: "https://github.com/XcodesOrg/XcodesApp/")!
-                    openURL(xcodesRepoURL)
+                Button("Xcodes GitHub Repo") {
+                    openURL(HelpMenuURL.xcodesRepo)
                 }
 
                 Divider()
 
-                Button("Menu.ReportABug") {
-                    let bugReportURL = URL(string: "https://github.com/XcodesOrg/XcodesApp/issues/new?assignees=&labels=bug&template=bug_report.md&title=")!
-                    openURL(bugReportURL)
+                Button("Report a Bug") {
+                    openURL(HelpMenuURL.bugReport)
                 }
 
-                Button("Menu.RequestNewFeature") {
-                    let featureRequestURL = URL(string: "https://github.com/XcodesOrg/XcodesApp/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=")!
-                    openURL(featureRequestURL)
+                Button("Request a New Feature") {
+                    openURL(HelpMenuURL.featureRequest)
                 }
             }
         }
-#if os(macOS)
-      Settings {
-        PreferencesView()
-          .environmentObject(appState)
-          .environmentObject(updater)
-          .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
-              alert(for: presentedAlert)
-          })
-      }
-        
-        Window("Platforms", id: "platforms") {
-            PlatformsListView()
-                .environmentObject(appState)
-                .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
-                    alert(for: presentedAlert)
-                })
-        }
-#endif
+        #if os(macOS)
+            Settings {
+                PreferencesView()
+                    .environmentObject(appState)
+                    .environmentObject(updater)
+                    .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
+                        alert(for: presentedAlert)
+                    })
+            }
+
+            Window("Platforms", id: "platforms") {
+                PlatformsListView()
+                    .environmentObject(appState)
+                    .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
+                        alert(for: presentedAlert)
+                    })
+            }
+        #endif
     }
-    
+
     private func alert(for alertType: XcodesPreferencesAlert) -> Alert {
         switch alertType {
         case let .deletePlatform(runtime):
-            return Alert(
-                title: Text(String(format: localizeString("Alert.DeletePlatform.Title"), runtime.name)),
-                  primaryButton: .destructive(
+            Alert(
+                title: Text("Are you sure you want to delete \(runtime.name)?"),
+                primaryButton: .destructive(
                     Text("Alert.DeletePlatform.PrimaryButton"),
                     action: {
                         Task {
                             do {
-                                try await self.appState.deleteRuntime(runtime: runtime)
+                                try await appState.deleteRuntime(runtime: runtime)
                             } catch {
                                 let errorString = error.legibleLocalizedDescription
-                                self.appState.presentedPreferenceAlert = .generic(title: "Error", message: errorString)
+                                appState.presentedPreferenceAlert = .generic(title: "Error", message: errorString)
                             }
-                            
                         }
                     }
-                  ),
-                  secondaryButton: .cancel(Text("Cancel"))
+                ),
+                secondaryButton: .cancel(Text("Cancel"))
             )
         case let .generic(title, message):
-            return Alert(
+            Alert(
                 title: Text(title),
                 message: Text(message),
                 dismissButton: .default(
@@ -131,7 +135,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, @unchecked Sendable {
         backing: .buffered,
         defer: false
     )) {
-        $0.title = localizeString("About")
+        $0.title = "About"
         $0.contentView = NSHostingView(rootView: AboutView(showAcknowledgementsWindow: { [weak self] in
             self?.showAcknowledgementsWindow()
         }))
@@ -145,12 +149,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, @unchecked Sendable {
         backing: .buffered,
         defer: false
     )) {
-        $0.title = localizeString("Acknowledgements")
+        $0.title = "Acknowledgements"
         $0.contentView = NSHostingView(rootView: AcknowledgmentsView())
         $0.isReleasedWhenClosed = false
     }
 
-    /// If we wanted to use only SwiftUI API to do this we could make a new WindowGroup and use openURL and handlesExternalEvents.
+    /// If we wanted to use only SwiftUI API to do this we could make a new WindowGroup and use openURL and
+    /// handlesExternalEvents.
     /// WindowGroup lets the user open more than one window right now, which is a little strange for an About window.
     /// (It's also weird that the main Xcode list window can be opened more than once, there should only be one.)
     /// To work around this, an AppDelegate holds onto a single instance of an NSWindow that is shown here.
@@ -168,12 +173,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, @unchecked Sendable {
     }
 
     func applicationDidFinishLaunching(_: Notification) {}
-    
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        return Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
-    }
-}
 
-func localizeString(_ key: String, comment: String = "") -> String {
-    return String(localized: String.LocalizationValue(key))
+    func applicationShouldTerminateAfterLastWindowClosed(_: NSApplication) -> Bool {
+        current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
+    }
 }

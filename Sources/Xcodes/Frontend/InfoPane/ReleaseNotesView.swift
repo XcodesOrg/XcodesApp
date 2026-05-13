@@ -14,25 +14,23 @@ struct ReleaseNotesView: View {
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
 
     var body: some View {
-        if let url = url {
-            Button(action: { openURL(url) }) {
+        if let url {
+            Button(action: { openURL(url) }, label: {
                 Image(systemName: "link.circle.fill")
                     .font(.title)
-            }
+            })
             .buttonStyle(.plain)
             .contextMenu(menuItems: {
                 CopyReleaseNoteButton(url: url)
             })
-            .help("ReleaseNotes.help")
-        } else {
-            EmptyView()
+            .help("View Release Notes")
         }
     }
 }
 
 #Preview {
-  let url = URL(string: "https://developer.apple.com/documentation/xcode-release-notes/xcode-12_3-release-notes/")!
+    let url = URL(string: "https://developer.apple.com/documentation/xcode-release-notes/xcode-12_3-release-notes/")!
 
-  return ReleaseNotesView(url: url)
-    .padding()
+    return ReleaseNotesView(url: url)
+        .padding()
 }

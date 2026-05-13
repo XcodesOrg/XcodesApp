@@ -2,7 +2,7 @@ import Combine
 import SwiftUI
 
 /// A ProgressIndicator that reflects the state of a Progress object.
-/// This functionality is already built in to ProgressView, 
+/// This functionality is already built in to ProgressView,
 /// but this implementation ensures that changes are received on the main thread.
 @available(iOS 14.0, macOS 11.0, *)
 public struct ObservingProgressIndicator: View {
@@ -10,7 +10,7 @@ public struct ObservingProgressIndicator: View {
     let style: NSProgressIndicator.Style
     let showsAdditionalDescription: Bool
     @StateObject private var progress: ProgressWrapper
-    
+
     public init(
         _ progress: Progress,
         controlSize: NSControl.ControlSize,
@@ -22,11 +22,11 @@ public struct ObservingProgressIndicator: View {
         self.style = style
         self.showsAdditionalDescription = showsAdditionalDescription
     }
-    
+
     class ProgressWrapper: ObservableObject {
         var progress: Progress
         var cancellable: AnyCancellable!
-        
+
         init(progress: Progress) {
             self.progress = progress
             cancellable = progress.publisher(for: \.fractionCompleted)
@@ -36,19 +36,19 @@ public struct ObservingProgressIndicator: View {
                 .sink { [weak self] _ in self?.objectWillChange.send() }
         }
     }
-    
+
     public var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             ProgressIndicator(
                 minValue: 0.0,
                 maxValue: 1.0,
-                doubleValue: progress.progress.fractionCompleted, 
+                doubleValue: progress.progress.fractionCompleted,
                 controlSize: controlSize,
                 isIndeterminate: progress.progress.isIndeterminate,
                 style: style
             )
-            .help(String(format: localizeString("DownloadingPercentDescription"), Int((progress.progress.fractionCompleted * 100))))
-            
+            .help("Downloading: \(Int(progress.progress.fractionCompleted * 100))% complete")
+
             if showsAdditionalDescription, progress.progress.xcodesLocalizedDescription.isEmpty == false {
                 Text(progress.progress.xcodesLocalizedDescription)
                     .font(.subheadline.monospacedDigit())
@@ -69,21 +69,21 @@ struct ObservingProgressBar_Previews: PreviewProvider {
                 controlSize: .small,
                 style: .spinning
             )
-            
+
             ObservingProgressIndicator(
                 configure(Progress()) {
                     $0.kind = .file
                     $0.fileOperationKind = .downloading
                     $0.estimatedTimeRemaining = 123
-                    $0.totalUnitCount = 11944848484
-                    $0.completedUnitCount = 848444920
-                    $0.throughput = 9211681
+                    $0.totalUnitCount = 11_944_848_484
+                    $0.completedUnitCount = 848_444_920
+                    $0.throughput = 9_211_681
                 },
                 controlSize: .regular,
                 style: .bar,
                 showsAdditionalDescription: true
             )
-            
+
             ObservingProgressIndicator(
                 configure(Progress()) {
                     $0.kind = .file

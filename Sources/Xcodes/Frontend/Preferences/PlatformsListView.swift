@@ -6,19 +6,19 @@
 //
 
 import Foundation
-import SwiftUI
-import Path
-import XcodesKit
 import OrderedCollections
+import Path
+import SwiftUI
+import XcodesKit
 
 struct PlatformsListView: View {
     @EnvironmentObject var appState: AppState
     @State private var runtimes: OrderedDictionary<DownloadableRuntime.Platform, [DownloadableRuntime]> = [:]
     @State private var selectedRuntime: DownloadableRuntime?
-    
+
     var body: some View {
         List(selection: $selectedRuntime) {
-            Text("PlatformsList.Title")
+            Text("Below are a list of platforms that are installed on this machine. ")
                 .font(.body)
             ForEach(runtimes.elements.sorted(\.key.order), id: \.key) { platform, runtimeList in
                 Section {
@@ -37,7 +37,7 @@ struct PlatformsListView: View {
                         }
                         .frame(height: 30)
                     }
-                   
+
                 } header: {
                     HStack {
                         runtimeList.first!.icon()
@@ -59,7 +59,7 @@ struct PlatformsListView: View {
             loadRuntimes()
         }
     }
-    
+
     func loadRuntimes() {
         let filteredRuntimes = appState.downloadableRuntimes.filter { runtime in
             appState.installedRuntimes.contains { $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate
@@ -67,22 +67,21 @@ struct PlatformsListView: View {
         }
         runtimes = OrderedDictionary(grouping: filteredRuntimes, by: { $0.platform })
     }
-    
+
     func deleteRuntime(runtime: DownloadableRuntime) {
         appState.presentedPreferenceAlert = .deletePlatform(runtime: runtime)
     }
 }
 
-
 #Preview {
     PlatformsListView()
         .environmentObject({ () -> AppState in
-            let a = AppState()
-          
-            a.installedRuntimes = installedRuntimes
-            a.downloadableRuntimes = downloadableRuntimes
-        
-            return a
-          
+            let appState = AppState()
+
+            appState.installedRuntimes = installedRuntimes
+            appState.downloadableRuntimes = downloadableRuntimes
+
+            return appState
+
         }())
 }

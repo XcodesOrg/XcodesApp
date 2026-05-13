@@ -12,7 +12,7 @@ struct UnselectedView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("NoXcodeSelected")
+            Text("No Xcode Selected")
                 .font(.title)
                 .foregroundColor(.secondary)
             Spacer()
@@ -21,6 +21,6 @@ struct UnselectedView: View {
 }
 
 #Preview {
-  UnselectedView()
-    .padding()
+    UnselectedView()
+        .padding()
 }

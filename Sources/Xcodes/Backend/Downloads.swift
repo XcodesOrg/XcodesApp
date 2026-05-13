@@ -6,13 +6,13 @@ struct Downloads: Codable {
     let resultCode: Int
     let resultsString: String?
     let downloads: [Download]?
-    
+
     var hasError: Bool {
-        return resultCode != 0
+        resultCode != 0
     }
 }
 
-// Set to Int64 as ByteCountFormatter uses it.
+/// Set to Int64 as ByteCountFormatter uses it.
 public typealias ByteCount = Int64
 
 public struct Download: Codable {

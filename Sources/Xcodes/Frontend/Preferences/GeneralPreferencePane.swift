@@ -3,27 +3,27 @@ import SwiftUI
 
 struct GeneralPreferencePane: View {
     @EnvironmentObject var appState: AppState
-   
+
     var body: some View {
         VStack(alignment: .leading) {
-            GroupBox(label: Text("AppleID")) {
+            GroupBox(label: Text("AppleID:")) {
                 if appState.authenticationStore.authenticationState == .authenticated {
                     SignedInView(authenticationStore: appState.authenticationStore)
                 } else {
-                    Button("SignIn", action: { self.appState.presentedSheet = .signIn })
+                    Button("Sign In", action: { appState.presentedSheet = .signIn })
                 }
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             Divider()
-            
+
             GroupBox(label: Text("Notifications")) {
                 NotificationsView().environmentObject(appState)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             Divider()
-            
+
             GroupBox(label: Text("Misc")) {
-                Toggle("TerminateAfterLastWindowClosed", isOn: $appState.terminateAfterLastWindowClosed)
+                Toggle("Terminate App after last window is closed", isOn: $appState.terminateAfterLastWindowClosed)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }

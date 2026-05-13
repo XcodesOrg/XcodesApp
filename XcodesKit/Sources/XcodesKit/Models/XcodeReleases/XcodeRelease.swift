@@ -1,5 +1,5 @@
 //
-//  Xcode.swift
+//  XcodeRelease.swift
 //  xcodereleases
 //
 //  Created by Xcode Releases on 4/3/18.
@@ -17,17 +17,26 @@ public struct XcodeRelease: Codable {
     public let compilers: Compilers?
     public let links: Links?
     public let checksums: Checksums?
-    
+
     public var architectures: [Architecture]? {
-        return links.flatMap { $0.download?.architectures }
+        links.flatMap { $0.download?.architectures }
     }
-    
-    public init(name: String = "Xcode", version: XcodeVersion, date: (Int, Int, Int), requires: String, sdks: SDKs? = nil, compilers: Compilers? = nil, links: Links? = nil, checksums: Checksums? = nil) {
+
+    public init(
+        name: String = "Xcode",
+        version: XcodeVersion,
+        date: YMD,
+        requires: String,
+        sdks: SDKs? = nil,
+        compilers: Compilers? = nil,
+        links: Links? = nil,
+        checksums: Checksums? = nil
+    ) {
         self.name = name
-        self.version = version;
-        self.date = YMD(date);
-        self.requires = requires;
-        self.sdks = sdks;
+        self.version = version
+        self.date = date
+        self.requires = requires
+        self.sdks = sdks
         self.compilers = compilers
         self.links = links
         self.checksums = checksums

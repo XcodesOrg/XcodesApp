@@ -1,7 +1,6 @@
 import AppleAPI
-import XCTest
-
 @testable import Xcodes
+import XCTest
 
 @MainActor
 final class AuthenticationStoreTests: XCTestCase {
@@ -16,17 +15,21 @@ final class AuthenticationStoreTests: XCTestCase {
             return try signInResult.get()
         }
 
-        func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) async throws -> AuthenticationState {
+        func requestSMS(
+            to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber,
+            authOptions: AuthOptionsResponse,
+            sessionData: AppleSessionData
+        ) async throws -> AuthenticationState {
             .waitingForSecondFactor(.smsSent(trustedPhoneNumber), authOptions, sessionData)
         }
 
-        func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) async throws -> AuthenticationState {
+        func submitSecurityCode(_: SecurityCode, sessionData _: AppleSessionData) async throws -> AuthenticationState {
             .authenticated
         }
     }
 
     override func setUpWithError() throws {
-        Current = .mock
+        current = .mock
     }
 
     func testSignInStoresCredentialsAndUpdatesAuthenticationState() async throws {
@@ -34,12 +37,12 @@ final class AuthenticationStoreTests: XCTestCase {
         var storedUsername: String?
         var storedPassword: String?
 
-        Current.defaults.set = { value, key in
+        current.defaults.set = { value, key in
             if key == "username" {
                 storedUsername = value as? String
             }
         }
-        Current.keychain.set = { password, username in
+        current.keychain.set = { password, username in
             storedPassword = "\(username):\(password)"
         }
 
@@ -62,13 +65,13 @@ final class AuthenticationStoreTests: XCTestCase {
         var removedKeychainAccount: String?
         var removedDefaultsKey: String?
 
-        Current.defaults.string = { key in
+        current.defaults.string = { key in
             key == "username" ? "user@icloud.com" : nil
         }
-        Current.defaults.removeObject = { key in
+        current.defaults.removeObject = { key in
             removedDefaultsKey = key
         }
-        Current.keychain.remove = { username in
+        current.keychain.remove = { username in
             removedKeychainAccount = username
         }
 

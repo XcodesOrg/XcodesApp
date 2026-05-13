@@ -20,13 +20,13 @@ struct CornerRadiusModifier: ViewModifier {
 
 extension View {
     func xcodesBackground() -> some View {
-        self.modifier(
+        modifier(
             CornerRadiusModifier()
         )
     }
 }
 
-struct Previews_CornerRadius_Previews: PreviewProvider {
+struct CornerRadiusPreviews: PreviewProvider {
     static var previews: some View {
         HStack {
             Text(verbatim: "XCODES RULES!")

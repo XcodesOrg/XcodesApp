@@ -10,18 +10,20 @@ import SwiftUI
 
 struct CompatibilityView: View {
     @EnvironmentObject var appState: AppState
-    
+
     let requiredMacOSVersion: String?
 
     var body: some View {
-        if let requiredMacOSVersion = requiredMacOSVersion {
-            HStack(alignment: .top){
+        if let requiredMacOSVersion {
+            HStack(alignment: .top) {
                 VStack(alignment: .leading) {
                     Text("Compatibility")
                         .font(.headline)
-                    Text(String(format: localizeString("MacOSRequirement"), requiredMacOSVersion))
+                    Text("Requires macOS \(requiredMacOSVersion) or later")
                         .font(.subheadline)
-                        .foregroundColor(appState.hasMinSupportedOS(requiredMacOSVersion: requiredMacOSVersion) ? .red : .primary)
+                        .foregroundColor(appState.hasMinSupportedOS(requiredMacOSVersion: requiredMacOSVersion)
+                            ? .red
+                            : .primary)
                 }
                 Spacer()
                 if appState.hasMinSupportedOS(requiredMacOSVersion: requiredMacOSVersion) {
@@ -30,14 +32,12 @@ struct CompatibilityView: View {
                 }
             }
             .xcodesBackground()
-        } else {
-            EmptyView()
         }
     }
 }
 
 #Preview {
-  CompatibilityView(requiredMacOSVersion: "10.15.4")
-    .padding()
-    .environmentObject(AppState())
+    CompatibilityView(requiredMacOSVersion: "10.15.4")
+        .padding()
+        .environmentObject(AppState())
 }

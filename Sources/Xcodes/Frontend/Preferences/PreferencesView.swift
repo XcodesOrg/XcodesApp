@@ -4,9 +4,10 @@ struct PreferencesView: View {
     private enum Tabs: Hashable {
         case general, updates, advanced, experiment
     }
+
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var updater: ObservableUpdater
-    
+
     var body: some View {
         TabView {
             GeneralPreferencePane()

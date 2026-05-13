@@ -22,10 +22,14 @@ struct XcodeListViewRow: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .accessibility(label: Text("IdenticalBuilds"))
-                            .accessibility(value: Text(xcode.identicalBuilds.map(\.version.appleDescription).joined(separator: ", ")))
-                            .help("IdenticalBuilds.help")
+                            .accessibility(value: Text(xcode.identicalBuilds.map(\.version.appleDescription)
+                                    .joined(separator: ", ")))
+                            .help(
+                                // swiftlint:disable:next line_length
+                                "Sometimes a prerelease and release version are the exact same build. Xcodes will automatically display these versions together."
+                            )
                     }
-                    
+
                     if xcode.architectures?.isAppleSilicon ?? false {
                         Image(systemName: "m4.button.horizontal")
                             .font(.subheadline)
@@ -95,17 +99,15 @@ struct XcodeListViewRow: View {
             if xcode.selected {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.green)
-                    .help("ActiveVersionDescription")
+                    .help("This is the active version")
             } else {
-                Button(action: { appState.select(xcode: xcode) }) {
+                Button(action: { appState.select(xcode: xcode) }, label: {
                     Image(systemName: "checkmark.circle")
                         .foregroundColor(.secondary)
-                }
+                })
                 .buttonStyle(PlainButtonStyle())
-                .help("MakeActiveVersionDescription")
+                .help("Make this the active version")
             }
-        } else {
-            EmptyView()
         }
     }
 
@@ -116,7 +118,7 @@ struct XcodeListViewRow: View {
             Button("Open") { appState.open(xcode: xcode) }
                 .textCase(.uppercase)
                 .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))
-                .help("OpenDescription")
+                .help("Open this version")
         case .notInstalled:
             InstallButton(xcode: xcode)
                 .textCase(.uppercase)
@@ -135,7 +137,12 @@ struct XcodeListViewRow_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.3.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: true, icon: nil),
+                xcode: Xcode(
+                    version: Version("12.3.0")!,
+                    installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
+                    selected: true,
+                    icon: nil
+                ),
                 selected: false,
                 appState: AppState()
             )
@@ -147,25 +154,48 @@ struct XcodeListViewRow_Previews: PreviewProvider {
             )
 
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.1.0")!, installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) { $0.completedUnitCount = 40 })), selected: false, icon: nil),
+                xcode: Xcode(
+                    version: Version("12.1.0")!,
+                    installState: .installing(.downloading(progress: configure(Progress(totalUnitCount: 100)) {
+                        $0.completedUnitCount = 40
+                    })),
+                    selected: false,
+                    icon: nil
+                ),
                 selected: false,
                 appState: AppState()
             )
 
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.0.0")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                xcode: Xcode(
+                    version: Version("12.0.0")!,
+                    installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
+                    selected: false,
+                    icon: nil
+                ),
                 selected: false,
                 appState: AppState()
             )
 
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.0.0+1234A")!, installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                xcode: Xcode(
+                    version: Version("12.0.0+1234A")!,
+                    installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
+                    selected: false,
+                    icon: nil
+                ),
                 selected: false,
                 appState: AppState()
             )
 
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [XcodeID(version: Version("12.0.0-RC+1234A")!)], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                xcode: Xcode(
+                    version: Version("12.0.0+1234A")!,
+                    identicalBuilds: [XcodeID(version: Version("12.0.0-RC+1234A")!)],
+                    installState: .installed(Path("/Applications/Xcode-12.3.0.app")!),
+                    selected: false,
+                    icon: nil
+                ),
                 selected: false,
                 appState: AppState()
             )

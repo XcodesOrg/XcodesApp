@@ -7,7 +7,11 @@ import XcodesKit
 @MainActor
 protocol AuthenticationClient {
     func signIn(accountName: String, password: String) async throws -> AuthenticationState
-    func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) async throws -> AuthenticationState
+    func requestSMS(
+        to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber,
+        authOptions: AuthOptionsResponse,
+        sessionData: AppleSessionData
+    ) async throws -> AuthenticationState
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) async throws -> AuthenticationState
 }
 
@@ -18,8 +22,16 @@ struct AppleAuthenticationClient: AuthenticationClient {
         try await client.srpLogin(accountName: accountName, password: password)
     }
 
-    func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) async throws -> AuthenticationState {
-        try await client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
+    func requestSMS(
+        to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber,
+        authOptions: AuthOptionsResponse,
+        sessionData: AppleSessionData
+    ) async throws -> AuthenticationState {
+        try await client.requestSMSSecurityCode(
+            to: trustedPhoneNumber,
+            authOptions: authOptions,
+            sessionData: sessionData
+        )
     }
 
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) async throws -> AuthenticationState {
@@ -38,20 +50,21 @@ final class AuthenticationStore {
             onAuthenticationStateChanged?(authenticationState)
         }
     }
+
     var isProcessingAuthRequest = false
     var authError: Error?
 
     @ObservationIgnored nonisolated(unsafe) var onSecondFactorRequired: SecondFactorHandler?
     @ObservationIgnored nonisolated(unsafe) var onAuthenticationStateChanged: AuthenticationStateHandler?
 
-    @ObservationIgnored nonisolated(unsafe) private let client: AuthenticationClient
+    @ObservationIgnored private nonisolated(unsafe) let client: AuthenticationClient
 
     nonisolated init(client: AuthenticationClient = AppleAuthenticationClient()) {
         self.client = client
     }
 
     var savedUsername: String? {
-        Current.defaults.string(forKey: "username")
+        current.defaults.string(forKey: "username")
     }
 
     var hasSavedUsername: Bool {
@@ -59,15 +72,17 @@ final class AuthenticationStore {
     }
 
     func validateADCSession(path: String) async throws {
-        let result = try await Current.network.dataTaskAsync(with: URLRequest.downloadADCAuth(path: path))
-        let httpResponse = result.1 as! HTTPURLResponse
+        let result = try await current.network.dataTaskAsync(with: URLRequest.downloadADCAuth(path: path))
+        guard let httpResponse = result.1 as? HTTPURLResponse else {
+            throw AuthenticationError.invalidSession
+        }
         if httpResponse.statusCode == 401 {
             throw AuthenticationError.notAuthorized
         }
     }
 
     func validateSession() async throws {
-        try await Current.network.validateSessionAsync()
+        try await current.network.validateSessionAsync()
     }
 
     func signInIfNeeded() async throws {
@@ -76,21 +91,21 @@ final class AuthenticationStore {
         } catch {
             guard
                 let username = savedUsername,
-                let password = try? Current.keychain.getString(username)
+                let password = try? current.keychain.getString(username)
             else {
                 throw error
             }
 
             let state = try await signIn(username: username, password: password)
-            try handleTerminalAuthenticationState(state.isTerminal ? state : await waitForTerminalAuthenticationState())
+            try await handleTerminalAuthenticationState(state.isTerminal ? state : waitForTerminalAuthenticationState())
         }
     }
 
     @discardableResult
     func signIn(username: String, password: String) async throws -> AuthenticationState {
         authError = nil
-        try? Current.keychain.set(password, key: username)
-        Current.defaults.set(username, forKey: "username")
+        try? current.keychain.set(password, key: username)
+        current.defaults.set(username, forKey: "username")
 
         return try await runAuthenticationRequest {
             try await client.signIn(accountName: username.lowercased(), password: password)
@@ -107,16 +122,30 @@ final class AuthenticationStore {
         }
     }
 
-    func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
+    func handleTwoFactorOption(
+        _ option: TwoFactorOption,
+        authOptions: AuthOptionsResponse,
+        serviceKey: String,
+        sessionID: String,
+        scnt: String
+    ) {
         let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
         onSecondFactorRequired?(option, authOptions, sessionData)
     }
 
-    func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {
+    func requestSMS(
+        to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber,
+        authOptions: AuthOptionsResponse,
+        sessionData: AppleSessionData
+    ) {
         Task {
             do {
                 _ = try await runAuthenticationRequest {
-                    try await client.requestSMS(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
+                    try await client.requestSMS(
+                        to: trustedPhoneNumber,
+                        authOptions: authOptions,
+                        sessionData: sessionData
+                    )
                 }
             } catch {
                 handleAuthenticationError(error)
@@ -142,11 +171,12 @@ final class AuthenticationStore {
 
     func signOut() {
         clearLoginCredentials()
-        AppleAPI.Current.network.session.configuration.httpCookieStorage?.removeCookies(since: .distantPast)
+        AppleAPI.current.network.session.configuration.httpCookieStorage?.removeCookies(since: .distantPast)
         authenticationState = .unauthenticated
     }
 
-    private func runAuthenticationRequest(_ request: () async throws -> AuthenticationState) async throws -> AuthenticationState {
+    private func runAuthenticationRequest(_ request: () async throws -> AuthenticationState) async throws
+        -> AuthenticationState {
         isProcessingAuthRequest = true
         defer { isProcessingAuthRequest = false }
 
@@ -163,7 +193,13 @@ final class AuthenticationStore {
 
     private func handleAuthenticationState(_ state: AuthenticationState) {
         if case let .waitingForSecondFactor(option, authOptions, sessionData) = state {
-            handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
+            handleTwoFactorOption(
+                option,
+                authOptions: authOptions,
+                serviceKey: sessionData.serviceKey,
+                sessionID: sessionData.sessionID,
+                scnt: sessionData.scnt
+            )
         }
     }
 
@@ -191,9 +227,9 @@ final class AuthenticationStore {
 
     private func clearLoginCredentials() {
         if let username = savedUsername {
-            try? Current.keychain.remove(username)
+            try? current.keychain.remove(username)
         }
-        Current.defaults.removeObject(forKey: "username")
+        current.defaults.removeObject(forKey: "username")
     }
 }
 
@@ -201,9 +237,9 @@ private extension AuthenticationState {
     var isTerminal: Bool {
         switch self {
         case .authenticated, .unauthenticated, .notAppleDeveloper:
-            return true
+            true
         case .waitingForSecondFactor:
-            return false
+            false
         }
     }
 }

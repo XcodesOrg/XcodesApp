@@ -4,25 +4,25 @@ import XcodesKit
 // MARK: - CommandMenu
 
 struct XcodeCommands: Commands {
-    // CommandMenus don't participate in the environment hierarchy, so we need to shuffle AppState along to the individual Commands manually.
+    /// CommandMenus don't participate in the environment hierarchy, so we need to shuffle AppState along to the
+    /// individual Commands manually.
     let appState: AppState
-    
+
     var body: some Commands {
         CommandMenu("Xcode") {
             Group {
-                
                 InstallCommand()
-                
+
                 Divider()
-                
+
                 SelectCommand()
                 OpenCommand()
                 RevealCommand()
                 CopyPathCommand()
                 CreateSymbolicLinkCommand()
-                
+
                 Divider()
-                
+
                 UninstallCommand()
             }
             .environmentObject(appState)
@@ -31,6 +31,7 @@ struct XcodeCommands: Commands {
 }
 
 // MARK: - Buttons
+
 // These are used for both context menus and commands
 
 struct InstallButton: View {
@@ -43,12 +44,12 @@ struct InstallButton: View {
             install()
         } label: {
             Text("Install")
-                .help("InstallDescription")
+                .help("Install this version")
         }
     }
 
     private func install() {
-        guard let xcode = xcode else { return }
+        guard let xcode else { return }
         appState.checkMinVersionAndInstall(id: xcode.id)
     }
 }
@@ -56,17 +57,17 @@ struct InstallButton: View {
 struct CancelInstallButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
-    
+
     var body: some View {
         Button(action: cancelInstall) {
             Label("Cancel", systemImage: "xmark")
         }
-        .help(localizeString("StopInstallation"))
+        .help("Stop installation")
         .buttonStyle(.plain)
     }
-    
+
     private func cancelInstall() {
-        guard let xcode = xcode else { return }
+        guard let xcode else { return }
         appState.presentedAlert = .cancelInstall(xcode: xcode)
     }
 }
@@ -74,16 +75,16 @@ struct CancelInstallButton: View {
 struct CancelRuntimeInstallButton: View {
     @EnvironmentObject var appState: AppState
     let runtime: DownloadableRuntime?
-    
+
     var body: some View {
         Button(action: cancelInstall) {
             Image(systemName: "xmark.circle.fill")
-        }.help(localizeString("StopInstallation"))
+        }.help("Stop installation")
             .buttonStyle(.plain)
     }
-    
+
     private func cancelInstall() {
-        guard let runtime = runtime else { return }
+        guard let runtime else { return }
         appState.presentedAlert = .cancelRuntimeInstall(runtime: runtime)
     }
 }
@@ -91,21 +92,21 @@ struct CancelRuntimeInstallButton: View {
 struct SelectButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
-    
+
     var body: some View {
         Button(action: select) {
             if xcode?.selected == true {
                 Text("Active")
             } else {
-                Text("MakeActive")
+                Text("Make active")
             }
         }
         .disabled(xcode?.selected != false)
         .help("Select")
     }
-    
+
     private func select() {
-        guard let xcode = xcode else { return }
+        guard let xcode else { return }
         appState.select(xcode: xcode)
     }
 }
@@ -113,11 +114,11 @@ struct SelectButton: View {
 struct OpenButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
-    
+
     var openInRosetta: Bool {
         appState.showOpenInRosettaOption && Hardware.isAppleSilicon()
     }
-    
+
     var body: some View {
         if openInRosetta {
             Menu("Open") {
@@ -136,11 +137,10 @@ struct OpenButton: View {
             }
             .help("Open")
         }
-        
     }
-    
+
     private func open() {
-        guard let xcode = xcode else { return }
+        guard let xcode else { return }
         appState.open(xcode: xcode, openInRosetta: openInRosetta)
     }
 }
@@ -148,13 +148,13 @@ struct OpenButton: View {
 struct UninstallButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
-    
+
     var body: some View {
         Button(action: {
             appState.xcodeBeingConfirmedForUninstallation = xcode
-        }) {
+        }, label: {
             Text("Uninstall")
-        }
+        })
         .foregroundColor(.red)
         .help("Uninstall")
     }
@@ -163,16 +163,16 @@ struct UninstallButton: View {
 struct RevealButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
-    
+
     var body: some View {
         Button(action: reveal) {
-            Text("RevealInFinder")
+            Text("Reveal in Finder")
         }
-        .help("RevealInFinder")
+        .help("Reveal in Finder")
     }
-    
+
     private func reveal() {
-        guard let xcode = xcode else { return }
+        guard let xcode else { return }
         appState.reveal(xcode.installedPath)
     }
 }
@@ -180,52 +180,51 @@ struct RevealButton: View {
 struct CopyPathButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
-    
+
     var body: some View {
         Button(action: copyPath) {
-            Text("CopyPath")
+            Text("Copy Path")
         }
-        .help("CopyPath")
+        .help("Copy Path")
     }
-    
+
     private func copyPath() {
-        guard let xcode = xcode else { return }
+        guard let xcode else { return }
         appState.copyPath(xcode: xcode)
     }
 }
 
 struct CopyReleaseNoteButton: View {
-  let url: URL?
-    
-  @EnvironmentObject var appState: AppState
+    let url: URL?
 
-  var body: some View {
-    Button(action: copyReleaseNote) {
-      Text("CopyReleaseNoteURL")
+    @EnvironmentObject var appState: AppState
+
+    var body: some View {
+        Button(action: copyReleaseNote) {
+            Text("Copy URL")
+        }
+        .help("Copy URL")
     }
-    .help("CopyReleaseNoteURL")
-  }
 
-  private func copyReleaseNote() {
-    guard let url = url else { return }
-    appState.copyReleaseNote(from: url)
-  }
+    private func copyReleaseNote() {
+        guard let url else { return }
+        appState.copyReleaseNote(from: url)
+    }
 }
-
 
 struct CreateSymbolicLinkButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
-    
+
     var body: some View {
         Button(action: createSymbolicLink) {
-            Text("CreateSymLink")
+            Text("Create Symlink as Xcode.app")
         }
-        .help("CreateSymLink")
+        .help("Create Symlink as Xcode.app")
     }
-    
+
     private func createSymbolicLink() {
-        guard let xcode = xcode else { return }
+        guard let xcode else { return }
         appState.createSymbolicLink(xcode: xcode)
     }
 }
@@ -233,16 +232,16 @@ struct CreateSymbolicLinkButton: View {
 struct DownloadRuntimeButton: View {
     @EnvironmentObject var appState: AppState
     let runtime: DownloadableRuntime?
-    
+
     var body: some View {
         Button(action: install) {
             Text("Install")
                 .help("Install")
         }
     }
-    
+
     private func install() {
-        guard let runtime = runtime else { return }
+        guard let runtime else { return }
         appState.downloadRuntime(runtime: runtime)
     }
 }
@@ -253,13 +252,13 @@ struct CreateSymbolicBetaLinkButton: View {
 
     var body: some View {
         Button(action: createSymbolicBetaLink) {
-            Text("CreateSymLinkBeta")
+            Text("Create Symlink as Xcode-Beta.app")
         }
-        .help("CreateSymLinkBeta")
+        .help("Create Symlink as Xcode-Beta.app")
     }
 
     private func createSymbolicBetaLink() {
-        guard let xcode = xcode else { return }
+        guard let xcode else { return }
         appState.createSymbolicLink(xcode: xcode, isBeta: true)
     }
 }
@@ -273,7 +272,7 @@ struct InstallCommand: View {
     var body: some View {
         if selectedXcode.unwrapped?.installState.installing == true {
             CancelInstallButton(xcode: selectedXcode.unwrapped)
-                .keyboardShortcut(".", modifiers: [.command])            
+                .keyboardShortcut(".", modifiers: [.command])
         } else {
             InstallButton(xcode: selectedXcode.unwrapped)
                 .keyboardShortcut("i", modifiers: [.command, .option])
@@ -329,7 +328,7 @@ struct CopyPathCommand: View {
 struct UninstallCommand: View {
     @EnvironmentObject var appState: AppState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
-    
+
     var body: some View {
         UninstallButton(xcode: selectedXcode.unwrapped)
             .keyboardShortcut("u", modifiers: [.command, .option])
@@ -340,11 +339,10 @@ struct UninstallCommand: View {
 struct CreateSymbolicLinkCommand: View {
     @EnvironmentObject var appState: AppState
     @FocusedValue(\.selectedXcode) private var selectedXcode: SelectedXcode?
-    
+
     var body: some View {
         CreateSymbolicLinkButton(xcode: selectedXcode.unwrapped)
             .keyboardShortcut("s", modifiers: [.command, .option])
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
-

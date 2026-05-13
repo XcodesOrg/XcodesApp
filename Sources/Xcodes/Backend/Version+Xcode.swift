@@ -15,9 +15,10 @@ public extension Version {
      10.2.1
      */
     init?(xcodeVersion: String, buildMetadataIdentifier: String? = nil) {
-        let nsrange = NSRange(xcodeVersion.startIndex..<xcodeVersion.endIndex, in: xcodeVersion)
+        let nsrange = NSRange(xcodeVersion.startIndex ..< xcodeVersion.endIndex, in: xcodeVersion)
         // https://regex101.com/r/dLLvsz/1
-        let pattern = "^(Xcode )?(?<major>\\d+)\\.?(?<minor>\\d?)\\.?(?<patch>\\d?) ?(?<prereleaseType>[a-zA-Z ]+)? ?(?<prereleaseVersion>\\d?)"
+        let pattern = "^(Xcode )?(?<major>\\d+)\\.?(?<minor>\\d?)\\.?(?<patch>\\d?) ?"
+            + "(?<prereleaseType>[a-zA-Z ]+)? ?(?<prereleaseVersion>\\d?)"
 
         guard
             let regex = try? NSRegularExpression(pattern: pattern, options: .caseInsensitive),
@@ -30,12 +31,22 @@ public extension Version {
 
         let minor = Int(minorString) ?? 0
         let patch = Int(patchString) ?? 0
-        let prereleaseIdentifiers = [match.groupNamed("prereleaseType", in: xcodeVersion), 
-                                     match.groupNamed("prereleaseVersion", in: xcodeVersion)]
-                                        .compactMap { $0?.lowercased().trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "-") }
-                                        .filter { !$0.isEmpty }
+        let prereleaseIdentifiers = [
+            match.groupNamed("prereleaseType", in: xcodeVersion),
+            match.groupNamed("prereleaseVersion", in: xcodeVersion)
+        ]
+        .compactMap {
+            $0?.lowercased().trimmingCharacters(in: .whitespaces).replacingOccurrences(of: " ", with: "-")
+        }
+        .filter { !$0.isEmpty }
 
-        self = Version(major: major, minor: minor, patch: patch, prereleaseIdentifiers: prereleaseIdentifiers, buildMetadataIdentifiers: [buildMetadataIdentifier].compactMap { $0 })
+        self = Version(
+            major: major,
+            minor: minor,
+            patch: patch,
+            prereleaseIdentifiers: prereleaseIdentifiers,
+            buildMetadataIdentifiers: [buildMetadataIdentifier].compactMap { $0 }
+        )
     }
 
     /// The intent here is to match Apple's marketing version

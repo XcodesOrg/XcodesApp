@@ -1,18 +1,18 @@
 import AppKit
 import Foundation
-import Version
 import Path
+import Version
 import XcodesKit
 
 public struct XcodeID: Codable, Hashable, Identifiable, @unchecked Sendable {
     public let version: Version
     public let architectures: [Architecture]?
-    
+
     public var id: String {
-        let architectures = architectures?.map { $0.rawValue}.joined() ?? ""
+        let architectures = architectures?.map(\.rawValue).joined() ?? ""
         return version.description + architectures
     }
-    
+
     public init(version: Version, architectures: [Architecture]? = nil) {
         self.version = version
         self.architectures = architectures
@@ -21,8 +21,9 @@ public struct XcodeID: Codable, Hashable, Identifiable, @unchecked Sendable {
 
 struct Xcode: Identifiable, CustomStringConvertible {
     var version: Version {
-        return id.version
+        id.version
     }
+
     /// Other Xcode versions that have the same build identifier
     let identicalBuilds: [XcodeID]
     var installState: XcodeInstallState
@@ -36,7 +37,7 @@ struct Xcode: Identifiable, CustomStringConvertible {
     let downloadFileSize: Int64?
     let architectures: [Architecture]?
     let id: XcodeID
-    
+
     init(
         version: Version,
         identicalBuilds: [XcodeID] = [],
@@ -62,28 +63,27 @@ struct Xcode: Identifiable, CustomStringConvertible {
         self.compilers = compilers
         self.downloadFileSize = downloadFileSize
         self.architectures = architectures
-        self.id = XcodeID(version: version, architectures: architectures)
+        id = XcodeID(version: version, architectures: architectures)
     }
-    
+
     var description: String {
         version.appleDescription
     }
-    
+
     var downloadFileSizeString: String? {
-        if let downloadFileSize = downloadFileSize {
-            return ByteCountFormatter.string(fromByteCount: downloadFileSize, countStyle: .file)
+        if let downloadFileSize {
+            ByteCountFormatter.string(fromByteCount: downloadFileSize, countStyle: .file)
         } else {
-            return nil
+            nil
         }
     }
-    
+
     var installedPath: Path? {
         switch installState {
-            case .installed(let path):
-                return path
-            default:
-                return nil
+        case let .installed(path):
+            path
+        default:
+            nil
         }
     }
-    
 }

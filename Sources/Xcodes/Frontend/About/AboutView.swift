@@ -3,28 +3,28 @@ import SwiftUI
 struct AboutView: View {
     let showAcknowledgementsWindow: @MainActor @Sendable () -> Void
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
-    
+
     var body: some View {
         HStack {
             Image(nsImage: NSApp.applicationIconImage)
-            
+
             VStack(alignment: .leading) {
                 Text(Bundle.main.bundleName!)
                     .font(.largeTitle)
-                
-                Text(String(format: localizeString("VersionWithBuild"), Bundle.main.shortVersion!, Bundle.main.version!))
-                
+
+                Text("Version \(Bundle.main.shortVersion!) (\(Bundle.main.version!))")
+
                 HStack(spacing: 32) {
                     Button(action: {
                         openURL(URL(string: "https://github.com/RobotsAndPencils/XcodesApp/")!)
-                    }) {
+                    }, label: {
                         Label("GithubRepo", systemImage: "link")
-                    }
+                    })
                     .buttonStyle(LinkButtonStyle())
-                    
-                    Button(action: { showAcknowledgementsWindow() }) {
+
+                    Button(action: { showAcknowledgementsWindow() }, label: {
                         Label("Acknowledgements", systemImage: "doc")
-                    }
+                    })
                     .buttonStyle(LinkButtonStyle())
                 }
                 Color.clear
@@ -33,16 +33,16 @@ struct AboutView: View {
                 HStack(spacing: 32) {
                     Button(action: {
                         openURL(URL(string: "https://github.com/saagarjha/unxip/")!)
-                    }) {
+                    }, label: {
                         Label("GithubRepo", systemImage: "link")
-                    }
+                    })
                     .buttonStyle(LinkButtonStyle())
-                    
+
                     Button(action: {
                         openURL(URL(string: "https://github.com/saagarjha/unxip/blob/main/LICENSE")!)
-                    }) {
+                    }, label: {
                         Label("License", systemImage: "link")
-                    }
+                    })
                     .buttonStyle(LinkButtonStyle())
                 }
                 HStack {
@@ -50,12 +50,12 @@ struct AboutView: View {
                         .font(.footnote)
                     Button(action: {
                         openURL(URL(string: "https://opencollective.com/xcodesapp")!)
-                    }) {
+                    }, label: {
                         HStack {
                             Image(systemName: "heart.circle")
                             Text("Support.Xcodes")
                         }
-                    }
+                    })
                 }
             }
         }

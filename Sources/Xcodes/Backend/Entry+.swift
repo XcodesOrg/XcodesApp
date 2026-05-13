@@ -4,9 +4,10 @@ import Path
 extension Path {
     static func isAppBundle(path: Path) -> Bool {
         path.isDirectory &&
-        path.extension == "app" &&
-        !path.isSymlink
+            path.extension == "app" &&
+            !path.isSymlink
     }
+
     static func infoPlist(path: Path) -> InfoPlist? {
         let infoPlistPath = path.join("Contents").join("Info.plist")
         guard
@@ -16,7 +17,7 @@ extension Path {
 
         return infoPlist
     }
-    
+
     var isAppBundle: Bool {
         Path.isAppBundle(path: self)
     }

@@ -1,6 +1,6 @@
 //
 //  CoreSimulatorImage.swift
-//  
+//
 //
 //  Created by Matt Kiazyk on 2023-01-08.
 //
@@ -9,7 +9,7 @@ import Foundation
 
 public struct CoreSimulatorPlist: Decodable, Sendable {
     public let images: [CoreSimulatorImage]
-    
+
     public init(images: [CoreSimulatorImage]) {
         self.images = images
     }
@@ -17,19 +17,19 @@ public struct CoreSimulatorPlist: Decodable, Sendable {
 
 public struct CoreSimulatorImage: Decodable, Identifiable, Equatable, Sendable {
     public var id: String {
-        return uuid
+        uuid
     }
-    
+
     public let uuid: String
     public let path: [String: String]
     public let runtimeInfo: CoreSimulatorRuntimeInfo
-    
-    public init(uuid: String, path: [String : String], runtimeInfo: CoreSimulatorRuntimeInfo) {
+
+    public init(uuid: String, path: [String: String], runtimeInfo: CoreSimulatorRuntimeInfo) {
         self.uuid = uuid
         self.path = path
         self.runtimeInfo = runtimeInfo
     }
-    
+
     public static func == (lhs: CoreSimulatorImage, rhs: CoreSimulatorImage) -> Bool {
         lhs.id == rhs.id
     }
@@ -38,7 +38,7 @@ public struct CoreSimulatorImage: Decodable, Identifiable, Equatable, Sendable {
 public struct CoreSimulatorRuntimeInfo: Decodable, Sendable {
     public let build: String
     public let supportedArchitectures: [Architecture]?
-    
+
     public init(build: String, supportedArchitectures: [Architecture]? = nil) {
         self.build = build
         self.supportedArchitectures = supportedArchitectures

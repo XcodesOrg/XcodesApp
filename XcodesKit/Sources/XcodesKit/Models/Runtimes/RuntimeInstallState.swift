@@ -15,20 +15,22 @@ public enum RuntimeInstallState: Equatable, Hashable, @unchecked Sendable {
 
     var notInstalled: Bool {
         switch self {
-        case .notInstalled: return true
-        default: return false
+        case .notInstalled: true
+        default: false
         }
     }
+
     var installing: Bool {
         switch self {
-        case .installing: return true
-        default: return false
+        case .installing: true
+        default: false
         }
     }
+
     var installed: Bool {
         switch self {
-        case .installed: return true
-        default: return false
+        case .installed: true
+        default: false
         }
     }
 }

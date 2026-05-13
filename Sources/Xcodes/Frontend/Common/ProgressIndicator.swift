@@ -1,29 +1,29 @@
-import SwiftUI
 import AppKit
+import SwiftUI
 
 /// You probably want ProgressView unless you need more of NSProgressIndicator's API, which this exposes.
 struct ProgressIndicator: NSViewRepresentable {
     typealias NSViewType = NSProgressIndicator
-    
+
     let minValue: Double
     let maxValue: Double
     let doubleValue: Double
     let controlSize: NSControl.ControlSize
     let isIndeterminate: Bool
     let style: NSProgressIndicator.Style
-    
-    func makeNSView(context: Context) -> NSViewType {
+
+    func makeNSView(context _: Context) -> NSViewType {
         NSProgressIndicator()
     }
 
-    func updateNSView(_ nsView: NSViewType, context: Context) {
+    func updateNSView(_ nsView: NSViewType, context _: Context) {
         nsView.minValue = minValue
         nsView.maxValue = maxValue
         nsView.doubleValue = doubleValue
         nsView.controlSize = controlSize
         nsView.isIndeterminate = isIndeterminate
         nsView.usesThreadedAnimation = true
-        
+
         nsView.style = style
         nsView.startAnimation(nil)
     }

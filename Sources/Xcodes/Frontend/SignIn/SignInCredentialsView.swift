@@ -4,20 +4,20 @@ struct SignInCredentialsView: View {
     private enum FocusedField {
         case username, password
     }
-    
+
     @Bindable var authenticationStore: AuthenticationStore
     let cancel: () -> Void
     @State private var username: String = ""
     @State private var password: String = ""
     @FocusState private var focusedField: FocusedField?
-    
+
     var body: some View {
         VStack(alignment: .leading) {
-            Text("SignInWithApple")
+            Text("Sign in with your Apple ID.")
                 .bold()
                 .padding(.vertical)
             HStack {
-                Text("AppleID")
+                Text("AppleID:")
                     .frame(minWidth: 100, alignment: .trailing)
                 TextField(text: $username) {
                     Text(verbatim: "example@icloud.com")
@@ -25,7 +25,7 @@ struct SignInCredentialsView: View {
                 .focused($focusedField, equals: .username)
             }
             HStack {
-                Text("Password")
+                Text("Password:")
                     .frame(minWidth: 100, alignment: .trailing)
                 SecureField("Required", text: $password)
                     .focused($focusedField, equals: .password)
@@ -39,14 +39,14 @@ struct SignInCredentialsView: View {
                         .foregroundColor(.red)
                 }
             }
-            
+
             HStack {
                 Spacer()
                 Button("Cancel") {
                     authenticationStore.authError = nil
                     cancel()
                 }
-                    .keyboardShortcut(.cancelAction)
+                .keyboardShortcut(.cancelAction)
                 ProgressButton(
                     isInProgress: authenticationStore.isProcessingAuthRequest,
                     action: { authenticationStore.signIn(username: username, password: password) },

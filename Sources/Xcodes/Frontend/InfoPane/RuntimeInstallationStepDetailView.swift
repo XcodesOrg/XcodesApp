@@ -11,11 +11,11 @@ import XcodesKit
 
 struct RuntimeInstallationStepDetailView: View {
     let installationStep: RuntimeInstallationStep
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text(String(format: localizeString("InstallationStepDescription"), installationStep.stepNumber, installationStep.stepCount, installationStep.message))
-            
+            Text("Step \(installationStep.stepNumber) of \(installationStep.stepCount): \(installationStep.message)")
+
             switch installationStep {
             case let .downloading(progress):
                 ObservingProgressIndicator(
@@ -24,7 +24,7 @@ struct RuntimeInstallationStepDetailView: View {
                     style: .bar,
                     showsAdditionalDescription: true
                 )
-                
+
             case .installing, .trashingArchive:
                 ObservingProgressIndicator(
                     Progress(),
@@ -40,18 +40,20 @@ struct RuntimeInstallationStepDetailView: View {
 #Preview("Downloading") {
     RuntimeInstallationStepDetailView(
         installationStep: .downloading(
-        progress: configure(Progress()) {
-            $0.kind = .file
-            $0.fileOperationKind = .downloading
-            $0.estimatedTimeRemaining = 123
-            $0.totalUnitCount = 11944848484
-            $0.completedUnitCount = 848444920
-            $0.throughput = 9211681
-        }
-    ))
+            progress: configure(Progress()) {
+                $0.kind = .file
+                $0.fileOperationKind = .downloading
+                $0.estimatedTimeRemaining = 123
+                $0.totalUnitCount = 11_944_848_484
+                $0.completedUnitCount = 848_444_920
+                $0.throughput = 9_211_681
+            }
+        )
+    )
 }
+
 #Preview("Installing") {
     RuntimeInstallationStepDetailView(
         installationStep: .installing
-        )
+    )
 }

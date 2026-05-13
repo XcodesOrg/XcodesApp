@@ -11,26 +11,26 @@ enum XcodesAlert: Identifiable {
 
     var id: Int {
         switch self {
-        case .cancelInstall: return 1
-        case .privilegedHelper: return 2
-        case .generic: return 3
-        case .checkMinSupportedVersion: return 4
-        case .cancelRuntimeInstall: return 5
-        case .unauthenticated: return 6
+        case .cancelInstall: 1
+        case .privilegedHelper: 2
+        case .generic: 3
+        case .checkMinSupportedVersion: 4
+        case .cancelRuntimeInstall: 5
+        case .unauthenticated: 6
         }
     }
 }
 
-// Splitting out alerts that are shown on the preference screen as by default we are showing on the MainWindow()
-// and users awkwardly switch screens, sometimes losing the preference screen
+/// Splitting out alerts that are shown on the preference screen as by default we are showing on the MainWindow()
+/// and users awkwardly switch screens, sometimes losing the preference screen
 enum XcodesPreferencesAlert: Identifiable {
     case deletePlatform(runtime: DownloadableRuntime)
     case generic(title: String, message: String)
-    
+
     var id: Int {
         switch self {
-        case .deletePlatform: return 1
-        case .generic: return 2
+        case .deletePlatform: 1
+        case .generic: 2
         }
     }
 }

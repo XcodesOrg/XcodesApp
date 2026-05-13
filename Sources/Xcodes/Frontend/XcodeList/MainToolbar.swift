@@ -21,30 +21,31 @@ struct MainToolbarModifier: ViewModifier {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }
             .keyboardShortcut(KeyEquivalent("r"))
-            .help("RefreshDescription")
-            
+            .help("Refresh Xcode List")
+
             Spacer()
-            
+
             let isFiltering = isInstalledOnly || category != .all || architectures != .universal
             Menu("Filter", systemImage: "line.horizontal.3.decrease.circle") {
                 Section {
-                    Toggle("Installed Only", systemImage: "arrow.down.app", isOn: $isInstalledOnly)            .labelStyle(.titleAndIcon)
+                    Toggle("Installed Only", systemImage: "arrow.down.app", isOn: $isInstalledOnly)
+                        .labelStyle(.titleAndIcon)
                 }
-                .help("FilterInstalledDescription")
-                
+                .help("Filter installed versions")
+
                 Section {
                     Picker("Category", selection: $category) {
                         Label("All", systemImage: "line.horizontal.3.decrease.circle")
                             .tag(XcodeListCategory.all)
-                        Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        Label("Release only", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .tag(XcodeListCategory.release)
-                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                        Label("Beta only", systemImage: "line.horizontal.3.decrease.circle.fill")
                             .tag(XcodeListCategory.beta)
                     }
                 }
-                .help("FilterAvailableDescription")
+                .help("Filter available versions")
                 .disabled(category.isManaged)
-                
+
                 Section {
                     Picker("Architecture", selection: $architectures) {
                         Label("Universal", systemImage: "cpu.fill")

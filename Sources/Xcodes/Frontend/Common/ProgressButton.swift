@@ -11,13 +11,7 @@ import SwiftUI
 struct ProgressButton<Label: View>: View {
     let isInProgress: Bool
     let action: () -> Void
-    let label: () -> Label
-
-    init(isInProgress: Bool, action: @escaping () -> Void, @ViewBuilder label: @escaping () -> Label) {
-        self.isInProgress = isInProgress
-        self.action = action
-        self.label = label
-    }
+    @ViewBuilder let label: () -> Label
 
     var body: some View {
         Button(action: action) {

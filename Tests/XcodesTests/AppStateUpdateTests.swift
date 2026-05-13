@@ -1,271 +1,374 @@
-import Path
-import CryptoKit
-import Version
-import XcodesKit
-@testable import Xcodes
-import XCTest
-import CommonCrypto
+// swiftlint:disable:next blanket_disable_command
+// swiftlint:disable file_length function_body_length line_length type_body_length
 import BigNum
+import CommonCrypto
+import Crypto
+import Path
 import SRP
+import Version
+@testable import Xcodes
+import XcodesKit
+import XCTest
 
 class AppStateUpdateTests: XCTestCase {
     var subject: AppState!
-    
+
     override func setUpWithError() throws {
-        Current = .mock
+        current = .mock
         subject = AppState()
     }
 
     func testDoesNotReplaceInstallState() throws {
-        subject.allXcodes = [
-            Xcode(version: Version("0.0.0")!, installState: .installing(.unarchiving), selected: false, icon: nil)
+        subject.allXcodes = try [
+            Xcode(
+                version: XCTUnwrap(Version("0.0.0")),
+                installState: .installing(.unarchiving),
+                selected: false,
+                icon: nil
+            )
         ]
-        
-        subject.updateAllXcodes(
+
+        try subject.updateAllXcodes(
             availableXcodes: [
-                AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
-            ], 
+                AvailableXcode(
+                    version: XCTUnwrap(Version("0.0.0")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                )
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
+
         XCTAssertEqual(subject.allXcodes[0].installState, .installing(.unarchiving))
     }
-    
+
     func testRemovesUninstalledVersion() throws {
-        subject.allXcodes = [
-            Xcode(version: Version("0.0.0")!, installState: .installed(Path("/Applications/Xcode-0.0.0.app")!), selected: true, icon: NSImage(systemSymbolName: "app.fill", accessibilityDescription: nil))
+        subject.allXcodes = try [
+            Xcode(
+                version: XCTUnwrap(Version("0.0.0")),
+                installState: .installed(XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))),
+                selected: true,
+                icon: NSImage(systemSymbolName: "app.fill", accessibilityDescription: nil)
+            )
         ]
-        
-        subject.updateAllXcodes(
+
+        try subject.updateAllXcodes(
             availableXcodes: [
-                AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
-            ], 
+                AvailableXcode(
+                    version: XCTUnwrap(Version("0.0.0")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                )
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
+
         XCTAssertEqual(subject.allXcodes[0].installState, .notInstalled)
     }
-    
+
     func testDeterminesIfInstalledByBuildMetadataAlone() throws {
-        Current.defaults.string = { key in
+        current.defaults.string = { key in
             if key == "dataSource" {
-                return "apple" 
+                "apple"
             } else {
-                return nil
-            }
-        }
-        
-        subject.allXcodes = [
-        ]
-        
-        subject.updateAllXcodes(
-            availableXcodes: [
-                // Note "GM" prerelease identifier
-                AvailableXcode(version: Version("0.0.0-GM+ABC123")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
-            ], 
-            installedXcodes: [
-                InstalledXcode(path: Path("/Applications/Xcode-0.0.0.app")!)!
-            ], 
-            selectedXcodePath: nil
-        )
-        
-        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123")!) 
-        XCTAssertEqual(subject.allXcodes[0].installState, .installed(Path("/Applications/Xcode-0.0.0.app")!))
-        XCTAssertEqual(subject.allXcodes[0].selected, false)
-    }
-    
-    func testAdjustedVersionsAreUsedToLookupAvailableXcode() throws {
-        Current.defaults.string = { key in
-            if key == "dataSource" {
-                return "apple" 
-            } else {
-                return nil
+                nil
             }
         }
 
         subject.allXcodes = [
         ]
-        
-        subject.updateAllXcodes(
+
+        try subject.updateAllXcodes(
             availableXcodes: [
                 // Note "GM" prerelease identifier
-                AvailableXcode(version: Version("0.0.0-GM+ABC123")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil, sdks: .init(iOS: .init("14.3")))
-            ], 
+                AvailableXcode(
+                    version: XCTUnwrap(Version("0.0.0-GM+ABC123")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                )
+            ],
             installedXcodes: [
-                InstalledXcode(path: Path("/Applications/Xcode-0.0.0.app")!)!
-            ], 
+                XCTUnwrap(try InstalledXcode(path: XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))))
+            ],
             selectedXcodePath: nil
         )
-        
-        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123")!) 
-        XCTAssertEqual(subject.allXcodes[0].installState, .installed(Path("/Applications/Xcode-0.0.0.app")!))
+
+        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123"))
+        XCTAssertEqual(
+            subject.allXcodes[0].installState,
+            try .installed(XCTUnwrap(Path("/Applications/Xcode-0.0.0.app")))
+        )
+        XCTAssertEqual(subject.allXcodes[0].selected, false)
+    }
+
+    func testAdjustedVersionsAreUsedToLookupAvailableXcode() throws {
+        current.defaults.string = { key in
+            if key == "dataSource" {
+                "apple"
+            } else {
+                nil
+            }
+        }
+
+        subject.allXcodes = [
+        ]
+
+        try subject.updateAllXcodes(
+            availableXcodes: [
+                // Note "GM" prerelease identifier
+                AvailableXcode(
+                    version: XCTUnwrap(Version("0.0.0-GM+ABC123")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil,
+                    sdks: .init(iOS: .init("14.3"))
+                )
+            ],
+            installedXcodes: [
+                XCTUnwrap(try InstalledXcode(path: XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))))
+            ],
+            selectedXcodePath: nil
+        )
+
+        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123"))
+        XCTAssertEqual(
+            subject.allXcodes[0].installState,
+            try .installed(XCTUnwrap(Path("/Applications/Xcode-0.0.0.app")))
+        )
         XCTAssertEqual(subject.allXcodes[0].selected, false)
         // XCModel types aren't equatable, so just check for non-nil for now
         XCTAssertNotNil(subject.allXcodes[0].sdks)
     }
 
-    func testAppendingInstalledVersionThatIsNotAvailable() {
+    func testAppendingInstalledVersionThatIsNotAvailable() throws {
         subject.allXcodes = [
         ]
-        
-        subject.updateAllXcodes(
+
+        try subject.updateAllXcodes(
             availableXcodes: [
-                AvailableXcode(version: Version("1.2.3")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil, sdks: .init(iOS: .init("14.3")))
-            ], 
+                AvailableXcode(
+                    version: XCTUnwrap(Version("1.2.3")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil,
+                    sdks: .init(iOS: .init("14.3"))
+                )
+            ],
             installedXcodes: [
                 // There's a version installed which for some reason isn't listed online
-                InstalledXcode(path: Path("/Applications/Xcode-0.0.0.app")!)!
-            ], 
+                XCTUnwrap(try InstalledXcode(path: XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))))
+            ],
             selectedXcodePath: nil
         )
-        
-        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("1.2.3")!, Version("0.0.0+ABC123")!]) 
+
+        XCTAssertEqual(
+            subject.allXcodes.map(\.version),
+            try [XCTUnwrap(Version("1.2.3")), XCTUnwrap(Version("0.0.0+ABC123"))]
+        )
     }
-    
-    
-    func testIdenticalBuilds_KeepsReleaseVersion_WithNeitherInstalled() {
-        Current.defaults.string = { key in
+
+    func testIdenticalBuilds_KeepsReleaseVersion_WithNeitherInstalled() throws {
+        current.defaults.string = { key in
             if key == "dataSource" {
-                return "xcodeReleases" 
+                "xcodeReleases"
             } else {
-                return nil
+                nil
             }
         }
 
         subject.allXcodes = [
         ]
-        
-        subject.updateAllXcodes(
+
+        try subject.updateAllXcodes(
             availableXcodes: [
-                AvailableXcode(version: Version("12.4.0+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-                AvailableXcode(version: Version("12.4.0-RC+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-            ], 
+                AvailableXcode(
+                    version: XCTUnwrap(Version("12.4.0+12D4e")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                ),
+                AvailableXcode(
+                    version: XCTUnwrap(Version("12.4.0-RC+12D4e")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                )
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
-        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
-        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[XcodeID(version: Version("12.4.0+12D4e")!), XcodeID(version: Version("12.4.0-RC+12D4e")!)]])
+
+        XCTAssertEqual(subject.allXcodes.map(\.version), try [XCTUnwrap(Version("12.4.0+12D4e"))])
+        XCTAssertEqual(
+            subject.allXcodes.map(\.identicalBuilds),
+            try [[
+                XcodeID(version: XCTUnwrap(Version("12.4.0+12D4e"))),
+                XcodeID(version: XCTUnwrap(Version("12.4.0-RC+12D4e")))
+            ]]
+        )
     }
-    
-    func testIdenticalBuilds_DoNotMergeReleaseVersions() {
-        Current.defaults.string = { key in
+
+    func testIdenticalBuilds_DoNotMergeReleaseVersions() throws {
+        current.defaults.string = { key in
             if key == "dataSource" {
-                return "xcodeReleases" 
+                "xcodeReleases"
             } else {
-                return nil
+                nil
             }
         }
 
         subject.allXcodes = [
         ]
-        
-        subject.updateAllXcodes(
+
+        try subject.updateAllXcodes(
             availableXcodes: [
-                AvailableXcode(version: Version("3.2.3+10M2262")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-                AvailableXcode(version: Version("3.2.3+10M2262")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-            ], 
+                AvailableXcode(
+                    version: XCTUnwrap(Version("3.2.3+10M2262")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                ),
+                AvailableXcode(
+                    version: XCTUnwrap(Version("3.2.3+10M2262")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                )
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
-        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("3.2.3+10M2262")!, Version("3.2.3+10M2262")!])
+
+        XCTAssertEqual(
+            subject.allXcodes.map(\.version),
+            try [XCTUnwrap(Version("3.2.3+10M2262")), XCTUnwrap(Version("3.2.3+10M2262"))]
+        )
         XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[], []])
     }
-    
-    func testIdenticalBuilds_KeepsReleaseVersion_WithPrereleaseInstalled() {
-        Current.defaults.string = { key in
+
+    func testIdenticalBuilds_KeepsReleaseVersion_WithPrereleaseInstalled() throws {
+        current.defaults.string = { key in
             if key == "dataSource" {
-                return "xcodeReleases" 
+                "xcodeReleases"
             } else {
-                return nil
+                nil
             }
         }
 
         subject.allXcodes = [
         ]
-        
-        Current.files.contentsAtPath = { path in
+
+        current.files.contentsAtPath = { path in
             if path.contains("Info.plist") {
-                return """
-                    <?xml version="1.0" encoding="UTF-8"?>
-                    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-                    <plist version="1.0">
-                    <dict>
-                        <key>CFBundleIdentifier</key>
-                        <string>com.apple.dt.Xcode</string>
-                        <key>CFBundleShortVersionString</key>
-                        <string>12.4.0</string>
-                    </dict>
-                    </plist>
-                    """.data(using: .utf8)
-            }
-            else if path.contains("version.plist") {
-                return """
-                    <?xml version="1.0" encoding="UTF-8"?>
-                    <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-                    <plist version="1.0">
-                    <dict>
-                        <key>ProductBuildVersion</key>
-                        <string>12D4e</string>
-                    </dict>
-                    </plist>
-                    """.data(using: .utf8)
-            }
-            else {
-                return nil
+                Data("""
+                <?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                <plist version="1.0">
+                <dict>
+                    <key>CFBundleIdentifier</key>
+                    <string>com.apple.dt.Xcode</string>
+                    <key>CFBundleShortVersionString</key>
+                    <string>12.4.0</string>
+                </dict>
+                </plist>
+                """.utf8)
+            } else if path.contains("version.plist") {
+                Data("""
+                <?xml version="1.0" encoding="UTF-8"?>
+                <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+                <plist version="1.0">
+                <dict>
+                    <key>ProductBuildVersion</key>
+                    <string>12D4e</string>
+                </dict>
+                </plist>
+                """.utf8)
+            } else {
+                nil
             }
         }
-        
-        subject.updateAllXcodes(
+
+        try subject.updateAllXcodes(
             availableXcodes: [
-                AvailableXcode(version: Version("12.4.0+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-                AvailableXcode(version: Version("12.4.0-RC+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-            ], 
+                AvailableXcode(
+                    version: XCTUnwrap(Version("12.4.0+12D4e")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                ),
+                AvailableXcode(
+                    version: XCTUnwrap(Version("12.4.0-RC+12D4e")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                )
+            ],
             installedXcodes: [
-                InstalledXcode(path: Path("/Applications/Xcode-12.4.0-RC.app")!)!
-            ], 
+                XCTUnwrap(try InstalledXcode(path: XCTUnwrap(Path("/Applications/Xcode-12.4.0-RC.app"))))
+            ],
             selectedXcodePath: nil
         )
-        
-        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
-        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[XcodeID(version: Version("12.4.0+12D4e")!), XcodeID(version: Version("12.4.0-RC+12D4e")!)]])
+
+        XCTAssertEqual(subject.allXcodes.map(\.version), try [XCTUnwrap(Version("12.4.0+12D4e"))])
+        XCTAssertEqual(
+            subject.allXcodes.map(\.identicalBuilds),
+            try [[
+                XcodeID(version: XCTUnwrap(Version("12.4.0+12D4e"))),
+                XcodeID(version: XCTUnwrap(Version("12.4.0-RC+12D4e")))
+            ]]
+        )
     }
-    
-    func testIdenticalBuilds_AppleDataSource_DoNotMergeVersionsWithoutBuildIdentifiers() {
-        Current.defaults.string = { key in
+
+    func testIdenticalBuilds_AppleDataSource_DoNotMergeVersionsWithoutBuildIdentifiers() throws {
+        current.defaults.string = { key in
             if key == "dataSource" {
-                return "apple" 
+                "apple"
             } else {
-                return nil
+                nil
             }
         }
 
         subject.allXcodes = [
         ]
-        
-        subject.updateAllXcodes(
+
+        try subject.updateAllXcodes(
             availableXcodes: [
-                AvailableXcode(version: Version("12.4.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-                AvailableXcode(version: Version("12.3.0-RC")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-            ], 
+                AvailableXcode(
+                    version: XCTUnwrap(Version("12.4.0")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                ),
+                AvailableXcode(
+                    version: XCTUnwrap(Version("12.3.0-RC")),
+                    url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+                    filename: "mock.xip",
+                    releaseDate: nil
+                )
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
-        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0")!, Version("12.3.0-RC")!])
+
+        XCTAssertEqual(
+            subject.allXcodes.map(\.version),
+            try [XCTUnwrap(Version("12.4.0")), XCTUnwrap(Version("12.3.0-RC"))]
+        )
         XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[], []])
     }
 
-    func sha256(data : Data) -> Data {
-        var hash = [UInt8](repeating: 0,  count: Int(CC_SHA256_DIGEST_LENGTH))
+    func sha256(data: Data) -> Data {
+        var hash = [UInt8](repeating: 0, count: Int(CC_SHA256_DIGEST_LENGTH))
         data.withUnsafeBytes {
             _ = CC_SHA256($0.baseAddress, CC_LONG(data.count), &hash)
         }
@@ -292,25 +395,36 @@ class AppStateUpdateTests: XCTestCase {
          response: {"accountName":"anand.appleseed@example.com","c":"d-533-eccbc4e9-9564-11ef-84a6-018111c8cc60:PRN","m1":"f/Bkq8gBTYxl7SyiRd4SXTyE/jM/g6E0mVyZIQDIsPg=","m2":"R2rgqC9cMAtWiXUImOrvs4oF+ccibf8KaFsZQ22WokM=","rememberMe":false}
          */
 
-        let publicKey = Data(base64Encoded:  "VLEKLa+n2cyeYNWbECm45CuS4kCdCxodlTDGlW1FKaUyOrv/RbtN2sM0pVE12zI7k3VkocPC3rN5DZBIkahR6I8JHj/J97dtTvzsR+aNRWTYCT2HGP1PBI0QArp3eitAbFqTWI4+Zw+oOnV8+AYdH/wjbq7gOK4C4dvIHE+FzRwIlmguPb5qu2r47R9W3y1msVdoUGlFBOMOMb7Gyq7F0MaEIFH63lNzGomwq74mfss/cFqurd6fxU+Y7tdVTPZw1GWyBEPiXWpk8sNm2zE+S6zWo5tOsICprU75IC9galh1igfzN7VNe0SUFLNFTbFK+Bb1SFAOrAbBZOmyOG5uSQ==".data(using: .utf8)!)
+        let publicKey =
+            Data(
+                base64Encoded: "VLEKLa+n2cyeYNWbECm45CuS4kCdCxodlTDGlW1FKaUyOrv/RbtN2sM0pVE12zI7k3VkocPC3rN5DZBIkahR6I8JHj/J97dtTvzsR+aNRWTYCT2HGP1PBI0QArp3eitAbFqTWI4+Zw+oOnV8+AYdH/wjbq7gOK4C4dvIHE+FzRwIlmguPb5qu2r47R9W3y1msVdoUGlFBOMOMb7Gyq7F0MaEIFH63lNzGomwq74mfss/cFqurd6fxU+Y7tdVTPZw1GWyBEPiXWpk8sNm2zE+S6zWo5tOsICprU75IC9galh1igfzN7VNe0SUFLNFTbFK+Bb1SFAOrAbBZOmyOG5uSQ=="
+            )
 
-        let privateKey = BigNum("23161374166158551996079451276150657702422963034121842124445818241826569345033578345120284496449280736328513302994568402583647660370960353252836732307301957364261384324957527103960720408713825427474127658415917826326829664923997096839970397226662116904369925262192683131695683487505523842260218490007066160096482662715246662018133837725691586205535995663334471723776536640973591229093933458552240634178864509015968350855952558520147559154646484379002445961375384929682566525908284011230815908584648931495968206840416022306138033496705677078512266958633477047047323620540878121579549170392075029336954975132431417099801")!
-        let clientKeys = SRPKeyPair(public: .init([UInt8](publicKey!)),
-                                    private: .init(privateKey.bytes))
+        let privateKey =
+            try XCTUnwrap(
+                BigNum(
+                    "23161374166158551996079451276150657702422963034121842124445818241826569345033578345120284496449280736328513302994568402583647660370960353252836732307301957364261384324957527103960720408713825427474127658415917826326829664923997096839970397226662116904369925262192683131695683487505523842260218490007066160096482662715246662018133837725691586205535995663334471723776536640973591229093933458552240634178864509015968350855952558520147559154646484379002445961375384929682566525908284011230815908584648931495968206840416022306138033496705677078512266958633477047047323620540878121579549170392075029336954975132431417099801"
+                )
+            )
+        let clientKeys = try SRPKeyPair(
+            public: .init([UInt8](XCTUnwrap(publicKey))),
+            private: .init(privateKey.bytes)
+        )
 
-        let password = sha256(data: "example".data(using: .utf8)!)
-        let salt = Data(base64Encoded: "fIjNflgqSJXACWwwvhDU+w==".data(using: .utf8)!)!
-        let iterations: Int = 20309
-        let derivedKeyLength: Int = 32
-        var keyArray = Array<UInt8>(repeating: 0, count: derivedKeyLength)
+        let password = sha256(data: Data("example".utf8))
+        let salt = try XCTUnwrap(Data(base64Encoded: Data("fIjNflgqSJXACWwwvhDU+w==".utf8)))
+        let iterations = 20309
+        let derivedKeyLength = 32
+        var keyArray = [UInt8](repeating: 0, count: derivedKeyLength)
 
         let result: Int32 = keyArray.withUnsafeMutableBytes { keyBytes -> Int32 in
             let keyBuffer = UnsafeMutablePointer<UInt8>(keyBytes.baseAddress!.assumingMemoryBound(to: UInt8.self))
             return password.withUnsafeBytes { passwordDigestBytes -> Int32 in
-                let passwordBuffer = UnsafePointer<UInt8>(passwordDigestBytes.baseAddress!.assumingMemoryBound(to: UInt8.self))
+                let passwordBuffer = UnsafePointer<UInt8>(passwordDigestBytes.baseAddress!
+                    .assumingMemoryBound(to: UInt8.self))
                 return salt.withUnsafeBytes { saltBytes -> Int32 in
                     let saltBuffer = UnsafePointer<UInt8>(saltBytes.baseAddress!.assumingMemoryBound(to: UInt8.self))
-                    return  CCKeyDerivationPBKDF(
+                    return CCKeyDerivationPBKDF(
                         CCPBKDFAlgorithm(kCCPBKDF2),
                         passwordBuffer,
                         password.count,
@@ -319,27 +433,80 @@ class AppStateUpdateTests: XCTestCase {
                         CCPseudoRandomAlgorithm(kCCPRFHmacAlgSHA256),
                         UInt32(iterations),
                         keyBuffer,
-                        derivedKeyLength)
-
+                        derivedKeyLength
+                    )
                 }
             }
         }
         XCTAssertEqual(result, Int32(kCCSuccess))
 
-        let expectedKey: [UInt8] = [0x40, 0x53, 0x2b, 0x4d, 0xe9, 0x35, 0x3f, 0xc5, 0x37, 0xdc, 0x62, 0xee, 0x84, 0xea, 0xce, 0xbd, 0x7e, 0xcb, 0x5e, 0xc2, 0x6e, 0xfc, 0xa9, 0x8b, 0xd0, 0x1b, 0x03, 0x80, 0xe3, 0x02, 0x10, 0x0f]
+        let expectedKey: [UInt8] = [
+            0x40,
+            0x53,
+            0x2B,
+            0x4D,
+            0xE9,
+            0x35,
+            0x3F,
+            0xC5,
+            0x37,
+            0xDC,
+            0x62,
+            0xEE,
+            0x84,
+            0xEA,
+            0xCE,
+            0xBD,
+            0x7E,
+            0xCB,
+            0x5E,
+            0xC2,
+            0x6E,
+            0xFC,
+            0xA9,
+            0x8B,
+            0xD0,
+            0x1B,
+            0x03,
+            0x80,
+            0xE3,
+            0x02,
+            0x10,
+            0x0F
+        ]
 
         XCTAssertEqual(expectedKey, keyArray)
 
-        let decodedB = Data(base64Encoded: "PMbU75wwG6rDTySXn2ASWyfQuPoW5ham15SzIscpInwOPE2uk7sePsW4ra0dHcLDUMFQn/LgBggIKOo7YZ9hf1VReiAzXwSKSHdJHjHUURTC2eNpANGUPO1qzuXYgc/MP3MR+GipKHsz+KTLT+8wLjNaiCIHsL/7evJBMw9QqiwhyXlAIm5mGZfhdTVbGpLz2/QzrFmI6pUTrHpio6m1Q74DH3FBxxIeiIcuEdGdeVt9iUweowBRyf2woasTvSV1fbMQbl+lsWPwzt/a73+J30eOGFdSubqSVYh2pV0OLqRz7zPzJars12teCWUV+0WUIaxb14Mp7tlmqcTPuqZe9w==".data(using: .utf8)!)!
+        let decodedB =
+            try XCTUnwrap(
+                Data(
+                    base64Encoded: "PMbU75wwG6rDTySXn2ASWyfQuPoW5ham15SzIscpInwOPE2uk7sePsW4ra0dHcLDUMFQn/LgBggIKOo7YZ9hf1VReiAzXwSKSHdJHjHUURTC2eNpANGUPO1qzuXYgc/MP3MR+GipKHsz+KTLT+8wLjNaiCIHsL/7evJBMw9QqiwhyXlAIm5mGZfhdTVbGpLz2/QzrFmI6pUTrHpio6m1Q74DH3FBxxIeiIcuEdGdeVt9iUweowBRyf2woasTvSV1fbMQbl+lsWPwzt/a73+J30eOGFdSubqSVYh2pV0OLqRz7zPzJars12teCWUV+0WUIaxb14Mp7tlmqcTPuqZe9w=="
+                )
+            )
 
         let client = SRPClient(configuration: SRPConfiguration<SHA256>(.N2048))
-        let sharedSecret = try client.calculateSharedSecret(password: keyArray, salt: [UInt8](salt), clientKeys: clientKeys, serverPublicKey: .init([UInt8](decodedB)))
+        let sharedSecret = try client.calculateSharedSecret(
+            password: keyArray,
+            salt: [UInt8](salt),
+            clientKeys: clientKeys,
+            serverPublicKey: .init([UInt8](decodedB))
+        )
 
         let accountName = "anand.appleseed@example.com"
-        let m1 = client.calculateClientProof(username: accountName, salt: [UInt8](salt), clientPublicKey: clientKeys.public, serverPublicKey: .init([UInt8](decodedB)), sharedSecret: sharedSecret)
-        let m2 = client.calculateServerProof(clientPublicKey: clientKeys.public, clientProof: m1, sharedSecret: sharedSecret)
+        let clientProof = client.calculateClientProof(
+            username: accountName,
+            salt: [UInt8](salt),
+            clientPublicKey: clientKeys.public,
+            serverPublicKey: .init([UInt8](decodedB)),
+            sharedSecret: sharedSecret
+        )
+        let serverProof = client.calculateServerProof(
+            clientPublicKey: clientKeys.public,
+            clientProof: clientProof,
+            sharedSecret: sharedSecret
+        )
 
-        XCTAssertEqual(Data(m1).base64EncodedString(), "f/Bkq8gBTYxl7SyiRd4SXTyE/jM/g6E0mVyZIQDIsPg=")
-        XCTAssertEqual(Data(m2).base64EncodedString(), "R2rgqC9cMAtWiXUImOrvs4oF+ccibf8KaFsZQ22WokM=")
+        XCTAssertEqual(Data(clientProof).base64EncodedString(), "f/Bkq8gBTYxl7SyiRd4SXTyE/jM/g6E0mVyZIQDIsPg=")
+        XCTAssertEqual(Data(serverProof).base64EncodedString(), "R2rgqC9cMAtWiXUImOrvs4oF+ccibf8KaFsZQ22WokM=")
     }
 }

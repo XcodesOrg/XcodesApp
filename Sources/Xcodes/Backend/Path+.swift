@@ -1,10 +1,10 @@
-import Path
 import Foundation
+import Path
 
 extension Path {
-    static let defaultXcodesApplicationSupport = Path.applicationSupport/"eu.mpwg.xcodes"
+    static let defaultXcodesApplicationSupport = Path.applicationSupport / "eu.mpwg.xcodes"
     static var xcodesApplicationSupport: Path {
-        guard let savedApplicationSupport = Current.defaults.string(forKey: "localPath") else {
+        guard let savedApplicationSupport = current.defaults.string(forKey: "localPath") else {
             return defaultXcodesApplicationSupport
         }
         guard let path = Path(savedApplicationSupport) else {
@@ -12,15 +12,15 @@ extension Path {
         }
         return path
     }
-    
+
     static var cacheFile: Path {
-        return xcodesApplicationSupport/"available-xcodes.json"
+        xcodesApplicationSupport / "available-xcodes.json"
     }
-    
-    static let defaultInstallDirectory = Path.root/"Applications"
-    
+
+    static let defaultInstallDirectory = Path.root / "Applications"
+
     static var installDirectory: Path {
-        guard let savedInstallDirectory = Current.defaults.string(forKey: "installPath") else {
+        guard let savedInstallDirectory = current.defaults.string(forKey: "installPath") else {
             return defaultInstallDirectory
         }
         guard let path = Path(savedInstallDirectory) else {
@@ -28,15 +28,15 @@ extension Path {
         }
         return path
     }
-    
+
     static var runtimeCacheFile: Path {
-        return xcodesApplicationSupport/"downloadable-runtimes.json"
+        xcodesApplicationSupport / "downloadable-runtimes.json"
     }
-    
+
     static var xcodesCaches: Path {
-        return caches/"eu.mpwg.xcodes"
+        caches / "eu.mpwg.xcodes"
     }
-    
+
     @discardableResult
     func setCurrentUserAsOwner() -> Path {
         let user = ProcessInfo.processInfo.environment["SUDO_USER"] ?? NSUserName()

@@ -1,6 +1,5 @@
-import XCTest
-
 import AppleAPITests
+import XCTest
 
 var tests = [XCTestCaseEntry]()
 tests += AppleAPITests.allTests()

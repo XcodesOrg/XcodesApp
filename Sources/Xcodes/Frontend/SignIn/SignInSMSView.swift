@@ -1,5 +1,5 @@
-import SwiftUI
 import AppleAPI
+import SwiftUI
 
 struct SignInSMSView: View {
     @Bindable var authenticationStore: AuthenticationStore
@@ -11,25 +11,37 @@ struct SignInSMSView: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Text(String(format: localizeString("EnterDigitCodeDescription"), authOptions.securityCode!.length, trustedPhoneNumber.numberWithDialCode))
-            
+            Text(
+                // swiftlint:disable:next line_length
+                "Enter the \(authOptions.securityCode!.length) digit code sent to \(trustedPhoneNumber.numberWithDialCode): "
+            )
+
             HStack {
                 Spacer()
                 PinCodeTextField(code: $code, numberOfDigits: authOptions.securityCode!.length) {
-                    authenticationStore.submitSecurityCode(.sms(code: $0, phoneNumberId: trustedPhoneNumber.id), sessionData: sessionData)
+                    authenticationStore.submitSecurityCode(
+                        .sms(code: $0, phoneNumberId: trustedPhoneNumber.id),
+                        sessionData: sessionData
+                    )
                 }
                 Spacer()
             }
             .padding()
-            
+
             HStack {
                 Button("Cancel", action: { isPresented = false })
                     .keyboardShortcut(.cancelAction)
                 Spacer()
-                ProgressButton(isInProgress: authenticationStore.isProcessingAuthRequest,
-                               action: { authenticationStore.submitSecurityCode(.sms(code: code, phoneNumberId: trustedPhoneNumber.id), sessionData: sessionData) }) {
-                    Text("Continue")
-                }
+                ProgressButton(
+                    isInProgress: authenticationStore.isProcessingAuthRequest,
+                    action: { authenticationStore.submitSecurityCode(
+                        .sms(code: code, phoneNumberId: trustedPhoneNumber.id),
+                        sessionData: sessionData
+                    ) },
+                    label: {
+                        Text("Continue")
+                    }
+                )
                 .keyboardShortcut(.defaultAction)
                 .disabled(code.count != authOptions.securityCode!.length)
             }
@@ -45,7 +57,7 @@ struct SignInSMSView_Previews: PreviewProvider {
         SignInSMSView(
             authenticationStore: AuthenticationStore(),
             isPresented: .constant(true),
-            trustedPhoneNumber: .init(id: 0, numberWithDialCode: "(•••) •••-••90"), 
+            trustedPhoneNumber: .init(id: 0, numberWithDialCode: "(•••) •••-••90"),
             authOptions: AuthOptionsResponse(
                 trustedPhoneNumbers: nil,
                 trustedDevices: nil,

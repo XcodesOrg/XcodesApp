@@ -18,7 +18,8 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "AppleAPI",
-            targets: ["AppleAPI"]),
+            targets: ["AppleAPI"]
+        )
     ],
     dependencies: [
         .package(url: "https://github.com/adam-fowler/swift-srp", from: "2.3.0")
@@ -29,10 +30,12 @@ let package = Package(
         .target(
             name: "AppleAPI",
             dependencies: [.product(name: "SRP", package: "swift-srp")],
-            swiftSettings: swift6Settings),
+            swiftSettings: swift6Settings
+        ),
         .testTarget(
             name: "AppleAPITests",
             dependencies: ["AppleAPI"],
-            swiftSettings: swift6Settings),
+            swiftSettings: swift6Settings
+        )
     ]
 )

@@ -4,15 +4,15 @@ struct ScrollingTextView: NSViewRepresentable {
     typealias NSViewType = NSScrollView
 
     let attributedString: NSAttributedString
-    
-    func makeNSView(context: Context) -> NSViewType {
+
+    func makeNSView(context _: Context) -> NSViewType {
         let view = NSTextView.scrollableTextView()
         let textView = view.documentView as? NSTextView
         textView?.isEditable = false
         return view
     }
-    
-    func updateNSView(_ nsView: NSViewType, context: Context) {
+
+    func updateNSView(_ nsView: NSViewType, context _: Context) {
         (nsView.documentView as? NSTextView)?.textStorage?.setAttributedString(attributedString)
     }
 }

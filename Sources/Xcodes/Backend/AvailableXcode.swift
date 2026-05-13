@@ -5,8 +5,9 @@ import XcodesKit
 /// A version of Xcode that's available for installation
 public struct AvailableXcode: Codable, @unchecked Sendable {
     public var version: Version {
-        return xcodeID.version
+        xcodeID.version
     }
+
     public let url: URL
     public let filename: String
     public let releaseDate: Date?
@@ -17,8 +18,9 @@ public struct AvailableXcode: Codable, @unchecked Sendable {
     public let fileSize: Int64?
     public let architectures: [Architecture]?
     public var downloadPath: String {
-        return url.path
+        url.path
     }
+
     public var xcodeID: XcodeID
 
     public init(
@@ -42,6 +44,6 @@ public struct AvailableXcode: Codable, @unchecked Sendable {
         self.compilers = compilers
         self.fileSize = fileSize
         self.architectures = architectures
-        self.xcodeID = XcodeID(version: version, architectures: architectures)
+        xcodeID = XcodeID(version: version, architectures: architectures)
     }
 }

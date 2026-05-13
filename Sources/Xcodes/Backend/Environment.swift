@@ -1,11 +1,10 @@
+import AppleAPI
 import Combine
-import Darwin
 import Foundation
 import Path
-import AppleAPI
 import Security
 import XcodesKit
-import libunxip
+
 /**
  Lightweight dependency injection using global mutable state :P
 
@@ -24,361 +23,13 @@ public struct Environment: @unchecked Sendable {
     public var notificationManager = NotificationManager()
 }
 
-nonisolated(unsafe) public var Current = Environment()
-
-private final class FuturePromiseBox<Output>: @unchecked Sendable {
-    typealias Promise = (Result<Output, Error>) -> Void
-
-    nonisolated(unsafe) private let promise: Promise
-
-    nonisolated init(_ promise: @escaping Promise) {
-        self.promise = promise
-    }
-
-    nonisolated func resolve(_ result: Result<Output, Error>) {
-        promise(result)
-    }
-}
-
-private final class NotificationObserverBox: @unchecked Sendable {
-    nonisolated(unsafe) private let observer: NSObjectProtocol
-
-    nonisolated init(_ observer: NSObjectProtocol) {
-        self.observer = observer
-    }
-
-    nonisolated func remove() {
-        NotificationCenter.default.removeObserver(observer, name: .NSFileHandleDataAvailable, object: nil)
-    }
-}
-
-private func runLibUnxip(_ url: URL) async throws -> ProcessOutput {
-    let outputDirectory = url.deletingLastPathComponent()
-    let outputDescriptor = open(outputDirectory.path, O_RDONLY | O_DIRECTORY)
-    guard outputDescriptor >= 0 else {
-        throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO)
-    }
-    defer { _ = close(outputDescriptor) }
-
-    let inputDescriptor = open(url.path, O_RDONLY)
-    guard inputDescriptor >= 0 else {
-        throw POSIXError(POSIXErrorCode(rawValue: errno) ?? .EIO)
-    }
-
-    // DataReader wraps this descriptor in DispatchIO, which owns and closes it.
-    let input = DataReader.data(readingFrom: inputDescriptor)
-    for try await _ in Unxip.makeStream(
-        from: .xip(),
-        to: .disk(),
-        input: DataReader(data: input),
-        nil,
-        nil,
-        .init(compress: true, dryRun: false, output: outputDescriptor)
-    ) {}
-
-    return (0, "", "")
-}
-
-private func systemExecutablePath(named executableName: String) -> Path? {
-    let environmentPaths = ProcessInfo.processInfo.environment["PATH"]?
-        .split(separator: ":")
-        .map(String.init) ?? []
-    let fallbackPaths = [
-        "/opt/homebrew/bin",
-        "/usr/local/bin",
-        "/usr/bin",
-        "/bin",
-        "/usr/sbin",
-        "/sbin",
-    ]
-
-    var seenPaths = Set<String>()
-    for directory in environmentPaths + fallbackPaths where seenPaths.insert(directory).inserted {
-        let candidateURL = URL(fileURLWithPath: directory, isDirectory: true)
-            .appendingPathComponent(executableName)
-
-        guard
-            FileManager.default.isExecutableFile(atPath: candidateURL.path),
-            let candidatePath = Path(url: candidateURL)
-        else { continue }
-
-        return candidatePath
-    }
-
-    return nil
-}
-
-public struct Shell: @unchecked Sendable {
-    public var unxip: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.xip, workingDirectory: $0.deletingLastPathComponent(), "--expand", "\($0.path)") }
-    public var spctlAssess: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.sbin.spctl, "--assess", "--verbose", "--type", "execute", "\($0.path)") }
-    public var codesignVerify: (URL) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.codesign, "-vv", "-d", "\($0.path)") }
-    public var buildVersion: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.sw_vers, "-buildVersion") }
-    public var xcodeBuildVersion: (InstalledXcode) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.libexec.PlistBuddy, "-c", "Print :ProductBuildVersion", "\($0.path.string)/Contents/version.plist") }
-    public var getUserCacheDir: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.getconf, "DARWIN_USER_CACHE_DIR") }
-    public var touchInstallCheck: (String, String, String) -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin/"touch", "\($0)com.apple.dt.Xcode.InstallCheckCache_\($1)_\($2)") }
-
-    public var xcodeSelectPrintPath: () -> AnyPublisher<ProcessOutput, Error> = { Process.run(Path.root.usr.bin.join("xcode-select"), "-p") }
-    public var aria2Path: () -> Path? = { systemExecutablePath(named: "aria2c") }
-    
-    public var downloadWithAria2: (Path, URL, Path, [HTTPCookie]) -> (Progress, AnyPublisher<Void, Error>) = { aria2Path, url, destination, cookies in
-        let process = Process()
-        process.executableURL = aria2Path.url
-        process.arguments = [
-            "--header=Cookie: \(cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; "))",     
-            "--max-connection-per-server=16",
-            "--split=16",
-            "--summary-interval=1",
-            "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)", // if xcodes quits, stop aria2 process
-            "--dir=\(destination.parent.string)",
-            "--out=\(destination.basename())",
-            "--human-readable=false", // sets the output to use bytes instead of formatting
-            url.absoluteString,
-        ]
-        let stdOutPipe = Pipe()
-        process.standardOutput = stdOutPipe
-        let stdErrPipe = Pipe()
-        process.standardError = stdErrPipe
-        
-        nonisolated(unsafe) var progress = Progress()
-        progress.kind = .file
-        progress.fileOperationKind = .downloading
-        
-        let observer = NotificationObserverBox(NotificationCenter.default.addObserver(
-            forName: .NSFileHandleDataAvailable, 
-            object: nil, 
-            queue: OperationQueue.main
-        ) { note in
-            guard
-                // This should always be the case for Notification.Name.NSFileHandleDataAvailable
-                let handle = note.object as? FileHandle,
-                handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
-            else { return }
-
-            defer { handle.waitForDataInBackgroundAndNotify() }
-
-            let string = String(decoding: handle.availableData, as: UTF8.self)
-            
-            progress.updateFromAria2(string: string)
-        })
-
-        stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-        stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-        
-        do {
-            try process.run()
-        } catch {
-            return (progress, Fail(error: error).eraseToAnyPublisher())
-        }
-
-        let publisher = Deferred {
-            Future<Void, Error> { promise in
-                let promiseBox = FuturePromiseBox(promise)
-                DispatchQueue.global(qos: .default).async {
-                    process.waitUntilExit()
-                    
-                    observer.remove()
-                    
-                    guard process.terminationReason == .exit, process.terminationStatus == 0 else {
-                        if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
-                            return promiseBox.resolve(.failure(aria2cError))
-                        } else {
-                            return promiseBox.resolve(.failure(ProcessExecutionError(process: process, standardOutput: "", standardError: "")))
-                        }
-                    }
-                    promiseBox.resolve(.success(()))
-                }
-            }
-        }
-        .handleEvents(receiveCancel: {
-            process.terminate()
-            observer.remove()
-        })
-        .eraseToAnyPublisher()
-        
-        return (progress, publisher)
-    }
-    
-    public var downloadWithAria2Async: (Path, URL, Path, [HTTPCookie]) -> AsyncThrowingStream<Progress, Error> = { aria2Path, url, destination, cookies in
-        return AsyncThrowingStream<Progress, Error> { continuation in
- 
-            Task {
-                // Assume progress will not have data races, so we manually opt-out isolation checks.
-                nonisolated(unsafe) var progress = Progress()
-                progress.kind = .file
-                progress.fileOperationKind = .downloading
-                
-                let process = Process()
-                process.executableURL = aria2Path.url
-                process.arguments = [
-                    "--header=Cookie: \(cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; "))",
-                    "--max-connection-per-server=16",
-                    "--split=16",
-                    "--summary-interval=1",
-                    "--stop-with-process=\(ProcessInfo.processInfo.processIdentifier)", // if xcodes quits, stop aria2 process
-                    "--dir=\(destination.parent.string)",
-                    "--out=\(destination.basename())",
-                    "--human-readable=false", // sets the output to use bytes instead of formatting
-                    url.absoluteString,
-                ]
-                let stdOutPipe = Pipe()
-                process.standardOutput = stdOutPipe
-                let stdErrPipe = Pipe()
-                process.standardError = stdErrPipe
-                
-                let observer = NotificationObserverBox(NotificationCenter.default.addObserver(
-                    forName: .NSFileHandleDataAvailable,
-                    object: nil,
-                    queue: OperationQueue.main
-                ) { note in
-                    guard
-                        // This should always be the case for Notification.Name.NSFileHandleDataAvailable
-                        let handle = note.object as? FileHandle,
-                        handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
-                    else { return }
-                    
-                    defer { handle.waitForDataInBackgroundAndNotify() }
-                    
-                    let string = String(decoding: handle.availableData, as: UTF8.self)
-                    // TODO: fix warning. ObservingProgressView is currently tied to an updating progress
-                    progress.updateFromAria2(string: string)
-                    
-                    continuation.yield(progress)
-                })
-                
-                stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-                stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-                
-                continuation.onTermination = { @Sendable _ in
-                    process.terminate()
-                    observer.remove()
-                }
-                
-                do {
-                    try process.run()
-                } catch {
-                    continuation.finish(throwing: error)
-                }
-                
-                process.waitUntilExit()
-                
-                observer.remove()
-                
-                guard process.terminationReason == .exit, process.terminationStatus == 0 else {
-                    if let aria2cError = Aria2CError(exitStatus: process.terminationStatus) {
-                        continuation.finish(throwing: aria2cError)
-                    } else {
-                        continuation.finish(throwing: ProcessExecutionError(process: process, standardOutput: "", standardError: ""))
-                    }
-                    return
-                }
-                continuation.finish()
-            }
-        }
-    }
-    
-    
-    public var unxipExperiment: (URL) -> AnyPublisher<ProcessOutput, Error> = { url in
-        Deferred {
-            Future<ProcessOutput, Error> { promise in
-                let promiseBox = FuturePromiseBox(promise)
-                Task.detached(priority: .userInitiated) {
-                    do {
-                        let output = try await runLibUnxip(url)
-                        promiseBox.resolve(.success(output))
-                    } catch {
-                        promiseBox.resolve(.failure(error))
-                    }
-                }
-            }
-        }
-        .eraseToAnyPublisher()
-    }
-    
-    public var downloadRuntime: (String, String, String?) -> AsyncThrowingStream<Progress, Error> = { platform, version, architecture in
-        return AsyncThrowingStream<Progress, Error> { continuation in
-            Task {
-                // Assume progress will not have data races, so we manually opt-out isolation checks.
-                nonisolated(unsafe) var progress = Progress()
-                progress.kind = .file
-                progress.fileOperationKind = .downloading
-                
-                let process = Process()
-                let xcodeBuildPath = Path.root.usr.bin.join("xcodebuild").url
-                
-                process.executableURL = xcodeBuildPath
-                process.arguments = [
-                    "-downloadPlatform",
-                    "\(platform)",
-                    "-buildVersion",
-                    "\(version)"
-                ]
-                
-                if let architecture {
-                    process.arguments?.append(contentsOf: [
-                        "-architectureVariant",
-                        "\(architecture)"
-                    ])
-                }
-                
-                let stdOutPipe = Pipe()
-                process.standardOutput = stdOutPipe
-                let stdErrPipe = Pipe()
-                process.standardError = stdErrPipe
-                
-                let observer = NotificationObserverBox(NotificationCenter.default.addObserver(
-                    forName: .NSFileHandleDataAvailable,
-                    object: nil,
-                    queue: OperationQueue.main
-                ) { note in
-                    guard
-                        // This should always be the case for Notification.Name.NSFileHandleDataAvailable
-                        let handle = note.object as? FileHandle,
-                        handle === stdOutPipe.fileHandleForReading || handle === stdErrPipe.fileHandleForReading
-                    else { return }
-                    
-                    defer { handle.waitForDataInBackgroundAndNotify() }
-                    
-                    let string = String(decoding: handle.availableData, as: UTF8.self)
-                   
-                    // TODO: fix warning. ObservingProgressView is currently tied to an updating progress
-                    progress.updateFromXcodebuild(text: string)
-                    
-                    continuation.yield(progress)
-                })
-                
-                stdOutPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-                stdErrPipe.fileHandleForReading.waitForDataInBackgroundAndNotify()
-                
-                continuation.onTermination = { @Sendable _ in
-                    process.terminate()
-                    observer.remove()
-                }
-                
-                do {
-                    try process.run()
-                } catch {
-                    continuation.finish(throwing: error)
-                }
-                
-                process.waitUntilExit()
-                
-                observer.remove()
-                
-                guard process.terminationReason == .exit, process.terminationStatus == 0 else {
-                    continuation.finish(throwing: ProcessExecutionError(process: process, standardOutput: "", standardError: ""))
-                    return
-                }
-                continuation.finish()
-            }
-        }
-    }
-}
+public nonisolated(unsafe) var current = Environment()
 
 public struct Files: @unchecked Sendable {
     public var fileExistsAtPath: (String) -> Bool = { FileManager.default.fileExists(atPath: $0) }
 
     public func fileExists(atPath path: String) -> Bool {
-        return fileExistsAtPath(path)
+        fileExistsAtPath(path)
     }
 
     public var moveItem: (URL, URL) throws -> Void = { try FileManager.default.moveItem(at: $0, to: $1) }
@@ -390,7 +41,7 @@ public struct Files: @unchecked Sendable {
     public var contentsAtPath: (String) -> Data? = { FileManager.default.contents(atPath: $0) }
 
     public func contents(atPath path: String) -> Data? {
-        return contentsAtPath(path)
+        contentsAtPath(path)
     }
 
     public var removeItem: (URL) throws -> Void = { try FileManager.default.removeItem(at: $0) }
@@ -403,31 +54,44 @@ public struct Files: @unchecked Sendable {
 
     @discardableResult
     public func trashItem(at URL: URL) throws -> URL {
-        return try trashItem(URL)
-    }
-    
-    public var createFile: (String, Data?, [FileAttributeKey: Any]?) -> Bool = { FileManager.default.createFile(atPath: $0, contents: $1, attributes: $2) }
-    
-    @discardableResult
-    public func createFile(atPath path: String, contents data: Data?, attributes attr: [FileAttributeKey : Any]? = nil) -> Bool {
-        return createFile(path, data, attr)
+        try trashItem(URL)
     }
 
-    public var createDirectory: (URL, Bool, [FileAttributeKey : Any]?) throws -> Void = FileManager.default.createDirectory(at:withIntermediateDirectories:attributes:)
-    public func createDirectory(at url: URL, withIntermediateDirectories createIntermediates: Bool, attributes: [FileAttributeKey : Any]? = nil) throws {
+    public var createFile: (String, Data?, [FileAttributeKey: Any]?) -> Bool = { FileManager.default.createFile(
+        atPath: $0,
+        contents: $1,
+        attributes: $2
+    ) }
+
+    @discardableResult
+    public func createFile(
+        atPath path: String,
+        contents data: Data?,
+        attributes attr: [FileAttributeKey: Any]? = nil
+    ) -> Bool {
+        createFile(path, data, attr)
+    }
+
+    public var createDirectory: (URL, Bool, [FileAttributeKey: Any]?) throws -> Void = FileManager.default
+        .createDirectory(at:withIntermediateDirectories:attributes:)
+    public func createDirectory(
+        at url: URL,
+        withIntermediateDirectories createIntermediates: Bool,
+        attributes: [FileAttributeKey: Any]? = nil
+    ) throws {
         try createDirectory(url, createIntermediates, attributes)
     }
 
     public var installedXcodes = _installedXcodes
-    
+
     public func installedXcode(destination: Path) -> InstalledXcode? {
-        if Path.isAppBundle(path: destination) && Path.infoPlist(path: destination)?.bundleID == "com.apple.dt.Xcode" {
-            return InstalledXcode.init(path: destination)
+        if Path.isAppBundle(path: destination), Path.infoPlist(path: destination)?.bundleID == "com.apple.dt.Xcode" {
+            InstalledXcode(path: destination)
         } else {
-            return nil
+            nil
         }
     }
-    
+
     public var write: (Data, URL) throws -> Void = { try $0.write(to: $1) }
 
     public func write(_ data: Data, to url: URL) throws {
@@ -444,29 +108,39 @@ private func _installedXcodes(destination: Path) -> [InstalledXcode] {
 
 public struct Network: @unchecked Sendable {
     private static let client = AppleAPI.Client()
-    
+
     public var dataTask: (URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> = {
-        AppleAPI.Current.network.session.dataTaskPublisher(for: $0)
+        AppleAPI.current.network.session.dataTaskPublisher(for: $0)
             .mapError { $0 as Error }
-            .eraseToAnyPublisher() 
+            .eraseToAnyPublisher()
     }
-   
+
     public func dataTask(with request: URLRequest) -> AnyPublisher<URLSession.DataTaskPublisher.Output, Error> {
         dataTask(request)
     }
-    
-    public func dataTaskAsync(with request: URLRequest) async throws -> (Data, URLResponse) {
-        return try await AppleAPI.Current.network.session.data(for: request)
-    }
-    
-    public var downloadTask: (URL, URL, Data?) -> (Progress, AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) = { AppleAPI.Current.network.session.downloadTask(with: $0, to: $1, resumingWith: $2) }
 
-    public func downloadTask(with url: URL, to saveLocation: URL, resumingWith resumeData: Data?) -> (progress: Progress, publisher: AnyPublisher<(saveLocation: URL, response: URLResponse), Error>) {
-        return downloadTask(url, saveLocation, resumeData)
+    public func dataTaskAsync(with request: URLRequest) async throws -> (Data, URLResponse) {
+        try await AppleAPI.current.network.session.data(for: request)
     }
-    
+
+    public var downloadTask: (URL, URL, Data?) -> (
+        Progress,
+        AnyPublisher<(saveLocation: URL, response: URLResponse), Error>
+    ) = { AppleAPI.current.network.session.downloadTask(with: $0, to: $1, resumingWith: $2) }
+
+    public func downloadTask(
+        with url: URL,
+        to saveLocation: URL,
+        resumingWith resumeData: Data?
+    ) -> (progress: Progress, publisher: AnyPublisher<
+        (saveLocation: URL, response: URLResponse),
+        Error
+    >) {
+        downloadTask(url, saveLocation, resumeData)
+    }
+
     public var validateSession: () -> AnyPublisher<Void, Error> = {
-        return client.validateSession()
+        client.validateSession()
     }
 
     public var validateSessionAsync: @Sendable () async throws -> Void = {
@@ -483,7 +157,7 @@ public struct Keychain: @unchecked Sendable {
             kSecAttrService as String: service,
             kSecAttrAccount as String: key,
             kSecMatchLimit as String: kSecMatchLimitOne,
-            kSecReturnData as String: true,
+            kSecReturnData as String: true
         ]
 
         var item: CFTypeRef?
@@ -509,10 +183,10 @@ public struct Keychain: @unchecked Sendable {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
-            kSecAttrAccount as String: key,
+            kSecAttrAccount as String: key
         ]
         let attributes: [String: Any] = [
-            kSecValueData as String: encodedValue,
+            kSecValueData as String: encodedValue
         ]
 
         let updateStatus = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
@@ -540,7 +214,7 @@ public struct Keychain: @unchecked Sendable {
         let query: [String: Any] = [
             kSecClass as String: kSecClassGenericPassword,
             kSecAttrService as String: service,
-            kSecAttrAccount as String: key,
+            kSecAttrAccount as String: key
         ]
         let status = SecItemDelete(query as CFDictionary)
 
@@ -549,7 +223,7 @@ public struct Keychain: @unchecked Sendable {
         }
     }
 
-    public func remove(_ key: String) throws -> Void {
+    public func remove(_ key: String) throws {
         try remove(key)
     }
 }
@@ -559,32 +233,32 @@ public struct Defaults: @unchecked Sendable {
     public func string(forKey key: String) -> String? {
         string(key)
     }
-    
+
     public var date: (String) -> Date? = { Date(timeIntervalSince1970: UserDefaults.standard.double(forKey: $0)) }
     public func date(forKey key: String) -> Date? {
         date(key)
     }
-    
+
     public var setDate: (Date?, String) -> Void = { UserDefaults.standard.set($0?.timeIntervalSince1970, forKey: $1) }
     public func setDate(_ value: Date?, forKey key: String) {
         setDate(value, key)
     }
-    
+
     public var set: (Any?, String) -> Void = { UserDefaults.standard.set($0, forKey: $1) }
     public func set(_ value: Any?, forKey key: String) {
         set(value, key)
     }
-    
+
     public var removeObject: (String) -> Void = { UserDefaults.standard.removeObject(forKey: $0) }
     public func removeObject(forKey key: String) {
         removeObject(key)
     }
-    
+
     public var get: (String) -> Any? = { UserDefaults.standard.value(forKey: $0) }
     public func get(forKey key: String) -> Any? {
         get(key)
     }
-    
+
     public var bool: (String) -> Bool? = { UserDefaults.standard.bool(forKey: $0) }
     public func bool(forKey key: String) -> Bool? {
         bool(key)
@@ -599,6 +273,6 @@ public struct Helper: @unchecked Sendable {
     var switchXcodePath: (_ absolutePath: String) -> AnyPublisher<Void, Error> = helperClient.switchXcodePath
     var devToolsSecurityEnable: () -> AnyPublisher<Void, Error> = helperClient.devToolsSecurityEnable
     var addStaffToDevelopersGroup: () -> AnyPublisher<Void, Error> = helperClient.addStaffToDevelopersGroup
-    var acceptXcodeLicense: (_ absoluteXcodePath: String) ->  AnyPublisher<Void, Error> = helperClient.acceptXcodeLicense
+    var acceptXcodeLicense: (_ absoluteXcodePath: String) -> AnyPublisher<Void, Error> = helperClient.acceptXcodeLicense
     var runFirstLaunch: (_ absoluteXcodePath: String) -> AnyPublisher<Void, Error> = helperClient.runFirstLaunch
 }

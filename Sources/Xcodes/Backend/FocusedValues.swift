@@ -2,7 +2,7 @@ import SwiftUI
 
 // MARK: - FocusedXcodeKey
 
-struct FocusedXcodeKey : FocusedValueKey {
+struct FocusedXcodeKey: FocusedValueKey {
     typealias Value = SelectedXcode
 }
 

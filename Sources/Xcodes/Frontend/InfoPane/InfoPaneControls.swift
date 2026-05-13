@@ -12,23 +12,25 @@ struct InfoPaneControls: View {
     let xcode: Xcode
 
     var body: some View {
-        VStack (alignment: .leading) {
+        VStack(alignment: .leading) {
             switch xcode.installState {
             case .notInstalled:
                 HStack {
                     Spacer()
                     NotInstalledStateButtons(
                         downloadFileSizeString: xcode.downloadFileSizeString,
-                        id: xcode.id)
+                        id: xcode.id
+                    )
                 }
-                
-            case .installing(let installationStep):
+
+            case let .installing(installationStep):
                 HStack(alignment: .top) {
                     InstallationStepDetailView(installationStep: installationStep)
                         .frame(maxWidth: .infinity, alignment: .leading)
                     CancelInstallButton(xcode: xcode)
                 }
-            case .installed(_):
+
+            case .installed:
                 InstalledStateButtons(xcode: xcode)
             }
         }
@@ -44,12 +46,12 @@ struct InfoPaneControls: View {
 
 @MainActor
 private func makePreviewContent(for index: Int) -> some View {
-  let name = XcodePreviewName.allCases[index]
+    let name = XcodePreviewName.allCases[index]
 
-  return InfoPaneControls(xcode: xcodeDict[name]!)
-    .environmentObject(configure(AppState()) {
-      $0.allXcodes = [xcodeDict[name]!]
-    })
-    .frame(width: 500)
-    .padding()
+    return InfoPaneControls(xcode: xcodeDict[name]!)
+        .environmentObject(configure(AppState()) {
+            $0.allXcodes = [xcodeDict[name]!]
+        })
+        .frame(width: 500)
+        .padding()
 }

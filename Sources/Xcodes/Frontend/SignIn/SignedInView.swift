@@ -8,9 +8,9 @@ struct SignedInView: View {
     }
 
     var body: some View {
-        HStack(alignment:.top, spacing: 10) {
+        HStack(alignment: .top, spacing: 10) {
             Text(username)
-            Button("SignOut", action: authenticationStore.signOut)
+            Button("Sign Out", action: authenticationStore.signOut)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }

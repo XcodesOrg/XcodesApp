@@ -3,7 +3,7 @@ import Foundation
 
 public extension NSAttributedString {
     func addingAttribute(_ attribute: NSAttributedString.Key, value: Any, range: NSRange) -> NSAttributedString {
-        let copy = mutableCopy() as! NSMutableAttributedString
+        guard let copy = mutableCopy() as? NSMutableAttributedString else { return self }
         copy.addAttribute(attribute, value: value, range: range)
         return copy
     }
@@ -16,12 +16,17 @@ public extension NSAttributedString {
     func convertingURLsToLinkAttributes() -> NSAttributedString {
         guard
             let detector = try? NSDataDetector(types: NSTextCheckingResult.CheckingType.link.rawValue),
-            let copy = self.mutableCopy() as? NSMutableAttributedString
+            let copy = mutableCopy() as? NSMutableAttributedString
         else { return self }
-        
-        let matches = detector.matches(in: self.string, options: [], range: NSRange(string.startIndex..<string.endIndex, in: string))
-        for match in matches where match.url != nil {
-            copy.addAttribute(.link, value: match.url!, range: match.range)
+
+        let matches = detector.matches(
+            in: string,
+            options: [],
+            range: NSRange(string.startIndex ..< string.endIndex, in: string)
+        )
+        for match in matches {
+            guard let url = match.url else { continue }
+            copy.addAttribute(.link, value: url, range: match.range)
         }
 
         return copy

@@ -8,15 +8,15 @@
 
 import Foundation
 
-enum FileError: LocalizedError{
+enum FileError: LocalizedError {
     case fileNotFound(_ fileName: String)
 }
 
 extension FileError {
     var errorDescription: String? {
         switch self {
-        case .fileNotFound(let fileName):
-            return String(format: localizeString("Alert.Uninstall.Error.Message.FileNotFound"), fileName)
+        case let .fileNotFound(fileName):
+            "Could not find file \"\(fileName)\"."
         }
     }
 }
@@ -45,7 +45,7 @@ extension Error {
         switch errorType {
         case .swiftError:
             return "\(theOperationCouldNotBeCompleted) (\(legibleDescription))"
-        case .swiftLocalizedError(let message, _):
+        case let .swiftLocalizedError(message, _):
             return message
         case .nsError(_, "kCLErrorDomain", 0):
             return "The location could not be determined."

@@ -26,7 +26,7 @@ struct SDKsView: View {
     }
 
     init(sdks: SDKs?) {
-        guard let sdks = sdks else {
+        guard let sdks else {
             self.content = ""
             return
         }
@@ -34,18 +34,19 @@ struct SDKsView: View {
         self.content = content
     }
 
-    static private func content(from sdks: SDKs) -> String {
-        let content: String = [
+    private static func content(from sdks: SDKs) -> String {
+        [
             ("macOS", sdks.macOS),
             ("iOS", sdks.iOS),
             ("watchOS", sdks.watchOS),
             ("tvOS", sdks.tvOS)
-        ].compactMap {             // remove nil compiler
-            guard $0.1 != nil,     // has version array
-                  !$0.1!.isEmpty   // has at least 1 version
+        ].compactMap { // remove nil compiler
+            guard
+                $0.1 != nil, // has version array
+                !$0.1!.isEmpty // has at least 1 version
             else { return nil }
 
-            let numbers = $0.1!.compactMap { $0.number } // remove nil number
+            let numbers = $0.1!.compactMap(\.number) // remove nil number
             guard !numbers.isEmpty // has at least 1 number
             else { return nil }
 
@@ -53,18 +54,17 @@ struct SDKsView: View {
             return "\($0.0): \(numbers.joined(separator: ", "))"
         }.joined(separator: "\n")
             .trimmingCharacters(in: .whitespaces)
-
-        return content
     }
 }
 
 #Preview {
-  let sdks = SDKs(
-    macOS: .init(number: "11.1"),
-    iOS: .init(number: "14.3"),
-    watchOS: .init(number: "7.3"),
-    tvOS: .init(number: "14.3"))
+    let sdks = SDKs(
+        macOS: .init(number: "11.1"),
+        iOS: .init(number: "14.3"),
+        watchOS: .init(number: "7.3"),
+        tvOS: .init(number: "14.3")
+    )
 
-  return SDKsView(sdks: sdks)
-    .padding()
+    return SDKsView(sdks: sdks)
+        .padding()
 }

@@ -87,7 +87,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/saagarjha/unxip.git",
       "state" : {
-        "revision" : "6c3990517fcc4c1db6952fccf4c562fb14097601"
+        "revision" : "6c3990517fcc4c1db6952fccf4c562fb14097601",
+        "version" : "3.3.0"
       }
     },
     {

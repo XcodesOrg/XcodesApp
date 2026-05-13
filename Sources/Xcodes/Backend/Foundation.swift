@@ -2,7 +2,7 @@ import Foundation
 
 public extension BidirectionalCollection where Element: Equatable {
     func suffix(fromLast delimiter: Element) -> Self.SubSequence {
-        guard 
+        guard
             let lastIndex = lastIndex(of: delimiter),
             index(after: lastIndex) < endIndex
         else { return suffix(0) }
@@ -16,13 +16,13 @@ public extension NumberFormatter {
         self.numberStyle = numberStyle
     }
 
-    func string<N: Numeric>(from number: N) -> String? {
-        return string(from: number as! NSNumber)
+    func string(from number: some Numeric) -> String? {
+        string(from: NSNumber(value: Double("\(number)") ?? 0))
     }
 }
 
 extension Sequence {
-    func sorted<Value: Comparable>(_ keyPath: KeyPath<Element, Value>) -> [Element] {
+    func sorted(_ keyPath: KeyPath<Element, some Comparable>) -> [Element] {
         sorted(by: { $0[keyPath: keyPath] < $1[keyPath: keyPath] })
     }
 }

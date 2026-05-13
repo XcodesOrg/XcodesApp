@@ -1,6 +1,6 @@
 //
 //  RuntimeInstallationStep.swift
-//  
+//
 //
 //  Created by Matt Kiazyk on 2023-11-23.
 //
@@ -19,21 +19,23 @@ public enum RuntimeInstallationStep: Equatable, CustomStringConvertible, Hashabl
     public var message: String {
         switch self {
         case .downloading:
-            return localizeString("Downloading")
+            "Downloading"
         case .installing:
-            return localizeString("Installing")
+            "Installing"
         case .trashingArchive:
-            return localizeString("TrashingArchive")
+            "Moving archive to the Trash"
         }
     }
 
     public var stepNumber: Int {
         switch self {
-        case .downloading:      return 1
-        case .installing:       return 2
-        case .trashingArchive:  return 3
+        case .downloading: 1
+        case .installing: 2
+        case .trashingArchive: 3
         }
     }
 
-    public var stepCount: Int { 3 }
+    public var stepCount: Int {
+        3
+    }
 }

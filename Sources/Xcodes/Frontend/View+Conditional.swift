@@ -2,7 +2,7 @@ import SwiftUI
 
 extension View {
     @ViewBuilder
-    func `if`<Other: View>(_ predicate: Bool, then: (Self) -> Other) -> some View {
+    func `if`(_ predicate: Bool, then: (Self) -> some View) -> some View {
         if predicate {
             then(self)
         } else {
