@@ -40,8 +40,8 @@ env:
   CODE_SIGN_IDENTITY: ""
 
 jobs:
-  build:
-    name: Build
+  build-and-test:
+    name: Build and Test
     runs-on: macos-26
     timeout-minutes: 20
     steps:
@@ -78,51 +78,7 @@ jobs:
         restore-keys: |
           xcodebuild-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-
 
-    - name: Build app
-      run: |
-        set -euo pipefail
-        destination="platform=macOS,arch=$(uname -m)"
-        xcodebuild build \
-          -project "${XCODE_PROJECT}" \
-          -scheme "${XCODE_SCHEME}" \
-          -configuration Debug \
-          -destination "${destination}" \
-          -derivedDataPath "${DERIVED_DATA_PATH}" \
-          -clonedSourcePackagesDirPath "${SOURCE_PACKAGES_PATH}" \
-          -onlyUsePackageVersionsFromResolvedFile \
-          CODE_SIGNING_ALLOWED=NO \
-          CODE_SIGNING_REQUIRED=NO \
-          CODE_SIGN_IDENTITY="" \
-          COMPILER_INDEX_STORE_ENABLE=NO
-
-  test:
-    name: Tests
-    runs-on: macos-26
-    timeout-minutes: 20
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v6
-      with:
-        fetch-depth: 1
-
-    - name: Xcode version
-      id: xcode-version
-      run: |
-        set -euo pipefail
-        xcodebuild -version
-        xcode-select -p
-        cache_version="$(xcodebuild -version | tr '\n' ' ' | sed 's/[[:space:]]*$//')"
-        echo "xcode-cache-version=$cache_version" >> "$GITHUB_OUTPUT"
-
-    - name: Restore SwiftPM cache
-      uses: actions/cache@v5
-      with:
-        path: ${{ env.SOURCE_PACKAGES_PATH }}
-        key: swiftpm-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Xcodes.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
-        restore-keys: |
-          swiftpm-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-
-
-    - name: Run tests
+    - name: Build and test
       run: |
         set -euo pipefail
         destination="platform=macOS,arch=$(uname -m)"
@@ -130,9 +86,11 @@ jobs:
           -project "${XCODE_PROJECT}" \
           -scheme "${XCODE_SCHEME}" \
           -destination "${destination}" \
-          -derivedDataPath "${DERIVED_DATA_PATH}-tests" \
+          -derivedDataPath "${DERIVED_DATA_PATH}" \
           -clonedSourcePackagesDirPath "${SOURCE_PACKAGES_PATH}" \
+          -onlyUsePackageVersionsFromResolvedFile \
           CODE_SIGNING_ALLOWED=NO \
           CODE_SIGNING_REQUIRED=NO \
           CODE_SIGN_IDENTITY="" \
-          COMPILER_INDEX_STORE_ENABLE=NO
+          COMPILER_INDEX_STORE_ENABLE=NO \
+          | xcbeautify --renderer github-actions
