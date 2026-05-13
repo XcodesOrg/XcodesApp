@@ -101,6 +101,7 @@ private func aria2Download(
     do {
         try process.run()
     } catch {
+        observer.remove()
         return (progress, Fail(error: error).eraseToAnyPublisher())
     }
 
@@ -174,7 +175,7 @@ private func unxipPublisher(url: URL) -> AnyPublisher<ProcessOutput, Error> {
     .eraseToAnyPublisher()
 }
 
-private func configuredAria2Process(
+func configuredAria2Process(
     aria2Path: Path,
     url: URL,
     destination: Path,
@@ -183,7 +184,6 @@ private func configuredAria2Process(
     let process = Process()
     process.executableURL = aria2Path.url
     process.arguments = [
-        "--header=Cookie: \(cookies.map { "\($0.name)=\($0.value)" }.joined(separator: "; "))",
         "--max-connection-per-server=16",
         "--split=16",
         "--summary-interval=1",
@@ -191,9 +191,29 @@ private func configuredAria2Process(
         "--dir=\(destination.parent.string)",
         "--out=\(destination.basename())",
         "--human-readable=false",
-        url.absoluteString
+        "--input-file=-"
     ]
+
+    let inputPipe = Pipe()
+    inputPipe.fileHandleForWriting.write(Data(aria2InputFileContents(url: url, cookies: cookies).utf8))
+    inputPipe.fileHandleForWriting.closeFile()
+    process.standardInput = inputPipe.fileHandleForReading
     return process
+}
+
+func aria2InputFileContents(url: URL, cookies: [HTTPCookie]) -> String {
+    let cookieHeader = cookies
+        .map { "\($0.name)=\($0.value)" }
+        .joined(separator: "; ")
+
+    guard !cookieHeader.isEmpty else {
+        return "\(url.absoluteString)\n"
+    }
+    return """
+    \(url.absoluteString)
+     header=Cookie: \(cookieHeader)
+
+    """
 }
 
 private func configuredRuntimeDownloadProcess(platform: String, version: String, architecture: String?) -> Process {
@@ -289,6 +309,7 @@ private func runDownloadProcess(
     do {
         try process.run()
     } catch {
+        observer.remove()
         continuation.finish(throwing: error)
         return
     }

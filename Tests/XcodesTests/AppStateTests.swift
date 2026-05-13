@@ -559,6 +559,49 @@ class AppStateTests: XCTestCase {
         XCTAssertEqual(downloadedURL, (Path.xcodesApplicationSupport / "Xcode-0.0.0.xip").url)
     }
 
+    func test_ConfiguredAria2Process_DoesNotIncludeCookiesInArguments() throws {
+        let process = configuredAria2Process(
+            aria2Path: try XCTUnwrap(Path("/usr/local/bin/aria2c")),
+            url: try XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+            destination: try XCTUnwrap(Path("/tmp/Xcode.xip")),
+            cookies: [
+                try XCTUnwrap(HTTPCookie(properties: [
+                    .domain: "apple.com",
+                    .path: "/",
+                    .name: "ADCDownloadAuth",
+                    .value: "secret-cookie-value"
+                ]))
+            ]
+        )
+
+        let arguments = try XCTUnwrap(process.arguments)
+
+        XCTAssertTrue(arguments.contains("--input-file=-"))
+        XCTAssertFalse(arguments.joined(separator: " ").contains("secret-cookie-value"))
+        XCTAssertFalse(arguments.joined(separator: " ").contains("Cookie:"))
+        XCTAssertNotNil(process.standardInput)
+    }
+
+    func test_Aria2InputFileContents_IncludesCookiesForStandardInput() throws {
+        let input = aria2InputFileContents(
+            url: try XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
+            cookies: [
+                try XCTUnwrap(HTTPCookie(properties: [
+                    .domain: "apple.com",
+                    .path: "/",
+                    .name: "ADCDownloadAuth",
+                    .value: "secret-cookie-value"
+                ]))
+            ]
+        )
+
+        XCTAssertEqual(input, """
+        https://apple.com/xcode.xip
+         header=Cookie: ADCDownloadAuth=secret-cookie-value
+
+        """)
+    }
+
     func test_Install_NotEnoughFreeSpace() throws {
         current.shell.unxip = { _ in
             Fail(error: ProcessExecutionError(
