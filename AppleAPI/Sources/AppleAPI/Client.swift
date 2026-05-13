@@ -27,7 +27,6 @@ public final class Client: Sendable {
     // MARK: - Login
 
     public func srpLogin(accountName: String, password: String) -> AnyPublisher<AuthenticationState, Swift.Error> {
-        var serviceKey: String!
         let session = srpLoginSession()
 
         return serviceKeyAndHashcashPublisher(accountName: accountName)
@@ -39,22 +38,23 @@ public final class Client: Sendable {
                     session: session
                 )
             }
-            .handleEvents(receiveOutput: { serviceKey = $0.serviceKey })
-            .flatMap { context -> AnyPublisher<URLSession.DataTaskPublisher.Output, Swift.Error> in
+            .flatMap { context -> AnyPublisher<(SRPInitContext, URLSession.DataTaskPublisher.Output), Swift.Error> in
                 self.srpCompletePublisher(
                     context: context,
                     session: session,
                     accountName: accountName,
                     password: password
                 )
+                .map { output in (context, output) }
+                .eraseToAnyPublisher()
             }
-            .flatMap { result -> AnyPublisher<AuthenticationState, Swift.Error> in
+            .flatMap { context, result -> AnyPublisher<AuthenticationState, Swift.Error> in
                 let (data, response) = result
                 return self.authenticationStatePublisher(
                     data: data,
                     response: response,
                     accountName: accountName,
-                    serviceKey: serviceKey
+                    serviceKey: context.serviceKey
                 )
             }
             .mapError { $0 as Swift.Error }

@@ -20,8 +20,12 @@ extension AppState {
                     } else if
                         executionError.standardError
                             .contains("can’t be expanded because the selected volume doesn’t have enough free space.") {
+                        guard let archivePath = Path(url: source) else {
+                            return Fail(error: InstallationError.failedToMoveXcodeToApplications)
+                                .eraseToAnyPublisher()
+                        }
                         return Fail(error: InstallationError.notEnoughFreeSpaceToExpandArchive(
-                            archivePath: Path(url: source)!,
+                            archivePath: archivePath,
                             version: availableXcode.version
                         ))
                         .eraseToAnyPublisher()

@@ -71,7 +71,12 @@ extension Client {
         case .twoStep:
             throw AuthenticationError.accountUsesTwoStepAuthentication
         case .twoFactor:
-            return handleTwoFactor(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt, authOptions: authOptions)
+            return try handleTwoFactor(
+                serviceKey: serviceKey,
+                sessionID: sessionID,
+                scnt: scnt,
+                authOptions: authOptions
+            )
         case .securityKey:
             throw AuthenticationError.accountUsesSecurityKeyAuthentication
         case .unknown:
@@ -87,16 +92,16 @@ extension Client {
         authOptions: AuthOptionsResponse
     ) -> AnyPublisher<AuthenticationState, Error> {
         let option: TwoFactorOption
-
-            // SMS was sent automatically
-            = if authOptions.smsAutomaticallySent {
-            .smsSent(authOptions.trustedPhoneNumbers!.first!)
-            // SMS wasn't sent automatically because user needs to choose a phone to send to
+        if authOptions.smsAutomaticallySent {
+            guard let trustedPhoneNumber = authOptions.trustedPhoneNumbers?.first else {
+                return Fail(error: AuthenticationError.missingTrustedPhoneNumber)
+                    .eraseToAnyPublisher()
+            }
+            option = .smsSent(trustedPhoneNumber)
         } else if authOptions.canFallBackToSMS {
-            .smsPendingChoice
-            // Code is shown on trusted devices
+            option = .smsPendingChoice
         } else {
-            .codeSent
+            option = .codeSent
         }
 
         let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
@@ -111,13 +116,17 @@ extension Client {
         sessionID: String,
         scnt: String,
         authOptions: AuthOptionsResponse
-    ) -> AuthenticationState {
-        let option: TwoFactorOption = if authOptions.smsAutomaticallySent {
-            .smsSent(authOptions.trustedPhoneNumbers!.first!)
+    ) throws -> AuthenticationState {
+        let option: TwoFactorOption
+        if authOptions.smsAutomaticallySent {
+            guard let trustedPhoneNumber = authOptions.trustedPhoneNumbers?.first else {
+                throw AuthenticationError.missingTrustedPhoneNumber
+            }
+            option = .smsSent(trustedPhoneNumber)
         } else if authOptions.canFallBackToSMS {
-            .smsPendingChoice
+            option = .smsPendingChoice
         } else {
-            .codeSent
+            option = .codeSent
         }
 
         let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)

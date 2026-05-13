@@ -22,13 +22,16 @@ extension Client {
         var derivedKeyData = Data(repeating: 0, count: input.keyByteCount)
         let derivedCount = derivedKeyData.count
         let derivationStatus: Int32 = derivedKeyData.withUnsafeMutableBytes { derivedKeyBytes in
-            let keyBuffer: UnsafeMutablePointer<UInt8> =
-                derivedKeyBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+            guard let keyBuffer = derivedKeyBytes.baseAddress?.assumingMemoryBound(to: UInt8.self) else {
+                return Int32(kCCParamError)
+            }
             return input.saltData.withUnsafeBytes { saltBytes -> Int32 in
-                let saltBuffer: UnsafePointer<UInt8> = saltBytes.baseAddress!.assumingMemoryBound(to: UInt8.self)
+                guard let saltBuffer = saltBytes.baseAddress?.assumingMemoryBound(to: UInt8.self) else {
+                    return Int32(kCCParamError)
+                }
                 return hashedPasswordData.withUnsafeBytes { hashedPasswordBytes -> Int32 in
-                    let passwordBuffer: UnsafePointer<UInt8> = hashedPasswordBytes.baseAddress!
-                        .assumingMemoryBound(to: UInt8.self)
+                    guard let passwordBuffer = hashedPasswordBytes.baseAddress?.assumingMemoryBound(to: UInt8.self)
+                    else { return Int32(kCCParamError) }
                     return CCKeyDerivationPBKDF(
                         CCPBKDFAlgorithm(kCCPBKDF2),
                         passwordBuffer,

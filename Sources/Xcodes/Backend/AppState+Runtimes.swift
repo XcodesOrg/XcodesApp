@@ -216,7 +216,9 @@ extension AppState {
 
         let downloader = Downloader(rawValue: current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2
 
-        let url = URL(string: source)!
+        guard let url = URL(string: source) else {
+            throw MessageError("Invalid runtime source")
+        }
         let expectedRuntimePath = Path.xcodesApplicationSupport / "\(url.lastPathComponent)"
         // aria2 downloads directly to the destination (instead of into /tmp first) so we need to make sure that the
         // download isn't incomplete
@@ -280,7 +282,9 @@ extension AppState {
         guard let source = runtime.source else {
             return
         }
-        let url = URL(string: source)!
+        guard let url = URL(string: source) else {
+            return
+        }
         let expectedRuntimePath = Path.xcodesApplicationSupport / "\(url.lastPathComponent)"
         let aria2DownloadMetadataPath = expectedRuntimePath.parent / (expectedRuntimePath.basename() + ".aria2")
 
@@ -295,15 +299,18 @@ extension AppState {
     }
 
     func runtimeInstallPath(xcode _: Xcode, runtime: DownloadableRuntime) -> Path? {
-        if let coreSimulatorInfo = coreSimulatorInfo(runtime: runtime) {
-            let urlString = coreSimulatorInfo.path["relative"]!
-            // app was not allowed to open up file:// url's so remove
-            let fileRemovedString = urlString.replacingOccurrences(of: "file://", with: "")
-            let url = URL(fileURLWithPath: fileRemovedString)
-
-            return Path(url: url)!
+        guard
+            let coreSimulatorInfo = coreSimulatorInfo(runtime: runtime),
+            let urlString = coreSimulatorInfo.path["relative"]
+        else {
+            return nil
         }
-        return nil
+
+        // app was not allowed to open up file:// url's so remove
+        let fileRemovedString = urlString.replacingOccurrences(of: "file://", with: "")
+        let url = URL(fileURLWithPath: fileRemovedString)
+
+        return Path(url: url)
     }
 
     func coreSimulatorInfo(runtime: DownloadableRuntime) -> CoreSimulatorImage? {

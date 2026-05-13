@@ -24,7 +24,7 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable, @unchecked S
     public let authentication: Authentication?
     public var url: URL? {
         if let source {
-            return URL(string: source)!
+            return URL(string: source)
         }
         return nil
     }
@@ -59,7 +59,7 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable, @unchecked S
         guard let regex = Regex.shared else { return nil }
         guard var foundString = regex.firstString(in: identifier) else { return nil }
         foundString.removeFirst()
-        return Int(foundString)!
+        return Int(foundString)
     }
 
     var completeVersion: String {

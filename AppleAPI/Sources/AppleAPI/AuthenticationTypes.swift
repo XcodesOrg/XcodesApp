@@ -18,6 +18,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
     case accountUsesTwoStepAuthentication
     case accountUsesSecurityKeyAuthentication
     case accountUsesUnknownAuthenticationKind(String?)
+    case missingTrustedPhoneNumber
     case accountLocked(String)
     case badStatusCode(statusCode: Int, data: Data, response: HTTPURLResponse)
     case notDeveloperAppleId
@@ -41,7 +42,7 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             Received an unexpected sign in response. If you continue to have problems, please submit a bug report in the Help menu and include the following information:
 
             Status code: \(statusCode)
-            \(message != nil ? ("Message: " + message!) : "")
+            \(message.map { "Message: \($0)" } ?? "")
             """
             // swiftlint:enable line_length
         case .appleIDAndPrivacyAcknowledgementRequired:
@@ -55,6 +56,8 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
         case .accountUsesUnknownAuthenticationKind:
             // swiftlint:disable:next line_length
             "Received a response from Apple that indicates this account has two-step or two-factor authentication enabled, but xcodes is unsure how to handle this response. If you continue to have problems, please submit a bug report in the Help menu."
+        case .missingTrustedPhoneNumber:
+            "Received a two-factor authentication response from Apple without a trusted phone number."
         case let .accountLocked(message):
             message
         case let .badStatusCode(statusCode, _, _):

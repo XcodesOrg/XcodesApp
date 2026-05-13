@@ -183,9 +183,12 @@ class AppState: ObservableObject, @unchecked Sendable {
     var bottomStatusBarMessage: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
-        let finishDate = formatter.date(from: "11/06/2022")
 
-        if Date().compare(finishDate!) == .orderedAscending {
+        guard let finishDate = formatter.date(from: "11/06/2022") else {
+            return ""
+        }
+
+        if Date().compare(finishDate) == .orderedAscending {
             return "👨🏻‍💻👩🏼‍💻 Happy WWDC 2022! 👨🏽‍💻🧑🏻‍💻"
         }
         return ""

@@ -85,9 +85,11 @@ extension String {
         data.withUnsafeBytes {
             _ = CC_SHA1($0.baseAddress, CC_LONG(data.count), &digest)
         }
-        let bigEndianValue = digest.withUnsafeBufferPointer {
-            ($0.baseAddress!.withMemoryRebound(to: UInt32.self, capacity: 1) { $0 })
-        }.pointee
+        guard digest.count >= MemoryLayout<UInt32>.size else {
+            return nil
+        }
+
+        let bigEndianValue = digest.withUnsafeBytes { $0.loadUnaligned(as: UInt32.self) }
         let value = UInt32(bigEndian: bigEndianValue)
         return value.leadingZeroBitCount
     }

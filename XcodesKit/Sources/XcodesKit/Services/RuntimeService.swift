@@ -41,7 +41,10 @@ public struct RuntimeService: Sendable {
 
         let decoder = JSONDecoder()
         decoder.dateDecodingStrategy = .iso8601
-        let outputDictionary = try decoder.decode([String: InstalledRuntime].self, from: output.out.data(using: .utf8)!)
+        guard let outputData = output.out.data(using: .utf8) else {
+            throw MessageError("Could not decode installed runtimes output")
+        }
+        let outputDictionary = try decoder.decode([String: InstalledRuntime].self, from: outputData)
 
         return outputDictionary.values.sorted { first, second in
             first.identifier.uuidString.compare(second.identifier.uuidString, options: .numeric) == .orderedAscending
@@ -76,10 +79,10 @@ public struct RuntimeService: Sendable {
     public func mountDMG(dmgUrl: URL) async throws -> URL {
         let resultPlist = try await current.shell.mountDmg(dmgUrl)
 
-        let dict = try? (PropertyListSerialization.propertyList(
-            from: resultPlist.out.data(using: .utf8)!,
-            format: nil
-        ) as? NSDictionary)
+        guard let resultPlistData = resultPlist.out.data(using: .utf8) else {
+            throw Error.failedMountingDMG
+        }
+        let dict = try? (PropertyListSerialization.propertyList(from: resultPlistData, format: nil) as? NSDictionary)
         let systemEntities = dict?["system-entities"] as? NSArray
         guard let path = systemEntities?.compactMap({ ($0 as? NSDictionary)?["mount-point"] as? String }).first else {
             throw Error.failedMountingDMG

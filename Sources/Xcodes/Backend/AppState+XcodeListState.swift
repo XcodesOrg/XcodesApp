@@ -102,11 +102,14 @@ extension AppState {
         let defaultXcodeInstallState: XcodeInstallState = installedXcode
             .map { .installed($0.path) } ?? .notInstalled
 
+        let selected = installedXcode
+            .map { selectedXcodePath?.hasPrefix($0.path.string) == true } ?? false
+
         return Xcode(
             version: availableXcode.version,
             identicalBuilds: identicalBuilds(for: availableXcode, availableXcodes: availableXcodes),
             installState: existingXcodeInstallState ?? defaultXcodeInstallState,
-            selected: installedXcode != nil && selectedXcodePath?.hasPrefix(installedXcode!.path.string) == true,
+            selected: selected,
             icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),
             requiredMacOSVersion: availableXcode.requiredMacOSVersion,
             releaseNotesURL: availableXcode.releaseNotesURL,
