@@ -1,172 +1,134 @@
-<h1><img src="icon.png" align="center" width=50 height=50 /> <img src="IconDark.png" align="center" width=50 height=50 /> <img src="IconMono.png" align="center" width=50 height=50 /> Xcodes.app</h1>
+# Xcodes.app Fork
 
-The easiest way to install and switch between multiple versions of Xcode.
+> Work in progress. Maintained fork. Vibe-coded with intent.
 
-_If you're looking for a command-line version of Xcodes.app, try [`xcodes`](https://github.com/XcodesOrg/xcodes)._
+This repository is an actively maintained fork of Xcodes.app, a macOS app for
+installing, managing, and switching between multiple versions of Xcode.
 
-![CI](https://github.com/XcodesOrg/XcodesApp/workflows/CI/badge.svg)
+The original project this fork came from is no longer maintained in the way this
+fork needs it to be. This repository exists to keep the app useful, modern, and
+working for current Apple developer tooling.
 
-![](screenshot_light.png#gh-light-mode-only)
-![](screenshot_dark.png#gh-dark-mode-only)
+## Current Status
 
-### :tada: Announcement
+This fork is WIP.
 
-XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
+Expect rough edges, unfinished work, and occasional breakage. The goal is not to
+pretend this is a pristine long-term-maintenance branch. The goal is to keep the
+tool moving, make practical improvements, and fix the things that matter for
+day-to-day use.
 
-## Features
+This fork is also intentionally vibe-coded. That means development is pragmatic,
+fast-moving, and assisted by AI. Changes may start from experiments, sketches, or
+direct problem solving rather than a traditional roadmap process. The standard is
+still that the result should be understandable, reviewable, and useful.
 
-- List all available Xcode versions from [Xcode Releases'](https://xcodereleases.com) data or the Apple Developer website.
-- Install any Xcode version, **fully automated** from start to finish. Xcodes can use a system-installed [`aria2`](https://aria2.github.io), which uses up to 16 connections to download 3-5x faster than URLSession.
-- Automatically resumes installs if network errors.
-- Apple ID required to download Xcode versions.
-- Just click a button to make a version active with `xcode-select`.
-- View release notes, OS compatibility, included SDKs and compilers from [Xcode Releases](https://xcodereleases.com).
-- Dark/Light Mode supported
-- Apple ID sign-in supports trusted-device codes and SMS verification. Physical security-key-only Apple Accounts are not supported because native macOS security-key assertions require a `webcredentials` associated domain for the relying party, and Xcodes cannot claim `apple.com`; use Apple's passkey-capable sign-in flow outside this native FIDO2 path instead.
-- Support installing Platforms/Runtimes
-- Support installing Apple Silicon variants
+## What Xcodes.app Does
 
-## Platforms/Runtimes
+Xcodes.app helps macOS developers:
 
-- Xcodes supports downloading the Apple runtimes via the app. Simply click on the Platform, and Xcodes will install automatically for you.
+- Browse available Xcode releases.
+- Download and install selected Xcode versions.
+- Switch the active Xcode with `xcode-select`.
+- View release metadata such as compatibility, SDKs, and compilers.
+- Install Apple platform runtimes where supported.
+- Work with Apple Silicon and Universal Xcode/runtime variants where available.
+- Use faster downloads through a system-installed `aria2c` when configured.
 
-**Note: iOS 18+, tvOS 18+, watchOS 11+, visionOS 2+ requires that Xcode 16.1 Beta 3+ be installed and active.** 
+Some features depend on Apple services, Apple Developer account behavior, and
+Apple's current download infrastructure. Those parts can change without warning.
 
-## Apple Silicon Variants
+## Fork Goals
 
-As of Xcode 26, Apple provides Apple Silicon as well as Universal variants for Xcode versions as well as each runtime. Simply tap on which variant you want installed. To install the Apple Silicon runtime variant Xcode 26 is required to be active.
+- Keep Xcodes.app usable on current macOS and Xcode versions.
+- Remove or repair stale assumptions from the old codebase.
+- Improve support for modern Xcode, runtimes, and Apple Silicon variants.
+- Keep the app practical rather than perfect.
+- Make maintenance transparent, including the parts that are experimental.
 
-## Experiments
+## Non-Goals
 
-- Thanks to the wonderful work of [https://github.com/saagarjha/unxip](https://github.com/saagarjha/unxip), turn on the experiment to increase your unxipping time by up to 70%! More can be found on his repo, but bugs, high memory may occur if used.
-
-![](experiment_light.png#gh-light-mode-only)
-![](experiment_dark.png#gh-dark-mode-only)
-
-## Localization
-
-Xcodes supports localization in several languages.
-
-The following languages are supported because of the following community users!
-
-|||||
-|-|-|-|-|
-|French 🇫🇷 |[@dompepin](https://github.com/dompepin)|Italian 🇮🇹 |[gualtierofrigerio](https://github.com/gualtierofrigerio)|
-|Spanish 🇪🇸🇲 |[@cesartru88](https://github.com/cesartru88)|Korean 🇰🇷 |[@ryan-son](https://github.com/ryan-son)|
-|Russian 🇷🇺 |[@alexmazlov](https://github.com/alexmazlov)|Turkish 🇹🇷 |[@egesucu](https://github.com/egesucu)|
-|Hindi 🇮🇳 |[@KGurpreet](https://github.com/KGurpreet)|Chinese-Simplified 🇨🇳|[@megabitsenmzq](https://github.com/megabitsenmzq)|
-|Finnish 🇫🇮 |[@marcusziade](https://github.com/marcusziade)|Chinese-Traditional 🇹🇼|[@itszero](https://github.com/itszero)|
-|Ukranian 🇺🇦 |[@gelosi](https://github.com/gelosi)|Japanese 🇯🇵|[@tatsuz0u](https://github.com/tatsuz0u)|
-|German 🇩🇪|[@drct](https://github.com/drct)|Dutch 🇳🇱|[@jfversluis](https://github/com/jfversluis)|
-|Brazilian Portuguese 🇧🇷|[@brunomunizaf](https://github.com/brunomunizaf)|Polish 🇵🇱|[@jakex7](https://github.com/jakex7)|
-|Catalan|[@ferranabello](https://github.com/ferranabello)|Greek 🇬🇷|[@alladinian](https://github.com/alladinian)
-|Thai 🇹🇭|[@neetrath](https://github.com/neetrath)|
-
-Want to add more languages? Simply create a PR with the updated strings file.
+- This is not an official Apple tool.
+- This is not a polished commercial product.
+- This fork does not promise compatibility with every historical Xcode version.
+- This fork does not guarantee that Apple account sign-in or download flows will
+  always work, because Apple can change those flows at any time.
 
 ## Installation
-v1.X - requires macOS 11 or newer
-v2.X - requires macOS 13
-v3.X - requires macOS 13 - architecture variants and updated icon.
 
-### Install with Homebrew
+There may not always be a signed, notarized, or generally recommended release
+build available from this fork.
 
-Developer ID-signed and notarized release builds are available on Homebrew. These don't require Xcode to already be installed in order to use.
+For now, treat this repository primarily as a source build unless a release is
+explicitly published by this fork's maintainer.
 
-```sh
-brew install --cask xcodes
-```
-
-### Manually install
-
-1. Download the latest version [here](https://github.com/XcodesOrg/XcodesApp/releases/latest) using the **Xcodes.zip** asset. These are Developer ID-signed and notarized release builds and don't require Xcode to already be installed in order to use.
-2. Move the unzipped `Xcodes.app` to your `/Applications` directory
-
-## Support
-
-Xcodes.app and CLI is updated, maintained with contributors like yourself. Even open source libraries and tools come with expenses. If you would like to support Xcodes or donate to the development and maintenance of the tool, it would be greatly appreciated. There is absolutely no obligation!
-
-<a href="https://opencollective.com/xcodesapp" target="_blank">
-				<img src="https://opencollective.com/xcodesapp/donate/button@2x.png?color=blue" class="buymeacoffee" width=200 />
-</a>
+If you need a stable production setup, verify the current state of releases,
+signing, notarization, and update behavior before relying on this app.
 
 ## Development
 
-You'll need macOS 15.6 Ventura and Xcode 26 in order to build and run Xcodes.app.
+Requirements:
 
-The faster unxip experiment is built from the `libunxip` Swift package.
-The aria2 downloader requires a system-installed `aria2c`. Install aria2 with [`brew install aria2`](https://formulae.brew.sh/formula/aria2); more information is available from [aria2](https://aria2.github.io).
+- macOS 15 or newer.
+- A recent Xcode version capable of opening and building this project.
+- Optional: `aria2c` for faster downloads.
 
-
-[`xcode-install`](https://github.com/xcpretty/xcode-install) and [fastlane/spaceship](https://github.com/fastlane/fastlane/tree/master/spaceship) both deserve credit for figuring out the hard parts of what makes this possible.
-
-
-<details>
-<summary>Releasing a new version</summary>
-
-Follow the steps below to build and release a new version of Xcodes.app. For any of the git steps, you can use your preferred tool, but please sign the tag.
+Open the project in Xcode:
 
 ```sh
-# Update the version number in Xcode and commit the change, if necessary
-
-# Question: Did anything in XPCHelper change?
-# - Sources/PrivilegedHelper and Sources/HelperXPCShared
-# - if so, bump the version number in eu.mpwg.xcodes.Helper target.
-# Note: you do not have to bump the version number if nothing has changed.
-# Note2: If you do bump the version, the end user, must re-install the XPCHelper and give permission again.
-
-# Increment the build number
-scripts/increment_build_number.sh
-
-# Commit the change
-git add Sources/Xcodes/Resources/Info.plist
-git commit -asm "Increment build number"
-
-# Tag the latest commit
-# Replace $VERSION and $BUILD below with the latest real values
-git tag -asm "v$VERSIONb$BUILD" "v$VERSIONb$BUILD"
-
-# Push to origin
-git push --follow-tags
-
-# Build the app
-# Make sure you have the Xcode Selected you want to build with
-scripts/package_release.sh
-
-# Notarize the app
-# Do this from the Product directory so the app is zipped without being nested inside Product
-# Create a app specific password on appleid.apple.com if you haven't already
-# xcrun notarytool store-credentials "AC_PASSWORD" \
-#              --apple-id "test@example.com" \
-#              --team-id "teamid" \
-#               --password "app specific password"
-
-pushd Product
-../scripts/notarize.sh Xcodes.zip <MYORG>
-
-# Sign the .zip for Sparkle, note the signature in the output for later
-# If you're warned about the signing key not being found, see the Xcodes 1Password vault for the key and installation instructions.
-../scripts/sign_update Xcodes.zip
-popd
-
-# Go to https://github.com/XcodesOrg/XcodesApp/releases
-# If there are uncategorized PRs, add the appropriate label and run the Release Drafter action manually
-# Edit the latest draft release
-# Set its tag to the tag you just pushed
-# Set its title to a string with the format "$VERSION ($BUILD)"
-# Polish the draft release notes, if necessary
-# Add the signature to the bottom of the release notes in a comment, like:
-<!-- sparkle:edSignature=$SIGNATURE -->
-# Attach the zip that was created in the Product directory to the release
-# Publish the release
-
-shasum -a 256 xcodes.zip
-# Update the [Homebrew Cask](https://github.com/XcodesOrg/homebrew-cask/blob/master/Casks/x/xcodes.rb).
+open Xcodes.xcodeproj
 ```
-</details>
 
-## Maintainers
+Optional faster-download dependency:
 
-[Matt Kiazyk](https://github.com/mattkiazyk) - [Twitter](https://www.twitter.com/mattkiazyk)
+```sh
+brew install aria2
+```
 
-[Twitter](https://twitter.com/xcodesApp) | [GitHub](https://github.com/xcodesOrg) | [Mastadon](https://iosdev.space/@XcodesApp) |
+The main app target is `Xcodes`. The repository also contains supporting Swift
+packages and helper code:
+
+- `AppleAPI`
+- `XcodesKit`
+- `Sources/PrivilegedHelper`
+- `Sources/HelperXPCShared`
+
+## Safety Notes
+
+This app interacts with developer tooling, installed Xcode bundles, privileged
+helper code, and Apple downloads. Review changes before running a build you do
+not trust.
+
+If you are testing changes that affect the privileged helper, Xcode selection,
+runtime installation, or app signing, use a machine where you are comfortable
+debugging developer-tool state.
+
+## Contributing
+
+Contributions are welcome, but this fork is currently maintainer-led and WIP.
+
+Good contributions are small, practical, and easy to review. Bug reports should
+include:
+
+- macOS version.
+- Xcode version.
+- App version or commit.
+- Clear reproduction steps.
+- Relevant logs or screenshots.
+
+AI-assisted contributions are fine. Please make sure generated code is reviewed,
+buildable, and explained well enough for a maintainer to reason about it.
+
+## Relationship to the Original Project
+
+This is a fork of Xcodes.app. Credit remains due to the original authors and
+contributors who built the foundation of the app.
+
+This fork has its own maintenance status, priorities, and direction. Do not
+assume issues, releases, support expectations, or update channels from the
+original project apply here.
+
+## License
+
+This project remains under the license provided in this repository. See
+[`LICENSE`](LICENSE).
