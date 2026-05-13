@@ -1,12 +1,14 @@
 import SwiftUI
 
 struct AboutView: View {
-    let showAcknowledgementsWindow: @MainActor @Sendable () -> Void
+    @SwiftUI.Environment(\.openWindow) private var openWindow
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
 
     var body: some View {
         HStack {
-            Image(nsImage: NSApp.applicationIconImage)
+            Image("xcode")
+                .resizable()
+                .frame(width: 128, height: 128)
 
             VStack(alignment: .leading) {
                 Text(Bundle.main.bundleName!)
@@ -22,7 +24,7 @@ struct AboutView: View {
                     })
                     .buttonStyle(LinkButtonStyle())
 
-                    Button(action: { showAcknowledgementsWindow() }, label: {
+                    Button(action: { openWindow(id: "acknowledgements") }, label: {
                         Label("Acknowledgements", systemImage: "doc")
                     })
                     .buttonStyle(LinkButtonStyle())
@@ -65,6 +67,6 @@ struct AboutView: View {
 
 struct AboutView_Previews: PreviewProvider {
     static var previews: some View {
-        AboutView(showAcknowledgementsWindow: {})
+        AboutView()
     }
 }

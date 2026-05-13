@@ -1,4 +1,3 @@
-import AppKit
 import Sparkle
 import SwiftUI
 import XcodesKit
@@ -13,8 +12,8 @@ private enum HelpMenuURL {
 
 @main
 struct XcodesApp: App {
-    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate: AppDelegate
     @SwiftUI.Environment(\.scenePhase) private var scenePhase: ScenePhase
+    @SwiftUI.Environment(\.openWindow) private var openWindow
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     @StateObject private var appState = AppState()
     @StateObject private var updater = ObservableUpdater()
@@ -39,7 +38,7 @@ struct XcodesApp: App {
         .commands {
             CommandGroup(replacing: .appInfo) {
                 Button("About Xcodes") {
-                    appDelegate.showAboutWindow()
+                    openWindow(id: "about")
                 }
             }
             CommandGroup(after: .appInfo) {
@@ -91,6 +90,16 @@ struct XcodesApp: App {
                         alert(for: presentedAlert)
                     })
             }
+
+            Window("About", id: "about") {
+                AboutView()
+            }
+            .windowResizability(.contentSize)
+
+            Window("Acknowledgements", id: "acknowledgements") {
+                AcknowledgmentsView()
+            }
+            .windowResizability(.contentSize)
         #endif
     }
 
@@ -124,57 +133,5 @@ struct XcodesApp: App {
                 )
             )
         }
-    }
-}
-
-class AppDelegate: NSObject, NSApplicationDelegate, @unchecked Sendable {
-    @MainActor
-    private lazy var aboutWindow = configure(NSWindow(
-        contentRect: .zero,
-        styleMask: [.closable, .resizable, .miniaturizable, .titled],
-        backing: .buffered,
-        defer: false
-    )) {
-        $0.title = "About"
-        $0.contentView = NSHostingView(rootView: AboutView(showAcknowledgementsWindow: { [weak self] in
-            self?.showAcknowledgementsWindow()
-        }))
-        $0.isReleasedWhenClosed = false
-    }
-
-    @MainActor
-    private let acknowledgementsWindow = configure(NSWindow(
-        contentRect: .zero,
-        styleMask: [.closable, .resizable, .miniaturizable, .titled],
-        backing: .buffered,
-        defer: false
-    )) {
-        $0.title = "Acknowledgements"
-        $0.contentView = NSHostingView(rootView: AcknowledgmentsView())
-        $0.isReleasedWhenClosed = false
-    }
-
-    /// If we wanted to use only SwiftUI API to do this we could make a new WindowGroup and use openURL and
-    /// handlesExternalEvents.
-    /// WindowGroup lets the user open more than one window right now, which is a little strange for an About window.
-    /// (It's also weird that the main Xcode list window can be opened more than once, there should only be one.)
-    /// To work around this, an AppDelegate holds onto a single instance of an NSWindow that is shown here.
-    /// FB8954588 Scene / WindowGroup is missing API to limit the number of windows that can be created
-    @MainActor
-    func showAboutWindow() {
-        aboutWindow.center()
-        aboutWindow.makeKeyAndOrderFront(nil)
-    }
-
-    @MainActor
-    func showAcknowledgementsWindow() {
-        acknowledgementsWindow.center()
-        acknowledgementsWindow.makeKeyAndOrderFront(nil)
-    }
-
-    func applicationDidFinishLaunching(_: Notification) {}
-
-    func applicationShouldTerminateAfterLastWindowClosed(_: NSApplication) -> Bool {
-        current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
     }
 }

@@ -59,19 +59,10 @@ struct MainWindow: View {
                         Label("Login", systemImage: "person.circle")
                     })
                     .help("LoginDescription")
-                    if #available(macOS 14, *) {
-                        SettingsLink(label: {
-                            Label("Preferences", systemImage: "gearshape")
-                        })
-                        .help("PreferencesDescription")
-                    } else {
-                        Button(action: {
-                            NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
-                        }, label: {
-                            Label("Preferences", systemImage: "gearshape")
-                        })
-                        .help("PreferencesDescription")
-                    }
+                    SettingsLink(label: {
+                        Label("Preferences", systemImage: "gearshape")
+                    })
+                    .help("PreferencesDescription")
                 }
             }
         }
