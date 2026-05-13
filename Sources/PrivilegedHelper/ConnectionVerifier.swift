@@ -1,28 +1,31 @@
-// From https://github.com/securing/SimpleXPCApp/
-
 import Foundation
 import os.log
+import Security
 
 class ConnectionVerifier {
-    private static func prepareCodeReferencesFromAuditToken(
+    private static func prepareCodeReferences(
         connection: NSXPCConnection,
         secCodeOptional: inout SecCode?,
         secStaticCodeOptional: inout SecStaticCode?
     ) -> Bool {
-        let auditTokenData = AuditTokenHack.getAuditTokenData(from: connection)
+        var pid = connection.processIdentifier
+        guard let pidNumber = CFNumberCreate(nil, .sInt32Type, &pid) else {
+            Logger.connectionVerifier.error("Couldn't create a CFNumber for XPC client pid \(pid)")
+            return false
+        }
 
-        let attributesDictrionary = [
-            kSecGuestAttributeAudit: auditTokenData
+        let attributesDictionary: [CFString: Any] = [
+            kSecGuestAttributePid: pidNumber
         ]
 
         if
             SecCodeCopyGuestWithAttributes(
                 nil,
-                attributesDictrionary as CFDictionary,
+                attributesDictionary as CFDictionary,
                 SecCSFlags(rawValue: 0),
                 &secCodeOptional
             ) != errSecSuccess {
-            Logger.connectionVerifier.error("Couldn't get SecCode with the audit token")
+            Logger.connectionVerifier.error("Couldn't get SecCode for XPC client pid \(pid)")
             return false
         }
 
@@ -31,7 +34,10 @@ class ConnectionVerifier {
             return false
         }
 
-        SecCodeCopyStaticCode(secCode, SecCSFlags(rawValue: 0), &secStaticCodeOptional)
+        guard SecCodeCopyStaticCode(secCode, SecCSFlags(rawValue: 0), &secStaticCodeOptional) == errSecSuccess else {
+            Logger.connectionVerifier.error("Couldn't copy the static code")
+            return false
+        }
 
         guard secStaticCodeOptional != nil else {
             Logger.connectionVerifier.error("Couldn't unwrap the secStaticCode")
@@ -126,20 +132,29 @@ class ConnectionVerifier {
         var secCodeOptional: SecCode?
         var secStaticCodeOptional: SecStaticCode?
 
-        if
-            !prepareCodeReferencesFromAuditToken(
-                connection: connection,
-                secCodeOptional: &secCodeOptional,
-                secStaticCodeOptional: &secStaticCodeOptional
-            ) {
+        if !prepareCodeReferences(
+            connection: connection,
+            secCodeOptional: &secCodeOptional,
+            secStaticCodeOptional: &secStaticCodeOptional
+        ) {
             return false
         }
 
-        if !verifyHardenedRuntimeAndProblematicEntitlements(secStaticCode: secStaticCodeOptional!) {
+        guard let secStaticCode = secStaticCodeOptional else {
+            Logger.connectionVerifier.error("Missing static code after XPC client lookup")
             return false
         }
 
-        if !verifyWithRequirementString(secCode: secCodeOptional!) {
+        guard let secCode = secCodeOptional else {
+            Logger.connectionVerifier.error("Missing dynamic code after XPC client lookup")
+            return false
+        }
+
+        if !verifyHardenedRuntimeAndProblematicEntitlements(secStaticCode: secStaticCode) {
+            return false
+        }
+
+        if !verifyWithRequirementString(secCode: secCode) {
             return false
         }
 
