@@ -6,8 +6,8 @@ extension URL {
         URL(string: "https://devimages-cdn.apple.com/downloads/xcode/simulators/index2.dvtdownloadableindex")!
 }
 
-public struct RuntimeService {
-    private var dataForRequest: (URLRequest) async throws -> (Data, URLResponse)
+public struct RuntimeService: Sendable {
+    private var dataForRequest: @Sendable (URLRequest) async throws -> (Data, URLResponse)
 
     public enum Error: LocalizedError, Equatable {
         case unavailableRuntime(String)
@@ -15,7 +15,7 @@ public struct RuntimeService {
     }
 
     public init(
-        dataForRequest: @escaping (URLRequest) async throws -> (Data, URLResponse) = { request in
+        dataForRequest: @escaping @Sendable (URLRequest) async throws -> (Data, URLResponse) = { request in
             try await URLSession.shared.data(for: request)
         }
     ) {

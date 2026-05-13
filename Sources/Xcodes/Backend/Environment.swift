@@ -23,7 +23,32 @@ public struct Environment: @unchecked Sendable {
     public var notificationManager = NotificationManager()
 }
 
-public nonisolated(unsafe) var current = Environment()
+private final class CurrentEnvironmentStorage: @unchecked Sendable {
+    static let shared = CurrentEnvironmentStorage()
+
+    private let lock = NSRecursiveLock()
+    private var environment = Environment()
+
+    var value: Environment {
+        get {
+            lock.withLock { environment }
+        }
+        set {
+            lock.withLock {
+                environment = newValue
+            }
+        }
+    }
+}
+
+public var current: Environment {
+    get {
+        CurrentEnvironmentStorage.shared.value
+    }
+    set {
+        CurrentEnvironmentStorage.shared.value = newValue
+    }
+}
 
 public struct Files: @unchecked Sendable {
     public var fileExistsAtPath: (String) -> Bool = { FileManager.default.fileExists(atPath: $0) }

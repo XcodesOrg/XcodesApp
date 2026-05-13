@@ -10,12 +10,15 @@ import Version
 import XcodesKit
 import XCTest
 
+@MainActor
 class AppStateUpdateTests: XCTestCase {
     var subject: AppState!
 
-    override func setUpWithError() throws {
-        current = .mock
-        subject = AppState()
+    override func setUp() async throws {
+        await MainActor.run {
+            current = .mock
+            subject = AppState()
+        }
     }
 
     func testDoesNotReplaceInstallState() throws {

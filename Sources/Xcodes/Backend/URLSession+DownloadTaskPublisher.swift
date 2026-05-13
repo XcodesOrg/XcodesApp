@@ -2,13 +2,13 @@ import Combine
 import Foundation
 
 private final class DownloadPromiseBox: @unchecked Sendable {
-    nonisolated(unsafe) let promise: (Result<(saveLocation: URL, response: URLResponse), Error>) -> Void
+    let promise: (Result<(saveLocation: URL, response: URLResponse), Error>) -> Void
 
-    nonisolated init(_ promise: @escaping (Result<(saveLocation: URL, response: URLResponse), Error>) -> Void) {
+    init(_ promise: @escaping (Result<(saveLocation: URL, response: URLResponse), Error>) -> Void) {
         self.promise = promise
     }
 
-    nonisolated func resolve(_ result: Result<(saveLocation: URL, response: URLResponse), Error>) {
+    func resolve(_ result: Result<(saveLocation: URL, response: URLResponse), Error>) {
         promise(result)
     }
 }

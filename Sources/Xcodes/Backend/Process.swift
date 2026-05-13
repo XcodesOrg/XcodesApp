@@ -11,13 +11,13 @@ public struct ProcessOutput: Sendable {
 }
 
 private final class PromiseBox<Output>: @unchecked Sendable {
-    nonisolated(unsafe) let promise: (Result<Output, Error>) -> Void
+    let promise: (Result<Output, Error>) -> Void
 
-    nonisolated init(_ promise: @escaping (Result<Output, Error>) -> Void) {
+    init(_ promise: @escaping (Result<Output, Error>) -> Void) {
         self.promise = promise
     }
 
-    nonisolated func resolve(_ result: Result<Output, Error>) {
+    func resolve(_ result: Result<Output, Error>) {
         promise(result)
     }
 }

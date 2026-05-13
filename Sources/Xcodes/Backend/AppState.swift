@@ -29,6 +29,7 @@ enum PreferenceKey: String {
     }
 }
 
+@MainActor
 class AppState: ObservableObject, @unchecked Sendable {
     let authenticationStore: AuthenticationStore
     let runtimeService = RuntimeService()
@@ -247,7 +248,9 @@ class AppState: ObservableObject, @unchecked Sendable {
         if autoInstallType == .none { return }
 
         autoInstallTimer = Timer.scheduledTimer(withTimeInterval: 60 * 60 * 6, repeats: true) { [weak self] _ in
-            self?.updateIfNeeded()
+            Task { @MainActor in
+                self?.updateIfNeeded()
+            }
         }
     }
 

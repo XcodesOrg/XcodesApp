@@ -11,25 +11,28 @@ import XCTest
 private final class TestPromiseBox<Output>: @unchecked Sendable {
     typealias Promise = (Result<Output, Error>) -> Void
 
-    private nonisolated(unsafe) let promise: Promise
+    private let promise: Promise
 
-    nonisolated init(_ promise: @escaping Promise) {
+    init(_ promise: @escaping Promise) {
         self.promise = promise
     }
 
-    nonisolated func resolve(_ result: Result<Output, Error>) {
+    func resolve(_ result: Result<Output, Error>) {
         promise(result)
     }
 }
 
+@MainActor
 class AppStateTests: XCTestCase {
     var subject: AppState!
     var cancellables = Set<AnyCancellable>()
 
-    override func setUpWithError() throws {
-        current = .mock
-        subject = AppState()
-        cancellables = []
+    override func setUp() async throws {
+        await MainActor.run {
+            current = .mock
+            subject = AppState()
+            cancellables = []
+        }
     }
 
     func test_ParseCertificateInfo_Succeeds() {
