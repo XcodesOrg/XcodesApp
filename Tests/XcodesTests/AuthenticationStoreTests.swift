@@ -4,7 +4,17 @@ import XCTest
 
 @MainActor
 final class AuthenticationStoreTests: XCTestCase {
-    private final class MockAuthenticationClient: AuthenticationClient {
+    private final class MockBrowserAuthenticationClient: BrowserAuthenticationClient {
+        var signInResult: Result<AuthenticationState, Error> = .success(.authenticated)
+        private(set) var receivedCookies: [HTTPCookie] = []
+
+        func signIn(with cookies: [HTTPCookie]) async throws -> AuthenticationState {
+            receivedCookies = cookies
+            return try signInResult.get()
+        }
+    }
+
+    private final class MockLegacyAuthenticationClient: LegacyAuthenticationClient {
         var signInResult: Result<AuthenticationState, Error> = .success(.authenticated)
         private(set) var receivedAccountName: String?
         private(set) var receivedPassword: String?
@@ -33,7 +43,8 @@ final class AuthenticationStoreTests: XCTestCase {
     }
 
     func testSignInStoresCredentialsAndUpdatesAuthenticationState() async throws {
-        let client = MockAuthenticationClient()
+        let browserClient = MockBrowserAuthenticationClient()
+        let client = MockLegacyAuthenticationClient()
         var storedUsername: String?
         var storedPassword: String?
 
@@ -46,7 +57,7 @@ final class AuthenticationStoreTests: XCTestCase {
             storedPassword = "\(username):\(password)"
         }
 
-        let subject = AuthenticationStore(client: client)
+        let subject = AuthenticationStore(browserClient: browserClient, legacyClient: client)
 
         let state = try await subject.signIn(username: "USER@ICLOUD.COM", password: "secret")
 
@@ -59,7 +70,8 @@ final class AuthenticationStoreTests: XCTestCase {
     }
 
     func testSignInFailureClearsSavedCredentialsAndPublishesAuthError() async {
-        let client = MockAuthenticationClient()
+        let browserClient = MockBrowserAuthenticationClient()
+        let client = MockLegacyAuthenticationClient()
         client.signInResult = .failure(AuthenticationError.invalidUsernameOrPassword(username: "user@icloud.com"))
 
         var removedKeychainAccount: String?
@@ -75,7 +87,7 @@ final class AuthenticationStoreTests: XCTestCase {
             removedKeychainAccount = username
         }
 
-        let subject = AuthenticationStore(client: client)
+        let subject = AuthenticationStore(browserClient: browserClient, legacyClient: client)
 
         do {
             _ = try await subject.signIn(username: "user@icloud.com", password: "wrong")
@@ -85,5 +97,38 @@ final class AuthenticationStoreTests: XCTestCase {
             XCTAssertEqual(removedDefaultsKey, "username")
             XCTAssertNotNil(subject.authError)
         }
+    }
+
+    func testBrowserSignInClearsSavedCredentialsAndUpdatesAuthenticationState() async throws {
+        let browserClient = MockBrowserAuthenticationClient()
+        let cookie = try XCTUnwrap(HTTPCookie(properties: [
+            .domain: ".apple.com",
+            .path: "/",
+            .name: "myacinfo",
+            .value: "browser-session"
+        ]))
+
+        var removedKeychainAccount: String?
+        var removedDefaultsKey: String?
+
+        current.defaults.string = { key in
+            key == "username" ? "user@icloud.com" : nil
+        }
+        current.defaults.removeObject = { key in
+            removedDefaultsKey = key
+        }
+        current.keychain.remove = { username in
+            removedKeychainAccount = username
+        }
+
+        let subject = AuthenticationStore(browserClient: browserClient, legacyClient: nil)
+
+        let state = try await subject.signInWithBrowser(cookies: [cookie])
+
+        XCTAssertEqual(state, .authenticated)
+        XCTAssertEqual(subject.authenticationState, .authenticated)
+        XCTAssertEqual(browserClient.receivedCookies, [cookie])
+        XCTAssertEqual(removedKeychainAccount, "user@icloud.com")
+        XCTAssertEqual(removedDefaultsKey, "username")
     }
 }

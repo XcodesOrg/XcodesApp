@@ -4,7 +4,7 @@ struct SignedInView: View {
     let authenticationStore: AuthenticationStore
 
     private var username: String {
-        authenticationStore.savedUsername ?? ""
+        authenticationStore.savedUsername ?? "Apple ID"
     }
 
     var body: some View {

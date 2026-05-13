@@ -5,7 +5,7 @@ import os.log
 import XcodesKit
 
 @MainActor
-protocol AuthenticationClient {
+protocol LegacyAuthenticationClient {
     func signIn(accountName: String, password: String) async throws -> AuthenticationState
     func requestSMS(
         to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber,
@@ -15,7 +15,7 @@ protocol AuthenticationClient {
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) async throws -> AuthenticationState
 }
 
-struct AppleAuthenticationClient: AuthenticationClient {
+struct AppleLegacyAuthenticationClient: LegacyAuthenticationClient {
     private let client = AppleAPI.Client()
 
     func signIn(accountName: String, password: String) async throws -> AuthenticationState {
@@ -57,10 +57,15 @@ final class AuthenticationStore {
     @ObservationIgnored nonisolated(unsafe) var onSecondFactorRequired: SecondFactorHandler?
     @ObservationIgnored nonisolated(unsafe) var onAuthenticationStateChanged: AuthenticationStateHandler?
 
-    @ObservationIgnored private nonisolated(unsafe) let client: AuthenticationClient
+    @ObservationIgnored private nonisolated(unsafe) let browserClient: BrowserAuthenticationClient
+    @ObservationIgnored private nonisolated(unsafe) let legacyClient: LegacyAuthenticationClient?
 
-    nonisolated init(client: AuthenticationClient = AppleAuthenticationClient()) {
-        self.client = client
+    nonisolated init(
+        browserClient: BrowserAuthenticationClient = AppleBrowserAuthenticationClient(),
+        legacyClient: LegacyAuthenticationClient? = AppleLegacyAuthenticationClient()
+    ) {
+        self.browserClient = browserClient
+        self.legacyClient = legacyClient
     }
 
     var savedUsername: String? {
@@ -90,6 +95,7 @@ final class AuthenticationStore {
             try await validateSession()
         } catch {
             guard
+                legacyClient != nil,
                 let username = savedUsername,
                 let password = try? current.keychain.getString(username)
             else {
@@ -102,13 +108,27 @@ final class AuthenticationStore {
     }
 
     @discardableResult
+    func signInWithBrowser(cookies: [HTTPCookie]) async throws -> AuthenticationState {
+        authError = nil
+        clearLoginCredentials()
+
+        return try await runAuthenticationRequest {
+            try await browserClient.signIn(with: cookies)
+        }
+    }
+
+    @discardableResult
     func signIn(username: String, password: String) async throws -> AuthenticationState {
+        guard let legacyClient else {
+            throw AuthenticationError.invalidSession
+        }
+
         authError = nil
         try? current.keychain.set(password, key: username)
         current.defaults.set(username, forKey: "username")
 
         return try await runAuthenticationRequest {
-            try await client.signIn(accountName: username.lowercased(), password: password)
+            try await legacyClient.signIn(accountName: username.lowercased(), password: password)
         }
     }
 
@@ -141,7 +161,11 @@ final class AuthenticationStore {
         Task {
             do {
                 _ = try await runAuthenticationRequest {
-                    try await client.requestSMS(
+                    guard let legacyClient else {
+                        throw AuthenticationError.invalidSession
+                    }
+
+                    return try await legacyClient.requestSMS(
                         to: trustedPhoneNumber,
                         authOptions: authOptions,
                         sessionData: sessionData
@@ -161,7 +185,11 @@ final class AuthenticationStore {
         Task {
             do {
                 _ = try await runAuthenticationRequest {
-                    try await client.submitSecurityCode(code, sessionData: sessionData)
+                    guard let legacyClient else {
+                        throw AuthenticationError.invalidSession
+                    }
+
+                    return try await legacyClient.submitSecurityCode(code, sessionData: sessionData)
                 }
             } catch {
                 handleAuthenticationError(error)

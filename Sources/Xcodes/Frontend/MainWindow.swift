@@ -131,22 +131,8 @@ struct MainWindow: View {
 
     @ViewBuilder
     private func signInView() -> some View {
-        if appState.authenticationStore.authenticationState == .authenticated {
-            VStack {
-                SignedInView(authenticationStore: appState.authenticationStore)
-                    .padding(32)
-                HStack {
-                    Spacer()
-                    Button("Close") { appState.presentedSheet = nil }
-                        .keyboardShortcut(.cancelAction)
-                }
-            }
-            .padding()
-        } else {
-            SignInCredentialsView(authenticationStore: appState.authenticationStore) {
-                appState.presentedSheet = nil
-            }
-            .frame(width: 400)
+        SignInView(authenticationStore: appState.authenticationStore) {
+            appState.presentedSheet = nil
         }
     }
 
