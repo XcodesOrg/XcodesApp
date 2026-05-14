@@ -63,7 +63,7 @@ struct AttributedText_Previews: PreviewProvider {
         let attributedString = NSMutableAttributedString(string: string)
         attributedString.addAttribute(
             .link,
-            value: URL(string: "https://robotsandpencils.com")!,
+            value: URL(string: "https://rhodon.com")!,
             range: NSRange(string.range(of: "link")!, in: string)
         )
         return attributedString
