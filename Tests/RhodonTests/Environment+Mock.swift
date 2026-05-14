@@ -1,8 +1,8 @@
 import Foundation
 @testable import Rhodon
 
-extension Rhodon.RhodonEnvironment {
-    static let mock = Rhodon.RhodonEnvironment(
+extension RhodonEnvironment {
+    static let mock = RhodonEnvironment(
         shell: .mock,
         files: .mock,
         network: .mock,

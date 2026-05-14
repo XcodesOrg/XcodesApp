@@ -113,9 +113,9 @@ class AppStateTests: XCTestCase {
                 true
             }
         }
-        Rhodon.current.network.validateSession = {
+        current.network.validateSession = {
         }
-        Rhodon.current.network.data = { urlRequest in
+        current.network.data = { urlRequest in
             // Don't have a valid session
             if urlRequest.url! == URLRequest.olympusSession.url! {
                 throw AuthenticationError.invalidSession
@@ -255,7 +255,7 @@ class AppStateTests: XCTestCase {
                 true
             }
         }
-        Rhodon.current.network.data = { urlRequest in
+        current.network.data = { urlRequest in
             // Don't have a valid session
             if urlRequest.url! == URLRequest.olympusSession.url! {
                 throw AuthenticationError.invalidSession

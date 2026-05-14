@@ -2,13 +2,13 @@ import Foundation
 import Path
 
 extension Path {
-    static let defaultRhodonlicationSupport = Path.applicationSupport / "eu.mpwg.rhodon"
+    static let defaultRhodonApplicationSupport = Path.applicationSupport / "eu.mpwg.rhodon"
     static var rhodonApplicationSupport: Path {
         guard let savedApplicationSupport = current.defaults.string(forKey: "localPath") else {
-            return defaultRhodonlicationSupport
+            return defaultRhodonApplicationSupport
         }
         guard let path = Path(savedApplicationSupport) else {
-            return defaultRhodonlicationSupport
+            return defaultRhodonApplicationSupport
         }
         return path
     }

@@ -222,7 +222,7 @@ class AppState: @unchecked Sendable {
     }
 
     func setupDefaults() {
-        localPath = current.defaults.string(forKey: "localPath") ?? Path.defaultRhodonlicationSupport.string
+        localPath = current.defaults.string(forKey: "localPath") ?? Path.defaultRhodonApplicationSupport.string
         unxipExperiment = current.defaults.bool(forKey: "unxipExperiment") ?? false
         createSymLinkOnSelect = current.defaults.bool(forKey: "createSymLinkOnSelect") ?? false
         onSelectActionType = SelectedActionType(rawValue: current.defaults

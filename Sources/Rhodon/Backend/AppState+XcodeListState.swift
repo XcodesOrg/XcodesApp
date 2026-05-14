@@ -143,7 +143,7 @@ extension AppState {
     ) {
         for installedXcode in installedRhodon
             where !allRhodon.contains(where: { xcode in xcode.version.isEquivalent(to: installedXcode.version) }) {
-            allRhodonend(
+            allRhodon.append(
                 Xcode(
                     version: installedXcode.version,
                     installState: .installed(installedXcode.path),
