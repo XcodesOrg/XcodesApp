@@ -14,8 +14,8 @@ categories:
       - 'documentation'
       - 'dependencies'
 template: |
-  Install Xcodes using one of the methods listed [here](https://github.com/RobotsAndPencils/XcodesApp#installation).
-  Update Xcodes by selecting Check for Updates... in the Xcodes menu in the menu bar.
+  Install Rhodon using one of the methods listed [here](https://github.com/RobotsAndPencils/Rhodon#installation).
+  Update Rhodon by selecting Check for Updates... in the Rhodon menu in the menu bar.
 
   ## Changes
 

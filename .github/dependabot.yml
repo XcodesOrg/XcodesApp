@@ -19,7 +19,7 @@ updates:
       interval: "weekly"
 
   - package-ecosystem: "swift"
-    directory: "/XcodesKit"
+    directory: "/RhodonKit"
     schedule:
       interval: "weekly"
 

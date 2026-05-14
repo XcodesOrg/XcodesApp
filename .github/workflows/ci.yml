@@ -9,8 +9,8 @@ on:
       - "AppleAPI/**"
       - "Sources/**"
       - "Tests/**"
-      - "Xcodes.xcodeproj/**"
-      - "XcodesKit/**"
+      - "Rhodon.xcodeproj/**"
+      - "RhodonKit/**"
       - "project.yml"
   pull_request:
     paths:
@@ -18,8 +18,8 @@ on:
       - "AppleAPI/**"
       - "Sources/**"
       - "Tests/**"
-      - "Xcodes.xcodeproj/**"
-      - "XcodesKit/**"
+      - "Rhodon.xcodeproj/**"
+      - "RhodonKit/**"
       - "project.yml"
   workflow_dispatch:
 
@@ -33,8 +33,8 @@ concurrency:
 env:
   DERIVED_DATA_PATH: .xcode-derived-data
   SOURCE_PACKAGES_PATH: .xcode-source-packages
-  XCODE_PROJECT: Xcodes.xcodeproj
-  XCODE_SCHEME: Xcodes
+  XCODE_PROJECT: Rhodon.xcodeproj
+  XCODE_SCHEME: Rhodon
   CODE_SIGNING_ALLOWED: NO
   CODE_SIGNING_REQUIRED: NO
   CODE_SIGN_IDENTITY: ""
@@ -63,7 +63,7 @@ jobs:
       uses: actions/cache@v5
       with:
         path: ${{ env.SOURCE_PACKAGES_PATH }}
-        key: swiftpm-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Xcodes.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
+        key: swiftpm-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Rhodon.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved') }}
         restore-keys: |
           swiftpm-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-
 
@@ -74,7 +74,7 @@ jobs:
           ${{ env.DERIVED_DATA_PATH }}/Build
           ${{ env.DERIVED_DATA_PATH }}/ModuleCache.noindex
           ${{ env.DERIVED_DATA_PATH }}/SDKStatCaches.noindex
-        key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Xcodes.xcodeproj/project.pbxproj', 'Xcodes.xcodeproj/xcshareddata/xcschemes/*.xcscheme', 'Xcodes.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Sources/**/*.swift', 'Sources/Xcodes/Resources/**', 'Tests/**/*.swift', 'AppleAPI/**/*.swift', 'XcodesKit/**/*.swift', 'project.yml') }}
+        key: xcodebuild-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-${{ hashFiles('Rhodon.xcodeproj/project.pbxproj', 'Rhodon.xcodeproj/xcshareddata/xcschemes/*.xcscheme', 'Rhodon.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved', 'Sources/**/*.swift', 'Sources/Rhodon/Resources/**', 'Tests/**/*.swift', 'AppleAPI/**/*.swift', 'RhodonKit/**/*.swift', 'project.yml') }}
         restore-keys: |
           xcodebuild-${{ runner.os }}-${{ runner.arch }}-xcode-${{ steps.xcode-version.outputs.xcode-cache-version }}-
 

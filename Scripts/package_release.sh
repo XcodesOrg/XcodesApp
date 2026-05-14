@@ -2,10 +2,10 @@
 #
 # Package release
 #
-# This will build and archive the app and then compress it in a .zip file at Product/Xcodes.zip
+# This will build and archive the app and then compress it in a .zip file at Product/Rhodon.zip
 # You must already have all required code signing assets installed on your computer
 
-PROJECT_NAME=Xcodes
+PROJECT_NAME=Rhodon
 PROJECT_DIR=$(pwd)/$PROJECT_NAME/Resources
 SCRIPTS_DIR=$(pwd)/Scripts
 INFOPLIST_FILE="Info.plist"

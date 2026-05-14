@@ -12,7 +12,7 @@
 #
 # Assumes that there's a .app beside the .zip with the same name so it can be stapled and re-zipped.
 #
-# E.g. notarize.sh "test@example.com" "@keychain:altool" MyOrg Xcodes.zip
+# E.g. notarize.sh "test@example.com" "@keychain:altool" MyOrg Rhodon.zip
 #
 # https://developer.apple.com/documentation/xcode/notarizing_macos_software_before_distribution/customizing_the_notarization_workflow
 # Adapted from https://github.com/keybase/client/blob/46f5df0aa64ff19198ba7b044bbb7cd907c0be9f/packaging/desktop/package_darwin.sh

@@ -6,7 +6,7 @@
 # Assumes that build numbers are monotonically increasing positive integers, across version numbers.
 # Tags must be named v$version_numberb$build_number, e.g. v1.2.3b456
 
-infoplist_file="$(pwd)/Sources/Xcodes/Resources/Info.plist"
+infoplist_file="$(pwd)/Sources/Rhodon/Resources/Info.plist"
 
 # Get latest tag hash matching pattern
 hash=$(git rev-list --tags="v*" --max-count=1)

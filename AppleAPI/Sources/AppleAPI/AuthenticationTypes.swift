@@ -49,13 +49,13 @@ public enum AuthenticationError: Swift.Error, LocalizedError, Equatable {
             "You must sign in to https://appstoreconnect.apple.com and acknowledge the Apple ID & Privacy agreement."
         case .accountUsesTwoStepAuthentication:
             // swiftlint:disable:next line_length
-            "Received a response from Apple that indicates this account has two-step authentication enabled. xcodes currently only supports the newer two-factor authentication, though. Please consider upgrading to two-factor authentication, or explain why this isn't an option for you by making a new feature request in the Help menu."
+            "Received a response from Apple that indicates this account has two-step authentication enabled. rhodon currently only supports the newer two-factor authentication, though. Please consider upgrading to two-factor authentication, or explain why this isn't an option for you by making a new feature request in the Help menu."
         case .accountUsesSecurityKeyAuthentication:
             // swiftlint:disable:next line_length
-            "This Apple ID requires physical security-key authentication, which Xcodes does not support. Use Apple's passkey-capable sign-in flow outside Xcodes, or sign in with a trusted device code or SMS verification instead."
+            "This Apple ID requires physical security-key authentication, which Rhodon does not support. Use Apple's passkey-capable sign-in flow outside Rhodon, or sign in with a trusted device code or SMS verification instead."
         case .accountUsesUnknownAuthenticationKind:
             // swiftlint:disable:next line_length
-            "Received a response from Apple that indicates this account has two-step or two-factor authentication enabled, but xcodes is unsure how to handle this response. If you continue to have problems, please submit a bug report in the Help menu."
+            "Received a response from Apple that indicates this account has two-step or two-factor authentication enabled, but rhodon is unsure how to handle this response. If you continue to have problems, please submit a bug report in the Help menu."
         case .missingTrustedPhoneNumber:
             "Received a two-factor authentication response from Apple without a trusted phone number."
         case let .accountLocked(message):

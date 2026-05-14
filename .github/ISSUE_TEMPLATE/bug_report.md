@@ -21,4 +21,4 @@ If applicable, add screenshots to help explain your problem.
 
 **Version**
  - OS: 
- - Xcodes:
+ - Rhodon:

@@ -1,8 +1,8 @@
-# Xcodes.app Fork
+# Rhodon Fork
 
 > Work in progress. Maintained fork. Vibe-coded with intent.
 
-This repository is an actively maintained fork of Xcodes.app, a macOS app for
+This repository is an actively maintained fork of Rhodon, a macOS app for
 installing, managing, and switching between multiple versions of Xcode.
 
 The original project this fork came from is no longer maintained in the way this
@@ -23,9 +23,9 @@ fast-moving, and assisted by AI. Changes may start from experiments, sketches, o
 direct problem solving rather than a traditional roadmap process. The standard is
 still that the result should be understandable, reviewable, and useful.
 
-## What Xcodes.app Does
+## What Rhodon Does
 
-Xcodes.app helps macOS developers:
+Rhodon helps macOS developers:
 
 - Browse available Xcode releases.
 - Download and install selected Xcode versions.
@@ -40,7 +40,7 @@ Apple's current download infrastructure. Those parts can change without warning.
 
 ## Fork Goals
 
-- Keep Xcodes.app usable on current macOS and Xcode versions.
+- Keep Rhodon usable on current macOS and Xcode versions.
 - Remove or repair stale assumptions from the old codebase.
 - Improve support for modern Xcode, runtimes, and Apple Silicon variants.
 - Keep the app practical rather than perfect.
@@ -76,7 +76,7 @@ Requirements:
 Open the project in Xcode:
 
 ```sh
-open Xcodes.xcodeproj
+open Rhodon.xcodeproj
 ```
 
 Optional faster-download dependency:
@@ -85,11 +85,11 @@ Optional faster-download dependency:
 brew install aria2
 ```
 
-The main app target is `Xcodes`. The repository also contains supporting Swift
+The main app target is `Rhodon`. The repository also contains supporting Swift
 packages and helper code:
 
 - `AppleAPI`
-- `XcodesKit`
+- `RhodonKit`
 - `Sources/PrivilegedHelper`
 - `Sources/HelperXPCShared`
 
@@ -121,7 +121,7 @@ buildable, and explained well enough for a maintainer to reason about it.
 
 ## Relationship to the Original Project
 
-This is a fork of Xcodes.app. Credit remains due to the original authors and
+This is a fork of Rhodon. Credit remains due to the original authors and
 contributors who built the foundation of the app.
 
 This fork has its own maintenance status, priorities, and direction. Do not

@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-**Tell us how we can improve Xcodes**
+**Tell us how we can improve Rhodon**
 
 **Is your feature request related to a problem? Please describe.**
 

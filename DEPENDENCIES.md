@@ -7,7 +7,7 @@ documented owner, reason, and replacement or release plan in this file.
 SwiftPM dependency updates are handled by Dependabot for the Xcode project and
 for each local package. Bundler updates for the AppCast Jekyll site are handled
 by Dependabot as well. Required attributions are maintained statically in
-`Sources/Xcodes/Resources/Licenses.md`; update that file when dependencies are added,
+`Sources/Rhodon/Resources/Licenses.md`; update that file when dependencies are added,
 removed, or relicensed.
 
 ## Local Package Boundaries
@@ -18,7 +18,7 @@ on the local packages below instead of letting those packages import app code.
 | Package | Boundary | External dependencies |
 | --- | --- | --- |
 | `AppleAPI` | Apple authentication and Apple API client code. | Owns `swift-srp` because SRP is only needed by this API client. |
-| `XcodesKit` | Reusable Xcode release, runtime, and shell models. | Owns `Path.swift` for runtime service and shell path handling. Keep this aligned with the app-level `Path.swift` pin while both scopes use the package. |
+| `RhodonKit` | Reusable Xcode release, runtime, and shell models. | Owns `Path.swift` for runtime service and shell path handling. Keep this aligned with the app-level `Path.swift` pin while both scopes use the package. |
 
 ## SwiftPM
 
@@ -32,7 +32,7 @@ on the local packages below instead of letting those packages import app code.
 | Xcode project | `unxip` / `libunxip` | `saagarjha` | Exact revision `6c3990517fcc4c1db6952fccf4c562fb14097601` (`v3.3`) because upstream release tags are not SwiftPM SemVer-compatible. | Provides the faster experimental XIP expansion path without bundling the `unxip` executable. | Move to a normal SemVer requirement if upstream publishes SemVer-compatible tags; otherwise update this pin intentionally after reviewing release notes. |
 | Xcode project | `Version` | `mxcl` | SemVer, `upToNextMajorVersion` from `2.2.1` | Parses, compares, and formats Xcode version values. | A local parser is possible but would need careful prerelease and build-metadata coverage. |
 | `AppleAPI` | `swift-srp` | `adam-fowler` | SemVer, `from: "2.3.0"` | Implements SRP authentication used by the Apple API client. | Replacement would be a security-sensitive auth rewrite; prefer a maintained release or controlled fork if needed. |
-| `XcodesKit` | `Path.swift` | `mxcl` | SemVer, `from: "1.6.0"` | Provides path handling in runtime service and shell wrappers. | Keep aligned with the app-level `Path.swift` requirement. |
+| `RhodonKit` | `Path.swift` | `mxcl` | SemVer, `from: "1.6.0"` | Provides path handling in runtime service and shell wrappers. | Keep aligned with the app-level `Path.swift` requirement. |
 
 ## Transitive SwiftPM Dependencies
 

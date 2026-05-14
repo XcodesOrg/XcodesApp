@@ -3,10 +3,10 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>eu.mpwg.xcodes.Helper</string>
+	<string>eu.mpwg.rhodon.Helper</string>
 	<key>MachServices</key>
 	<dict>
-		<key>eu.mpwg.xcodes.Helper</key>
+		<key>eu.mpwg.rhodon.Helper</key>
 		<true/>
 	</dict>
 </dict>

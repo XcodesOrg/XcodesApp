@@ -2,16 +2,16 @@ included:
   - AppleAPI
   - Sources
   - Tests
-  - XcodesKit
+  - RhodonKit
 
 excluded:
   - .build
   - build
   - AppleAPI/.build
-  - XcodesKit/.build
+  - RhodonKit/.build
   - DerivedData
   - SourcePackages
-  - Xcodes.xcodeproj
+  - Rhodon.xcodeproj
 
 custom_rules:
   plain_strings_only:

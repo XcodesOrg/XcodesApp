@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PRIVILEGED_HELPER_LABEL=eu.mpwg.xcodes.Helper
+PRIVILEGED_HELPER_LABEL=eu.mpwg.rhodon.Helper
 
 sudo rm /Library/PrivilegedHelperTools/$PRIVILEGED_HELPER_LABEL
 sudo rm /Library/LaunchDaemons/$PRIVILEGED_HELPER_LABEL.plist
