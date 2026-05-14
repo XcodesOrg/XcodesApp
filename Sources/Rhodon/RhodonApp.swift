@@ -3,11 +3,11 @@ import SwiftUI
 import RhodonKit
 
 private enum HelpMenuURL {
-    static let rhodonRepo = URL(string: "https://github.com/RhodonOrg/Rhodon/")!
+    static let rhodonRepo = URL(string: "https://github.com/mpwg/Rhodon/")!
     // swiftlint:disable:next line_length
-    static let bugReport = URL(string: "https://github.com/RhodonOrg/Rhodon/issues/new?assignees=&labels=bug&template=bug_report.md&title=")!
+    static let bugReport = URL(string: "https://github.com/mpwg/Rhodon/issues/new?assignees=&labels=bug&template=bug_report.md&title=")!
     // swiftlint:disable:next line_length
-    static let featureRequest = URL(string: "https://github.com/RhodonOrg/Rhodon/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=")!
+    static let featureRequest = URL(string: "https://github.com/mpwg/Rhodon/issues/new?assignees=&labels=enhancement&template=feature_request.md&title=")!
 }
 
 @main

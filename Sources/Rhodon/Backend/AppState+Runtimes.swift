@@ -40,7 +40,7 @@ extension AppState {
     }
 
     func downloadRuntime(runtime: DownloadableRuntime) {
-        guard let selectedXcode = allRhodon.first(where: { $0.selected }) else {
+        guard let selectedXcode = allXcodes.first(where: { $0.selected }) else {
             Logger.appState.error("No selected Xcode")
             self.presentedAlert = .generic(
                 title: "Unable to install Xcode",
@@ -50,7 +50,7 @@ extension AppState {
         }
         // new runtimes
         if runtime.contentType == .cryptexDiskImage {
-            // only selected rhodon > 16.1 beta 3 can download runtimes via a xcodebuild -downloadPlatform version
+            // only selected Xcode > 16.1 beta 3 can download runtimes via a xcodebuild -downloadPlatform version
             // only Runtimes coming from cryptexDiskImage can be downloaded via xcodebuild
             if selectedXcode.version > Version(major: 16, minor: 0, patch: 0) {
                 if runtime.architectures?.isAppleSilicon ?? false {

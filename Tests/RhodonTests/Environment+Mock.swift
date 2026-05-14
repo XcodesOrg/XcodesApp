@@ -50,7 +50,7 @@ extension Files {
         trashItem: { _ in URL(fileURLWithPath: "\(NSHomeDirectory())/.Trash") },
         createFile: { _, _, _ in true },
         createDirectory: { _, _, _ in },
-        installedRhodon: { _ in [] }
+        installedXcodes: { _ in [] }
     )
 }
 

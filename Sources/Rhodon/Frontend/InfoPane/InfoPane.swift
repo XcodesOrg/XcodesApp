@@ -74,7 +74,7 @@ private func makePreviewContent(for index: Int) -> some View {
     let name = XcodePreviewName.allCases[index]
     return InfoPane(xcode: xcodeDict[name]!)
         .environment(configure(AppState()) {
-            $0.allRhodon = [xcodeDict[name]!]
+            $0.allXcodes = [xcodeDict[name]!]
         })
         .frame(width: 600, height: 400)
         .padding()

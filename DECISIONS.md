@@ -4,7 +4,7 @@ This file exists to provide a historical record of the motivation for important 
 
 ## Why Make Rhodon?
 
-[Rhodon](https://github.com/RobotsAndPencils/Rhodon) has been well-received within and outside of Robots and Pencils as an easy way to manage Xcode versions. A command line tool can have a familiar interface for developers, and is also easier to automate than most GUI apps.
+[Rhodon](https://github.com/mpwg/Rhodon) has been well-received as an easy way to manage Xcode versions. A command line tool can have a familiar interface for developers, and is also easier to automate than most GUI apps.
 
 Not everyone wants to use a command line tool though, and there's an opportunity to create an even better developer experience with an app. This is also an opportunity for contributors to get more familiar with SwiftUI and Combine on macOS. 
 
@@ -32,7 +32,7 @@ While I'm curious and eager to try Point Free's [Composable Architecture](https:
 
 ## Privilege Escalation
 
-Unlike [Rhodon](https://github.com/RobotsAndPencils/Rhodon/blob/master/DECISIONS.md#privilege-escalation), there is a better option than running sudo in a Process when we need to escalate privileges in Rhodon, namely a privileged helper.
+Unlike [Rhodon](https://github.com/mpwg/Rhodon/blob/master/DECISIONS.md#privilege-escalation), there is a better option than running sudo in a Process when we need to escalate privileges in Rhodon, namely a privileged helper.
 
 A separate, bundled executable is installed as a privileged helper using SMJobBless and communicates with the main app (the client) over XPC. This helper performs the post-install and xcode-select tasks that would require sudo from the command line. The helper and main app validate each other's bundle ID, version and code signing certificate chain.
 

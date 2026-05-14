@@ -22,10 +22,10 @@ extension AppState {
     }
 
     internal func setInstallationStep(of version: Version, to step: XcodeInstallationStep) {
-        guard let index = self.allRhodon.firstIndex(where: { $0.version.isEquivalent(to: version) }) else { return }
-        self.allRhodon[index].installState = .installing(step)
+        guard let index = self.allXcodes.firstIndex(where: { $0.version.isEquivalent(to: version) }) else { return }
+        self.allXcodes[index].installState = .installing(step)
 
-        let xcode = self.allRhodon[index]
+        let xcode = self.allXcodes[index]
         current.notificationManager.scheduleNotification(
             title: xcode.version.major.description + "." + xcode.version.appleDescription,
             body: step.description,

@@ -50,7 +50,7 @@ private func makePreviewContent(for index: Int) -> some View {
 
     return InfoPaneControls(xcode: xcodeDict[name]!)
         .environment(configure(AppState()) {
-            $0.allRhodon = [xcodeDict[name]!]
+            $0.allXcodes = [xcodeDict[name]!]
         })
         .frame(width: 500)
         .padding()

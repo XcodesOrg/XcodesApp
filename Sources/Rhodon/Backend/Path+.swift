@@ -14,7 +14,7 @@ extension Path {
     }
 
     static var cacheFile: Path {
-        rhodonApplicationSupport / "available-rhodon.json"
+        rhodonApplicationSupport / "available-xcodes.json"
     }
 
     static let defaultInstallDirectory = Path.root / "Applications"

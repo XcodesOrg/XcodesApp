@@ -126,7 +126,7 @@ private func makePreviewContent(for index: Int) -> some View {
     return PlatformsView(xcode: xcodeDict[name]!)
         .environment({ () -> AppState in
             let appState = AppState()
-            appState.allRhodon = [xcodeDict[name]!]
+            appState.allXcodes = [xcodeDict[name]!]
             appState.installedRuntimes = installedRuntimes
             appState.downloadableRuntimes = runtimes
 

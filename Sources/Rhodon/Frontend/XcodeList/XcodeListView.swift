@@ -26,27 +26,27 @@ struct XcodeListView: View {
         self.architecture = architecture
     }
 
-    var visibleRhodon: [Xcode] {
-        var rhodon: [Xcode] = switch category {
+    var visibleXcodes: [Xcode] {
+        var xcodes: [Xcode] = switch category {
         case .all:
-            appState.allRhodon
+            appState.allXcodes
         case .release:
-            appState.allRhodon.filter(\.version.isNotPrerelease)
+            appState.allXcodes.filter(\.version.isNotPrerelease)
         case .beta:
-            appState.allRhodon.filter(\.version.isPrerelease)
+            appState.allXcodes.filter(\.version.isPrerelease)
         }
 
         if architecture == .appleSilicon {
-            rhodon = rhodon.filter { $0.architectures == [.arm64] }
+            xcodes = xcodes.filter { $0.architectures == [.arm64] }
         }
 
-        let latestMajor = rhodon.sorted(\.version)
+        let latestMajor = xcodes.sorted(\.version)
             .filter(\.version.isNotPrerelease)
             .last?
             .version
             .major
 
-        rhodon = rhodon.filter {
+        xcodes = xcodes.filter {
             if
                 $0.installState.notInstalled,
                 let latestMajor,
@@ -58,18 +58,18 @@ struct XcodeListView: View {
         }
 
         if !searchText.isEmpty {
-            rhodon = rhodon.filter { $0.description.contains(searchText) }
+            xcodes = xcodes.filter { $0.description.contains(searchText) }
         }
 
         if isInstalledOnly {
-            rhodon = rhodon.filter(\.installState.installed)
+            xcodes = xcodes.filter(\.installState.installed)
         }
 
-        return rhodon
+        return xcodes
     }
 
     var body: some View {
-        List(visibleRhodon, selection: $selectedXcodeID) { xcode in
+        List(visibleXcodes, selection: $selectedXcodeID) { xcode in
             XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
         }
         .listStyle(.sidebar)
@@ -125,7 +125,7 @@ struct XcodeListView_Previews: PreviewProvider {
             )
             .environment({ () -> AppState in
                 let appState = AppState()
-                appState.allRhodon = [
+                appState.allXcodes = [
                     Xcode(
                         version: Version("12.0.0+1234A")!,
                         identicalBuilds: [

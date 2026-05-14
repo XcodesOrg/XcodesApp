@@ -37,18 +37,18 @@ class AppState: @unchecked Sendable {
 
     // MARK: - Published Properties
 
-    var availableRhodon: [AvailableXcode] = [] {
+    var availableXcodes: [AvailableXcode] = [] {
         willSet {
-            if newValue.count > availableRhodon.count, availableRhodon.count != 0 {
+            if newValue.count > availableXcodes.count, availableXcodes.count != 0 {
                 current.notificationManager.scheduleNotification(
                     title: "New Xcode versions",
                     body: "New Xcode versions are available to download.",
                     category: .normal
                 )
             }
-            updateAllRhodon(
-                availableRhodon: newValue,
-                installedRhodon: current.files.installedRhodon(Path.installDirectory),
+            updateAllXcodes(
+                availableXcodes: newValue,
+                installedXcodes: current.files.installedXcodes(Path.installDirectory),
                 selectedXcodePath: selectedXcodePath
             )
         }
@@ -57,12 +57,12 @@ class AppState: @unchecked Sendable {
         }
     }
 
-    var allRhodon: [Xcode] = []
+    var allXcodes: [Xcode] = []
     var selectedXcodePath: String? {
         willSet {
-            updateAllRhodon(
-                availableRhodon: availableRhodon,
-                installedRhodon: current.files.installedRhodon(Path.installDirectory),
+            updateAllXcodes(
+                availableXcodes: availableXcodes,
+                installedXcodes: current.files.installedXcodes(Path.installDirectory),
                 selectedXcodePath: newValue
             )
         }
@@ -214,7 +214,7 @@ class AppState: @unchecked Sendable {
         }
 
         guard !isTesting else { return }
-        try? loadCachedAvailableRhodon()
+        try? loadCachedAvailableXcodes()
         try? loadCacheDownloadableRuntimes()
         Task { await checkIfHelperIsInstalled() }
         setupAutoInstallTimer()
@@ -233,7 +233,7 @@ class AppState: @unchecked Sendable {
 
     // MARK: Timer
 
-    /// Runs a timer every 6 hours when app is open to check if it needs to auto install any rhodon
+    /// Runs a timer every 6 hours when app is open to check if it needs to auto install any Xcodes
     func setupAutoInstallTimer() {
         guard
             let storageValue = current.defaults.get(forKey: "autoInstallation") as? Int,

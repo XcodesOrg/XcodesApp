@@ -88,11 +88,11 @@ struct MainWindow: View {
         // I'm expecting to be able to use this modifier on a List row, but using it at the top level here is the only
         // way that has made XcodeCommands work so far.
         // FB8954571 focusedValue(_:_:) on List row doesn't propagate value to @FocusedValue
-        .focusedValue(\.selectedXcode, SelectedXcode(appState.allRhodon.first { $0.id == selectedXcodeID }))
+        .focusedValue(\.selectedXcode, SelectedXcode(appState.allXcodes.first { $0.id == selectedXcodeID }))
     }
 
     private var xcode: Xcode? {
-        appState.allRhodon.first(where: { $0.id == selectedXcodeID })
+        appState.allXcodes.first(where: { $0.id == selectedXcodeID })
     }
 
     private var subtitleText: Text {
@@ -248,7 +248,7 @@ struct MainWindow_Previews: PreviewProvider {
     static var previews: some View {
         MainWindow().environment({ () -> AppState in
             let appState = AppState()
-            appState.allRhodon = [
+            appState.allXcodes = [
                 Xcode(
                     version: Version("12.0.0+1234A")!,
                     identicalBuilds: [

@@ -45,7 +45,7 @@ struct InstalledStateButtons: View {
 #Preview {
     InstalledStateButtons(xcode: xcode)
         .environment(configure(AppState()) {
-            $0.allRhodon = [xcode]
+            $0.allXcodes = [xcode]
         })
         .padding()
         .frame(width: 300)

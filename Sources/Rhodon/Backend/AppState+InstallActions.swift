@@ -41,7 +41,7 @@ extension AppState {
     }
 
     func checkMinVersionAndInstall(id: XcodeID) {
-        guard let availableXcode = availableRhodon.first(where: { $0.xcodeID == id }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
         if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
             if hasMinSupportedOS(requiredMacOSVersion: requiredMacOSVersion) {
@@ -68,7 +68,7 @@ extension AppState {
     }
 
     func install(id: XcodeID) {
-        guard let availableXcode = availableRhodon.first(where: { $0.xcodeID == id }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
         installationTasks[id] = Task {
             do {
@@ -109,13 +109,13 @@ extension AppState {
             self.error = error
             presentedAlert = .generic(title: "Unable to install Xcode", message: error.legibleLocalizedDescription)
         }
-        if let index = allRhodon.firstIndex(where: { $0.id == id }) {
-            allRhodon[index].installState = .notInstalled
+        if let index = allXcodes.firstIndex(where: { $0.id == id }) {
+            allXcodes[index].installState = .notInstalled
         }
     }
 
     func installWithoutLogin(id: Xcode.ID) {
-        guard let availableXcode = availableRhodon.first(where: { $0.xcodeID == id }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
         installationTasks[id] = Task {
             do {
@@ -131,8 +131,8 @@ extension AppState {
                         message: error.legibleLocalizedDescription
                     )
                 }
-                if let index = allRhodon.firstIndex(where: { $0.id == id }) {
-                    allRhodon[index].installState = .notInstalled
+                if let index = allXcodes.firstIndex(where: { $0.id == id }) {
+                    allXcodes[index].installState = .notInstalled
                 }
             }
             installationTasks[id] = nil
@@ -140,7 +140,7 @@ extension AppState {
     }
 
     func cancelInstall(id: Xcode.ID) {
-        guard let availableXcode = availableRhodon.first(where: { $0.xcodeID == id }) else { return }
+        guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
         installationTasks[id]?.cancel()
         installationTasks[id] = nil
@@ -154,8 +154,8 @@ extension AppState {
         try? current.files.removeItem(at: expectedArchivePath.url)
         try? current.files.removeItem(at: aria2DownloadMetadataPath.url)
 
-        if let index = allRhodon.firstIndex(where: { $0.id == id }) {
-            allRhodon[index].installState = .notInstalled
+        if let index = allXcodes.firstIndex(where: { $0.id == id }) {
+            allXcodes[index].installState = .notInstalled
         }
     }
 }

@@ -9,16 +9,16 @@ import RhodonKit
 import XCTest
 
 @MainActor
-private func recordAllRhodon(
+private func recordAllXcodes(
     from subject: AppState,
     onChange: @escaping @MainActor ([Xcode]) -> Void
 ) {
-    onChange(subject.allRhodon)
+    onChange(subject.allXcodes)
     withObservationTracking {
-        _ = subject.allRhodon
+        _ = subject.allXcodes
     } onChange: {
         Task {
-            await recordAllRhodon(from: subject, onChange: onChange)
+            await recordAllXcodes(from: subject, onChange: onChange)
         }
     }
 }
@@ -89,7 +89,7 @@ class AppStateTests: XCTestCase {
 
     func test_Install_FullHappyPath_Apple() async throws {
         // Available xcode doesn't necessarily have build identifier
-        subject.allRhodon = try [
+        subject.allXcodes = try [
             .init(version: XCTUnwrap(Version("0.0.0")), installState: .notInstalled, selected: false, icon: nil),
             .init(
                 version: XCTUnwrap(Version("0.0.0-Beta.1")),
@@ -192,14 +192,14 @@ class AppStateTests: XCTestCase {
         // Helper is already installed
         subject.helperInstallState = .installed
 
-        var allRhodonElements = [[Xcode]]()
+        var allXcodesElements = [[Xcode]]()
         let installedStateExpectation = expectation(description: "Installed state")
         var didObserveInstalledState = false
-        recordAllRhodon(from: subject) { rhodon in
-            allRhodonElements.append(rhodon)
+        recordAllXcodes(from: subject) { xcodes in
+            allXcodesElements.append(xcodes)
             if
                 !didObserveInstalledState,
-                rhodon.first?.installState == .installed(Path("/Applications/Xcode-0.0.0.app")!) {
+                xcodes.first?.installState == .installed(Path("/Applications/Xcode-0.0.0.app")!) {
                 didObserveInstalledState = true
                 installedStateExpectation.fulfill()
             }
@@ -215,7 +215,7 @@ class AppStateTests: XCTestCase {
         )
         await fulfillment(of: [installedStateExpectation], timeout: 5)
 
-        let observedStates = allRhodonElements.map { $0.map(\.installState) }
+        let observedStates = allXcodesElements.map { $0.map(\.installState) }
         XCTAssertTrue(observedStates.contains([.installing(.downloading(progress: progress)), .notInstalled, .notInstalled]))
         XCTAssertTrue(observedStates.contains([.installing(.finishing), .notInstalled, .notInstalled]))
         XCTAssertEqual(
@@ -226,7 +226,7 @@ class AppStateTests: XCTestCase {
 
     func test_Install_FullHappyPath_XcodeReleases() async throws {
         // Available xcode has build identifier
-        subject.allRhodon = try [
+        subject.allXcodes = try [
             .init(
                 version: XCTUnwrap(Version("0.0.0+ABC123")),
                 installState: .notInstalled,
@@ -332,14 +332,14 @@ class AppStateTests: XCTestCase {
         // Helper is already installed
         subject.helperInstallState = .installed
 
-        var allRhodonElements = [[Xcode]]()
+        var allXcodesElements = [[Xcode]]()
         let installedStateExpectation = expectation(description: "Installed state")
         var didObserveInstalledState = false
-        recordAllRhodon(from: subject) { rhodon in
-            allRhodonElements.append(rhodon)
+        recordAllXcodes(from: subject) { xcodes in
+            allXcodesElements.append(xcodes)
             if
                 !didObserveInstalledState,
-                rhodon.first?.installState == .installed(Path("/Applications/Xcode-0.0.0.app")!) {
+                xcodes.first?.installState == .installed(Path("/Applications/Xcode-0.0.0.app")!) {
                 didObserveInstalledState = true
                 installedStateExpectation.fulfill()
             }
@@ -355,7 +355,7 @@ class AppStateTests: XCTestCase {
         )
         await fulfillment(of: [installedStateExpectation], timeout: 5)
 
-        let observedStates = allRhodonElements.map { $0.map(\.installState) }
+        let observedStates = allXcodesElements.map { $0.map(\.installState) }
         XCTAssertTrue(observedStates.contains([.installing(.downloading(progress: progress)), .notInstalled, .notInstalled]))
         XCTAssertTrue(observedStates.contains([.installing(.finishing), .notInstalled, .notInstalled]))
         XCTAssertEqual(

@@ -16,7 +16,7 @@ extension AppState {
 
         if autoInstallType == .none { return }
 
-        guard let newestXcode = allRhodon.first, newestXcode.installState == .notInstalled else {
+        guard let newestXcode = allXcodes.first, newestXcode.installState == .notInstalled else {
             Logger.appState.info("User has latest Xcode already installed")
             return
         }
@@ -86,9 +86,9 @@ extension AppState {
 
     private func updateInstalledState(for installedXcode: InstalledXcode) {
         guard
-            let index = allRhodon.firstIndex(where: { $0.version.isEquivalent(to: installedXcode.version) })
+            let index = allXcodes.firstIndex(where: { $0.version.isEquivalent(to: installedXcode.version) })
         else { return }
-        allRhodon[index].installState = .installed(installedXcode.path)
+        allXcodes[index].installState = .installed(installedXcode.path)
     }
 
     private func getXcodeArchive(
@@ -98,7 +98,7 @@ extension AppState {
         switch installationType {
         case let .version(availableXcode):
             if
-                let installedXcode = current.files.installedRhodon(Path.installDirectory)
+                let installedXcode = current.files.installedXcodes(Path.installDirectory)
                     .first(where: { $0.version.isEquivalent(to: availableXcode.version) }) {
                 throw InstallationError.versionAlreadyInstalled(installedXcode)
             }

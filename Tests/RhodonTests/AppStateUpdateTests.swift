@@ -22,7 +22,7 @@ class AppStateUpdateTests: XCTestCase {
     }
 
     func testDoesNotReplaceInstallState() throws {
-        subject.allRhodon = try [
+        subject.allXcodes = try [
             Xcode(
                 version: XCTUnwrap(Version("0.0.0")),
                 installState: .installing(.unarchiving),
@@ -31,8 +31,8 @@ class AppStateUpdateTests: XCTestCase {
             )
         ]
 
-        try subject.updateAllRhodon(
-            availableRhodon: [
+        try subject.updateAllXcodes(
+            availableXcodes: [
                 AvailableXcode(
                     version: XCTUnwrap(Version("0.0.0")),
                     url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
@@ -40,16 +40,16 @@ class AppStateUpdateTests: XCTestCase {
                     releaseDate: nil
                 )
             ],
-            installedRhodon: [
+            installedXcodes: [
             ],
             selectedXcodePath: nil
         )
 
-        XCTAssertEqual(subject.allRhodon[0].installState, .installing(.unarchiving))
+        XCTAssertEqual(subject.allXcodes[0].installState, .installing(.unarchiving))
     }
 
     func testRemovesUninstalledVersion() throws {
-        subject.allRhodon = try [
+        subject.allXcodes = try [
             Xcode(
                 version: XCTUnwrap(Version("0.0.0")),
                 installState: .installed(XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))),
@@ -58,8 +58,8 @@ class AppStateUpdateTests: XCTestCase {
             )
         ]
 
-        try subject.updateAllRhodon(
-            availableRhodon: [
+        try subject.updateAllXcodes(
+            availableXcodes: [
                 AvailableXcode(
                     version: XCTUnwrap(Version("0.0.0")),
                     url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
@@ -67,12 +67,12 @@ class AppStateUpdateTests: XCTestCase {
                     releaseDate: nil
                 )
             ],
-            installedRhodon: [
+            installedXcodes: [
             ],
             selectedXcodePath: nil
         )
 
-        XCTAssertEqual(subject.allRhodon[0].installState, .notInstalled)
+        XCTAssertEqual(subject.allXcodes[0].installState, .notInstalled)
     }
 
     func testDeterminesIfInstalledByBuildMetadataAlone() throws {
@@ -84,11 +84,11 @@ class AppStateUpdateTests: XCTestCase {
             }
         }
 
-        subject.allRhodon = [
+        subject.allXcodes = [
         ]
 
-        try subject.updateAllRhodon(
-            availableRhodon: [
+        try subject.updateAllXcodes(
+            availableXcodes: [
                 // Note "GM" prerelease identifier
                 AvailableXcode(
                     version: XCTUnwrap(Version("0.0.0-GM+ABC123")),
@@ -97,18 +97,18 @@ class AppStateUpdateTests: XCTestCase {
                     releaseDate: nil
                 )
             ],
-            installedRhodon: [
+            installedXcodes: [
                 XCTUnwrap(try InstalledXcode(path: XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))))
             ],
             selectedXcodePath: nil
         )
 
-        XCTAssertEqual(subject.allRhodon[0].version, Version("0.0.0+ABC123"))
+        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123"))
         XCTAssertEqual(
-            subject.allRhodon[0].installState,
+            subject.allXcodes[0].installState,
             try .installed(XCTUnwrap(Path("/Applications/Xcode-0.0.0.app")))
         )
-        XCTAssertEqual(subject.allRhodon[0].selected, false)
+        XCTAssertEqual(subject.allXcodes[0].selected, false)
     }
 
     func testAdjustedVersionsAreUsedToLookupAvailableXcode() throws {
@@ -120,11 +120,11 @@ class AppStateUpdateTests: XCTestCase {
             }
         }
 
-        subject.allRhodon = [
+        subject.allXcodes = [
         ]
 
-        try subject.updateAllRhodon(
-            availableRhodon: [
+        try subject.updateAllXcodes(
+            availableXcodes: [
                 // Note "GM" prerelease identifier
                 AvailableXcode(
                     version: XCTUnwrap(Version("0.0.0-GM+ABC123")),
@@ -134,28 +134,28 @@ class AppStateUpdateTests: XCTestCase {
                     sdks: .init(iOS: .init("14.3"))
                 )
             ],
-            installedRhodon: [
+            installedXcodes: [
                 XCTUnwrap(try InstalledXcode(path: XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))))
             ],
             selectedXcodePath: nil
         )
 
-        XCTAssertEqual(subject.allRhodon[0].version, Version("0.0.0+ABC123"))
+        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123"))
         XCTAssertEqual(
-            subject.allRhodon[0].installState,
+            subject.allXcodes[0].installState,
             try .installed(XCTUnwrap(Path("/Applications/Xcode-0.0.0.app")))
         )
-        XCTAssertEqual(subject.allRhodon[0].selected, false)
+        XCTAssertEqual(subject.allXcodes[0].selected, false)
         // XCModel types aren't equatable, so just check for non-nil for now
-        XCTAssertNotNil(subject.allRhodon[0].sdks)
+        XCTAssertNotNil(subject.allXcodes[0].sdks)
     }
 
     func testAppendingInstalledVersionThatIsNotAvailable() throws {
-        subject.allRhodon = [
+        subject.allXcodes = [
         ]
 
-        try subject.updateAllRhodon(
-            availableRhodon: [
+        try subject.updateAllXcodes(
+            availableXcodes: [
                 AvailableXcode(
                     version: XCTUnwrap(Version("1.2.3")),
                     url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
@@ -164,7 +164,7 @@ class AppStateUpdateTests: XCTestCase {
                     sdks: .init(iOS: .init("14.3"))
                 )
             ],
-            installedRhodon: [
+            installedXcodes: [
                 // There's a version installed which for some reason isn't listed online
                 XCTUnwrap(try InstalledXcode(path: XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))))
             ],
@@ -172,7 +172,7 @@ class AppStateUpdateTests: XCTestCase {
         )
 
         XCTAssertEqual(
-            subject.allRhodon.map(\.version),
+            subject.allXcodes.map(\.version),
             try [XCTUnwrap(Version("1.2.3")), XCTUnwrap(Version("0.0.0+ABC123"))]
         )
     }
@@ -186,11 +186,11 @@ class AppStateUpdateTests: XCTestCase {
             }
         }
 
-        subject.allRhodon = [
+        subject.allXcodes = [
         ]
 
-        try subject.updateAllRhodon(
-            availableRhodon: [
+        try subject.updateAllXcodes(
+            availableXcodes: [
                 AvailableXcode(
                     version: XCTUnwrap(Version("12.4.0+12D4e")),
                     url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
@@ -204,14 +204,14 @@ class AppStateUpdateTests: XCTestCase {
                     releaseDate: nil
                 )
             ],
-            installedRhodon: [
+            installedXcodes: [
             ],
             selectedXcodePath: nil
         )
 
-        XCTAssertEqual(subject.allRhodon.map(\.version), try [XCTUnwrap(Version("12.4.0+12D4e"))])
+        XCTAssertEqual(subject.allXcodes.map(\.version), try [XCTUnwrap(Version("12.4.0+12D4e"))])
         XCTAssertEqual(
-            subject.allRhodon.map(\.identicalBuilds),
+            subject.allXcodes.map(\.identicalBuilds),
             try [[
                 XcodeID(version: XCTUnwrap(Version("12.4.0+12D4e"))),
                 XcodeID(version: XCTUnwrap(Version("12.4.0-RC+12D4e")))
@@ -228,11 +228,11 @@ class AppStateUpdateTests: XCTestCase {
             }
         }
 
-        subject.allRhodon = [
+        subject.allXcodes = [
         ]
 
-        try subject.updateAllRhodon(
-            availableRhodon: [
+        try subject.updateAllXcodes(
+            availableXcodes: [
                 AvailableXcode(
                     version: XCTUnwrap(Version("3.2.3+10M2262")),
                     url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
@@ -246,16 +246,16 @@ class AppStateUpdateTests: XCTestCase {
                     releaseDate: nil
                 )
             ],
-            installedRhodon: [
+            installedXcodes: [
             ],
             selectedXcodePath: nil
         )
 
         XCTAssertEqual(
-            subject.allRhodon.map(\.version),
+            subject.allXcodes.map(\.version),
             try [XCTUnwrap(Version("3.2.3+10M2262")), XCTUnwrap(Version("3.2.3+10M2262"))]
         )
-        XCTAssertEqual(subject.allRhodon.map(\.identicalBuilds), [[], []])
+        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[], []])
     }
 
     func testIdenticalBuilds_KeepsReleaseVersion_WithPrereleaseInstalled() throws {
@@ -267,7 +267,7 @@ class AppStateUpdateTests: XCTestCase {
             }
         }
 
-        subject.allRhodon = [
+        subject.allXcodes = [
         ]
 
         current.files.contentsAtPath = { path in
@@ -300,8 +300,8 @@ class AppStateUpdateTests: XCTestCase {
             }
         }
 
-        try subject.updateAllRhodon(
-            availableRhodon: [
+        try subject.updateAllXcodes(
+            availableXcodes: [
                 AvailableXcode(
                     version: XCTUnwrap(Version("12.4.0+12D4e")),
                     url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
@@ -315,15 +315,15 @@ class AppStateUpdateTests: XCTestCase {
                     releaseDate: nil
                 )
             ],
-            installedRhodon: [
+            installedXcodes: [
                 XCTUnwrap(try InstalledXcode(path: XCTUnwrap(Path("/Applications/Xcode-12.4.0-RC.app"))))
             ],
             selectedXcodePath: nil
         )
 
-        XCTAssertEqual(subject.allRhodon.map(\.version), try [XCTUnwrap(Version("12.4.0+12D4e"))])
+        XCTAssertEqual(subject.allXcodes.map(\.version), try [XCTUnwrap(Version("12.4.0+12D4e"))])
         XCTAssertEqual(
-            subject.allRhodon.map(\.identicalBuilds),
+            subject.allXcodes.map(\.identicalBuilds),
             try [[
                 XcodeID(version: XCTUnwrap(Version("12.4.0+12D4e"))),
                 XcodeID(version: XCTUnwrap(Version("12.4.0-RC+12D4e")))
@@ -340,11 +340,11 @@ class AppStateUpdateTests: XCTestCase {
             }
         }
 
-        subject.allRhodon = [
+        subject.allXcodes = [
         ]
 
-        try subject.updateAllRhodon(
-            availableRhodon: [
+        try subject.updateAllXcodes(
+            availableXcodes: [
                 AvailableXcode(
                     version: XCTUnwrap(Version("12.4.0")),
                     url: XCTUnwrap(URL(string: "https://apple.com/xcode.xip")),
@@ -358,16 +358,16 @@ class AppStateUpdateTests: XCTestCase {
                     releaseDate: nil
                 )
             ],
-            installedRhodon: [
+            installedXcodes: [
             ],
             selectedXcodePath: nil
         )
 
         XCTAssertEqual(
-            subject.allRhodon.map(\.version),
+            subject.allXcodes.map(\.version),
             try [XCTUnwrap(Version("12.4.0")), XCTUnwrap(Version("12.3.0-RC"))]
         )
-        XCTAssertEqual(subject.allRhodon.map(\.identicalBuilds), [[], []])
+        XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[], []])
     }
 
     func sha256(data: Data) -> Data {

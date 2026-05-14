@@ -106,7 +106,7 @@ public struct Files: @unchecked Sendable {
         try createDirectory(url, createIntermediates, attributes)
     }
 
-    public var installedRhodon = _installedRhodon
+    public var installedXcodes = _installedXcodes
 
     public func installedXcode(destination: Path) -> InstalledXcode? {
         if Path.isAppBundle(path: destination), Path.infoPlist(path: destination)?.bundleID == "com.apple.dt.Xcode" {
@@ -123,7 +123,7 @@ public struct Files: @unchecked Sendable {
     }
 }
 
-private func _installedRhodon(destination: Path) -> [InstalledXcode] {
+private func _installedXcodes(destination: Path) -> [InstalledXcode] {
     destination.ls()
         .filter { $0.isAppBundle && $0.infoPlist?.bundleID == "com.apple.dt.Xcode" }
         .map { $0 }

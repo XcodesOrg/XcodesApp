@@ -37,7 +37,7 @@ extension AppState {
                 async let downloadableRuntimes: Void = updateDownloadableRuntimes()
                 async let installedRuntimes: Void = updateInstalledRuntimes()
                 await updateSelectedXcodePath()
-                _ = try await updateAvailableRhodon(from: dataSource)
+                _ = try await updateAvailableXcodes(from: dataSource)
                 _ = await (downloadableRuntimes, installedRuntimes)
                 current.defaults.setDate(current.date(), forKey: "lastUpdated")
             } catch {
@@ -61,25 +61,25 @@ extension AppState {
         }
     }
 
-    private func updateAvailableRhodon(from dataSource: DataSource) async throws -> [AvailableXcode] {
+    private func updateAvailableXcodes(from dataSource: DataSource) async throws -> [AvailableXcode] {
         switch dataSource {
         case .apple:
             try await authenticationStore.signInIfNeeded()
             try await authenticationStore.validateSession()
-            async let released = releasedRhodon()
-            async let prerelease = prereleaseRhodon()
-            let (releasedRhodon, prereleaseRhodon) = try await (released, prerelease)
-            let rhodon = releasedRhodon.filter { releasedXcode in
-                prereleaseRhodon.contains { $0.version.isEquivalent(to: releasedXcode.version) } == false
-            } + prereleaseRhodon
-            availableRhodon = rhodon
-            try? cacheAvailableRhodon(rhodon)
-            return rhodon
+            async let released = releasedXcodes()
+            async let prerelease = prereleaseXcodes()
+            let (releasedXcodes, prereleaseXcodes) = try await (released, prerelease)
+            let xcodes = releasedXcodes.filter { releasedXcode in
+                prereleaseXcodes.contains { $0.version.isEquivalent(to: releasedXcode.version) } == false
+            } + prereleaseXcodes
+            availableXcodes = xcodes
+            try? cacheAvailableXcodes(xcodes)
+            return xcodes
         case .xcodeReleases:
-            let rhodon = try await xcodeReleases()
-            availableRhodon = rhodon
-            try? cacheAvailableRhodon(rhodon)
-            return rhodon
+            let xcodes = try await xcodeReleases()
+            availableXcodes = xcodes
+            try? cacheAvailableXcodes(xcodes)
+            return xcodes
         }
     }
 }
@@ -87,14 +87,14 @@ extension AppState {
 extension AppState {
     // MARK: - Available Xcode Cache
 
-    func loadCachedAvailableRhodon() throws {
+    func loadCachedAvailableXcodes() throws {
         guard let data = current.files.contents(atPath: Path.cacheFile.string) else { return }
-        let rhodon = try JSONDecoder().decode([AvailableXcode].self, from: data)
-        availableRhodon = rhodon
+        let xcodes = try JSONDecoder().decode([AvailableXcode].self, from: data)
+        availableXcodes = xcodes
     }
 
-    func cacheAvailableRhodon(_ rhodon: [AvailableXcode]) throws {
-        let data = try JSONEncoder().encode(rhodon)
+    func cacheAvailableXcodes(_ xcodes: [AvailableXcode]) throws {
+        let data = try JSONEncoder().encode(xcodes)
         try FileManager.default.createDirectory(
             at: Path.cacheFile.url.deletingLastPathComponent(),
             withIntermediateDirectories: true
@@ -123,7 +123,7 @@ extension AppState {
 extension AppState {
     // MARK: - Apple
 
-    private func releasedRhodon() async throws -> [AvailableXcode] {
+    private func releasedXcodes() async throws -> [AvailableXcode] {
         let data = try await current.network.data(for: URLRequest.downloads).0
         let downloads = try configure(JSONDecoder()) {
             $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
@@ -155,12 +155,12 @@ extension AppState {
             }
     }
 
-    private func prereleaseRhodon() async throws -> [AvailableXcode] {
+    private func prereleaseXcodes() async throws -> [AvailableXcode] {
         let data = try await current.network.data(for: URLRequest.download).0
-        return try parsePrereleaseRhodon(from: data)
+        return try parsePrereleaseXcodes(from: data)
     }
 
-    private func parsePrereleaseRhodon(from data: Data) throws -> [AvailableXcode] {
+    private func parsePrereleaseXcodes(from data: Data) throws -> [AvailableXcode] {
         let body = String(data: data, encoding: .utf8)!
         let document = try SwiftSoup.parse(body)
 
@@ -198,8 +198,8 @@ extension AppState {
     private func xcodeReleases() async throws -> [AvailableXcode] {
         let xcodeReleasesURL = URL(string: "https://xcodereleases.com/data.json")!
         let data = try await current.network.data(for: URLRequest(url: xcodeReleasesURL)).0
-        let xcReleasesRhodon = try JSONDecoder().decode([XcodeRelease].self, from: data)
-        return xcReleasesRhodon.compactMap { xcReleasesXcode -> AvailableXcode? in
+        let xcReleasesXcodes = try JSONDecoder().decode([XcodeRelease].self, from: data)
+        return xcReleasesXcodes.compactMap { xcReleasesXcode -> AvailableXcode? in
             guard
                 let downloadURL = xcReleasesXcode.links?.download?.url,
                 let version = Version(xcReleasesXcode: xcReleasesXcode)

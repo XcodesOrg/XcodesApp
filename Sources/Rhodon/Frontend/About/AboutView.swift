@@ -18,7 +18,7 @@ struct AboutView: View {
 
                 HStack(spacing: 32) {
                     Button(action: {
-                        openURL(URL(string: "https://github.com/RobotsAndPencils/Rhodon/")!)
+                        openURL(URL(string: "https://github.com/mpwg/Rhodon/")!)
                     }, label: {
                         Label("GithubRepo", systemImage: "link")
                     })

@@ -5,70 +5,70 @@ import Version
 import RhodonKit
 
 extension AppState {
-    func updateAllRhodon(
-        availableRhodon: [AvailableXcode],
-        installedRhodon: [InstalledXcode],
+    func updateAllXcodes(
+        availableXcodes: [AvailableXcode],
+        installedXcodes: [InstalledXcode],
         selectedXcodePath: String?
     ) {
-        let adjustedAvailableRhodon = adjustedAvailableRhodon(
-            availableRhodon: availableRhodon,
-            installedRhodon: installedRhodon
+        let adjustedAvailableXcodes = adjustedAvailableXcodes(
+            availableXcodes: availableXcodes,
+            installedXcodes: installedXcodes
         )
-        var newAllRhodon = mappedRhodon(
-            adjustedAvailableRhodon: adjustedAvailableRhodon,
-            availableRhodon: availableRhodon,
-            installedRhodon: installedRhodon,
+        var newAllXcodes = mappedXcodes(
+            adjustedAvailableXcodes: adjustedAvailableXcodes,
+            availableXcodes: availableXcodes,
+            installedXcodes: installedXcodes,
             selectedXcodePath: selectedXcodePath
         )
 
-        appendMissingInstalledRhodon(
-            installedRhodon: installedRhodon,
+        appendMissingInstalledXcodes(
+            installedXcodes: installedXcodes,
             selectedXcodePath: selectedXcodePath,
-            allRhodon: &newAllRhodon
+            allXcodes: &newAllXcodes
         )
 
-        allRhodon = newAllRhodon.sorted { $0.version > $1.version }
+        allXcodes = newAllXcodes.sorted { $0.version > $1.version }
     }
 
-    private func adjustedAvailableRhodon(
-        availableRhodon: [AvailableXcode],
-        installedRhodon: [InstalledXcode]
+    private func adjustedAvailableXcodes(
+        availableXcodes: [AvailableXcode],
+        installedXcodes: [InstalledXcode]
     ) -> [AvailableXcode] {
-        guard dataSource == .apple else { return availableRhodon }
+        guard dataSource == .apple else { return availableXcodes }
 
-        var adjustedAvailableRhodon = availableRhodon
-        for installedXcode in installedRhodon {
-            adjustAvailableXcode(installedXcode, in: &adjustedAvailableRhodon)
+        var adjustedAvailableXcodes = availableXcodes
+        for installedXcode in installedXcodes {
+            adjustAvailableXcode(installedXcode, in: &adjustedAvailableXcodes)
         }
-        return adjustedAvailableRhodon
+        return adjustedAvailableXcodes
     }
 
-    private func adjustAvailableXcode(_ installedXcode: InstalledXcode, in rhodon: inout [AvailableXcode]) {
-        if let index = rhodon.map(\.version).firstIndex(
+    private func adjustAvailableXcode(_ installedXcode: InstalledXcode, in availableXcodes: inout [AvailableXcode]) {
+        if let index = availableXcodes.map(\.version).firstIndex(
             where: { $0.buildMetadataIdentifiers == installedXcode.version.buildMetadataIdentifiers }
         ) {
-            rhodon[index].xcodeID = installedXcode.xcodeID
-        } else if let index = rhodon.firstIndex(where: { availableXcode in
+            availableXcodes[index].xcodeID = installedXcode.xcodeID
+        } else if let index = availableXcodes.firstIndex(where: { availableXcode in
             availableXcode.version.isEquivalent(to: installedXcode.version) &&
                 availableXcode.version.buildMetadataIdentifiers.isEmpty
         }) {
-            rhodon[index].xcodeID = installedXcode.xcodeID
+            availableXcodes[index].xcodeID = installedXcode.xcodeID
         }
     }
 
-    private func mappedRhodon(
-        adjustedAvailableRhodon: [AvailableXcode],
-        availableRhodon: [AvailableXcode],
-        installedRhodon: [InstalledXcode],
+    private func mappedXcodes(
+        adjustedAvailableXcodes: [AvailableXcode],
+        availableXcodes: [AvailableXcode],
+        installedXcodes: [InstalledXcode],
         selectedXcodePath: String?
     ) -> [Xcode] {
-        adjustedAvailableRhodon
-            .filter { shouldIncludeAvailableXcode($0, availableRhodon: availableRhodon) }
+        adjustedAvailableXcodes
+            .filter { shouldIncludeAvailableXcode($0, availableXcodes: availableXcodes) }
             .map { availableXcode in
                 xcode(
                     from: availableXcode,
-                    availableRhodon: availableRhodon,
-                    installedRhodon: installedRhodon,
+                    availableXcodes: availableXcodes,
+                    installedXcodes: installedXcodes,
                     selectedXcodePath: selectedXcodePath
                 )
             }
@@ -76,11 +76,11 @@ extension AppState {
 
     private func shouldIncludeAvailableXcode(
         _ availableXcode: AvailableXcode,
-        availableRhodon: [AvailableXcode]
+        availableXcodes: [AvailableXcode]
     ) -> Bool {
         guard !availableXcode.version.buildMetadataIdentifiers.isEmpty else { return true }
 
-        let availableIdenticalBuilds = availableRhodon
+        let availableIdenticalBuilds = availableXcodes
             .filter { $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers }
 
         return availableIdenticalBuilds.count == 1 ||
@@ -90,14 +90,14 @@ extension AppState {
 
     private func xcode(
         from availableXcode: AvailableXcode,
-        availableRhodon: [AvailableXcode],
-        installedRhodon: [InstalledXcode],
+        availableXcodes: [AvailableXcode],
+        installedXcodes: [InstalledXcode],
         selectedXcodePath: String?
     ) -> Xcode {
-        let installedXcode = installedRhodon.first {
+        let installedXcode = installedXcodes.first {
             availableXcode.version.isEquivalent(to: $0.version)
         }
-        let existingXcodeInstallState = allRhodon
+        let existingXcodeInstallState = allXcodes
             .first { $0.id == availableXcode.xcodeID && $0.installState.installing }?.installState
         let defaultXcodeInstallState: XcodeInstallState = installedXcode
             .map { .installed($0.path) } ?? .notInstalled
@@ -107,7 +107,7 @@ extension AppState {
 
         return Xcode(
             version: availableXcode.version,
-            identicalBuilds: identicalBuilds(for: availableXcode, availableRhodon: availableRhodon),
+            identicalBuilds: identicalBuilds(for: availableXcode, availableXcodes: availableXcodes),
             installState: existingXcodeInstallState ?? defaultXcodeInstallState,
             selected: selected,
             icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),
@@ -121,8 +121,8 @@ extension AppState {
         )
     }
 
-    private func identicalBuilds(for availableXcode: AvailableXcode, availableRhodon: [AvailableXcode]) -> [XcodeID] {
-        let prereleaseIdenticalBuilds = availableRhodon
+    private func identicalBuilds(for availableXcode: AvailableXcode, availableXcodes: [AvailableXcode]) -> [XcodeID] {
+        let prereleaseIdenticalBuilds = availableXcodes
             .filter {
                 $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers &&
                     !$0.version.prereleaseIdentifiers.isEmpty &&
@@ -136,14 +136,14 @@ extension AppState {
         }
     }
 
-    private func appendMissingInstalledRhodon(
-        installedRhodon: [InstalledXcode],
+    private func appendMissingInstalledXcodes(
+        installedXcodes: [InstalledXcode],
         selectedXcodePath: String?,
-        allRhodon: inout [Xcode]
+        allXcodes: inout [Xcode]
     ) {
-        for installedXcode in installedRhodon
-            where !allRhodon.contains(where: { xcode in xcode.version.isEquivalent(to: installedXcode.version) }) {
-            allRhodon.append(
+        for installedXcode in installedXcodes
+            where !allXcodes.contains(where: { xcode in xcode.version.isEquivalent(to: installedXcode.version) }) {
+            allXcodes.append(
                 Xcode(
                     version: installedXcode.version,
                     installState: .installed(installedXcode.path),
