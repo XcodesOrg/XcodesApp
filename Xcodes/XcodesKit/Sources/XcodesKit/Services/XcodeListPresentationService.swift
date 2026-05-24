@@ -23,25 +23,31 @@ public struct XcodeListPresentationService: Sendable {
         availableXcodes: [AvailableXcode],
         installedXcodes: [InstalledXcode],
         selectedXcodePath: String?,
-        dataSource: XcodeListDataSource
+        dataSource: XcodeListDataSource,
+        architectures: [Architecture] = []
     ) -> [AvailableRow] {
         struct ReleasedVersion {
             let version: Version
             let releaseDate: Date?
         }
 
-        let adjustedAvailableXcodes = dataSource == .apple
+        let adjustedAvailableXcodes = (dataSource == .apple
             ? XcodeListComposer.adjustingAvailableXcodesForInstalledBuildMetadata(
                 availableXcodes,
                 installedXcodes: installedXcodes
             )
-            : availableXcodes
+            : availableXcodes)
+            .matchingArchitectures(architectures)
+
+        let adjustedInstalledXcodes = architectures.isEmpty
+            ? installedXcodes
+            : installedXcodes.filter { $0.xcodeID.architectures?.containsAny(architectures) == true }
 
         var releasedVersions = adjustedAvailableXcodes.map {
             ReleasedVersion(version: $0.version, releaseDate: $0.releaseDate)
         }
 
-        for installedXcode in installedXcodes {
+        for installedXcode in adjustedInstalledXcodes {
             if !releasedVersions.contains(where: { $0.version.isEquivalent(to: installedXcode.version) }) {
                 releasedVersions.append(ReleasedVersion(version: installedXcode.version, releaseDate: nil))
             } else if let index = releasedVersions.firstIndex(where: {
@@ -53,7 +59,7 @@ public struct XcodeListPresentationService: Sendable {
         }
 
         let selectedInstalledXcode = Self.selectedInstalledXcode(
-            in: installedXcodes,
+            in: adjustedInstalledXcodes,
             selectedXcodePath: selectedXcodePath
         )
 
@@ -68,7 +74,7 @@ public struct XcodeListPresentationService: Sendable {
                 return first.version < second.version
             }
             .map { releasedVersion in
-                let installedXcode = installedXcodes.first {
+                let installedXcode = adjustedInstalledXcodes.first {
                     releasedVersion.version.isEquivalent(to: $0.version)
                 }
                 return AvailableRow(

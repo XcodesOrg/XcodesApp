@@ -90,4 +90,39 @@ public extension Array where Element == AvailableXcode {
     func first(withVersion version: Version) -> AvailableXcode? {
         XcodeVersionMatcher.find(version: version, in: self, versionKeyPath: \AvailableXcode.version)
     }
+
+    func matchingArchitectures(_ architectures: [Architecture]) -> [AvailableXcode] {
+        guard !architectures.isEmpty else { return self }
+        return filter { $0.architectures?.containsAny(architectures) == true }
+    }
+
+    /// Returns the best compatible Xcode for the given version and host architecture.
+    /// Adapted from XcodesOrg/xcodes#470 by wmehanna.
+    func firstCompatible(withVersion version: Version, hostArchitecture: Architecture) -> AvailableXcode? {
+        let matches = all(withVersion: version)
+        guard !matches.isEmpty else { return nil }
+
+        if let universal = matches.first(where: { $0.architectures?.isUniversal == true }) {
+            return universal
+        }
+
+        if let matching = matches.first(where: { $0.architectures?.contains(hostArchitecture) == true }) {
+            return matching
+        }
+
+        return matches.first
+    }
+
+    private func all(withVersion version: Version) -> [AvailableXcode] {
+        let equivalentMatches = filter { $0.version.isEquivalent(to: version) }
+        if !equivalentMatches.isEmpty {
+            return equivalentMatches
+        }
+
+        if version.prereleaseIdentifiers.isEmpty && version.buildMetadataIdentifiers.isEmpty {
+            return filter { $0.version.isEqualWithoutAllIdentifiers(to: version) }
+        }
+
+        return []
+    }
 }

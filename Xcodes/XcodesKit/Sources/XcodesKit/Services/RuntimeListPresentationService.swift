@@ -44,13 +44,15 @@ public struct RuntimeListPresentationService: Sendable {
     public func rows(
         downloadableRuntimes: DownloadableRuntimesResponse,
         installedRuntimes: [InstalledRuntime],
-        includeBetas: Bool
+        includeBetas: Bool,
+        architectures: [Architecture] = []
     ) -> [(platform: DownloadableRuntime.Platform, runtimes: [RuntimeRow])] {
         rows(
             downloadableRuntimes: downloadableRuntimes.downloadablesWithSDKBuildUpdates(),
             installedRuntimes: installedRuntimes,
             includeBetas: includeBetas,
-            sdkToSeedMappings: downloadableRuntimes.sdkToSeedMappings
+            sdkToSeedMappings: downloadableRuntimes.sdkToSeedMappings,
+            architectures: architectures
         )
     }
 
@@ -58,12 +60,13 @@ public struct RuntimeListPresentationService: Sendable {
         downloadableRuntimes: [DownloadableRuntime],
         installedRuntimes: [InstalledRuntime],
         includeBetas: Bool,
-        sdkToSeedMappings: [SDKToSeedMapping] = []
+        sdkToSeedMappings: [SDKToSeedMapping] = [],
+        architectures: [Architecture] = []
     ) -> [(platform: DownloadableRuntime.Platform, runtimes: [RuntimeRow])] {
         var unmatchedInstalledRuntimes = installedRuntimes
         var rows: [RuntimeRow] = []
 
-        downloadableRuntimes.forEach { downloadable in
+        downloadableRuntimes.matchingArchitectures(architectures).forEach { downloadable in
             let matchingInstalledRuntimes = unmatchedInstalledRuntimes.removeAll {
                 $0.build == downloadable.simulatorVersion.buildUpdate
             }
@@ -77,18 +80,20 @@ public struct RuntimeListPresentationService: Sendable {
             }
         }
 
-        unmatchedInstalledRuntimes.forEach { installedRuntime in
-            let betaNumber = sdkToSeedMappings.first {
-                $0.buildUpdate == installedRuntime.build
-            }?.seedNumber
-            var row = RuntimeRow(installedRuntime, betaNumber: betaNumber)
+        if architectures.isEmpty {
+            unmatchedInstalledRuntimes.forEach { installedRuntime in
+                let betaNumber = sdkToSeedMappings.first {
+                    $0.buildUpdate == installedRuntime.build
+                }?.seedNumber
+                var row = RuntimeRow(installedRuntime, betaNumber: betaNumber)
 
-            rows.indices.filter { row.visibleIdentifier == rows[$0].visibleIdentifier }.forEach { index in
-                row.hasDuplicateVersion = true
-                rows[index].hasDuplicateVersion = true
+                rows.indices.filter { row.visibleIdentifier == rows[$0].visibleIdentifier }.forEach { index in
+                    row.hasDuplicateVersion = true
+                    rows[index].hasDuplicateVersion = true
+                }
+
+                rows.append(row)
             }
-
-            rows.append(row)
         }
 
         return Dictionary(grouping: rows, by: \.platform)
@@ -161,7 +166,7 @@ private extension RuntimeListPresentationService.RuntimeRow {
             version: runtime.version,
             build: runtime.build,
             kind: runtime.kind,
-            architectures: nil
+            architectures: runtime.supportedArchitectures
         )
     }
 }

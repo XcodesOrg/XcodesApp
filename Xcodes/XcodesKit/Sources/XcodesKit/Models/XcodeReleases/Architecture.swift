@@ -68,4 +68,8 @@ extension Array where Element == Architecture {
     public var isUniversal: Bool {
         self.contains([.arm64, .x86_64])
     }
+
+    public func containsAny(_ architectures: [Architecture]) -> Bool {
+        !Set(self).isDisjoint(with: architectures)
+    }
 }

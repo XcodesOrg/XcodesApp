@@ -178,6 +178,13 @@ public struct InstalledRuntime: Decodable, Sendable {
     public let supportedArchitectures: [Architecture]?
 }
 
+public extension Array where Element == DownloadableRuntime {
+    func matchingArchitectures(_ architectures: [Architecture]) -> [DownloadableRuntime] {
+        guard !architectures.isEmpty else { return self }
+        return filter { $0.architectures?.containsAny(architectures) == true }
+    }
+}
+
 extension InstalledRuntime {
     public enum Kind: String, Decodable, Sendable {
         case bundled = "Bundled with Xcode"
