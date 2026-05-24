@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Compilers: Codable {
+public struct Compilers: Codable, Equatable, Sendable {
     public let gcc: Array<XcodeVersion>?
     public let llvm_gcc: Array<XcodeVersion>?
     public let llvm: Array<XcodeVersion>?

@@ -1,5 +1,5 @@
 import SwiftUI
-import AppleAPI
+import XcodesLoginKit
 
 struct SignInSMSView: View {
     @EnvironmentObject var appState: AppState
@@ -41,6 +41,7 @@ struct SignInSMSView: View {
 }
 
 struct SignInSMSView_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         SignInSMSView(
             isPresented: .constant(true),

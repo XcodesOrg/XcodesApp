@@ -1,26 +1,34 @@
 #!/bin/sh
 
-# Fix libfido2.framework structure for macOS validation
-# If this script is not run, the build will fail because xcodebuild is expecting the library in a specific structure
-FRAMEWORK_PATH="${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks/libfido2.framework"
+set -e
 
-if [ -d "$FRAMEWORK_PATH" ] && [ -f "$FRAMEWORK_PATH/Info.plist" ] && [ ! -d "$FRAMEWORK_PATH/Versions" ]; then
+FRAMEWORKS_DIR="${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/Frameworks"
+LIBFIDO_FRAMEWORK_PATH="${FRAMEWORKS_DIR}/libfido2.framework"
+
+if [ -d "$LIBFIDO_FRAMEWORK_PATH" ] && [ -f "$LIBFIDO_FRAMEWORK_PATH/Info.plist" ] && [ ! -d "$LIBFIDO_FRAMEWORK_PATH/Versions" ]; then
     echo "Fixing libfido2.framework bundle structure..."
 
-    # Create proper bundle structure
-    mkdir -p "$FRAMEWORK_PATH/Versions/A/Resources"
+    mkdir -p "$LIBFIDO_FRAMEWORK_PATH/Versions/A/Resources"
 
-    # Move files to proper locations
-    mv "$FRAMEWORK_PATH/Info.plist" "$FRAMEWORK_PATH/Versions/A/Resources/"
-    mv "$FRAMEWORK_PATH/libfido2" "$FRAMEWORK_PATH/Versions/A/"
-    if [ -f "$FRAMEWORK_PATH/LICENSE" ]; then
-        mv "$FRAMEWORK_PATH/LICENSE" "$FRAMEWORK_PATH/Versions/A/"
+    mv "$LIBFIDO_FRAMEWORK_PATH/Info.plist" "$LIBFIDO_FRAMEWORK_PATH/Versions/A/Resources/"
+    mv "$LIBFIDO_FRAMEWORK_PATH/libfido2" "$LIBFIDO_FRAMEWORK_PATH/Versions/A/"
+    if [ -f "$LIBFIDO_FRAMEWORK_PATH/LICENSE" ]; then
+        mv "$LIBFIDO_FRAMEWORK_PATH/LICENSE" "$LIBFIDO_FRAMEWORK_PATH/Versions/A/"
     fi
 
-    # Create symbolic links
-    ln -sf A "$FRAMEWORK_PATH/Versions/Current"
-    ln -sf Versions/Current/libfido2 "$FRAMEWORK_PATH/libfido2"
-    ln -sf Versions/Current/Resources "$FRAMEWORK_PATH/Resources"
-
-    echo "libfido2.framework structure fixed"
+    ln -sf A "$LIBFIDO_FRAMEWORK_PATH/Versions/Current"
+    ln -sf Versions/Current/libfido2 "$LIBFIDO_FRAMEWORK_PATH/libfido2"
+    ln -sf Versions/Current/Resources "$LIBFIDO_FRAMEWORK_PATH/Resources"
 fi
+
+SIGN_IDENTITY="${EXPANDED_CODE_SIGN_IDENTITY:--}"
+for item in \
+    "$BUILT_PRODUCTS_DIR/libcrypto.3.dylib" \
+    "$BUILT_PRODUCTS_DIR/libcbor.0.11.0.dylib" \
+    "$FRAMEWORKS_DIR/libcrypto.3.dylib" \
+    "$FRAMEWORKS_DIR/libcbor.0.11.0.dylib" \
+    "$LIBFIDO_FRAMEWORK_PATH"; do
+    if [ -e "$item" ]; then
+        codesign --force --sign "$SIGN_IDENTITY" "$item"
+    fi
+done

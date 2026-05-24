@@ -9,7 +9,7 @@
 
 import Foundation
 
-public struct Checksums: Codable {
+public struct Checksums: Codable, Sendable {
     
     public let sha1: String?
     

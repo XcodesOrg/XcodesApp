@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Version
+import XcodesKit
 
 struct IdenticalBuildsView: View {
     let builds: [Version]
@@ -50,10 +51,11 @@ struct IdenticalBuildsView: View {
     }
 }
 
-let builds: [Version] = [.init(xcodeVersion: "15.0")!, .init(xcodeVersion: "15.1")!]
+@MainActor
+private let previewBuilds: [Version] = [.init(xcodeVersion: "15.0")!, .init(xcodeVersion: "15.1")!]
 
 #Preview("Has Some Builds") {
-  IdenticalBuildsView(builds: builds)
+  IdenticalBuildsView(builds: previewBuilds)
     .padding()
 }
 

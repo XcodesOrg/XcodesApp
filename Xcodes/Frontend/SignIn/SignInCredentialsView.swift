@@ -63,6 +63,7 @@ struct SignInCredentialsView: View {
 }
 
 struct SignInCredentialsView_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         SignInCredentialsView()
             .environmentObject(AppState())

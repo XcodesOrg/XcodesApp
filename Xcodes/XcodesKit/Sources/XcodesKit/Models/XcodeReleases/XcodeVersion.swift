@@ -9,7 +9,7 @@
 import Foundation
 
 public typealias V = XcodeVersion
-public struct XcodeVersion: Codable {
+public struct XcodeVersion: Codable, Equatable, Sendable {
     public let number: String?
     public let build: String?
     public let release: Release

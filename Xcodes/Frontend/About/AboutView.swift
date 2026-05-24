@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct AboutView: View {
-    let showAcknowledgementsWindow: () -> Void
+    let showAcknowledgementsWindow: @MainActor () -> Void
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     
     var body: some View {

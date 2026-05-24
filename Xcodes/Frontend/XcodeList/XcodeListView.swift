@@ -1,6 +1,7 @@
 import Path
 import SwiftUI
 import Version
+import XcodesKit
 
 struct XcodeListView: View {
     @EnvironmentObject var appState: AppState
@@ -111,6 +112,7 @@ struct PlatformsPocket: View {
 }
 
 struct XcodeListView_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         Group {
             XcodeListView(selectedXcodeID: .constant(nil), searchText: "", category: .all, isInstalledOnly: false, architecture: .appleSilicon)

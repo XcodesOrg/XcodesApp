@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct Link: Codable {
+public struct Link: Codable, Sendable {
     public let url: URL
     public let sizeMB: Int?
     /// The platforms supported by this link, if applicable.
@@ -21,7 +21,7 @@ public struct Link: Codable {
 //    }
 }
 
-public struct Links: Codable {
+public struct Links: Codable, Sendable {
     public let download: Link?
     public let notes: Link?
     

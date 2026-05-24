@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import Path
+@preconcurrency import Path
 
-public enum RuntimeInstallState: Equatable, Hashable {
+public enum RuntimeInstallState: Equatable, Hashable, Sendable {
     case notInstalled
     case installing(RuntimeInstallationStep)
     case installed

@@ -115,7 +115,7 @@ struct OpenButton: View {
     let xcode: Xcode?
     
     var openInRosetta: Bool {
-        appState.showOpenInRosettaOption && Hardware.isAppleSilicon()
+        appState.showOpenInRosettaOption && HostHardware.isAppleSilicon()
     }
     
     var body: some View {
@@ -347,4 +347,3 @@ struct CreateSymbolicLinkCommand: View {
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
-

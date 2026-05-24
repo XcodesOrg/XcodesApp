@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "AsyncNetworkService",
-        "repositoryURL": "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService",
+        "repositoryURL": "https://github.com/XcodesOrg/AsyncHTTPNetworkService",
         "state": {
           "branch": "main",
-          "revision": "97770856c4e429f880d4b4dd68cfaf286dc00c30",
+          "revision": "12e225af8b5dc25afcfabfcf582a165b0581ab19",
           "version": null
         }
       },
@@ -17,15 +17,6 @@
           "branch": null,
           "revision": "5c5511ad06aeb2b97d0868f7394e14a624bfb1c7",
           "version": "2.0.2"
-        }
-      },
-      {
-        "package": "CombineExpectations",
-        "repositoryURL": "https://github.com/groue/CombineExpectations",
-        "state": {
-          "branch": null,
-          "revision": "989a92221899929ab8347a5878aa2b16db8b81ca",
-          "version": "0.6.0"
         }
       },
       {
@@ -68,9 +59,9 @@
         "package": "LibFido2Swift",
         "repositoryURL": "https://github.com/kinoroy/LibFido2Swift",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "b87a93300c5b35307c9f26ae490963196bd927f1",
-          "version": null
+          "version": "0.1.5"
         }
       },
       {
@@ -134,6 +125,15 @@
           "branch": null,
           "revision": "087c91fedc110f9f833b14ef4c32745dabca8913",
           "version": "1.0.3"
+        }
+      },
+      {
+        "package": "Yams",
+        "repositoryURL": "https://github.com/jpsim/Yams",
+        "state": {
+          "branch": null,
+          "revision": "0d9ee7ea8c4ebd4a489ad7a73d5c6cad55d6fed3",
+          "version": "5.0.6"
         }
       }
     ]

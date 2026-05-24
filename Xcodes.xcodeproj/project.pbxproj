@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		15F5B8902CCF09B900705E2F /* CryptoKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15F5B88F2CCF09B900705E2F /* CryptoKit.framework */; };
-		33027E342CA8C18800CB387C /* LibFido2Swift in Frameworks */ = {isa = PBXBuildFile; productRef = 334A932B2CA885A400A5E079 /* LibFido2Swift */; };
 		3328073F2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */; };
 		332807412CA5EA820036F691 /* SignInSecurityKeyTouchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */; };
 		36741BFD291E4FDB00A85AAE /* DownloadPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36741BFC291E4FDB00A85AAE /* DownloadPreferencePane.swift */; };
@@ -32,7 +31,6 @@
 		BDBAB7452B9FF55800694B0B /* TrailingIconLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBAB7442B9FF55800694B0B /* TrailingIconLabelStyle.swift */; };
 		CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */; };
 		CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */; };
-		CA25192A25A9644800F08414 /* XcodeInstallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA25192925A9644800F08414 /* XcodeInstallState.swift */; };
 		CA378F992466567600A58CE0 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA378F982466567600A58CE0 /* AppState.swift */; };
 		CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */; };
 		CA42DD7325AEB04300BC0B0C /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA42DD7225AEB04300BC0B0C /* Logger.swift */; };
@@ -48,10 +46,7 @@
 		CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF84D2595079F00E47BAF /* ScrollingTextView.swift */; };
 		CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */; };
 		CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8652595130600E47BAF /* View+IsHidden.swift */; };
-		CA9FF877259528CC00E47BAF /* Version+XcodeReleases.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF876259528CC00E47BAF /* Version+XcodeReleases.swift */; };
 		CA9FF87B2595293E00E47BAF /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF87A2595293E00E47BAF /* DataSource.swift */; };
-		CA9FF88125955C7000E47BAF /* AvailableXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF88025955C7000E47BAF /* AvailableXcode.swift */; };
-		CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8862595607900E47BAF /* InstalledXcode.swift */; };
 		CA9FF8B12595967A00E47BAF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8B02595967A00E47BAF /* main.swift */; };
 		CA9FF8CF25959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
 		CA9FF8D025959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
@@ -59,31 +54,20 @@
 		CA9FF8E025959BAA00E47BAF /* ConnectionVerifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8DF25959BAA00E47BAF /* ConnectionVerifier.swift */; };
 		CA9FF8E625959BB800E47BAF /* AuditTokenHack.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */; };
 		CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF9352595B44700E47BAF /* HelperClient.swift */; };
-		CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */ = {isa = PBXBuildFile; productRef = CAA1CB2C255A5262003FD669 /* AppleAPI */; };
 		CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */; };
 		CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */; };
 		CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */; };
 		CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */; };
 		CAA8587C25A2B37900ACF8C0 /* IsTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */; };
 		CAA8589325A2B77E00ACF8C0 /* aria2c in Copy aria2c */ = {isa = PBXBuildFile; fileRef = CAA8588025A2B63A00ACF8C0 /* aria2c */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */; };
 		CAA858C425A2BE4E00ACF8C0 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */; };
 		CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */ = {isa = PBXBuildFile; productRef = CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */; };
 		CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */; };
 		CAB3AB0E25BCA6C200BF1B04 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7B72449575100113D76 /* AppStateTests.swift */; };
-		CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */; };
 		CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A92592EEE900380FEE /* Environment.swift */; };
-		CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */; };
-		CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A82592EEE900380FEE /* Version+.swift */; };
-		CABFA9C22592EEEA00380FEE /* Publisher+Resumable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B02592EEEA00380FEE /* Publisher+Resumable.swift */; };
-		CABFA9C32592EEEA00380FEE /* Downloads.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B92592EEEA00380FEE /* Downloads.swift */; };
 		CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B82592EEEA00380FEE /* FileManager+.swift */; };
-		CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B22592EEEA00380FEE /* Entry+.swift */; };
-		CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */; };
 		CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A72592EEE900380FEE /* AppState+Update.swift */; };
 		CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AE2592EEE900380FEE /* Path+.swift */; };
-		CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9AC2592EEE900380FEE /* Foundation.swift */; };
-		CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A62592EEE900380FEE /* Version+Xcode.swift */; };
 		CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B42592EEEA00380FEE /* Process.swift */; };
 		CABFA9E42592F08E00380FEE /* Version in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9E32592F08E00380FEE /* Version */; };
 		CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */ = {isa = PBXBuildFile; productRef = CABFA9ED2592F0CC00380FEE /* SwiftSoup */; };
@@ -92,7 +76,6 @@
 		CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA2B2592FBFC00380FEE /* Configure.swift */; };
 		CABFAA432593104F00380FEE /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA422593104F00380FEE /* AboutView.swift */; };
 		CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */; };
-		CAC28188259EE27200B8AB0B /* CombineExpectations in Frameworks */ = {isa = PBXBuildFile; productRef = CAC28187259EE27200B8AB0B /* CombineExpectations */; };
 		CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */; };
 		CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */; };
 		CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */; };
@@ -124,6 +107,8 @@
 		E84E4F542B333864003F3959 /* PlatformsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E84E4F532B333864003F3959 /* PlatformsListView.swift */; };
 		E84E4F572B335094003F3959 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = E84E4F562B335094003F3959 /* OrderedCollections */; };
 		E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */ = {isa = PBXBuildFile; productRef = E862D43A2CC8B26F00BAA376 /* SRP */; };
+		E89CBD382D5FAB950037ED95 /* XcodesLoginKit in Frameworks */ = {isa = PBXBuildFile; productRef = E89CBD372D5FAB950037ED95 /* XcodesLoginKit */; };
+		E89CBD3A2D5FB8920037ED95 /* XcodesLoginKitSecurityKey in Frameworks */ = {isa = PBXBuildFile; productRef = E89CBD392D5FB8920037ED95 /* XcodesLoginKitSecurityKey */; };
 		E86671272B309D2F0048559A /* PlatformsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E86671262B309D2F0048559A /* PlatformsView.swift */; };
 		E87AB3C52939B65E00D72F43 /* Hardware.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87AB3C42939B65E00D72F43 /* Hardware.swift */; };
 		E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E87DD6EA25D053FA00D86808 /* Progress+.swift */; };
@@ -222,7 +207,6 @@
 		BDBAB7442B9FF55800694B0B /* TrailingIconLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingIconLabelStyle.swift; sourceTree = "<group>"; };
 		CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommands.swift; sourceTree = "<group>"; };
 		CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateUpdateTests.swift; sourceTree = "<group>"; };
-		CA25192925A9644800F08414 /* XcodeInstallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeInstallState.swift; sourceTree = "<group>"; };
 		CA378F982466567600A58CE0 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
 		CA42DD7225AEB04300BC0B0C /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -230,7 +214,6 @@
 		CA452BAF259FD9770072DFA4 /* ProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressIndicator.swift; sourceTree = "<group>"; };
 		CA452BBF259FDDFE0072DFA4 /* Stub-version.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Stub-version.plist"; sourceTree = "<group>"; };
 		CA452BEA25A236500072DFA4 /* Stub-0.0.0.Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Stub-0.0.0.Info.plist"; sourceTree = "<group>"; };
-		CA538A0C255A4F1A00E64DD7 /* AppleAPI */ = {isa = PBXFileReference; lastKnownFileType = folder; name = AppleAPI; path = Xcodes/AppleAPI; sourceTree = "<group>"; };
 		CA5D781D257365D6008EDE9D /* PinCodeTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinCodeTextView.swift; sourceTree = "<group>"; };
 		CA61A6DF259835580008926E /* Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Xcode.swift; sourceTree = "<group>"; };
 		CA735108257BF96D00EA9CF8 /* AttributedText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedText.swift; sourceTree = "<group>"; };
@@ -243,10 +226,7 @@
 		CA9FF84D2595079F00E47BAF /* ScrollingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollingTextView.swift; sourceTree = "<group>"; };
 		CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcknowledgementsView.swift; sourceTree = "<group>"; };
 		CA9FF8652595130600E47BAF /* View+IsHidden.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+IsHidden.swift"; sourceTree = "<group>"; };
-		CA9FF876259528CC00E47BAF /* Version+XcodeReleases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Version+XcodeReleases.swift"; sourceTree = "<group>"; };
 		CA9FF87A2595293E00E47BAF /* DataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
-		CA9FF88025955C7000E47BAF /* AvailableXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvailableXcode.swift; sourceTree = "<group>"; };
-		CA9FF8862595607900E47BAF /* InstalledXcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstalledXcode.swift; sourceTree = "<group>"; };
 		CA9FF8AE2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = com.xcodesorg.xcodesapp.Helper; sourceTree = BUILT_PRODUCTS_DIR; };
 		CA9FF8B02595967A00E47BAF /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		CA9FF8C22595988B00E47BAF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -267,26 +247,16 @@
 		CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsTesting.swift; sourceTree = "<group>"; };
 		CAA8588025A2B63A00ACF8C0 /* aria2c */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = aria2c; sourceTree = "<group>"; };
 		CAA8588A25A2B69300ACF8C0 /* aria2c.LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aria2c.LICENSE; sourceTree = "<group>"; };
-		CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Aria2CError.swift; sourceTree = "<group>"; };
 		CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "aria2-release-1.35.0.tar.gz"; sourceTree = "<group>"; };
 		CABFA9A02592EAF500380FEE /* R&PLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "R&PLogo.png"; sourceTree = "<group>"; };
 		CABFA9A12592EAFB00380FEE /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		CABFA9A32592ED5700380FEE /* Apple.paw */ = {isa = PBXFileReference; lastKnownFileType = file; name = Apple.paw; path = ../xcodes/Apple.paw; sourceTree = "<group>"; };
-		CABFA9A62592EEE900380FEE /* Version+Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Version+Xcode.swift"; sourceTree = "<group>"; };
 		CABFA9A72592EEE900380FEE /* AppState+Update.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState+Update.swift"; sourceTree = "<group>"; };
-		CABFA9A82592EEE900380FEE /* Version+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Version+.swift"; sourceTree = "<group>"; };
 		CABFA9A92592EEE900380FEE /* Environment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
-		CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLRequest+Apple.swift"; sourceTree = "<group>"; };
-		CABFA9AC2592EEE900380FEE /* Foundation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Foundation.swift; sourceTree = "<group>"; };
 		CABFA9AE2592EEE900380FEE /* Path+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Path+.swift"; sourceTree = "<group>"; };
-		CABFA9B02592EEEA00380FEE /* Publisher+Resumable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Publisher+Resumable.swift"; sourceTree = "<group>"; };
-		CABFA9B22592EEEA00380FEE /* Entry+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Entry+.swift"; sourceTree = "<group>"; };
-		CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+DownloadTaskPublisher.swift"; sourceTree = "<group>"; };
 		CABFA9B42592EEEA00380FEE /* Process.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Process.swift; sourceTree = "<group>"; };
 		CABFA9B82592EEEA00380FEE /* FileManager+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileManager+.swift"; sourceTree = "<group>"; };
-		CABFA9B92592EEEA00380FEE /* Downloads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloads.swift; sourceTree = "<group>"; };
-		CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+.swift"; sourceTree = "<group>"; };
 		CABFA9D42592EF6300380FEE /* DECISIONS.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = DECISIONS.md; sourceTree = "<group>"; };
 		CABFAA2B2592FBFC00380FEE /* Configure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Configure.swift; path = Xcodes/Backend/Configure.swift; sourceTree = SOURCE_ROOT; };
 		CABFAA422593104F00380FEE /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
@@ -329,6 +299,7 @@
 		E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusModifier.swift; sourceTree = "<group>"; };
 		E84E4F532B333864003F3959 /* PlatformsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsListView.swift; sourceTree = "<group>"; };
 		E856BB73291EDD3D00DC438B /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XcodesKit; path = Xcodes/XcodesKit; sourceTree = "<group>"; };
+		E89CBD3B2D5FC0B10037ED95 /* XcodesLoginKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XcodesLoginKit; path = ../XcodesLoginKit; sourceTree = "<group>"; };
 		E86671262B309D2F0048559A /* PlatformsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsView.swift; sourceTree = "<group>"; };
 		E87AB3C42939B65E00D72F43 /* Hardware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hardware.swift; sourceTree = "<group>"; };
 		E87DD6EA25D053FA00D86808 /* Progress+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+.swift"; sourceTree = "<group>"; };
@@ -358,7 +329,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				15F5B8902CCF09B900705E2F /* CryptoKit.framework in Frameworks */,
-				33027E342CA8C18800CB387C /* LibFido2Swift in Frameworks */,
 				CABFA9E42592F08E00380FEE /* Version in Frameworks */,
 				CABFA9FD2592F13300380FEE /* LegibleError in Frameworks */,
 				E689540325BE8C64000EBCEA /* DockProgress in Frameworks */,
@@ -366,9 +336,10 @@
 				E83FDC442CBB649100679C6B /* Sparkle in Frameworks */,
 				E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */,
 				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
+				E89CBD3A2D5FB8920037ED95 /* XcodesLoginKitSecurityKey in Frameworks */,
+				E89CBD382D5FAB950037ED95 /* XcodesLoginKit in Frameworks */,
 				E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */,
 				E8FD5727291EE4AC001E004C /* AsyncNetworkService in Frameworks */,
-				CAA1CB2D255A5262003FD669 /* AppleAPI in Frameworks */,
 				CABFA9EE2592F0CC00380FEE /* SwiftSoup in Frameworks */,
 				E84E4F572B335094003F3959 /* OrderedCollections in Frameworks */,
 				E8F44A1E296B4CD7002D6592 /* Path in Frameworks */,
@@ -379,7 +350,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CAC28188259EE27200B8AB0B /* CombineExpectations in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -502,37 +472,23 @@
 				E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */,
 				CAE424B3259A764700B8B246 /* AppState+Install.swift */,
 				CABFA9A72592EEE900380FEE /* AppState+Update.swift */,
-				CAA8589A25A2B83000ACF8C0 /* Aria2CError.swift */,
-				CA9FF88025955C7000E47BAF /* AvailableXcode.swift */,
 				CABFAA2B2592FBFC00380FEE /* Configure.swift */,
 				CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */,
 				CA9FF87A2595293E00E47BAF /* DataSource.swift */,
-				CABFA9BA2592EEEA00380FEE /* DateFormatter+.swift */,
-				CABFA9B92592EEEA00380FEE /* Downloads.swift */,
 				CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */,
-				CABFA9B22592EEEA00380FEE /* Entry+.swift */,
 				CABFA9A92592EEE900380FEE /* Environment.swift */,
 				36741BFE291E50F500A85AAE /* FileError.swift */,
 				CABFA9B82592EEEA00380FEE /* FileManager+.swift */,
 				CAFBDB942598FE96003DCC5A /* FocusedValues.swift */,
-				CABFA9AC2592EEE900380FEE /* Foundation.swift */,
 				CA9FF9352595B44700E47BAF /* HelperClient.swift */,
 				CAC9F92C25BCDA4400B4965F /* HelperInstallState.swift */,
-				CA9FF8862595607900E47BAF /* InstalledXcode.swift */,
 				CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */,
 				E89342F925EDCC17007CF557 /* NotificationManager.swift */,
 				CAE4248B259A68B800B8B246 /* Optional+IsNotNil.swift */,
 				CABFA9AE2592EEE900380FEE /* Path+.swift */,
 				CABFA9B42592EEEA00380FEE /* Process.swift */,
-				CABFA9B02592EEEA00380FEE /* Publisher+Resumable.swift */,
 				CAFBDB902598FE80003DCC5A /* SelectedXcode.swift */,
-				CABFA9AB2592EEE900380FEE /* URLRequest+Apple.swift */,
-				CABFA9B32592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift */,
-				CABFA9A82592EEE900380FEE /* Version+.swift */,
-				CA9FF876259528CC00E47BAF /* Version+XcodeReleases.swift */,
-				CABFA9A62592EEE900380FEE /* Version+Xcode.swift */,
 				CA61A6DF259835580008926E /* Xcode.swift */,
-				CA25192925A9644800F08414 /* XcodeInstallState.swift */,
 				CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */,
 				E87DD6EA25D053FA00D86808 /* Progress+.swift */,
 				E81D7E9F2805250100A205FC /* Collection+.swift */,
@@ -581,6 +537,7 @@
 			isa = PBXGroup;
 			children = (
 				E856BB73291EDD3D00DC438B /* XcodesKit */,
+				E89CBD3B2D5FC0B10037ED95 /* XcodesLoginKit */,
 				CA8FB5F8256E0F9400469DA5 /* README.md */,
 				CABFA9D42592EF6300380FEE /* DECISIONS.md */,
 				CABFA9A02592EAF500380FEE /* R&PLogo.png */,
@@ -589,7 +546,6 @@
 				CA8FB61C256E115700469DA5 /* .github */,
 				CA9FF9252595A7EB00E47BAF /* Scripts */,
 				CA9FF8242594F10700E47BAF /* AcknowledgementsGenerator */,
-				CA538A0C255A4F1A00E64DD7 /* AppleAPI */,
 				CAD2E7A02449574E00113D76 /* Xcodes */,
 				CAD2E7B62449575100113D76 /* XcodesTests */,
 				CA9FF8AF2595967A00E47BAF /* com.xcodesorg.xcodesapp.Helper */,
@@ -711,6 +667,7 @@
 				CAD2E79C2449574E00113D76 /* Resources */,
 				CA9FF8BB259596B500E47BAF /* Copy Helper */,
 				CAA8589225A2B76F00ACF8C0 /* Copy aria2c */,
+				D971F84C2E79102E005F84C9 /* Fix libfido2 structure */,
 			);
 			buildRules = (
 			);
@@ -719,7 +676,6 @@
 			);
 			name = Xcodes;
 			packageProductDependencies = (
-				CAA1CB2C255A5262003FD669 /* AppleAPI */,
 				CABFA9E32592F08E00380FEE /* Version */,
 				CABFA9ED2592F0CC00380FEE /* SwiftSoup */,
 				CABFA9F72592F0F900380FEE /* KeychainAccess */,
@@ -731,8 +687,9 @@
 				E8F44A1D296B4CD7002D6592 /* Path */,
 				E84E4F562B335094003F3959 /* OrderedCollections */,
 				E83FDC432CBB649100679C6B /* Sparkle */,
-				334A932B2CA885A400A5E079 /* LibFido2Swift */,
 				E862D43A2CC8B26F00BAA376 /* SRP */,
+				E89CBD372D5FAB950037ED95 /* XcodesLoginKit */,
+				E89CBD392D5FB8920037ED95 /* XcodesLoginKitSecurityKey */,
 			);
 			productName = XcodesMac;
 			productReference = CAD2E79E2449574E00113D76 /* Xcodes.app */;
@@ -753,7 +710,6 @@
 			);
 			name = XcodesTests;
 			packageProductDependencies = (
-				CAC28187259EE27200B8AB0B /* CombineExpectations */,
 			);
 			productName = XcodesMacTests;
 			productReference = CAD2E7B32449575100113D76 /* XcodesTests.xctest */;
@@ -815,13 +771,11 @@
 				CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */,
 				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
-				CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */,
 				E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */,
 				E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */,
 				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */,
 				E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */,
-				33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */,
 			);
 			productRefGroup = CAD2E79F2449574E00113D76 /* Products */;
 			projectDirPath = "";
@@ -881,6 +835,24 @@
 			shellPath = /bin/sh;
 			shellScript = "cd \"${SRCROOT}/Xcodes/AcknowledgementsGenerator\"\nxcrun -sdk macosx swift run AcknowledgementsGenerator \\\n    -p \"${SRCROOT}/Xcodes.xcodeproj\" \\\n    -o \"${SRCROOT}/Xcodes/Resources/Licenses.rtf\"\n";
 		};
+		D971F84C2E79102E005F84C9 /* Fix libfido2 structure */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Fix libfido2 structure";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "sh \"${SRCROOT}/Scripts/fix_libfido2_framework.sh\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -905,7 +877,6 @@
 				CA735109257BF96D00EA9CF8 /* AttributedText.swift in Sources */,
 				CAFBDC4E2599B33D003DCC5A /* MainToolbar.swift in Sources */,
 				CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */,
-				CAA8589B25A2B83000ACF8C0 /* Aria2CError.swift in Sources */,
 				536CFDD2263C94DE00026CE0 /* SignedInView.swift in Sources */,
 				CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */,
 				CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */,
@@ -917,22 +888,17 @@
 				CAA8587C25A2B37900ACF8C0 /* IsTesting.swift in Sources */,
 				CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */,
 				CA44901F2463AD34003D8213 /* Tag.swift in Sources */,
-				CABFA9BF2592EEEA00380FEE /* URLSession+DownloadTaskPublisher.swift in Sources */,
 				CAFE4AAC25B7D2C70064FE51 /* GeneralPreferencePane.swift in Sources */,
-				CABFA9BB2592EEEA00380FEE /* DateFormatter+.swift in Sources */,
 				CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */,
 				CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */,
-				CABFA9C32592EEEA00380FEE /* Downloads.swift in Sources */,
 				E8CBDB8B27AE02FF00B22292 /* ExperiementsPreferencePane.swift in Sources */,
 				E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */,
 				CA378F992466567600A58CE0 /* AppState.swift in Sources */,
 				CAD2E7A42449574E00113D76 /* XcodeListView.swift in Sources */,
 				CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */,
 				CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */,
-				CABFA9CD2592EEEA00380FEE /* Foundation.swift in Sources */,
 				B0403CFC2AD9A6BF00137C09 /* InstalledStateButtons.swift in Sources */,
 				36741BFF291E50F500A85AAE /* FileError.swift in Sources */,
-				CA9FF8872595607900E47BAF /* InstalledXcode.swift in Sources */,
 				E84E4F522B323A5F003F3959 /* CornerRadiusModifier.swift in Sources */,
 				B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */,
 				B0403CFE2ADA712C00137C09 /* InfoPaneControls.swift in Sources */,
@@ -946,22 +912,18 @@
 				CAFE4AB425B7D3AF0064FE51 /* AdvancedPreferencePane.swift in Sources */,
 				CA9FF84E2595079F00E47BAF /* ScrollingTextView.swift in Sources */,
 				E832EAF82B0FBCF4001B570D /* RuntimeInstallationStepDetailView.swift in Sources */,
-				CABFA9C12592EEEA00380FEE /* Version+.swift in Sources */,
 				BDBAB7452B9FF55800694B0B /* TrailingIconLabelStyle.swift in Sources */,
 				E8D655C0288DD04700A139C2 /* SelectedActionType.swift in Sources */,
 				36741BFD291E4FDB00A85AAE /* DownloadPreferencePane.swift in Sources */,
 				E84E4F542B333864003F3959 /* PlatformsListView.swift in Sources */,
 				E86671272B309D2F0048559A /* PlatformsView.swift in Sources */,
 				CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */,
-				CABFA9CE2592EEEA00380FEE /* Version+Xcode.swift in Sources */,
 				CAFBDB912598FE80003DCC5A /* SelectedXcode.swift in Sources */,
 				CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */,
-				CA25192A25A9644800F08414 /* XcodeInstallState.swift in Sources */,
 				E8DA461125FAF7FB002E85EF /* NotificationsView.swift in Sources */,
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
 				E81D7EA02805250100A205FC /* Collection+.swift in Sources */,
 				E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */,
-				CA9FF877259528CC00E47BAF /* Version+XcodeReleases.swift in Sources */,
 				CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */,
 				E84B7D0D2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift in Sources */,
 				CA73510D257BFCEF00EA9CF8 /* NSAttributedString+.swift in Sources */,
@@ -970,7 +932,6 @@
 				CAC9F92D25BCDA4400B4965F /* HelperInstallState.swift in Sources */,
 				E87DD6EB25D053FA00D86808 /* Progress+.swift in Sources */,
 				CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */,
-				CABFA9C22592EEEA00380FEE /* Publisher+Resumable.swift in Sources */,
 				B0C6AD0B2AD9178E00E64698 /* IdenticalBuildView.swift in Sources */,
 				CAFBDC68259A308B003DCC5A /* InfoPane.swift in Sources */,
 				B0403CF82AD991F800137C09 /* UnselectedView.swift in Sources */,
@@ -979,7 +940,6 @@
 				CAFBDC6C259A3098003DCC5A /* View+Conditional.swift in Sources */,
 				CABFA9CF2592EEEA00380FEE /* Process.swift in Sources */,
 				CAFFFED8259CDA5000903F81 /* XcodeListViewRow.swift in Sources */,
-				CABFA9C72592EEEA00380FEE /* Entry+.swift in Sources */,
 				B0403CFA2AD9942A00137C09 /* NotInstalledStateButtons.swift in Sources */,
 				CAE424B4259A764700B8B246 /* AppState+Install.swift in Sources */,
 				CAE42487259A68A300B8B246 /* XcodeListCategory.swift in Sources */,
@@ -987,7 +947,6 @@
 				B0403CF62AD9849E00137C09 /* CompilersView.swift in Sources */,
 				E8977EA325C11E1500835F80 /* PreferencesView.swift in Sources */,
 				CA9FF87B2595293E00E47BAF /* DataSource.swift in Sources */,
-				CABFA9C92592EEEA00380FEE /* URLRequest+Apple.swift in Sources */,
 				CABFAA432593104F00380FEE /* AboutView.swift in Sources */,
 				E8D0296F284B029800647641 /* BottomStatusBar.swift in Sources */,
 				E8C0EB1C291EF9A10081528A /* AppState+Runtimes.swift in Sources */,
@@ -999,7 +958,6 @@
 				E89342FA25EDCC17007CF557 /* NotificationManager.swift in Sources */,
 				CA5D781E257365D6008EDE9D /* PinCodeTextView.swift in Sources */,
 				CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */,
-				CA9FF88125955C7000E47BAF /* AvailableXcode.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1120,7 +1078,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Test;
 		};
@@ -1143,7 +1101,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xcodes.app/Contents/MacOS/Xcodes";
 			};
 			name = Test;
@@ -1169,7 +1127,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "com.xcodesorg.xcodesapp.Helper/com.xcodesorg.xcodesapp.Helper-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -1196,7 +1154,7 @@
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "com.xcodesorg.xcodesapp.Helper/com.xcodesorg.xcodesapp.Helper-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Test;
 		};
@@ -1222,7 +1180,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "com.xcodesorg.xcodesapp.Helper/com.xcodesorg.xcodesapp.Helper-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -1372,7 +1330,7 @@
 				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -1401,7 +1359,7 @@
 				MARKETING_VERSION = 3.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -1422,7 +1380,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xcodes.app/Contents/MacOS/Xcodes";
 			};
 			name = Debug;
@@ -1445,7 +1403,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Xcodes.app/Contents/MacOS/Xcodes";
 			};
 			name = Release;
@@ -1496,14 +1454,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		33027E282CA8BB5800CB387C /* XCRemoteSwiftPackageReference "LibFido2Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kinoroy/LibFido2Swift";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/RobotsAndPencils/ErrorHandling";
@@ -1544,14 +1494,6 @@
 				minimumVersion = 1.0.1;
 			};
 		};
-		CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/groue/CombineExpectations";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.6.0;
-			};
-		};
 		E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sindresorhus/DockProgress";
@@ -1586,7 +1528,7 @@
 		};
 		E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService";
+			repositoryURL = "https://github.com/XcodesOrg/AsyncHTTPNetworkService";
 			requirement = {
 				branch = main;
 				kind = branch;
@@ -1595,14 +1537,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		334A932B2CA885A400A5E079 /* LibFido2Swift */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = LibFido2Swift;
-		};
-		CAA1CB2C255A5262003FD669 /* AppleAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = AppleAPI;
-		};
 		CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */;
@@ -1628,11 +1562,6 @@
 			package = CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */;
 			productName = LegibleError;
 		};
-		CAC28187259EE27200B8AB0B /* CombineExpectations */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CAC28186259EE27200B8AB0B /* XCRemoteSwiftPackageReference "CombineExpectations" */;
-			productName = CombineExpectations;
-		};
 		E689540225BE8C64000EBCEA /* DockProgress */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */;
@@ -1651,6 +1580,14 @@
 		E862D43A2CC8B26F00BAA376 /* SRP */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SRP;
+		};
+		E89CBD372D5FAB950037ED95 /* XcodesLoginKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = XcodesLoginKit;
+		};
+		E89CBD392D5FB8920037ED95 /* XcodesLoginKitSecurityKey */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = XcodesLoginKitSecurityKey;
 		};
 		E8C0EB19291EF43E0081528A /* XcodesKit */ = {
 			isa = XCSwiftPackageProductDependency;

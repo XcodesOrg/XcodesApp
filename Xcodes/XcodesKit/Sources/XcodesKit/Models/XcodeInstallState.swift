@@ -6,29 +6,36 @@
 //
 
 import Foundation
-import Path
+@preconcurrency import Path
 
-public enum XcodeInstallState: Equatable {
+public enum XcodeInstallState: Equatable, Sendable {
     case notInstalled
     case installing(XcodeInstallationStep)
     case installed(Path)
 
-    var notInstalled: Bool {
+    public var notInstalled: Bool {
         switch self {
         case .notInstalled: return true
         default: return false
         }
     }
-    var installing: Bool {
+    public var installing: Bool {
         switch self {
         case .installing: return true
         default: return false
         }
     }
-    var installed: Bool {
+    public var installed: Bool {
         switch self {
         case .installed: return true
         default: return false
+        }
+    }
+
+    public var installedPath: Path? {
+        switch self {
+        case .installed(let path): return path
+        default: return nil
         }
     }
 }

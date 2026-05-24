@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct SDKs: Codable {
+public struct SDKs: Codable, Equatable, Sendable {
     public let macOS: Array<XcodeVersion>?
     public let iOS: Array<XcodeVersion>?
     public let watchOS: Array<XcodeVersion>?
@@ -53,5 +53,18 @@ public struct SDKs: Codable {
         self.watchOS = watchOS?.isEmpty == true ? nil : watchOS
         self.tvOS = tvOS?.isEmpty == true ? nil : tvOS
         self.visionOS = visionOS?.isEmpty == true ? nil : visionOS
+    }
+
+    /// All SDK build numbers, used to correlate downloadable runtimes with Xcode releases.
+    public var allBuilds: [String] {
+        [
+            iOS,
+            tvOS,
+            macOS,
+            watchOS,
+            visionOS,
+        ]
+            .compactMap { $0 }
+            .flatMap { versions in versions.compactMap(\.build) }
     }
 }

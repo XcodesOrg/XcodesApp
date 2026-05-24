@@ -1,6 +1,11 @@
 import Foundation
 
-public struct DownloadableRuntimesResponse: Codable {
+public func makeRuntimeVersion(for osVersion: String, betaNumber: Int?) -> String {
+    let betaSuffix = betaNumber.flatMap { "-beta\($0)" } ?? ""
+    return osVersion + betaSuffix
+}
+
+public struct DownloadableRuntimesResponse: Codable, Sendable {
     public let sdkToSimulatorMappings: [SDKToSimulatorMapping]
     public let sdkToSeedMappings: [SDKToSeedMapping]
     public let refreshInterval: Int
@@ -8,7 +13,7 @@ public struct DownloadableRuntimesResponse: Codable {
     public let version: String
 }
 
-public struct DownloadableRuntime: Codable, Identifiable, Hashable {
+public struct DownloadableRuntime: Codable, Identifiable, Hashable, Sendable {
     public let category: Category
     public let simulatorVersion: SimulatorVersion
     public let source: String?
@@ -53,24 +58,23 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
         case architectures
     }
 
-    var betaNumber: Int? {
+    public var betaNumber: Int? {
         enum Regex { static let shared = try! NSRegularExpression(pattern: "b[0-9]+") }
         guard var foundString = Regex.shared.firstString(in: identifier) else { return nil }
         foundString.removeFirst()
         return Int(foundString)!
     }
 
-    var completeVersion: String {
-        makeVersion(for: simulatorVersion.version, betaNumber: betaNumber)
+    public var completeVersion: String {
+        makeRuntimeVersion(for: simulatorVersion.version, betaNumber: betaNumber)
     }
 
     public var visibleIdentifier: String {
         return platform.shortName + " " + completeVersion
     }
     
-    func makeVersion(for osVersion: String, betaNumber: Int?) -> String {
-        let betaSuffix = betaNumber.flatMap { "-beta\($0)" } ?? ""
-        return osVersion + betaSuffix
+    public func makeVersion(for osVersion: String, betaNumber: Int?) -> String {
+        makeRuntimeVersion(for: osVersion, betaNumber: betaNumber)
     }
     
     public var downloadFileSizeString: String {
@@ -86,13 +90,13 @@ public struct DownloadableRuntime: Codable, Identifiable, Hashable {
     }
 }
 
-public struct SDKToSeedMapping: Codable {
+public struct SDKToSeedMapping: Codable, Sendable {
     public let buildUpdate: String
     public let platform: DownloadableRuntime.Platform
     public let seedNumber: Int
 }
 
-public struct SDKToSimulatorMapping: Codable {
+public struct SDKToSimulatorMapping: Codable, Sendable {
     public let sdkBuildUpdate: String
     public let simulatorBuildUpdate: String
     public let sdkIdentifier: String
@@ -100,33 +104,34 @@ public struct SDKToSimulatorMapping: Codable {
 }
 
 extension DownloadableRuntime {
-    public struct SimulatorVersion: Codable, Hashable {
+    public struct SimulatorVersion: Codable, Hashable, Sendable {
         public let buildUpdate: String
         public let version: String
     }
 
-    public struct HostRequirements: Codable, Hashable {
-        let maxHostVersion: String?
-        let excludedHostArchitectures: [String]?
-        let minHostVersion: String?
-        let minXcodeVersion: String?
+    public struct HostRequirements: Codable, Hashable, Sendable {
+        public let maxHostVersion: String?
+        public let excludedHostArchitectures: [String]?
+        public let minHostVersion: String?
+        public let minXcodeVersion: String?
     }
 
-    public enum Authentication: String, Codable {
+    public enum Authentication: String, Codable, Sendable {
         case virtual = "virtual"
     }
 
-    public enum Category: String, Codable {
+    public enum Category: String, Codable, Sendable {
         case simulator = "simulator"
     }
 
-    public enum ContentType: String, Codable {
+    public enum ContentType: String, Codable, Sendable {
         case diskImage = "diskImage"
         case package = "package"
         case cryptexDiskImage = "cryptexDiskImage"
+        case patchableCryptexDiskImage = "patchableCryptexDiskImage"
     }
 
-    public enum Platform: String, Codable {
+    public enum Platform: String, Codable, Sendable {
         case iOS = "com.apple.platform.iphoneos"
         case macOS = "com.apple.platform.macosx"
         case watchOS = "com.apple.platform.watchos"
@@ -156,37 +161,39 @@ extension DownloadableRuntime {
     }
 }
 
-public struct InstalledRuntime: Decodable {
-    let build: String
-    let deletable: Bool
-    let identifier: UUID
-    let kind: Kind
-    let lastUsedAt: Date?
-    let path: String
-    let platformIdentifier: Platform
-    let runtimeBundlePath: String
-    let runtimeIdentifier: String
-    let signatureState: String
-    let state: String
-    let version: String
-    let sizeBytes: Int?
-    let supportedArchitectures: [Architecture]?
+public struct InstalledRuntime: Decodable, Sendable {
+    public let build: String
+    public let deletable: Bool
+    public let identifier: UUID
+    public let kind: Kind
+    public let lastUsedAt: Date?
+    public let path: String
+    public let platformIdentifier: Platform
+    public let runtimeBundlePath: String
+    public let runtimeIdentifier: String
+    public let signatureState: String
+    public let state: String
+    public let version: String
+    public let sizeBytes: Int?
+    public let supportedArchitectures: [Architecture]?
 }
 
 extension InstalledRuntime {
-    enum Kind: String, Decodable {
-        case diskImage = "Disk Image"
+    public enum Kind: String, Decodable, Sendable {
         case bundled = "Bundled with Xcode"
+        case cryptexDiskImage = "Cryptex Disk Image"
+        case diskImage = "Disk Image"
         case legacyDownload = "Legacy Download"
+        case patchableCryptexDiskImage = "Patchable Cryptex Disk Image"
     }
 
-    enum Platform: String, Decodable {
+    public enum Platform: String, Decodable, Sendable {
         case tvOS = "com.apple.platform.appletvsimulator"
         case iOS = "com.apple.platform.iphonesimulator"
         case watchOS = "com.apple.platform.watchsimulator"
         case visionOS = "com.apple.platform.xrsimulator"
         
-        var asPlatformOS: DownloadableRuntime.Platform {
+        public var asPlatformOS: DownloadableRuntime.Platform {
             switch self {
                 case .watchOS: return .watchOS
                 case .iOS: return .iOS
@@ -196,4 +203,3 @@ extension InstalledRuntime {
         }
     }
 }
-

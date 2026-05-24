@@ -1,46 +1,33 @@
 import Path
 import Foundation
+import XcodesKit
 
 extension Path {
-    static let defaultXcodesApplicationSupport = Path.applicationSupport/"com.robotsandpencils.XcodesApp"
+    static var defaultXcodesApplicationSupport: Path {
+        XcodesPathResolver.appDefaultApplicationSupport
+    }
+
     static var xcodesApplicationSupport: Path {
-        guard let savedApplicationSupport = Current.defaults.string(forKey: "localPath") else {
-            return defaultXcodesApplicationSupport
-        }
-        guard let path = Path(savedApplicationSupport) else {
-            return defaultXcodesApplicationSupport
-        }
-        return path
+        XcodesPathResolver.appApplicationSupport(savedPath: Current.defaults.string(forKey: "localPath"))
     }
     
     static var cacheFile: Path {
-        return xcodesApplicationSupport/"available-xcodes.json"
+        XcodesPathResolver.availableXcodesCacheFile(in: xcodesApplicationSupport)
     }
     
-    static let defaultInstallDirectory = Path.root/"Applications"
+    static var defaultInstallDirectory: Path {
+        XcodesPathResolver.appDefaultInstallDirectory
+    }
     
     static var installDirectory: Path {
-        guard let savedInstallDirectory = Current.defaults.string(forKey: "installPath") else {
-            return defaultInstallDirectory
-        }
-        guard let path = Path(savedInstallDirectory) else {
-            return defaultInstallDirectory
-        }
-        return path
+        XcodesPathResolver.appInstallDirectory(savedPath: Current.defaults.string(forKey: "installPath"))
     }
     
     static var runtimeCacheFile: Path {
-        return xcodesApplicationSupport/"downloadable-runtimes.json"
+        XcodesPathResolver.downloadableRuntimesCacheFile(in: xcodesApplicationSupport)
     }
     
     static var xcodesCaches: Path {
-        return caches/"com.xcodesorg.xcodesapp"
-    }
-    
-    @discardableResult
-    func setCurrentUserAsOwner() -> Path {
-        let user = ProcessInfo.processInfo.environment["SUDO_USER"] ?? NSUserName()
-        try? FileManager.default.setAttributes([.ownerAccountName: user], ofItemAtPath: string)
-        return self
+        XcodesPathResolver.appCaches()
     }
 }

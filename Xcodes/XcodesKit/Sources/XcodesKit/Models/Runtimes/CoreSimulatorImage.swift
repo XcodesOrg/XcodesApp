@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct CoreSimulatorPlist: Decodable {
+public struct CoreSimulatorPlist: Decodable, Sendable {
     public let images: [CoreSimulatorImage]
     
     public init(images: [CoreSimulatorImage]) {
@@ -15,7 +15,7 @@ public struct CoreSimulatorPlist: Decodable {
     }
 }
 
-public struct CoreSimulatorImage: Decodable, Identifiable, Equatable {
+public struct CoreSimulatorImage: Decodable, Identifiable, Equatable, Sendable {
     public var id: String {
         return uuid
     }
@@ -35,7 +35,7 @@ public struct CoreSimulatorImage: Decodable, Identifiable, Equatable {
     }
 }
 
-public struct CoreSimulatorRuntimeInfo: Decodable {
+public struct CoreSimulatorRuntimeInfo: Decodable, Sendable {
     public let build: String
     public let supportedArchitectures: [Architecture]?
     

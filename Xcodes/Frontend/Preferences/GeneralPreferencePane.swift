@@ -1,4 +1,3 @@
-import AppleAPI
 import SwiftUI
 
 struct GeneralPreferencePane: View {
@@ -7,7 +6,7 @@ struct GeneralPreferencePane: View {
     var body: some View {
         VStack(alignment: .leading) {
             GroupBox(label: Text("AppleID")) {
-                if appState.authenticationState == .authenticated {
+                if case .authenticated = appState.authenticationState {
                     SignedInView()
                 } else {
                     Button("SignIn", action: { self.appState.presentedSheet = .signIn })
@@ -31,6 +30,7 @@ struct GeneralPreferencePane: View {
 }
 
 struct GeneralPreferencePane_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         Group {
             GeneralPreferencePane()

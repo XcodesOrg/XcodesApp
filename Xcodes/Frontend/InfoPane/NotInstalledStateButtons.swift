@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Version
+import XcodesKit
 
 struct NotInstalledStateButtons: View {
     let downloadFileSizeString: String?
@@ -39,7 +40,7 @@ struct NotInstalledStateButtons: View {
     }
 }
 
-#Preview {
+#Preview { @MainActor in
   NotInstalledStateButtons(
     downloadFileSizeString: "1,19 GB",
     id: XcodeID(version: Version(major: 12, minor: 3, patch: 0), architectures: nil)

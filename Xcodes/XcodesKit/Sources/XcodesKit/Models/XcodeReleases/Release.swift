@@ -8,7 +8,7 @@
 
 import Foundation
 
-public enum Release: Codable {
+public enum Release: Codable, Equatable, Sendable {
     
     public enum CodingKeys: String, CodingKey {
         case gm, gmSeed, rc, beta, dp, release

@@ -9,6 +9,7 @@
 import Path
 import SwiftUI
 import Version
+import XcodesKit
 
 struct IconView: View {
     let xcode: Xcode

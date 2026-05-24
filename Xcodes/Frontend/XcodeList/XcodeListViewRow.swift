@@ -1,6 +1,7 @@
 import Path
 import SwiftUI
 import Version
+import XcodesKit
 
 struct XcodeListViewRow: View {
     let xcode: Xcode
@@ -69,7 +70,11 @@ struct XcodeListViewRow: View {
                 #if DEBUG
                     Divider()
                     Button("Perform post-install steps") {
-                        appState.performPostInstallSteps(for: InstalledXcode(path: path)!) as Void
+                        appState.performPostInstallSteps(for: InstalledXcode(
+                            path: path,
+                            contentsAtPath: { path in Current.files.contents(atPath: path) },
+                            loadArchitectures: Current.shell.archs
+                        )!) as Void
                     }
                 #endif
             }

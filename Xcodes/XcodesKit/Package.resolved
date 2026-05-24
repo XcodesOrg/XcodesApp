@@ -1,0 +1,32 @@
+{
+  "pins" : [
+    {
+      "identity" : "path.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mxcl/Path.swift",
+      "state" : {
+        "revision" : "8e355c28e9393c42e58b18c54cace2c42c98a616",
+        "version" : "1.4.1"
+      }
+    },
+    {
+      "identity" : "swiftsoup",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/scinfu/SwiftSoup",
+      "state" : {
+        "revision" : "aeb5b4249c273d1783a5299e05be1b26e061ea81",
+        "version" : "2.0.0"
+      }
+    },
+    {
+      "identity" : "version",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mxcl/Version",
+      "state" : {
+        "revision" : "087c91fedc110f9f833b14ef4c32745dabca8913",
+        "version" : "1.0.3"
+      }
+    }
+  ],
+  "version" : 2
+}

@@ -54,6 +54,7 @@ extension View {
 }
 
 struct Previews_BottomStatusBar_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         Group {
             HStack {

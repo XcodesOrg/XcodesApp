@@ -1,23 +1,8 @@
 import AppKit
 import Foundation
-import Version
 import Path
+import Version
 import XcodesKit
-
-public struct XcodeID: Codable, Hashable, Identifiable {
-    public let version: Version
-    public let architectures: [Architecture]?
-    
-    public var id: String {
-        let architectures = architectures?.map { $0.rawValue}.joined() ?? ""
-        return version.description + architectures
-    }
-    
-    public init(version: Version, architectures: [Architecture]? = nil) {
-        self.version = version
-        self.architectures = architectures
-    }
-}
 
 struct Xcode: Identifiable, CustomStringConvertible {
     var version: Version {
@@ -64,26 +49,48 @@ struct Xcode: Identifiable, CustomStringConvertible {
         self.architectures = architectures
         self.id = XcodeID(version: version, architectures: architectures)
     }
+
+    init(_ item: XcodeListItem, icon: NSImage?) {
+        self.identicalBuilds = item.identicalBuilds
+        self.installState = item.installState
+        self.selected = item.selected
+        self.icon = icon
+        self.requiredMacOSVersion = item.requiredMacOSVersion
+        self.releaseNotesURL = item.releaseNotesURL
+        self.releaseDate = item.releaseDate
+        self.sdks = item.sdks
+        self.compilers = item.compilers
+        self.downloadFileSize = item.downloadFileSize
+        self.architectures = item.architectures
+        self.id = item.id
+    }
+
+    var listItem: XcodeListItem {
+        XcodeListItem(
+            version: version,
+            identicalBuilds: identicalBuilds,
+            installState: installState,
+            selected: selected,
+            requiredMacOSVersion: requiredMacOSVersion,
+            releaseNotesURL: releaseNotesURL,
+            releaseDate: releaseDate,
+            sdks: sdks,
+            compilers: compilers,
+            downloadFileSize: downloadFileSize,
+            architectures: architectures
+        )
+    }
     
     var description: String {
         version.appleDescription
     }
     
     var downloadFileSizeString: String? {
-        if let downloadFileSize = downloadFileSize {
-            return ByteCountFormatter.string(fromByteCount: downloadFileSize, countStyle: .file)
-        } else {
-            return nil
-        }
+        listItem.downloadFileSizeString
     }
     
     var installedPath: Path? {
-        switch installState {
-            case .installed(let path):
-                return path
-            default:
-                return nil
-        }
+        installState.installedPath
     }
     
 }

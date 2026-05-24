@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct YMD: Codable {
+public struct YMD: Codable, Sendable {
     public let year: Int
     public let month: Int
     public let day: Int

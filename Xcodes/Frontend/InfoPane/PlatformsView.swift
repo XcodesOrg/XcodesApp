@@ -17,7 +17,7 @@ struct PlatformsView: View {
  
     var body: some View {
         
-        let builds = xcode.sdks?.allBuilds()
+        let builds = xcode.sdks?.allBuilds
         let runtimes = builds?.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
                 $0.sdkBuildUpdate?.contains(sdkBuild) ?? false &&
@@ -121,8 +121,9 @@ struct PlatformsView: View {
     }
 }
 
-#Preview(XcodePreviewName.allCases[0].rawValue) { makePreviewContent(for: 0) }
+#Preview(XcodePreviewName.allCases[0].rawValue) { @MainActor in makePreviewContent(for: 0) }
 
+@MainActor
 private func makePreviewContent(for index: Int) -> some View {
     let name = XcodePreviewName.allCases[index]
     let runtimes = downloadableRuntimes

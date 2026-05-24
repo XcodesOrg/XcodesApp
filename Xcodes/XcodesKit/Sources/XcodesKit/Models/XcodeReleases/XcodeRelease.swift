@@ -8,7 +8,7 @@
 
 import Foundation
 
-public struct XcodeRelease: Codable {
+public struct XcodeRelease: Codable, Sendable {
     public let name: String
     public let version: XcodeVersion
     public let date: YMD

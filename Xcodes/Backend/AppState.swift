@@ -1,6 +1,6 @@
 import AppKit
-import AppleAPI
-import Combine
+import XcodesLoginKit
+import XcodesLoginKitSecurityKey
 import Path
 import LegibleError
 import KeychainAccess
@@ -9,7 +9,6 @@ import Version
 import os.log
 import DockProgress
 import XcodesKit
-import LibFido2Swift
 
 enum PreferenceKey: String {
     case installPath
@@ -31,12 +30,13 @@ enum PreferenceKey: String {
     func isManaged() -> Bool { UserDefaults.standard.objectIsForced(forKey: self.rawValue) }
 }
 
+@MainActor
 class AppState: ObservableObject {
-    private let client = AppleAPI.Client()
-    internal let runtimeService = RuntimeService()
-   
+    private var client: XcodesLoginKit.Client { Current.network.loginClient }
+    internal var runtimeService: RuntimeService
+
     // MARK: - Published Properties
-    
+
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
@@ -44,8 +44,8 @@ class AppState: ObservableObject {
                 Current.notificationManager.scheduleNotification(title: localizeString("Notification.NewXcodeVersion.Title"), body: localizeString("Notification.NewXcodeVersion.Body"), category: .normal)
             }
             updateAllXcodes(
-                availableXcodes: newValue, 
-                installedXcodes: Current.files.installedXcodes(Path.installDirectory), 
+                availableXcodes: newValue,
+                installedXcodes: Current.files.installedXcodes(Path.installDirectory),
                 selectedXcodePath: selectedXcodePath
             )
         }
@@ -63,10 +63,14 @@ class AppState: ObservableObject {
             )
         }
     }
-    @Published var updatePublisher: AnyCancellable?
-    var isUpdating: Bool { updatePublisher != nil }
+    @Published var updateTask: Task<Void, Never>?
+    var updateTaskID: UUID?
+    var isUpdating: Bool { updateTask != nil }
     @Published var presentedSheet: XcodesSheet? = nil
     @Published var isProcessingAuthRequest = false
+    private var authenticationRequestID: UUID?
+    private var authenticationTask: Task<Void, Never>?
+    private var authenticationTaskID: UUID?
     @Published var xcodeBeingConfirmedForUninstallation: Xcode?
     @Published var presentedAlert: XcodesAlert?
     @Published var presentedPreferenceAlert: XcodesPreferencesAlert?
@@ -74,19 +78,20 @@ class AppState: ObservableObject {
     /// Whether the user is being prepared for the helper installation alert with an explanation.
     /// This closure will be performed after the user chooses whether or not to proceed.
     @Published var isPreparingUserForActionRequiringHelper: ((Bool) -> Void)?
+    var helperActionPreparationID: UUID?
 
     // MARK: - Errors
 
     @Published var error: Error?
     @Published var authError: Error?
-    
+
     // MARK: Advanced Preferences
     @Published var localPath = "" {
         didSet {
             Current.defaults.set(localPath, forKey: "localPath")
         }
     }
-    
+
     var disableLocalPathChange: Bool { PreferenceKey.localPath.isManaged() }
 
     @Published var installPath = "" {
@@ -102,7 +107,7 @@ class AppState: ObservableObject {
             Current.defaults.set(unxipExperiment, forKey: "unxipExperiment")
         }
     }
-    
+
     var disableUnxipExperiment: Bool { PreferenceKey.unxipExperiment.isManaged() }
 
     @Published var createSymLinkOnSelect = false {
@@ -110,21 +115,21 @@ class AppState: ObservableObject {
             Current.defaults.set(createSymLinkOnSelect, forKey: "createSymLinkOnSelect")
         }
     }
-    
+
     var createSymLinkOnSelectDisabled: Bool {
         return onSelectActionType == .rename || PreferenceKey.createSymLinkOnSelect.isManaged()
     }
-    
+
     @Published var onSelectActionType = SelectedActionType.none {
         didSet {
             Current.defaults.set(onSelectActionType.rawValue, forKey: "onSelectActionType")
-            
+
             if onSelectActionType == .rename {
                 createSymLinkOnSelect = false
             }
         }
     }
-    
+
     var onSelectActionTypeDisabled: Bool { PreferenceKey.onSelectActionType.isManaged() }
 
     @Published var showOpenInRosettaOption = false {
@@ -132,41 +137,58 @@ class AppState: ObservableObject {
             Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
         }
     }
-    
+
     @Published var terminateAfterLastWindowClosed = false {
         didSet {
             Current.defaults.set(terminateAfterLastWindowClosed, forKey: "terminateAfterLastWindowClosed")
         }
     }
-    
+
     // MARK: - Runtimes
-    
+
     @Published var downloadableRuntimes: [DownloadableRuntime] = []
     @Published var installedRuntimes: [CoreSimulatorImage] = []
 
-    // MARK: - Publisher Cancellables
-    
-    var cancellables = Set<AnyCancellable>()
-    private var installationPublishers: [XcodeID: AnyCancellable] = [:]
-    internal var runtimePublishers: [String: Task<(), any Error>] = [:]
-    private var selectPublisher: AnyCancellable?
-    private var uninstallPublisher: AnyCancellable?
+    // MARK: - Operation State
+
+    var downloadableRuntimesTask: Task<Void, Never>?
+    var downloadableRuntimesTaskID: UUID?
+    var installedRuntimesTask: Task<Void, Never>?
+    var installedRuntimesTaskID: UUID?
+    internal var installationTasks: [XcodeID: Task<Void, Never>] = [:]
+    internal var installationTaskIDs: [XcodeID: UUID] = [:]
+    internal var runtimeTasks: [String: Task<Void, Never>] = [:]
+    internal var runtimeTaskIDs: [String: UUID] = [:]
+    internal var deleteRuntimeTask: Task<Void, Never>?
+    internal var deleteRuntimeTaskID: UUID?
+    internal var helperInstallTask: Task<Void, Never>?
+    internal var helperInstallTaskID: UUID?
+    internal var postInstallTask: Task<Void, Never>?
+    internal var postInstallTaskID: UUID?
+    private var helperStatusTask: Task<Void, Never>?
+    internal var selectTask: Task<Void, Never>?
+    internal var selectTaskID: UUID?
+    internal var uninstallTask: Task<Void, Never>?
+    internal var uninstallTaskID: UUID?
     private var autoInstallTimer: Timer?
-    
+
     // MARK: - Dock Progress Tracking
-    
+
     public static let totalProgressUnits = Int64(10)
     public static let unxipProgressWeight = Int64(1)
     var overallProgress = Progress()
-    var unxipProgress = {
+    var unxipProgress = AppState.makeUnxipProgress()
+    var overallProgressChildIDs = Set<ObjectIdentifier>()
+
+    static func makeUnxipProgress() -> Progress {
         let progress = Progress(totalUnitCount: totalProgressUnits)
         progress.kind = .file
         progress.fileOperationKind = .copying
         return progress
-    }()
-    
-    // MARK: - 
-    
+    }
+
+    // MARK: -
+
     var dataSource: DataSource {
         Current.defaults.string(forKey: "dataSource").flatMap(DataSource.init(rawValue:)) ?? .default
     }
@@ -178,29 +200,33 @@ class AppState: ObservableObject {
     var hasSavedUsername: Bool {
         savedUsername != nil
     }
-    
+
     var bottomStatusBarMessage: String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd/MM/yyyy"
         let finishDate = formatter.date(from: "11/06/2022")
-        
+
         if Date().compare(finishDate!) == .orderedAscending {
             return String(format: localizeString("WWDC.Message"), "2022")
         }
         return ""
     }
-    
+
     // MARK: - Init
-    
-    init() {
+
+    init(runtimeService: RuntimeService = RuntimeService()) {
+        self.runtimeService = runtimeService
         guard !isTesting else { return }
         try? loadCachedAvailableXcodes()
         try? loadCacheDownloadableRuntimes()
-        checkIfHelperIsInstalled()
+        helperStatusTask = Task { @MainActor in
+            await checkIfHelperIsInstalled()
+            helperStatusTask = nil
+        }
         setupAutoInstallTimer()
         setupDefaults()
     }
-    
+
     func setupDefaults() {
         localPath = Current.defaults.string(forKey: "localPath") ?? Path.defaultXcodesApplicationSupport.string
         unxipExperiment = Current.defaults.bool(forKey: "unxipExperiment") ?? false
@@ -210,101 +236,66 @@ class AppState: ObservableObject {
         showOpenInRosettaOption = Current.defaults.bool(forKey: "showOpenInRosettaOption") ?? false
         terminateAfterLastWindowClosed = Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
     }
-    
+
     // MARK: Timer
     /// Runs a timer every 6 hours when app is open to check if it needs to auto install any xcodes
     func setupAutoInstallTimer() {
         guard let storageValue = Current.defaults.get(forKey: "autoInstallation") as? Int, let autoInstallType = AutoInstallationType(rawValue: storageValue) else { return }
 
         if autoInstallType == .none { return }
-        
+
         autoInstallTimer = Timer.scheduledTimer(withTimeInterval: 60*60*6, repeats: true) { [weak self] _ in
-            self?.updateIfNeeded()
+            Task { @MainActor in
+                self?.updateIfNeeded()
+            }
         }
     }
     // MARK: - Authentication
-    
-    func validateADCSession(path: String) -> AnyPublisher<Void, Error> {
-        return Current.network.dataTask(with: URLRequest.downloadADCAuth(path: path))
-            .receive(on: DispatchQueue.main)
-            .tryMap { result -> Void in
-                let httpResponse = result.response as! HTTPURLResponse
-                if httpResponse.statusCode == 401 {
-                    throw AuthenticationError.notAuthorized
-                }
-            }
-            .eraseToAnyPublisher()
-    }
-    
+
     func validateADCSession(path: String) async throws {
-        let result = try await Current.network.dataTaskAsync(with: URLRequest.downloadADCAuth(path: path))
-        let httpResponse = result.1 as! HTTPURLResponse
-        if httpResponse.statusCode == 401 {
-            throw AuthenticationError.notAuthorized
+        try await DeveloperPortalSessionService(
+            loadData: { request in
+                try await Current.network.dataTaskAsync(with: request)
+            },
+            unauthorizedError: { AuthenticationError.notAuthorized }
+        ).validateADCSession(path: path)
+    }
+
+    func validateSessionAsync() async throws {
+        try await Current.network.validateSessionAsync()
+    }
+
+    func signInIfNeededAsync() async throws {
+        do {
+            try await validateSessionAsync()
+        } catch {
+            guard
+                let username = savedUsername,
+                let password = try? Current.keychain.getString(username)
+            else {
+                throw error
+            }
+
+            _ = try await signInAsync(username: username, password: password)
         }
     }
-    
-    func validateSession() -> AnyPublisher<Void, Error> {
-        
-        return Current.network.validateSession()
-            .receive(on: DispatchQueue.main)
-            .handleEvents(receiveCompletion: { completion in 
-                if case .failure = completion {
-                    // this is causing some awkwardness with showing an alert with the error and also popping up the sign in view
-                    // self.authenticationState = .unauthenticated
-                    // self.presentedSheet = .signIn
-                }
-            })
-            .eraseToAnyPublisher()
-    }
-    
-    func signInIfNeeded() -> AnyPublisher<Void, Error> {
-        validateSession()
-            .catch { (error) -> AnyPublisher<Void, Error> in
-                guard
-                    let username = self.savedUsername,
-                    let password = try? Current.keychain.getString(username)
-                else {
-                    return Fail(error: error) 
-                        .eraseToAnyPublisher()
-                }
 
-                return self.signIn(username: username, password: password)
-                    .map { _ in Void() }
-                    .eraseToAnyPublisher()
-            }
-            .eraseToAnyPublisher()
-    }
-    
     func signIn(username: String, password: String) {
         authError = nil
-        signIn(username: username.lowercased(), password: password)
-            .sink(
-                receiveCompletion: { _ in },
-                receiveValue: { _ in }
-            )
-            .store(in: &cancellables)
+        startAuthenticationTask {
+            _ = try await self.signInAsync(username: username.lowercased(), password: password)
+        }
     }
-    
-    func signIn(username: String, password: String) -> AnyPublisher<AuthenticationState, Error> {
+
+    func signInAsync(username: String, password: String) async throws -> AuthenticationState {
         try? Current.keychain.set(password, key: username)
         Current.defaults.set(username, forKey: "username")
-        
-        isProcessingAuthRequest = true
-        return client.srpLogin(accountName: username, password: password)
-            .receive(on: DispatchQueue.main)
-            .handleEvents(
-                receiveOutput: { authenticationState in 
-                    self.authenticationState = authenticationState
-                },
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingAuthRequest = false
-                }
-            )
-            .eraseToAnyPublisher()
+
+        return try await performAuthenticationRequest {
+            try await client.srpLogin(accountName: username, password: password)
+        }
     }
-    
+
     func handleTwoFactorOption(_ option: TwoFactorOption, authOptions: AuthOptionsResponse, serviceKey: String, sessionID: String, scnt: String) {
         let sessionData = AppleSessionData(serviceKey: serviceKey, sessionID: sessionID, scnt: scnt)
 
@@ -319,25 +310,14 @@ class AppState: ObservableObject {
         }
     }
 
-    func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {        
-        isProcessingAuthRequest = true
-        client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingAuthRequest = false
-                }, 
-                receiveValue: { authenticationState in 
-                    self.authenticationState = authenticationState
-                    if case let AuthenticationState.waitingForSecondFactor(option, authOptions, sessionData) = authenticationState {
-                        self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
-                    }
-                }
-            )
-            .store(in: &cancellables)
+    func requestSMS(to trustedPhoneNumber: AuthOptionsResponse.TrustedPhoneNumber, authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {
+        startAuthenticationTask {
+            _ = try await self.performAuthenticationRequest {
+                try await self.client.requestSMSSecurityCode(to: trustedPhoneNumber, authOptions: authOptions, sessionData: sessionData)
+            }
+        }
     }
-    
+
     func choosePhoneNumberForSMS(authOptions: AuthOptionsResponse, sessionData: AppleSessionData) {
         self.presentedSheet = .twoFactor(.init(
             option: .smsPendingChoice,
@@ -345,125 +325,113 @@ class AppState: ObservableObject {
             sessionData: sessionData
         ))
     }
-    
+
     func submitSecurityCode(_ code: SecurityCode, sessionData: AppleSessionData) {
-        isProcessingAuthRequest = true
-        client.submitSecurityCode(code, sessionData: sessionData)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { completion in
-                    self.handleAuthenticationFlowCompletion(completion)
-                    self.isProcessingAuthRequest = false
-                },
-                receiveValue: { authenticationState in
-                    self.authenticationState = authenticationState
-                }
-            )
-            .store(in: &cancellables)
+        startAuthenticationTask {
+            _ = try await self.performAuthenticationRequest {
+                try await self.client.submitSecurityCode(code, sessionData: sessionData)
+            }
+        }
     }
-    
-    private lazy var fido2 = FIDO2()
 
     func createAndSubmitSecurityKeyAssertationWithPinCode(_ pinCode: String?, sessionData: AppleSessionData, authOptions: AuthOptionsResponse) {
         self.presentedSheet = .securityKeyTouchToConfirm
-        
-        guard let fsaChallenge = authOptions.fsaChallenge else {
-            // This shouldn't happen
-            // we shouldn't have called this method without setting the fsaChallenge
-            // so this is an assertionFailure
-            assertionFailure()
-            self.authError = "Something went wrong. Please file a bug report"
-            return
-        }
-        
-        // The challenge is encoded in Base64URL encoding
-        let challengeUrl = fsaChallenge.challenge
-        let challenge = FIDO2.base64urlToBase64(base64url: challengeUrl)
-        let origin = "https://idmsa.apple.com"
-        let rpId = "apple.com"
-        // Allowed creds is sent as a comma separated string
-        let validCreds = fsaChallenge.allowedCredentials.split(separator: ",").map(String.init)
 
-        Task {
-            do {
-                let response = try fido2.respondToChallenge(args: ChallengeArgs(rpId: rpId, validCredentials: validCreds, devPin: pinCode, challenge: challenge, origin: origin))
-            
-                Task { @MainActor in
-                    self.isProcessingAuthRequest = true
-                }
-                
-                let respData = try JSONEncoder().encode(response)
-                client.submitChallenge(response: respData, sessionData: AppleSessionData(serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt))
-                    .receive(on: DispatchQueue.main)
-                    .handleEvents(
-                        receiveOutput: { authenticationState in
-                            self.authenticationState = authenticationState
-                        },
-                        receiveCompletion: { completion in
-                            self.handleAuthenticationFlowCompletion(completion)
-                            self.isProcessingAuthRequest = false
-                        }
-                    ).sink(
-                        receiveCompletion: { _ in },
-                        receiveValue: { _ in }
-                    ).store(in: &cancellables)
-            } catch FIDO2Error.canceledByUser {
-                // User cancelled the auth flow
-                // we don't have to show an error
-                // because the sheet will already be dismissed
-            } catch {
-                Task { @MainActor in
-                    authError = error
-                }
+        startAuthenticationTask {
+            _ = try await self.performAuthenticationRequest {
+                try await self.client.submitSecurityKeyPinCode(pinCode, sessionData: sessionData, authOptions: authOptions)
             }
         }
     }
 
     func fido2DeviceIsPresent() -> Bool {
-        fido2.hasDeviceAttached()
+        client.hasSecurityKeyDeviceAttached()
     }
 
     func fido2DeviceNeedsPin() -> Bool {
         do {
-            return try fido2.deviceHasPin()
+            return try client.securityKeyDeviceNeedsPin()
         } catch {
-            Task { @MainActor in
-                authError = error
-            }
-
+            authError = error
             return true
         }
     }
-    
+
     func cancelSecurityKeyAssertationRequest() {
-        self.fido2.cancel()
+        self.client.cancelSecurityKeyAssertationRequest()
     }
-    
-    private func handleAuthenticationFlowCompletion(_ completion: Subscribers.Completion<Error>) {
-        switch completion {
-        case let .failure(error):
-            // remove saved username and any stored keychain password if authentication fails so it doesn't try again.
-            clearLoginCredentials()
-            Logger.appState.error("Authentication error: \(error.legibleDescription)")
-            self.authError = error
-        case .finished:
-            switch self.authenticationState {
-                case .authenticated, .unauthenticated, .notAppleDeveloper:
-                self.presentedSheet = nil
-            case let .waitingForSecondFactor(option, authOptions, sessionData):
-                self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
+
+    private func handleAuthenticationFlowFailure(_ error: Error) {
+        // remove saved username and any stored keychain password if authentication fails so it doesn't try again.
+        clearLoginCredentials()
+        Logger.appState.error("Authentication error: \(error.legibleDescription)")
+        self.authError = error
+    }
+
+    private func handleAuthenticationFlowSuccess() {
+        switch self.authenticationState {
+        case .authenticated, .unauthenticated, .notAppleDeveloper:
+            self.presentedSheet = nil
+        case let .waitingForSecondFactor(option, authOptions, sessionData):
+            self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
+        }
+    }
+
+    private func performAuthenticationRequest(
+        _ operation: () async throws -> AuthenticationState
+    ) async throws -> AuthenticationState {
+        let requestID = UUID()
+        authenticationRequestID = requestID
+        isProcessingAuthRequest = true
+        defer {
+            if authenticationRequestID == requestID {
+                isProcessingAuthRequest = false
+                authenticationRequestID = nil
+            }
+        }
+
+        do {
+            let authenticationState = try await operation()
+            guard authenticationRequestID == requestID else { return authenticationState }
+            self.authenticationState = authenticationState
+            handleAuthenticationFlowSuccess()
+            return authenticationState
+        } catch {
+            if authenticationRequestID == requestID {
+                handleAuthenticationFlowFailure(error)
+            }
+            throw error
+        }
+    }
+
+    private func startAuthenticationTask(_ operation: @escaping () async throws -> Void) {
+        authenticationTask?.cancel()
+        let taskID = UUID()
+        authenticationTaskID = taskID
+        authenticationTask = Task { @MainActor in
+            defer {
+                if authenticationTaskID == taskID {
+                    authenticationTask = nil
+                    authenticationTaskID = nil
+                }
+            }
+            do {
+                try await operation()
+            } catch is CancellationError {
+            } catch {
+                // performAuthenticationRequest owns auth error presentation.
             }
         }
     }
-    
+
     func signOut() {
         clearLoginCredentials()
-        AppleAPI.Current.network.session.configuration.httpCookieStorage?.removeCookies(since: .distantPast)
+        Current.network.signout()
         authenticationState = .unauthenticated
     }
-    
+
     // MARK: - Helper
-    
+
     /// Install the privileged helper if it isn't already installed.
     ///
     /// The way this is done is a little roundabout, because it requires user interaction in an alert before installation should be attempted.
@@ -476,66 +444,90 @@ class AppState: ObservableObject {
     /// - Parameter shouldPrepareUserForHelperInstallation: Whether the user should be presented with an alert preparing them for helper installation.
     func installHelperIfNecessary(shouldPrepareUserForHelperInstallation: Bool = true) {
         guard helperInstallState == .installed || shouldPrepareUserForHelperInstallation == false else {
-            isPreparingUserForActionRequiringHelper = { [unowned self] userConsented in
+            prepareForHelperAction { [weak self] userConsented in
                 guard userConsented else { return }
-                self.installHelperIfNecessary(shouldPrepareUserForHelperInstallation: false) 
+                self?.installHelperIfNecessary(shouldPrepareUserForHelperInstallation: false)
             }
-            presentedAlert = .privilegedHelper
             return
         }
-        
-        installHelperIfNecessary()
-            .sink(
-                receiveCompletion: { [unowned self] completion in
-                    if case let .failure(error) = completion {
-                        self.error = error
-                        self.presentedAlert = .generic(title: localizeString("Alert.PrivilegedHelper.Error.Title"), message: error.legibleLocalizedDescription)
-                    }
-                }, 
-                receiveValue: {}
-            )
-            .store(in: &cancellables)
-    }
-    
-    func installHelperIfNecessary() -> AnyPublisher<Void, Error> {
-        Result {
-            if helperInstallState == .notInstalled {
-                try Current.helper.install()
-                checkIfHelperIsInstalled()
+
+        helperInstallTask?.cancel()
+        let taskID = UUID()
+        helperInstallTaskID = taskID
+        helperInstallTask = Task { @MainActor in
+            defer {
+                if helperInstallTaskID == taskID {
+                    helperInstallTask = nil
+                    helperInstallTaskID = nil
+                }
+            }
+            do {
+                try await installHelperIfNecessaryAsync()
+            } catch is CancellationError {
+            } catch {
+                self.error = error
+                self.presentedAlert = .generic(title: localizeString("Alert.PrivilegedHelper.Error.Title"), message: error.legibleLocalizedDescription)
             }
         }
-        .publisher
-        .subscribe(on: DispatchQueue.main)
-        .eraseToAnyPublisher()
     }
-    
-    private func checkIfHelperIsInstalled() {
+
+    func installHelperIfNecessaryAsync() async throws {
+        if helperInstallState == .unknown {
+            await checkIfHelperIsInstalled()
+            try Task.checkCancellation()
+        }
+
+        if helperInstallState == .notInstalled {
+            try Task.checkCancellation()
+            try await Current.helper.install()
+            try Task.checkCancellation()
+            await checkIfHelperIsInstalled()
+        }
+    }
+
+    private func checkIfHelperIsInstalled() async {
         helperInstallState = .unknown
 
-        Current.helper.checkIfLatestHelperIsInstalled()
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveValue: { installed in
-                    self.helperInstallState = installed ? .installed : .notInstalled
-                }
-            )
-            .store(in: &cancellables)
+        let installed = (try? await Current.helper.checkIfLatestHelperIsInstalledAsync()) ?? false
+        helperInstallState = installed ? .installed : .notInstalled
     }
-    
+
+    @discardableResult
+    func prepareForHelperAction(preparationID: UUID = UUID(), _ action: @escaping (Bool) -> Void) -> UUID {
+        helperActionPreparationID = preparationID
+        var didHandleResponse = false
+        isPreparingUserForActionRequiringHelper = { [weak self] userConsented in
+            guard let self else { return }
+            guard self.helperActionPreparationID == preparationID else { return }
+            guard didHandleResponse == false else { return }
+            didHandleResponse = true
+            helperActionPreparationID = nil
+            isPreparingUserForActionRequiringHelper = nil
+            action(userConsented)
+        }
+        presentedAlert = .privilegedHelper
+        return preparationID
+    }
+
+    func respondToPreparedHelperAction(userConsented: Bool) {
+        let helperAction = isPreparingUserForActionRequiringHelper
+        helperAction?(userConsented)
+        presentedAlert = nil
+    }
+
     // MARK: - Install
-    
+
     func checkMinVersionAndInstall(id: XcodeID) {
         guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
-        
-        // Check to see if users macOS is supported
-        if let requiredMacOSVersion = availableXcode.requiredMacOSVersion {
-            if hasMinSupportedOS(requiredMacOSVersion: requiredMacOSVersion) {
-                // prompt
-                self.presentedAlert = .checkMinSupportedVersion(xcode: availableXcode, macOS: ProcessInfo.processInfo.operatingSystemVersion.versionString())
-                return
-            }
+
+        switch compatibilityStatus(for: availableXcode) {
+        case .supported:
+            break
+        case let .unsupported(_, currentMacOSVersion):
+            self.presentedAlert = .checkMinSupportedVersion(xcode: availableXcode, macOS: currentMacOSVersion)
+            return
         }
-        
+
         switch self.dataSource {
         case .apple:
             install(id: id)
@@ -543,165 +535,144 @@ class AppState: ObservableObject {
             install(id: id)
         }
     }
-    
+
     func hasMinSupportedOS(requiredMacOSVersion: String) -> Bool {
-        let split = requiredMacOSVersion.components(separatedBy: ".").compactMap { Int($0) }
-        let xcodeMinimumMacOSVersion = OperatingSystemVersion(majorVersion: split[safe: 0] ?? 0, minorVersion: split[safe: 1] ?? 0, patchVersion: split[safe: 2] ?? 0)
-        
-        return !ProcessInfo.processInfo.isOperatingSystemAtLeast(xcodeMinimumMacOSVersion)
+        compatibilityStatus(requiredMacOSVersion: requiredMacOSVersion).isUnsupported
     }
-    
+
+    private func compatibilityStatus(for availableXcode: AvailableXcode) -> XcodeCompatibilityStatus {
+        XcodeCompatibilityService().status(
+            for: availableXcode,
+            currentOSVersion: ProcessInfo.processInfo.operatingSystemVersion
+        )
+    }
+
+    private func compatibilityStatus(requiredMacOSVersion: String) -> XcodeCompatibilityStatus {
+        XcodeCompatibilityService().status(
+            requiredMacOSVersion: requiredMacOSVersion,
+            currentOSVersion: ProcessInfo.processInfo.operatingSystemVersion
+        )
+    }
+
     func install(id: XcodeID) {
         guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
-        installationPublishers[id] = signInIfNeeded()
-            .handleEvents(
-                receiveSubscription: { [unowned self] _ in
-                    self.setInstallationStep(of: availableXcode.version, to: .authenticating)
+        installationTasks[id]?.cancel()
+        let installationTaskID = UUID()
+        installationTaskIDs[id] = installationTaskID
+        installationTasks[id] = Task { @MainActor in
+            defer {
+                if installationTaskIDs[id] == installationTaskID {
+                    installationTasks[id] = nil
+                    installationTaskIDs[id] = nil
                 }
-            )
-            .flatMap { [unowned self] in
-                // signInIfNeeded might finish before the user actually authenticates if UI is involved. 
-                // This publisher will wait for the @Published authentication state to change to authenticated or unauthenticated before finishing,
-                // indicating that the user finished what they were doing in the UI.
-                self.$authenticationState
-                    .filter { state in
-                        switch state {
-                            case .authenticated, .unauthenticated, .notAppleDeveloper: return true
-                        case .waitingForSecondFactor: return false
-                        }
-                    }
-                    .prefix(1)
-                    .tryMap { state in
-                        if state == .unauthenticated {
-                            throw AuthenticationError.invalidSession
-                        }
-                        if state == .notAppleDeveloper {
-                            throw AuthenticationError.notDeveloperAppleId
-                        }
-                        return Void()
-                    }
             }
-            .flatMap {
-                // This request would've already been made if the Apple data source were being used.
-                // That's not the case for the Xcode Releases data source.
-                // We need the cookies from its response in order to download Xcodes though,
-                // so perform it here first just to be sure.
-                Current.network.dataTask(with: URLRequest.downloads)
-                    .map(\.data)
-                    .decode(type: Downloads.self, decoder: configure(JSONDecoder()) {
-                        $0.dateDecodingStrategy = .formatted(.downloadsDateModified)
-                    })
-                    .tryMap { downloads -> Void in
-                        if downloads.hasError {
-                            throw AuthenticationError.invalidResult(resultString: downloads.resultsString)
-                        }
-                       if downloads.downloads == nil {
-                            throw AuthenticationError.invalidResult(resultString: localizeString("DownloadingError"))
-                        }
-                    }
-                    .mapError { $0 as Error }
+            do {
+                setInstallationStep(of: availableXcode.version, to: .authenticating)
+                try await signInIfNeededAsync()
+                try await waitForAuthenticationTerminalState()
+                try await validateDeveloperDownloads()
+                _ = try await installAsync(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2, attemptNumber: 0)
+            } catch is CancellationError {
+            } catch {
+                handleInstallError(error, id: id)
             }
-            .flatMap { [unowned self] in
-                self.install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
-            }
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { [unowned self] completion in 
-                    self.installationPublishers[id] = nil
-                    if case let .failure(error) = completion {
-                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
-                        if let error = error as? AuthenticationError, case .notAuthorized = error {
-                            self.error = error
-                            self.presentedAlert = .unauthenticated
-                            
-                        } else if error as? AuthenticationError != .invalidSession {
-                            self.error = error
-                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
-                        }
-                        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) { 
-                            self.allXcodes[index].installState = .notInstalled
-                        }
-                    }
-                },
-                receiveValue: { _ in }
-            )
+        }
     }
-    
+
+    private func validateDeveloperDownloads() async throws {
+        do {
+            try await XcodeListService { request in
+                try await Current.network.dataTaskAsync(with: request)
+            }.validateDeveloperDownloads(missingDownloadsMessage: localizeString("DownloadingError"))
+        } catch let error as XcodeListService.Error {
+            switch error {
+            case let .invalidResult(resultString):
+                throw AuthenticationError.invalidResult(resultString: resultString)
+            }
+        }
+    }
+
     /// Skips using the username/password to log in to Apple, and simply gets a Auth Cookie used in downloading
     /// As of Nov 2022 this was returning a 403 forbidden
     func installWithoutLogin(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
-        
-        installationPublishers[id] = self.install(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2)
-            .receive(on: DispatchQueue.main)
-            .sink(
-                receiveCompletion: { [unowned self] completion in
-                    self.installationPublishers[id] = nil
-                    if case let .failure(error) = completion {
-                        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
-                        if error as? AuthenticationError != .invalidSession {
-                            self.error = error
-                            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
-                        }
-                        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) {
-                            self.allXcodes[index].installState = .notInstalled
-                        }
-                    }
-                },
-                receiveValue: { _ in }
-            )
+
+        installationTasks[id]?.cancel()
+        let installationTaskID = UUID()
+        installationTaskIDs[id] = installationTaskID
+        installationTasks[id] = Task { @MainActor in
+            defer {
+                if installationTaskIDs[id] == installationTaskID {
+                    installationTasks[id] = nil
+                    installationTaskIDs[id] = nil
+                }
+            }
+            do {
+                _ = try await installAsync(.version(availableXcode), downloader: Downloader(rawValue: Current.defaults.string(forKey: "downloader") ?? "aria2") ?? .aria2, attemptNumber: 0)
+            } catch is CancellationError {
+            } catch {
+                handleInstallError(error, id: id)
+            }
+        }
     }
-    
+
     func cancelInstall(id: Xcode.ID) {
         guard let availableXcode = availableXcodes.first(where: { $0.xcodeID == id }) else { return }
 
-        // Cancel the publisher
-        installationPublishers[id] = nil
-        
+        installationTasks[id]?.cancel()
+        installationTasks[id] = nil
+        installationTaskIDs[id] = nil
+
         resetDockProgressTracking()
-                
+
         // If the download is cancelled by the user, clean up the download files that aria2 creates.
         // This isn't done as part of the publisher with handleEvents(receiveCancel:) because it shouldn't happen when e.g. the app quits.
-        let expectedArchivePath = Path.xcodesApplicationSupport/"Xcode-\(availableXcode.version).\(availableXcode.filename.suffix(fromLast: "."))"
-        let aria2DownloadMetadataPath = expectedArchivePath.parent/(expectedArchivePath.basename() + ".aria2")
-        try? Current.files.removeItem(at: expectedArchivePath.url)
-        try? Current.files.removeItem(at: aria2DownloadMetadataPath.url)
-        
-        if let index = allXcodes.firstIndex(where: { $0.id == id }) { 
+        ArchiveCancellationCleanupService(
+            removeItem: { try Current.files.removeItem(at: $0) }
+        ).cleanupXcodeArchive(
+            for: availableXcode,
+            applicationSupportPath: .xcodesApplicationSupport
+        )
+
+        if let index = allXcodes.firstIndex(where: { $0.id == id }) {
             allXcodes[index].installState = .notInstalled
         }
     }
-    
+
     // MARK: - Uninstall
     func uninstall(xcode: Xcode) {
-        guard
-            let installedXcodePath = xcode.installedPath,
-            uninstallPublisher == nil
-        else { return }
-        
-        uninstallPublisher = uninstallXcode(path: installedXcodePath)
-            .flatMap { [unowned self] _ in
-                self.updateSelectedXcodePath()
+        guard let installedXcodePath = xcode.installedPath else { return }
+
+        uninstallTask?.cancel()
+        let taskID = UUID()
+        uninstallTaskID = taskID
+        uninstallTask = Task { @MainActor in
+            defer {
+                if uninstallTaskID == taskID {
+                    uninstallTask = nil
+                    uninstallTaskID = nil
+                }
             }
-            .sink(
-                receiveCompletion: { [unowned self] completion in
-                    if case let .failure(error) = completion {
-                        self.error = error
-                        self.presentedAlert = .generic(title: localizeString("Alert.Uninstall.Error.Title"), message: error.legibleLocalizedDescription)
-                    }
-                    self.uninstallPublisher = nil
-                },
-                receiveValue: { _ in }
-        )
+            do {
+                try Task.checkCancellation()
+                try await uninstallXcodeAsync(path: installedXcodePath)
+                try Task.checkCancellation()
+                await updateSelectedXcodePathAsync()
+            } catch is CancellationError {
+            } catch {
+                self.error = error
+                self.presentedAlert = .generic(title: localizeString("Alert.Uninstall.Error.Title"), message: error.legibleLocalizedDescription)
+            }
+        }
     }
-    
+
     func reveal(_ path: Path?) {
         // TODO: show error if not
         guard let path = path else { return }
         NSWorkspace.shared.activateFileViewerSelecting([path.url])
     }
-    
+
     func reveal(path: String) {
         let url = URL(fileURLWithPath: path)
         NSWorkspace.shared.activateFileViewerSelecting([url])
@@ -710,7 +681,7 @@ class AppState: ObservableObject {
     /// Make an Xcode active, a.k.a select it, in the `xcode-select` sense.
     ///
     /// The underlying work is done by the privileged helper, so we need to make sure that it's installed first.
-    /// The way this is done is a little roundabout, because it requires user interaction in an alert before the `selectPublisher` is subscribed to.
+    /// The way this is done is a little roundabout, because it requires user interaction in an alert before the selection task is started.
     /// The first time this method is invoked should be with `shouldPrepareUserForHelperInstallation` set to true.
     /// If the helper is already installed, the Xcode will be made active immediately.
     /// If the helper is not already installed, the user will be prepared for installation and this method will return early.
@@ -721,47 +692,49 @@ class AppState: ObservableObject {
     /// - Parameter shouldPrepareUserForHelperInstallation: Whether the user should be presented with an alert preparing them for helper installation before making the Xcode version active.
     func select(xcode: Xcode, shouldPrepareUserForHelperInstallation: Bool = true) {
         guard helperInstallState == .installed || shouldPrepareUserForHelperInstallation == false else {
-            isPreparingUserForActionRequiringHelper = { [unowned self] userConsented in
+            prepareForHelperAction { [weak self] userConsented in
                 guard userConsented else { return }
-                self.select(xcode: xcode, shouldPrepareUserForHelperInstallation: false)
+                self?.select(xcode: xcode, shouldPrepareUserForHelperInstallation: false)
             }
-            presentedAlert = .privilegedHelper
             return
         }
 
         guard
-            var installedXcodePath = xcode.installedPath,
-            selectPublisher == nil
+            var installedXcodePath = xcode.installedPath
         else { return }
-       
+
         if onSelectActionType == .rename {
             guard let newDestinationXcodePath = renameToXcode(xcode: xcode) else { return }
             installedXcodePath = newDestinationXcodePath
         }
-        
-        selectPublisher = installHelperIfNecessary()
-            .flatMap {
-                Current.helper.switchXcodePath(installedXcodePath.string)
+
+        selectTask?.cancel()
+        let taskID = UUID()
+        selectTaskID = taskID
+        selectTask = Task { @MainActor in
+            defer {
+                if selectTaskID == taskID {
+                    selectTask = nil
+                    selectTaskID = nil
+                }
             }
-            .flatMap { [unowned self] _ in
-                self.updateSelectedXcodePath()
+            do {
+                try await installHelperIfNecessaryAsync()
+                try Task.checkCancellation()
+                try await Current.helper.switchXcodePathAsync(installedXcodePath.string)
+                try Task.checkCancellation()
+                await updateSelectedXcodePathAsync()
+                if createSymLinkOnSelect && onSelectActionType != .rename {
+                    createSymbolicLink(to: installedXcodePath)
+                }
+            } catch is CancellationError {
+            } catch {
+                self.error = error
+                self.presentedAlert = .generic(title: localizeString("Alert.Select.Error.Title"), message: error.legibleLocalizedDescription)
             }
-            .sink(
-                receiveCompletion: { [unowned self] completion in
-                    if case let .failure(error) = completion {
-                        self.error = error
-                        self.presentedAlert = .generic(title: localizeString("Alert.Select.Error.Title"), message: error.legibleLocalizedDescription)
-                    } else {
-                        if self.createSymLinkOnSelect {
-                            createSymbolicLink(xcode: xcode)
-                        }
-                    }
-                    self.selectPublisher = nil
-                },
-                receiveValue: { _ in }
-            )
+        }
     }
-    
+
     func open(xcode: Xcode, openInRosetta: Bool? = false) {
         switch xcode.installState {
         case let .installed(path):
@@ -776,10 +749,10 @@ class AppState: ObservableObject {
             return
         }
     }
-    
+
     func copyPath(xcode: Xcode) {
         guard let installedXcodePath = xcode.installedPath else { return }
-        
+
         NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
         NSPasteboard.general.writeObjects([installedXcodePath.url as NSURL])
         NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
@@ -791,64 +764,51 @@ class AppState: ObservableObject {
       NSPasteboard.general.writeObjects([url as NSURL])
       NSPasteboard.general.setString(url.absoluteString, forType: .string)
     }
-    
+
     func createSymbolicLink(xcode: Xcode, isBeta: Bool = false) {
         guard let installedXcodePath = xcode.installedPath else { return }
-        
-        let destinationPath: Path = Path.installDirectory/"Xcode\(isBeta ? "-Beta" : "").app"
-        
-        // does an Xcode.app file exist?
-        if FileManager.default.fileExists(atPath: destinationPath.string) {
-            do {
-                // if it's not a symlink, error because we don't want to delete an actual xcode.app file
-                let attributes: [FileAttributeKey : Any]? = try? FileManager.default.attributesOfItem(atPath: destinationPath.string)
-                
-                if attributes?[.type] as? FileAttributeType == FileAttributeType.typeSymbolicLink {
-                    try FileManager.default.removeItem(atPath: destinationPath.string)
-                    Logger.appState.info("Successfully deleted old symlink")
-                } else {
-                    self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: localizeString("Alert.SymLink.Message"))
-                    return
-                }
-            } catch {
-                self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.localizedDescription)
-            }
-        }
-        
+        createSymbolicLink(to: installedXcodePath, isBeta: isBeta)
+    }
+
+    func createSymbolicLink(to installedXcodePath: Path, isBeta: Bool = false) {
+        let destinationPath = Path.installDirectory/"Xcode\(isBeta ? "-Beta" : "").app"
+
         do {
-            try FileManager.default.createSymbolicLink(atPath: destinationPath.string, withDestinationPath: installedXcodePath.string)
+            let service = XcodeSelectionFilesystemService(
+                installedXcode: { Current.files.installedXcode(destination: $0) }
+            )
+            let result = try service.createSymbolicLink(
+                to: installedXcodePath,
+                in: Path.installDirectory,
+                isBeta: isBeta
+            )
+            if result.replacedExistingSymlink {
+                Logger.appState.info("Successfully deleted old symlink")
+            }
             Logger.appState.info("Successfully created symbolic link with Xcode\(isBeta ? "-Beta": "").app")
         } catch {
             Logger.appState.error("Unable to create symbolic Link")
             self.error = error
-            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+            let message = error as? XcodeSelectionFilesystemError == .destinationExistsAndIsNotSymlink(destinationPath)
+                ? localizeString("Alert.SymLink.Message")
+                : error.legibleLocalizedDescription
+            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: message)
         }
     }
-    
+
     func renameToXcode(xcode: Xcode) -> Path? {
         guard let installedXcodePath = xcode.installedPath else { return nil }
-        
-        let destinationPath: Path = Path.installDirectory/"Xcode.app"
-        
-        // rename any old named `Xcode.app` to the Xcodes versioned named files
-        if FileManager.default.fileExists(atPath: destinationPath.string) {
-            if let originalXcode = Current.files.installedXcode(destination: destinationPath) {
-                let newName = "Xcode-\(originalXcode.version.descriptionWithoutBuildMetadata).app"
-                Logger.appState.debug("Found Xcode.app - renaming back to \(newName)")
-                do {
-                    try destinationPath.rename(to: newName)
-                } catch {
-                    Logger.appState.error("Unable to create rename Xcode.app back to original")
-                    self.error = error
-                    // TODO UPDATE MY ERROR STRING
-                    self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
-                }
-            }
-        }
-        // rename passed in xcode to xcode.app
-        Logger.appState.debug("Found Xcode.app - renaming back to Xcode.app")
+
         do {
-            return try installedXcodePath.rename(to: "Xcode.app")
+            let service = XcodeSelectionFilesystemService(
+                installedXcode: { Current.files.installedXcode(destination: $0) }
+            )
+            let renamedPath = try service.renameForSelection(
+                installedXcodePath: installedXcodePath,
+                in: Path.installDirectory
+            )
+            Logger.appState.debug("Renamed selected Xcode to Xcode.app")
+            return renamedPath
         } catch {
             Logger.appState.error("Unable to create rename Xcode.app back to original")
             self.error = error
@@ -859,124 +819,71 @@ class AppState: ObservableObject {
     }
 
     func updateAllXcodes(availableXcodes: [AvailableXcode], installedXcodes: [InstalledXcode], selectedXcodePath: String?) {
-        var adjustedAvailableXcodes = availableXcodes
-        
-        // First, adjust all of the available Xcodes so that available and installed versions line up and the second part of this function works properly.
-        if dataSource == .apple {
-            for installedXcode in installedXcodes {
-                // We can trust that build metadata identifiers are unique for each version of Xcode, so if we have it then it's all we need.
-                // If build metadata matches exactly, replace the available version with the installed version.
-                // This should handle Apple versions from /downloads/more which don't have build metadata identifiers. 
-                if let index = adjustedAvailableXcodes.map(\.version).firstIndex(where: { $0.buildMetadataIdentifiers == installedXcode.version.buildMetadataIdentifiers }) {
-                    adjustedAvailableXcodes[index].xcodeID = installedXcode.xcodeID
-                }
-                // If an installed version is the same as one that's listed online which doesn't have build metadata, replace it with the installed version
-                // Not all prerelease Apple versions available online include build metadata
-                else if let index = adjustedAvailableXcodes.firstIndex(where: { availableXcode in
-                    availableXcode.version.isEquivalent(to: installedXcode.version) &&
-                        availableXcode.version.buildMetadataIdentifiers.isEmpty
-                }) {
-                    adjustedAvailableXcodes[index].xcodeID = installedXcode.xcodeID
-                }
-            }
+        let existingXcodes = allXcodes.map(\.listItem)
+        let items = XcodeListComposer().compose(
+            availableXcodes: availableXcodes,
+            installedXcodes: installedXcodes,
+            selectedXcodePath: selectedXcodePath,
+            existingXcodes: existingXcodes,
+            dataSource: dataSource
+        )
+
+        self.allXcodes = items.map { item in
+            Xcode(item, icon: item.installedPath.map { NSWorkspace.shared.icon(forFile: $0.string) })
         }
-
-        // Map all of the available versions into Xcode values that join available and installed Xcode data for display.
-        var newAllXcodes = adjustedAvailableXcodes
-            .filter { availableXcode in
-                // If we don't have the build identifier, don't attempt to filter prerelease versions with identical build identifiers
-                guard !availableXcode.version.buildMetadataIdentifiers.isEmpty else { return true }
-
-                let availableXcodesWithIdenticalBuildIdentifiers = availableXcodes
-                    .filter({ $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers })
-                
-                // Include this version if there's only one with this build identifier
-                return availableXcodesWithIdenticalBuildIdentifiers.count == 1 ||
-                    // Or if there's more than one with this build identifier and this is the release version
-                
-                availableXcodesWithIdenticalBuildIdentifiers.count > 1 && (availableXcode.version.prereleaseIdentifiers.isEmpty || availableXcode.architectures?.count ?? 0 != 0)
-            }
-            .map { availableXcode -> Xcode in
-                let installedXcode = installedXcodes.first(where: { installedXcode in
-                    // if we want to have only specific Xcodes as selected instead of the Architecture Equivalent. 
-                   // if availableXcode.architectures == nil {
-//                        return availableXcode.version.isEquivalent(to: installedXcode.version)
-//                    } else {
-//                        return availableXcode.xcodeID == installedXcode.xcodeID
-//                    }
-                    return availableXcode.version.isEquivalent(to: installedXcode.version)
-                })
-
-                let identicalBuilds: [XcodeID]
-                let prereleaseAvailableXcodesWithIdenticalBuildIdentifiers = availableXcodes
-                    .filter {
-                        return $0.version.buildMetadataIdentifiers == availableXcode.version.buildMetadataIdentifiers &&
-                            !$0.version.prereleaseIdentifiers.isEmpty &&
-                            // If we don't have the build identifier, don't consider this as a potential identical build
-                            !$0.version.buildMetadataIdentifiers.isEmpty
-                    }
-                // If this is the release version, add the identical builds to it
-                if !prereleaseAvailableXcodesWithIdenticalBuildIdentifiers.isEmpty, availableXcode.version.prereleaseIdentifiers.isEmpty {
-                    identicalBuilds = [availableXcode.xcodeID] + prereleaseAvailableXcodesWithIdenticalBuildIdentifiers.map(\.xcodeID)
-                } else {
-                    identicalBuilds = []
-                }
-                
-                // If the existing install state is "installing", keep it 
-                let existingXcodeInstallState = allXcodes.first { $0.id == availableXcode.xcodeID && $0.installState.installing }?.installState
-                // Otherwise, determine it from whether there's an installed Xcode
-                let defaultXcodeInstallState: XcodeInstallState = installedXcode.map { .installed($0.path) } ?? .notInstalled
-                
-                return Xcode(
-                    version: availableXcode.version,
-                    identicalBuilds: identicalBuilds,
-                    installState: existingXcodeInstallState ?? defaultXcodeInstallState,
-                    selected: installedXcode != nil && selectedXcodePath?.hasPrefix(installedXcode!.path.string) == true, 
-                    icon: (installedXcode?.path.string).map(NSWorkspace.shared.icon(forFile:)),
-                    requiredMacOSVersion: availableXcode.requiredMacOSVersion,
-                    releaseNotesURL: availableXcode.releaseNotesURL,
-                    releaseDate: availableXcode.releaseDate,
-                    sdks: availableXcode.sdks,
-                    compilers: availableXcode.compilers,
-                    downloadFileSize: availableXcode.fileSize,
-                    architectures: availableXcode.architectures
-                )
-            }
-        
-        // If an installed version isn't listed in the available versions, add the installed version
-        // Xcode Releases should have all versions
-        // Apple didn't used to keep all prerelease versions around but has started to recently
-        for installedXcode in installedXcodes {
-            if !newAllXcodes.contains(where: { xcode in xcode.version.isEquivalent(to: installedXcode.version) }) {
-                newAllXcodes.append(
-                    Xcode(
-                        version: installedXcode.version, 
-                        installState: .installed(installedXcode.path), 
-                        selected: selectedXcodePath?.hasPrefix(installedXcode.path.string) == true, 
-                        icon: NSWorkspace.shared.icon(forFile: installedXcode.path.string)
-                    )
-                )
-            }
-        }
-        
-        self.allXcodes = newAllXcodes.sorted { $0.version > $1.version }
     }
 
-    
+
     // MARK: - Private
-    
-    private func uninstallXcode(path: Path) -> AnyPublisher<Void, Error> {
-        return Deferred {
-            Future { promise in
-                do {
-                    try Current.files.trashItem(at: path.url)
-                    promise(.success(()))
-                } catch {
-                    promise(.failure(error))
-                }
+
+    private func uninstallXcodeAsync(path: Path) async throws {
+        let xcode = InstalledXcode(
+            path: path,
+            contentsAtPath: { path in Current.files.contents(atPath: path) },
+            loadArchitectures: Current.shell.archs
+        )!
+        _ = try XcodeUninstallService(
+            removeItem: { url in try Current.files.removeItem(at: url) },
+            trashItem: { url in try Current.files.trashItem(at: url) }
+        ).uninstall(xcode, emptyTrash: false)
+    }
+
+    private func waitForAuthenticationTerminalState() async throws {
+        func validate(_ state: AuthenticationState) throws -> Bool {
+            switch state {
+            case .authenticated:
+                return true
+            case .unauthenticated:
+                throw AuthenticationError.invalidSession
+            case .notAppleDeveloper:
+                throw AuthenticationError.notDeveloperAppleId
+            case .waitingForSecondFactor:
+                return false
             }
         }
-        .eraseToAnyPublisher()
+
+        try Task.checkCancellation()
+        if try validate(authenticationState) { return }
+
+        for await state in $authenticationState.values {
+            try Task.checkCancellation()
+            if try validate(state) { return }
+        }
+    }
+
+    private func handleInstallError(_ error: Error, id: XcodeID) {
+        // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
+        if let error = error as? AuthenticationError, case .notAuthorized = error {
+            self.error = error
+            self.presentedAlert = .unauthenticated
+
+        } else if error as? AuthenticationError != .invalidSession {
+            self.error = error
+            self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+        }
+        if let index = self.allXcodes.firstIndex(where: { $0.id == id }) {
+            self.allXcodes[index].installState = .notInstalled
+        }
     }
 
     /// removes saved username and credentials stored in keychain
@@ -994,11 +901,5 @@ class AppState: ObservableObject {
         var title: String
         var message: String
         var id: String { title + message }
-    }
-}
-
-extension OperatingSystemVersion {
-    func versionString() -> String {
-        return String(majorVersion) + "." + String(minorVersion) + "." + String(patchVersion)
     }
 }

@@ -1,7 +1,7 @@
 import Foundation
 import os.log
 
-class XPCDelegate: NSObject, NSXPCListenerDelegate, HelperXPCProtocol {
+final class XPCDelegate: NSObject, NSXPCListenerDelegate, HelperXPCProtocol {
 
     // MARK: - NSXPCListenerDelegate
     
