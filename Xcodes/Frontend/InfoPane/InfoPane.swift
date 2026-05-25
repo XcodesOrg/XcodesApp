@@ -40,7 +40,7 @@ struct InfoPane: View {
                 VStack(alignment: .leading) {
                     ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
                     CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
-                    IdenticalBuildsView(builds: xcode.identicalBuilds.map { $0.version })
+                    IdenticalBuildsView(builds: xcode.identicalBuildsForCurrentVariant)
                     SDKandCompilers
                 }
                 .frame(width: 200)

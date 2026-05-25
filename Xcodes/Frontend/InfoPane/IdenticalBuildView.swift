@@ -11,7 +11,7 @@ import Version
 import XcodesKit
 
 struct IdenticalBuildsView: View {
-    let builds: [Version]
+    let builds: [XcodeID]
     private let isEmpty: Bool
     private let accessibilityDescription: String
 
@@ -29,8 +29,8 @@ struct IdenticalBuildsView: View {
                 }
                 .font(.headline)
 
-                ForEach(builds, id: \.description) { version in
-                    Text(verbatim: "• \(version.appleDescription)")
+                ForEach(builds) { build in
+                    Text(verbatim: "• \(build.version.appleDescription)")
                         .font(.subheadline)
                 }
             }
@@ -42,17 +42,20 @@ struct IdenticalBuildsView: View {
         }
     }
 
-    init(builds: [Version]) {
+    init(builds: [XcodeID]) {
         self.builds = builds
         self.isEmpty = builds.isEmpty
         self.accessibilityDescription = builds
-            .map(\.appleDescription)
+            .map(\.version.appleDescription)
             .joined(separator: ", ")
     }
 }
 
 @MainActor
-private let previewBuilds: [Version] = [.init(xcodeVersion: "15.0")!, .init(xcodeVersion: "15.1")!]
+private let previewBuilds: [XcodeID] = [
+    .init(version: .init(xcodeVersion: "15.0")!),
+    .init(version: .init(xcodeVersion: "15.1")!)
+]
 
 #Preview("Has Some Builds") {
   IdenticalBuildsView(builds: previewBuilds)

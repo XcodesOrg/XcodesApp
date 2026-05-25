@@ -47,7 +47,6 @@
 		CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */; };
 		CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8652595130600E47BAF /* View+IsHidden.swift */; };
 		CA9FF87B2595293E00E47BAF /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF87A2595293E00E47BAF /* DataSource.swift */; };
-		CAA858C025A2BE4E00ACF8C0 /* View+ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA858BF25A2BE4E00ACF8C0 /* View+ErrorHandling.swift */; };
 		CA9FF8B12595967A00E47BAF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8B02595967A00E47BAF /* main.swift */; };
 		CA9FF8CF25959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
 		CA9FF8D025959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
@@ -56,12 +55,12 @@
 		CA9FF8E625959BB800E47BAF /* AuditTokenHack.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */; };
 		CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF9352595B44700E47BAF /* HelperClient.swift */; };
 		CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */; };
-		E89CBD402D6434E10037ED95 /* SignInFederatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */; };
 		CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */; };
 		CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */; };
 		CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */; };
 		CAA8587C25A2B37900ACF8C0 /* IsTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */; };
 		CAA8589325A2B77E00ACF8C0 /* aria2c in Copy aria2c */ = {isa = PBXBuildFile; fileRef = CAA8588025A2B63A00ACF8C0 /* aria2c */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		CAA858C025A2BE4E00ACF8C0 /* View+ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA858BF25A2BE4E00ACF8C0 /* View+ErrorHandling.swift */; };
 		CAA858C425A2BE4E00ACF8C0 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */; };
 		CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */; };
 		CAB3AB0E25BCA6C200BF1B04 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7B72449575100113D76 /* AppStateTests.swift */; };
@@ -115,6 +114,7 @@
 		E8977EA325C11E1500835F80 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8977EA225C11E1500835F80 /* PreferencesView.swift */; };
 		E89CBD382D5FAB950037ED95 /* XcodesLoginKit in Frameworks */ = {isa = PBXBuildFile; productRef = E89CBD372D5FAB950037ED95 /* XcodesLoginKit */; };
 		E89CBD3A2D5FB8920037ED95 /* XcodesLoginKitSecurityKey in Frameworks */ = {isa = PBXBuildFile; productRef = E89CBD392D5FB8920037ED95 /* XcodesLoginKitSecurityKey */; };
+		E89CBD402D6434E10037ED95 /* SignInFederatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */; };
 		E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */; };
 		E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */ = {isa = PBXBuildFile; productRef = E8C0EB19291EF43E0081528A /* XcodesKit */; };
 		E8C0EB1C291EF9A10081528A /* AppState+Runtimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */; };
@@ -242,7 +242,6 @@
 		CA9FF9252595A7EB00E47BAF /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		CA9FF9352595B44700E47BAF /* HelperClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperClient.swift; sourceTree = "<group>"; };
 		CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCredentialsView.swift; sourceTree = "<group>"; };
-		E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFederatedView.swift; sourceTree = "<group>"; };
 		CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn2FAView.swift; sourceTree = "<group>"; };
 		CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSMSView.swift; sourceTree = "<group>"; };
 		CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPhoneListView.swift; sourceTree = "<group>"; };
@@ -307,6 +306,7 @@
 		E89342F925EDCC17007CF557 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E8977EA225C11E1500835F80 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		E89CBD3B2D5FC0B10037ED95 /* XcodesLoginKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XcodesLoginKit; path = ../XcodesLoginKit; sourceTree = "<group>"; };
+		E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFederatedView.swift; sourceTree = "<group>"; };
 		E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKs+Xcode.swift"; sourceTree = "<group>"; };
 		E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState+Runtimes.swift"; sourceTree = "<group>"; };
 		E8CBDB8627ADD92000B22292 /* unxip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = unxip; sourceTree = "<group>"; };
@@ -1513,6 +1513,14 @@
 				minimumVersion = 1.0.5;
 			};
 		};
+		E856BB74291EDD3D00DC438B /* XCRemoteSwiftPackageReference "XcodesKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/XcodesOrg/XcodesKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Path.swift";
@@ -1524,14 +1532,6 @@
 		E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/XcodesOrg/AsyncHTTPNetworkService";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
-		E856BB74291EDD3D00DC438B /* XCRemoteSwiftPackageReference "XcodesKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/XcodesOrg/XcodesKit";
 			requirement = {
 				branch = main;
 				kind = branch;

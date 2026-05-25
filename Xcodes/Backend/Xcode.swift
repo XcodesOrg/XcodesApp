@@ -84,6 +84,10 @@ struct Xcode: Identifiable, CustomStringConvertible {
     var description: String {
         version.appleDescription
     }
+
+    var identicalBuildsForCurrentVariant: [XcodeID] {
+        identicalBuilds.filter { $0.architectures == architectures }
+    }
     
     var downloadFileSizeString: String? {
         listItem.downloadFileSizeString

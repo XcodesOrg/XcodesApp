@@ -17,12 +17,12 @@ struct XcodeListViewRow: View {
                     Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                         .font(.body)
 
-                    if !xcode.identicalBuilds.isEmpty {
+                    if !xcode.identicalBuildsForCurrentVariant.isEmpty {
                         Image(systemName: "square.fill.on.square.fill")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .accessibility(label: Text("IdenticalBuilds"))
-                            .accessibility(value: Text(xcode.identicalBuilds.map(\.version.appleDescription).joined(separator: ", ")))
+                            .accessibility(value: Text(xcode.identicalBuildsForCurrentVariant.map(\.version.appleDescription).joined(separator: ", ")))
                             .help("IdenticalBuilds.help")
                     }
                     
