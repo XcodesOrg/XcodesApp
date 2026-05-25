@@ -104,7 +104,9 @@ extension Defaults {
             date: { _ in nil },
             setDate: { _, _ in },
             set: { _, _ in },
-            removeObject: { _ in }
+            removeObject: { _ in },
+            get: { _ in nil },
+            bool: { _ in nil }
         )
     }
 }

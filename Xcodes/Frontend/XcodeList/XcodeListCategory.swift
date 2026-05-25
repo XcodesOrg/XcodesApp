@@ -17,6 +17,17 @@ enum XcodeListCategory: String, CaseIterable, Identifiable, CustomStringConverti
     }
 
     var isManaged: Bool { PreferenceKey.xcodeListCategory.isManaged() }
+
+    var versionFilter: XcodeListVersionFilter {
+        switch self {
+        case .all:
+            return .all
+        case .release:
+            return .release
+        case .beta:
+            return .prerelease
+        }
+    }
 }
 
 enum XcodeListArchitecture: String, CaseIterable, Identifiable, CustomStringConvertible {
@@ -33,4 +44,13 @@ enum XcodeListArchitecture: String, CaseIterable, Identifiable, CustomStringConv
     }
     
     var isManaged: Bool { PreferenceKey.xcodeListCategory.isManaged() }
+
+    var architectureFilters: [ArchitectureFilter] {
+        switch self {
+        case .universal:
+            return []
+        case .appleSilicon:
+            return [.variant(.appleSilicon)]
+        }
+    }
 }

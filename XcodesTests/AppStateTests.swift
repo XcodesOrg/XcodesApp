@@ -68,6 +68,22 @@ class AppStateTests: XCTestCase {
         XCTAssertNil(subject.isPreparingUserForActionRequiringHelper)
     }
 
+    func test_SetupDefaults_EnableGroupedXcodeListDefaultsToTrue() {
+        subject.setupDefaults()
+
+        XCTAssertTrue(subject.enableGroupedXcodeList)
+    }
+
+    func test_SetupDefaults_EnableGroupedXcodeListUsesStoredValue() {
+        Current.defaults.get = { key in
+            key == PreferenceKey.enableGroupedXcodeList.rawValue ? false : nil
+        }
+
+        subject.setupDefaults()
+
+        XCTAssertFalse(subject.enableGroupedXcodeList)
+    }
+
     func test_PrepareForHelperAction_StaleActionDoesNotClearReplacementAction() {
         var responses = [Bool]()
         subject.prepareForHelperAction { responses.append($0) }

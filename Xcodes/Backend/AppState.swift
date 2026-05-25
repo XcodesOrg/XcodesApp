@@ -26,6 +26,9 @@ enum PreferenceKey: String {
     case allowedMajorVersions
     case hideSupportXcodes
     case xcodeListArchitectures
+    case enableGroupedXcodeList
+    case expandedMajorXcodeVersions
+    case expandedMinorXcodeVersions
 
     func isManaged() -> Bool { UserDefaults.standard.objectIsForced(forKey: self.rawValue) }
 }
@@ -144,6 +147,12 @@ class AppState: ObservableObject {
         }
     }
 
+    @Published var enableGroupedXcodeList = true {
+        didSet {
+            Current.defaults.set(enableGroupedXcodeList, forKey: PreferenceKey.enableGroupedXcodeList.rawValue)
+        }
+    }
+
     // MARK: - Runtimes
 
     @Published var downloadableRuntimes: [DownloadableRuntime] = []
@@ -235,6 +244,7 @@ class AppState: ObservableObject {
         installPath = Current.defaults.string(forKey: "installPath") ?? Path.defaultInstallDirectory.string
         showOpenInRosettaOption = Current.defaults.bool(forKey: "showOpenInRosettaOption") ?? false
         terminateAfterLastWindowClosed = Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
+        enableGroupedXcodeList = Current.defaults.get(forKey: PreferenceKey.enableGroupedXcodeList.rawValue) as? Bool ?? true
     }
 
     // MARK: Timer

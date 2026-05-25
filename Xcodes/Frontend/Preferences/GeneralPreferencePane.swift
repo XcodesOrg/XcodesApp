@@ -23,6 +23,7 @@ struct GeneralPreferencePane: View {
             
             GroupBox(label: Text("Misc")) {
                 Toggle("TerminateAfterLastWindowClosed", isOn: $appState.terminateAfterLastWindowClosed)
+                Toggle("GroupXcodeVersionsInList", isOn: $appState.enableGroupedXcodeList)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }
