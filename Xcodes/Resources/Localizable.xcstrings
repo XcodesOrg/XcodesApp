@@ -4670,6 +4670,9 @@
         }
       }
     },
+    "An error occurred" : {
+
+    },
     "Apple Silicon" : {
       "localizations" : {
         "ar" : {
@@ -7904,6 +7907,9 @@
         }
       }
     },
+    "Dismiss" : {
+
+    },
     "Downloader" : {
       "localizations" : {
         "ar" : {
@@ -10355,6 +10361,136 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GitHub Repo"
+          }
+        }
+      }
+    },
+    "GroupXcodeVersionsInList" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
           }
         }
       }
@@ -18682,6 +18818,9 @@
         }
       }
     },
+    "Open Browser" : {
+
+    },
     "Open In Rosetta" : {
       "localizations" : {
         "ar" : {
@@ -19065,6 +19204,9 @@
           }
         }
       }
+    },
+    "Paste redirected URL" : {
+
     },
     "Perform post-install steps" : {
       "extractionState" : "stale",
@@ -22682,6 +22824,9 @@
         }
       }
     },
+    "Signing out..." : {
+
+    },
     "SignInWithApple" : {
       "comment" : "SignIn",
       "localizations" : {
@@ -23204,136 +23349,6 @@
         }
       }
     },
-    "GroupXcodeVersionsInList" : {
-      "localizations" : {
-        "ar" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "ca" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "de" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "el" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "fi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "fr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "hi" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "it" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "ja" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "ko" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "nl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "pl" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "pt-BR" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "ru" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "th" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "tr" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "uk" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Group Xcode versions in the list"
-          }
-        }
-      }
-    },
     "TerminateAfterLastWindowClosed" : {
       "localizations" : {
         "ar" : {
@@ -23463,6 +23478,9 @@
           }
         }
       }
+    },
+    "This Apple ID uses federated authentication via %@." : {
+
     },
     "TrashingArchive" : {
       "extractionState" : "manual",
@@ -23851,6 +23869,7 @@
       }
     },
     "Universal" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {

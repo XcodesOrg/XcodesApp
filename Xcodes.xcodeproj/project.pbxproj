@@ -47,6 +47,7 @@
 		CA9FF8522595080100E47BAF /* AcknowledgementsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8512595080100E47BAF /* AcknowledgementsView.swift */; };
 		CA9FF8662595130600E47BAF /* View+IsHidden.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8652595130600E47BAF /* View+IsHidden.swift */; };
 		CA9FF87B2595293E00E47BAF /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF87A2595293E00E47BAF /* DataSource.swift */; };
+		CAA858C025A2BE4E00ACF8C0 /* View+ErrorHandling.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA858BF25A2BE4E00ACF8C0 /* View+ErrorHandling.swift */; };
 		CA9FF8B12595967A00E47BAF /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8B02595967A00E47BAF /* main.swift */; };
 		CA9FF8CF25959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
 		CA9FF8D025959A9700E47BAF /* HelperXPCShared.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8CE25959A9700E47BAF /* HelperXPCShared.swift */; };
@@ -62,7 +63,6 @@
 		CAA8587C25A2B37900ACF8C0 /* IsTesting.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */; };
 		CAA8589325A2B77E00ACF8C0 /* aria2c in Copy aria2c */ = {isa = PBXBuildFile; fileRef = CAA8588025A2B63A00ACF8C0 /* aria2c */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		CAA858C425A2BE4E00ACF8C0 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */; };
-		CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */ = {isa = PBXBuildFile; productRef = CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */; };
 		CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */; };
 		CAB3AB0E25BCA6C200BF1B04 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7B72449575100113D76 /* AppStateTests.swift */; };
 		CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A92592EEE900380FEE /* Environment.swift */; };
@@ -249,6 +249,7 @@
 		CAA8587B25A2B37900ACF8C0 /* IsTesting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsTesting.swift; sourceTree = "<group>"; };
 		CAA8588025A2B63A00ACF8C0 /* aria2c */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = aria2c; sourceTree = "<group>"; };
 		CAA8588A25A2B69300ACF8C0 /* aria2c.LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = aria2c.LICENSE; sourceTree = "<group>"; };
+		CAA858BF25A2BE4E00ACF8C0 /* View+ErrorHandling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ErrorHandling.swift"; sourceTree = "<group>"; };
 		CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Downloader.swift; sourceTree = "<group>"; };
 		CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */ = {isa = PBXFileReference; lastKnownFileType = archive.gzip; path = "aria2-release-1.35.0.tar.gz"; sourceTree = "<group>"; };
 		CABFA9A02592EAF500380FEE /* R&PLogo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "R&PLogo.png"; sourceTree = "<group>"; };
@@ -300,7 +301,6 @@
 		E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationSplitViewWrapper.swift; sourceTree = "<group>"; };
 		E84E4F512B323A5F003F3959 /* CornerRadiusModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CornerRadiusModifier.swift; sourceTree = "<group>"; };
 		E84E4F532B333864003F3959 /* PlatformsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsListView.swift; sourceTree = "<group>"; };
-		E856BB73291EDD3D00DC438B /* XcodesKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XcodesKit; path = Xcodes/XcodesKit; sourceTree = "<group>"; };
 		E86671262B309D2F0048559A /* PlatformsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsView.swift; sourceTree = "<group>"; };
 		E87AB3C42939B65E00D72F43 /* Hardware.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Hardware.swift; sourceTree = "<group>"; };
 		E87DD6EA25D053FA00D86808 /* Progress+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+.swift"; sourceTree = "<group>"; };
@@ -337,7 +337,6 @@
 				CABFA9F82592F0F900380FEE /* KeychainAccess in Frameworks */,
 				E83FDC442CBB649100679C6B /* Sparkle in Frameworks */,
 				E862D43B2CC8B26F00BAA376 /* SRP in Frameworks */,
-				CAA858CD25A3D8BC00ACF8C0 /* ErrorHandling in Frameworks */,
 				E89CBD3A2D5FB8920037ED95 /* XcodesLoginKitSecurityKey in Frameworks */,
 				E89CBD382D5FAB950037ED95 /* XcodesLoginKit in Frameworks */,
 				E8C0EB1A291EF43E0081528A /* XcodesKit in Frameworks */,
@@ -369,6 +368,7 @@
 				53CBAB2B263DCC9100410495 /* XcodesAlert.swift */,
 				E84B7D0C2B296A8900DBDA2B /* NavigationSplitViewWrapper.swift */,
 				BDBAB7442B9FF55800694B0B /* TrailingIconLabelStyle.swift */,
+				CAA858BF25A2BE4E00ACF8C0 /* View+ErrorHandling.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -539,7 +539,6 @@
 		CAD2E7952449574E00113D76 = {
 			isa = PBXGroup;
 			children = (
-				E856BB73291EDD3D00DC438B /* XcodesKit */,
 				E89CBD3B2D5FC0B10037ED95 /* XcodesLoginKit */,
 				CA8FB5F8256E0F9400469DA5 /* README.md */,
 				CABFA9D42592EF6300380FEE /* DECISIONS.md */,
@@ -683,7 +682,6 @@
 				CABFA9ED2592F0CC00380FEE /* SwiftSoup */,
 				CABFA9F72592F0F900380FEE /* KeychainAccess */,
 				CABFA9FC2592F13300380FEE /* LegibleError */,
-				CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */,
 				E689540225BE8C64000EBCEA /* DockProgress */,
 				E8FD5726291EE4AC001E004C /* AsyncNetworkService */,
 				E8C0EB19291EF43E0081528A /* XcodesKit */,
@@ -773,10 +771,10 @@
 				CABFA9EC2592F0CC00380FEE /* XCRemoteSwiftPackageReference "SwiftSoup" */,
 				CABFA9F62592F0F900380FEE /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 				CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */,
-				CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */,
 				E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */,
 				E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */,
 				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */,
+				E856BB74291EDD3D00DC438B /* XCRemoteSwiftPackageReference "XcodesKit" */,
 				E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
@@ -894,6 +892,7 @@
 				CAFE4AAC25B7D2C70064FE51 /* GeneralPreferencePane.swift in Sources */,
 				CAFE4ABC25B7D54B0064FE51 /* UpdatesPreferencePane.swift in Sources */,
 				CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */,
+				CAA858C025A2BE4E00ACF8C0 /* View+ErrorHandling.swift in Sources */,
 				E8CBDB8B27AE02FF00B22292 /* ExperiementsPreferencePane.swift in Sources */,
 				E8E98A9625D863D700EC89A0 /* InstallationStepDetailView.swift in Sources */,
 				CA378F992466567600A58CE0 /* AppState.swift in Sources */,
@@ -1458,14 +1457,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/RobotsAndPencils/ErrorHandling";
-			requirement = {
-				kind = upToNextMinorVersion;
-				minimumVersion = 0.1.0;
-			};
-		};
 		CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Version";
@@ -1538,14 +1529,17 @@
 				kind = branch;
 			};
 		};
+		E856BB74291EDD3D00DC438B /* XCRemoteSwiftPackageReference "XcodesKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/XcodesOrg/XcodesKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CAA858CC25A3D8BC00ACF8C0 /* ErrorHandling */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CAA858CB25A3D8BC00ACF8C0 /* XCRemoteSwiftPackageReference "ErrorHandling" */;
-			productName = ErrorHandling;
-		};
 		CABFA9E32592F08E00380FEE /* Version */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */;
@@ -1595,6 +1589,7 @@
 		};
 		E8C0EB19291EF43E0081528A /* XcodesKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = E856BB74291EDD3D00DC438B /* XCRemoteSwiftPackageReference "XcodesKit" */;
 			productName = XcodesKit;
 		};
 		E8F44A1D296B4CD7002D6592 /* Path */ = {
