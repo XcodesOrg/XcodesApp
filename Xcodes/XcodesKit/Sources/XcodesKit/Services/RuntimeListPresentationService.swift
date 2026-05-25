@@ -16,8 +16,7 @@ public struct RuntimeListPresentationService: Sendable {
         }
 
         public var visibleIdentifier: String {
-            let architectureDescription = architectures?.map(\.rawValue).joined(separator: "|")
-            return platform.shortName + " " + completeVersion + (architectureDescription != nil ? " \(architectureDescription!)" : "")
+            platform.shortName + " " + completeVersion + (architectures?.listOutputSuffix ?? "")
         }
 
         fileprivate init(
@@ -45,7 +44,7 @@ public struct RuntimeListPresentationService: Sendable {
         downloadableRuntimes: DownloadableRuntimesResponse,
         installedRuntimes: [InstalledRuntime],
         includeBetas: Bool,
-        architectures: [Architecture] = []
+        architectures: [ArchitectureFilter] = []
     ) -> [(platform: DownloadableRuntime.Platform, runtimes: [RuntimeRow])] {
         rows(
             downloadableRuntimes: downloadableRuntimes.downloadablesWithSDKBuildUpdates(),
@@ -61,12 +60,12 @@ public struct RuntimeListPresentationService: Sendable {
         installedRuntimes: [InstalledRuntime],
         includeBetas: Bool,
         sdkToSeedMappings: [SDKToSeedMapping] = [],
-        architectures: [Architecture] = []
+        architectures: [ArchitectureFilter] = []
     ) -> [(platform: DownloadableRuntime.Platform, runtimes: [RuntimeRow])] {
         var unmatchedInstalledRuntimes = installedRuntimes
         var rows: [RuntimeRow] = []
 
-        downloadableRuntimes.matchingArchitectures(architectures).forEach { downloadable in
+        downloadableRuntimes.matchingArchitectureFilters(architectures).forEach { downloadable in
             let matchingInstalledRuntimes = unmatchedInstalledRuntimes.removeAll {
                 $0.build == downloadable.simulatorVersion.buildUpdate
             }

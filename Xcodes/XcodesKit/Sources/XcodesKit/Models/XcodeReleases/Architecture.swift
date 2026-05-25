@@ -60,6 +60,39 @@ public enum ArchitectureVariant: String, Codable, Equatable, Hashable, Identifia
     }
 }
 
+public enum ArchitectureFilter: Equatable, Hashable, Sendable {
+    case architecture(Architecture)
+    case variant(ArchitectureVariant)
+
+    public init?(_ rawValue: String) {
+        switch rawValue {
+        case Architecture.arm64.rawValue:
+            self = .architecture(.arm64)
+        case Architecture.x86_64.rawValue:
+            self = .architecture(.x86_64)
+        case ArchitectureVariant.appleSilicon.rawValue, "apple-silicon", "apple_silicon":
+            self = .variant(.appleSilicon)
+        case ArchitectureVariant.universal.rawValue:
+            self = .variant(.universal)
+        default:
+            return nil
+        }
+    }
+
+    public func matches(_ architectures: [Architecture]?) -> Bool {
+        guard let architectures, !architectures.isEmpty else { return false }
+
+        switch self {
+        case .architecture(let architecture):
+            return architectures == [architecture]
+        case .variant(.appleSilicon):
+            return architectures.isAppleSilicon
+        case .variant(.universal):
+            return architectures.isUniversal
+        }
+    }
+}
+
 extension Array where Element == Architecture {
     public var isAppleSilicon: Bool {
         self == [.arm64]
@@ -71,5 +104,23 @@ extension Array where Element == Architecture {
 
     public func containsAny(_ architectures: [Architecture]) -> Bool {
         !Set(self).isDisjoint(with: architectures)
+    }
+
+    var listOutputSuffix: String {
+        guard !isEmpty else { return "" }
+        if isUniversal {
+            return " [\(ArchitectureVariant.universal.displayString)]"
+        }
+        if isAppleSilicon {
+            return " [\(ArchitectureVariant.appleSilicon.displayString)]"
+        }
+        return " [\(map(\.displayString).joined(separator: "|"))]"
+    }
+}
+
+extension Array where Element == ArchitectureFilter {
+    func matches(_ architectures: [Architecture]?) -> Bool {
+        guard !isEmpty else { return true }
+        return contains { $0.matches(architectures) }
     }
 }

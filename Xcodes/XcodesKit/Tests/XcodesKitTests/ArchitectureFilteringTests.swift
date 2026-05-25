@@ -42,10 +42,21 @@ final class ArchitectureFilteringTests: XCTestCase {
             installedXcodes: [],
             selectedXcodePath: nil,
             dataSource: .xcodeReleases,
-            architectures: [.arm64]
+            architectures: [.architecture(.arm64), .variant(.universal)]
         )
 
         XCTAssertEqual(rows.map(\.version), [universal.version, appleSilicon.version])
+        XCTAssertEqual(rows.map(\.versionDescription), [
+            "15.0 [Universal]",
+            "16.0 [Apple Silicon]"
+        ])
+    }
+
+    func testArchitectureFiltersParseRawArchitecturesAndVariants() {
+        XCTAssertEqual(ArchitectureFilter("arm64"), .architecture(.arm64))
+        XCTAssertEqual(ArchitectureFilter("x86_64"), .architecture(.x86_64))
+        XCTAssertEqual(ArchitectureFilter("appleSilicon"), .variant(.appleSilicon))
+        XCTAssertEqual(ArchitectureFilter("universal"), .variant(.universal))
     }
 
     func testRuntimeListPresentationServiceFiltersRowsByArchitecture() {
@@ -77,12 +88,12 @@ final class ArchitectureFilteringTests: XCTestCase {
             downloadableRuntimes: response,
             installedRuntimes: [],
             includeBetas: false,
-            architectures: [.arm64]
+            architectures: [.architecture(.arm64), .variant(.universal)]
         )
 
         XCTAssertEqual(rows.first?.runtimes.map(\.visibleIdentifier), [
-            "iOS 16.0 arm64|x86_64",
-            "iOS 17.0 arm64"
+            "iOS 16.0 [Universal]",
+            "iOS 17.0 [Apple Silicon]"
         ])
     }
 

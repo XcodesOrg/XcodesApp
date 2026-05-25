@@ -183,6 +183,11 @@ public extension Array where Element == DownloadableRuntime {
         guard !architectures.isEmpty else { return self }
         return filter { $0.architectures?.containsAny(architectures) == true }
     }
+
+    func matchingArchitectureFilters(_ filters: [ArchitectureFilter]) -> [DownloadableRuntime] {
+        guard !filters.isEmpty else { return self }
+        return filter { filters.matches($0.architectures) }
+    }
 }
 
 extension InstalledRuntime {

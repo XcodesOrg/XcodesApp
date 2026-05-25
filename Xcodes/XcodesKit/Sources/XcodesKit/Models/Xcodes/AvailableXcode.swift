@@ -96,6 +96,11 @@ public extension Array where Element == AvailableXcode {
         return filter { $0.architectures?.containsAny(architectures) == true }
     }
 
+    func matchingArchitectureFilters(_ filters: [ArchitectureFilter]) -> [AvailableXcode] {
+        guard !filters.isEmpty else { return self }
+        return filter { filters.matches($0.architectures) }
+    }
+
     /// Returns the best compatible Xcode for the given version and host architecture.
     /// Adapted from XcodesOrg/xcodes#470 by wmehanna.
     func firstCompatible(withVersion version: Version, hostArchitecture: Architecture) -> AvailableXcode? {

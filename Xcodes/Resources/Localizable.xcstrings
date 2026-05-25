@@ -19067,6 +19067,7 @@
       }
     },
     "Perform post-install steps" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
