@@ -18,7 +18,7 @@ struct PlatformsView: View {
     var body: some View {
         
         let builds = xcode.sdks?.allBuilds
-        let runtimes = builds?.flatMap { sdkBuild in
+        let runtimes = (builds?.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
                 $0.sdkBuildUpdate?.contains(sdkBuild) ?? false &&
                 ($0.architectures?.isEmpty ?? true ||
@@ -26,9 +26,9 @@ struct PlatformsView: View {
                  ($0.architectures?.isAppleSilicon ?? false && selectedVariant == .appleSilicon)
                 )
             }
-        }
+        } ?? []).removingReleaseCandidateDisplayDuplicates(installedRuntimes: appState.installedRuntimes)
         
-        let architectures = Set((runtimes ?? []).flatMap { $0.architectures ?? [] })
+        let architectures = Set(runtimes.flatMap { $0.architectures ?? [] })
         
         VStack {
             HStack {
@@ -52,7 +52,7 @@ struct PlatformsView: View {
                 }
             }
             
-            ForEach(runtimes ?? [], id: \.identifier) { runtime in
+            ForEach(runtimes, id: \.identifier) { runtime in
                 runtimeView(runtime: runtime)
                     .frame(minWidth: 200)
                     .padding()
@@ -122,6 +122,65 @@ struct PlatformsView: View {
         } else {
             EmptyView()
         }
+    }
+}
+
+private struct RuntimeDisplayKey: Hashable {
+    let platform: DownloadableRuntime.Platform
+    let version: String
+    let architectures: [String]
+
+    init(_ runtime: DownloadableRuntime) {
+        platform = runtime.platform
+        version = runtime.completeVersion
+        architectures = (runtime.architectures ?? []).map(\.rawValue).sorted()
+    }
+}
+
+private extension DownloadableRuntime {
+    var isReleaseCandidate: Bool {
+        name.localizedCaseInsensitiveContains("Release Candidate") ||
+        identifier.localizedCaseInsensitiveContains("_rc")
+    }
+
+    func shouldReplace(_ other: DownloadableRuntime, installedRuntimes: [CoreSimulatorImage]) -> Bool {
+        let isInstalled = RuntimeInstallationLookupService()
+            .coreSimulatorImage(for: self, in: installedRuntimes) != nil
+        let otherIsInstalled = RuntimeInstallationLookupService()
+            .coreSimulatorImage(for: other, in: installedRuntimes) != nil
+
+        if isInstalled != otherIsInstalled {
+            return isInstalled
+        }
+
+        if isReleaseCandidate != other.isReleaseCandidate {
+            return !isReleaseCandidate
+        }
+
+        return simulatorVersion.buildUpdate.localizedStandardCompare(other.simulatorVersion.buildUpdate) == .orderedDescending
+    }
+}
+
+private extension Array where Element == DownloadableRuntime {
+    func removingReleaseCandidateDisplayDuplicates(installedRuntimes: [CoreSimulatorImage]) -> [DownloadableRuntime] {
+        var runtimesByKey: [RuntimeDisplayKey: DownloadableRuntime] = [:]
+        var keys: [RuntimeDisplayKey] = []
+
+        for runtime in self {
+            let key = RuntimeDisplayKey(runtime)
+
+            guard let existingRuntime = runtimesByKey[key] else {
+                runtimesByKey[key] = runtime
+                keys.append(key)
+                continue
+            }
+
+            if runtime.shouldReplace(existingRuntime, installedRuntimes: installedRuntimes) {
+                runtimesByKey[key] = runtime
+            }
+        }
+
+        return keys.compactMap { runtimesByKey[$0] }
     }
 }
 
