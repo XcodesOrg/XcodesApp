@@ -15,7 +15,7 @@ struct MainWindow: View {
     // FB8979533 SceneStorage doesn't restore value after app is quit by user
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
-    @AppStorage("xcodeListArchitecture") private var architecture: XcodeListArchitecture = .universal
+    @AppStorage("xcodeListArchitecture") private var architecture: XcodeListArchitecture = .defaultForCurrentMachine
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
 
     var body: some View {

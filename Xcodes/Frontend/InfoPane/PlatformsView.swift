@@ -11,7 +11,7 @@ import XcodesKit
 
 struct PlatformsView: View {
     @EnvironmentObject var appState: AppState
-    @AppStorage("selectedRuntimeArchitecture") private var selectedVariant: ArchitectureVariant = .universal
+    @AppStorage("selectedRuntimeArchitecture") private var selectedVariant: ArchitectureVariant = .defaultForMachine()
 
     let xcode: Xcode
  
@@ -39,7 +39,7 @@ struct PlatformsView: View {
                     Spacer()
                     Picker("Architecture", selection: $selectedVariant) {
                         ForEach(ArchitectureVariant.allCases, id: \.self) { arch in
-                            Label(arch.displayString, systemImage: arch.iconName)
+                            Label(variantLabel(for: arch), systemImage: arch.iconName)
                                 .tag(arch)
                         }
                         .labelStyle(.trailingIcon)
@@ -63,6 +63,10 @@ struct PlatformsView: View {
         .xcodesBackground()
         
 
+    }
+
+    private func variantLabel(for variant: ArchitectureVariant) -> String {
+        variant == .defaultForMachine() ? "\(variant.displayString) (\(localizeString("This Mac")))" : variant.displayString
     }
     
     @ViewBuilder

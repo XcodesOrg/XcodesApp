@@ -59,6 +59,18 @@ final class ArchitectureFilteringTests: XCTestCase {
         XCTAssertEqual(ArchitectureFilter("universal"), .variant(.universal))
     }
 
+    func testArchitectureFiltersKeepUnknownArchitectureEntriesVisible() {
+        XCTAssertTrue([ArchitectureFilter.variant(.appleSilicon)].matches(nil))
+        XCTAssertTrue([ArchitectureFilter.variant(.universal)].matches([]))
+    }
+
+    func testDefaultArchitectureFilterUsesMachineArchitecture() {
+        XCTAssertEqual(ArchitectureVariant.defaultForMachine(machineHardwareName: "arm64"), .appleSilicon)
+        XCTAssertEqual(ArchitectureVariant.defaultForMachine(machineHardwareName: "x86_64"), .universal)
+        XCTAssertEqual([ArchitectureFilter].defaultForMachine(machineHardwareName: "arm64"), [.variant(.appleSilicon)])
+        XCTAssertEqual([ArchitectureFilter].defaultForMachine(machineHardwareName: "x86_64"), [.variant(.universal)])
+    }
+
     func testRuntimeListPresentationServiceFiltersRowsByArchitecture() {
         let response = DownloadableRuntimesResponse(
             sdkToSimulatorMappings: [],

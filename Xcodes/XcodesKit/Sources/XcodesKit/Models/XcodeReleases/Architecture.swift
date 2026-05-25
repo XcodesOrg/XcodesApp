@@ -58,6 +58,10 @@ public enum ArchitectureVariant: String, Codable, Equatable, Hashable, Identifia
                 return "cpu.fill"
         }
     }
+
+    public static func defaultForMachine(machineHardwareName: String? = HostHardware.currentMachineHardwareName()) -> Self {
+        HostHardware.isAppleSilicon(machineHardwareName: machineHardwareName) ? .appleSilicon : .universal
+    }
 }
 
 public enum ArchitectureFilter: Equatable, Hashable, Sendable {
@@ -80,7 +84,7 @@ public enum ArchitectureFilter: Equatable, Hashable, Sendable {
     }
 
     public func matches(_ architectures: [Architecture]?) -> Bool {
-        guard let architectures, !architectures.isEmpty else { return false }
+        guard let architectures, !architectures.isEmpty else { return true }
 
         switch self {
         case .architecture(let architecture):
@@ -119,6 +123,10 @@ extension Array where Element == Architecture {
 }
 
 extension Array where Element == ArchitectureFilter {
+    public static func defaultForMachine(machineHardwareName: String? = HostHardware.currentMachineHardwareName()) -> [ArchitectureFilter] {
+        [.variant(.defaultForMachine(machineHardwareName: machineHardwareName))]
+    }
+
     func matches(_ architectures: [Architecture]?) -> Bool {
         guard !isEmpty else { return true }
         return contains { $0.matches(architectures) }
