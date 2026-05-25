@@ -55,6 +55,7 @@
 		CA9FF8E625959BB800E47BAF /* AuditTokenHack.m in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF8E525959BB800E47BAF /* AuditTokenHack.m */; };
 		CA9FF9362595B44700E47BAF /* HelperClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA9FF9352595B44700E47BAF /* HelperClient.swift */; };
 		CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */; };
+		E89CBD402D6434E10037ED95 /* SignInFederatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */; };
 		CAA1CB45255A5B60003FD669 /* SignIn2FAView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */; };
 		CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */; };
 		CAA1CB4D255A5CFD003FD669 /* SignInPhoneListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */; };
@@ -241,6 +242,7 @@
 		CA9FF9252595A7EB00E47BAF /* Scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Scripts; sourceTree = "<group>"; };
 		CA9FF9352595B44700E47BAF /* HelperClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperClient.swift; sourceTree = "<group>"; };
 		CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCredentialsView.swift; sourceTree = "<group>"; };
+		E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFederatedView.swift; sourceTree = "<group>"; };
 		CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignIn2FAView.swift; sourceTree = "<group>"; };
 		CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSMSView.swift; sourceTree = "<group>"; };
 		CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInPhoneListView.swift; sourceTree = "<group>"; };
@@ -442,6 +444,7 @@
 				3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */,
 				332807402CA5EA820036F691 /* SignInSecurityKeyTouchView.swift */,
 				CAA1CB34255A5AD5003FD669 /* SignInCredentialsView.swift */,
+				E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */,
 				CAA1CB44255A5B60003FD669 /* SignIn2FAView.swift */,
 				CAA1CB48255A5C97003FD669 /* SignInSMSView.swift */,
 				CAA1CB4C255A5CFD003FD669 /* SignInPhoneListView.swift */,
@@ -922,6 +925,7 @@
 				CAA1CB49255A5C97003FD669 /* SignInSMSView.swift in Sources */,
 				E8DA461125FAF7FB002E85EF /* NotificationsView.swift in Sources */,
 				CAA1CB35255A5AD5003FD669 /* SignInCredentialsView.swift in Sources */,
+				E89CBD402D6434E10037ED95 /* SignInFederatedView.swift in Sources */,
 				E81D7EA02805250100A205FC /* Collection+.swift in Sources */,
 				E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */,
 				CABFAA2D2592FBFC00380FEE /* Configure.swift in Sources */,

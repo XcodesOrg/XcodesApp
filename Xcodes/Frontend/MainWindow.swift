@@ -1,6 +1,7 @@
 import ErrorHandling
 import SwiftUI
 import XcodesKit
+import XcodesLoginKit
 import Path
 import Version
 
@@ -130,6 +131,10 @@ struct MainWindow: View {
                 }
             }
             .padding()
+        } else if case let .waitingForFederatedAuthentication(federationResponse) = appState.authenticationState {
+            SignInFederatedView(federationResponse: federationResponse)
+                .environmentObject(appState)
+                .frame(width: 400)
         } else {
             SignInCredentialsView()
                 .frame(width: 400)

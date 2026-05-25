@@ -290,19 +290,29 @@ class AppState: ObservableObject {
         }
     }
 
-    func signIn(username: String, password: String) {
+    func signIn(username: String, password: String?) {
         authError = nil
         startAuthenticationTask {
             _ = try await self.signInAsync(username: username.lowercased(), password: password)
         }
     }
 
-    func signInAsync(username: String, password: String) async throws -> AuthenticationState {
-        try? Current.keychain.set(password, key: username)
+    func signInAsync(username: String, password: String?) async throws -> AuthenticationState {
+        if let password, !password.isEmpty {
+            try? Current.keychain.set(password, key: username)
+        }
         Current.defaults.set(username, forKey: "username")
 
         return try await performAuthenticationRequest {
-            try await client.srpLogin(accountName: username, password: password)
+            try await client.authenticationState(accountName: username, password: password)
+        }
+    }
+
+    func submitFederatedAuthenticationCallback(_ callbackURLString: String) {
+        startAuthenticationTask {
+            _ = try await self.performAuthenticationRequest {
+                try await self.client.validateFederatedCallbackURLString(callbackURLString)
+            }
         }
     }
 
@@ -382,6 +392,8 @@ class AppState: ObservableObject {
         switch self.authenticationState {
         case .authenticated, .unauthenticated, .notAppleDeveloper:
             self.presentedSheet = nil
+        case .waitingForFederatedAuthentication:
+            break
         case let .waitingForSecondFactor(option, authOptions, sessionData):
             self.handleTwoFactorOption(option, authOptions: authOptions, serviceKey: sessionData.serviceKey, sessionID: sessionData.sessionID, scnt: sessionData.scnt)
         }
@@ -867,6 +879,8 @@ class AppState: ObservableObject {
                 throw AuthenticationError.invalidSession
             case .notAppleDeveloper:
                 throw AuthenticationError.notDeveloperAppleId
+            case .waitingForFederatedAuthentication:
+                return false
             case .waitingForSecondFactor:
                 return false
             }
