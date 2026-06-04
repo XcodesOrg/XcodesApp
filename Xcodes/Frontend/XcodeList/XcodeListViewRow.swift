@@ -7,6 +7,14 @@ struct XcodeListViewRow: View {
     let xcode: Xcode
     let selected: Bool
     let appState: AppState
+    let latestReleaseForSelectedPrerelease: Xcode?
+
+    init(xcode: Xcode, selected: Bool, appState: AppState, latestReleaseForSelectedPrerelease: Xcode? = nil) {
+        self.xcode = xcode
+        self.selected = selected
+        self.appState = appState
+        self.latestReleaseForSelectedPrerelease = latestReleaseForSelectedPrerelease
+    }
 
     var body: some View {
         HStack {
@@ -98,7 +106,23 @@ struct XcodeListViewRow: View {
     @ViewBuilder
     private func selectControl(for xcode: Xcode) -> some View {
         if xcode.installState.installed {
-            if xcode.selected {
+            if let latestReleaseForSelectedPrerelease, xcode.selected {
+                switch latestReleaseForSelectedPrerelease.installState {
+                case .installed:
+                    Button(action: { appState.select(xcode: latestReleaseForSelectedPrerelease) }) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.yellow)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .help(staleSelectedHelpText)
+                case .notInstalled:
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.yellow)
+                        .help(staleSelectedHelpText)
+                case .installing:
+                    EmptyView()
+                }
+            } else if xcode.selected {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.green)
                     .help("ActiveVersionDescription")
@@ -117,6 +141,19 @@ struct XcodeListViewRow: View {
 
     @ViewBuilder
     private func installControl(for xcode: Xcode) -> some View {
+        if let latestReleaseForSelectedPrerelease,
+           xcode.selected,
+           latestReleaseForSelectedPrerelease.installState == .notInstalled {
+            InstallButton(xcode: latestReleaseForSelectedPrerelease)
+                .textCase(.uppercase)
+                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
+        } else {
+            installStateControl(for: xcode)
+        }
+    }
+
+    @ViewBuilder
+    private func installStateControl(for xcode: Xcode) -> some View {
         switch xcode.installState {
         case .installed:
             Button("Open") { appState.open(xcode: xcode) }
@@ -133,6 +170,20 @@ struct XcodeListViewRow: View {
                 highlighted: selected,
                 cancel: { appState.presentedAlert = .cancelInstall(xcode: xcode) }
             )
+        }
+    }
+
+    private var staleSelectedHelpText: Text {
+        let selectedVersion = xcode.version.appleDescription
+        let latestVersion = latestReleaseForSelectedPrerelease?.version.appleDescription ?? ""
+
+        switch latestReleaseForSelectedPrerelease?.installState {
+        case .installed:
+            return Text(verbatim: "\(selectedVersion) selected, \(latestVersion) available. Click to select \(latestVersion).")
+        case .notInstalled:
+            return Text(verbatim: "\(selectedVersion) selected, \(latestVersion) available. Install \(latestVersion) to select it.")
+        case .installing, .none:
+            return Text("ActiveVersionDescription")
         }
     }
 }
