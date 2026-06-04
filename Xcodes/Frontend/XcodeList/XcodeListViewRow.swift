@@ -85,6 +85,8 @@ struct XcodeListViewRow: View {
     func appIconView(for xcode: Xcode) -> some View {
         if let icon = xcode.icon {
             Image(nsImage: icon)
+                .resizable()
+                .frame(width: 32, height: 32)
         } else {
             Image(xcode.version.isPrerelease ? "xcode-beta" : "xcode")
                 .resizable()

@@ -190,6 +190,7 @@ private struct XcodeVersionGroupRow: View {
                     Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
                         .font(.caption.weight(.semibold))
                         .foregroundColor(.secondary)
+                        .frame(width: 12, height: 12)
 
                     icon
 
@@ -223,11 +224,11 @@ private struct XcodeVersionGroupRow: View {
         if let icon = latestRelease?.icon {
             Image(nsImage: icon)
                 .resizable()
-                .frame(width: indentation == 0 ? 32 : 28, height: indentation == 0 ? 32 : 28)
+                .frame(width: 32, height: 32)
         } else {
             Image(latestRelease?.version.isPrerelease == true ? "xcode-beta" : "xcode")
                 .resizable()
-                .frame(width: indentation == 0 ? 32 : 28, height: indentation == 0 ? 32 : 28)
+                .frame(width: 32, height: 32)
                 .opacity(0.2)
         }
     }
