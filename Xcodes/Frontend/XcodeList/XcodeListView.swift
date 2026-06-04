@@ -408,6 +408,7 @@ struct PlatformsPocket: View {
         .font(.body.weight(.medium))
         .padding(.horizontal)
         .padding(.vertical, 12)
+        .contentShape(Rectangle())
     }
 }
 
