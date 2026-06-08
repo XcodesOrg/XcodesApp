@@ -30,9 +30,7 @@ final class HelperClient {
 
     private func helper(errorHandler: @escaping @Sendable (Error) -> Void) -> HelperXPCProtocol? {
         guard
-            let helper = self.currentConnection()?.remoteObjectProxyWithErrorHandler({ error in
-                errorHandler(error)
-            }) as? HelperXPCProtocol
+            let helper = self.currentConnection()?.remoteObjectProxyWithErrorHandler(errorHandler) as? HelperXPCProtocol
         else { return nil }
         return helper
     }
