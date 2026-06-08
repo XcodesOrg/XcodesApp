@@ -8,10 +8,11 @@
 
 import SwiftUI
 import Version
+import XcodesKit
 
 struct NotInstalledStateButtons: View {
     let downloadFileSizeString: String?
-    let id: Version
+    let id: XcodeID
 
     @EnvironmentObject var appState: AppState
 
@@ -20,7 +21,11 @@ struct NotInstalledStateButtons: View {
             Button {
                 appState.checkMinVersionAndInstall(id: id)
             } label: {
-                Text("Install") .help("Install")
+                if id.architectures?.isAppleSilicon ?? false {
+                    Text("Install Apple Silicon").help("Install")
+                } else {
+                    Text("Install Universal").help("Install")
+                }
             }
             
             if let size = downloadFileSizeString {
@@ -35,10 +40,10 @@ struct NotInstalledStateButtons: View {
     }
 }
 
-#Preview {
+#Preview { @MainActor in
   NotInstalledStateButtons(
     downloadFileSizeString: "1,19 GB",
-    id: Version(major: 12, minor: 3, patch: 0)
+    id: XcodeID(version: Version(major: 12, minor: 3, patch: 0), architectures: nil)
   )
   .padding()
 }

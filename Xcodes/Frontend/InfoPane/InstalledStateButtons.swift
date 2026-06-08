@@ -8,7 +8,7 @@
 
 import SwiftUI
 import Version
-import XCModel
+import XcodesKit
 import Path
 
 struct InstalledStateButtons: View {
@@ -42,7 +42,7 @@ struct InstalledStateButtons: View {
     }
 }
 
-#Preview {
+#Preview { @MainActor in
   InstalledStateButtons(xcode: xcode)
     .environmentObject(configure(AppState()) {
       $0.allXcodes = [xcode]

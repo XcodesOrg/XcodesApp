@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import AppleAPI
+import XcodesLoginKit
 
 struct SignInSecurityKeyPinView: View {
     @EnvironmentObject var appState: AppState
@@ -59,7 +59,7 @@ struct SignInSecurityKeyPinView: View {
     }
 }
 
-#Preview {
+#Preview { @MainActor in
     SignInSecurityKeyPinView(isPresented: .constant(true),
                              authOptions: AuthOptionsResponse(
                                 trustedPhoneNumbers: nil,

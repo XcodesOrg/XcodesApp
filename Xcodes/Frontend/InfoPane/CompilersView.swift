@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import struct XCModel.Compilers
+import XcodesKit
 
 struct CompilersView: View {
     let compilers: Compilers?

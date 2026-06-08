@@ -1,4 +1,5 @@
 import Foundation
+import XcodesKit
 
 extension FileManager {
     /**
@@ -10,12 +11,10 @@ extension FileManager {
      */
     @discardableResult
     func trashItem(at url: URL) throws -> URL {
-        var resultingItemURL: NSURL!
         if fileExists(atPath: url.path) {
-            try trashItem(at: url, resultingItemURL: &resultingItemURL)
+            return try xcodesTrashItem(at: url)
         } else {
             throw FileError.fileNotFound(url.lastPathComponent)
         }
-        return resultingItemURL as URL
     }
 }

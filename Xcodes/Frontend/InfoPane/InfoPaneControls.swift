@@ -42,6 +42,7 @@ struct InfoPaneControls: View {
 #Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
 #Preview(XcodePreviewName.allCases[5].rawValue) { makePreviewContent(for: 5) }
 
+@MainActor
 private func makePreviewContent(for index: Int) -> some View {
   let name = XcodePreviewName.allCases[index]
 

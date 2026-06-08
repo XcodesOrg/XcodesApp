@@ -29,23 +29,45 @@ public enum XcodesNotificationType: String, Identifiable, CaseIterable, CustomSt
     }
 }
 
-public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, ObservableObject {
+@MainActor
+public final class NotificationManager: NSObject, UNUserNotificationCenterDelegate, ObservableObject {
     private let notificationCenter = UNUserNotificationCenter.current()
+    private var notificationStatusTask: Task<Void, Never>?
+    private var notificationStatusTaskID: UUID?
+    private var requestAccessTask: Task<Void, Never>?
+    private var requestAccessTaskID: UUID?
     
     @Published var notificationStatus = NotificationPermissionPromptStatus.unknown
     
-    public override init() {
+    nonisolated public override init() {
         super.init()
-        loadNotificationStatus()
-        
-        notificationCenter.delegate = self
+        Task { @MainActor [weak self] in
+            guard let self else { return }
+            loadNotificationStatus()
+            notificationCenter.delegate = self
+        }
+    }
+
+    deinit {
+        notificationStatusTask?.cancel()
+        requestAccessTask?.cancel()
     }
     
     public func loadNotificationStatus() {
-        UNUserNotificationCenter.current().getNotificationSettings(completionHandler: { [weak self] (settings) in
+        notificationStatusTask?.cancel()
+        let taskID = UUID()
+        notificationStatusTaskID = taskID
+        notificationStatusTask = Task { [weak self] in
+            let settings = await UNUserNotificationCenter.current().notificationSettings()
+            guard !Task.isCancelled else {
+                await self?.clearNotificationStatusTask(id: taskID)
+                return
+            }
+
             let status = NotificationManager.systemPromptStatusFromSettings(settings)
-            self?.notificationStatus = status
-        })
+            await self?.setNotificationStatus(status, ifNotificationStatusTaskID: taskID)
+            await self?.clearNotificationStatusTask(id: taskID)
+        }
     }
     
     private class func systemPromptStatusFromSettings(_ settings: UNNotificationSettings) -> NotificationPermissionPromptStatus {
@@ -62,18 +84,73 @@ public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, Ob
     }
     
     public func requestAccess() {
-        
-        notificationCenter.requestAuthorization(options: [.alert, .sound, .badge]) { [weak self] granted, error in
-            DispatchQueue.main.async {
-                if let error = error {
-                    // Handle the error here.
-                    Logger.appState.error("Error requesting notification accesss: \(error.legibleLocalizedDescription)")
-                } else {
-                    Logger.appState.log("User has \(granted ? "Granted" : "NOT GRANTED") notification permission")
+        notificationStatusTask?.cancel()
+        notificationStatusTask = nil
+        notificationStatusTaskID = nil
+        requestAccessTask?.cancel()
+        let taskID = UUID()
+        requestAccessTaskID = taskID
+        requestAccessTask = Task { [weak self] in
+            do {
+                let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
+                guard !Task.isCancelled else {
+                    await self?.clearRequestAccessTask(id: taskID)
+                    return
                 }
-                self?.loadNotificationStatus()
+
+                Logger.appState.log("User has \(granted ? "Granted" : "NOT GRANTED") notification permission")
+            } catch {
+                guard !Task.isCancelled else {
+                    await self?.clearRequestAccessTask(id: taskID)
+                    return
+                }
+
+                Logger.appState.error("Error requesting notification accesss: \(error.legibleLocalizedDescription)")
             }
+
+            let settings = await UNUserNotificationCenter.current().notificationSettings()
+            guard !Task.isCancelled else {
+                await self?.clearRequestAccessTask(id: taskID)
+                return
+            }
+
+            let status = NotificationManager.systemPromptStatusFromSettings(settings)
+            await self?.setNotificationStatus(status, ifRequestAccessTaskID: taskID)
+            await self?.clearRequestAccessTask(id: taskID)
         }
+    }
+
+    @MainActor
+    private func setNotificationStatus(
+        _ status: NotificationPermissionPromptStatus,
+        ifNotificationStatusTaskID notificationStatusTaskID: UUID? = nil,
+        ifRequestAccessTaskID requestAccessTaskID: UUID? = nil
+    ) {
+        if let notificationStatusTaskID, notificationStatusTaskID != self.notificationStatusTaskID {
+            return
+        }
+
+        if let requestAccessTaskID, requestAccessTaskID != self.requestAccessTaskID {
+            return
+        }
+
+        notificationStatus = status
+    }
+
+    @MainActor
+    private func clearNotificationStatusTask(id: UUID) {
+        guard id == notificationStatusTaskID else { return }
+
+        notificationStatusTask = nil
+        notificationStatusTaskID = nil
+    }
+
+    @MainActor
+    private func clearRequestAccessTask(id: UUID) {
+        guard id == requestAccessTaskID else { return }
+
+        requestAccessTask = nil
+        requestAccessTaskID = nil
     }
     
     func scheduleNotification(title: String?, body: String, category: XcodesNotificationCategory) {
@@ -93,8 +170,7 @@ public class NotificationManager: NSObject, UNUserNotificationCenterDelegate, Ob
     
     // MARK: UNUserNotificationCenterDelegate
     
-    public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+    nonisolated public func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
         completionHandler( [.banner, .badge, .sound])
     }
 }
-

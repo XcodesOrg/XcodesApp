@@ -93,6 +93,12 @@
             "value" : ""
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : ""
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -206,6 +212,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@"
@@ -335,6 +347,12 @@
             "value" : "%1$@ %2$@ %3$@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ %3$@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -457,6 +475,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "⚠️ Отказано в доступе ⚠️\n\nПожалуйста, откройте настройки уведомлений и выберите Xcodes, чтобы разрешить доступ."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ การเข้าถึงถูกปฏิเสธ ⚠️\n\nโปรดเปิดการตั้งค่าการแจ้งเตือนและเลือก Xcodes หากคุณต้องการอนุญาตการเข้าถึง"
           }
         },
         "tr" : {
@@ -584,6 +608,12 @@
             "value" : "Доступ разрешен. Вы будете получать уведомления от Xcodes."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ได้รับอนุญาตการเข้าถึงแล้ว คุณจะได้รับการแจ้งเตือนจาก Xcodes"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -700,6 +730,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Юридическая информация"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รับทราบ"
           }
         },
         "tr" : {
@@ -820,6 +856,12 @@
             "value" : "Активно"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้งาน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -936,6 +978,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Активировать/Выбрать"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้งาน/เลือกใช้งาน"
           }
         },
         "tr" : {
@@ -1063,6 +1111,12 @@
             "value" : "Это активная версия"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "นี่คือเวอร์ชันที่ใช้งานอยู่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1180,6 +1234,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дополнительно"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขั้นสูง"
           }
         },
         "tr" : {
@@ -1306,6 +1366,12 @@
             "value" : "Прогресс будет сброшен."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความคืบหน้าใด ๆ จะถูกยกเลิก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1430,6 +1496,12 @@
             "value" : "Остановить установку"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หยุดการติดตั้ง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1547,13 +1619,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to stop the installation of Xcode %@?"
+            "value" : "Tem certeza que deseja interromper a instalação do Xcode %@?"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы уверены, что хотите остановить установку Xcode %@?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณแน่ใจหรือไม่ว่าต้องการหยุดการติดตั้ง Xcode %@?"
           }
         },
         "tr" : {
@@ -1682,6 +1760,12 @@
             "value" : "Вы уверены, что хотите остановить установку Xcode %@?"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณแน่ใจหรือไม่ว่าต้องการหยุดการติดตั้ง Xcode %@?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1798,13 +1882,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Delete"
+            "value" : "Remover"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Удалить"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบ"
           }
         },
         "tr" : {
@@ -1923,13 +2013,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Are you sure you want to delete %@?"
+            "value" : "Tem certeza que deseja remover %@?"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вы уверены, что хотите удалить %@?"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณแน่ใจว่าต้องการลบ %@ หรือไม่?"
           }
         },
         "tr" : {
@@ -1954,6 +2050,136 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "你確定要刪除 %@ 嗎？"
+          }
+        }
+      }
+    },
+    "Alert.Install.AuthError.Message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Você não está autorizado. Por favor, entre com o seu ID Apple primeiro."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คุณไม่ได้รับอนุญาต กรุณาลงชื่อเข้าใช้ด้วย Apple ID ของคุณก่อน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You are not authorized. Please Sign in with your Apple ID first."
           }
         }
       }
@@ -2048,13 +2274,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+            "value" : "A Apple oferece suporte para download somente nos sistemas operacionais iOS 16.0+, watchOS 9.0+, tvOS 16+ e visionOS 1.0+ com Xcode 16.1+. Baixe, ative e tente novamente."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple รองรับการดาวน์โหลดรันไทม์ iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ ด้วย Xcode 16.1+ เท่านั้น กรุณาดาวน์โหลด เปิดใช้งาน แล้วลองอีกครั้ง"
           }
         },
         "tr" : {
@@ -2079,6 +2311,137 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        }
+      }
+    },
+    "Alert.Install.Error.Need.Xcode26" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A Apple oferece suporte ao download de runtimes do Apple Silicon somente quando o Xcode 26+ estiver selecionado. Selecione e tente baixar novamente ou baixe a compilação universal."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple รองรับการดาวน์โหลดรันไทม์ Apple Silicon เฉพาะเมื่อเลือก Xcode 26 ขึ้นไปเท่านั้น โปรดเลือกและลองดาวน์โหลดอีกครั้ง หรือดาวน์โหลดเวอร์ชัน Universal"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple supports downloading Apple Silicon runtimes only when Xcode 26+ is selected. Please Select and try downloading again or download the universal build."
           }
         }
       }
@@ -2181,6 +2544,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Невозможно установить Xcode"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถติดตั้ง Xcode ได้"
           }
         },
         "tr" : {
@@ -2308,6 +2677,12 @@
             "value" : "Невозможно установить заархивированный Xcode"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถติดตั้ง Archive ของ Xcode ได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2433,6 +2808,12 @@
             "value" : "Xcode %@ требует macOS %@, но вы используете macOS %@, вы все еще хотите установить?"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ ต้องใช้ macOS %@ แต่คุณกำลังใช้งาน macOS %@ คุณยังคงต้องการติดตั้งหรือไม่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2556,6 +2937,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Текущая macOS не соответствует минимальным требованиям"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความต้องการขั้นต่ำยังไม่เพียงพอ"
           }
         },
         "tr" : {
@@ -2684,6 +3071,12 @@
             "value" : "Невозможно выполнить дополнительные шаги после установки"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถดำเนินการตามขั้นตอนหลังการติดตั้งได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2807,6 +3200,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Невозможно установить помощник"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถติดตั้งตัวช่วยได้"
           }
         },
         "tr" : {
@@ -2933,6 +3332,12 @@
             "value" : "Xcodes использует отдельный привилегированный помощник для выполнения задач от имени root-пользователя. Это команды, которые потребуют sudo в командной строке, включая шаги после установки и переключение версий Xcode с помощью xcode-select.\n\nВам будет предложено указать пароль от вашей учетной записи macOS для его установки."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes ใช้ตัวช่วยที่มีสิทธิพิเศษแยกต่างหากเพื่อดำเนินการต่าง ๆ ในฐานะ root สิ่งเหล่านี้จำเป็นต้องใช้คำสั่ง sudo บน Command Line รวมถึงขั้นตอนหลังการติดตั้งและการสลับเวอร์ชัน Xcode ด้วยคำสั่ง xcode-select\n\nระบบจะขอให้คุณป้อนรหัสผ่านของบัญชี macOS ของคุณเพื่อทำการติดตั้ง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3056,6 +3461,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Привилегированный помощник"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตัวช่วยที่มีสิทธิพิเศษ"
           }
         },
         "tr" : {
@@ -3184,6 +3595,12 @@
             "value" : "Невозможно выбрать Xcode"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถเลือก Xcode ได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3307,6 +3724,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode.app существует и не является символической ссылкой"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode.app มีอยู่และไม่ใช่ Symbolic Link"
           }
         },
         "tr" : {
@@ -3435,6 +3858,12 @@
             "value" : "Невозможно создать символическую ссылку"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถสร้าง Symbolic Link ได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3551,13 +3980,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Could not find file \"%@\"."
+            "value" : "Não foi possível encontrar o arquivo \"%@\"."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не удалось найти файл «%@»."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบไฟล์ \"%@\""
           }
         },
         "tr" : {
@@ -3685,6 +4120,12 @@
             "value" : "Невозможно удалить Xcode"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถถอนการติดตั้ง Xcode ได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3807,6 +4248,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Файлы будут перемещены в корзину, но не будут очищены из неё автоматически."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "มันจะถูกย้ายไปที่ถังขยะ แต่จะไม่ถูกลบอย่างถาวร"
           }
         },
         "tr" : {
@@ -3935,6 +4382,12 @@
             "value" : "Удалить Xcode %@?"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ถอนการติดตั้ง Xcode %@?"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4061,6 +4514,12 @@
             "value" : "Невозможно обновить выбранный Xcode"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถอัปเดต Xcode ที่เลือกได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4179,6 +4638,12 @@
             "value" : "Все"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทั้งหมด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4201,6 +4666,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "全部"
+          }
+        }
+      }
+    },
+    "An error occurred" : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S’ha produït un error"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ein Fehler ist aufgetreten"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Παρουσιάστηκε σφάλμα"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se produjo un error"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tapahtui virhe"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Une erreur est survenue"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "एक त्रुटि हुई"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Si è verificato un errore"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "エラーが発生しました"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "오류가 발생했습니다"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Er is een fout opgetreden"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wystąpił błąd"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ocorreu um erro"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Произошла ошибка"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bir hata oluştu"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Сталася помилка"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发生错误"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "發生錯誤"
           }
         }
       }
@@ -4297,6 +4874,12 @@
             "value" : "Apple Silicon"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple Silicon"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4312,7 +4895,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : ""
+            "value" : "Apple芯片"
           }
         },
         "zh-Hant" : {
@@ -4419,6 +5002,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple ID:"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AppleID:"
           }
         },
         "tr" : {
@@ -4545,6 +5134,12 @@
             "value" : "Обновления Xcodes.app"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อัปเดต Xcodes.app"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4567,6 +5162,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes.app 更新"
+          }
+        }
+      }
+    },
+    "Architecture" : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arquitectura"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Architektur"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αρχιτεκτονική"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arquitectura"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arkkitehtuuri"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Architecture"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "आर्किटेक्चर"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Architettura"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アーキテクチャ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아키텍처"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Architectuur"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Architektura"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Arquitetura"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Архитектура"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mimari"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Архітектура"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "架构"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "架構"
           }
         }
       }
@@ -4661,13 +5368,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Authenticating"
+            "value" : "Autenticando"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Authenticating"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังตรวจสอบความถูกต้อง"
           }
         },
         "tr" : {
@@ -4794,6 +5507,12 @@
             "value" : "Автоматически создавать символическую ссылку к Xcode.app"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สร้าง Symbolic Link ไปยัง Xcode.app โดยอัตโนมัติ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4918,6 +5637,12 @@
             "value" : "Когда вы делаете версию Xcode активной/выбранной, будет выполнена попытка создать символическую ссылку с именем Xcode.app в директории установки"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อทำให้เวอร์ชัน Xcode เป็น ใช้งาน/ถูกเลือก ให้ลองสร้าง Symbolic link ชื่อ Xcode.app ในไดเร็กทอรีของการติดตั้ง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5040,6 +5765,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Автоматически устанавливать новые версии Xcode"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้ง Xcode เวอร์ชันล่าสุดโดยอัตโนมัติ"
           }
         },
         "tr" : {
@@ -5167,6 +5898,12 @@
             "value" : "Бета"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เบต้า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5291,6 +6028,12 @@
             "value" : "Только бета"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เบต้าเท่านั้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5409,6 +6152,12 @@
             "value" : "Отмена"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยกเลิก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5431,6 +6180,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消"
+          }
+        }
+      }
+    },
+    "Category" : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoria"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategorie"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Κατηγορία"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoría"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategoria"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Catégorie"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "श्रेणी"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoria"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "カテゴリ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "카테고리"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categorie"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategoria"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Categoria"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Категория"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kategori"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Категорія"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "类别"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "類別"
           }
         }
       }
@@ -5525,6 +6386,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Изменить"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปลี่ยน"
           }
         },
         "tr" : {
@@ -5649,6 +6516,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Автоматически проверять наличие обновлений"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตรวจสอบเวอร์ชันล่าสุดของ Xcodes โดยอัตโนมัติ"
           }
         },
         "tr" : {
@@ -5776,6 +6649,12 @@
             "value" : "Проверка безопасности"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การตรวจสอบความปลอดภัย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5900,6 +6779,12 @@
             "value" : "Проверить сейчас"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตรวจสอบตอนนี้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6016,6 +6901,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Закрыть"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปิด"
           }
         },
         "tr" : {
@@ -6136,6 +7027,12 @@
             "value" : "Совместимость"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ความเข้ากันได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6254,6 +7151,12 @@
             "value" : "Компиляторы"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คอมไพเลอร์"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6370,6 +7273,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Продолжить"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดำเนินการต่อ"
           }
         },
         "tr" : {
@@ -6496,6 +7405,12 @@
             "value" : "Копировать путь"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดลอก Path"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6611,13 +7526,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Copy URL"
+            "value" : "Copiar URL"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Копировать URL"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดลอก URL"
           }
         },
         "tr" : {
@@ -6735,13 +7656,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Criar Symlink como Xcode.app"
+            "value" : "Criar link simbólico como Xcode.app"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Создать символическую ссылку к Xcode.app"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สร้าง Symlink เป็น Xcode.app"
           }
         },
         "tr" : {
@@ -6859,13 +7786,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Create Symlink as Xcode-Beta.app"
+            "value" : "Criar link simbólico como Xcode-Beta.app"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Создать символическую ссылку к Xcode-Beta.app"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สร้าง Symlink เป็น Xcode-Beta.app"
           }
         },
         "tr" : {
@@ -6992,6 +7925,12 @@
             "value" : "Источник данных"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แหล่งข้อมูล"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7115,6 +8054,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Источник данных Apple применяет технологию \"веб-скрейпинга\" к веб-сайту Apple для разработчиков. Он всегда показывает последние доступные выпуски, но является менее стабильным источником данных.\n\n[Xcode Releases](https://xcodereleases.com) — это неофициальный список выпусков Xcode. Он предоставляется в виде удобно структурированных данных, содержит дополнительную информацию, которую не всегда можно получить от Apple и который с меньшей вероятностью перестанет работать, если Apple изменит дизайн своего веб-сайта для разработчиков."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แหล่งข้อมูล Apple จะรวบรวมข้อมูลจากเว็บไซต์นักพัฒนาของ Apple ซึ่งจะแสดงเวอร์ชันล่าสุดที่พร้อมใช้งานอยู่เสมอ แต่มีความเปราะบางมากกว่า\n\n[Xcode Releases](https://xcodereleases.com) คือรายชื่อของ [Xcode Releases](https://xcodereleases.com) อย่างไม่เป็นทางการ มีข้อมูลเพิ่มเติมที่ไม่สามารถหาได้จาก Apple และมีโอกาสเสียหายน้อยกว่าเมื่อ Apple ออกแบบเว็บไซต์นักพัฒนาใหม่"
           }
         },
         "tr" : {
@@ -7243,6 +8188,12 @@
             "value" : "Введите %d цифровой код с одного из ваших доверенных устройств:"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ป้อนรหัส %d หลักจากหนึ่งในอุปกรณ์ที่เชื่อถือได้ของคุณ:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7265,6 +8216,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "請輸入顯示在你其中一個信任裝置中的 %d 位數密碼："
+          }
+        }
+      }
+    },
+    "Dismiss" : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descarta"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Schließen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Απόρριψη"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Descartar"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sulje"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fermer"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "खारिज करें"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ignora"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "閉じる"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "닫기"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sluiten"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zamknij"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dispensar"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрыть"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kapat"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Закрити"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "關閉"
           }
         }
       }
@@ -7359,6 +8422,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузчик"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เครื่องมือในการดาวน์โหลด"
           }
         },
         "tr" : {
@@ -7484,6 +8553,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[aria2](https://github.com/aria2/aria2) использует до 16 подключений для загрузки Xcode в 3-5 раз быстрее, чем URLSession. Он поставляется в виде исполняемого файла вместе с исходным кодом в Xcodes, чтобы соответствовать лицензии GPLv2.\n\nURLSession — это API Apple по умолчанию для выполнения запросов по сети."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[aria2](https://github.com/aria2/aria2) ใช้การเชื่อมต่อสูงสุด 16 ทาง เพื่อดาวน์โหลด Xcode ที่เร็วกว่า URLSession 3-5 เท่า มันถูกรวมเป็นไฟล์ปฏิบัติการพร้อมกับซอร์สโค้ดภายใน Xcodes เพื่อให้สอดคล้องกับใบอนุญาต GPLv2\n\nURLSession คือ API ค่าเริ่มต้นของ Apple สำหรับการส่ง URL requests"
           }
         },
         "tr" : {
@@ -7612,6 +8687,12 @@
             "value" : "Скачивание"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังดาวน์โหลด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7737,6 +8818,12 @@
             "value" : "Информация о загрузке не найдена"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบข้อมูลของการดาวน์โหลด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7769,109 +8856,115 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "التنزيل: اكتمل %d%%"
+            "value" : "التنزيل  : اكتمل %d%%"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descarregant: %d%% completat"
+            "value" : "Descarregant  : %d%% completat"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Download: %d%% vollständig"
+            "value" : "Download  : %d%% vollständig"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Λήψη: %d%% ολοκλήρωση"
+            "value" : "Λήψη  : %d%% ολοκλήρωση"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Downloading: %d%% complete"
+            "value" : "Downloading  : %d%% complete"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descargando: %d%% completado"
+            "value" : "Descargando  : %d%% completado"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lataa: %d%% valmis"
+            "value" : "Lataa  : %d%% valmis"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Téléchargement : %d%% téléchargé"
+            "value" : "Téléchargement   : %d%% téléchargé"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "डाउनलोड: %d%% पूर्ण"
+            "value" : "डाउनलोड  : %d%% पूर्ण"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Download: %d%% completato"
+            "value" : "Download  : %d%% completato"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ダウンロード中: %d%%"
+            "value" : "ダウンロード中  : %d%%"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "다운로드 중: %d%% 완료"
+            "value" : "다운로드 중  : %d%% 완료"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Downloaden: %d%% compleet"
+            "value" : "Downloaden  : %d%% compleet"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobieranie: %d%% ukończone"
+            "value" : "Pobieranie  : %d%% ukończone"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Baixando: %d%% finalizado"
+            "value" : "Baixando  : %d%% finalizado"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Скачивание: %d% завершено"
+            "value" : "Скачивание  : %d% завершено"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังดาวน์โหลด  : %d%% เสร็จแล้ว"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İndirme: %d%% tamamlandı"
+            "value" : "İndirme  : %d%% tamamlandı"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Викачано: %d%%"
+            "value" : "Викачано  : %d%%"
           }
         },
         "zh-Hans" : {
@@ -7979,6 +9072,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загрузки"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดาวน์โหลด"
           }
         },
         "tr" : {
@@ -8105,6 +9204,12 @@
             "value" : "Размер загрузки"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขนาดที่ต้องดาวน์โหลด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8229,6 +9334,12 @@
             "value" : "Включить уведомления"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดการแจ้งเตือน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8267,7 +9378,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Introdueix el codi de %d dígits enviat a %@: "
+            "value" : "Introdueix el codi de %d dígits enviat a %@  : "
           }
         },
         "de" : {
@@ -8285,37 +9396,37 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter the %1$d digit code sent to %2$@: "
+            "value" : "Enter the %1$d digit code sent to %2$@  : "
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ingrese el código de dígito %1$d enviado a %2$@: "
+            "value" : "Ingrese el código de dígito %1$d enviado a %2$@  : "
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anna %1$d numeroinen koodi, joka lähetettiin osoitteeseen %2$@: "
+            "value" : "Anna %1$d numeroinen koodi, joka lähetettiin osoitteeseen %2$@  : "
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Entrez le code à %1$d chiffres envoyé à %2$@ : "
+            "value" : "Entrez le code à %1$d chiffres envoyé à %2$@   : "
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$@ को भेजा गया %1$d अंक कोड दर्ज करें: "
+            "value" : "%2$@ को भेजा गया %1$d अंक कोड दर्ज करें  : "
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inserisci il codice di %d cifre inviato a %@: "
+            "value" : "Inserisci il codice di %d cifre inviato a %@  : "
           }
         },
         "ja" : {
@@ -8333,31 +9444,37 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Voer de %1$d code in die is verstuurd naar %2$@: "
+            "value" : "Voer de %1$d code in die is verstuurd naar %2$@  : "
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wprowadź %1$d-cyfrowy kod wysłany do %2$@: "
+            "value" : "Wprowadź %1$d-cyfrowy kod wysłany do %2$@  : "
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Insira o código de %1$d dígitos enviado para %2$@: "
+            "value" : "Insira o código de %1$d dígitos enviado para %2$@  : "
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Введите %1$d цифровой код, отправленный на %2$@: "
+            "value" : "Введите %1$d цифровой код, отправленный на %2$@  : "
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ป้อนรหัส %1$d หลักที่ส่งไปที่ %2$@:"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$@ kaynağından gönderilen %1$d rakamlı kodu gir: "
+            "value" : "%2$@ kaynağından gönderilen %1$d rakamlı kodu gir  : "
           }
         },
         "uk" : {
@@ -8470,13 +9587,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Error"
+            "value" : "Erro"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ошибка"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ข้อผิดพลาด"
           }
         },
         "tr" : {
@@ -8589,13 +9712,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Experiments"
+            "value" : "Experimentos"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Эксперименты"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การทดลอง"
           }
         },
         "tr" : {
@@ -8722,6 +9851,12 @@
             "value" : "Быстрый Unxip"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unxip เร็วขึ้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8784,7 +9919,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gracias a [@_saagarjha](https://twitter.com/_saagarjha), este experimento puede aumentar la velocidad de liberación hasta en un 70 % para algunos sistemas.\n\nPuede ver más información sobre cómo se logra esto en el repositorio de unxip: https://github.com/saagarjha/unxip"
+            "value" : "Gracias a [@_saagarjha](https://twitter.com/_saagarjha), este experimento puede aumentar la velocidad de liberación hasta en un 70 % para algunos sistemas.\n\nPuede ver más información sobre cómo se logra esto en el repositorio de unxip  : https://github.com/saagarjha/unxip"
           }
         },
         "fi" : {
@@ -8845,6 +9980,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Благодаря [@_saagarjha](https://twitter.com/_saagarjha) этот эксперимент может увеличить скорость распаковки до 70% на некоторых системах.\n\nДополнительную информацию о том, как достигается такой результат, можно прочесть в репозитории unxip — https://github.com/saagarjha/unxip. "
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขอขอบคุณ [@_saagarjha](https://twitter.com/_saagarjha) การทดลองนี้สามารถเพิ่มความเร็วในการ unxipping ได้มากถึง 70% สำหรับบางระบบ\n\nดูข้อมูลเพิ่มเติมเกี่ยวกับวิธีการดำเนินการนี้ได้ที่ repo ของ unxip - https://github.com/saagarjha/unxip"
           }
         },
         "tr" : {
@@ -8965,6 +10106,12 @@
             "value" : "Фильтр"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดกรอง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8987,6 +10134,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "過濾"
+          }
+        }
+      }
+    },
+    "FilterArchitecturesDescription" : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtra les versions d’Xcode per arquitectura."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtere Xcode-Versionen nach Architektur."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Φιλτράρισμα εκδόσεων Xcode κατά αρχιτεκτονική."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtra las versiones de Xcode por arquitectura."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suodata Xcode-versiot arkkitehtuurin mukaan."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtrer les versions de Xcode par architecture."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode संस्करणों को आर्किटेक्चर के अनुसार फ़िल्टर करें."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtra le versioni di Xcode per architettura."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "アーキテクチャでXcodeバージョンを絞り込みます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "아키텍처별로 Xcode 버전을 필터링합니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filter Xcode-versies op architectuur."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtruj wersje Xcode według architektury."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Filtre as versões do Xcode por arquitetura."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фильтруйте версии Xcode по архитектуре."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode sürümlerini mimariye göre filtreleyin."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Фільтруйте версії Xcode за архітектурою."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按架构筛选 Xcode 版本。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "依架構篩選 Xcode 版本。"
           }
         }
       }
@@ -9087,6 +10346,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отфильтровать доступные версии"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดกรองเวอร์ชันที่พร้อมใช้งาน"
           }
         },
         "tr" : {
@@ -9211,6 +10476,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отфильтровать установленные версии"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดกรองเวอร์ชันที่ติดตั้ง"
           }
         },
         "tr" : {
@@ -9338,6 +10609,12 @@
             "value" : "Завершение"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังจะเสร็จสิ้น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9455,6 +10732,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Общее"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ทั่วไป"
           }
         },
         "tr" : {
@@ -9581,6 +10864,12 @@
             "value" : "Репозиторий GitHub"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "GitHub Repo"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9603,6 +10892,136 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GitHub Repo"
+          }
+        }
+      }
+    },
+    "GroupXcodeVersionsInList" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Group Xcode versions in the list"
           }
         }
       }
@@ -9704,6 +11123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Невозможно установить связь с привилегированным помощником."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถติดต่อกับตัวช่วยที่มีสิทธิพิเศษได้"
           }
         },
         "tr" : {
@@ -9830,6 +11255,12 @@
             "value" : "Помощник установлен"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตัวช่วยถูกติดตั้งแล้ว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9952,6 +11383,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Помощник не установлен"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตัวช่วยยังไม่ถูกติดตั้ง"
           }
         },
         "tr" : {
@@ -10079,6 +11516,12 @@
             "value" : "Идентичные выпуски"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Builds ที่เหมือนกัน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10203,6 +11646,12 @@
             "value" : "Иногда предварительная и релизная версии представляют собой один и тот же выпуск. Xcodes автоматически отображает эти версии вместе."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บางครั้งเวอร์ชันก่อนวางจำหน่ายและเวอร์ชันวางจำหน่ายจะเป็นรุ่นเดียวกัน Xcodes จะแสดงเวอร์ชันเหล่านี้พร้อมกันโดยอัตโนมัติ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10325,6 +11774,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Включить предварительные/бета-версии"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รวมถึงเวอร์ชัน prerelease/beta "
           }
         },
         "tr" : {
@@ -10452,6 +11907,12 @@
             "value" : "Установить"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้ง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10474,6 +11935,254 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "安裝"
+          }
+        }
+      }
+    },
+    "Install Apple Silicon" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instalar Apple Silicon"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้ง Apple Silicon"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安装Apple芯片版本"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Apple Silicon"
+          }
+        }
+      }
+    },
+    "Install Universal" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instalar Universal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้ง Universal"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "安装通用版本"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Universal"
           }
         }
       }
@@ -10502,7 +12211,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Αποτυχία επαλήθευσης ψηφιακής υπογραφής για το ληφθέν Xcode: \n%@"
+            "value" : "Αποτυχία επαλήθευσης ψηφιακής υπογραφής για το ληφθέν Xcode  : \n%@"
           }
         },
         "en" : {
@@ -10575,6 +12284,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Загруженный Xcode не прошел проверку подписи сертификата со следующим выводом:\n%@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode ที่ดาวน์โหลดมาล้มเหลวในการตรวจสอบการลงนามโค้ด โดยมีผลลัพธ์ดังต่อไปนี้:\n%@"
           }
         },
         "tr" : {
@@ -10703,6 +12418,12 @@
             "value" : "Архив \"%@\" поврежден и не может быть расширен."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไฟล์ \"%@\" เสียหายและไม่สามารถแตกไฟล์ได้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10828,6 +12549,12 @@
             "value" : "Xcode %@ не прошел оценку безопасности со следующим выводом:\n%@\nОн остается установленным в %@, если вы все равно хотите его использовать."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ ไม่ผ่านการประเมินความปลอดภัย โดยมีผลลัพธ์ดังนี้:\n%@\nระบบจะติดตั้งไว้ที่ %@ หากคุณต้องการใช้งานต่อไป"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10944,13 +12671,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Falha ao mover Xcode para o diretório: %@"
+            "value" : "Falha ao mover Xcode para o diretório  : %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не удалось переместить Xcode в директорию %@."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถย้าย Xcode ไปยังไดเร็กทอรี %@ ได้"
           }
         },
         "tr" : {
@@ -11078,6 +12811,12 @@
             "value" : "%@ не является допустимым номером версии."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ไม่ใช่หมายเลขเวอร์ชันที่ถูกต้อง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11158,7 +12897,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "पासवर्ड अनुपलब्ध है। कृपया पुन: प्रयास करें।"
+            "value" : "पासवर्ड अनुपलब्ध है। कृपया पुन  : प्रयास करें।"
           }
         },
         "it" : {
@@ -11201,6 +12940,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отсутствует пароль. Повторите попытку."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยังขาดรหัสผ่านอยู่ กรุณาลองอีกครั้ง"
           }
         },
         "tr" : {
@@ -11283,7 +13028,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "उपयोगकर्ता नाम या पासवर्ड गुम है। कृपया पुन: प्रयास करें।"
+            "value" : "उपयोगकर्ता नाम या पासवर्ड गुम है। कृपया पुन  : प्रयास करें।"
           }
         },
         "it" : {
@@ -11326,6 +13071,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Отсутствует имя пользователя или пароль. Пожалуйста, попробуйте еще раз."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยังขาดชื่อผู้ใช้หรือรหัสผ่านอยู่ กรุณาลองอีกครั้ง"
           }
         },
         "tr" : {
@@ -11453,6 +13204,12 @@
             "value" : "Нет доступных не предварительных версий."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีเวอร์ชันที่ไม่ใช่รุ่นก่อนวางจำหน่ายที่พร้อมใช้งาน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11576,6 +13333,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Предварительные версии недоступны."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่มีเวอร์ชันก่อนวางจำหน่ายที่พร้อมใช้งาน"
           }
         },
         "tr" : {
@@ -11703,6 +13466,12 @@
             "value" : "Архив \"%@\" не может быть расширен, поскольку в текущем жестком диске недостаточно свободного места.\n\nОсвободите больше места для расширения архива, а затем снова установите Xcode %@, чтобы начать установку с того места, где он остановился."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่สามารถขยายไฟล์ \"%@\" ได้ เนื่องจากพื้นที่ว่างในไดรฟ์ปัจจุบันไม่เพียงพอ\n\nเพิ่มพื้นที่ว่างเพื่อขยายไฟล์ แล้วติดตั้ง Xcode %@ อีกครั้งเพื่อเริ่มการติดตั้งต่อจากจุดที่ค้างไว้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11826,6 +13595,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Установка завершена, но некоторые шаги после установки не были выполнены автоматически. Они будут выполнены при первом запуске Xcode %@."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การติดตั้งเสร็จสมบูรณ์แล้ว แต่บางขั้นตอนหลังการติดตั้งไม่ได้ดำเนินการโดยอัตโนมัติ ขั้นตอนเหล่านี้จะดำเนินการเมื่อคุณเปิด Xcode %@ ครั้งแรก"
           }
         },
         "tr" : {
@@ -11953,6 +13728,12 @@
             "value" : "Установка была завершена, но некоторые шаги после установки не были выполнены автоматически. Xcodes выполняет эти шаги с привилегированным помощником, который, похоже, не установлен. Вы можете установить его из Настройки > Дополнительно.\n\nЭти шаги будут выполнены при первом запуске Xcode %@."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การติดตั้งเสร็จสมบูรณ์แล้ว แต่บางขั้นตอนหลังการติดตั้งไม่ได้ดำเนินการโดยอัตโนมัติ Xcodes ดำเนินการตามขั้นตอนเหล่านี้ด้วยตัวช่วยที่มีสิทธิ์ ซึ่งดูเหมือนจะไม่ได้ติดตั้ง คุณสามารถติดตั้งได้จาก การตั้งค่า > ขั้นสูง\n\nขั้นตอนเหล่านี้จะดำเนินการเมื่อคุณเปิด Xcode %@ ครั้งแรก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12076,6 +13857,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Не удалось найти версию %@."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่พบเวอร์ชัน %@"
           }
         },
         "tr" : {
@@ -12203,6 +13990,12 @@
             "value" : "Загруженный Xcode не имеет ожидаемого идентификатора подписи сертификата.\nПолучено:\n%@\n%@\nОжидается:\n%@\n%@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode ที่ดาวน์โหลดมาไม่มีรหัสประจำตัวการลงนามตามที่ต้องการ\nได้รับ:\n%@\n%@\nต้องการ:\n%@\n%@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12326,6 +14119,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes (пока) не поддерживает установку Xcode из формата файла %@."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes ยังไม่รองรับการติดตั้ง Xcode จากรูปแบบไฟล์ %@"
           }
         },
         "tr" : {
@@ -12453,6 +14252,12 @@
             "value" : "%@ уже установлен в %@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ได้รับการติดตั้งแล้วที่ %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12578,6 +14383,12 @@
             "value" : "%@ не установлен."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ ยังไม่ได้รับการติดตั้ง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12605,115 +14416,121 @@
       }
     },
     "InstallationStepDescription" : {
-      "comment" : "So if changing order, make sure the positional specficier is retained. ex: \"%3$@: Step %1$d of %2$d\"",
+      "comment" : "So if changing order, make sure the positional specficier is retained. ex  : \"%3$@  : Step %1$d of %2$d\"",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Step %1$d of %2$d: %3$@"
+            "value" : "Step %1$d of %2$d  : %3$@"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pas %1$d de %2$d: %3$@"
+            "value" : "Pas %1$d de %2$d  : %3$@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schritt %1$d von %2$d: %3$@"
+            "value" : "Schritt %1$d von %2$d  : %3$@"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Βήμα %1$d από %2$d: %3$@"
+            "value" : "Βήμα %1$d από %2$d  : %3$@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Step %1$d of %2$d: %3$@"
+            "value" : "Step %1$d of %2$d  : %3$@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Paso %1$d de %2$d: %3$@"
+            "value" : "Paso %1$d de %2$d  : %3$@"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaihe %1$d / %2$d: %3$@"
+            "value" : "Vaihe %1$d / %2$d  : %3$@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Étape %1$d sur %2$d : %3$@"
+            "value" : "Étape %1$d sur %2$d   : %3$@"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$d का स्टेप %1$d: %3$@"
+            "value" : "%2$d का स्टेप %1$d  : %3$@"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Passo %1$d di %2$d: %3$@"
+            "value" : "Passo %1$d di %2$d  : %3$@"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ステップ %1$d / %2$d: %3$@"
+            "value" : "ステップ %1$d / %2$d  : %3$@"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$d / %2$d 단계: %3$@"
+            "value" : "%1$d / %2$d 단계  : %3$@"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stap %1$d van %2$d: %3$@"
+            "value" : "Stap %1$d van %2$d  : %3$@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Krok %1$d z %2$d: %3$@"
+            "value" : "Krok %1$d z %2$d  : %3$@"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Passo %1$d de %2$d: %3$@"
+            "value" : "Passo %1$d de %2$d  : %3$@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Шаг %1$d из %2$d: %3$@"
+            "value" : "Шаг %1$d из %2$d  : %3$@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ขั้นตอนที่ %1$d จาก %2$d  : %3$@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adım %1$d/%2$d: %3$@"
+            "value" : "Adım %1$d/%2$d  : %3$@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Крок %1$d з %2$d: %3$@"
+            "value" : "Крок %1$d з %2$d  : %3$@"
           }
         },
         "zh-Hans" : {
@@ -12826,6 +14643,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Установить эту версию"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้งเวอร์ชันนี้"
           }
         },
         "tr" : {
@@ -12943,13 +14766,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Install Directory"
+            "value" : "Diretório de instalação"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Путь для установки"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้งที่ไดเร็กทอรี"
           }
         },
         "tr" : {
@@ -12974,6 +14803,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "安裝目錄"
+          }
+        }
+      }
+    },
+    "Installed Only" : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Només instal·lats"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Nur installierte"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Μόνο εγκατεστημένα"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo instalados"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Vain asennetut"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Installés uniquement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "केवल इंस्टॉल किए गए"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Solo installati"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "インストール済みのみ"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설치된 항목만"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alleen geïnstalleerd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tylko zainstalowane"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Somente instalados"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Только установленные"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yalnızca yüklü"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Лише встановлені"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "仅已安装"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "僅已安裝"
           }
         }
       }
@@ -13074,6 +15015,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Установить помощника"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้งตัวช่วย"
           }
         },
         "tr" : {
@@ -13191,13 +15138,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
+            "value" : "Xcodes procura e instala em um diretório único. Por padrão (e recomendado) é mantido no /Applications. Qualquer mudança onde o Xcode é instalado pode resultar na falha de outros aplicativos/serviços."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes использует единый путь для поиска и установки выпусков Xcode. По умолчанию, рекомендуется оставить /Applications. Любые изменения в то, где находится Xcode, могут привести к тому, что другие приложения/сервисы могут перестать работать. "
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes จะค้นหาและติดตั้งลงในไดเรกทอรีเดียว โดยค่าเริ่มต้น (และแนะนำ) คือการเก็บข้อมูลนี้ไว้ใน /Applications การเปลี่ยนแปลงใด ๆ เกี่ยวกับตำแหน่งที่เก็บ Xcode อาจทำให้แอปพลิเคชัน/บริการอื่น ๆ หยุดทำงาน"
           }
         },
         "tr" : {
@@ -13232,109 +15185,115 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "آخر فحص: %@"
+            "value" : "آخر فحص  : %@"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Última consulta: %@"
+            "value" : "Última consulta  : %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Letzte Prüfung: %@"
+            "value" : "Letzte Prüfung  : %@"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Τελευταίος έλεγχος: %@"
+            "value" : "Τελευταίος έλεγχος  : %@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Last checked: %@"
+            "value" : "Last checked  : %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Última comprobación: %@"
+            "value" : "Última comprobación  : %@"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Viimeksi tarkistettu: %@"
+            "value" : "Viimeksi tarkistettu  : %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dernière vérification : %@"
+            "value" : "Dernière vérification   : %@"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "पिछली बार चेक किया गया: %@"
+            "value" : "पिछली बार चेक किया गया  : %@"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ultimo controllo: %@"
+            "value" : "Ultimo controllo  : %@"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "前回の確認: %@"
+            "value" : "前回の確認  : %@"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "마지막 확인 시점: %@"
+            "value" : "마지막 확인 시점  : %@"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Laatste controle: %@"
+            "value" : "Laatste controle  : %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ostatnio sprawdzono: %@"
+            "value" : "Ostatnio sprawdzono  : %@"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ultima vez verificado: %@"
+            "value" : "Ultima vez verificado  : %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Последняя проверка: %@"
+            "value" : "Последняя проверка  : %@"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตรวจสอบล่าสุดเมื่อ  : %@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Son kontrol: %@"
+            "value" : "Son kontrol  : %@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перевірено в останнє: %@"
+            "value" : "Перевірено в останнє  : %@"
           }
         },
         "zh-Hans" : {
@@ -13434,13 +15393,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Licensa"
+            "value" : "Licença"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Лицензия"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใบอนุญาต"
           }
         },
         "tr" : {
@@ -13567,6 +15532,12 @@
             "value" : "Путь к локальному кешу"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตำแหน่งที่เก็บไฟล์แคช"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13691,6 +15662,12 @@
             "value" : "Xcodes кеширует доступные версии Xcode и временно загружает новые версии в указанную директорию"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes แคชเวอร์ชัน Xcode ที่มีอยู่และดาวน์โหลดเวอร์ชันใหม่ชั่วคราวไปยังไดเร็กทอรี"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13808,6 +15785,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Логин"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เข้าสู่ระบบ"
           }
         },
         "tr" : {
@@ -13932,6 +15915,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Открыть окно логина"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดหน้าเข้าสู่ระบบ"
           }
         },
         "tr" : {
@@ -14059,6 +16048,12 @@
             "value" : "Требуется macOS %@ или новее"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้องใช้ macOS %@ หรือใหม่กว่า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14183,6 +16178,12 @@
             "value" : "Активировать"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกใช้งาน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14305,6 +16306,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Сделать эту версию активной"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกเวอร์ชันนี้มาใช้งาน"
           }
         },
         "tr" : {
@@ -14432,6 +16439,12 @@
             "value" : "О Xcodes"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เกี่ยวกับ Xcodes"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14555,6 +16568,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Юридическая информация Xcodes"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คำขอบคุณจาก Xcodes"
           }
         },
         "tr" : {
@@ -14681,6 +16700,12 @@
             "value" : "Проверить наличие обновлений..."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตรวจสอบการอัปเดต..."
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14803,6 +16828,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GitHub-репозиторий Xcodes"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes GitHub Repo"
           }
         },
         "tr" : {
@@ -14929,6 +16960,12 @@
             "value" : "Сообщить об ошибке"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รายงานจุดบกพร่อง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15044,13 +17081,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Requerir uma nova funcionalidade"
+            "value" : "Solicitar uma nova funcionalidade"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Запросить новую функцию"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ต้องการฟีเจอร์ใหม่"
           }
         },
         "tr" : {
@@ -15168,13 +17211,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Misc"
+            "value" : "Diversos"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Misc"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อื่น ๆ"
           }
         },
         "tr" : {
@@ -15302,6 +17351,12 @@
             "value" : "Перемещение в %@"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังย้ายไปที่ %@"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15427,6 +17482,12 @@
             "value" : "Никогда"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่อีกเลย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15543,6 +17604,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Далее"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ถัดไป"
           }
         },
         "tr" : {
@@ -15668,6 +17735,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Завершена установка"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้งเสร็จแล้ว"
           }
         },
         "tr" : {
@@ -15796,6 +17869,12 @@
             "value" : "Доступна новая версия"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวอร์ชันใหม่พร้อมใช้งานแล้ว"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15919,6 +17998,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Новые версии Xcode доступны для скачивания."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode เวอร์ชันใหม่พร้อมให้ดาวน์โหลดแล้ว"
           }
         },
         "tr" : {
@@ -16047,6 +18132,12 @@
             "value" : "Новые версии Xcode"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode เวอร์ชันใหม่"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16163,6 +18254,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Уведомления"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การแจ้งเตือน"
           }
         },
         "tr" : {
@@ -16289,6 +18386,12 @@
             "value" : "Настройки уведомлений"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การตั้งค่าการแจ้งเตือน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16405,13 +18508,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sua conta não possui nenhum telefone confiável, mas é necessário para autenticação de dois fatores.\n\nVer https://support.apple.com/en-ca/HT204915."
+            "value" : "Sua conta não possui nenhum telefone confiável, mas é necessário para autenticação de dois fatores.\n\nVeja https://support.apple.com/en-ca/HT204915."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "В вашем аккаунтe нет доверенных телефонных номеров, но они необходимы для двухфакторной аутентификации.\n\nСм. https://support.apple.com/HT204915."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "บัญชีของคุณไม่มีหมายเลขโทรศัพท์ที่เชื่อถือได้ แต่จำเป็นต้องใช้สำหรับการยืนยันตัวตนแบบสองปัจจัย\n\nดู https://support.apple.com/HT204915"
           }
         },
         "tr" : {
@@ -16538,6 +18647,12 @@
             "value" : "Xcode не выбран"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่ได้เลือก Xcode"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16654,6 +18769,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "OK"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตกลง"
           }
         },
         "tr" : {
@@ -16781,6 +18902,12 @@
             "value" : "Сохранять формат имени Xcode-X.X.X.app"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้ชื่อว่า Xcode-X.X.X.app"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16855,7 +18982,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lors de la sélection, gardera le numéro de version. Exemple: Xcode-13.4.1.app"
+            "value" : "Lors de la sélection, gardera le numéro de version. Exemple  : Xcode-13.4.1.app"
           }
         },
         "hi" : {
@@ -16897,13 +19024,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "On select, will keep the name as the version eg. Xcode-13.4.1.app"
+            "value" : "Quando selecionado, será mantido o nome com a versão ex. Xcode-13.4.1.app"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Если выбрано, формат имени будет содержать версию, прим. Xcode-13.4.1.app"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อเลือก จะเก็บชื่อไว้เป็นเวอร์ชัน เช่น Xcode-13.4.1.app"
           }
         },
         "tr" : {
@@ -17031,6 +19164,12 @@
             "value" : "Всегда переименовывать в Xcode.app"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปลี่ยนชื่อเป็น Xcode.app เสมอ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17156,6 +19295,12 @@
             "value" : "Если выбрано, будет выполнена попытка переименовать активный Xcode в Xcode.app, а предыдущий Xcode.app в формат имени с версией."
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เมื่อเลือก จะพยายามเปลี่ยนชื่อ Xcode ที่ใช้งานอยู่เป็น Xcode.app โดยอัตโนมัติ โดยเปลี่ยนชื่อ Xcode.app ก่อนหน้าเป็นชื่อเวอร์ชันแทน"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17274,6 +19419,12 @@
             "value" : "Открыть"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิด"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17296,6 +19447,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "打開"
+          }
+        }
+      }
+    },
+    "Open Browser" : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obre el navegador"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Browser öffnen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα προγράμματος περιήγησης"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir navegador"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avaa selain"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir le navigateur"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ब्राउज़र खोलें"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri browser"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ブラウザを開く"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "브라우저 열기"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Browser openen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otwórz przeglądarkę"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir navegador"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть браузер"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tarayıcıyı aç"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відкрити браузер"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开浏览器"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打開瀏覽器"
           }
         }
       }
@@ -17383,13 +19646,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open In Rosetta"
+            "value" : "Abrir com Rosetta"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Открыть в Rosetta"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดด้วย Rosetta"
           }
         },
         "tr" : {
@@ -17516,6 +19785,12 @@
             "value" : "Открыть эту версию"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดเวอร์ชันนี้"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17640,6 +19915,12 @@
             "value" : "Пароль:"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รหัสผ่าน:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17666,7 +19947,120 @@
         }
       }
     },
+    "Paste redirected URL" : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enganxa l’URL redirigida"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Umgeleitete URL einfügen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Επικόλληση ανακατευθυνόμενης διεύθυνσης URL"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pegar URL redirigida"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Liitä uudelleenohjattu URL"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Coller l’URL redirigée"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "रीडायरेक्ट किया गया URL चिपकाएँ"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Incolla URL reindirizzato"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "リダイレクトされたURLをペースト"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "리디렉션된 URL 붙여넣기"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Omgeleide URL plakken"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wklej przekierowany URL"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Colar URL redirecionado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставить перенаправленный URL"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Yönlendirilen URL’yi yapıştır"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вставити переспрямовану URL-адресу"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "粘贴重定向的 URL"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "貼上重新導向的 URL"
+          }
+        }
+      }
+    },
     "Perform post-install steps" : {
+      "extractionState" : "stale",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
@@ -17749,13 +20143,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Perform post-install steps"
+            "value" : "Executar passos pós-instalação"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Perform post-install steps"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดำเนินการตามขั้นตอนหลังการติดตั้ง"
           }
         },
         "tr" : {
@@ -17882,6 +20282,12 @@
             "value" : "PIN"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รหัส PIN"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17997,13 +20403,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PIN not set"
+            "value" : "PIN não definido"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "PIN not set"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ไม่ได้ตั้งรหัส PIN"
           }
         },
         "tr" : {
@@ -18021,7 +20433,7 @@
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PIN not set"
+            "value" : "没有设置 PIN"
           }
         },
         "zh-Hant" : {
@@ -18121,13 +20533,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Platforms"
+            "value" : "Plataformas"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Платформы"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แพลตฟอร์ม"
           }
         },
         "tr" : {
@@ -18245,13 +20663,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Installed Platforms"
+            "value" : "Plataformas instaladas"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Установленные платформы"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แพลตฟอร์มที่ติดตั้งแล้ว"
           }
         },
         "tr" : {
@@ -18370,13 +20794,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Below are a list of platforms that are installed on this machine. "
+            "value" : "Abaixo contém uma lista de plataformas que estão instalada nesse computador."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Below are a list of platforms that are installed on this machine. "
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ด้านล่างนี้เป็นรายการของแพลตฟอร์มที่ได้รับการติดตั้งบนเครื่องนี้"
           }
         },
         "tr" : {
@@ -18503,6 +20933,12 @@
             "value" : "Hастройки"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "การตั้งค่า"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18625,6 +21061,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Открыть настройки"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดการตั้งค่า"
           }
         },
         "tr" : {
@@ -18751,6 +21193,12 @@
             "value" : "Привилегированный помощник"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตัวช่วยที่มีสิทธิพิเศษ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18873,6 +21321,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes использует отдельный привилегированный помощник для выполнения задач от имени root-пользователя. Это команды, которые потребуют sudo в командной строке, включая шаги после установки и переключение версий Xcode с помощью xcode-select.\n\nВам будет предложено указать пароль от вашей учетной записи macOS для его установки."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes ใช้ตัวช่วยที่มีสิทธิพิเศษแยกต่างหากเพื่อดำเนินการต่าง ๆ ในฐานะ root สิ่งเหล่านี้จำเป็นต้องใช้คำสั่ง sudo บน Command Line รวมถึงขั้นตอนหลังการติดตั้งและการสลับเวอร์ชัน Xcode ด้วยคำสั่ง xcode-select\n\nระบบจะขอให้คุณป้อนรหัสผ่านของบัญชี macOS ของคุณเพื่อทำการติดตั้ง"
           }
         },
         "tr" : {
@@ -18999,6 +21453,12 @@
             "value" : "Обновить"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รีเฟรช"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19121,6 +21581,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обновить список Xcode"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "รีเฟรชรายการของ Xcode"
           }
         },
         "tr" : {
@@ -19248,6 +21714,12 @@
             "value" : "Pелиз"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปล่อย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19370,6 +21842,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Дата выпуска"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "วันที่ปล่อย"
           }
         },
         "tr" : {
@@ -19496,6 +21974,12 @@
             "value" : "Просмотреть примечания к выпуску"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ดูข้อมูลการปล่อย"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19618,6 +22102,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Только релиз"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ปล่อยเท่านั้น"
           }
         },
         "tr" : {
@@ -19749,6 +22239,12 @@
             "value" : "Обязательно"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "จำเป็น"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19873,6 +22369,12 @@
             "value" : "Показать в Finder"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แสดงใน Finder"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19991,6 +22493,12 @@
             "value" : "SDK"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SDKs"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20107,13 +22615,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Insert your physical security key and enter the PIN"
+            "value" : "Insira sua chave de segurança física e digite o PIN"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Insert your physical security key and enter the PIN"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใส่คีย์ความปลอดภัยของคุณและป้อน PIN"
           }
         },
         "tr" : {
@@ -20232,13 +22746,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Touch your security key to verify that it’s you"
+            "value" : "Toque na sua chave de segurança para verificar que é você"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Touch your security key to verify that it’s you"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แตะคีย์ความปลอดภัยของคุณเพื่อยืนยันว่าเป็นคุณ"
           }
         },
         "tr" : {
@@ -20359,6 +22879,12 @@
             "value" : "Выбрать"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือก"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20475,6 +23001,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Выбрано"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ถูกเลือก"
           }
         },
         "tr" : {
@@ -20602,6 +23134,12 @@
             "value" : "Выберите доверенный номер телефона для получения %d цифрового кода по SMS:"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เลือกหมายเลขโทรศัพท์ที่เชื่อถือได้เพื่อรับรหัส %d หลักผ่าน SMS:"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20726,6 +23264,12 @@
             "value" : "Отправить SMS"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ส่ง SMS"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20841,13 +23385,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mostrar opçao abrir com Rosetta"
+            "value" : "Mostrar opção abrir com Rosetta"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Показать опцию «Открыть в Rosetta»"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แสดงตัวเลือกให้เปิดใน Rosetta"
           }
         },
         "tr" : {
@@ -20881,67 +23431,67 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "سيُظهر خيار \"فتح في Rosetta\" الأماكن التي تتوفر فيها وظائف \"فتح\" أخرى. ملاحظة: سيظهر هذا فقط لأجهزة Apple Silicon."
+            "value" : "سيُظهر خيار \"فتح في Rosetta\" الأماكن التي تتوفر فيها وظائف \"فتح\" أخرى. ملاحظة  : سيظهر هذا فقط لأجهزة Apple Silicon."
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Η επιλογή «Άνοιγμα με Rosetta» θα εμφανίζεται όπου είναι διαθέσιμες οι υπόλοιπες επιλογές «Άνοιγμα». Σημείωση: Θα εμφανίζεται μόνο σε συστήματα με Apple Silicon."
+            "value" : "Η επιλογή «Άνοιγμα με Rosetta» θα εμφανίζεται όπου είναι διαθέσιμες οι υπόλοιπες επιλογές «Άνοιγμα». Σημείωση  : Θα εμφανίζεται μόνο σε συστήματα με Apple Silicon."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ouvrir avec Rosetta s'affichera d'autres options \"Ouvrir\" sont disponibles. Note: Uniquement pour les machines Apple Silicon."
+            "value" : "Ouvrir avec Rosetta s'affichera d'autres options \"Ouvrir\" sont disponibles. Note  : Uniquement pour les machines Apple Silicon."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rosettaで開くオプションは \"開く\" 機能が利用できる場所に表示されます。注意: これはApple Siliconマシンにのみ表示されます。"
+            "value" : "Rosettaで開くオプションは \"開く\" 機能が利用できる場所に表示されます。注意  : これはApple Siliconマシンにのみ表示されます。"
           }
         },
         "ko" : {
@@ -20953,37 +23503,43 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note: This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opcja Otwórz w Rosetta będzie wyświetlana, gdy dostępne są inne funkcje \"Otwórz\". Uwaga: Będzie to działać tylko na urządzeniach z Apple Silicon."
+            "value" : "Opcja Otwórz w Rosetta będzie wyświetlana, gdy dostępne są inne funkcje \"Otwórz\". Uwaga  : Będzie to działać tylko na urządzeniach z Apple Silicon."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opção de abrir com o Rosetta será mostrar onde outras opções \"Abrir\" estão disponíveis. Nota: Isso só será mostrado pra máquinas Apple Silicon."
+            "value" : "Opção de abrir com o Rosetta será mostrar onde outras opções \"Abrir\" estão disponíveis. Nota  : Isso só será mostrado pra máquinas Apple Silicon."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Опция «Открыть в Rosetta» будет показана там, где доступны другие функции «Открыть». Примечание: опция будет отображаться только для компьютеров Apple Silicon."
+            "value" : "Опция «Открыть в Rosetta» будет показана там, где доступны другие функции «Открыть». Примечание  : опция будет отображаться только для компьютеров Apple Silicon."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตัวเลือก \"เปิดใน Rosetta\" จะแสดงเมื่อมีตัวเลือกในการเปิดอื่น ๆ ที่พร้อมใช้งานอยู่เท่านั้น หมายเหตุ  : ตัวเลือกนี้จะแสดงเฉพาะเครื่อง Apple Silicon เท่านั้น"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rosetta ile açma opsiyonu diğer uygun \"Açma\" fonksiyonlarını gösterecektir. Not: Bu sadece Apple Silikon makinelerinde gözükecektir."
+            "value" : "Rosetta ile açma opsiyonu diğer uygun \"Açma\" fonksiyonlarını gösterecektir. Not  : Bu sadece Apple Silikon makinelerinde gözükecektir."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Опція \"Запустити через Rosetta\" зʼявиться там де наразі знаходиться функція \"Запустити\".\nПримітка: Доступно лише для Apple Silicon машин."
+            "value" : "Опція \"Запустити через Rosetta\" зʼявиться там де наразі знаходиться функція \"Запустити\".\nПримітка  : Доступно лише для Apple Silicon машин."
           }
         },
         "zh-Hans" : {
@@ -21098,6 +23654,12 @@
             "value" : "Войти"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เข้าสู่ระบบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21120,6 +23682,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "登入"
+          }
+        }
+      }
+    },
+    "Signing out..." : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "S’està tancant la sessió..."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abmelden..."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Γίνεται αποσύνδεση..."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cerrando sesión..."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirjaudutaan ulos..."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Déconnexion..."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "साइन आउट हो रहा है..."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Disconnessione..."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "サインアウト中..."
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "로그아웃 중..."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uitloggen..."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wylogowywanie..."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Encerrando sessão..."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Выполняется выход..."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Çıkış yapılıyor..."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вихід..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在退出登录..."
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在登出..."
           }
         }
       }
@@ -21221,6 +23895,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Войти со своим Apple ID."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เข้าสู่ระบบด้วย Apple ID"
           }
         },
         "tr" : {
@@ -21347,6 +24027,12 @@
             "value" : "Выход"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ออกจากระบบ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21471,6 +24157,12 @@
             "value" : "Остановить установку"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "หยุดการติดตั้ง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21587,13 +24279,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Support Xcodes"
+            "value" : "Ajude o Xcodes"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Поддержать Xcodes"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "สนับสนุน Xcodes"
           }
         },
         "tr" : {
@@ -21711,13 +24409,19 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Terminate App after last window is closed"
+            "value" : "Encerrar o aplicativo quando a ultima janela for fechada"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terminate App after last window is closed"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ยุติการทำงานของแอปเมื่อหน้าต่างสุดท้ายถูกปิดลง"
           }
         },
         "tr" : {
@@ -21742,6 +24446,118 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "在最後一個窗口關閉後終止 App"
+          }
+        }
+      }
+    },
+    "This Apple ID uses federated authentication via %@." : {
+      "localizations" : {
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Aquest Apple ID utilitza autenticació federada mitjançant %@."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Diese Apple-ID verwendet föderierte Authentifizierung über %@."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αυτό το Apple ID χρησιμοποιεί ομοσπονδιακό έλεγχο ταυτότητας μέσω %@."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este Apple ID usa autenticación federada mediante %@."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Tämä Apple ID käyttää yhdistettyä todennusta palvelun %@ kautta."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Cet identifiant Apple utilise l’authentification fédérée via %@."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "यह Apple ID %@ के माध्यम से फ़ेडरेटेड प्रमाणीकरण का उपयोग करता है."
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questo ID Apple usa l’autenticazione federata tramite %@."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "このApple IDは%@経由のフェデレーション認証を使用しています。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "이 Apple ID는 %@을(를) 통한 페더레이션 인증을 사용합니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Deze Apple ID gebruikt gefedereerde verificatie via %@."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ten Apple ID używa uwierzytelniania federacyjnego przez %@."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Este Apple ID usa autenticação federada via %@."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Этот Apple ID использует федеративную аутентификацию через %@."
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Bu Apple ID, %@ üzerinden birleşik kimlik doğrulaması kullanıyor."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Цей Apple ID використовує федеративну автентифікацію через %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此 Apple ID 使用通过 %@ 的联合认证。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此 Apple ID 使用透過 %@ 的同盟認證。"
           }
         }
       }
@@ -21843,6 +24659,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Перемещение архива в корзину"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังย้ายไฟล์ไปที่ถังขยะ"
           }
         },
         "tr" : {
@@ -21970,6 +24792,12 @@
             "value" : "Разархивирование (это может занять некоторое время)"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "กำลังแตกไฟล์ (อาจใช้เวลาสักครู่)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22088,6 +24916,12 @@
             "value" : "Удалить"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ถอนการติดตั้ง"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22110,6 +24944,131 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "解除安裝"
+          }
+        }
+      }
+    },
+    "Universal" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通用"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Universal"
           }
         }
       }
@@ -22210,6 +25169,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Экспериментальный Unxip"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unxip Experiment"
           }
         },
         "tr" : {
@@ -22338,6 +25303,12 @@
             "value" : "Обновлено"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อัปเดตเมื่อ"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22455,6 +25426,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Обновления"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "อัปเดต"
           }
         },
         "tr" : {
@@ -22581,6 +25558,12 @@
             "value" : "При выполнении unxip будет использован экспериментальный функционал"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ใช้ unxip ในการแตกไฟล์"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22697,6 +25680,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Версии"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวอร์ชัน"
           }
         },
         "tr" : {
@@ -22825,6 +25814,12 @@
             "value" : "Версия %@ (%@)"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เวอร์ชัน %@ (%@)"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22951,6 +25946,12 @@
             "value" : "👨🏻‍💻👩🏼‍💻 Счастливого WWDC %@! 👨🏽‍💻🧑🏻‍💻"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23069,6 +26070,12 @@
             "value" : "Xcode"
           }
         },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode"
+          }
+        },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23182,6 +26189,12 @@
           }
         },
         "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes"
+          }
+        },
+        "th" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes"

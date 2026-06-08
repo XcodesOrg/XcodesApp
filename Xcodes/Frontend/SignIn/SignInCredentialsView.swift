@@ -48,12 +48,12 @@ struct SignInCredentialsView: View {
                     .keyboardShortcut(.cancelAction)
                 ProgressButton(
                     isInProgress: appState.isProcessingAuthRequest,
-                    action: { appState.signIn(username: username, password: password) },
+                    action: { appState.signIn(username: username, password: password.isEmpty ? nil : password) },
                     label: {
                         Text("Next")
                     }
                 )
-                .disabled(username.isEmpty || password.isEmpty)
+                .disabled(username.isEmpty)
                 .keyboardShortcut(.defaultAction)
             }
             .frame(height: 25)
@@ -63,6 +63,7 @@ struct SignInCredentialsView: View {
 }
 
 struct SignInCredentialsView_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         SignInCredentialsView()
             .environmentObject(AppState())

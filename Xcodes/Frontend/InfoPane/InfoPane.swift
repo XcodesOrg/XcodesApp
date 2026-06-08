@@ -3,8 +3,6 @@ import XcodesKit
 import Path
 import SwiftUI
 import Version
-import struct XCModel.Compilers
-import struct XCModel.SDKs
 
 struct InfoPane: View {
     let xcode: Xcode
@@ -42,7 +40,7 @@ struct InfoPane: View {
                 VStack(alignment: .leading) {
                     ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
                     CompatibilityView(requiredMacOSVersion: xcode.requiredMacOSVersion)
-                    IdenticalBuildsView(builds: xcode.identicalBuilds)
+                    IdenticalBuildsView(builds: xcode.identicalBuildsForCurrentVariant)
                     SDKandCompilers
                 }
                 .frame(width: 200)
@@ -71,6 +69,7 @@ struct InfoPane: View {
 #Preview(XcodePreviewName.allCases[4].rawValue) { makePreviewContent(for: 4) }
 #Preview(XcodePreviewName.allCases[5].rawValue) { makePreviewContent(for: 5) }
 
+@MainActor
 private func makePreviewContent(for index: Int) -> some View {
     let name = XcodePreviewName.allCases[index]
     return InfoPane(xcode: xcodeDict[name]!)
@@ -92,7 +91,8 @@ enum XcodePreviewName: String, CaseIterable, Identifiable {
     var id: XcodePreviewName { self }
 }
 
-var xcodeDict: [XcodePreviewName: Xcode] = [
+@MainActor
+let xcodeDict: [XcodePreviewName: Xcode] = [
     .Populated_Installed_Selected: .init(
         version: _versionNoMeta,
         installState: .installed(Path(_path)!),
@@ -158,7 +158,8 @@ var xcodeDict: [XcodePreviewName: Xcode] = [
     ),
 ]
 
-var downloadableRuntimes: [DownloadableRuntime] = {
+@MainActor
+let downloadableRuntimes: [DownloadableRuntime] = {
     var runtimes = try! JSONDecoder().decode([DownloadableRuntime].self, from: Current.files.contents(atPath: Path.runtimeCacheFile.string)!)
     // set iOS to installed
     let iOSIndex = 0//runtimes.firstIndex { $0.sdkBuildUpdate.contains == "19E239" }!
@@ -185,13 +186,16 @@ var downloadableRuntimes: [DownloadableRuntime] = {
     return runtimes
 }()
 
-var installedRuntimes: [CoreSimulatorImage] = {
+@MainActor
+let installedRuntimes: [CoreSimulatorImage] = {
     [CoreSimulatorImage(uuid: "85B22F5B-048B-4331-B6E2-F4196D8B7475", path: ["relative" : "file:///Library/Developer/CoreSimulator/Images/85B22F5B-048B-4331-B6E2-F4196D8B7475.dmg"], runtimeInfo: CoreSimulatorRuntimeInfo(build: "19E240")),
      CoreSimulatorImage(uuid: "85B22F5B-048B-4331-B6E2-F4196D8B7473", path: ["relative" : "file:///Library/Developer/CoreSimulator/Images/85B22F5B-048B-4331-B6E2-F4196D8B7475.dmg"], runtimeInfo: CoreSimulatorRuntimeInfo(build: "21N5233f"))]
 }()
 
 
+@MainActor
 private let _versionNoMeta = Version(major: 12, minor: 3, patch: 0)
+@MainActor
 private let _versionWithMeta = Version(major: 12, minor: 3, patch: 1, buildMetadataIdentifiers: ["1234A"])
 private let _path = "/Applications/Xcode-12.3.0.app"
 private let _requiredMacOSVersion = "10.15.4"

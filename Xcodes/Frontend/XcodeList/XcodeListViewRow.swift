@@ -1,11 +1,20 @@
 import Path
 import SwiftUI
 import Version
+import XcodesKit
 
 struct XcodeListViewRow: View {
     let xcode: Xcode
     let selected: Bool
     let appState: AppState
+    let latestReleaseForSelectedPrerelease: Xcode?
+
+    init(xcode: Xcode, selected: Bool, appState: AppState, latestReleaseForSelectedPrerelease: Xcode? = nil) {
+        self.xcode = xcode
+        self.selected = selected
+        self.appState = appState
+        self.latestReleaseForSelectedPrerelease = latestReleaseForSelectedPrerelease
+    }
 
     var body: some View {
         HStack {
@@ -16,13 +25,21 @@ struct XcodeListViewRow: View {
                     Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
                         .font(.body)
 
-                    if !xcode.identicalBuilds.isEmpty {
+                    if !xcode.identicalBuildsForCurrentVariant.isEmpty {
                         Image(systemName: "square.fill.on.square.fill")
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                             .accessibility(label: Text("IdenticalBuilds"))
-                            .accessibility(value: Text(xcode.identicalBuilds.map(\.appleDescription).joined(separator: ", ")))
+                            .accessibility(value: Text(xcode.identicalBuildsForCurrentVariant.map(\.version.appleDescription).joined(separator: ", ")))
                             .help("IdenticalBuilds.help")
+                    }
+                    
+                    if xcode.architectures?.isAppleSilicon ?? false {
+                        Image(systemName: "m4.button.horizontal")
+                            .font(.subheadline)
+                            .foregroundColor(.secondary)
+                            .accessibility(label: Text("Apple Silicon"))
+                            .help("Apple Silicon")
                     }
                 }
 
@@ -61,7 +78,11 @@ struct XcodeListViewRow: View {
                 #if DEBUG
                     Divider()
                     Button("Perform post-install steps") {
-                        appState.performPostInstallSteps(for: InstalledXcode(path: path)!) as Void
+                        appState.performPostInstallSteps(for: InstalledXcode(
+                            path: path,
+                            contentsAtPath: { path in Current.files.contents(atPath: path) },
+                            loadArchitectures: Current.shell.archs
+                        )!) as Void
                     }
                 #endif
             }
@@ -72,6 +93,8 @@ struct XcodeListViewRow: View {
     func appIconView(for xcode: Xcode) -> some View {
         if let icon = xcode.icon {
             Image(nsImage: icon)
+                .resizable()
+                .frame(width: 32, height: 32)
         } else {
             Image(xcode.version.isPrerelease ? "xcode-beta" : "xcode")
                 .resizable()
@@ -83,7 +106,23 @@ struct XcodeListViewRow: View {
     @ViewBuilder
     private func selectControl(for xcode: Xcode) -> some View {
         if xcode.installState.installed {
-            if xcode.selected {
+            if let latestReleaseForSelectedPrerelease, xcode.selected {
+                switch latestReleaseForSelectedPrerelease.installState {
+                case .installed:
+                    Button(action: { appState.select(xcode: latestReleaseForSelectedPrerelease) }) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.yellow)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .help(staleSelectedHelpText)
+                case .notInstalled:
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.yellow)
+                        .help(staleSelectedHelpText)
+                case .installing:
+                    EmptyView()
+                }
+            } else if xcode.selected {
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(.green)
                     .help("ActiveVersionDescription")
@@ -102,6 +141,19 @@ struct XcodeListViewRow: View {
 
     @ViewBuilder
     private func installControl(for xcode: Xcode) -> some View {
+        if let latestReleaseForSelectedPrerelease,
+           xcode.selected,
+           latestReleaseForSelectedPrerelease.installState == .notInstalled {
+            InstallButton(xcode: latestReleaseForSelectedPrerelease)
+                .textCase(.uppercase)
+                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
+        } else {
+            installStateControl(for: xcode)
+        }
+    }
+
+    @ViewBuilder
+    private func installStateControl(for xcode: Xcode) -> some View {
         switch xcode.installState {
         case .installed:
             Button("Open") { appState.open(xcode: xcode) }
@@ -118,6 +170,20 @@ struct XcodeListViewRow: View {
                 highlighted: selected,
                 cancel: { appState.presentedAlert = .cancelInstall(xcode: xcode) }
             )
+        }
+    }
+
+    private var staleSelectedHelpText: Text {
+        let selectedVersion = xcode.version.appleDescription
+        let latestVersion = latestReleaseForSelectedPrerelease?.version.appleDescription ?? ""
+
+        switch latestReleaseForSelectedPrerelease?.installState {
+        case .installed:
+            return Text(verbatim: "\(selectedVersion) selected, \(latestVersion) available. Click to select \(latestVersion).")
+        case .notInstalled:
+            return Text(verbatim: "\(selectedVersion) selected, \(latestVersion) available. Install \(latestVersion) to select it.")
+        case .installing, .none:
+            return Text("ActiveVersionDescription")
         }
     }
 }
@@ -156,7 +222,7 @@ struct XcodeListViewRow_Previews: PreviewProvider {
             )
 
             XcodeListViewRow(
-                xcode: Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [Version("12.0.0-RC+1234A")!], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
+                xcode: Xcode(version: Version("12.0.0+1234A")!, identicalBuilds: [XcodeID(version: Version("12.0.0-RC+1234A")!)], installState: .installed(Path("/Applications/Xcode-12.3.0.app")!), selected: false, icon: nil),
                 selected: false,
                 appState: AppState()
             )

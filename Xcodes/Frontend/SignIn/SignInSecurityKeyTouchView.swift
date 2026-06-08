@@ -7,7 +7,7 @@
 //
 
 import SwiftUI
-import AppleAPI
+import XcodesLoginKit
 
 struct SignInSecurityKeyTouchView: View {
     @EnvironmentObject var appState: AppState
@@ -48,7 +48,7 @@ struct SignInSecurityKeyTouchView: View {
     }
 }
 
-#Preview {
+#Preview { @MainActor in
     SignInSecurityKeyTouchView(isPresented: .constant(true))
     .environmentObject(AppState())
 }

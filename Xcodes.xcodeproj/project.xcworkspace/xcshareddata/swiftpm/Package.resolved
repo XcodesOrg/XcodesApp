@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "AsyncNetworkService",
-        "repositoryURL": "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService",
+        "repositoryURL": "https://github.com/XcodesOrg/AsyncHTTPNetworkService",
         "state": {
           "branch": "main",
-          "revision": "97770856c4e429f880d4b4dd68cfaf286dc00c30",
+          "revision": "12e225af8b5dc25afcfabfcf582a165b0581ab19",
           "version": null
         }
       },
@@ -15,26 +15,8 @@
         "repositoryURL": "https://github.com/adam-fowler/big-num",
         "state": {
           "branch": null,
-          "revision": "5c5511ad06aeb2b97d0868f7394e14a624bfb1c7",
-          "version": "2.0.2"
-        }
-      },
-      {
-        "package": "CombineExpectations",
-        "repositoryURL": "https://github.com/groue/CombineExpectations",
-        "state": {
-          "branch": null,
-          "revision": "989a92221899929ab8347a5878aa2b16db8b81ca",
-          "version": "0.6.0"
-        }
-      },
-      {
-        "package": "XcodeReleases",
-        "repositoryURL": "https://github.com/xcodereleases/data",
-        "state": {
-          "branch": "main",
-          "revision": "a43ad89e536d7a3da525fcc23fb182c37b756ecc",
-          "version": null
+          "revision": "9059dcab8dd001b8143bc512b4477d079e97957f",
+          "version": "2.0.3"
         }
       },
       {
@@ -44,15 +26,6 @@
           "branch": null,
           "revision": "d4f23b5a8f5ca0fac393eb7ba78c2fe3e32e52da",
           "version": "4.3.1"
-        }
-      },
-      {
-        "package": "ErrorHandling",
-        "repositoryURL": "https://github.com/RobotsAndPencils/ErrorHandling",
-        "state": {
-          "branch": null,
-          "revision": "7be837fcb515447c0776805c3288fb7d5181ec68",
-          "version": "0.1.0"
         }
       },
       {
@@ -75,11 +48,11 @@
       },
       {
         "package": "LibFido2Swift",
-        "repositoryURL": "https://github.com/kinoroy/LibFido2Swift.git",
+        "repositoryURL": "https://github.com/kinoroy/LibFido2Swift",
         "state": {
           "branch": null,
-          "revision": "94d496d6f850dcbb3e8c4a27cd7eeabfad9f14e3",
-          "version": "0.1.4"
+          "revision": "b87a93300c5b35307c9f26ae490963196bd927f1",
+          "version": "0.1.5"
         }
       },
       {
@@ -143,6 +116,33 @@
           "branch": null,
           "revision": "087c91fedc110f9f833b14ef4c32745dabca8913",
           "version": "1.0.3"
+        }
+      },
+      {
+        "package": "XcodesKit",
+        "repositoryURL": "https://github.com/XcodesOrg/XcodesKit",
+        "state": {
+          "branch": null,
+          "revision": "5bff14052f7664f75a4837547804e07c3c2dfe47",
+          "version": "1.0.3"
+        }
+      },
+      {
+        "package": "XcodesLoginKit",
+        "repositoryURL": "https://github.com/XcodesOrg/XcodesLoginKit",
+        "state": {
+          "branch": "main",
+          "revision": "9bece1ada36006b18b84caec62d14dc91b47ae2b",
+          "version": null
+        }
+      },
+      {
+        "package": "Yams",
+        "repositoryURL": "https://github.com/jpsim/Yams",
+        "state": {
+          "branch": null,
+          "revision": "0d9ee7ea8c4ebd4a489ad7a73d5c6cad55d6fed3",
+          "version": "5.0.6"
         }
       }
     ]

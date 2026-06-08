@@ -36,7 +36,7 @@ struct CompatibilityView: View {
     }
 }
 
-#Preview {
+#Preview { @MainActor in
   CompatibilityView(requiredMacOSVersion: "10.15.4")
     .padding()
     .environmentObject(AppState())

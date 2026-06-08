@@ -1,4 +1,3 @@
-import AppleAPI
 import SwiftUI
 
 struct DownloadPreferencePane: View {
@@ -53,6 +52,7 @@ struct DownloadPreferencePane: View {
 }
 
 struct DownloadPreferencePane_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         Group {
             DownloadPreferencePane()

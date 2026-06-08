@@ -1,4 +1,4 @@
-import AppleAPI
+import XcodesLoginKit
 import SwiftUI
 
 struct SignInPhoneListView: View {
@@ -48,6 +48,7 @@ struct SignInPhoneListView: View {
 }
 
 struct SignInPhoneListView_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         Group {
             SignInPhoneListView(

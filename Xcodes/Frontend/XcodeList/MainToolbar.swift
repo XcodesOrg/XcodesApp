@@ -5,6 +5,7 @@ struct MainToolbarModifier: ViewModifier {
     @Binding var category: XcodeListCategory
     @Binding var isInstalledOnly: Bool
     @Binding var isShowingInfoPane: Bool
+    @Binding var architectures: XcodeListArchitecture
 
     func body(content: Content) -> some View {
         content
@@ -21,48 +22,49 @@ struct MainToolbarModifier: ViewModifier {
             }
             .keyboardShortcut(KeyEquivalent("r"))
             .help("RefreshDescription")
+            
             Spacer()
-
-            Button(action: {
-                switch category {
-                case .all: category = .release
-                case .release: category = .beta
-                case .beta: category = .releasePlusNewBetas
-                case .releasePlusNewBetas: category = .all
+            
+            let isFiltering = isInstalledOnly || category != .all || !architectures.isCurrentMachineDefault
+            Menu("Filter", systemImage: "line.horizontal.3.decrease.circle") {
+                Section {
+                    Toggle("Installed Only", systemImage: "arrow.down.app", isOn: $isInstalledOnly)            .labelStyle(.titleAndIcon)
                 }
-            }) {
-                switch category {
-                case .all:
-                    Label("All", systemImage: "line.horizontal.3.decrease.circle")
-                case .release:
+                .help("FilterInstalledDescription")
+                
+                Section {
+                    Picker("Category", selection: $category) {
+                        Label("All", systemImage: "line.horizontal.3.decrease.circle")
+                            .tag(XcodeListCategory.all)
                         Label("ReleaseOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                            .labelStyle(.trailingIcon)
+                            .tag(XcodeListCategory.release)
+                        Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
+                            .tag(XcodeListCategory.beta)
+                    }
+                }
+                .help("FilterAvailableDescription")
+                .disabled(category.isManaged)
+                
+                Section {
+                    Picker("Architecture", selection: $architectures) {
+                        Label(architecturesLabel(for: .universal), systemImage: "cpu.fill")
+                            .tag(XcodeListArchitecture.universal)
+                        Label(architecturesLabel(for: .appleSilicon), systemImage: "m4.button.horizontal")
                             .foregroundColor(.accentColor)
-                case .beta:
-                    Label("BetaOnly", systemImage: "line.horizontal.3.decrease.circle.fill")
-                        .labelStyle(.trailingIcon)
-                        .foregroundColor(.accentColor)
-                case .releasePlusNewBetas:
-                    Label("ReleasePlusNewBetas", systemImage: "line.horizontal.3.decrease.circle.fill")
-                        .labelStyle(.trailingIcon)
-                        .foregroundColor(.accentColor)
+                            .tag(XcodeListArchitecture.appleSilicon)
+                    }
+                    .help("FilterArchitecturesDescription")
+                    .disabled(architectures.isManaged)
                 }
+                .labelStyle(.titleAndIcon)
             }
-            .help("FilterAvailableDescription")
-            .disabled(category.isManaged)
-
-            Button(action: {
-                isInstalledOnly.toggle()
-            }) {
-                if isInstalledOnly {
-                    Label("Filter", systemImage: "arrow.down.app.fill")
-                        .foregroundColor(.accentColor)
-                } else {
-                    Label("Filter", systemImage: "arrow.down.app")
-                }
-            }
-            .help("FilterInstalledDescription")
+            .pickerStyle(.inline)
+            .symbolVariant(isFiltering ? .fill : .none)
         }
+    }
+
+    private func architecturesLabel(for architecture: XcodeListArchitecture) -> String {
+        architecture.menuDescription
     }
 }
 
@@ -70,13 +72,15 @@ extension View {
     func mainToolbar(
         category: Binding<XcodeListCategory>,
         isInstalledOnly: Binding<Bool>,
-        isShowingInfoPane: Binding<Bool>
+        isShowingInfoPane: Binding<Bool>,
+        architecture: Binding<XcodeListArchitecture>
     ) -> some View {
         modifier(
             MainToolbarModifier(
                 category: category,
                 isInstalledOnly: isInstalledOnly,
-                isShowingInfoPane: isShowingInfoPane
+                isShowingInfoPane: isShowingInfoPane,
+                architectures: architecture
             )
         )
     }
