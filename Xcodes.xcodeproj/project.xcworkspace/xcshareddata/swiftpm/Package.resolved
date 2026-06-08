@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/adam-fowler/big-num",
         "state": {
           "branch": null,
-          "revision": "5c5511ad06aeb2b97d0868f7394e14a624bfb1c7",
-          "version": "2.0.2"
+          "revision": "9059dcab8dd001b8143bc512b4477d079e97957f",
+          "version": "2.0.3"
         }
       },
       {
@@ -125,6 +125,15 @@
           "branch": null,
           "revision": "5bff14052f7664f75a4837547804e07c3c2dfe47",
           "version": "1.0.3"
+        }
+      },
+      {
+        "package": "XcodesLoginKit",
+        "repositoryURL": "https://github.com/XcodesOrg/XcodesLoginKit",
+        "state": {
+          "branch": "main",
+          "revision": "9bece1ada36006b18b84caec62d14dc91b47ae2b",
+          "version": null
         }
       },
       {

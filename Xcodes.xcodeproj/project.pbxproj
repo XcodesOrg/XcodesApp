@@ -305,7 +305,6 @@
 		E87DD6EA25D053FA00D86808 /* Progress+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Progress+.swift"; sourceTree = "<group>"; };
 		E89342F925EDCC17007CF557 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		E8977EA225C11E1500835F80 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
-		E89CBD3B2D5FC0B10037ED95 /* XcodesLoginKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = XcodesLoginKit; path = ../XcodesLoginKit; sourceTree = "<group>"; };
 		E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFederatedView.swift; sourceTree = "<group>"; };
 		E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKs+Xcode.swift"; sourceTree = "<group>"; };
 		E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState+Runtimes.swift"; sourceTree = "<group>"; };
@@ -539,7 +538,6 @@
 		CAD2E7952449574E00113D76 = {
 			isa = PBXGroup;
 			children = (
-				E89CBD3B2D5FC0B10037ED95 /* XcodesLoginKit */,
 				CA8FB5F8256E0F9400469DA5 /* README.md */,
 				CABFA9D42592EF6300380FEE /* DECISIONS.md */,
 				CABFA9A02592EAF500380FEE /* R&PLogo.png */,
@@ -775,6 +773,7 @@
 				E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */,
 				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */,
 				E856BB74291EDD3D00DC438B /* XCRemoteSwiftPackageReference "XcodesKit" */,
+				E89CBD3B2D5FC0B10037ED95 /* XCRemoteSwiftPackageReference "XcodesLoginKit" */,
 				E84E4F552B335094003F3959 /* XCRemoteSwiftPackageReference "swift-collections" */,
 				E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */,
 			);
@@ -1100,7 +1099,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1380,7 +1379,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.robotsandpencils.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 6.0;
@@ -1403,7 +1402,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MACOSX_DEPLOYMENT_TARGET = 14.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp.XcodesAppTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 6.0;
@@ -1521,6 +1520,14 @@
 				minimumVersion = 1.0.3;
 			};
 		};
+		E89CBD3B2D5FC0B10037ED95 /* XCRemoteSwiftPackageReference "XcodesLoginKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/XcodesOrg/XcodesLoginKit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Path.swift";
@@ -1581,10 +1588,12 @@
 		};
 		E89CBD372D5FAB950037ED95 /* XcodesLoginKit */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = E89CBD3B2D5FC0B10037ED95 /* XCRemoteSwiftPackageReference "XcodesLoginKit" */;
 			productName = XcodesLoginKit;
 		};
 		E89CBD392D5FB8920037ED95 /* XcodesLoginKitSecurityKey */ = {
 			isa = XCSwiftPackageProductDependency;
+			package = E89CBD3B2D5FC0B10037ED95 /* XCRemoteSwiftPackageReference "XcodesLoginKit" */;
 			productName = XcodesLoginKitSecurityKey;
 		};
 		E8C0EB19291EF43E0081528A /* XcodesKit */ = {

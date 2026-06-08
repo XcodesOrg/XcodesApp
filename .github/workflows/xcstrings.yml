@@ -9,7 +9,7 @@ on:
 
 jobs:
   test:
-    runs-on: macos-13
+    runs-on: macos-26
     steps:
     - uses: actions/checkout@v4
 
