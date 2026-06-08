@@ -17,6 +17,17 @@ enum XcodeListCategory: String, CaseIterable, Identifiable, CustomStringConverti
     }
 
     var isManaged: Bool { PreferenceKey.xcodeListCategory.isManaged() }
+
+    var versionFilter: XcodeListVersionFilter {
+        switch self {
+        case .all:
+            return .all
+        case .release:
+            return .release
+        case .beta:
+            return .prerelease
+        }
+    }
 }
 
 enum XcodeListArchitecture: String, CaseIterable, Identifiable, CustomStringConvertible {
@@ -24,6 +35,15 @@ enum XcodeListArchitecture: String, CaseIterable, Identifiable, CustomStringConv
     case appleSilicon
     
     var id: Self { self }
+
+    static var defaultForCurrentMachine: Self {
+        switch ArchitectureVariant.defaultForMachine() {
+        case .universal:
+            return .universal
+        case .appleSilicon:
+            return .appleSilicon
+        }
+    }
     
     var description: String {
         switch self {
@@ -31,6 +51,23 @@ enum XcodeListArchitecture: String, CaseIterable, Identifiable, CustomStringConv
             case .appleSilicon: return localizeString("Apple Silicon")
         }
     }
+
+    var menuDescription: String {
+        isCurrentMachineDefault ? "\(description) (\(localizeString("This Mac")))" : description
+    }
     
-    var isManaged: Bool { PreferenceKey.xcodeListCategory.isManaged() }
+    var isCurrentMachineDefault: Bool {
+        self == Self.defaultForCurrentMachine
+    }
+    
+    var isManaged: Bool { PreferenceKey.xcodeListArchitectures.isManaged() }
+
+    var architectureFilters: [ArchitectureFilter] {
+        switch self {
+        case .universal:
+            return [.variant(.universal)]
+        case .appleSilicon:
+            return [.variant(.appleSilicon)]
+        }
+    }
 }

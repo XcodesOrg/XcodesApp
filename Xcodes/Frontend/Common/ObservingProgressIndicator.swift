@@ -1,5 +1,5 @@
-import Combine
 import SwiftUI
+import XcodesKit
 
 /// A ProgressIndicator that reflects the state of a Progress object.
 /// This functionality is already built in to ProgressView, 
@@ -23,17 +23,39 @@ public struct ObservingProgressIndicator: View {
         self.showsAdditionalDescription = showsAdditionalDescription
     }
     
+    @MainActor
     class ProgressWrapper: ObservableObject {
         var progress: Progress
-        var cancellable: AnyCancellable!
+        private var observationTask: Task<Void, Never>?
         
         init(progress: Progress) {
             self.progress = progress
-            cancellable = progress.publisher(for: \.fractionCompleted)
-                .combineLatest(progress.publisher(for: \.localizedAdditionalDescription))
-                .combineLatest(progress.publisher(for: \.isIndeterminate))
-                .throttle(for: 1.0, scheduler: DispatchQueue.main, latest: true)
-                .sink { [weak self] _ in self?.objectWillChange.send() }
+            observationTask = Task { [weak self] in
+                await self?.observeProgress()
+            }
+        }
+
+        deinit {
+            observationTask?.cancel()
+        }
+
+        private func observeProgress() async {
+            for await _ in Self.progressChanges(for: progress) {
+                objectWillChange.send()
+
+                do {
+                    try await Task.sleep(for: .seconds(1))
+                } catch {
+                    return
+                }
+            }
+        }
+
+        private nonisolated static func progressChanges(for progress: Progress) -> AsyncStream<Void> {
+            ProgressObservation.changes(
+                for: progress,
+                observing: [.fractionCompleted, .localizedAdditionalDescription, .isIndeterminate]
+            )
         }
     }
     

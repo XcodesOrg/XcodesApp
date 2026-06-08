@@ -1,41 +1,43 @@
-import Combine
 import Foundation
 import os.log
 import ServiceManagement
+import XcodesKit
 
+@MainActor
 final class HelperClient {
     private var connection: NSXPCConnection?
-    
+
     private func currentConnection() -> NSXPCConnection? {
         guard self.connection == nil else {
             return self.connection
         }
-        
+
         let connection = NSXPCConnection(machServiceName: machServiceName, options: .privileged)
         connection.remoteObjectInterface = NSXPCInterface(with: HelperXPCProtocol.self)
-        connection.invalidationHandler = {
-            self.connection?.invalidationHandler = nil
-            DispatchQueue.main.async {
+        connection.invalidationHandler = { [weak self, weak connection] in
+            Task { @MainActor [weak self, weak connection] in
+                guard let self, let connection, self.connection === connection else { return }
+                connection.invalidationHandler = nil
                 self.connection = nil
             }
         }
-        
+
         self.connection = connection
         connection.resume()
-        
+
         return self.connection
     }
-    
-    private func helper(errorSubject: PassthroughSubject<String, Error>) -> HelperXPCProtocol? {
-        guard 
+
+    private func helper(errorHandler: @escaping @Sendable (Error) -> Void) -> HelperXPCProtocol? {
+        guard
             let helper = self.currentConnection()?.remoteObjectProxyWithErrorHandler({ error in
-                errorSubject.send(completion: .failure(error))
-            }) as? HelperXPCProtocol 
+                errorHandler(error)
+            }) as? HelperXPCProtocol
         else { return nil }
         return helper
     }
-    
-    func checkIfLatestHelperIsInstalled() -> AnyPublisher<Bool, Never> {
+
+    func checkIfLatestHelperIsInstalledAsync() async throws -> Bool {
         Logger.helperClient.info(#function)
 
         let helperURL = Bundle.main.bundleURL.appendingPathComponent("Contents/Library/LaunchServices/" + machServiceName)
@@ -43,270 +45,104 @@ final class HelperClient {
             let helperBundleInfo = CFBundleCopyInfoDictionaryForURL(helperURL as CFURL) as? [String: Any],
             let bundledHelperVersion = helperBundleInfo["CFBundleShortVersionString"] as? String
         else {
-            return Just(false)
-                .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") })
-                .eraseToAnyPublisher()
+            Logger.helperClient.info("\(#function): false")
+            return false
         }
-        
-        return getVersion()
-            .map { installedHelperVersion in installedHelperVersion == bundledHelperVersion }
-            .catch { _ in Just(false) }
-            // Failure is Never, so don't bother logging completion
-            .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0), privacy: .public)") })
-            .eraseToAnyPublisher()
+
+        let isInstalled = try await getVersionAsync() == bundledHelperVersion
+        Logger.helperClient.info("\(#function): \(String(describing: isInstalled), privacy: .public)")
+        return isInstalled
     }
-    
-    func getVersion() -> AnyPublisher<String, Error> {
+
+    func getVersionAsync() async throws -> String {
         Logger.helperClient.info(#function)
 
-        let connectionErrorSubject = PassthroughSubject<String, Error>()
-        guard 
-            let helper = self.helper(errorSubject: connectionErrorSubject)
-        else {
-            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
-                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
-                .eraseToAnyPublisher()
-        }
-        
-        return Deferred {
-            Future { promise in
-                helper.getVersion { version in
-                    promise(.success(version))
-                } 
+        let version = try await performHelperRequest { helper, finish in
+            helper.getVersion { version in
+                finish(.success(version))
             }
         }
-        // Take values, but fail when connectionErrorSubject fails
-        .zip(
-            connectionErrorSubject
-                .prepend("")
-                .map { _ in Void() }
-        )
-        .map { $0.0 }
-        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0), privacy: .public)") },
-                      receiveCompletion: { completion in
-                        switch completion {
-                        case .finished:
-                            Logger.helperClient.info("\(#function): finished") 
-                        case let .failure(error):
-                            Logger.helperClient.error("\(#function): \(String(describing: error))")
-                        }
-                      })
-        .eraseToAnyPublisher()
+        Logger.helperClient.info("\(#function): \(String(describing: version), privacy: .public)")
+        return version
     }
-    
-    func switchXcodePath(_ absolutePath: String) -> AnyPublisher<Void, Error> {
+
+    func switchXcodePathAsync(_ absolutePath: String) async throws {
         Logger.helperClient.info("\(#function): \(absolutePath, privacy: .private(mask: .hash))")
 
-        let connectionErrorSubject = PassthroughSubject<String, Error>()
-        guard 
-            let helper = self.helper(errorSubject: connectionErrorSubject)
-        else {
-            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
-                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
-                .eraseToAnyPublisher()
-        }
-        
-        return Deferred {
-            Future { promise in
-                helper.xcodeSelect(absolutePath: absolutePath, completion: { (possibleError) in
-                    if let error = possibleError {
-                        promise(.failure(error))
-                    } else {
-                        promise(.success(()))
-                    }
-                })                
+        try await performVoidHelperRequest { helper, finish in
+            helper.xcodeSelect(absolutePath: absolutePath) { possibleError in
+                finish(possibleError.map(Result.failure) ?? .success(()))
             }
         }
-        // Take values, but fail when connectionErrorSubject fails
-        .zip(
-            connectionErrorSubject
-                .prepend("")
-                .map { _ in Void() }
-        )
-        .map { $0.0 }
-        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
-                      receiveCompletion: { completion in
-                        switch completion {
-                        case .finished:
-                            Logger.helperClient.info("\(#function): finished") 
-                        case let .failure(error):
-                            Logger.helperClient.error("\(#function): \(String(describing: error))")
-                        }
-                      })
-        .eraseToAnyPublisher()
+        Logger.helperClient.info("\(#function): finished")
     }
-    
-    func devToolsSecurityEnable() -> AnyPublisher<Void, Error> {
+
+    func devToolsSecurityEnableAsync() async throws {
         Logger.helperClient.info(#function)
 
-        let connectionErrorSubject = PassthroughSubject<String, Error>()
-        guard 
-            let helper = self.helper(errorSubject: connectionErrorSubject)
-        else {
-            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
-                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
-                .eraseToAnyPublisher()
-        }
-        
-        return Deferred {
-            Future { promise in
-                helper.devToolsSecurityEnable(completion: { (possibleError) in
-                    if let error = possibleError {
-                        promise(.failure(error))
-                    } else {
-                        promise(.success(()))
-                    }
-                })                
+        try await performVoidHelperRequest { helper, finish in
+            helper.devToolsSecurityEnable { possibleError in
+                finish(possibleError.map(Result.failure) ?? .success(()))
             }
         }
-        // Take values, but fail when connectionErrorSubject fails
-        .zip(
-            connectionErrorSubject
-                .prepend("")
-                .map { _ in Void() }
-        )
-        .map { $0.0 }
-        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
-                      receiveCompletion: { completion in
-                        switch completion {
-                        case .finished:
-                            Logger.helperClient.info("\(#function): finished") 
-                        case let .failure(error):
-                            Logger.helperClient.error("\(#function): \(String(describing: error))")
-                        }
-                      })
-        .eraseToAnyPublisher()
+        Logger.helperClient.info("\(#function): finished")
     }
-    
-    func addStaffToDevelopersGroup() -> AnyPublisher<Void, Error> {
+
+    func addStaffToDevelopersGroupAsync() async throws {
         Logger.helperClient.info(#function)
 
-        let connectionErrorSubject = PassthroughSubject<String, Error>()
-        guard 
-            let helper = self.helper(errorSubject: connectionErrorSubject)
-        else {
-            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
-                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
-                .eraseToAnyPublisher()
-        }
-        
-        return Deferred {
-            Future { promise in
-                helper.addStaffToDevelopersGroup(completion: { (possibleError) in
-                    if let error = possibleError {
-                        promise(.failure(error))
-                    } else {
-                        promise(.success(()))
-                    }
-                })                
+        try await performVoidHelperRequest { helper, finish in
+            helper.addStaffToDevelopersGroup { possibleError in
+                finish(possibleError.map(Result.failure) ?? .success(()))
             }
         }
-        // Take values, but fail when connectionErrorSubject fails
-        .zip(
-            connectionErrorSubject
-                .prepend("")
-                .map { _ in Void() }
-        )
-        .map { $0.0 }
-        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
-                      receiveCompletion: { completion in
-                        switch completion {
-                        case .finished:
-                            Logger.helperClient.info("\(#function): finished") 
-                        case let .failure(error):
-                            Logger.helperClient.error("\(#function): \(String(describing: error))")
-                        }
-                      })
-        .eraseToAnyPublisher()
+        Logger.helperClient.info("\(#function): finished")
     }
-    
-    func acceptXcodeLicense(absoluteXcodePath: String) -> AnyPublisher<Void, Error> {
+
+    func acceptXcodeLicenseAsync(absoluteXcodePath: String) async throws {
         Logger.helperClient.info("\(#function): \(absoluteXcodePath, privacy: .private(mask: .hash))")
 
-        let connectionErrorSubject = PassthroughSubject<String, Error>()
-        guard 
-            let helper = self.helper(errorSubject: connectionErrorSubject)
-        else {
-            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
-                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
-                .eraseToAnyPublisher()
-        }
-        
-        return Deferred {
-            Future { promise in
-                helper.acceptXcodeLicense(absoluteXcodePath: absoluteXcodePath, completion: { (possibleError) in
-                    if let error = possibleError {
-                        promise(.failure(error))
-                    } else {
-                        promise(.success(()))
-                    }
-                })                
+        try await performVoidHelperRequest { helper, finish in
+            helper.acceptXcodeLicense(absoluteXcodePath: absoluteXcodePath) { possibleError in
+                finish(possibleError.map(Result.failure) ?? .success(()))
             }
         }
-        // Take values, but fail when connectionErrorSubject fails
-        .zip(
-            connectionErrorSubject
-                .prepend("")
-                .map { _ in Void() }
-        )
-        .map { $0.0 }
-        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
-                      receiveCompletion: { completion in
-                        switch completion {
-                        case .finished:
-                            Logger.helperClient.info("\(#function): finished") 
-                        case let .failure(error):
-                            Logger.helperClient.error("\(#function): \(String(describing: error))")
-                        }
-                      })
-        .eraseToAnyPublisher()
+        Logger.helperClient.info("\(#function): finished")
     }
-    
-    func runFirstLaunch(absoluteXcodePath: String) -> AnyPublisher<Void, Error> {
+
+    func runFirstLaunchAsync(absoluteXcodePath: String) async throws {
         Logger.helperClient.info("\(#function): \(absoluteXcodePath, privacy: .private(mask: .hash))")
 
-        let connectionErrorSubject = PassthroughSubject<String, Error>()
-        guard 
-            let helper = self.helper(errorSubject: connectionErrorSubject)
-        else {
-            return Fail(error: HelperClientError.failedToCreateRemoteObjectProxy)
-                .handleEvents(receiveCompletion: { Logger.helperClient.error("\(#function): \(String(describing: $0))") })
-                .eraseToAnyPublisher()
-        }
-        
-        return Deferred {
-            Future { promise in
-                helper.runFirstLaunch(absoluteXcodePath: absoluteXcodePath, completion: { (possibleError) in
-                    if let error = possibleError {
-                        promise(.failure(error))
-                    } else {
-                        promise(.success(()))
-                    }
-                })                
+        try await performVoidHelperRequest { helper, finish in
+            helper.runFirstLaunch(absoluteXcodePath: absoluteXcodePath) { possibleError in
+                finish(possibleError.map(Result.failure) ?? .success(()))
             }
         }
-        // Take values, but fail when connectionErrorSubject fails
-        .zip(
-            connectionErrorSubject
-                .prepend("")
-                .map { _ in Void() }
-        )
-        .map { $0.0 }
-        .handleEvents(receiveOutput: { Logger.helperClient.info("\(#function): \(String(describing: $0))") },
-                      receiveCompletion: { completion in
-                        switch completion {
-                        case .finished:
-                            Logger.helperClient.info("\(#function): finished") 
-                        case let .failure(error):
-                            Logger.helperClient.error("\(#function): \(String(describing: error))")
-                        }
-                      })
-        .eraseToAnyPublisher()
-    }    
-    
+        Logger.helperClient.info("\(#function): finished")
+    }
+
+    private func performVoidHelperRequest(_ operation: @escaping @Sendable (HelperXPCProtocol, @escaping @Sendable (Result<Void, Error>) -> Void) -> Void) async throws {
+        try await performHelperRequest(operation)
+    }
+
+    private func performHelperRequest<T: Sendable>(_ operation: @escaping @Sendable (HelperXPCProtocol, @escaping @Sendable (Result<T, Error>) -> Void) -> Void) async throws -> T {
+        let request = OneShotContinuation<T>()
+        guard let helper = helper(errorHandler: { error in
+            request.resume(throwing: error)
+        }) else {
+            throw HelperClientError.failedToCreateRemoteObjectProxy
+        }
+
+        return try await request.value {
+            operation(helper) { result in
+                request.resume(with: result)
+            }
+        }
+    }
+
     // MARK: - Install
     // From https://github.com/securing/SimpleXPCApp/
-    
+
     func install() throws {
         Logger.helperClient.info(#function)
 
@@ -325,15 +161,15 @@ final class HelperClient {
 
             self.connection?.invalidate()
             self.connection = nil
-            
+
             Logger.helperClient.info("\(#function): Finished installation")
         } catch {
             Logger.helperClient.error("\(#function): \(error.localizedDescription)")
-            
+
             throw error
         }
     }
-    
+
     private func executeAuthorizationFunction(_ authorizationFunction: () -> (OSStatus) ) throws {
         let osStatus = authorizationFunction()
         guard osStatus == errAuthorizationSuccess else {
@@ -344,7 +180,7 @@ final class HelperClient {
             }
         }
     }
-    
+
     func authorizationRef(_ rights: UnsafePointer<AuthorizationRights>?,
                                  _ environment: UnsafePointer<AuthorizationEnvironment>?,
                                  _ flags: AuthorizationFlags) throws -> AuthorizationRef? {
@@ -357,7 +193,7 @@ final class HelperClient {
 enum HelperClientError: LocalizedError {
     case failedToCreateRemoteObjectProxy
     case message(String)
-    
+
     var errorDescription: String? {
         switch self {
         case .failedToCreateRemoteObjectProxy:

@@ -1,6 +1,6 @@
-import AppleAPI
 import SwiftUI
 import Path
+import XcodesKit
 
 struct AdvancedPreferencePane: View {
     @EnvironmentObject var appState: AppState
@@ -115,7 +115,7 @@ struct AdvancedPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             
-            if Hardware.isAppleSilicon() {
+            if HostHardware.isAppleSilicon() {
                 GroupBox(label: Text("Apple Silicon")) {
                     Toggle("ShowOpenInRosetta", isOn: $appState.showOpenInRosettaOption)
                         .disabled(appState.createSymLinkOnSelectDisabled)
@@ -159,6 +159,7 @@ struct AdvancedPreferencePane: View {
 }
 
 struct AdvancedPreferencePane_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         Group {
             AdvancedPreferencePane()

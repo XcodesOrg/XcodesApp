@@ -25,7 +25,7 @@ struct MainToolbarModifier: ViewModifier {
             
             Spacer()
             
-            let isFiltering = isInstalledOnly || category != .all || architectures != .universal
+            let isFiltering = isInstalledOnly || category != .all || !architectures.isCurrentMachineDefault
             Menu("Filter", systemImage: "line.horizontal.3.decrease.circle") {
                 Section {
                     Toggle("Installed Only", systemImage: "arrow.down.app", isOn: $isInstalledOnly)            .labelStyle(.titleAndIcon)
@@ -47,9 +47,9 @@ struct MainToolbarModifier: ViewModifier {
                 
                 Section {
                     Picker("Architecture", selection: $architectures) {
-                        Label("Universal", systemImage: "cpu.fill")
+                        Label(architecturesLabel(for: .universal), systemImage: "cpu.fill")
                             .tag(XcodeListArchitecture.universal)
-                        Label("Apple Silicon", systemImage: "m4.button.horizontal")
+                        Label(architecturesLabel(for: .appleSilicon), systemImage: "m4.button.horizontal")
                             .foregroundColor(.accentColor)
                             .tag(XcodeListArchitecture.appleSilicon)
                     }
@@ -61,6 +61,10 @@ struct MainToolbarModifier: ViewModifier {
             .pickerStyle(.inline)
             .symbolVariant(isFiltering ? .fill : .none)
         }
+    }
+
+    private func architecturesLabel(for architecture: XcodeListArchitecture) -> String {
+        architecture.menuDescription
     }
 }
 

@@ -1,5 +1,5 @@
 import SwiftUI
-import AppleAPI
+import XcodesLoginKit
 
 struct SignIn2FAView: View {
     @EnvironmentObject var appState: AppState
@@ -42,6 +42,7 @@ struct SignIn2FAView: View {
 }
 
 struct SignIn2FAView_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         SignIn2FAView(
             isPresented: .constant(true),

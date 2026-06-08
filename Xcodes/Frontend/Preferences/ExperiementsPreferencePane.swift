@@ -1,4 +1,3 @@
-import AppleAPI
 import Path
 import SwiftUI
 
@@ -27,6 +26,7 @@ struct ExperimentsPreferencePane: View {
 }
 
 struct ExperimentsPreferencePane_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         Group {
             ExperimentsPreferencePane()

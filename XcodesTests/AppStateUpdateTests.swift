@@ -1,86 +1,121 @@
 import Path
 import CryptoKit
 import Version
+import XcodesKit
 @testable import Xcodes
 import XCTest
 import CommonCrypto
 import BigNum
 import SRP
+import os
 
+private final class AppStateUpdateTestLockedBox<Value: Sendable>: Sendable {
+    private let storage: OSAllocatedUnfairLock<Value>
+
+    init(_ value: Value) {
+        self.storage = OSAllocatedUnfairLock(initialState: value)
+    }
+
+    func read<Result: Sendable>(_ body: @Sendable (Value) -> Result) -> Result {
+        storage.withLock { body($0) }
+    }
+
+    func withValue<Result: Sendable>(_ body: @Sendable (inout Value) -> Result) -> Result {
+        storage.withLock { body(&$0) }
+    }
+}
+
+@MainActor
 class AppStateUpdateTests: XCTestCase {
     var subject: AppState!
-    
+
     override func setUpWithError() throws {
         Current = .mock
+        syncXcodesKitMocks()
         subject = AppState()
+    }
+
+    func test_UpdateIfNeeded_OldTaskDoesNotClearReplacementTask() async throws {
+        subject.availableXcodes = [
+            AvailableXcode(
+                version: Version("0.0.0")!,
+                url: URL(string: "https://apple.com/xcode.xip")!,
+                filename: "mock.xip",
+                releaseDate: nil
+            )
+        ]
+        Current.defaults.date = { _ in Date.mock() }
+
+        let continuations = AppStateUpdateTestLockedBox<[CheckedContinuation<ProcessOutput, Error>]>([])
+        Current.shell.xcodeSelectPrintPath = {
+            try await withCheckedThrowingContinuation { continuation in
+                continuations.withValue { $0.append(continuation) }
+            }
+        }
+
+        subject.updateIfNeeded()
+        for _ in 0..<100 where continuations.read({ $0.count }) < 1 {
+            await Task.yield()
+        }
+        let firstTask = try XCTUnwrap(subject.updateTask)
+        XCTAssertEqual(continuations.read { $0.count }, 1)
+
+        subject.updateIfNeeded()
+        for _ in 0..<100 where continuations.read({ $0.count }) < 2 {
+            await Task.yield()
+        }
+        let replacementTask = try XCTUnwrap(subject.updateTask)
+        XCTAssertEqual(continuations.read { $0.count }, 2)
+
+        continuations.read { $0[0] }.resume(returning: (0, "/Applications/Xcode.app", ""))
+        await firstTask.value
+        XCTAssertNotNil(subject.updateTask)
+
+        continuations.read { $0[1] }.resume(returning: (0, "/Applications/Xcode-Beta.app", ""))
+        await replacementTask.value
+        XCTAssertNil(subject.updateTask)
+        XCTAssertNil(subject.updateTaskID)
+        XCTAssertEqual(subject.selectedXcodePath, "/Applications/Xcode-Beta.app")
     }
 
     func testDoesNotReplaceInstallState() throws {
         subject.allXcodes = [
             Xcode(version: Version("0.0.0")!, installState: .installing(.unarchiving), selected: false, icon: nil)
         ]
-        
+
         subject.updateAllXcodes(
             availableXcodes: [
                 AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
-            ], 
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
+
         XCTAssertEqual(subject.allXcodes[0].installState, .installing(.unarchiving))
     }
-    
+
     func testRemovesUninstalledVersion() throws {
         subject.allXcodes = [
             Xcode(version: Version("0.0.0")!, installState: .installed(Path("/Applications/Xcode-0.0.0.app")!), selected: true, icon: NSImage(systemSymbolName: "app.fill", accessibilityDescription: nil))
         ]
-        
+
         subject.updateAllXcodes(
             availableXcodes: [
                 AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
-            ], 
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
+
         XCTAssertEqual(subject.allXcodes[0].installState, .notInstalled)
     }
-    
+
     func testDeterminesIfInstalledByBuildMetadataAlone() throws {
         Current.defaults.string = { key in
             if key == "dataSource" {
-                return "apple" 
-            } else {
-                return nil
-            }
-        }
-        
-        subject.allXcodes = [
-        ]
-        
-        subject.updateAllXcodes(
-            availableXcodes: [
-                // Note "GM" prerelease identifier
-                AvailableXcode(version: Version("0.0.0-GM+ABC123")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
-            ], 
-            installedXcodes: [
-                InstalledXcode(path: Path("/Applications/Xcode-0.0.0.app")!)!
-            ], 
-            selectedXcodePath: nil
-        )
-        
-        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123")!) 
-        XCTAssertEqual(subject.allXcodes[0].installState, .installed(Path("/Applications/Xcode-0.0.0.app")!))
-        XCTAssertEqual(subject.allXcodes[0].selected, false)
-    }
-    
-    func testAdjustedVersionsAreUsedToLookupAvailableXcode() throws {
-        Current.defaults.string = { key in
-            if key == "dataSource" {
-                return "apple" 
+                return "apple"
             } else {
                 return nil
             }
@@ -88,19 +123,47 @@ class AppStateUpdateTests: XCTestCase {
 
         subject.allXcodes = [
         ]
-        
+
+        subject.updateAllXcodes(
+            availableXcodes: [
+                // Note "GM" prerelease identifier
+                AvailableXcode(version: Version("0.0.0-GM+ABC123")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+            ],
+            installedXcodes: [
+                InstalledXcode(path: Path("/Applications/Xcode-0.0.0.app")!)!
+            ],
+            selectedXcodePath: nil
+        )
+
+        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123")!)
+        XCTAssertEqual(subject.allXcodes[0].installState, .installed(Path("/Applications/Xcode-0.0.0.app")!))
+        XCTAssertEqual(subject.allXcodes[0].selected, false)
+    }
+
+    func testAdjustedVersionsAreUsedToLookupAvailableXcode() throws {
+        Current.defaults.string = { key in
+            if key == "dataSource" {
+                return "apple"
+            } else {
+                return nil
+            }
+        }
+
+        subject.allXcodes = [
+        ]
+
         subject.updateAllXcodes(
             availableXcodes: [
                 // Note "GM" prerelease identifier
                 AvailableXcode(version: Version("0.0.0-GM+ABC123")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil, sdks: .init(iOS: .init("14.3")))
-            ], 
+            ],
             installedXcodes: [
                 InstalledXcode(path: Path("/Applications/Xcode-0.0.0.app")!)!
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
-        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123")!) 
+
+        XCTAssertEqual(subject.allXcodes[0].version, Version("0.0.0+ABC123")!)
         XCTAssertEqual(subject.allXcodes[0].installState, .installed(Path("/Applications/Xcode-0.0.0.app")!))
         XCTAssertEqual(subject.allXcodes[0].selected, false)
         // XCModel types aren't equatable, so just check for non-nil for now
@@ -110,26 +173,26 @@ class AppStateUpdateTests: XCTestCase {
     func testAppendingInstalledVersionThatIsNotAvailable() {
         subject.allXcodes = [
         ]
-        
+
         subject.updateAllXcodes(
             availableXcodes: [
                 AvailableXcode(version: Version("1.2.3")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil, sdks: .init(iOS: .init("14.3")))
-            ], 
+            ],
             installedXcodes: [
                 // There's a version installed which for some reason isn't listed online
                 InstalledXcode(path: Path("/Applications/Xcode-0.0.0.app")!)!
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
-        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("1.2.3")!, Version("0.0.0+ABC123")!]) 
+
+        XCTAssertEqual(subject.allXcodes.map(\.version), [Version("1.2.3")!, Version("0.0.0+ABC123")!])
     }
-    
-    
+
+
     func testIdenticalBuilds_KeepsReleaseVersion_WithNeitherInstalled() {
         Current.defaults.string = { key in
             if key == "dataSource" {
-                return "xcodeReleases" 
+                return "xcodeReleases"
             } else {
                 return nil
             }
@@ -137,25 +200,25 @@ class AppStateUpdateTests: XCTestCase {
 
         subject.allXcodes = [
         ]
-        
+
         subject.updateAllXcodes(
             availableXcodes: [
                 AvailableXcode(version: Version("12.4.0+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
                 AvailableXcode(version: Version("12.4.0-RC+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-            ], 
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
+
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
         XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[XcodeID(version: Version("12.4.0+12D4e")!), XcodeID(version: Version("12.4.0-RC+12D4e")!)]])
     }
-    
+
     func testIdenticalBuilds_DoNotMergeReleaseVersions() {
         Current.defaults.string = { key in
             if key == "dataSource" {
-                return "xcodeReleases" 
+                return "xcodeReleases"
             } else {
                 return nil
             }
@@ -163,25 +226,25 @@ class AppStateUpdateTests: XCTestCase {
 
         subject.allXcodes = [
         ]
-        
+
         subject.updateAllXcodes(
             availableXcodes: [
                 AvailableXcode(version: Version("3.2.3+10M2262")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
                 AvailableXcode(version: Version("3.2.3+10M2262")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-            ], 
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
+
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("3.2.3+10M2262")!, Version("3.2.3+10M2262")!])
         XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[], []])
     }
-    
+
     func testIdenticalBuilds_KeepsReleaseVersion_WithPrereleaseInstalled() {
         Current.defaults.string = { key in
             if key == "dataSource" {
-                return "xcodeReleases" 
+                return "xcodeReleases"
             } else {
                 return nil
             }
@@ -189,7 +252,7 @@ class AppStateUpdateTests: XCTestCase {
 
         subject.allXcodes = [
         ]
-        
+
         Current.files.contentsAtPath = { path in
             if path.contains("Info.plist") {
                 return """
@@ -221,26 +284,26 @@ class AppStateUpdateTests: XCTestCase {
                 return nil
             }
         }
-        
+
         subject.updateAllXcodes(
             availableXcodes: [
                 AvailableXcode(version: Version("12.4.0+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
                 AvailableXcode(version: Version("12.4.0-RC+12D4e")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-            ], 
+            ],
             installedXcodes: [
                 InstalledXcode(path: Path("/Applications/Xcode-12.4.0-RC.app")!)!
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
+
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0+12D4e")!])
         XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[XcodeID(version: Version("12.4.0+12D4e")!), XcodeID(version: Version("12.4.0-RC+12D4e")!)]])
     }
-    
+
     func testIdenticalBuilds_AppleDataSource_DoNotMergeVersionsWithoutBuildIdentifiers() {
         Current.defaults.string = { key in
             if key == "dataSource" {
-                return "apple" 
+                return "apple"
             } else {
                 return nil
             }
@@ -248,17 +311,17 @@ class AppStateUpdateTests: XCTestCase {
 
         subject.allXcodes = [
         ]
-        
+
         subject.updateAllXcodes(
             availableXcodes: [
                 AvailableXcode(version: Version("12.4.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
                 AvailableXcode(version: Version("12.3.0-RC")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil),
-            ], 
+            ],
             installedXcodes: [
-            ], 
+            ],
             selectedXcodePath: nil
         )
-        
+
         XCTAssertEqual(subject.allXcodes.map(\.version), [Version("12.4.0")!, Version("12.3.0-RC")!])
         XCTAssertEqual(subject.allXcodes.map(\.identicalBuilds), [[], []])
     }

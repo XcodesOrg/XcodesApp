@@ -1,6 +1,6 @@
-import ErrorHandling
 import SwiftUI
 import XcodesKit
+import XcodesLoginKit
 import Path
 import Version
 
@@ -15,7 +15,7 @@ struct MainWindow: View {
     // FB8979533 SceneStorage doesn't restore value after app is quit by user
     @AppStorage("isShowingInfoPane") private var isShowingInfoPane = false
     @AppStorage("xcodeListCategory") private var category: XcodeListCategory = .all
-    @AppStorage("xcodeListArchitecture") private var architecture: XcodeListArchitecture = .universal
+    @AppStorage("xcodeListArchitecture") private var architecture: XcodeListArchitecture = .defaultForCurrentMachine
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
 
     var body: some View {
@@ -119,7 +119,7 @@ struct MainWindow: View {
 
     @ViewBuilder
     private func signInView() -> some View {
-        if appState.authenticationState == .authenticated {
+        if case .authenticated = appState.authenticationState {
             VStack {
                 SignedInView()
                     .padding(32)
@@ -130,6 +130,10 @@ struct MainWindow: View {
                 }
             }
             .padding()
+        } else if case let .waitingForFederatedAuthentication(federationResponse) = appState.authenticationState {
+            SignInFederatedView(federationResponse: federationResponse)
+                .environmentObject(appState)
+                .frame(width: 400)
         } else {
             SignInCredentialsView()
                 .frame(width: 400)
@@ -155,30 +159,10 @@ struct MainWindow: View {
                 title: Text("Alert.PrivilegedHelper.Title"),
                 message: Text("Alert.PrivilegedHelper.Message"),
                 primaryButton: .default(Text("Install"), action: {
-                    // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
-                    // We need to capture it to be invoked after that happens.
-                    let helperAction = appState.isPreparingUserForActionRequiringHelper
-                    DispatchQueue.main.async {
-                        // This really shouldn't be nil, but sometimes this alert is being shown twice and I don't know why.
-                        // There are some DispatchQueue.main.async's scattered around which make this better but in some situations it's still happening.
-                        // When that happens, the second time the user clicks an alert button isPreparingUserForActionRequiringHelper will be nil.
-                        // To at least not crash, we're using ?
-                        helperAction?(true)
-                        appState.presentedAlert = nil
-                    }
+                    appState.respondToPreparedHelperAction(userConsented: true)
                 }),
                 secondaryButton: .cancel {
-                    // The isPreparingUserForActionRequiringHelper closure is set to nil by the alert's binding when its dismissed.
-                    // We need to capture it to be invoked after that happens.
-                    let helperAction = appState.isPreparingUserForActionRequiringHelper
-                    DispatchQueue.main.async {
-                        // This really shouldn't be nil, but sometimes this alert is being shown twice and I don't know why.
-                        // There are some DispatchQueue.main.async's scattered around which make this better but in some situations it's still happening.
-                        // When that happens, the second time the user clicks an alert button isPreparingUserForActionRequiringHelper will be nil.
-                        // To at least not crash, we're using ?
-                        helperAction?(false)
-                        appState.presentedAlert = nil
-                    }
+                    appState.respondToPreparedHelperAction(userConsented: false)
                 }
             )
         case let .generic(title, message):
@@ -235,6 +219,7 @@ struct MainWindow: View {
 }
 
 struct MainWindow_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         MainWindow().environmentObject({ () -> AppState in
             let a = AppState()

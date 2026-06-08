@@ -1,4 +1,3 @@
-import AppleAPI
 import Sparkle
 import SwiftUI
 
@@ -74,6 +73,7 @@ struct UpdatesPreferencePane: View {
     }
 }
 
+@MainActor
 class ObservableUpdater: ObservableObject {
     private let updater: SPUUpdater
     private let updaterDelegate = UpdaterDelegate()
@@ -110,16 +110,22 @@ class ObservableUpdater: ObservableObject {
         automaticallyChecksForUpdatesObservation = updater.observe(
             \.automaticallyChecksForUpdates, 
             options: [.initial, .new, .old],
-            changeHandler: { [unowned self] updater, change in
+            changeHandler: { [weak self] updater, change in
                 guard change.newValue != change.oldValue else { return }
-                self.automaticallyChecksForUpdates = updater.automaticallyChecksForUpdates
+                let automaticallyChecksForUpdates = updater.automaticallyChecksForUpdates
+                Task { @MainActor [weak self] in
+                    self?.automaticallyChecksForUpdates = automaticallyChecksForUpdates
+                }
             }
         )
         lastUpdateCheckDateObservation = updater.observe(
             \.lastUpdateCheckDate, 
             options: [.initial, .new, .old],
-            changeHandler: { [unowned self] updater, change in
-                self.lastUpdateCheckDate = updater.lastUpdateCheckDate
+            changeHandler: { [weak self] updater, change in
+                let lastUpdateCheckDate = updater.lastUpdateCheckDate
+                Task { @MainActor [weak self] in
+                    self?.lastUpdateCheckDate = lastUpdateCheckDate
+                }
             }
         )
         includePrereleaseVersions = Current.defaults.bool(forKey: "includePrereleaseVersions") ?? false
@@ -149,6 +155,7 @@ extension String {
 }
 
 struct UpdatesPreferencePane_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         Group {
             UpdatesPreferencePane()

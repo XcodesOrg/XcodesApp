@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "AsyncNetworkService",
-        "repositoryURL": "https://github.com/RobotsAndPencils/AsyncHTTPNetworkService",
+        "repositoryURL": "https://github.com/XcodesOrg/AsyncHTTPNetworkService",
         "state": {
           "branch": "main",
-          "revision": "97770856c4e429f880d4b4dd68cfaf286dc00c30",
+          "revision": "12e225af8b5dc25afcfabfcf582a165b0581ab19",
           "version": null
         }
       },
@@ -20,30 +20,12 @@
         }
       },
       {
-        "package": "CombineExpectations",
-        "repositoryURL": "https://github.com/groue/CombineExpectations",
-        "state": {
-          "branch": null,
-          "revision": "989a92221899929ab8347a5878aa2b16db8b81ca",
-          "version": "0.6.0"
-        }
-      },
-      {
         "package": "DockProgress",
         "repositoryURL": "https://github.com/sindresorhus/DockProgress",
         "state": {
           "branch": null,
           "revision": "d4f23b5a8f5ca0fac393eb7ba78c2fe3e32e52da",
           "version": "4.3.1"
-        }
-      },
-      {
-        "package": "ErrorHandling",
-        "repositoryURL": "https://github.com/RobotsAndPencils/ErrorHandling",
-        "state": {
-          "branch": null,
-          "revision": "7be837fcb515447c0776805c3288fb7d5181ec68",
-          "version": "0.1.0"
         }
       },
       {
@@ -68,9 +50,9 @@
         "package": "LibFido2Swift",
         "repositoryURL": "https://github.com/kinoroy/LibFido2Swift",
         "state": {
-          "branch": "main",
+          "branch": null,
           "revision": "b87a93300c5b35307c9f26ae490963196bd927f1",
-          "version": null
+          "version": "0.1.5"
         }
       },
       {
@@ -134,6 +116,24 @@
           "branch": null,
           "revision": "087c91fedc110f9f833b14ef4c32745dabca8913",
           "version": "1.0.3"
+        }
+      },
+      {
+        "package": "XcodesKit",
+        "repositoryURL": "https://github.com/XcodesOrg/XcodesKit",
+        "state": {
+          "branch": null,
+          "revision": "5bff14052f7664f75a4837547804e07c3c2dfe47",
+          "version": "1.0.3"
+        }
+      },
+      {
+        "package": "Yams",
+        "repositoryURL": "https://github.com/jpsim/Yams",
+        "state": {
+          "branch": null,
+          "revision": "0d9ee7ea8c4ebd4a489ad7a73d5c6cad55d6fed3",
+          "version": "5.0.6"
         }
       }
     ]

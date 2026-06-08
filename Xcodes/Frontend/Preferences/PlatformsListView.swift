@@ -74,7 +74,7 @@ struct PlatformsListView: View {
 }
 
 
-#Preview {
+#Preview { @MainActor in
     PlatformsListView()
         .environmentObject({ () -> AppState in
             let a = AppState()

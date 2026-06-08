@@ -1,6 +1,7 @@
 import Path
 import SwiftUI
 import Version
+import XcodesKit
 
 struct XcodeListView: View {
     @EnvironmentObject var appState: AppState
@@ -19,52 +20,43 @@ struct XcodeListView: View {
         self.architecture = architecture
     }
     
-    var visibleXcodes: [Xcode] {
-        var xcodes: [Xcode]
-        switch category {
-        case .all:
-            xcodes = appState.allXcodes
-        case .release:
-            xcodes = appState.allXcodes.filter { $0.version.isNotPrerelease }
-        case .beta:
-            xcodes = appState.allXcodes.filter { $0.version.isPrerelease }
-        }
-        
-        if architecture == .appleSilicon {
-            xcodes = xcodes.filter { $0.architectures == [.arm64] }
-        }
-        
-        
-        let latestMajor = xcodes.sorted(\.version)
-            .filter { $0.version.isNotPrerelease }
-            .last?
-            .version
-            .major
+    private var visibleXcodes: [XcodeListEntry] {
+        appState.allXcodes
+            .enumerated()
+            .map { XcodeListEntry(index: $0.offset, xcode: $0.element) }
+            .applying(XcodeListFilters(
+                versionFilter: category.versionFilter,
+                architectureFilters: architecture.architectureFilters,
+                allowedMajorVersions: allowedMajorVersions,
+                searchText: searchText,
+                installedOnly: isInstalledOnly
+            ), item: \.listItem)
+    }
 
-        xcodes = xcodes.filter {
-            if $0.installState.notInstalled,
-               let latestMajor = latestMajor,
-               $0.version.major < (latestMajor - min(latestMajor,allowedMajorVersions)) {
-                return false
-            }
-
-            return true
-        }
-
-        if !searchText.isEmpty {
-            xcodes = xcodes.filter { $0.description.contains(searchText) }
-        }
-        
-        if isInstalledOnly {
-            xcodes = xcodes.filter { $0.installState.installed }
-        }
-        
-        return xcodes
+    private func latestReleaseForSelectedPrerelease(_ xcode: Xcode) -> Xcode? {
+        appState.allXcodes.latestReleaseForSelectedPrerelease(xcode)
     }
     
     var body: some View {
-        List(visibleXcodes, selection: $selectedXcodeID) { xcode in
-            XcodeListViewRow(xcode: xcode, selected: selectedXcodeID == xcode.id, appState: appState)
+        List(selection: $selectedXcodeID) {
+            if appState.enableGroupedXcodeList {
+                GroupedXcodeListContent(
+                    xcodes: visibleXcodes,
+                    allXcodes: appState.allXcodes,
+                    selectedXcodeID: $selectedXcodeID,
+                    appState: appState
+                )
+            } else {
+                ForEach(visibleXcodes) { entry in
+                    XcodeListViewRow(
+                        xcode: entry.xcode,
+                        selected: selectedXcodeID == entry.xcode.id,
+                        appState: appState,
+                        latestReleaseForSelectedPrerelease: latestReleaseForSelectedPrerelease(entry.xcode)
+                    )
+                        .tag(entry.xcode.id)
+                }
+            }
         }
         .listStyle(.sidebar)
         .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -72,6 +64,317 @@ struct XcodeListView: View {
                 .padding(.horizontal)
                 .padding(.vertical, 8)
            
+        }
+    }
+}
+
+private struct XcodeListEntry: Identifiable {
+    let index: Int
+    let xcode: Xcode
+
+    var id: Int {
+        index
+    }
+
+    var listItem: XcodeListItem {
+        xcode.listItem
+    }
+}
+
+private struct GroupedXcodeListContent: View {
+    let xcodes: [XcodeListEntry]
+    let allXcodes: [Xcode]
+    @Binding var selectedXcodeID: Xcode.ID?
+    let appState: AppState
+
+    @AppStorage(PreferenceKey.expandedMajorXcodeVersions.rawValue) private var expandedMajorVersionStorage = ""
+    @AppStorage(PreferenceKey.expandedMinorXcodeVersions.rawValue) private var expandedMinorVersionStorage = ""
+
+    private var expandedMajorVersions: Set<Int> {
+        get {
+            Set(expandedMajorVersionStorage.split(separator: ",").compactMap { Int($0) })
+        }
+        nonmutating set {
+            expandedMajorVersionStorage = newValue.sorted().map(String.init).joined(separator: ",")
+        }
+    }
+
+    private var expandedMinorVersions: Set<String> {
+        get {
+            Set(expandedMinorVersionStorage.split(separator: ",").map(String.init))
+        }
+        nonmutating set {
+            expandedMinorVersionStorage = newValue.sorted().joined(separator: ",")
+        }
+    }
+
+    private var majorVersionGroups: [XcodeListElementMajorVersionGroup<XcodeListEntry>] {
+        xcodes.groupedByMajorVersion(item: \.listItem)
+    }
+
+    private func latestReleaseForSelectedPrerelease(_ xcode: Xcode) -> Xcode? {
+        allXcodes.latestReleaseForSelectedPrerelease(xcode)
+    }
+
+    var body: some View {
+        ForEach(majorVersionGroups) { majorVersionGroup in
+            let isMajorExpanded = expandedMajorVersions.contains(majorVersionGroup.majorVersion)
+            let majorVersions = majorVersionGroup.versions.map(\.xcode)
+            let latestMajorRelease = majorVersions.latestRelease
+            let latestInstalledMajorVersion = majorVersions.latestInstalledVersion
+
+            XcodeVersionGroupRow(
+                displayName: majorVersionGroup.displayName,
+                latestRelease: latestMajorRelease,
+                latestSelectableRelease: latestMajorRelease,
+                latestSelectionTarget: latestInstalledMajorVersion,
+                selectedVersion: majorVersions.first { $0.selected },
+                installingVersion: majorVersions.first { $0.installState.installing },
+                isExpanded: isMajorExpanded,
+                indentation: 0,
+                appState: appState,
+                onToggleExpanded: {
+                    var updatedExpandedMajorVersions = expandedMajorVersions
+                    var updatedExpandedMinorVersions = expandedMinorVersions
+
+                    if isMajorExpanded {
+                        updatedExpandedMajorVersions.remove(majorVersionGroup.majorVersion)
+                        majorVersionGroup.minorVersionGroups.forEach {
+                            updatedExpandedMinorVersions.remove($0.id)
+                        }
+                    } else {
+                        updatedExpandedMajorVersions.insert(majorVersionGroup.majorVersion)
+                    }
+
+                    self.expandedMajorVersions = updatedExpandedMajorVersions
+                    self.expandedMinorVersions = updatedExpandedMinorVersions
+                }
+            )
+            .tag(majorVersions.first { $0.selected }?.id)
+
+            if isMajorExpanded {
+                ForEach(majorVersionGroup.minorVersionGroups) { minorVersionGroup in
+                    let isMinorExpanded = expandedMinorVersions.contains(minorVersionGroup.id)
+                    let minorVersions = minorVersionGroup.versions.map(\.xcode)
+                    let latestInstalledMinorVersion = minorVersions.latestInstalledVersion
+
+                    XcodeVersionGroupRow(
+                        displayName: minorVersionGroup.displayName,
+                        latestRelease: minorVersions.latestRelease,
+                        latestSelectableRelease: latestMajorRelease,
+                        latestSelectionTarget: latestInstalledMinorVersion,
+                        selectedVersion: minorVersions.first { $0.selected },
+                        installingVersion: minorVersions.first { $0.installState.installing },
+                        isExpanded: isMinorExpanded,
+                        indentation: 20,
+                        appState: appState,
+                        onToggleExpanded: {
+                            var updatedExpandedMinorVersions = expandedMinorVersions
+
+                            if isMinorExpanded {
+                                updatedExpandedMinorVersions.remove(minorVersionGroup.id)
+                            } else {
+                                updatedExpandedMinorVersions.insert(minorVersionGroup.id)
+                            }
+
+                            self.expandedMinorVersions = updatedExpandedMinorVersions
+                        }
+                    )
+                    .tag(minorVersions.first { $0.selected }?.id)
+
+                    if isMinorExpanded {
+                        ForEach(minorVersionGroup.versions) { entry in
+                            XcodeListViewRow(
+                                xcode: entry.xcode,
+                                selected: selectedXcodeID == entry.xcode.id,
+                                appState: appState,
+                                latestReleaseForSelectedPrerelease: latestReleaseForSelectedPrerelease(entry.xcode)
+                            )
+                                .padding(.leading, 40)
+                                .tag(entry.xcode.id)
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+private struct XcodeVersionGroupRow: View {
+    let displayName: String
+    let latestRelease: Xcode?
+    let latestSelectableRelease: Xcode?
+    let latestSelectionTarget: Xcode?
+    let selectedVersion: Xcode?
+    let installingVersion: Xcode?
+    let isExpanded: Bool
+    let indentation: CGFloat
+    let appState: AppState
+    let onToggleExpanded: () -> Void
+
+    var body: some View {
+        HStack {
+            Button(action: onToggleExpanded) {
+                HStack(spacing: 8) {
+                    Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
+                        .font(.caption.weight(.semibold))
+                        .foregroundColor(.secondary)
+                        .frame(width: 12, height: 12)
+
+                    icon
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(verbatim: "Xcode \(displayName)")
+                            .font(.body.weight(indentation == 0 ? .medium : .regular))
+
+                        if let latestRelease {
+                            Text(verbatim: "Latest: \(latestRelease.description)")
+                                .font(.caption)
+                                .foregroundColor(.secondary)
+                        }
+                    }
+
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            selectControl
+                .padding(.trailing, 16)
+            installControl
+        }
+        .padding(.leading, indentation)
+        .padding(.vertical, indentation == 0 ? 8 : 6)
+        .contentShape(Rectangle())
+    }
+
+    @ViewBuilder
+    private var icon: some View {
+        if let icon = latestRelease?.icon {
+            Image(nsImage: icon)
+                .resizable()
+                .frame(width: 32, height: 32)
+        } else {
+            Image(latestRelease?.version.isPrerelease == true ? "xcode-beta" : "xcode")
+                .resizable()
+                .frame(width: 32, height: 32)
+                .opacity(0.2)
+        }
+    }
+
+    @ViewBuilder
+    private var selectControl: some View {
+        if let selectedVersion, selectedVersion.selected, let latestSelectableRelease, latestSelectableRelease.id != selectedVersion.id {
+            switch latestSelectionTarget?.installState {
+            case .installed:
+                if let latestSelectionTarget, latestSelectionTarget.id != selectedVersion.id {
+                    Button(action: { appState.select(xcode: latestSelectionTarget) }) {
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(.yellow)
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .help(staleSelectedHelpText(selectedVersion: selectedVersion, latestRelease: latestSelectableRelease, selectionTarget: latestSelectionTarget))
+                } else {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.yellow)
+                        .help(staleSelectedHelpText(selectedVersion: selectedVersion, latestRelease: latestSelectableRelease, selectionTarget: latestSelectionTarget))
+                }
+            case .notInstalled:
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(.yellow)
+                    .help(staleSelectedHelpText(selectedVersion: selectedVersion, latestRelease: latestSelectableRelease, selectionTarget: latestSelectionTarget))
+            case .installing, .none:
+                EmptyView()
+            }
+        } else if selectedVersion?.selected == true {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(.green)
+                .help("ActiveVersionDescription")
+        } else if let latestSelectionTarget {
+            Button(action: { appState.select(xcode: latestSelectionTarget) }) {
+                Image(systemName: "checkmark.circle")
+                    .foregroundColor(.secondary)
+            }
+            .buttonStyle(PlainButtonStyle())
+            .help("MakeActiveVersionDescription")
+        }
+    }
+
+    private func staleSelectedHelpText(selectedVersion: Xcode, latestRelease: Xcode, selectionTarget: Xcode?) -> Text {
+        switch selectionTarget?.installState {
+        case .installed:
+            if let selectionTarget, selectionTarget.id != selectedVersion.id {
+                return Text(verbatim: "\(selectedVersion.description) selected, \(latestRelease.description) available. Click to select \(selectionTarget.description).")
+            } else {
+                return Text(verbatim: "\(selectedVersion.description) selected, \(latestRelease.description) available.")
+            }
+        case .notInstalled:
+            if let selectionTarget {
+                return Text(verbatim: "\(selectedVersion.description) selected, \(latestRelease.description) available. Install \(selectionTarget.description) to select it.")
+            } else {
+                return Text(verbatim: "\(selectedVersion.description) selected, \(latestRelease.description) available.")
+            }
+        case .installing, .none:
+            return Text(verbatim: "\(selectedVersion.description) selected, \(latestRelease.description) available.")
+        }
+    }
+
+    @ViewBuilder
+    private var installControl: some View {
+        if let installingVersion,
+           case let .installing(installationStep) = installingVersion.installState {
+            InstallationStepRowView(
+                installationStep: installationStep,
+                highlighted: false,
+                cancel: { appState.presentedAlert = .cancelInstall(xcode: installingVersion) }
+            )
+        } else if let latestRelease {
+            switch latestRelease.installState {
+            case .installed:
+                Button("Open") { appState.open(xcode: latestRelease) }
+                    .textCase(.uppercase)
+                    .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: false))
+                    .help("OpenDescription")
+            case .notInstalled:
+                Button("Install") {
+                    appState.checkMinVersionAndInstall(id: latestRelease.id)
+                }
+                .textCase(.uppercase)
+                .buttonStyle(AppStoreButtonStyle(primary: false, highlighted: false))
+                .help("InstallDescription")
+            case .installing:
+                EmptyView()
+            }
+        }
+    }
+}
+
+private extension Array where Element == Xcode {
+    var latestRelease: Xcode? {
+        filter { $0.version.isNotPrerelease }
+            .sorted { $0.version < $1.version }
+            .last
+    }
+
+    var latestInstalledVersion: Xcode? {
+        filter(\.installState.installed)
+            .sorted { $0.version < $1.version }
+            .last
+    }
+
+    func latestReleaseForSelectedPrerelease(_ xcode: Xcode) -> Xcode? {
+        guard xcode.selected, xcode.version.isPrerelease else { return nil }
+
+        return first { candidate in
+            candidate.id != xcode.id &&
+                candidate.architectures == xcode.architectures &&
+                candidate.version.major == xcode.version.major &&
+                candidate.version.minor == xcode.version.minor &&
+                candidate.version.patch == xcode.version.patch &&
+                candidate.version.isNotPrerelease &&
+                candidate.installState.installing == false
         }
     }
 }
@@ -107,10 +410,12 @@ struct PlatformsPocket: View {
         .font(.body.weight(.medium))
         .padding(.horizontal)
         .padding(.vertical, 12)
+        .contentShape(Rectangle())
     }
 }
 
 struct XcodeListView_Previews: PreviewProvider {
+    @MainActor
     static var previews: some View {
         Group {
             XcodeListView(selectedXcodeID: .constant(nil), searchText: "", category: .all, isInstalledOnly: false, architecture: .appleSilicon)

@@ -11,14 +11,14 @@ import XcodesKit
 
 struct PlatformsView: View {
     @EnvironmentObject var appState: AppState
-    @AppStorage("selectedRuntimeArchitecture") private var selectedVariant: ArchitectureVariant = .universal
+    @AppStorage("selectedRuntimeArchitecture") private var selectedVariant: ArchitectureVariant = .defaultForMachine()
 
     let xcode: Xcode
  
     var body: some View {
         
-        let builds = xcode.sdks?.allBuilds()
-        let runtimes = builds?.flatMap { sdkBuild in
+        let builds = xcode.sdks?.allBuilds
+        let runtimes = (builds?.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
                 $0.sdkBuildUpdate?.contains(sdkBuild) ?? false &&
                 ($0.architectures?.isEmpty ?? true ||
@@ -26,9 +26,9 @@ struct PlatformsView: View {
                  ($0.architectures?.isAppleSilicon ?? false && selectedVariant == .appleSilicon)
                 )
             }
-        }
+        } ?? []).removingReleaseCandidateDisplayDuplicates(installedRuntimes: appState.installedRuntimes)
         
-        let architectures = Set((runtimes ?? []).flatMap { $0.architectures ?? [] })
+        let architectures = Set(runtimes.flatMap { $0.architectures ?? [] })
         
         VStack {
             HStack {
@@ -39,7 +39,7 @@ struct PlatformsView: View {
                     Spacer()
                     Picker("Architecture", selection: $selectedVariant) {
                         ForEach(ArchitectureVariant.allCases, id: \.self) { arch in
-                            Label(arch.displayString, systemImage: arch.iconName)
+                            Label(variantLabel(for: arch), systemImage: arch.iconName)
                                 .tag(arch)
                         }
                         .labelStyle(.trailingIcon)
@@ -52,7 +52,7 @@ struct PlatformsView: View {
                 }
             }
             
-            ForEach(runtimes ?? [], id: \.identifier) { runtime in
+            ForEach(runtimes, id: \.identifier) { runtime in
                 runtimeView(runtime: runtime)
                     .frame(minWidth: 200)
                     .padding()
@@ -63,6 +63,10 @@ struct PlatformsView: View {
         .xcodesBackground()
         
 
+    }
+
+    private func variantLabel(for variant: ArchitectureVariant) -> String {
+        variant == .defaultForMachine() ? "\(variant.displayString) (\(localizeString("This Mac")))" : variant.displayString
     }
     
     @ViewBuilder
@@ -121,8 +125,68 @@ struct PlatformsView: View {
     }
 }
 
-#Preview(XcodePreviewName.allCases[0].rawValue) { makePreviewContent(for: 0) }
+private struct RuntimeDisplayKey: Hashable {
+    let platform: DownloadableRuntime.Platform
+    let version: String
+    let architectures: [String]
 
+    init(_ runtime: DownloadableRuntime) {
+        platform = runtime.platform
+        version = runtime.completeVersion
+        architectures = (runtime.architectures ?? []).map(\.rawValue).sorted()
+    }
+}
+
+private extension DownloadableRuntime {
+    var isReleaseCandidate: Bool {
+        name.localizedCaseInsensitiveContains("Release Candidate") ||
+        identifier.localizedCaseInsensitiveContains("_rc")
+    }
+
+    func shouldReplace(_ other: DownloadableRuntime, installedRuntimes: [CoreSimulatorImage]) -> Bool {
+        let isInstalled = RuntimeInstallationLookupService()
+            .coreSimulatorImage(for: self, in: installedRuntimes) != nil
+        let otherIsInstalled = RuntimeInstallationLookupService()
+            .coreSimulatorImage(for: other, in: installedRuntimes) != nil
+
+        if isInstalled != otherIsInstalled {
+            return isInstalled
+        }
+
+        if isReleaseCandidate != other.isReleaseCandidate {
+            return !isReleaseCandidate
+        }
+
+        return simulatorVersion.buildUpdate.localizedStandardCompare(other.simulatorVersion.buildUpdate) == .orderedDescending
+    }
+}
+
+private extension Array where Element == DownloadableRuntime {
+    func removingReleaseCandidateDisplayDuplicates(installedRuntimes: [CoreSimulatorImage]) -> [DownloadableRuntime] {
+        var runtimesByKey: [RuntimeDisplayKey: DownloadableRuntime] = [:]
+        var keys: [RuntimeDisplayKey] = []
+
+        for runtime in self {
+            let key = RuntimeDisplayKey(runtime)
+
+            guard let existingRuntime = runtimesByKey[key] else {
+                runtimesByKey[key] = runtime
+                keys.append(key)
+                continue
+            }
+
+            if runtime.shouldReplace(existingRuntime, installedRuntimes: installedRuntimes) {
+                runtimesByKey[key] = runtime
+            }
+        }
+
+        return keys.compactMap { runtimesByKey[$0] }
+    }
+}
+
+#Preview(XcodePreviewName.allCases[0].rawValue) { @MainActor in makePreviewContent(for: 0) }
+
+@MainActor
 private func makePreviewContent(for index: Int) -> some View {
     let name = XcodePreviewName.allCases[index]
     let runtimes = downloadableRuntimes

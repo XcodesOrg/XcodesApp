@@ -1,6 +1,7 @@
 import AppKit
 import Sparkle
 import SwiftUI
+import XcodesKit
 
 @main
 struct XcodesApp: App {
@@ -96,20 +97,7 @@ struct XcodesApp: App {
                   primaryButton: .destructive(
                     Text("Alert.DeletePlatform.PrimaryButton"),
                     action: {
-                        Task {
-                            do {
-                                try await self.appState.deleteRuntime(runtime: runtime)
-                            } catch {
-                                var errorString: String
-                                if let error = error as? String {
-                                    errorString = error
-                                } else {
-                                    errorString = error.localizedDescription
-                                }
-                                self.appState.presentedPreferenceAlert = .generic(title: "Error", message: errorString)
-                            }
-                            
-                        }
+                        self.appState.confirmDeleteRuntime(runtime: runtime)
                     }
                   ),
                   secondaryButton: .cancel(Text("Cancel"))
@@ -127,6 +115,7 @@ struct XcodesApp: App {
     }
 }
 
+@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate {
     private lazy var aboutWindow = configure(NSWindow(
         contentRect: .zero,
