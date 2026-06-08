@@ -8,6 +8,112 @@
             
                 
                     <item>
+                        <title>4.0.1 - Shared XcodesKit, XcodeLoginKit</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="xcodesapp-release-notes">XcodesApp Release Notes</h2>
+
+<h3 id="highlights">Highlights</h3>
+
+<ul>
+  <li>Refactored XcodesApp to use the shared, concurrency-enabled <code class="language-plaintext highlighter-rouge">XcodesKit</code> package.</li>
+  <li>Added architecture-aware filtering for Xcode and runtime lists.</li>
+  <li>Defaulted architecture filtering to the current Mac, with filter labels that indicate “This Mac”.</li>
+  <li>Added an optional grouped Xcode list view that collapses versions by major/minor release.</li>
+  <li>Added federated Apple ID authentication support.</li>
+  <li>Updated install, runtime, update, helper, selection, and uninstall flows to use Swift concurrency tasks instead of Combine publishers.</li>
+  <li>Removed duplicated in-app Apple API/XcodesKit model code now provided by shared packages.</li>
+  <li>Updated dependencies, including <code class="language-plaintext highlighter-rouge">XcodesKit</code> 1.0.0 and <code class="language-plaintext highlighter-rouge">XcodesLoginKit</code>.</li>
+  <li>Cleaned up obsolete dependencies such as <code class="language-plaintext highlighter-rouge">ErrorHandling</code> and <code class="language-plaintext highlighter-rouge">CombineExpectations</code>.</li>
+  <li>Improved test coverage around app state, update behavior, grouped-list defaults, and shared <code class="language-plaintext highlighter-rouge">XcodesKit</code> mocks.</li>
+</ul>
+
+<h3 id="xcode-and-runtime-filtering">Xcode And Runtime Filtering</h3>
+
+<ul>
+  <li>Xcode list filtering now uses shared <code class="language-plaintext highlighter-rouge">XcodesKit</code> filter logic.</li>
+  <li>Runtime and Xcode architecture filters are handled consistently through architecture variants.</li>
+  <li>The architecture filter defaults to the best match for the current machine.</li>
+  <li>Architecture labels are localized and can show the current-machine hint.</li>
+</ul>
+
+<h3 id="xcode-list">Xcode List</h3>
+
+<ul>
+  <li>Added grouped Xcode list support with expandable major and minor version sections.</li>
+  <li>Added a General preference to enable or disable grouped list behavior.</li>
+  <li>Preserved the existing flat list as the fallback view.</li>
+  <li>Added persisted expansion state for grouped Xcode versions.</li>
+</ul>
+
+<h3 id="sign-in">Sign In</h3>
+
+<ul>
+  <li>Added a federated authentication view for Apple IDs managed by an organization.</li>
+  <li>Added support for validating federated callback URLs.</li>
+  <li>Moved sign-in and security-key flows onto <code class="language-plaintext highlighter-rouge">XcodesLoginKit</code> / <code class="language-plaintext highlighter-rouge">XcodesLoginKitSecurityKey</code>.</li>
+</ul>
+
+<h3 id="localization">Localization</h3>
+
+<ul>
+  <li>Added new strings for grouped list controls, federated authentication, architecture labels, and “This Mac”.</li>
+  <li>Included zh-Hans updates for architecture and filter-related strings.</li>
+</ul>
+
+<h3 id="dependency-and-build-changes">Dependency And Build Changes</h3>
+
+<ul>
+  <li>Added <code class="language-plaintext highlighter-rouge">XcodesKit</code> as a shared package dependency.</li>
+  <li>Added <code class="language-plaintext highlighter-rouge">XcodesLoginKit</code> and <code class="language-plaintext highlighter-rouge">XcodesLoginKitSecurityKey</code>.</li>
+  <li>Updated <code class="language-plaintext highlighter-rouge">LibFido2Swift</code> package resolution.</li>
+  <li>Refreshed generated acknowledgements/licenses.</li>
+  <li>Kept the libfido2 framework structure fix in the build pipeline.</li>
+</ul>
+
+<h3 id="prs-and-contributors">PRs And Contributors</h3>
+
+<ul>
+  <li>Includes zh-Hans localization and localized architecture display work from <a href="https://github.com/XcodesOrg/XcodesApp/pull/761">#761</a> by @megabitsenmzq.</li>
+  <li>Builds on the grouped/collapsible list direction from <a href="https://github.com/XcodesOrg/XcodesApp/pull/751">#751</a> by @anciltech.</li>
+  <li>Builds on the compact filter menu UX from <a href="https://github.com/XcodesOrg/XcodesApp/pull/746">#746</a> by @LiYanan2004.</li>
+  <li>Continues the Xcode 26 / libfido2 build compatibility work from <a href="https://github.com/XcodesOrg/XcodesApp/pull/753">#753</a>, including the fix credited in that thread to @anciltech.</li>
+</ul>
+
+<h2 id="changes">Changes</h2>
+
+<ul>
+  <li>Shared XcodesKit, XcodesLoginKit (#811) @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=ZrBqmQ0xaWKoQWvmoF5Led/HiPnAVOgQJcx0iVRhQixGFGjQoSFF84Bud7g5Dd1SppTOaOfcr/k61RjulXN/CA== -->
+]]></description>
+                        <pubDate>Mon, 08 Jun 2026 02:37:43 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v4.0.1b36/Xcodes.zip"
+                                    sparkle:version="36"
+                                    sparkle:shortVersionString="4.0.1"
+                                    sparkle:edSignature="ZrBqmQ0xaWKoQWvmoF5Led/HiPnAVOgQJcx0iVRhQixGFGjQoSFF84Bud7g5Dd1SppTOaOfcr/k61RjulXN/CA=="
+                                    length="26302808"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>3.0.2</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
