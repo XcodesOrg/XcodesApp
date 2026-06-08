@@ -4768,6 +4768,12 @@
             "value" : "Сталася помилка"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "发生错误"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8312,6 +8318,12 @@
             "value" : "Закрити"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "关闭"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8844,115 +8856,115 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "التنزيل : اكتمل %d%%"
+            "value" : "التنزيل  : اكتمل %d%%"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descarregant : %d%% completat"
+            "value" : "Descarregant  : %d%% completat"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Download : %d%% vollständig"
+            "value" : "Download  : %d%% vollständig"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Λήψη : %d%% ολοκλήρωση"
+            "value" : "Λήψη  : %d%% ολοκλήρωση"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Downloading : %d%% complete"
+            "value" : "Downloading  : %d%% complete"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Descargando : %d%% completado"
+            "value" : "Descargando  : %d%% completado"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lataa : %d%% valmis"
+            "value" : "Lataa  : %d%% valmis"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Téléchargement  : %d%% téléchargé"
+            "value" : "Téléchargement   : %d%% téléchargé"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "डाउनलोड : %d%% पूर्ण"
+            "value" : "डाउनलोड  : %d%% पूर्ण"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Download : %d%% completato"
+            "value" : "Download  : %d%% completato"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ダウンロード中 : %d%%"
+            "value" : "ダウンロード中  : %d%%"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "다운로드 중 : %d%% 완료"
+            "value" : "다운로드 중  : %d%% 완료"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Downloaden : %d%% compleet"
+            "value" : "Downloaden  : %d%% compleet"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pobieranie : %d%% ukończone"
+            "value" : "Pobieranie  : %d%% ukończone"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Baixando : %d%% finalizado"
+            "value" : "Baixando  : %d%% finalizado"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Скачивание : %d% завершено"
+            "value" : "Скачивание  : %d% завершено"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "กำลังดาวน์โหลด : %d%% เสร็จแล้ว"
+            "value" : "กำลังดาวน์โหลด  : %d%% เสร็จแล้ว"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "İndirme : %d%% tamamlandı"
+            "value" : "İndirme  : %d%% tamamlandı"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Викачано : %d%%"
+            "value" : "Викачано  : %d%%"
           }
         },
         "zh-Hans" : {
@@ -9366,7 +9378,7 @@
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Introdueix el codi de %d dígits enviat a %@ : "
+            "value" : "Introdueix el codi de %d dígits enviat a %@  : "
           }
         },
         "de" : {
@@ -9384,37 +9396,37 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter the %1$d digit code sent to %2$@ : "
+            "value" : "Enter the %1$d digit code sent to %2$@  : "
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ingrese el código de dígito %1$d enviado a %2$@ : "
+            "value" : "Ingrese el código de dígito %1$d enviado a %2$@  : "
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Anna %1$d numeroinen koodi, joka lähetettiin osoitteeseen %2$@ : "
+            "value" : "Anna %1$d numeroinen koodi, joka lähetettiin osoitteeseen %2$@  : "
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Entrez le code à %1$d chiffres envoyé à %2$@  : "
+            "value" : "Entrez le code à %1$d chiffres envoyé à %2$@   : "
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$@ को भेजा गया %1$d अंक कोड दर्ज करें : "
+            "value" : "%2$@ को भेजा गया %1$d अंक कोड दर्ज करें  : "
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inserisci il codice di %d cifre inviato a %@ : "
+            "value" : "Inserisci il codice di %d cifre inviato a %@  : "
           }
         },
         "ja" : {
@@ -9432,25 +9444,25 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Voer de %1$d code in die is verstuurd naar %2$@ : "
+            "value" : "Voer de %1$d code in die is verstuurd naar %2$@  : "
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wprowadź %1$d-cyfrowy kod wysłany do %2$@ : "
+            "value" : "Wprowadź %1$d-cyfrowy kod wysłany do %2$@  : "
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Insira o código de %1$d dígitos enviado para %2$@ : "
+            "value" : "Insira o código de %1$d dígitos enviado para %2$@  : "
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Введите %1$d цифровой код, отправленный на %2$@ : "
+            "value" : "Введите %1$d цифровой код, отправленный на %2$@  : "
           }
         },
         "th" : {
@@ -9462,7 +9474,7 @@
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$@ kaynağından gönderilen %1$d rakamlı kodu gir : "
+            "value" : "%2$@ kaynağından gönderilen %1$d rakamlı kodu gir  : "
           }
         },
         "uk" : {
@@ -9907,7 +9919,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gracias a [@_saagarjha](https://twitter.com/_saagarjha), este experimento puede aumentar la velocidad de liberación hasta en un 70 % para algunos sistemas.\n\nPuede ver más información sobre cómo se logra esto en el repositorio de unxip : https://github.com/saagarjha/unxip"
+            "value" : "Gracias a [@_saagarjha](https://twitter.com/_saagarjha), este experimento puede aumentar la velocidad de liberación hasta en un 70 % para algunos sistemas.\n\nPuede ver más información sobre cómo se logra esto en el repositorio de unxip  : https://github.com/saagarjha/unxip"
           }
         },
         "fi" : {
@@ -10222,6 +10234,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Фільтруйте версії Xcode за архітектурою."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按架构筛选 Xcode 版本。"
           }
         },
         "zh-Hant" : {
@@ -12193,7 +12211,7 @@
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Αποτυχία επαλήθευσης ψηφιακής υπογραφής για το ληφθέν Xcode : \n%@"
+            "value" : "Αποτυχία επαλήθευσης ψηφιακής υπογραφής για το ληφθέν Xcode  : \n%@"
           }
         },
         "en" : {
@@ -12653,7 +12671,7 @@
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Falha ao mover Xcode para o diretório : %@"
+            "value" : "Falha ao mover Xcode para o diretório  : %@"
           }
         },
         "ru" : {
@@ -12879,7 +12897,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "पासवर्ड अनुपलब्ध है। कृपया पुन : प्रयास करें।"
+            "value" : "पासवर्ड अनुपलब्ध है। कृपया पुन  : प्रयास करें।"
           }
         },
         "it" : {
@@ -13010,7 +13028,7 @@
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "उपयोगकर्ता नाम या पासवर्ड गुम है। कृपया पुन : प्रयास करें।"
+            "value" : "उपयोगकर्ता नाम या पासवर्ड गुम है। कृपया पुन  : प्रयास करें।"
           }
         },
         "it" : {
@@ -14398,121 +14416,121 @@
       }
     },
     "InstallationStepDescription" : {
-      "comment" : "So if changing order, make sure the positional specficier is retained. ex : \"%3$@ : Step %1$d of %2$d\"",
+      "comment" : "So if changing order, make sure the positional specficier is retained. ex  : \"%3$@  : Step %1$d of %2$d\"",
       "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Step %1$d of %2$d : %3$@"
+            "value" : "Step %1$d of %2$d  : %3$@"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pas %1$d de %2$d : %3$@"
+            "value" : "Pas %1$d de %2$d  : %3$@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Schritt %1$d von %2$d : %3$@"
+            "value" : "Schritt %1$d von %2$d  : %3$@"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Βήμα %1$d από %2$d : %3$@"
+            "value" : "Βήμα %1$d από %2$d  : %3$@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Step %1$d of %2$d : %3$@"
+            "value" : "Step %1$d of %2$d  : %3$@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Paso %1$d de %2$d : %3$@"
+            "value" : "Paso %1$d de %2$d  : %3$@"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Vaihe %1$d / %2$d : %3$@"
+            "value" : "Vaihe %1$d / %2$d  : %3$@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Étape %1$d sur %2$d  : %3$@"
+            "value" : "Étape %1$d sur %2$d   : %3$@"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%2$d का स्टेप %1$d : %3$@"
+            "value" : "%2$d का स्टेप %1$d  : %3$@"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Passo %1$d di %2$d : %3$@"
+            "value" : "Passo %1$d di %2$d  : %3$@"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ステップ %1$d / %2$d : %3$@"
+            "value" : "ステップ %1$d / %2$d  : %3$@"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%1$d / %2$d 단계 : %3$@"
+            "value" : "%1$d / %2$d 단계  : %3$@"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stap %1$d van %2$d : %3$@"
+            "value" : "Stap %1$d van %2$d  : %3$@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Krok %1$d z %2$d : %3$@"
+            "value" : "Krok %1$d z %2$d  : %3$@"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Passo %1$d de %2$d : %3$@"
+            "value" : "Passo %1$d de %2$d  : %3$@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Шаг %1$d из %2$d : %3$@"
+            "value" : "Шаг %1$d из %2$d  : %3$@"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ขั้นตอนที่ %1$d จาก %2$d : %3$@"
+            "value" : "ขั้นตอนที่ %1$d จาก %2$d  : %3$@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Adım %1$d/%2$d : %3$@"
+            "value" : "Adım %1$d/%2$d  : %3$@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Крок %1$d з %2$d : %3$@"
+            "value" : "Крок %1$d з %2$d  : %3$@"
           }
         },
         "zh-Hans" : {
@@ -15167,115 +15185,115 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "آخر فحص : %@"
+            "value" : "آخر فحص  : %@"
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Última consulta : %@"
+            "value" : "Última consulta  : %@"
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Letzte Prüfung : %@"
+            "value" : "Letzte Prüfung  : %@"
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Τελευταίος έλεγχος : %@"
+            "value" : "Τελευταίος έλεγχος  : %@"
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Last checked : %@"
+            "value" : "Last checked  : %@"
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Última comprobación : %@"
+            "value" : "Última comprobación  : %@"
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Viimeksi tarkistettu : %@"
+            "value" : "Viimeksi tarkistettu  : %@"
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Dernière vérification  : %@"
+            "value" : "Dernière vérification   : %@"
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "पिछली बार चेक किया गया : %@"
+            "value" : "पिछली बार चेक किया गया  : %@"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ultimo controllo : %@"
+            "value" : "Ultimo controllo  : %@"
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "前回の確認 : %@"
+            "value" : "前回の確認  : %@"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "마지막 확인 시점 : %@"
+            "value" : "마지막 확인 시점  : %@"
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Laatste controle : %@"
+            "value" : "Laatste controle  : %@"
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ostatnio sprawdzono : %@"
+            "value" : "Ostatnio sprawdzono  : %@"
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ultima vez verificado : %@"
+            "value" : "Ultima vez verificado  : %@"
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Последняя проверка : %@"
+            "value" : "Последняя проверка  : %@"
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ตรวจสอบล่าสุดเมื่อ : %@"
+            "value" : "ตรวจสอบล่าสุดเมื่อ  : %@"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Son kontrol : %@"
+            "value" : "Son kontrol  : %@"
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Перевірено в останнє : %@"
+            "value" : "Перевірено в останнє  : %@"
           }
         },
         "zh-Hans" : {
@@ -18964,7 +18982,7 @@
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Lors de la sélection, gardera le numéro de version. Exemple : Xcode-13.4.1.app"
+            "value" : "Lors de la sélection, gardera le numéro de version. Exemple  : Xcode-13.4.1.app"
           }
         },
         "hi" : {
@@ -19531,6 +19549,12 @@
             "value" : "Відкрити браузер"
           }
         },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开浏览器"
+          }
+        },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20019,6 +20043,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вставити переспрямовану URL-адресу"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "粘贴重定向的 URL"
           }
         },
         "zh-Hant" : {
@@ -23390,67 +23420,67 @@
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "سيُظهر خيار \"فتح في Rosetta\" الأماكن التي تتوفر فيها وظائف \"فتح\" أخرى. ملاحظة : سيظهر هذا فقط لأجهزة Apple Silicon."
+            "value" : "سيُظهر خيار \"فتح في Rosetta\" الأماكن التي تتوفر فيها وظائف \"فتح\" أخرى. ملاحظة  : سيظهر هذا فقط لأجهزة Apple Silicon."
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note : This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note : This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Η επιλογή «Άνοιγμα με Rosetta» θα εμφανίζεται όπου είναι διαθέσιμες οι υπόλοιπες επιλογές «Άνοιγμα». Σημείωση : Θα εμφανίζεται μόνο σε συστήματα με Apple Silicon."
+            "value" : "Η επιλογή «Άνοιγμα με Rosetta» θα εμφανίζεται όπου είναι διαθέσιμες οι υπόλοιπες επιλογές «Άνοιγμα». Σημείωση  : Θα εμφανίζεται μόνο σε συστήματα με Apple Silicon."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note : This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note : This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note : This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Ouvrir avec Rosetta s'affichera d'autres options \"Ouvrir\" sont disponibles. Note : Uniquement pour les machines Apple Silicon."
+            "value" : "Ouvrir avec Rosetta s'affichera d'autres options \"Ouvrir\" sont disponibles. Note  : Uniquement pour les machines Apple Silicon."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note : This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note : This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rosettaで開くオプションは \"開く\" 機能が利用できる場所に表示されます。注意 : これはApple Siliconマシンにのみ表示されます。"
+            "value" : "Rosettaで開くオプションは \"開く\" 機能が利用できる場所に表示されます。注意  : これはApple Siliconマシンにのみ表示されます。"
           }
         },
         "ko" : {
@@ -23462,43 +23492,43 @@
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note : This will only show for Apple Silicon machines."
+            "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opcja Otwórz w Rosetta będzie wyświetlana, gdy dostępne są inne funkcje \"Otwórz\". Uwaga : Będzie to działać tylko na urządzeniach z Apple Silicon."
+            "value" : "Opcja Otwórz w Rosetta będzie wyświetlana, gdy dostępne są inne funkcje \"Otwórz\". Uwaga  : Będzie to działać tylko na urządzeniach z Apple Silicon."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Opção de abrir com o Rosetta será mostrar onde outras opções \"Abrir\" estão disponíveis. Nota : Isso só será mostrado pra máquinas Apple Silicon."
+            "value" : "Opção de abrir com o Rosetta será mostrar onde outras opções \"Abrir\" estão disponíveis. Nota  : Isso só será mostrado pra máquinas Apple Silicon."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Опция «Открыть в Rosetta» будет показана там, где доступны другие функции «Открыть». Примечание : опция будет отображаться только для компьютеров Apple Silicon."
+            "value" : "Опция «Открыть в Rosetta» будет показана там, где доступны другие функции «Открыть». Примечание  : опция будет отображаться только для компьютеров Apple Silicon."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ตัวเลือก \"เปิดใน Rosetta\" จะแสดงเมื่อมีตัวเลือกในการเปิดอื่น ๆ ที่พร้อมใช้งานอยู่เท่านั้น หมายเหตุ : ตัวเลือกนี้จะแสดงเฉพาะเครื่อง Apple Silicon เท่านั้น"
+            "value" : "ตัวเลือก \"เปิดใน Rosetta\" จะแสดงเมื่อมีตัวเลือกในการเปิดอื่น ๆ ที่พร้อมใช้งานอยู่เท่านั้น หมายเหตุ  : ตัวเลือกนี้จะแสดงเฉพาะเครื่อง Apple Silicon เท่านั้น"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Rosetta ile açma opsiyonu diğer uygun \"Açma\" fonksiyonlarını gösterecektir. Not : Bu sadece Apple Silikon makinelerinde gözükecektir."
+            "value" : "Rosetta ile açma opsiyonu diğer uygun \"Açma\" fonksiyonlarını gösterecektir. Not  : Bu sadece Apple Silikon makinelerinde gözükecektir."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Опція \"Запустити через Rosetta\" зʼявиться там де наразі знаходиться функція \"Запустити\".\nПримітка : Доступно лише для Apple Silicon машин."
+            "value" : "Опція \"Запустити через Rosetta\" зʼявиться там де наразі знаходиться функція \"Запустити\".\nПримітка  : Доступно лише для Apple Silicon машин."
           }
         },
         "zh-Hans" : {
@@ -23741,6 +23771,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Вихід..."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在退出登录..."
           }
         },
         "zh-Hant" : {
@@ -24499,6 +24535,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Цей Apple ID використовує федеративну автентифікацію через %@."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "此 Apple ID 使用通过 %@ 的联合认证。"
           }
         },
         "zh-Hant" : {
