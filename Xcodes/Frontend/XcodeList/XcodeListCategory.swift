@@ -22,7 +22,7 @@ enum XcodeListCategory: String, CaseIterable, Identifiable, CustomStringConverti
 
     var versionFilter: XcodeListVersionFilter {
         switch self {
-        case .all:
+        case .all, .releasePlusNewBetas:
             return .all
         case .release:
             return .release
