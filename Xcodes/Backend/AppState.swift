@@ -48,7 +48,7 @@ class AppState: ObservableObject {
             }
             updateAllXcodes(
                 availableXcodes: newValue,
-                installedXcodes: Current.files.installedXcodes(Path.installDirectory),
+                installedXcodes: installedXcodes,
                 selectedXcodePath: selectedXcodePath
             )
         }
@@ -61,11 +61,12 @@ class AppState: ObservableObject {
         willSet {
             updateAllXcodes(
                 availableXcodes: availableXcodes,
-                installedXcodes: Current.files.installedXcodes(Path.installDirectory),
+                installedXcodes: installedXcodes,
                 selectedXcodePath: newValue
             )
         }
     }
+    private var installedXcodes: [InstalledXcode] = []
     @Published var updateTask: Task<Void, Never>?
     var updateTaskID: UUID?
     var isUpdating: Bool { updateTask != nil }
@@ -228,6 +229,9 @@ class AppState: ObservableObject {
         guard !isTesting else { return }
         try? loadCachedAvailableXcodes()
         try? loadCacheDownloadableRuntimes()
+        Task { @MainActor in
+            await updateInstalledXcodesAsync()
+        }
         helperStatusTask = Task { @MainActor in
             await checkIfHelperIsInstalled()
             helperStatusTask = nil
@@ -855,6 +859,24 @@ class AppState: ObservableObject {
         }
     }
 
+    @discardableResult
+    func updateInstalledXcodesAsync(recomposeAllXcodes: Bool = true) async -> [InstalledXcode] {
+        let installDirectory = Path.installDirectory
+        let files = Current.files
+        let installedXcodes = await Task.detached(priority: .userInitiated) {
+            files.installedXcodes(installDirectory)
+        }.value
+
+        self.installedXcodes = installedXcodes
+        if recomposeAllXcodes {
+            updateAllXcodes(
+                availableXcodes: availableXcodes,
+                installedXcodes: installedXcodes,
+                selectedXcodePath: selectedXcodePath
+            )
+        }
+        return installedXcodes
+    }
 
     // MARK: - Private
 
