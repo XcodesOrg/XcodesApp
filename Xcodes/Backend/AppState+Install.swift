@@ -77,13 +77,15 @@ extension AppState {
     }
 
     private func getXcodeArchiveAsync(_ installationType: InstallationType, downloader: Downloader) async throws -> (AvailableXcode, URL) {
+        let installedXcodes = await updateInstalledXcodesAsync(recomposeAllXcodes: false)
+
         switch installationType {
         case .version(let availableXcode):
             let resolution = try mapInstallResolutionError {
                 try XcodeInstallResolutionService().resolve(
                     .availableXcode(availableXcode),
                     availableXcodes: [],
-                    installedXcodes: Current.files.installedXcodes(Path.installDirectory),
+                    installedXcodes: installedXcodes,
                     willInstall: true
                 )
             }

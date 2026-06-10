@@ -26,6 +26,7 @@ extension AppState {
                         updateTaskID = nil
                     }
                 }
+                await self.updateInstalledXcodesAsync()
                 await self.updateSelectedXcodePathAsync()
             }
             updateTask = task
@@ -49,6 +50,7 @@ extension AppState {
                 }
             }
             do {
+                await self.updateInstalledXcodesAsync()
                 await self.updateSelectedXcodePathAsync()
                 let xcodes = try await self.updateAvailableXcodes(from: self.dataSource)
                 try Task.checkCancellation()
