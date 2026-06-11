@@ -8,6 +8,44 @@
             
                 
                     <item>
+                        <title>4.0.3</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<ul>
+  <li>Fix: macOS 27 beta launch crash (#816) @tylertms</li>
+  <li>fix: improve paste support for PIN code input fields (#778) @zhangqifan</li>
+</ul>
+
+<!-- sparkle:edSignature=Bfe+tuA0FeHDgpKkgvqfd2EkE0U3pGXTajwZKALln7J5euwdoNGTSv1ycYcNXrRjUQnvmKti9Adlqy4rn2yqCA== -->
+]]></description>
+                        <pubDate>Thu, 11 Jun 2026 03:24:29 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v4.0.3b38/Xcodes.zip"
+                                    sparkle:version="38"
+                                    sparkle:shortVersionString="4.0.3"
+                                    sparkle:edSignature="Bfe+tuA0FeHDgpKkgvqfd2EkE0U3pGXTajwZKALln7J5euwdoNGTSv1ycYcNXrRjUQnvmKti9Adlqy4rn2yqCA=="
+                                    length="26312493"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>4.0.2</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
