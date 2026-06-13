@@ -129,7 +129,17 @@ extension AppState {
                 if let expectedInstallationTaskID, self.installationTaskIDs[availableXcode.xcodeID] != expectedInstallationTaskID {
                     return
                 }
-                self.setInstallationStep(of: availableXcode.version, to: .downloading(progress: progress))
+
+                let isAlreadyDownloading: Bool
+                if let xcode = self.allXcodes.first(where: { $0.version.isEquivalent(to: availableXcode.version) }),
+                   case .installing(.downloading) = xcode.installState
+                {
+                    isAlreadyDownloading = true
+                } else {
+                    isAlreadyDownloading = false
+                }
+
+                self.setInstallationStep(of: availableXcode.version, to: .downloading(progress: progress), postNotification: !isAlreadyDownloading)
                 self.addDockProgressChildIfNeeded(progress, withPendingUnitCount: AppState.totalProgressUnits - AppState.unxipProgressWeight)
             }
         })
@@ -455,12 +465,14 @@ extension AppState {
 
     // MARK: -
 
-    func setInstallationStep(of version: Version, to step: XcodeInstallationStep) {
+    func setInstallationStep(of version: Version, to step: XcodeInstallationStep, postNotification: Bool = true) {
         guard let index = allXcodes.firstIndex(where: { $0.version.isEquivalent(to: version) }) else { return }
         allXcodes[index].installState = .installing(step)
 
         let xcode = allXcodes[index]
-        Current.notificationManager.scheduleNotification(title: xcode.version.major.description + "." + xcode.version.appleDescription, body: step.description, category: .normal)
+        if postNotification {
+            Current.notificationManager.scheduleNotification(title: xcode.version.major.description + "." + xcode.version.appleDescription, body: step.description, category: .normal)
+        }
     }
 
     func setInstallationStep(of runtime: DownloadableRuntime, to step: RuntimeInstallationStep, postNotification: Bool = true) {
