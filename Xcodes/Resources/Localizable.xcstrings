@@ -157,6 +157,12 @@
             "value" : "%@"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -282,6 +288,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%1$@ %2$@ %3$@"
+          }
+        },
+        "fa" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ %2$@ %3$@"
@@ -417,6 +429,12 @@
             "value" : "⚠️ Acceso Denegado ⚠️\n\nPor favor abra su Configuración de notificaciones y seleccione Xcodes si desea permitir el acceso."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "⚠️ دسترسی ممنوع ⚠️\n\nلطفاً تنظیمات اعلان خود را باز کنید و Xcodes را انتخاب کنید اگر می‌خواهید دسترسی را مجاز کنید."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -548,6 +566,12 @@
             "value" : "Acceso Permitido. Recibirás notificaciones de Xcodes."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دسترسی مجاز است. شما اعلان‌ها را از Xcodes دریافت خواهید کرد."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -670,6 +694,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Agradecimientos"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تقدیر و تشکرها"
           }
         },
         "fi" : {
@@ -796,6 +826,12 @@
             "value" : "Activo"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فعال"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -918,6 +954,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Activar/Seleccionar"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فعال/انتخاب"
           }
         },
         "fi" : {
@@ -1051,6 +1093,12 @@
             "value" : "Esta es la versión activa."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "این نسخه‌ی فعال است"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1174,6 +1222,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Avanzado"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پیشرفته"
           }
         },
         "fi" : {
@@ -1306,6 +1360,12 @@
             "value" : "Cualquier progreso será descartado."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هر پیشرفتی لغو خواهد شد."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1434,6 +1494,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detener Instalación"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توقف نصب"
           }
         },
         "fi" : {
@@ -1568,6 +1634,12 @@
             "value" : "Are you sure you want to stop the installation of Xcode %@?"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "از توقف نصب Xcode %@ مطمعن هستید؟"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1698,6 +1770,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "¿Está seguro de que desea detener la instalación de Xcode %@?"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "از توقف نصب Xcode %@ مطمعن هستید؟"
           }
         },
         "fi" : {
@@ -1831,6 +1909,12 @@
             "value" : "Delete"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -1960,6 +2044,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Are you sure you want to delete %@?"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آیا از حذف %@ مطمعن هستید؟"
           }
         },
         "fi" : {
@@ -2221,6 +2311,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Apple only supports downloading runtimes iOS 16.0+, watchOS 9.0+, tvOS 16+, visionOS 1.0+ with Xcode 16.1+. Please download, make active and try again."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اپل فقط از دانلود نسخه‌های iOS 16.0+، watchOS 9.0+، tvOS 16+، visionOS 1.0+ با Xcode 16.1+ پشتیبانی می‌کند. لطفاً نسخه‌ها را دانلود کنید، فعال کنید و دوباره امتحان کنید."
           }
         },
         "fi" : {
@@ -2486,6 +2582,12 @@
             "value" : "No se puede instalar Xcode"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصب Xcode امکان‌پذیر نیست."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2615,6 +2717,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No se puede instalar el Xcode archivado"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصب Xcode آرشیو شده امکان‌پذیر نیست."
           }
         },
         "fi" : {
@@ -2748,6 +2856,12 @@
             "value" : "Xcode %@ requiere macOS %@, pero está ejecutando macOS %@, ¿aún desea instalarlo?"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ به macOS %@ نیاز دارد، اما شما از macOS %@ استفاده می‌کنید. آیا همچنان می‌خواهید آن را نصب کنید؟"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -2877,6 +2991,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Requisitos mínimos no cumplidos"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حداقل الزامات برآورده نشده است"
           }
         },
         "fi" : {
@@ -3011,6 +3131,12 @@
             "value" : "No se pueden realizar los pasos posteriores a la instalación"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "امکان انجام مراحل پس از نصب وجود ندارد"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3140,6 +3266,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No se puede instalar el asistente"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "امکان نصب helper وجود ندارد"
           }
         },
         "fi" : {
@@ -3272,6 +3404,12 @@
             "value" : "Xcodes utiliza un Asistente Privilegiado independiente para realizar tareas como root. Estas son cosas que requerirían sudo en la línea de comando, incluidos los pasos posteriores a la instalación y el cambio de versiones de Xcode con xcode-select.\n\nSe le pedirá la contraseña de su cuenta de macOS para instalarlo."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes از یک کمک‌کار مجاز جداگانه برای انجام کارها به‌عنوان کاربر root استفاده می‌کند. این کارها شامل مواردی است که در خط فرمان به دسترسی sudo نیاز دارند، از جمله مراحل پس از نصب و تغییر نسخه‌های Xcode با استفاده از xcode-select.\n\nبرای نصب آن از شما خواسته می‌شود که رمز عبور حساب macOS خود را وارد کنید."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3401,6 +3539,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asistente Privilegiado"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کمک‌کار مجاز"
           }
         },
         "fi" : {
@@ -3535,6 +3679,12 @@
             "value" : "No se puede seleccionar el Xcode"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode قابل انتخاب نیست"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3664,6 +3814,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcode.app existe y no es un enlace simbólico"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode.app وجود دارد و یک لینک نمادین نیست."
           }
         },
         "fi" : {
@@ -3798,6 +3954,12 @@
             "value" : "No se puede crear un enlace simbólico"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "امکان ایجاد لینک نمادین وجود ندارد."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -3927,6 +4089,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Could not find file \"%@\"."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فایل “%@” پیدا نشد."
           }
         },
         "fi" : {
@@ -4060,6 +4228,12 @@
             "value" : "No se puede desinstalar Xcode"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "امکان حذف Xcode وجود ندارد."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4188,6 +4362,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Se moverá a la Papelera, pero no se vaciará."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "به سطل زباله منتقل خواهد شد، اما خالی نخواهد شد."
           }
         },
         "fi" : {
@@ -4322,6 +4502,12 @@
             "value" : "Desinstalar Xcode %@?"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حدف Xcode %@ ؟"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4454,6 +4640,12 @@
             "value" : "No se puede actualizar el Xcode seleccionado"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "امکان به‌روزرسانی Xcode انتخاب شده وجود ندارد."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4576,6 +4768,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Todos"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "همه"
           }
         },
         "fi" : {
@@ -4814,6 +5012,12 @@
             "value" : "Apple Silicon"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اپل سیلیکون"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -4944,6 +5148,12 @@
             "value" : "AppleID:"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اپل آیدی:"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5072,6 +5282,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes.app Actualizaciones"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بروزرسانی های Xcode.app"
           }
         },
         "fi" : {
@@ -5317,6 +5533,12 @@
             "value" : "Authenticating"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال احراز هویت"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5445,6 +5667,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Crear automáticamente enlace simbólico a Xcode.app"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ایجاد لینک نمادین به صورت خودکار"
           }
         },
         "fi" : {
@@ -5577,6 +5805,12 @@
             "value" : "Al activar/seleccionar una versión de Xcode, intentará crear un enlace simbólico llamado Xcode.app en el directorio de instalación."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هنگام فعال‌سازی/انتخاب یک نسخه Xcode، سعی کن یک لینک نمادین با نام Xcode.app در دایرکتوری نصب ایجاد کنی"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5705,6 +5939,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Instalar automáticamente versions de Xcode"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصب نسخه های جدید Xcode به صورت خودکار"
           }
         },
         "fi" : {
@@ -5838,6 +6078,12 @@
             "value" : "Beta"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بتا"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -5968,6 +6214,12 @@
             "value" : "Solo Beta"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فقط بتا"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6090,6 +6342,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cancelar"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لغو"
           }
         },
         "fi" : {
@@ -6328,6 +6586,12 @@
             "value" : "Cambiar"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تغییر"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6456,6 +6720,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Buscar automáticamente actualizaciones"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بررسی نسخه جدید برنامه به صورت خودکار"
           }
         },
         "fi" : {
@@ -6589,6 +6859,12 @@
             "value" : "Verificación de seguridad"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تایید امنیتی"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6719,6 +6995,12 @@
             "value" : "Revisarlo Ahora"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الان بررسی کن"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -6841,6 +7123,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Cerrar"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بستن"
           }
         },
         "fi" : {
@@ -6967,6 +7255,12 @@
             "value" : "Compatibilidad"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سازگاری"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7091,6 +7385,12 @@
             "value" : "Compiladores"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کامپایلر"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7213,6 +7513,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Continuar"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ادامه"
           }
         },
         "fi" : {
@@ -7345,6 +7651,12 @@
             "value" : "Copiar Ruta"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کپی کردن مسیر"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7473,6 +7785,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Copiar URL"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کپی کردن URL"
           }
         },
         "fi" : {
@@ -7605,6 +7923,12 @@
             "value" : "Crear Symlink como Xcode.app"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ایجاد لینک نمادین به نام Xcode.app"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7735,6 +8059,12 @@
             "value" : "Crear Symlink como Xcode-Beta.app"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ایجاد لینک نمادین به نام Xcode-‌Beta.app"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -7863,6 +8193,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fuente de datos"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منبع اطلاعات"
           }
         },
         "fi" : {
@@ -7996,6 +8332,12 @@
             "value" : "La fuente de datos de Apple la extrae de el sitio web de Apple Developer. Siempre mostrará los últimos lanzamientos disponibles, pero es más frágil.\n\n[Xcode Releases](https://xcodereleases.com) es una lista no oficial de lanzamientos de Xcode. Se proporciona como datos bien estructurados, contiene información adicional que no está disponible fácilmente en Apple y es menos probable que se rompa si Apple rediseña su sitio web para desarrolladores."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "منبع داده اپل، وب‌سایت توسعه‌دهندگان اپل را اسکرپ می‌کند. این منبع همیشه آخرین نسخه‌های موجود را نمایش می‌دهد، اما ممکن است شکننده‌تر باشد.\n\n[Xcode Releases](https://xcodereleases.com) یک لیست غیررسمی از [Xcode Releases](https://xcodereleases.com) است. این اطلاعات به صورت داده‌های ساخت‌یافته ارائه می‌شود، شامل اطلاعات اضافی است که به راحتی از اپل در دسترس نیست و احتمالاً در صورت redesign وب‌سایت توسعه‌دهندگان اپل کمتر خراب می‌شود."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8126,6 +8468,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ingrese el código de %d dígitos de uno de sus dispositivos de confianza:"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کد %d رقمی را از یکی از دستگاه های خود وارد کنید"
           }
         },
         "fi" : {
@@ -8364,6 +8712,12 @@
             "value" : "Descargador"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دانلود کننده"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8493,6 +8847,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "[aria2](https://github.com/aria2/aria2) usa hasta 16 conexiones para descargar Xcode de 3 a 5 veces más rápido que URLSession. Se incluye como un ejecutable junto con su código fuente dentro de Xcodes para cumplir con su licencia GPLv2.\n\nURLSession es la API predeterminada de Apple para realizar solicitudes de URL."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "[aria2](https://github.com/aria2/aria2) از حداکثر 16 اتصال برای دانلود Xcode استفاده می‌کند که 3 تا 5 برابر سریع‌تر از URLSession است. این برنامه به عنوان یک فایل اجرایی به همراه کد منبع خود در Xcodes گنجانده شده است تا با مجوز GPLv2 سازگار باشد.\n\nURLSession API پیش‌فرض اپل برای انجام درخواست‌های URL است."
           }
         },
         "fi" : {
@@ -8627,6 +8987,12 @@
             "value" : "Descargando"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال دانلود"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -8756,6 +9122,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No se encontró información de descarga"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اطلاعات دانلود یافت نشد"
           }
         },
         "fi" : {
@@ -8889,6 +9261,12 @@
             "value" : "Descargando  : %d%% completado"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال دانلود: %d%% کامل شده"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9012,6 +9390,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Descargas"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دانلود ها"
           }
         },
         "fi" : {
@@ -9144,6 +9528,12 @@
             "value" : "Tamaño de descarga"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حجم دانلود"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9272,6 +9662,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Permitir notificaciones"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فعالسازی اعلان‌ها"
           }
         },
         "fi" : {
@@ -9405,6 +9801,12 @@
             "value" : "Ingrese el código de dígito %1$d enviado a %2$@  : "
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کد %1$d رقمی ارسال شده به %2$@ را وارد کنید: "
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9536,6 +9938,12 @@
             "value" : "Error"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خطا"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -9659,6 +10067,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Experimentos"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آزمایشی"
           }
         },
         "fi" : {
@@ -9789,6 +10203,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Unxip más rápido"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "استخراج سریعتر"
           }
         },
         "fi" : {
@@ -9922,6 +10342,12 @@
             "value" : "Gracias a [@_saagarjha](https://twitter.com/_saagarjha), este experimento puede aumentar la velocidad de liberación hasta en un 70 % para algunos sistemas.\n\nPuede ver más información sobre cómo se logra esto en el repositorio de unxip  : https://github.com/saagarjha/unxip"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "با تشکر از [@_saagarjha](https://twitter.com/_saagarjha)، این آزمایش می‌تواند سرعت استخراج فایل‌ها (unzip) را تا 70% برای برخی سیستم‌ها افزایش دهد.\n\nاطلاعات بیشتر در مورد نحوه انجام این کار را می‌توانید در مخزن unxip مشاهده کنید - [https://github.com/saagarjha/unxip](https://github.com/saagarjha/unxip)"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10044,6 +10470,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filtro"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فیلتر"
           }
         },
         "fi" : {
@@ -10288,6 +10720,12 @@
             "value" : "Filtrar versiones disponibles"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فیلتر نسخه های موجود "
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10416,6 +10854,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Filtrar versiones instaladas"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فیلتر نسخه های نصب شده"
           }
         },
         "fi" : {
@@ -10549,6 +10993,12 @@
             "value" : "Finalizando"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال اتمام"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -10672,6 +11122,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "General"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "عمومی"
           }
         },
         "fi" : {
@@ -10802,6 +11258,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "GitHub Repositorio"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مخزن گیتهاب"
           }
         },
         "fi" : {
@@ -11065,6 +11527,12 @@
             "value" : "No se puede comunicar con el Asistente privilegiado."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "امکان برقراری ارتباط با کمک‌کار مجاز وجود ندارد."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11195,6 +11663,12 @@
             "value" : "El Asistente está instalado"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کمک‌کار نصب شده"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11323,6 +11797,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El Asistente no está instalado."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کمک‌کار نصب نشده"
           }
         },
         "fi" : {
@@ -11456,6 +11936,12 @@
             "value" : "Compilaciones Idénticas"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخه‌های ساخت یکسان"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11584,6 +12070,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "A veces, una versión preliminar y una versión de lanzamiento tienen exactamente la misma compilación. Xcodes mostrará automáticamente estas versiones juntas."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "گاهی اوقات نسخه‌های پیش‌انتشار (Prerelease) و انتشار نهایی یک ساخت یکسان دارند. Xcodes به‌طور خودکار این نسخه‌ها را با هم نمایش می‌دهد."
           }
         },
         "fi" : {
@@ -11716,6 +12208,12 @@
             "value" : "Incluir versiones preliminares/beta"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخه‌های پیش‌انتشار/بتا را نیز شامل شود"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -11845,6 +12343,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Instalar"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصب"
           }
         },
         "fi" : {
@@ -12226,6 +12730,12 @@
             "value" : "El Xcode descargado falló en la verificación de firma de código con el siguiente resultado:\n%@"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode دانلود شده در بررسی امضای کد با خطای زیر شکست خورد: %@\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12356,6 +12866,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El archivo \"%@\" está dañado y no se puede expandir."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آرشیو \"%@\" خراب است و نمی‌توان آن را گسترش داد."
           }
         },
         "fi" : {
@@ -12489,6 +13005,12 @@
             "value" : "Xcode %@ falló su evaluación de seguridad con el siguiente resultado:\n%@\nPermanece instalado en %@ si desea usarlo de todos modos."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ در ارزیابی امنیتی رد شد و خروجی زیر را تولید کرد:\n%@\nاین برنامه همچنان در %@ نصب باقی مانده است، اگر همچنان می‌خواهید از آن استفاده کنید.\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12618,6 +13140,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No se pudo mover Xcode al directorio %@."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتقال Xcode به دایرکتوری %@ با شکست مواجه شد.\n"
           }
         },
         "fi" : {
@@ -12751,6 +13279,12 @@
             "value" : "%@ no es un número de versión válido."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ یک شماره نسخه معتبر نیست.\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -12880,6 +13414,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Falta la contraseña. Inténtalo de nuevo."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رمز عبور وارد نشده است. لطفاً دوباره تلاش کنید.\n"
           }
         },
         "fi" : {
@@ -13013,6 +13553,12 @@
             "value" : "Falta el nombre de usuario o una contraseña. Inténtalo de nuevo."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رمز عبور یا نام کاربری وارد نشده است. لطفاً دوباره تلاش کنید.\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13142,6 +13688,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No hay versiones que no sean preliminares disponibles."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هیچ نسخه‌ای غیر از پیش‌انتشار در دسترس نیست.\n"
           }
         },
         "fi" : {
@@ -13275,6 +13827,12 @@
             "value" : "No hay versiones preliminares disponibles."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هیچ نسخه‌ای از پیش‌انتشار در دسترس نیست.\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13404,6 +13962,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El archivo \"%@\" no se puede expandir porque el volumen/disco actual no tiene suficiente espacio libre.\n\nHaga más espacio disponible para expandir el archivo y luego instale Xcode %@ nuevamente para comenzar la instalación desde donde lo dejó."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آرشیو \"%@\" قابل باز شدن نیست زیرا حجم فعلی فضای کافی ندارد.\n\nفضای بیشتری آزاد کنید تا آرشیو باز شود، سپس Xcode %@ را دوباره نصب کنید تا نصب از همان جایی که متوقف شده بود، ادامه یابد.\n"
           }
         },
         "fi" : {
@@ -13537,6 +14101,12 @@
             "value" : "La instalación se completó, pero algunos pasos posteriores a la instalación no se realizaron automáticamente. Estos se realizarán cuando inicie Xcode por primera vez %@."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصب کامل شد، اما برخی مراحل پس از نصب به‌صورت خودکار انجام نشدند. این مراحل در اولین اجرای Xcode %@ انجام خواهند شد.\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13666,6 +14236,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "La instalación se completó, pero algunos pasos posteriores a la instalación no se realizaron automáticamente. Xcodes realiza estos pasos con un asistente privilegiado, que parece no estar instalado. Puede instalarlo desde Preferencias > Avanzado.\n\nEstos pasos se realizarán cuando inicie Xcode por primera vez %@."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصب کامل شد، اما برخی از مراحل پس از نصب به طور خودکار انجام نشد. Xcode این مراحل را با یک کمک‌کننده دارای مجوز انجام می‌دهد که به نظر می‌رسد نصب نشده است. شما می‌توانید آن را از بخش Preferences > Advanced نصب کنید.\n\nاین مراحل هنگام اولین راه‌اندازی Xcode %@ انجام خواهد شد."
           }
         },
         "fi" : {
@@ -13799,6 +14375,12 @@
             "value" : "No se pudo encontrar la versión %@."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخه %@ پیدا نشد."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -13928,6 +14510,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "El Xcode descargado no tiene la identidad de firma de código esperada.\nObtuvo:\n%@\n%@\nEsperado:\n%@\n%@"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode دانلود شده، هویت امضای کد مورد انتظار را ندارد.\nدریافت شده:\n%@ \n%@\nمورد انتظار:\n%@ \n%@ \n"
           }
         },
         "fi" : {
@@ -14061,6 +14649,12 @@
             "value" : "Xcodes no admite (todavía) la instalación de Xcode desde el formato de archivo %@."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode (هنوز) از نصب Xcode از فرمت فایل %@ پشتیبانی نمی‌کند.\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14192,6 +14786,12 @@
             "value" : "%@ ya está instalado en %@"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ قبلاً در %@ نصب شده است.\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14321,6 +14921,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%@ no esta instalada."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@ نصب نشده است.\n"
           }
         },
         "fi" : {
@@ -14455,6 +15061,12 @@
             "value" : "Paso %1$d de %2$d  : %3$@"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مرحله %1$d از %2$d: %3$@\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14585,6 +15197,12 @@
             "value" : "Instalar esta versión"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصب این نسخه"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -14713,6 +15331,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Directorio de instalación"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "محل نصب"
           }
         },
         "fi" : {
@@ -14957,6 +15581,12 @@
             "value" : "Instalar Asistente"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصب heliper"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15087,6 +15717,12 @@
             "value" : "Xcodes searches and installs to a single directory. By default (and recommended) is to keep this /Applications. Any changes to where Xcode is stored may result in other apps/services to stop working. "
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode به دنبال نصب در یک دایرکتوری واحد است. به طور پیش‌فرض (و توصیه‌شده) این دایرکتوری /Applications است. هر گونه تغییر در محل ذخیره Xcode ممکن است باعث توقف عملکرد سایر برنامه‌ها و خدمات شود."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15179,6 +15815,16 @@
         }
       }
     },
+    "Language" : {
+      "localizations" : {
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "زبان"
+          }
+        }
+      }
+    },
     "LastChecked" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -15216,6 +15862,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Última comprobación  : %@"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "آخرین بررسی: %@ "
           }
         },
         "fi" : {
@@ -15340,6 +15992,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Licencia"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مجوز"
           }
         },
         "fi" : {
@@ -15472,6 +16130,12 @@
             "value" : "Ruta de caché local"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مسیر کش محلی"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15602,6 +16266,12 @@
             "value" : "Xcodes almacena en caché versiones de Xcode disponibles y descargas temporalmente las nuevas versiones en un directorio"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode نسخه‌های در دسترس Xcode را کش می‌کند و نسخه‌های جدید را به طور موقت در یک دایرکتوری دانلود می‌کند."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -15725,6 +16395,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Iniciar Sesión"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ورود"
           }
         },
         "fi" : {
@@ -15855,6 +16531,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abrir Inicio de Sesión"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باز کردن صفحه ورود"
           }
         },
         "fi" : {
@@ -15988,6 +16670,12 @@
             "value" : "Requiere macOS %@ o posterior"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نیاز به macOS %@ یا نسخه‌های بالاتر دارد."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16118,6 +16806,12 @@
             "value" : "Activarlo"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فعالسازی"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16246,6 +16940,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Haz que esta sea la versión activa"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "این نسخه را به نسخه فعال تبدیل کنید."
           }
         },
         "fi" : {
@@ -16379,6 +17079,12 @@
             "value" : "Acerca de Xcodes"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در مورد Xcodes"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16508,6 +17214,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes Agradecimientos"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "دانستنیهای Xcodes "
           }
         },
         "fi" : {
@@ -16640,6 +17352,12 @@
             "value" : "Buscar Actualizaciones..."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بررسی به‌روزرسانی‌ها..."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -16768,6 +17486,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes GitHub Repositorio"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مخزن گیتهاب"
           }
         },
         "fi" : {
@@ -16900,6 +17624,12 @@
             "value" : "Reportar un fallo"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "گزارش مشکل"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17030,6 +17760,12 @@
             "value" : "Solicitar una nueva función"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "درخواست قابلیت جدید"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17158,6 +17894,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Misc"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "غیره"
           }
         },
         "fi" : {
@@ -17291,6 +18033,12 @@
             "value" : "Moviendo a %@"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال رفتن به %@"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17422,6 +18170,12 @@
             "value" : "Nunca"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هرگز"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17544,6 +18298,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Siguiente"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بعدی"
           }
         },
         "fi" : {
@@ -17675,6 +18435,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terminado de instalar"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نصب پایان یافته"
           }
         },
         "fi" : {
@@ -17809,6 +18575,12 @@
             "value" : "Una nueva versión está disponible"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخه جدیدی موجود است"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -17938,6 +18710,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Nuevas versiones de Xcode están disponibles para descargar."
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخه های جدیدی برای دانلود موجود است"
           }
         },
         "fi" : {
@@ -18072,6 +18850,12 @@
             "value" : "Nuevas versiones de Xcode"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخه های جدید Xcodes"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18194,6 +18978,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Notificaciones"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "اعلان ها"
           }
         },
         "fi" : {
@@ -18324,6 +19114,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Configuración de las notificaciones"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تنظیمات اعلان"
           }
         },
         "fi" : {
@@ -18457,6 +19253,12 @@
             "value" : "Su cuenta no tiene números de teléfono de confianza, pero son necesarios para la autenticación de dos factores.\n\nVer https://support.apple.com/HT204915."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حساب کاربری او هیچ شماره تلفن معتبری ندارد، اما این شماره‌ها برای تأیید هویت دو مرحله‌ای الزامی هستند.\n\nبه https://support.apple.com/HT204915 مراجعه کنید.\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18587,6 +19389,12 @@
             "value" : "No se ha seleccionado un Xcode"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode انتخاب نشده"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18709,6 +19517,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Aceptar"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باشه"
           }
         },
         "fi" : {
@@ -18842,6 +19656,12 @@
             "value" : "Mantener el nombre como Xcode-X.X.X.app"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نام را به صورت Xcode-X.X.X.app حفظ کنید."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -18971,6 +19791,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Al seleccionar, mantener el nombre como la versión p.ej. Xcode-13.4.1.app"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "با انتخاب، نام به صورت نسخه حفظ خواهد شد، مانند Xcode-13.4.1.app."
           }
         },
         "fi" : {
@@ -19104,6 +19930,12 @@
             "value" : "Always rename to Xcode.app"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "همیشه به Xcode.app تغییر نام شود"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19235,6 +20067,12 @@
             "value" : "On select, will automatically try and rename the active Xcode to Xcode.app, renaming the previous Xcode.app to the version name."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "با انتخاب، به‌طور خودکار سعی می‌کند Xcode فعال را به Xcode.app تغییر نام دهد و Xcode.app قبلی را به نام نسخه تغییر نام می‌دهد.\n"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19357,6 +20195,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Abrir"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باز کردن"
           }
         },
         "fi" : {
@@ -19595,6 +20439,12 @@
             "value" : "Open In Rosetta"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باز کردن با Rosetta"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19725,6 +20575,12 @@
             "value" : "Abrir esta versión"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باز کردن این نسخه"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -19853,6 +20709,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Contraseña:"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رمز عبور:"
           }
         },
         "fi" : {
@@ -20092,6 +20954,12 @@
             "value" : "Perform post-install steps"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انجام مراحل پس از نصب"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20220,6 +21088,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "PIN"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پین"
           }
         },
         "fi" : {
@@ -20482,6 +21356,12 @@
             "value" : "Platforms"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پلتفرم‌ها"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20610,6 +21490,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Installed Platforms"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پلتفرم‌های نصب شده"
           }
         },
         "fi" : {
@@ -20743,6 +21629,12 @@
             "value" : "Below are a list of platforms that are installed on this machine. "
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در زیر فهرستی از پلتفرم‌هایی که بر روی این ماشین نصب شده‌اند آمده است."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -20871,6 +21763,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Preferencias"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تنظیمات"
           }
         },
         "fi" : {
@@ -21003,6 +21901,12 @@
             "value" : "Abrir Preferencias"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "باز کردن تنظیمات"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21131,6 +22035,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Asistente privilegiado"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کمک‌کننده دارای مجوز"
           }
         },
         "fi" : {
@@ -21263,6 +22173,12 @@
             "value" : "Xcodes utiliza un asistente privilegiado independiente para realizar tareas como root. Estas son cosas que requerirían sudo en la línea de comandos, incluidos los pasos posteriores a la instalación y el cambio de versiones de Xcode con xcode-select.\n\nSe le pedirá la contraseña de su cuenta de macOS para instalarlo."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode از یک کمک‌کننده جداگانه دارای مجوز برای انجام کارها به عنوان کاربر ریشه استفاده می‌کند. این کارها شامل مواردی است که به sudo در خط فرمان نیاز دارند، از جمله مراحل پس از نصب و تغییر نسخه‌های Xcode با استفاده از xcode-select.\n\nبرای نصب آن از شما خواسته می‌شود که رمز عبور حساب macOS خود را وارد کنید."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21393,6 +22309,12 @@
             "value" : "Refrescar"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "به‌روزرسانی"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21521,6 +22443,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Refrescar lista de Xcodes"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "به‌روزرسانی لیست Xcode ها"
           }
         },
         "fi" : {
@@ -21654,6 +22582,12 @@
             "value" : "Liberado"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتشار"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -21782,6 +22716,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Fecha de lanzamiento"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تاریخ انتشار"
           }
         },
         "fi" : {
@@ -21914,6 +22854,12 @@
             "value" : "Ver Notas del Lanzamiento"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "مشاهده یادداشت‌های انتشار"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22044,6 +22990,12 @@
             "value" : "Solo Liberados"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فقط منتشر شده ها"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22166,6 +23118,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Requerido"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "الزامی"
           }
         },
         "fi" : {
@@ -22298,6 +23256,12 @@
             "value" : "Mostrar en el Finder"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نمایش در Finder"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22420,6 +23384,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "SDKs"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "SDKها"
           }
         },
         "fi" : {
@@ -22553,6 +23523,12 @@
             "value" : "Insert your physical security key and enter the PIN"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کلید امنیتی فیزیکی خود را وارد کرده و رمز عبور را وارد کنید."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22684,6 +23660,12 @@
             "value" : "Touch your security key to verify that it’s you"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "کلید امنیتی خود را لمس کنید تا تأیید شود که شما هستید."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22808,6 +23790,12 @@
             "value" : "Seleccionar"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتخاب"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -22930,6 +23918,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Seleccionado"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "انتخاب شده"
           }
         },
         "fi" : {
@@ -23063,6 +24057,12 @@
             "value" : "Selecciona un número de teléfono de confianza para recibir un código de %d dígitos por SMS:"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "یک شماره تلفن معتبر را انتخاب کنید تا کد %d رقمی را از طریق SMS دریافت کنید:"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23191,6 +24191,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Enviar SMS"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ارسال SMS"
           }
         },
         "fi" : {
@@ -23323,6 +24329,12 @@
             "value" : "Show Open In Rosetta option"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نمایش باز کردن با Rosetta"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23453,6 +24465,12 @@
             "value" : "Open in Rosetta option will show where other \"Open\" functions are available. Note  : This will only show for Apple Silicon machines."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "گزینه \"باز کردن با Rosetta\" مکان‌هایی را نشان می‌دهد که سایر عملکردهای \"باز کردن\" در دسترس هستند. توجه: این گزینه فقط برای ماشین‌های مجهز به Apple Silicon نمایش داده خواهد شد."
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23581,6 +24599,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Iniciar Sesión"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ورود"
           }
         },
         "fi" : {
@@ -23826,6 +24850,12 @@
             "value" : "Inicia sesión con tu ID de Apple."
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ورود با اپل آیدی"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -23956,6 +24986,12 @@
             "value" : "Cerrar Sesión"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خروج"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24084,6 +25120,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Detener Instalación"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "توقف نصب"
           }
         },
         "fi" : {
@@ -24217,6 +25259,12 @@
             "value" : "Support Xcodes"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "پشتیبانی از Xcodes"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24345,6 +25393,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Terminate App after last window is closed"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "خروج از برنامه بعد از بستن تمام پنجره ها"
           }
         },
         "fi" : {
@@ -24590,6 +25644,12 @@
             "value" : "Mover archivo a la Papelera"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال فرستان آرشیو به سطل زباله"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24721,6 +25781,12 @@
             "value" : "Desarchivando (esto puede llevar un tiempo)"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "در حال استخراج (ممکن است کمی طول بکشد("
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -24843,6 +25909,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Desinstalar"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف نصب"
           }
         },
         "fi" : {
@@ -25100,6 +26172,12 @@
             "value" : "Experimento Unxip"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Unxip  آزمایشی"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25232,6 +26310,12 @@
             "value" : "Actualizado en"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "بروز شده در"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25355,6 +26439,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Actualizaciones"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "به‌روزها"
           }
         },
         "fi" : {
@@ -25487,6 +26577,12 @@
             "value" : "Al descomprimir, usar experimento"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "هنگام استخراج، از Unxip استفاده کن"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25609,6 +26705,12 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Versiones"
+          }
+        },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخه ها"
           }
         },
         "fi" : {
@@ -25743,6 +26845,12 @@
             "value" : "Versión %@ (%@)"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخه  %@ (%@)"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25875,6 +26983,12 @@
             "value" : "👨🏻‍💻👩🏼‍💻 Happy WWDC %@! 👨🏽‍💻🧑🏻‍💻"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "👨🏻‍💻👩🏼‍💻 مبارک WWDC %@! 👨🏽‍💻🧑🏻‍💻"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -25999,6 +27113,12 @@
             "value" : "Xcode"
           }
         },
+        "fa" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode"
+          }
+        },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
@@ -26118,6 +27238,12 @@
           }
         },
         "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes"
+          }
+        },
+        "fa" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Xcodes"
