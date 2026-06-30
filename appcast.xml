@@ -8,6 +8,44 @@
             
                 
                     <item>
+                        <title>v4.0.4</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<ul>
+  <li>fix: crash on delete when version does not exist (#827) @MattKiazyk</li>
+  <li>fix: multiple download notifications (#821) @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=R/4wdY7B+FcU5cO4M7GYkYTJT0TuHe5lyWuvs/O0oBXYsvYi8wb4J2F11SH8DMGGOeoTB5HpDIQnsSrSmYDGBw== -->
+]]></description>
+                        <pubDate>Tue, 30 Jun 2026 02:31:04 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v4.0.4b39/Xcodes.zip"
+                                    sparkle:version="39"
+                                    sparkle:shortVersionString="4.0.4"
+                                    sparkle:edSignature="R/4wdY7B+FcU5cO4M7GYkYTJT0TuHe5lyWuvs/O0oBXYsvYi8wb4J2F11SH8DMGGOeoTB5HpDIQnsSrSmYDGBw=="
+                                    length="26313542"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>4.0.3</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
