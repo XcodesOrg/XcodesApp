@@ -685,6 +685,7 @@ class AppState: ObservableObject {
                 try await uninstallXcodeAsync(path: installedXcodePath)
                 try Task.checkCancellation()
                 await updateSelectedXcodePathAsync()
+                await updateInstalledXcodesAsync()
             } catch is CancellationError {
             } catch {
                 self.error = error
@@ -881,11 +882,13 @@ class AppState: ObservableObject {
     // MARK: - Private
 
     private func uninstallXcodeAsync(path: Path) async throws {
-        let xcode = InstalledXcode(
+        guard let xcode = InstalledXcode(
             path: path,
             contentsAtPath: { path in Current.files.contents(atPath: path) },
             loadArchitectures: Current.shell.archs
-        )!
+        ) else {
+            throw FileError.fileNotFound(path.string)
+        }
         _ = try XcodeUninstallService(
             removeItem: { url in try Current.files.removeItem(at: url) },
             trashItem: { url in try Current.files.trashItem(at: url) }

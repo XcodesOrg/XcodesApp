@@ -252,6 +252,52 @@ class AppStateTests: XCTestCase {
         XCTAssertEqual(subject.selectedXcodePath, secondPath.string)
     }
 
+    func test_Uninstall_MissingXcodePresentsFileNotFoundError() async throws {
+        let missingPath = try XCTUnwrap(Path("/Applications/Xcode-Missing.app"))
+        let xcode = Xcode(version: Version("15.0.0")!, installState: .installed(missingPath), selected: false, icon: nil)
+        let didTryToTrashItem = TestLockedBox(false)
+        Current.files.contentsAtPath = { _ in nil }
+        Current.files.trashItem = { _ in
+            didTryToTrashItem.withValue { $0 = true }
+            return URL(fileURLWithPath: "\(NSHomeDirectory())/.Trash")
+        }
+
+        subject.uninstall(xcode: xcode)
+        let uninstallTask = try XCTUnwrap(subject.uninstallTask)
+        await uninstallTask.value
+
+        guard case let .generic(title, message) = subject.presentedAlert else {
+            return XCTFail("Expected generic uninstall error alert")
+        }
+        XCTAssertEqual(title, localizeString("Alert.Uninstall.Error.Title"))
+        XCTAssertEqual(
+            message,
+            String(format: localizeString("Alert.Uninstall.Error.Message.FileNotFound"), missingPath.string)
+        )
+        XCTAssertFalse(didTryToTrashItem.read { $0 })
+    }
+
+    func test_Uninstall_RefreshesInstalledXcodeList() async throws {
+        let installedPath = try XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))
+        let version = try XCTUnwrap(Version("0.0.0"))
+        subject.availableXcodes = [
+            AvailableXcode(version: version, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+        ]
+        subject.allXcodes = [
+            Xcode(version: version, installState: .installed(installedPath), selected: true, icon: nil)
+        ]
+        Current.files.installedXcodes = { _ in [] }
+        Current.shell.xcodeSelectPrintPath = {
+            ProcessOutput(status: 0, out: "", err: "")
+        }
+
+        subject.uninstall(xcode: subject.allXcodes[0])
+        let uninstallTask = try XCTUnwrap(subject.uninstallTask)
+        await uninstallTask.value
+
+        XCTAssertEqual(subject.allXcodes[0].installState, .notInstalled)
+    }
+
     func test_Signout_RemovesCookiesFromDownloadSession() throws {
         let session = URLSession(configuration: .ephemeral)
         Current.network.session = session
