@@ -61,11 +61,54 @@ struct PlatformsListView: View {
     }
     
     func loadRuntimes() {
-        let filteredRuntimes = appState.downloadableRuntimes.filter { runtime in
-            appState.installedRuntimes.contains { $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate
-            }
+        runtimes = Self.installedRuntimeRows(
+            downloadableRuntimes: appState.downloadableRuntimes,
+            installedRuntimes: appState.installedRuntimes
+        )
+    }
+
+    /// Builds the grouped list of installed simulator runtimes for display.
+    ///
+    /// Apple's downloadable runtime index can list several records for the same
+    /// installed build (e.g. a Universal and an Apple Silicon-only download share
+    /// the same `simulatorVersion.buildUpdate` but differ in `identifier` and
+    /// `architectures`). A single installed runtime must therefore collapse to a
+    /// single row, otherwise the same platform appears multiple times.
+    nonisolated static func installedRuntimeRows(
+        downloadableRuntimes: [DownloadableRuntime],
+        installedRuntimes: [CoreSimulatorImage]
+    ) -> OrderedDictionary<DownloadableRuntime.Platform, [DownloadableRuntime]> {
+        var rows: [DownloadableRuntime] = []
+        var seenBuilds = Set<String>()
+
+        for installed in installedRuntimes {
+            let build = installed.runtimeInfo.build
+            guard !seenBuilds.contains(build) else { continue }
+
+            let candidates = downloadableRuntimes.filter { $0.simulatorVersion.buildUpdate == build }
+            guard let row = bestMatch(for: installed, among: candidates) else { continue }
+
+            seenBuilds.insert(build)
+            rows.append(row)
         }
-        runtimes = OrderedDictionary(grouping: filteredRuntimes, by: { $0.platform })
+
+        return OrderedDictionary(grouping: rows, by: { $0.platform })
+    }
+
+    /// Picks the downloadable record that best represents an installed runtime,
+    /// preferring the variant whose architectures match what is installed.
+    private nonisolated static func bestMatch(
+        for installed: CoreSimulatorImage,
+        among candidates: [DownloadableRuntime]
+    ) -> DownloadableRuntime? {
+        guard !candidates.isEmpty else { return nil }
+
+        if let installedArchitectures = installed.runtimeInfo.supportedArchitectures,
+           let exactMatch = candidates.first(where: { ($0.architectures ?? []) == installedArchitectures }) {
+            return exactMatch
+        }
+
+        return candidates.first
     }
     
     func deleteRuntime(runtime: DownloadableRuntime) {
