@@ -93,7 +93,7 @@
       },
       {
         "package": "swift-srp",
-        "repositoryURL": "https://github.com/xcodesOrg/swift-srp",
+        "repositoryURL": "https://github.com/XcodesOrg/swift-srp",
         "state": {
           "branch": "main",
           "revision": "543aa0122a0257b992f6c7d62d18a26e3dffb8fe",
@@ -123,8 +123,8 @@
         "repositoryURL": "https://github.com/XcodesOrg/XcodesKit",
         "state": {
           "branch": null,
-          "revision": "5bff14052f7664f75a4837547804e07c3c2dfe47",
-          "version": "1.0.3"
+          "revision": "a9e5d7d701f20f1385071851319cdaecccc9f1e8",
+          "version": "1.0.4"
         }
       },
       {
