@@ -5,6 +5,7 @@ enum XcodeListCategory: String, CaseIterable, Identifiable, CustomStringConverti
     case all
     case release
     case beta
+    case releasePlusNewBetas
     
     var id: Self { self }
     
@@ -13,6 +14,7 @@ enum XcodeListCategory: String, CaseIterable, Identifiable, CustomStringConverti
             case .all: return localizeString("All")
             case .release: return localizeString("Release")
             case .beta: return localizeString("Beta")
+            case .releasePlusNewBetas: return localizeString("ReleasePlusNewBetas")
         }
     }
 
@@ -20,7 +22,7 @@ enum XcodeListCategory: String, CaseIterable, Identifiable, CustomStringConverti
 
     var versionFilter: XcodeListVersionFilter {
         switch self {
-        case .all:
+        case .all, .releasePlusNewBetas:
             return .all
         case .release:
             return .release
