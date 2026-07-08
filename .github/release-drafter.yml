@@ -9,7 +9,7 @@ categories:
     labels:
       - 'localization'
   - title: '🧰 Maintenance'
-    label:
+    labels:
       - 'chore'
       - 'documentation'
       - 'dependencies'
