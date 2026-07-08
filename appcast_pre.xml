@@ -8,6 +8,43 @@
             
                 
                     <item>
+                        <title>4.0.5</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/XcodesOrg/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<ul>
+  <li>Updates xcodesKit to fix 27 beta 3 runtime issue (#833) @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=giu/eWoL76zcia+eKHmCse6iZrya/KV82s5VTRRsD3zw+QlJT7gmwaFbfBEwlt/tfXY0Qjj8L4CHsqODm9YTCw== -->
+]]></description>
+                        <pubDate>Wed, 08 Jul 2026 03:50:43 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v4.0.5b40/Xcodes.zip"
+                                    sparkle:version="40"
+                                    sparkle:shortVersionString="4.0.5"
+                                    sparkle:edSignature="giu/eWoL76zcia+eKHmCse6iZrya/KV82s5VTRRsD3zw+QlJT7gmwaFbfBEwlt/tfXY0Qjj8L4CHsqODm9YTCw=="
+                                    length="26314042"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>v4.0.4</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/RobotsAndPencils/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
