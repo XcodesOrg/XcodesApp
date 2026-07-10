@@ -64,6 +64,7 @@
 		CAA858C425A2BE4E00ACF8C0 /* Downloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAA858C325A2BE4E00ACF8C0 /* Downloader.swift */; };
 		CAA858DB25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz in Resources */ = {isa = PBXBuildFile; fileRef = CAA858DA25A3E11F00ACF8C0 /* aria2-release-1.35.0.tar.gz */; };
 		CAB3AB0E25BCA6C200BF1B04 /* AppStateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7B72449575100113D76 /* AppStateTests.swift */; };
+		9B90B7153E09F8599E323DA3 /* PlatformsListViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35BDE2F9D65A9B4A63CEB3BD /* PlatformsListViewTests.swift */; };
 		CABFA9BD2592EEEA00380FEE /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A92592EEE900380FEE /* Environment.swift */; };
 		CABFA9C52592EEEA00380FEE /* FileManager+.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9B82592EEEA00380FEE /* FileManager+.swift */; };
 		CABFA9CA2592EEEA00380FEE /* AppState+Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFA9A72592EEE900380FEE /* AppState+Update.swift */; };
@@ -276,6 +277,7 @@
 		CAD2E7AE2449575000113D76 /* Xcodes.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Xcodes.entitlements; sourceTree = "<group>"; };
 		CAD2E7B32449575100113D76 /* XcodesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = XcodesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		CAD2E7B72449575100113D76 /* AppStateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateTests.swift; sourceTree = "<group>"; };
+		35BDE2F9D65A9B4A63CEB3BD /* PlatformsListViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformsListViewTests.swift; sourceTree = "<group>"; };
 		CAD2E7B92449575100113D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CAE4247E259A666100B8B246 /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		CAE42486259A68A300B8B246 /* XcodeListCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeListCategory.swift; sourceTree = "<group>"; };
@@ -594,6 +596,7 @@
 				CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */,
 				CAD2E7B72449575100113D76 /* AppStateTests.swift */,
 				CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */,
+				35BDE2F9D65A9B4A63CEB3BD /* PlatformsListViewTests.swift */,
 				CAD2E7B92449575100113D76 /* Info.plist */,
 			);
 			path = XcodesTests;
@@ -971,6 +974,7 @@
 				CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */,
 				CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */,
 				CAB3AB0E25BCA6C200BF1B04 /* AppStateTests.swift in Sources */,
+				9B90B7153E09F8599E323DA3 /* PlatformsListViewTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
