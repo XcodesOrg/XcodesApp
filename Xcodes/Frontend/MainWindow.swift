@@ -4,6 +4,21 @@ import XcodesLoginKit
 import Path
 import Version
 
+enum MainWindowLayout {
+    static let sidebarMinimumWidth: CGFloat = 290
+    static let infoPanePrimaryColumnMinimumWidth: CGFloat = 380
+    static let infoPaneSecondaryColumnWidth: CGFloat = 200
+    static let infoPaneColumnSpacing: CGFloat = 8
+    static let infoPaneHorizontalMargins: CGFloat = 20
+    static let detailMinimumWidth =
+        infoPanePrimaryColumnMinimumWidth +
+        infoPaneSecondaryColumnWidth +
+        infoPaneColumnSpacing +
+        infoPaneHorizontalMargins
+    static let splitViewDividerWidth: CGFloat = 9
+    static let minimumWidth = sidebarMinimumWidth + detailMinimumWidth + splitViewDividerWidth
+}
+
 struct MainWindow: View {
     @EnvironmentObject var appState: AppState
     @State private var selectedXcodeID: Xcode.ID?
@@ -68,7 +83,7 @@ struct MainWindow: View {
         .bottomStatusBar()
         .padding([.top], 0)
         .navigationSubtitle(subtitleText)
-        .frame(minWidth: 600, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
+        .frame(minWidth: MainWindowLayout.minimumWidth, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)
         .emittingError($appState.error, recoveryHandler: { _ in })
         .sheet(item: $appState.presentedSheet) { sheet in
             switch sheet {

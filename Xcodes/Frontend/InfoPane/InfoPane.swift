@@ -18,7 +18,7 @@ struct InfoPane: View {
     
     private var mainContent: some View {
         ScrollView(.vertical) {
-            HStack(alignment: .top) {
+            HStack(alignment: .top, spacing: MainWindowLayout.infoPaneColumnSpacing) {
                 VStack {
                     VStack(spacing: 5) {
                         HStack {
@@ -35,7 +35,7 @@ struct InfoPane: View {
                     
                     PlatformsView(xcode: xcode)
                 }
-                .frame(minWidth: 380)
+                .frame(minWidth: MainWindowLayout.infoPanePrimaryColumnMinimumWidth)
                 
                 VStack(alignment: .leading) {
                     ReleaseDateView(date: xcode.releaseDate, url: xcode.releaseNotesURL)
@@ -43,7 +43,7 @@ struct InfoPane: View {
                     IdenticalBuildsView(builds: xcode.identicalBuildsForCurrentVariant)
                     SDKandCompilers
                 }
-                .frame(width: 200)
+                .frame(width: MainWindowLayout.infoPaneSecondaryColumnWidth)
                 
             }
         }
