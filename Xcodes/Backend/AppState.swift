@@ -777,12 +777,11 @@ class AppState: ObservableObject {
         }
     }
 
-    func copyPath(xcode: Xcode) {
+    func copyPath(xcode: Xcode, pasteboard: NSPasteboard = .general) {
         guard let installedXcodePath = xcode.installedPath else { return }
 
-        NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
-        NSPasteboard.general.writeObjects([installedXcodePath.url as NSURL])
-        NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
+        pasteboard.clearContents()
+        pasteboard.setString(installedXcodePath.string, forType: .string)
     }
 
     func copyReleaseNote(from url: URL?) {
