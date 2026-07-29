@@ -1,3 +1,4 @@
+import AppKit
 import Combine
 @preconcurrency import Path
 import Version
@@ -82,6 +83,22 @@ class AppStateTests: XCTestCase {
         subject.setupDefaults()
 
         XCTAssertFalse(subject.enableGroupedXcodeList)
+    }
+
+    func test_CopyPath_WritesInstalledPathAsPlainText() throws {
+        let installedPath = try XCTUnwrap(Path("/Applications/Xcode 26.0.app"))
+        let xcode = Xcode(
+            version: Version("26.0.0")!,
+            installState: .installed(installedPath),
+            selected: false,
+            icon: nil
+        )
+        let pasteboard = NSPasteboard(name: NSPasteboard.Name("AppStateTests-\(UUID().uuidString)"))
+        defer { pasteboard.releaseGlobally() }
+
+        subject.copyPath(xcode: xcode, pasteboard: pasteboard)
+
+        XCTAssertEqual(pasteboard.string(forType: .string), installedPath.string)
     }
 
     func test_PrepareForHelperAction_StaleActionDoesNotClearReplacementAction() {
