@@ -16,10 +16,9 @@ struct ReleaseNotesView: View {
     var body: some View {
         if let url = url {
             Button(action: { openURL(url) }) {
-                Image(systemName: "link.circle.fill")
-                    .font(.title)
+                Text("ReleaseNotes")
+                    .font(.callout)
             }
-            .buttonStyle(.plain)
             .contextMenu(menuItems: {
                 CopyReleaseNoteButton(url: url)
             })
