@@ -82,6 +82,7 @@
 		CABFAA492593162500380FEE /* Bundle+InfoPlistValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */; };
 		CAC281CD259F97FA00B8AB0B /* ObservingProgressIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */; };
 		CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */; };
+		7AC8E102000000000000A0F2 /* XcodeCommandShortcutsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7AC8E101000000000000A0F1 /* XcodeCommandShortcutsTests.swift */; };
 		CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */; };
 		CAC9F92D25BCDA4400B4965F /* HelperInstallState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAC9F92C25BCDA4400B4965F /* HelperInstallState.swift */; };
 		CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CAD2E7A12449574E00113D76 /* XcodesApp.swift */; };
@@ -272,6 +273,7 @@
 		CABFAA482593162500380FEE /* Bundle+InfoPlistValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+InfoPlistValues.swift"; sourceTree = "<group>"; };
 		CAC281CC259F97FA00B8AB0B /* ObservingProgressIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ObservingProgressIndicator.swift; sourceTree = "<group>"; };
 		CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+XcodesTests.swift"; sourceTree = "<group>"; };
+		7AC8E101000000000000A0F1 /* XcodeCommandShortcutsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XcodeCommandShortcutsTests.swift"; sourceTree = "<group>"; };
 		CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Environment+Mock.swift"; sourceTree = "<group>"; };
 		CAC9F92C25BCDA4400B4965F /* HelperInstallState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperInstallState.swift; sourceTree = "<group>"; };
 		CAD2E79E2449574E00113D76 /* Xcodes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Xcodes.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -599,6 +601,7 @@
 			children = (
 				CA452BBD259FDDBF0072DFA4 /* Fixtures */,
 				CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */,
+				7AC8E101000000000000A0F1 /* XcodeCommandShortcutsTests.swift */,
 				CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */,
 				CAD2E7B72449575100113D76 /* AppStateTests.swift */,
 				CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */,
@@ -981,6 +984,7 @@
 			files = (
 				CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */,
 				CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */,
+				7AC8E102000000000000A0F2 /* XcodeCommandShortcutsTests.swift in Sources */,
 				CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */,
 				14d2f5a1273f6c350cad4406 /* NewVersionNotificationTests.swift in Sources */,
 				CAB3AB0E25BCA6C200BF1B04 /* AppStateTests.swift in Sources */,
