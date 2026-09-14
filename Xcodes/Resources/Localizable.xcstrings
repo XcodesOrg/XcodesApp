@@ -9949,13 +9949,13 @@
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[@_saagarjha](https://twitter.com/_saagarjha) さんの方法で、一部のシステムで Unxip の速度が最大70%向上します。\n\n方法の詳細については、 unxipのリポジトリ (https://github.com/saagarjha/unxip)をご覧ください。"
+            "value" : "[@_saagarjha](https://twitter.com/_saagarjha) さんの方法で、一部のシステムで Unxip の速度が最大70%向上します。\n\n方法の詳細については、 unxipのリポジトリ (https://github.com/saagarjha/unxip) をご覧ください。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "[@_saagarjha](https://twitter.com/_saagarjha)님 덕분에 이 실험 기능을 이용하면 일부 시스템에서 압축 해제 속도를 최대 70%까지 향상시킬 수 있습니다.\n\n이를 수행하는 방법에 대한 자세한 내용은 unxip 저장소 (https://github.com/saagarjha/unxip)에서 확인할 수 있습니다."
+            "value" : "[@_saagarjha](https://twitter.com/_saagarjha)님 덕분에 이 실험 기능을 이용하면 일부 시스템에서 압축 해제 속도를 최대 70%까지 향상시킬 수 있습니다.\n\n이를 수행하는 방법에 대한 자세한 내용은 unxip 저장소 (https://github.com/saagarjha/unxip) 에서 확인할 수 있습니다."
           }
         },
         "nl" : {
