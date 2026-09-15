@@ -3890,6 +3890,138 @@
         }
       }
     },
+    "Alert.Uninstall.DeletePermanently" : {
+      "comment" : "Checkbox in the uninstall dialog that deletes Xcode permanently instead of moving it to the Trash.",
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "حذف نهائي"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Suprimeix permanentment"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Endgültig löschen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Οριστική διαγραφή"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete permanently"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Eliminar permanentemente"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Poista pysyvästi"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Supprimer définitivement"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "स्थायी रूप से डिलीट करें"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Elimina definitivamente"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完全に削除"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "영구적으로 삭제"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Definitief verwijderen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Usuń trwale"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Excluir permanentemente"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Удалить безвозвратно"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลบอย่างถาวร"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kalıcı olarak sil"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Видалити назавжди"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "永久删除"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "永久刪除"
+          }
+        }
+      }
+    },
     "Alert.Uninstall.Error.Message.FileNotFound" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -4153,131 +4285,133 @@
       }
     },
     "Alert.Uninstall.Message" : {
+      "comment" : "Explains the default Trash behavior and warns that choosing permanent deletion cannot be undone.",
+      "extractionState" : "manual",
       "localizations" : {
         "ar" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "سيتم نقله إلى سلة المهملات، ولكن لن يتم إفراغه."
+            "value" : "سيتم نقل Xcode إلى سلة المهملات ما لم تختر حذفه نهائيًا. لا يمكن التراجع عن الحذف النهائي."
           }
         },
         "ca" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Es mourà a la paperera, però no es buidarà."
+            "value" : "Xcode es mourà a la paperera tret que decidiu suprimir-lo permanentment. La supressió permanent no es pot desfer."
           }
         },
         "de" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Die Anwendung wird in den Papierkorb verschoben, dieser wird aber nicht geleert."
+            "value" : "Xcode wird in den Papierkorb verschoben, sofern Sie es nicht endgültig löschen möchten. Das endgültige Löschen kann nicht rückgängig gemacht werden."
           }
         },
         "el" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Θα μετακινηθεί στον Κάδο, αλλά δεν θα γίνει άδειασμα."
+            "value" : "Το Xcode θα μετακινηθεί στον Κάδο, εκτός αν επιλέξετε να το διαγράψετε οριστικά. Η οριστική διαγραφή δεν μπορεί να αναιρεθεί."
           }
         },
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "It will be moved to the Trash, but won't be emptied."
+            "value" : "Xcode will be moved to the Trash unless you choose to delete it permanently. Permanent deletion cannot be undone."
           }
         },
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se moverá a la Papelera, pero no se vaciará."
+            "value" : "Xcode se moverá a la Papelera a menos que elijas eliminarlo permanentemente. La eliminación permanente no se puede deshacer."
           }
         },
         "fi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Se siirretään roskakoriin, mutta sitä ei tyhjennetä."
+            "value" : "Xcode siirretään roskakoriin, ellet valitse sen poistamista pysyvästi. Pysyvää poistoa ei voi kumota."
           }
         },
         "fr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcodes sera déplacé vers la corbeille, mais la corbeille ne sera pas vidée."
+            "value" : "Xcode sera déplacé vers la corbeille, sauf si vous choisissez de le supprimer définitivement. La suppression définitive est irréversible."
           }
         },
         "hi" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "इसे ट्रैश में ले जाया जाएगा, लेकिन खाली नहीं किया जाएगा।"
+            "value" : "Xcode को ट्रैश में ले जाया जाएगा, जब तक कि आप इसे स्थायी रूप से डिलीट करने का विकल्प नहीं चुनते। स्थायी रूप से डिलीट करने के बाद इस कार्रवाई को पूर्ववत नहीं किया जा सकता।"
           }
         },
         "it" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Sarà spostato nel cestino, ma non svuotato."
+            "value" : "Xcode verrà spostato nel Cestino, a meno che tu non scelga di eliminarlo definitivamente. L’eliminazione definitiva non può essere annullata."
           }
         },
         "ja" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ゴミ箱に移動されますが、ゴミ箱を自動的に空にすることはありません。"
+            "value" : "完全に削除することを選択しない限り、Xcodeはゴミ箱に移動されます。完全に削除すると元に戻すことはできません。"
           }
         },
         "ko" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "휴지통으로 이동되지만 비워지지는 않습니다."
+            "value" : "영구적으로 삭제하도록 선택하지 않으면 Xcode가 휴지통으로 이동됩니다. 영구 삭제는 되돌릴 수 없습니다."
           }
         },
         "nl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Het zal worden verplaatst naar de Prullenbak, maar deze zal niet geleegd worden."
+            "value" : "Xcode wordt naar de prullenmand verplaatst, tenzij je ervoor kiest om het definitief te verwijderen. Definitief verwijderen kan niet ongedaan worden gemaakt."
           }
         },
         "pl" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Zostanie przeniesiony do kosza, ale nie zostanie opróżniony."
+            "value" : "Xcode zostanie przeniesiony do Kosza, chyba że wybierzesz trwałe usunięcie. Trwałego usunięcia nie można cofnąć."
           }
         },
         "pt-BR" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Será movido para a lixeira, mas não será esvaziada."
+            "value" : "O Xcode será movido para o Lixo, a menos que você escolha excluí-lo permanentemente. A exclusão permanente não pode ser desfeita."
           }
         },
         "ru" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Файлы будут перемещены в корзину, но не будут очищены из неё автоматически."
+            "value" : "Xcode будет перемещён в Корзину, если вы не выберете безвозвратное удаление. Безвозвратное удаление нельзя отменить."
           }
         },
         "th" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "มันจะถูกย้ายไปที่ถังขยะ แต่จะไม่ถูกลบอย่างถาวร"
+            "value" : "Xcode จะถูกย้ายไปที่ถังขยะ เว้นแต่คุณจะเลือกที่จะลบอย่างถาวร การลบอย่างถาวรไม่สามารถเลิกทำได้"
           }
         },
         "tr" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Uygulama Çöp Kutusuna taşınacaktır, fakat silinmeyecektir."
+            "value" : "Kalıcı olarak silmeyi seçmediğiniz sürece Xcode Çöp Sepeti’ne taşınacaktır. Kalıcı silme işlemi geri alınamaz."
           }
         },
         "uk" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Xcode буде просто переміщено до Кошика, без повного видалення."
+            "value" : "Xcode буде переміщено до Смітника, якщо ви не виберете видалення назавжди. Видалення назавжди не можна скасувати."
           }
         },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "它会被移动到废纸篓，但废纸篓不会清空。"
+            "value" : "除非您选择永久删除，否则 Xcode 将被移到废纸篓。永久删除无法撤销。"
           }
         },
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "將移到垃圾桶，但垃圾桶不會清空。"
+            "value" : "除非您選擇永久刪除，否則 Xcode 將移到垃圾桶。永久刪除無法復原。"
           }
         }
       }
