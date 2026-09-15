@@ -510,9 +510,9 @@ extension AppState {
 
     /// Uninstalls an Xcode, then removes the given simulator runtimes.
     @discardableResult
-    func uninstall(xcode: Xcode, removingRuntimes runtimes: [DownloadableRuntime]) -> Task<Void, Never>? {
+    func uninstall(xcode: Xcode, permanently: Bool = false, removingRuntimes runtimes: [DownloadableRuntime]) -> Task<Void, Never>? {
         guard let installedPath = xcode.installedPath else { return nil }
-        uninstall(xcode: xcode)
+        uninstall(xcode: xcode, permanently: permanently)
         guard !runtimes.isEmpty, let removalTask = uninstallTask else { return uninstallTask }
         return Task { @MainActor [weak self] in
             await removalTask.value

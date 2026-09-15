@@ -10,6 +10,7 @@ struct MainWindow: View {
     @State private var selectedXcodeID: Xcode.ID?
     @State private var searchText: String = ""
     @State private var columnVisibility: NavigationSplitViewVisibility = .automatic
+    @State private var deletePermanently = false
     @AppStorage("lastUpdated") private var lastUpdated: Double?
     // These two properties should be per-scene state managed by @SceneStorage property wrappers.
     // There's currently a bug with @SceneStorage on macOS, though, where quitting the app will discard the values, which removes a lot of its utility.
@@ -30,10 +31,12 @@ struct MainWindow: View {
                     presenting: appState.xcodeBeingConfirmedForUninstallation
                 ) { xcode in
                     let platforms = appState.installedRuntimesUsedOnly(by: xcode)
-                    Button("Uninstall", role: .destructive) { appState.uninstall(xcode: xcode) }
+                    Button("Uninstall", role: .destructive) {
+                        appState.uninstall(xcode: xcode, permanently: deletePermanently)
+                    }
                     if !platforms.isEmpty {
                         Button("Alert.Uninstall.WithPlatforms", role: .destructive) {
-                            appState.uninstall(xcode: xcode, removingRuntimes: platforms)
+                            appState.uninstall(xcode: xcode, permanently: deletePermanently, removingRuntimes: platforms)
                         }
                     }
                     Button("Cancel", role: .cancel) {}
@@ -43,6 +46,12 @@ struct MainWindow: View {
                         Text("Alert.Uninstall.Message")
                     } else {
                         Text(verbatim: localizeString("Alert.Uninstall.Message") + "\n\n" + String(format: localizeString("Alert.Uninstall.PlatformsMessage"), platforms.map(\.visibleIdentifier).joined(separator: ", ")))
+                    }
+                }
+                .dialogSuppressionToggle("Alert.Uninstall.DeletePermanently", isSuppressed: $deletePermanently)
+                .onChange(of: appState.xcodeBeingConfirmedForUninstallation?.id) { _, id in
+                    if id != nil {
+                        deletePermanently = false
                     }
                 }
                 .searchable(text: $searchText, placement: .sidebar)
