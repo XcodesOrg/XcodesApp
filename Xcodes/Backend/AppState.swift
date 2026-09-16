@@ -811,17 +811,75 @@ class AppState: ObservableObject {
     }
 
     func open(xcode: Xcode, openInRosetta: Bool? = false) {
-        switch xcode.installState {
-        case let .installed(path):
-            let config = NSWorkspace.OpenConfiguration.init()
-            if (openInRosetta ?? false) {
-                config.architecture = CPU_TYPE_X86_64
-            }
-            config.allowsRunningApplicationSubstitution = false
-            NSWorkspace.shared.openApplication(at: path.url, configuration: config)
-        default:
+        guard case let .installed(path) = xcode.installState else {
             Logger.appState.error("\(xcode.id.version) is not installed")
             return
+        }
+
+        let bundleURL = path.url.standardizedFileURL
+
+        // Already running: bring it forward instead of spawning a second one.
+        if let running = runningApplication(atBundleURL: bundleURL) {
+            running.activate(from: .current, options: [.activateAllWindows])
+            return
+        }
+
+        // LaunchServices only blocks an Xcode older than the running macOS. Launch those
+        // directly to bypass the gate; newer or same-generation Xcodes open normally.
+        guard Self.requiresDirectLaunch(xcodeVersion: xcode.version, osMajorVersion: ProcessInfo.processInfo.operatingSystemVersion.majorVersion) else {
+            let config = NSWorkspace.OpenConfiguration()
+            if openInRosetta == true { config.architecture = CPU_TYPE_X86_64 }
+            config.allowsRunningApplicationSubstitution = false
+            NSWorkspace.shared.openApplication(at: path.url, configuration: config)
+            return
+        }
+
+        do {
+            try launchProcess(forAppAt: path.url, inRosetta: openInRosetta == true).run()
+            activateApplication(atBundleURL: bundleURL)
+        } catch {
+            Logger.appState.error("Failed to open \(xcode.id.version): \(error.localizedDescription)")
+            self.error = error
+            presentedAlert = .generic(title: localizeString("Open"), message: error.legibleLocalizedDescription)
+        }
+    }
+
+    /// Whether an Xcode must be launched directly to bypass the LaunchServices
+    /// compatibility gate, i.e. it predates the running macOS.
+    static func requiresDirectLaunch(xcodeVersion: Version, osMajorVersion: Int) -> Bool {
+        xcodeVersion.major < osMajorVersion
+    }
+
+    private func runningApplication(atBundleURL bundleURL: URL) -> NSRunningApplication? {
+        NSWorkspace.shared.runningApplications.first {
+            !$0.isTerminated && $0.bundleURL?.standardizedFileURL == bundleURL
+        }
+    }
+
+    private func launchProcess(forAppAt url: URL, inRosetta: Bool) -> Process {
+        let binary = Bundle(url: url)?.executableURL ?? url.appendingPathComponent("Contents/MacOS/Xcode")
+        let process = Process()
+        if inRosetta {
+            process.executableURL = URL(fileURLWithPath: "/usr/bin/arch")
+            process.arguments = ["-x86_64", binary.path]
+        } else {
+            process.executableURL = binary
+        }
+        process.standardInput = FileHandle.nullDevice
+        process.standardOutput = FileHandle.nullDevice
+        process.standardError = FileHandle.nullDevice
+        return process
+    }
+
+    // A freshly exec'd app isn't activatable right away; retry until it's frontmost.
+    private func activateApplication(atBundleURL bundleURL: URL) {
+        Task { @MainActor in
+            for _ in 0..<40 {
+                let app = runningApplication(atBundleURL: bundleURL)
+                if app?.isActive == true { return }
+                app?.activate(from: .current, options: [.activateAllWindows])
+                try? await Task.sleep(for: .milliseconds(200))
+            }
         }
     }
 
