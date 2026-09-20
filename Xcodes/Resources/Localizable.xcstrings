@@ -20704,6 +20704,28 @@
         }
       }
     },
+    "PlatformsList.AutoInstall.Description" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After Xcodes finishes installing a version of Xcode it downloads the newest runtime for each platform selected above, unless that runtime is already installed."
+          }
+        }
+      }
+    },
+    "PlatformsList.AutoInstall.Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install Automatically"
+          }
+        }
+      }
+    },
     "PlatformsList.Title" : {
       "extractionState" : "manual",
       "localizations" : {

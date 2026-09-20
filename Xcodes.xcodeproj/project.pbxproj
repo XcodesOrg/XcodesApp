@@ -34,6 +34,7 @@
 		BDBAB7452B9FF55800694B0B /* TrailingIconLabelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BDBAB7442B9FF55800694B0B /* TrailingIconLabelStyle.swift */; };
 		CA11E7BA2598476C00D2EE1C /* XcodeCommands.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */; };
 		CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */; };
+		AD0298B11A2E5B0100000002 /* RuntimeAutoInstallServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0298B01A2E5B0100000002 /* RuntimeAutoInstallServiceTests.swift */; };
 		CA2518EE25A7FF2B00F08414 /* SignInCredentialsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA2518ED25A7FF2B00F08414 /* SignInCredentialsViewTests.swift */; };
 		CA378F992466567600A58CE0 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA378F982466567600A58CE0 /* AppState.swift */; };
 		CA39711924495F0E00AFFB77 /* AppStoreButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */; };
@@ -122,6 +123,7 @@
 		E89CBD402D6434E10037ED95 /* SignInFederatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */; };
 		E8B20CBF2A2EDEC20057D816 /* SDKs+Xcode.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */; };
 		E8C0EB1C291EF9A10081528A /* AppState+Runtimes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */; };
+		AD0298A11A2E5B0100000001 /* RuntimeAutoInstallService.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD0298A01A2E5B0100000001 /* RuntimeAutoInstallService.swift */; };
 		E8CBDB8927ADE32300B22292 /* unxip in Copy aria2c */ = {isa = PBXBuildFile; fileRef = E8CBDB8627ADD92000B22292 /* unxip */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		E8CBDB8B27AE02FF00B22292 /* ExperiementsPreferencePane.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8CBDB8A27AE02FF00B22292 /* ExperiementsPreferencePane.swift */; };
 		E8D0296F284B029800647641 /* BottomStatusBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8D0296E284B029800647641 /* BottomStatusBar.swift */; };
@@ -214,6 +216,7 @@
 		BDBAB7442B9FF55800694B0B /* TrailingIconLabelStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrailingIconLabelStyle.swift; sourceTree = "<group>"; };
 		CA11E7B92598476C00D2EE1C /* XcodeCommands.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XcodeCommands.swift; sourceTree = "<group>"; };
 		CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateUpdateTests.swift; sourceTree = "<group>"; };
+		AD0298B01A2E5B0100000002 /* RuntimeAutoInstallServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeAutoInstallServiceTests.swift; sourceTree = "<group>"; };
 		CA2518ED25A7FF2B00F08414 /* SignInCredentialsViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInCredentialsViewTests.swift; sourceTree = "<group>"; };
 		CA378F982466567600A58CE0 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		CA39711824495F0E00AFFB77 /* AppStoreButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStoreButtonStyle.swift; sourceTree = "<group>"; };
@@ -315,6 +318,7 @@
 		E89CBD3F2D6434E10037ED95 /* SignInFederatedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInFederatedView.swift; sourceTree = "<group>"; };
 		E8B20CBE2A2EDEC20057D816 /* SDKs+Xcode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SDKs+Xcode.swift"; sourceTree = "<group>"; };
 		E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppState+Runtimes.swift"; sourceTree = "<group>"; };
+		AD0298A01A2E5B0100000001 /* RuntimeAutoInstallService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RuntimeAutoInstallService.swift; sourceTree = "<group>"; };
 		E8CBDB8627ADD92000B22292 /* unxip */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; path = unxip; sourceTree = "<group>"; };
 		E8CBDB8A27AE02FF00B22292 /* ExperiementsPreferencePane.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExperiementsPreferencePane.swift; sourceTree = "<group>"; };
 		E8D0296E284B029800647641 /* BottomStatusBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomStatusBar.swift; sourceTree = "<group>"; };
@@ -480,6 +484,7 @@
 			children = (
 				CA378F982466567600A58CE0 /* AppState.swift */,
 				E8C0EB1B291EF9A10081528A /* AppState+Runtimes.swift */,
+				AD0298A01A2E5B0100000001 /* RuntimeAutoInstallService.swift */,
 				CAE424B3259A764700B8B246 /* AppState+Install.swift */,
 				CABFA9A72592EEE900380FEE /* AppState+Update.swift */,
 				CABFAA2B2592FBFC00380FEE /* Configure.swift */,
@@ -602,6 +607,7 @@
 				CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */,
 				CAD2E7B72449575100113D76 /* AppStateTests.swift */,
 				CA2518EB25A7FF2B00F08414 /* AppStateUpdateTests.swift */,
+				AD0298B01A2E5B0100000002 /* RuntimeAutoInstallServiceTests.swift */,
 				CA2518ED25A7FF2B00F08414 /* SignInCredentialsViewTests.swift */,
 				884f01aed2f43048ab4d3323 /* NewVersionNotificationTests.swift */,
 				CAD2E7B92449575100113D76 /* Info.plist */,
@@ -964,6 +970,7 @@
 				CABFAA432593104F00380FEE /* AboutView.swift in Sources */,
 				E8D0296F284B029800647641 /* BottomStatusBar.swift in Sources */,
 				E8C0EB1C291EF9A10081528A /* AppState+Runtimes.swift in Sources */,
+				AD0298A11A2E5B0100000001 /* RuntimeAutoInstallService.swift in Sources */,
 				E8E98A9025D8631800EC89A0 /* InstallationStepRowView.swift in Sources */,
 				CABFA9CC2592EEEA00380FEE /* Path+.swift in Sources */,
 				CAD2E7A22449574E00113D76 /* XcodesApp.swift in Sources */,
@@ -982,6 +989,7 @@
 				CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */,
 				CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */,
 				CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */,
+				AD0298B11A2E5B0100000002 /* RuntimeAutoInstallServiceTests.swift in Sources */,
 				14d2f5a1273f6c350cad4406 /* NewVersionNotificationTests.swift in Sources */,
 				CAB3AB0E25BCA6C200BF1B04 /* AppStateTests.swift in Sources */,
 				CA2518EE25A7FF2B00F08414 /* SignInCredentialsViewTests.swift in Sources */,
