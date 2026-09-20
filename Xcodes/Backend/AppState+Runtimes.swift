@@ -55,7 +55,11 @@ extension AppState {
         }
     }
 
-    func downloadRuntime(runtime: DownloadableRuntime) {
+    /// Starts installing a runtime.
+    ///
+    /// - Parameter presentingErrors: Whether a runtime that can't be installed right now should
+    ///   raise an alert. Automatic installs only log, so that they never interrupt the user.
+    func downloadRuntime(runtime: DownloadableRuntime, presentingErrors: Bool = true) {
         do {
             let method = try RuntimeInstallPolicy().installMethod(
                 for: runtime,
@@ -69,8 +73,56 @@ extension AppState {
                 downloadRuntimeViaXcodeBuild(runtime: runtime, architecture: architecture)
             }
         } catch {
-            presentRuntimeInstallPolicyError(error)
+            if presentingErrors {
+                presentRuntimeInstallPolicyError(error)
+            } else {
+                Logger.appState.error("Skipping automatic install of \(runtime.visibleIdentifier): \(error.localizedDescription)")
+            }
         }
+    }
+
+    /// Installs the newest runtime for each platform the user asked to keep up to date.
+    ///
+    /// Runs after an Xcode install finishes so the simulators a developer always needs are
+    /// ready as soon as the Xcode they were installed alongside is.
+    func autoInstallRuntimesIfNeeded() async {
+        guard
+            let rawValue = Current.defaults.string(forKey: PreferenceKey.autoInstallRuntimePlatforms.rawValue),
+            let preference = AutoInstallRuntimePlatforms(rawValue: rawValue),
+            !preference.platforms.isEmpty
+        else { return }
+
+        // The runtime lists are populated lazily, and an install that just finished can have
+        // made an installed runtime stale, so make sure both are current before deciding.
+        if downloadableRuntimes.isEmpty {
+            updateDownloadableRuntimes()
+            await downloadableRuntimesTask?.value
+        }
+        updateInstalledRuntimes()
+        await installedRuntimesTask?.value
+
+        let runtimes = RuntimeAutoInstallService().runtimesToInstall(
+            platforms: preference.platforms,
+            downloadableRuntimes: downloadableRuntimes,
+            installedRuntimes: installedRuntimes,
+            includingPrereleases: isAutoInstallingXcodeBetas
+        )
+
+        guard !runtimes.isEmpty else {
+            Logger.appState.info("Every platform selected for automatic installation is already up to date")
+            return
+        }
+
+        for runtime in runtimes where runtimeTasks[runtime.identifier] == nil {
+            Logger.appState.info("Automatically installing runtime \(runtime.visibleIdentifier)")
+            downloadRuntime(runtime: runtime, presentingErrors: false)
+        }
+    }
+
+    /// Beta runtimes are only installed automatically for users who already opted into Xcode betas.
+    private var isAutoInstallingXcodeBetas: Bool {
+        guard let storageValue = Current.defaults.get(forKey: PreferenceKey.autoInstallation.rawValue) as? Int else { return false }
+        return AutoInstallationType(rawValue: storageValue) == .newestBeta
     }
 
     private func presentRuntimeInstallPolicyError(_ error: Error) {

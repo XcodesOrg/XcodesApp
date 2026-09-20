@@ -31,6 +31,7 @@ enum PreferenceKey: String {
     case expandedMajorXcodeVersions
     case expandedMinorXcodeVersions
     case usePrivilegeHelperForFileOperations
+    case autoInstallRuntimePlatforms
 
     func isManaged() -> Bool { UserDefaults.standard.objectIsForced(forKey: self.rawValue) }
 }
