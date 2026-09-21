@@ -51,6 +51,7 @@ extension AppState {
                 let (xcode, url) = try await getXcodeArchiveAsync(installationType, downloader: downloader)
                 try Task.checkCancellation()
                 let installedXcode = try await installArchivedXcodeAsync(xcode, at: url)
+                recordInstalledXcode(installedXcode)
 
                 guard let index = allXcodes.firstIndex(where: { $0.version.isEquivalent(to: installedXcode.version) }) else {
                     return installedXcode

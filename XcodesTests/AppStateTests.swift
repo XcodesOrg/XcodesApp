@@ -814,6 +814,18 @@ class AppStateTests: XCTestCase {
                 [.installed(Path("/Applications/Xcode-0.0.0.app")!), .notInstalled, .notInstalled]
             ]
         )
+        assertInstalledStateSurvivesRecomposition()
+    }
+
+    private func assertInstalledStateSurvivesRecomposition() {
+        subject.availableXcodes = [
+            AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+        ]
+        let path = Path("/Applications/Xcode-0.0.0.app")!
+        XCTAssertEqual(subject.allXcodes.first?.installState, .installed(path))
+        subject.selectedXcodePath = path.string + "/Contents/Developer"
+        XCTAssertEqual(subject.allXcodes.first?.installState, .installed(path))
+        XCTAssertEqual(subject.allXcodes.first?.selected, true)
     }
 
     private static func downloadableRuntime() throws -> DownloadableRuntime {
@@ -971,6 +983,7 @@ class AppStateTests: XCTestCase {
                 [.installed(Path("/Applications/Xcode-0.0.0.app")!), .notInstalled, .notInstalled]
             ]
         )
+        assertInstalledStateSurvivesRecomposition()
     }
 
     func test_Install_NotEnoughFreeSpace() async throws {
