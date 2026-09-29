@@ -319,3 +319,18 @@ extension AppState {
         return error.localizedDescription
     }
 }
+
+// MARK: - Platforms of an Xcode
+
+extension DownloadableRuntime.Platform {
+    /// The order platforms are listed in: iOS, watchOS, visionOS, tvOS.
+    var displayOrder: Int {
+        switch self {
+        case .iOS: return 0
+        case .watchOS: return 1
+        case .visionOS: return 2
+        case .tvOS: return 3
+        case .macOS: return 4
+        }
+    }
+}

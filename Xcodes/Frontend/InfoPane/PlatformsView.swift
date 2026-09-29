@@ -32,6 +32,13 @@ struct PlatformsView: View {
             guard !(runtime.architectures?.isEmpty ?? true), let displayedVariant else { return true }
             return runtime.supports(displayedVariant)
         }
+        // iOS, watchOS, visionOS, tvOS; newest version first within a platform
+        .sorted { lhs, rhs in
+            if lhs.platform.displayOrder != rhs.platform.displayOrder {
+                return lhs.platform.displayOrder < rhs.platform.displayOrder
+            }
+            return lhs.simulatorVersion.version.localizedStandardCompare(rhs.simulatorVersion.version) == .orderedDescending
+        }
         
         VStack {
             HStack {

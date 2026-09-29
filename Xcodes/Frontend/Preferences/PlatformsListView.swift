@@ -20,7 +20,7 @@ struct PlatformsListView: View {
         List(selection: $selectedRuntime) {
             Text("PlatformsList.Title")
                 .font(.body)
-            ForEach(runtimes.elements.sorted(\.key.order), id: \.key) { platform, runtimeList in
+            ForEach(runtimes.elements.sorted(\.key.displayOrder), id: \.key) { platform, runtimeList in
                 Section {
                     ForEach(runtimeList, id: \.self) { runtime in
                         HStack {
