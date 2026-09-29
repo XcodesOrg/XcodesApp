@@ -5434,7 +5434,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "When Xcodes installs an Xcode, it also downloads the selected simulator platforms for that Xcode alongside it, one platform at a time, for this Mac's architecture. Platforms that are already installed are skipped."
+            "value" : "When Xcodes installs an Xcode, it also downloads the selected simulator platforms for that Xcode at the same time, for this Mac's architecture. Platforms that are already installed are skipped. iOS includes the iPhone Duo simulator."
           }
         }
       }

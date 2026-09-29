@@ -395,8 +395,8 @@ extension AppState {
             .sorted { $0.platform.order < $1.platform.order }
     }
 
-    /// Downloads the platforms chosen in Settings for an Xcode being installed, one at a time,
-    /// alongside the Xcode download.
+    /// Downloads the platforms chosen in Settings for an Xcode being installed, in parallel with each
+    /// other and with the Xcode download, the same as pressing several Install buttons in the info pane.
     func autoDownloadPlatforms(for availableXcode: AvailableXcode) {
         let selection = AutoDownloadPlatformsSelection(rawValue: Current.defaults.string(forKey: AutoDownloadPlatformsSelection.defaultsKey) ?? "")
         guard !selection.isEmpty, let sdkBuilds = availableXcode.sdks?.allBuilds, !sdkBuilds.isEmpty else { return }
@@ -412,14 +412,7 @@ extension AppState {
         guard !runtimes.isEmpty else { return }
         Logger.appState.info("Automatically downloading platforms: \(runtimes.map(\.name).joined(separator: ", "))")
 
-        Task { @MainActor [weak self] in
-            for runtime in runtimes {
-                guard let self, !Task.isCancelled else { return }
-                self.downloadRuntime(runtime: runtime)
-                // Downloads run one at a time; xcodebuild doesn't handle concurrent platform downloads well.
-                await self.runtimeTasks[runtime.identifier]?.value
-            }
-        }
+        runtimes.forEach(downloadRuntime(runtime:))
     }
 }
 
