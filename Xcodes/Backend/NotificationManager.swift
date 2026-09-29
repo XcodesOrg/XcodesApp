@@ -154,9 +154,11 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
     }
     
     func scheduleNotification(title: String?, body: String, category: XcodesNotificationCategory) {
-          
         let content = UNMutableNotificationContent()
-        if let title = title {
+        // Unit tests run inside the app and simulate installing Xcode "0.0"; label those so they aren't mistaken for real installs.
+        if isTesting {
+            content.title = ["Test", title].compactMap { $0 }.joined(separator: ": ")
+        } else if let title = title {
             content.title = title
         }
         content.body = body
