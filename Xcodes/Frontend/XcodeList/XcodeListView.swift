@@ -422,14 +422,15 @@ private struct XcodeVersionGroupRow: View {
             }
             .buttonStyle(.plain)
 
-            // Like the progress ring and Active tag, the checkmark belongs to the deepest visible row
+            // Like the progress ring and Active tag, the checkmark and Open/Install belong to the deepest
+            // visible row, so an expanded group leaves them to the rows below it
             if !isExpanded {
                 selectControl
                     .padding(.trailing, 16)
+                installControl
+                    // Same column width as the Install/Open buttons, so the progress ring lines up with them
+                    .frame(minWidth: 67)
             }
-            installControl
-                // Same column width as the Install/Open buttons, so the progress ring lines up with them
-                .frame(minWidth: 67)
         }
         .padding(.leading, CGFloat(level) * TreeGuide.levelIndent)
         .padding(.vertical, level == 0 ? 8 : 5)
@@ -519,9 +520,7 @@ private struct XcodeVersionGroupRow: View {
 
     @ViewBuilder
     private var installControl: some View {
-        // Progress is shown once, on the deepest visible row: an expanded group leaves it to its children.
-        if !isExpanded,
-           let installingVersion,
+        if let installingVersion,
            case let .installing(installationStep) = installingVersion.installState {
             InstallationStepRowView(
                 installationStep: installationStep,
