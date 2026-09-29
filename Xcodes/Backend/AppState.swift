@@ -83,6 +83,10 @@ class AppState: ObservableObject {
     @Published var updateTask: Task<Void, Never>?
     var updateTaskID: UUID?
     var isUpdating: Bool { updateTask != nil }
+    /// Whether `updateTask` fetches available Xcodes, as opposed to only rescanning installed ones.
+    var updateTaskIsFullRefresh = false
+    /// The available Xcode list is always refreshed once per launch, regardless of cache age.
+    var hasRefreshedAvailableXcodesThisLaunch = false
     @Published var presentedSheet: XcodesSheet? = nil
     @Published var isProcessingAuthRequest = false
     private var authenticationRequestID: UUID?
@@ -480,13 +484,28 @@ class AppState: ObservableObject {
                     authenticationTaskID = nil
                 }
             }
+            let wasAuthenticated = isAuthenticated
             do {
                 try await operation()
+                if !wasAuthenticated, isAuthenticated {
+                    refreshAfterSignIn()
+                }
             } catch is CancellationError {
             } catch {
                 // performAuthenticationRequest owns auth error presentation.
             }
         }
+    }
+
+    private var isAuthenticated: Bool {
+        if case .authenticated = authenticationState { return true }
+        return false
+    }
+
+    /// Signing in unlocks the Apple data source, so restart any refresh that ran without a session.
+    private func refreshAfterSignIn() {
+        guard !isTesting else { return }
+        update(restartingInFlightUpdate: dataSource == .apple)
     }
 
     func signOut() {
