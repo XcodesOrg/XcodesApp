@@ -98,6 +98,8 @@ struct XcodeListViewRow: View {
             selectControl(for: xcode)
                 .padding(.trailing, 16)
             installControl(for: xcode)
+                // Same column width as the Install/Open buttons, so the progress ring lines up with them
+                .frame(minWidth: 67)
         }
         .padding(.vertical, 4)
         .contextMenu {

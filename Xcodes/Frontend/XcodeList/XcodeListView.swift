@@ -381,6 +381,8 @@ private struct XcodeVersionGroupRow: View {
             selectControl
                 .padding(.trailing, 16)
             installControl
+                // Same column width as the Install/Open buttons, so the progress ring lines up with them
+                .frame(minWidth: 67)
         }
         .padding(.leading, CGFloat(level) * TreeGuide.levelIndent)
         .padding(.vertical, level == 0 ? 8 : 5)
