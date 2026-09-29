@@ -285,7 +285,8 @@ extension AppState {
         }
     }
 
-    func confirmDeleteRuntime(runtime: DownloadableRuntime) {
+    /// - Parameter presentErrorInSettings: Show failures in the Settings window (Platforms list) instead of the main window.
+    func confirmDeleteRuntime(runtime: DownloadableRuntime, presentErrorInSettings: Bool = true) {
         deleteRuntimeTask?.cancel()
         let taskID = UUID()
         deleteRuntimeTaskID = taskID
@@ -303,10 +304,17 @@ extension AppState {
             } catch is CancellationError {
             } catch {
                 guard self.deleteRuntimeTaskID == taskID else { return }
-                self.presentedPreferenceAlert = .generic(
-                    title: "Error",
-                    message: self.runtimeDeletionErrorMessage(error)
-                )
+                if presentErrorInSettings {
+                    self.presentedPreferenceAlert = .generic(
+                        title: "Error",
+                        message: self.runtimeDeletionErrorMessage(error)
+                    )
+                } else {
+                    self.presentedAlert = .generic(
+                        title: "Error",
+                        message: self.runtimeDeletionErrorMessage(error)
+                    )
+                }
             }
         }
     }

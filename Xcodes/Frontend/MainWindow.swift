@@ -204,6 +204,15 @@ struct MainWindow: View {
                     Text("Cancel")
                 )
             )
+        case let .deletePlatform(runtime):
+            return Alert(
+                title: Text(String(format: localizeString("Alert.DeletePlatform.Title"), runtime.name)),
+                primaryButton: .destructive(
+                    Text("Alert.DeletePlatform.PrimaryButton"),
+                    action: { appState.confirmDeleteRuntime(runtime: runtime, presentErrorInSettings: false) }
+                ),
+                secondaryButton: .cancel(Text("Cancel"))
+            )
         case let .checkMinSupportedVersion(xcode, deviceVersion):
             return Alert(
                 title: Text("Alert.MinSupported.Title"),

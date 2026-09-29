@@ -91,6 +91,14 @@ struct PlatformsView: View {
                 }
                
                 pathIfAvailable(xcode: xcode, runtime: runtime)
+
+                if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
+                    Spacer()
+                    Button("Uninstall", role: .destructive) {
+                        appState.presentedAlert = .deletePlatform(runtime: runtime)
+                    }
+                    .help("Alert.DeletePlatform.PrimaryButton")
+                }
                 
                 if runtime.installState == .notInstalled {
                     // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
