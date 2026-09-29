@@ -20,7 +20,7 @@ struct XcodesApp: App {
                 // so that it's triggered when an individual window's phase changes instead of all window phases.
                 // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup.
                 // FB8954581 ScenePhase read from App doesn't return a value on launch
-                .onChange(of: scenePhase) { newScenePhase in
+                .onChange(of: scenePhase) { _, newScenePhase in
                     guard !isTesting else { return }
                     if case .active = newScenePhase {
                         appState.updateIfNeeded()
