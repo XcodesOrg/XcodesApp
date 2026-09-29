@@ -58,12 +58,16 @@ struct PlatformsListView: View {
         .onChange(of: appState.installedRuntimes) { _ in
             loadRuntimes()
         }
+        .onChange(of: appState.downloadableRuntimes) { _ in
+            loadRuntimes()
+        }
     }
     
     func loadRuntimes() {
+        // Match on architecture too, so a build published as both Apple Silicon and Universal
+        // only lists the variant that is actually installed (and can therefore be deleted).
         let filteredRuntimes = appState.downloadableRuntimes.filter { runtime in
-            appState.installedRuntimes.contains { $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate
-            }
+            appState.coreSimulatorInfo(runtime: runtime) != nil
         }
         runtimes = OrderedDictionary(grouping: filteredRuntimes, by: { $0.platform })
     }
