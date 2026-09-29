@@ -234,7 +234,7 @@ final class HelperClient {
         do {
             let authRef = try authorizationRef(&authRights, nil, [.interactionAllowed, .extendRights, .preAuthorize])
             var cfError: Unmanaged<CFError>?
-            SMJobBless(kSMDomainSystemLaunchd, machServiceName as CFString, authRef, &cfError)
+            (SMJobBlessInstaller() as PrivilegedHelperBlessing).bless(label: machServiceName, authorization: authRef, error: &cfError)
             if let error = cfError?.takeRetainedValue() { throw error }
 
             self.connection?.invalidate()
@@ -265,6 +265,23 @@ final class HelperClient {
         var authRef: AuthorizationRef?
         try executeAuthorizationFunction { AuthorizationCreate(rights, environment, flags, &authRef) }
         return authRef
+    }
+}
+
+/// Installs the privileged helper with SMJobBless, which macOS 13 deprecated in favor of SMAppService.
+/// SMAppService uses a different install and approval model (a bundled launch daemon plist, approved in
+/// System Settings), so the move is a separate change. Until then the one legacy call lives here, and is
+/// reached through a protocol so the known deprecation doesn't warn on every build.
+private protocol PrivilegedHelperBlessing {
+    @discardableResult
+    func bless(label: String, authorization: AuthorizationRef?, error: inout Unmanaged<CFError>?) -> Bool
+}
+
+private struct SMJobBlessInstaller: PrivilegedHelperBlessing {
+    @available(macOS, deprecated: 13.0, message: "Move the privileged helper to SMAppService")
+    @discardableResult
+    func bless(label: String, authorization: AuthorizationRef?, error: inout Unmanaged<CFError>?) -> Bool {
+        SMJobBless(kSMDomainSystemLaunchd, label as CFString, authorization, &error)
     }
 }
 
