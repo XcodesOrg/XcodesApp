@@ -11158,6 +11158,7 @@
       }
     },
     "HelperClient.error.AuthorizationFailed" : {
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -11168,7 +11169,7 @@
       }
     },
     "HelperClient.error.InvalidSignature" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -11179,7 +11180,7 @@
       }
     },
     "HelperClient.error.UnreachableAfterInstall" : {
-      "extractionState" : "stale",
+      "extractionState" : "manual",
       "localizations" : {
         "en" : {
           "stringUnit" : {

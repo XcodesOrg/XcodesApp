@@ -237,7 +237,8 @@ final class HelperClient {
             var cfError: Unmanaged<CFError>?
             SMJobBless(kSMDomainSystemLaunchd, machServiceName as CFString, authRef, &cfError)
             if let error = cfError?.takeRetainedValue() {
-                if CFErrorGetDomain(error) as String == kSMErrorDomainLaunchd as String {
+                // kSMErrorDomainLaunchd is deprecated, but SMJobBless still reports its errors in that domain
+                if CFErrorGetDomain(error) as String == "CFErrorDomainLaunchd" {
                     switch CFErrorGetCode(error) {
                     case kSMErrorInvalidSignature:
                         throw HelperClientError.invalidSignature(underlyingError: error)
