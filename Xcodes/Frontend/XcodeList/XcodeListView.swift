@@ -116,6 +116,25 @@ private struct GroupedXcodeListContent: View {
         allXcodes.latestReleaseForSelectedPrerelease(xcode)
     }
 
+    /// The newest non-prerelease version across the whole list, tagged "Latest"
+    private var latestStableVersion: Version? {
+        allXcodes.latestRelease?.version
+    }
+
+    private func isLatestRelease(_ xcode: Xcode) -> Bool {
+        guard let latestStableVersion, xcode.version.isNotPrerelease else { return false }
+        return xcode.version.isEquivalent(to: latestStableVersion)
+    }
+
+    /// Latest when the group holds the newest release; otherwise, for a group of only prereleases, its newest seed.
+    private func groupTag(for versions: [Xcode]) -> ReleaseTagView? {
+        if versions.contains(where: isLatestRelease) {
+            return .latest
+        }
+        guard versions.allSatisfy(\.version.isPrerelease), let newest = versions.max(by: { $0.version < $1.version }) else { return nil }
+        return ReleaseTagView(prereleaseOf: newest.version)
+    }
+
     var body: some View {
         ForEach(majorVersionGroups) { majorVersionGroup in
             let isMajorExpanded = expandedMajorVersions.contains(majorVersionGroup.majorVersion)
@@ -135,6 +154,7 @@ private struct GroupedXcodeListContent: View {
                 isExpanded: isMajorExpanded,
                 level: 0,
                 versionCount: majorVersions.count,
+                tag: majorVersions.contains(where: isLatestRelease) ? .latest : nil,
                 appState: appState,
                 onToggleExpanded: {
                     var updatedExpandedMajorVersions = expandedMajorVersions
@@ -173,6 +193,7 @@ private struct GroupedXcodeListContent: View {
                         isExpanded: isMinorExpanded,
                         level: 1,
                         versionCount: minorVersions.count,
+                        tag: groupTag(for: minorVersions),
                         appState: appState,
                         onToggleExpanded: {
                             var updatedExpandedMinorVersions = expandedMinorVersions
@@ -203,7 +224,8 @@ private struct GroupedXcodeListContent: View {
                                 selected: selectedXcodeID == entry.xcode.id,
                                 appState: appState,
                                 latestReleaseForSelectedPrerelease: latestReleaseForSelectedPrerelease(entry.xcode),
-                                style: .grouped
+                                style: .grouped,
+                                isLatestRelease: isLatestRelease(entry.xcode)
                             )
                                 .padding(.leading, TreeGuide.contentInset(forLevel: 2))
                                 .background(alignment: .leading) {
@@ -307,6 +329,7 @@ private struct XcodeVersionGroupRow: View {
     let isExpanded: Bool
     let level: Int
     let versionCount: Int
+    let tag: ReleaseTagView?
     let appState: AppState
     let onToggleExpanded: () -> Void
 
@@ -333,6 +356,10 @@ private struct XcodeVersionGroupRow: View {
                                 .padding(.vertical, 1)
                                 .background(.quaternary, in: Capsule())
                                 .accessibilityHidden(true)
+
+                            if let tag {
+                                tag
+                            }
                         }
 
                         if let latestRelease {

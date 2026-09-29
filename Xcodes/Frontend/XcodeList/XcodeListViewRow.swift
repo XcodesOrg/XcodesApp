@@ -7,7 +7,7 @@ struct XcodeListViewRow: View {
     enum Style {
         /// "27.0 Beta 6 (27A5252f)", used by the flat list
         case flat
-        /// "27.0 – Beta 6" with the build moved to the caption, used under a version group
+        /// "27.0" followed by release tags (Beta 6, RC, Latest), with the build in the caption, used under a version group
         case grouped
     }
 
@@ -16,13 +16,15 @@ struct XcodeListViewRow: View {
     let appState: AppState
     let latestReleaseForSelectedPrerelease: Xcode?
     let style: Style
+    let isLatestRelease: Bool
 
-    init(xcode: Xcode, selected: Bool, appState: AppState, latestReleaseForSelectedPrerelease: Xcode? = nil, style: Style = .flat) {
+    init(xcode: Xcode, selected: Bool, appState: AppState, latestReleaseForSelectedPrerelease: Xcode? = nil, style: Style = .flat, isLatestRelease: Bool = false) {
         self.xcode = xcode
         self.selected = selected
         self.appState = appState
         self.latestReleaseForSelectedPrerelease = latestReleaseForSelectedPrerelease
         self.style = style
+        self.isLatestRelease = isLatestRelease
     }
 
     private var title: String {
@@ -31,9 +33,7 @@ struct XcodeListViewRow: View {
             return "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)"
         case .grouped:
             let version = xcode.version
-            let base = Version(major: version.major, minor: version.minor, patch: version.patch).appleDescription
-            let prerelease = xcode.description.dropFirst(base.count).trimmingCharacters(in: .whitespaces)
-            return prerelease.isEmpty ? base : "\(base) – \(prerelease)"
+            return Version(major: version.major, minor: version.minor, patch: version.patch).appleDescription
         }
     }
 
@@ -57,6 +57,15 @@ struct XcodeListViewRow: View {
                 HStack {
                     Text(verbatim: title)
                         .font(.body)
+
+                    if style == .grouped {
+                        if let prereleaseTag = ReleaseTagView(prereleaseOf: xcode.version) {
+                            prereleaseTag
+                        }
+                        if isLatestRelease {
+                            ReleaseTagView.latest
+                        }
+                    }
 
                     if !xcode.identicalBuildsForCurrentVariant.isEmpty {
                         Image(systemName: "square.fill.on.square.fill")

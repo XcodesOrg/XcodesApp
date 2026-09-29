@@ -24309,6 +24309,17 @@
         }
       }
     },
+    "Tag.Latest" : {
+      "comment" : "Tag on the newest non-prerelease Xcode in the list",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest"
+          }
+        }
+      }
+    },
     "TerminateAfterLastWindowClosed" : {
       "localizations" : {
         "ar" : {
