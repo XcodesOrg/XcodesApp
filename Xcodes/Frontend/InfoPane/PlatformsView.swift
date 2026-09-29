@@ -92,27 +92,19 @@ struct PlatformsView: View {
                
                 pathIfAvailable(xcode: xcode, runtime: runtime)
 
+                // One spacer, so the action button sits next to the size column on every row
+                Spacer()
+
+                // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
                 if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
-                    Spacer()
                     Button("Uninstall", role: .destructive) {
                         appState.presentedAlert = .deletePlatform(runtime: runtime)
                     }
                     .help("Alert.DeletePlatform.PrimaryButton")
+                } else if runtime.installState == .notInstalled {
+                    DownloadRuntimeButton(runtime: runtime)
                 }
-                
-                if runtime.installState == .notInstalled {
-                    // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
-                    if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
-                        EmptyView()
-                    } else {
-                        HStack {
-                            Spacer()
-                            DownloadRuntimeButton(runtime: runtime)
-                        }
-                    }
-                }
-					
-                Spacer()
+
                 Text(runtime.downloadFileSizeString)
                     .font(.subheadline)
 						  .frame(width: 70, alignment: .trailing)
