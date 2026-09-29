@@ -395,7 +395,8 @@ extension AppState {
             .sorted { $0.platform.order < $1.platform.order }
     }
 
-    /// Downloads the platforms chosen in Settings for a newly installed Xcode, one at a time.
+    /// Downloads the platforms chosen in Settings for an Xcode being installed, one at a time,
+    /// alongside the Xcode download.
     func autoDownloadPlatforms(for availableXcode: AvailableXcode) {
         let selection = AutoDownloadPlatformsSelection(rawValue: Current.defaults.string(forKey: AutoDownloadPlatformsSelection.defaultsKey) ?? "")
         guard !selection.isEmpty, let sdkBuilds = availableXcode.sdks?.allBuilds, !sdkBuilds.isEmpty else { return }
