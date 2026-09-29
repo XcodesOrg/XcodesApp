@@ -48,7 +48,10 @@ struct XcodeListViewRow: View {
 
     var body: some View {
         HStack {
-            appIconView(for: xcode)
+            // Rows under a version group rely on the group's icon
+            if style == .flat {
+                appIconView(for: xcode)
+            }
 
             VStack(alignment: .leading) {
                 HStack {
@@ -57,17 +60,17 @@ struct XcodeListViewRow: View {
 
                     if style == .grouped {
                         if let prereleaseTag = ReleaseTagView(prereleaseOf: xcode.version) {
-                            prereleaseTag
+                            prereleaseTag.onSelection(selected)
                         }
                         if isLatestRelease {
-                            ReleaseTagView.latest
+                            ReleaseTagView.latest.onSelection(selected)
                         }
                     }
 
                     if !xcode.identicalBuildsForCurrentVariant.isEmpty {
                         Image(systemName: "square.fill.on.square.fill")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .accessibility(label: Text("IdenticalBuilds"))
                             .accessibility(value: Text(xcode.identicalBuildsForCurrentVariant.map(\.version.appleDescription).joined(separator: ", ")))
                             .help("IdenticalBuilds.help")
@@ -76,7 +79,7 @@ struct XcodeListViewRow: View {
                     if xcode.architectures?.isAppleSilicon ?? false {
                         Image(systemName: "m4.button.horizontal")
                             .font(.subheadline)
-                            .foregroundColor(.secondary)
+                            .foregroundStyle(.secondary)
                             .accessibility(label: Text("Apple Silicon"))
                             .help("Apple Silicon")
                     }
@@ -85,7 +88,8 @@ struct XcodeListViewRow: View {
                 if let caption {
                     Text(verbatim: caption)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        // A hierarchical style stays legible on the selection highlight, unlike Color.secondary
+                        .foregroundStyle(.secondary)
                 }
             }
 
@@ -140,7 +144,7 @@ struct XcodeListViewRow: View {
             Image(xcode.version.isPrerelease ? "xcode-beta" : "xcode")
                 .resizable()
                 .frame(width: 32, height: 32)
-                .opacity(0.2)
+                .opacity(0.5)
         }
     }
 

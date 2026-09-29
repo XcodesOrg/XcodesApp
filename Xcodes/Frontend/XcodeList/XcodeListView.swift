@@ -342,12 +342,18 @@ private struct XcodeVersionGroupRow: View {
                         .foregroundColor(.secondary)
                         .frame(width: 12, height: 12)
 
-                    icon
+                    if level == 0 {
+                        icon
+                    }
 
                     VStack(alignment: .leading, spacing: 2) {
                         HStack(spacing: 6) {
                             Text(verbatim: displayName)
                                 .font(level == 0 ? .headline : .body.weight(.medium))
+
+                            if let tag {
+                                tag
+                            }
 
                             Text(verbatim: "\(versionCount)")
                                 .font(.caption2.weight(.semibold).monospacedDigit())
@@ -356,10 +362,6 @@ private struct XcodeVersionGroupRow: View {
                                 .padding(.vertical, 1)
                                 .background(.quaternary, in: Capsule())
                                 .accessibilityHidden(true)
-
-                            if let tag {
-                                tag
-                            }
                         }
 
                         if let latestRelease {
@@ -395,7 +397,7 @@ private struct XcodeVersionGroupRow: View {
             Image(latestRelease?.version.isPrerelease == true ? "xcode-beta" : "xcode")
                 .resizable()
                 .frame(width: 32, height: 32)
-                .opacity(0.2)
+                .opacity(0.5)
         }
     }
 

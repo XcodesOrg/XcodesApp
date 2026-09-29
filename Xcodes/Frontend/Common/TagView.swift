@@ -45,16 +45,25 @@ struct ReleaseTagView: View {
 
     let label: Text
     let kind: Kind
+    /// On a selected row the tint would disappear into the highlight, so draw it in white instead
+    var isOnSelection = false
 
     var body: some View {
+        let color = isOnSelection ? Color.white : kind.color
         label
             .font(.caption2.weight(.semibold))
-            .foregroundStyle(kind.color)
+            .foregroundStyle(color)
             .padding(.horizontal, 6)
             .padding(.vertical, 1)
-            .background(kind.color.opacity(0.16), in: Capsule())
-            .overlay(Capsule().strokeBorder(kind.color.opacity(0.35), lineWidth: 0.5))
+            .background(color.opacity(isOnSelection ? 0.22 : 0.16), in: Capsule())
+            .overlay(Capsule().strokeBorder(color.opacity(isOnSelection ? 0.6 : 0.35), lineWidth: 0.5))
             .fixedSize()
+    }
+
+    func onSelection(_ isOnSelection: Bool) -> ReleaseTagView {
+        var tag = self
+        tag.isOnSelection = isOnSelection
+        return tag
     }
 }
 
