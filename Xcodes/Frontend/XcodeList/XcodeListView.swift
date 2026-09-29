@@ -429,8 +429,9 @@ private struct XcodeVersionGroupRow: View {
                 .help("ActiveVersionDescription")
         } else if let latestSelectionTarget {
             Button(action: { appState.select(xcode: latestSelectionTarget) }) {
+                // Installed but not active: green outline; the active Xcode gets the filled check
                 Image(systemName: "checkmark.circle")
-                    .foregroundColor(.secondary)
+                    .foregroundColor(.green)
             }
             .buttonStyle(PlainButtonStyle())
             .help("MakeActiveVersionDescription")

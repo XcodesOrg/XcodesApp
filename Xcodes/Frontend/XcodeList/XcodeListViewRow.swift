@@ -169,8 +169,9 @@ struct XcodeListViewRow: View {
                     .help("ActiveVersionDescription")
             } else {
                 Button(action: { appState.select(xcode: xcode) }) {
+                    // Installed but not active: green outline; the active Xcode gets the filled check
                     Image(systemName: "checkmark.circle")
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.green)
                 }
                 .buttonStyle(PlainButtonStyle())
                 .help("MakeActiveVersionDescription")
