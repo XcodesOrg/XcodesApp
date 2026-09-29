@@ -27,7 +27,7 @@ struct DownloadPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             .disabled(dataSource.isManaged)
-            .onChange(of: dataSource) { _ in
+            .onChange(of: dataSource) {
                 // The cached list belongs to the previous source, so fetch the new one right away.
                 appState.isChangingDataSource = true
                 appState.update(restartingInFlightUpdate: true)
