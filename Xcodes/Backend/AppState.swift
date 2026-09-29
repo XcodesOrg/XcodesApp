@@ -45,7 +45,10 @@ class AppState: ObservableObject {
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
-            if !Self.newlyAvailableXcodes(oldXcodes: availableXcodes, newXcodes: newValue).isEmpty {
+            if isChangingDataSource {
+                // The sources identify releases differently, so everything would look new.
+                isChangingDataSource = false
+            } else if !Self.newlyAvailableXcodes(oldXcodes: availableXcodes, newXcodes: newValue).isEmpty {
                 Current.notificationManager.scheduleNotification(title: localizeString("Notification.NewXcodeVersion.Title"), body: localizeString("Notification.NewXcodeVersion.Body"), category: .normal)
             }
             updateAllXcodes(
@@ -87,6 +90,8 @@ class AppState: ObservableObject {
     var updateTaskIsFullRefresh = false
     /// The available Xcode list is always refreshed once per launch, regardless of cache age.
     var hasRefreshedAvailableXcodesThisLaunch = false
+    /// Set while refreshing after a data source change, so the new list isn't announced as new versions
+    var isChangingDataSource = false
     @Published var presentedSheet: XcodesSheet? = nil
     @Published var isProcessingAuthRequest = false
     private var authenticationRequestID: UUID?
