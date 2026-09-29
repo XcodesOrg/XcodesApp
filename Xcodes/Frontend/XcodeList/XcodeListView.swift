@@ -373,7 +373,9 @@ private struct XcodeVersionGroupRow: View {
     var body: some View {
         HStack {
             Button(action: onToggleExpanded) {
-                HStack(spacing: 8) {
+                // Nested rows line the chevron up with the title, where the tree guide branch ends;
+                // top-level rows center it on the icon.
+                HStack(alignment: level == 0 ? .center : .firstTextBaseline, spacing: 8) {
                     Image(systemName: isExpanded ? "chevron.down" : "chevron.right")
                         .font(.caption.weight(.semibold))
                         .foregroundColor(.secondary)
