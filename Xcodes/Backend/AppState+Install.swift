@@ -246,6 +246,7 @@ extension AppState {
             self.presentedAlert = .generic(title: localizeString("Alert.InstallArchive.Error.Title"), message: error.legibleLocalizedDescription)
         }
         resetDockProgressTracking()
+        autoDownloadPlatforms(for: availableXcode)
 
         return installedXcode
     }

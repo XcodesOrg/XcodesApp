@@ -78,6 +78,67 @@ class AppStateUpdateTests: XCTestCase {
         XCTAssertEqual(subject.selectedXcodePath, "/Applications/Xcode-Beta.app")
     }
 
+    func test_AutoDownloadPlatformsSelection_RoundTrips() {
+        XCTAssertTrue(AutoDownloadPlatformsSelection(rawValue: "").isEmpty)
+        XCTAssertTrue(AutoDownloadPlatformsSelection(rawValue: "all").includes(.visionOS))
+
+        let selection = AutoDownloadPlatformsSelection(platforms: [.watchOS, .iOS])
+        XCTAssertEqual(selection.rawValue, "com.apple.platform.iphoneos,com.apple.platform.watchos")
+        XCTAssertEqual(AutoDownloadPlatformsSelection(rawValue: selection.rawValue), selection)
+        XCTAssertFalse(selection.includes(.tvOS))
+    }
+
+    func test_RuntimesToAutoDownload_PicksSelectedPlatformsMatchingSDKsAndArchitecture() throws {
+        let runtimes = try [
+            runtime(platform: "iphoneos", identifier: "ios-arm", sdkBuild: "24A5422a", simulatorBuild: "24A5422a", architectures: ["arm64"]),
+            runtime(platform: "iphoneos", identifier: "ios-universal", sdkBuild: "24A5422a", simulatorBuild: "24A5422a", architectures: ["arm64", "x86_64"]),
+            runtime(platform: "iphoneos", identifier: "ios-older", sdkBuild: "24A5408c", simulatorBuild: "24A5408c", architectures: ["arm64"]),
+            runtime(platform: "watchos", identifier: "watch-arm", sdkBuild: "24R5355a", simulatorBuild: "24R5355a", architectures: ["arm64"]),
+            runtime(platform: "appletvos", identifier: "tv-arm", sdkBuild: "24J5356a", simulatorBuild: "24J5356a", architectures: ["arm64"]),
+        ]
+
+        let picked = AppState.runtimesToAutoDownload(
+            sdkBuilds: ["24A5422a", "24R5355a", "24J5356a"],
+            downloadableRuntimes: runtimes,
+            selection: AutoDownloadPlatformsSelection(platforms: [.iOS, .watchOS]),
+            variant: .appleSilicon,
+            isInstalled: { $0.identifier == "watch-arm" }
+        )
+
+        XCTAssertEqual(picked.map(\.identifier), ["ios-arm"])
+    }
+
+    func test_RuntimesToAutoDownload_NothingSelectedDownloadsNothing() throws {
+        let runtimes = try [runtime(platform: "iphoneos", identifier: "ios-arm", sdkBuild: "24A5422a", simulatorBuild: "24A5422a", architectures: ["arm64"])]
+
+        let picked = AppState.runtimesToAutoDownload(
+            sdkBuilds: ["24A5422a"],
+            downloadableRuntimes: runtimes,
+            selection: AutoDownloadPlatformsSelection(),
+            variant: .appleSilicon,
+            isInstalled: { _ in false }
+        )
+
+        XCTAssertTrue(picked.isEmpty)
+    }
+
+    private func runtime(platform: String, identifier: String, sdkBuild: String, simulatorBuild: String, architectures: [String]) throws -> DownloadableRuntime {
+        let json: [String: Any] = [
+            "sdkBuildUpdate": [sdkBuild],
+            "architectures": architectures,
+            "name": identifier,
+            "platform": "com.apple.platform.\(platform)",
+            "simulatorVersion": ["version": "27.0", "buildUpdate": simulatorBuild],
+            "contentType": "cryptexDiskImage",
+            "dictionaryVersion": 2,
+            "version": "27.0.0.1",
+            "category": "simulator",
+            "identifier": identifier,
+            "fileSize": 1,
+        ]
+        return try JSONDecoder().decode(DownloadableRuntime.self, from: JSONSerialization.data(withJSONObject: json))
+    }
+
     func testDoesNotReplaceInstallState() throws {
         subject.allXcodes = [
             Xcode(version: Version("0.0.0")!, installState: .installing(.unarchiving), selected: false, icon: nil)

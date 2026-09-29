@@ -5409,6 +5409,36 @@
         }
       }
     },
+    "AutoDownloadPlatforms" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Platforms"
+          }
+        }
+      }
+    },
+    "AutoDownloadPlatforms.All" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Download all platforms"
+          }
+        }
+      }
+    },
+    "AutoDownloadPlatformsDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "After Xcodes installs an Xcode, it also downloads the selected simulator platforms for that Xcode, one at a time, for this Mac's architecture. Platforms that are already installed are skipped."
+          }
+        }
+      }
+    },
     "AutomaticallyCreateSymbolicLink" : {
       "localizations" : {
         "ar" : {

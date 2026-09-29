@@ -319,3 +319,117 @@ extension AppState {
         return error.localizedDescription
     }
 }
+
+// MARK: - Automatic platform downloads
+
+/// The simulator platforms to download automatically after Xcodes installs an Xcode, as chosen in Settings.
+struct AutoDownloadPlatformsSelection: Equatable {
+    static let defaultsKey = "autoDownloadPlatforms"
+    static let choosablePlatforms: [DownloadableRuntime.Platform] = [.iOS, .watchOS, .tvOS, .visionOS]
+    private static let allToken = "all"
+
+    var isAll: Bool
+    var platforms: Set<DownloadableRuntime.Platform>
+
+    init(isAll: Bool = false, platforms: Set<DownloadableRuntime.Platform> = []) {
+        self.isAll = isAll
+        self.platforms = platforms
+    }
+
+    /// Parses the stored value: "all", or a comma-separated list of platform identifiers.
+    init(rawValue: String) {
+        let components = rawValue.split(separator: ",").map(String.init)
+        self.isAll = components.contains(Self.allToken)
+        self.platforms = Set(components.compactMap(DownloadableRuntime.Platform.init(rawValue:)))
+    }
+
+    var rawValue: String {
+        if isAll { return Self.allToken }
+        return Self.choosablePlatforms.filter(platforms.contains).map(\.rawValue).joined(separator: ",")
+    }
+
+    var isEmpty: Bool {
+        !isAll && platforms.isEmpty
+    }
+
+    func includes(_ platform: DownloadableRuntime.Platform) -> Bool {
+        isAll || platforms.contains(platform)
+    }
+}
+
+extension AppState {
+    /// Picks one runtime per selected platform that matches the Xcode's SDKs and the architecture variant,
+    /// skipping platforms that are already installed or installing.
+    static func runtimesToAutoDownload(
+        sdkBuilds: [String],
+        downloadableRuntimes: [DownloadableRuntime],
+        selection: AutoDownloadPlatformsSelection,
+        variant: ArchitectureVariant,
+        isInstalled: (DownloadableRuntime) -> Bool
+    ) -> [DownloadableRuntime] {
+        guard !selection.isEmpty else { return [] }
+
+        let candidates = downloadableRuntimes.filter { runtime in
+            selection.includes(runtime.platform) &&
+                sdkBuilds.contains { runtime.sdkBuildUpdate?.contains($0) ?? false } &&
+                runtime.supports(variant)
+        }
+
+        var runtimesByPlatform: [DownloadableRuntime.Platform: DownloadableRuntime] = [:]
+        for runtime in candidates {
+            guard let existing = runtimesByPlatform[runtime.platform] else {
+                runtimesByPlatform[runtime.platform] = runtime
+                continue
+            }
+            // Prefer the newest simulator build for the platform
+            if runtime.simulatorVersion.buildUpdate.localizedStandardCompare(existing.simulatorVersion.buildUpdate) == .orderedDescending {
+                runtimesByPlatform[runtime.platform] = runtime
+            }
+        }
+
+        return runtimesByPlatform.values
+            .filter { runtime in
+                if case .installing = runtime.installState { return false }
+                return !isInstalled(runtime)
+            }
+            .sorted { $0.platform.order < $1.platform.order }
+    }
+
+    /// Downloads the platforms chosen in Settings for a newly installed Xcode, one at a time.
+    func autoDownloadPlatforms(for availableXcode: AvailableXcode) {
+        let selection = AutoDownloadPlatformsSelection(rawValue: Current.defaults.string(forKey: AutoDownloadPlatformsSelection.defaultsKey) ?? "")
+        guard !selection.isEmpty, let sdkBuilds = availableXcode.sdks?.allBuilds, !sdkBuilds.isEmpty else { return }
+
+        let variant = Current.defaults.string(forKey: "selectedRuntimeArchitecture").flatMap(ArchitectureVariant.init(rawValue:)) ?? .defaultForMachine()
+        let runtimes = Self.runtimesToAutoDownload(
+            sdkBuilds: sdkBuilds,
+            downloadableRuntimes: downloadableRuntimes,
+            selection: selection,
+            variant: variant,
+            isInstalled: { self.coreSimulatorInfo(runtime: $0) != nil }
+        )
+        guard !runtimes.isEmpty else { return }
+        Logger.appState.info("Automatically downloading platforms: \(runtimes.map(\.name).joined(separator: ", "))")
+
+        Task { @MainActor [weak self] in
+            for runtime in runtimes {
+                guard let self, !Task.isCancelled else { return }
+                self.downloadRuntime(runtime: runtime)
+                // Downloads run one at a time; xcodebuild doesn't handle concurrent platform downloads well.
+                await self.runtimeTasks[runtime.identifier]?.value
+            }
+        }
+    }
+}
+
+private extension DownloadableRuntime {
+    func supports(_ variant: ArchitectureVariant) -> Bool {
+        guard let architectures, !architectures.isEmpty else { return true }
+        switch variant {
+        case .universal:
+            return architectures.isUniversal
+        case .appleSilicon:
+            return architectures.isAppleSilicon
+        }
+    }
+}
