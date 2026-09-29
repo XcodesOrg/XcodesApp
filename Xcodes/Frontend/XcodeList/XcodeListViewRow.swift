@@ -4,16 +4,49 @@ import Version
 import XcodesKit
 
 struct XcodeListViewRow: View {
+    enum Style {
+        /// "27.0 Beta 6 (27A5252f)", used by the flat list
+        case flat
+        /// "27.0 – Beta 6" with the build moved to the caption, used under a version group
+        case grouped
+    }
+
     let xcode: Xcode
     let selected: Bool
     let appState: AppState
     let latestReleaseForSelectedPrerelease: Xcode?
+    let style: Style
 
-    init(xcode: Xcode, selected: Bool, appState: AppState, latestReleaseForSelectedPrerelease: Xcode? = nil) {
+    init(xcode: Xcode, selected: Bool, appState: AppState, latestReleaseForSelectedPrerelease: Xcode? = nil, style: Style = .flat) {
         self.xcode = xcode
         self.selected = selected
         self.appState = appState
         self.latestReleaseForSelectedPrerelease = latestReleaseForSelectedPrerelease
+        self.style = style
+    }
+
+    private var title: String {
+        switch style {
+        case .flat:
+            return "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)"
+        case .grouped:
+            let version = xcode.version
+            let base = Version(major: version.major, minor: version.minor, patch: version.patch).appleDescription
+            let prerelease = xcode.description.dropFirst(base.count).trimmingCharacters(in: .whitespaces)
+            return prerelease.isEmpty ? base : "\(base) – \(prerelease)"
+        }
+    }
+
+    /// Secondary line: the build (grouped style only) and the install path, when present.
+    private var caption: String? {
+        var parts: [String] = []
+        if style == .grouped {
+            parts.append(contentsOf: xcode.version.buildMetadataIdentifiers)
+        }
+        if case let .installed(path) = xcode.installState {
+            parts.append(path.string)
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
     var body: some View {
@@ -22,7 +55,7 @@ struct XcodeListViewRow: View {
 
             VStack(alignment: .leading) {
                 HStack {
-                    Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
+                    Text(verbatim: title)
                         .font(.body)
 
                     if !xcode.identicalBuildsForCurrentVariant.isEmpty {
@@ -43,8 +76,8 @@ struct XcodeListViewRow: View {
                     }
                 }
 
-                if case let .installed(path) = xcode.installState {
-                    Text(verbatim: path.string)
+                if let caption {
+                    Text(verbatim: caption)
                         .font(.caption)
                         .foregroundColor(.secondary)
                 }

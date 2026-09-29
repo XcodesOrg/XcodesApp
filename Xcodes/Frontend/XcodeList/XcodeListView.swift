@@ -124,7 +124,7 @@ private struct GroupedXcodeListContent: View {
             let latestInstalledMajorVersion = majorVersions.latestInstalledVersion
 
             XcodeVersionGroupRow(
-                displayName: majorVersionGroup.displayName,
+                displayName: "Xcode \(majorVersionGroup.displayName)",
                 latestRelease: latestMajorRelease,
                 latestSelectableRelease: latestMajorRelease,
                 latestSelectionTarget: latestInstalledMajorVersion,
@@ -188,7 +188,8 @@ private struct GroupedXcodeListContent: View {
                                 xcode: entry.xcode,
                                 selected: selectedXcodeID == entry.xcode.id,
                                 appState: appState,
-                                latestReleaseForSelectedPrerelease: latestReleaseForSelectedPrerelease(entry.xcode)
+                                latestReleaseForSelectedPrerelease: latestReleaseForSelectedPrerelease(entry.xcode),
+                                style: .grouped
                             )
                                 .padding(.leading, 40)
                                 .tag(entry.xcode.id)
@@ -224,7 +225,7 @@ private struct XcodeVersionGroupRow: View {
                     icon
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(verbatim: "Xcode \(displayName)")
+                        Text(verbatim: displayName)
                             .font(.body.weight(indentation == 0 ? .medium : .regular))
 
                         if let latestRelease {
