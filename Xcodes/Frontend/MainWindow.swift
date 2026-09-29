@@ -219,6 +219,8 @@ struct MainWindow: View {
                     Text("Cancel")
                 )
             )
+        case let .noActiveXcode(runtime, xcode):
+            return .noActiveXcode(appState: appState, runtime: runtime, xcode: xcode, inSettings: false)
         case let .deletePlatform(runtime):
             return Alert(
                 title: Text(String(format: localizeString("Alert.DeletePlatform.Title"), runtime.name)),

@@ -2971,6 +2971,50 @@
         }
       }
     },
+    "Alert.NoActiveXcode.Message" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Removing %1$@ uses simctl, which comes with Xcode. The active developer directory is %2$@, which doesn't include it."
+          }
+        }
+      }
+    },
+    "Alert.NoActiveXcode.NoneInstalled" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Install a release of Xcode, make it active, then try again."
+          }
+        }
+      }
+    },
+    "Alert.NoActiveXcode.PrimaryButton" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Make %@ Active and Retry"
+          }
+        }
+      }
+    },
+    "Alert.NoActiveXcode.Title" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No Xcode Is Active"
+          }
+        }
+      }
+    },
     "Alert.PostInstall.Title" : {
       "comment" : "Post install",
       "extractionState" : "manual",

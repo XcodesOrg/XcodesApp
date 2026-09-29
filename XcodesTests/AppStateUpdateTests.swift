@@ -111,6 +111,39 @@ class AppStateUpdateTests: XCTestCase {
         XCTAssertEqual(subject.installedRuntimesUsedOnly(by: uninstalling).map(\.identifier), ["ios-27.0"])
     }
 
+    func test_LatestInstalledReleaseXcode_SkipsBetasAndNotInstalled() {
+        func xcode(_ version: String, installed: Bool) -> Xcode {
+            Xcode(
+                version: Version(version)!,
+                installState: installed ? .installed(Path("/Applications/Xcode-\(version).app")!) : .notInstalled,
+                selected: false,
+                icon: nil
+            )
+        }
+        subject.allXcodes = [
+            xcode("27.2.0-beta.2+27B5028f", installed: true),
+            xcode("27.1.0+27B100", installed: false),
+            xcode("27.0.0+27A266a", installed: true),
+            xcode("26.6.0+17G1", installed: true),
+        ]
+
+        XCTAssertEqual(subject.latestInstalledReleaseXcode?.version, Version("27.0.0+27A266a"))
+    }
+
+    func test_LatestInstalledReleaseXcode_NilWithOnlyBetas() {
+        subject.allXcodes = [
+            Xcode(version: Version("27.2.0-beta.2+27B5028f")!, installState: .installed(Path("/Applications/Xcode-Beta.app")!), selected: false, icon: nil)
+        ]
+
+        XCTAssertNil(subject.latestInstalledReleaseXcode)
+    }
+
+    func test_IsMissingDeveloperToolError() {
+        XCTAssertTrue(AppState.isMissingDeveloperToolError(#"xcrun: error: unable to find utility "simctl", not a developer tool or in PATH"#))
+        XCTAssertTrue(AppState.isMissingDeveloperToolError("xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance"))
+        XCTAssertFalse(AppState.isMissingDeveloperToolError("No simulator found with ios-27.0"))
+    }
+
     private func platformRuntime(platform: String, identifier: String, sdkBuild: String, simulatorBuild: String) throws -> DownloadableRuntime {
         let json: [String: Any] = [
             "sdkBuildUpdate": [sdkBuild],

@@ -304,18 +304,51 @@ extension AppState {
             } catch is CancellationError {
             } catch {
                 guard self.deleteRuntimeTaskID == taskID else { return }
-                if presentErrorInSettings {
-                    self.presentedPreferenceAlert = .generic(
-                        title: "Error",
-                        message: self.runtimeDeletionErrorMessage(error)
-                    )
-                } else {
-                    self.presentedAlert = .generic(
-                        title: "Error",
-                        message: self.runtimeDeletionErrorMessage(error)
-                    )
-                }
+                self.presentRuntimeDeletionError(error, runtime: runtime, inSettings: presentErrorInSettings)
             }
+        }
+    }
+
+    /// Shows why a platform couldn't be removed. When it failed because no Xcode is active,
+    /// offers to make the newest installed release active and try again.
+    func presentRuntimeDeletionError(_ error: Error, runtime: DownloadableRuntime, inSettings: Bool) {
+        let message = runtimeDeletionErrorMessage(error)
+        if Self.isMissingDeveloperToolError(message) {
+            if inSettings {
+                presentedPreferenceAlert = .noActiveXcode(runtime: runtime, xcode: latestInstalledReleaseXcode)
+            } else {
+                presentedAlert = .noActiveXcode(runtime: runtime, xcode: latestInstalledReleaseXcode)
+            }
+        } else if inSettings {
+            presentedPreferenceAlert = .generic(title: "Error", message: message)
+        } else {
+            presentedAlert = .generic(title: "Error", message: message)
+        }
+    }
+
+    /// `xcrun` reports this when the active developer directory is the Command Line Tools,
+    /// which don't include `simctl`.
+    static func isMissingDeveloperToolError(_ message: String) -> Bool {
+        message.contains("unable to find utility") || message.contains("requires Xcode")
+    }
+
+    /// The newest installed Xcode that isn't a beta or release candidate.
+    var latestInstalledReleaseXcode: Xcode? {
+        allXcodes
+            .filter { $0.installState.installed && $0.version.prereleaseIdentifiers.isEmpty }
+            .max { $0.version < $1.version }
+    }
+
+    /// Makes the Xcode active, then tries removing the platform again.
+    func selectXcodeAndDeleteRuntime(xcode: Xcode, runtime: DownloadableRuntime, presentErrorInSettings: Bool) {
+        select(xcode: xcode)
+        Task { @MainActor [weak self] in
+            // select(xcode:) starts selectTask right away unless it first has to ask to install the helper;
+            // in that case the user can remove the platform again once the Xcode is active.
+            guard let self, let selectTask = self.selectTask else { return }
+            await selectTask.value
+            guard let path = xcode.installedPath?.string, self.selectedXcodePath?.hasPrefix(path) == true else { return }
+            self.confirmDeleteRuntime(runtime: runtime, presentErrorInSettings: presentErrorInSettings)
         }
     }
 
@@ -374,7 +407,8 @@ extension AppState {
                 do {
                     try await self?.deleteRuntime(runtime: runtime)
                 } catch {
-                    self?.presentedAlert = .generic(title: "Error", message: error.legibleLocalizedDescription)
+                    self?.presentRuntimeDeletionError(error, runtime: runtime, inSettings: false)
+                    return
                 }
             }
         }
