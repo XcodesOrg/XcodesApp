@@ -188,7 +188,7 @@ extension AppState {
             for: runtime,
             destinationDirectory: .xcodesApplicationSupport,
             downloader: downloader
-        ) { progress in
+        ) { [weak self] progress in
             let expectedTaskID = taskID
             Task { @MainActor [weak self] in
                 if let expectedTaskID, self?.runtimeTaskIDs[runtime.identifier] != expectedTaskID {
