@@ -54,39 +54,10 @@ struct XcodeListViewRow: View {
             }
 
             VStack(alignment: .leading) {
-                HStack {
-                    Text(verbatim: title)
-                        .font(.body)
-                        .treeGuideTitle()
-
-                    if style == .grouped {
-                        if let prereleaseTag = ReleaseTagView(prereleaseOf: xcode.version) {
-                            prereleaseTag
-                        }
-                        if isLatestRelease {
-                            ReleaseTagView.latest
-                        }
-                        if xcode.selected {
-                            ReleaseTagView.active
-                        }
-                    }
-
-                    if !xcode.identicalBuildsForCurrentVariant.isEmpty {
-                        Image(systemName: "square.fill.on.square.fill")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .accessibility(label: Text("IdenticalBuilds"))
-                            .accessibility(value: Text(xcode.identicalBuildsForCurrentVariant.map(\.version.appleDescription).joined(separator: ", ")))
-                            .help("IdenticalBuilds.help")
-                    }
-                    
-                    if xcode.architectures?.isAppleSilicon ?? false {
-                        Image(systemName: "m4.button.horizontal")
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                            .accessibility(label: Text("Apple Silicon"))
-                            .help("Apple Silicon")
-                    }
+                // The version must never truncate; when space is tight, drop the small symbols first
+                ViewThatFits(in: .horizontal) {
+                    titleLine(showsSymbols: true)
+                    titleLine(showsSymbols: false)
                 }
 
                 if let caption {
@@ -136,6 +107,46 @@ struct XcodeListViewRow: View {
                         )!) as Void
                     }
                 #endif
+            }
+        }
+    }
+
+    private func titleLine(showsSymbols: Bool) -> some View {
+        HStack {
+            Text(verbatim: title)
+                .font(.body)
+                .fixedSize()
+                .treeGuideTitle()
+
+            if style == .grouped {
+                if let prereleaseTag = ReleaseTagView(prereleaseOf: xcode.version) {
+                    prereleaseTag
+                }
+                if isLatestRelease {
+                    ReleaseTagView.latest
+                }
+                if xcode.selected {
+                    ReleaseTagView.active
+                }
+            }
+
+            if showsSymbols {
+                if !xcode.identicalBuildsForCurrentVariant.isEmpty {
+                    Image(systemName: "square.fill.on.square.fill")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .accessibility(label: Text("IdenticalBuilds"))
+                        .accessibility(value: Text(xcode.identicalBuildsForCurrentVariant.map(\.version.appleDescription).joined(separator: ", ")))
+                        .help("IdenticalBuilds.help")
+                }
+
+                if xcode.architectures?.isAppleSilicon ?? false {
+                    Image(systemName: "m4.button.horizontal")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .accessibility(label: Text("Apple Silicon"))
+                        .help("Apple Silicon")
+                }
             }
         }
     }
