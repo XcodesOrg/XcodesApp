@@ -17,12 +17,12 @@ struct PlatformsView: View {
  
     var body: some View {
         
-        let builds = xcode.sdks?.allBuilds
-        let availableRuntimes = (builds?.flatMap { sdkBuild in
+        let builds = xcode.platformSDKBuilds
+        let availableRuntimes = builds.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
                 $0.sdkBuildUpdate?.contains(sdkBuild) ?? false
             }
-        } ?? []).removingReleaseCandidateDisplayDuplicates(installedRuntimes: appState.installedRuntimes)
+        }.removingReleaseCandidateDisplayDuplicates(installedRuntimes: appState.installedRuntimes)
 
         let availableVariants = ArchitectureVariant.allCases.filter { variant in
             availableRuntimes.contains { $0.supports(variant) }

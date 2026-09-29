@@ -78,6 +78,38 @@ class AppStateUpdateTests: XCTestCase {
         XCTAssertEqual(subject.selectedXcodePath, "/Applications/Xcode-Beta.app")
     }
 
+    func test_InstalledSDKBuilds_ReadsEachRealSDKOnce() throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let xcodeURL = root.appending(path: "Xcode.app")
+        func addSDK(platform: String, sdk: String, build: String) throws {
+            let coreServices = xcodeURL.appending(path: "Contents/Developer/Platforms/\(platform).platform/Developer/SDKs/\(sdk).sdk/System/Library/CoreServices")
+            try FileManager.default.createDirectory(at: coreServices, withIntermediateDirectories: true)
+            let plist = try PropertyListSerialization.data(fromPropertyList: ["ProductBuildVersion": build], format: .xml, options: 0)
+            try plist.write(to: coreServices.appending(path: "SystemVersion.plist"))
+        }
+        try addSDK(platform: "iPhoneOS", sdk: "iPhoneOS", build: "24A5422a")
+        try addSDK(platform: "iPhoneSimulator", sdk: "iPhoneSimulator", build: "24A5422a")
+        try addSDK(platform: "XROS", sdk: "XROS", build: "24M5357a")
+        // Versioned SDK names are symlinks to the real SDK and must be skipped
+        let sdksURL = xcodeURL.appending(path: "Contents/Developer/Platforms/XROS.platform/Developer/SDKs")
+        try FileManager.default.createSymbolicLink(at: sdksURL.appending(path: "XROS27.0.sdk"), withDestinationURL: sdksURL.appending(path: "XROS.sdk"))
+        Current.files.contentsAtPath = { FileManager.default.contents(atPath: $0) }
+
+        let builds = InstalledSDKBuilds.builds(forXcodeAt: Path(url: xcodeURL)!, version: Version("27.0.0-beta.6+27A5252f")!)
+
+        XCTAssertEqual(Set(builds), ["24A5422a", "24M5357a"])
+        XCTAssertEqual(builds.count, 2)
+    }
+
+    func test_PlatformSDKBuilds_PreferInstalledBundleOverReleaseMetadata() {
+        let xcode = Xcode(version: Version("27.0.0")!, installState: .notInstalled, selected: false, icon: nil, installedSDKBuilds: ["24A5422a"])
+        XCTAssertEqual(xcode.platformSDKBuilds, ["24A5422a"])
+
+        let notInstalled = Xcode(version: Version("27.0.0")!, installState: .notInstalled, selected: false, icon: nil)
+        XCTAssertEqual(notInstalled.platformSDKBuilds, [])
+    }
+
     func testDoesNotReplaceInstallState() throws {
         subject.allXcodes = [
             Xcode(version: Version("0.0.0")!, installState: .installing(.unarchiving), selected: false, icon: nil)
