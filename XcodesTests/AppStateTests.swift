@@ -81,6 +81,49 @@ class AppStateTests: XCTestCase {
         subject = AppState()
     }
 
+    func test_InstallHelper_RetriesUntilNewlyInstalledHelperAnswers() async throws {
+        subject.helperInstallState = .notInstalled
+        subject.helperInstallRetryDelay = .zero
+        let checks = AppStateTestsCounter()
+        Current.helper.install = { }
+        Current.helper.checkIfLatestHelperIsInstalledAsync = {
+            // launchd hasn't started the helper for the first couple of checks
+            checks.increment() >= 3
+        }
+
+        try await subject.installHelperIfNecessaryAsync()
+
+        XCTAssertEqual(subject.helperInstallState, .installed)
+        XCTAssertEqual(checks.value, 3)
+    }
+
+    func test_InstallHelper_ThrowsWithReasonWhenInstalledHelperIsUnreachable() async throws {
+        subject.helperInstallState = .notInstalled
+        subject.helperInstallRetryDelay = .zero
+        Current.helper.install = { }
+        Current.helper.checkIfLatestHelperIsInstalledAsync = {
+            throw NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionInvalid)
+        }
+
+        do {
+            try await subject.installHelperIfNecessaryAsync()
+            XCTFail("Expected an unreachable helper to throw")
+        } catch let HelperClientError.unreachableAfterInstall(underlyingError) {
+            XCTAssertEqual((underlyingError as NSError?)?.code, NSXPCConnectionInvalid)
+        }
+        XCTAssertEqual(subject.helperInstallState, .notInstalled)
+    }
+
+    func test_PostInstallStepsError_IncludesUnderlyingReason() {
+        let error = InstallationError.postInstallStepsNotPerformed(
+            version: Version("27.2.0")!,
+            helperInstallState: .notInstalled,
+            reason: HelperClientError.unreachableAfterInstall(underlyingError: nil).localizedDescription
+        )
+
+        XCTAssertTrue(error.errorDescription?.contains(localizeString("HelperClient.error.UnreachableAfterInstall")) == true)
+    }
+
     func test_InstallError_Network401IsUnauthorized() {
         let error = NetworkError.non200StatusCode(statusCode: 401, data: Data())
 
@@ -1044,5 +1087,21 @@ private extension HTTPCookie {
             .secure: "TRUE",
             .expires: Date.distantFuture
         ]))
+    }
+}
+
+private final class AppStateTestsCounter: @unchecked Sendable {
+    private let lock = NSLock()
+    private var count = 0
+
+    var value: Int {
+        lock.withLock { count }
+    }
+
+    func increment() -> Int {
+        lock.withLock {
+            count += 1
+            return count
+        }
     }
 }

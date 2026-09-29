@@ -1,4 +1,5 @@
 import Foundation
+import LegibleError
 import os.log
 import ServiceManagement
 import XcodesKit
@@ -235,7 +236,13 @@ final class HelperClient {
             let authRef = try authorizationRef(&authRights, nil, [.interactionAllowed, .extendRights, .preAuthorize])
             var cfError: Unmanaged<CFError>?
             SMJobBless(kSMDomainSystemLaunchd, machServiceName as CFString, authRef, &cfError)
-            if let error = cfError?.takeRetainedValue() { throw error }
+            if let error = cfError?.takeRetainedValue() {
+                if CFErrorGetDomain(error) as String == kSMErrorDomainLaunchd as String,
+                   CFErrorGetCode(error) == kSMErrorInvalidSignature {
+                    throw HelperClientError.invalidSignature(underlyingError: error)
+                }
+                throw error
+            }
 
             self.connection?.invalidate()
             self.connection = nil
@@ -271,6 +278,10 @@ final class HelperClient {
 enum HelperClientError: LocalizedError {
     case failedToCreateRemoteObjectProxy
     case message(String)
+    /// SMJobBless rejected the helper because its signature doesn't satisfy the app's SMPrivilegedExecutables requirement
+    case invalidSignature(underlyingError: Error)
+    /// The helper was blessed but doesn't answer, e.g. it rejects this app's signature via SMAuthorizedClients
+    case unreachableAfterInstall(underlyingError: Error?)
 
     var errorDescription: String? {
         switch self {
@@ -278,6 +289,15 @@ enum HelperClientError: LocalizedError {
             return localizeString("HelperClient.error")
         case let .message(message):
             return message
+        case let .invalidSignature(underlyingError):
+            return Self.withDetails(localizeString("HelperClient.error.InvalidSignature"), underlyingError)
+        case let .unreachableAfterInstall(underlyingError):
+            return Self.withDetails(localizeString("HelperClient.error.UnreachableAfterInstall"), underlyingError)
         }
+    }
+
+    private static func withDetails(_ message: String, _ underlyingError: Error?) -> String {
+        guard let underlyingError else { return message }
+        return "\(message)\n\n\(underlyingError.legibleLocalizedDescription)"
     }
 }

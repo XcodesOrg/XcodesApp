@@ -11157,6 +11157,28 @@
         }
       }
     },
+    "HelperClient.error.InvalidSignature" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS refused to install the privileged helper because its code signature doesn't match what Xcodes expects. The app and helper must be signed by the same developer team."
+          }
+        }
+      }
+    },
+    "HelperClient.error.UnreachableAfterInstall" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The privileged helper was installed, but Xcodes couldn't connect to it. This usually means the helper and Xcodes are signed by different developer teams, for example a local development build running alongside a helper installed by the released app."
+          }
+        }
+      }
+    },
     "HelperInstalled" : {
       "localizations" : {
         "ar" : {

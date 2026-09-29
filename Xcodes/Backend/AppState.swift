@@ -92,6 +92,8 @@ class AppState: ObservableObject {
     @Published var presentedAlert: XcodesAlert?
     @Published var presentedPreferenceAlert: XcodesPreferencesAlert?
     @Published var helperInstallState: HelperInstallState = .notInstalled
+    /// Delay between attempts to reach a newly installed helper
+    var helperInstallRetryDelay: Duration = .milliseconds(500)
     /// Whether the user is being prepared for the helper installation alert with an explanation.
     /// This closure will be performed after the user chooses whether or not to proceed.
     @Published var isPreparingUserForActionRequiringHelper: ((Bool) -> Void)?
@@ -546,15 +548,37 @@ class AppState: ObservableObject {
             try Task.checkCancellation()
             try await Current.helper.install()
             try Task.checkCancellation()
-            await checkIfHelperIsInstalled()
+            // launchd starts a newly blessed helper asynchronously, so give it a moment to answer.
+            let connectionError = await checkIfHelperIsInstalled(attempts: 5)
+            try Task.checkCancellation()
+            guard helperInstallState == .installed else {
+                throw HelperClientError.unreachableAfterInstall(underlyingError: connectionError)
+            }
         }
     }
 
-    private func checkIfHelperIsInstalled() async {
+    /// Asks the helper for its version, retrying up to `attempts` times.
+    /// - Returns: The last connection error, if the helper couldn't be reached.
+    @discardableResult
+    private func checkIfHelperIsInstalled(attempts: Int = 1) async -> Error? {
         helperInstallState = .unknown
 
-        let installed = (try? await Current.helper.checkIfLatestHelperIsInstalledAsync()) ?? false
-        helperInstallState = installed ? .installed : .notInstalled
+        var lastError: Error?
+        for attempt in 1...max(1, attempts) {
+            do {
+                if try await Current.helper.checkIfLatestHelperIsInstalledAsync() {
+                    helperInstallState = .installed
+                    return nil
+                }
+                lastError = nil
+            } catch {
+                lastError = error
+            }
+            guard attempt < attempts, !Task.isCancelled else { break }
+            try? await Task.sleep(for: helperInstallRetryDelay)
+        }
+        helperInstallState = .notInstalled
+        return lastError
     }
 
     @discardableResult
