@@ -11157,6 +11157,16 @@
         }
       }
     },
+    "HelperClient.error.AuthorizationFailed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS didn't authorize installing the privileged helper. Try again and enter an administrator's name and password when asked; the helper can also be installed from Settings > Advanced."
+          }
+        }
+      }
+    },
     "HelperClient.error.InvalidSignature" : {
       "extractionState" : "stale",
       "localizations" : {

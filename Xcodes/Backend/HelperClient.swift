@@ -237,9 +237,15 @@ final class HelperClient {
             var cfError: Unmanaged<CFError>?
             SMJobBless(kSMDomainSystemLaunchd, machServiceName as CFString, authRef, &cfError)
             if let error = cfError?.takeRetainedValue() {
-                if CFErrorGetDomain(error) as String == kSMErrorDomainLaunchd as String,
-                   CFErrorGetCode(error) == kSMErrorInvalidSignature {
-                    throw HelperClientError.invalidSignature(underlyingError: error)
+                if CFErrorGetDomain(error) as String == kSMErrorDomainLaunchd as String {
+                    switch CFErrorGetCode(error) {
+                    case kSMErrorInvalidSignature:
+                        throw HelperClientError.invalidSignature(underlyingError: error)
+                    case kSMErrorAuthorizationFailure:
+                        throw HelperClientError.authorizationFailed(underlyingError: error)
+                    default:
+                        break
+                    }
                 }
                 throw error
             }
@@ -280,6 +286,8 @@ enum HelperClientError: LocalizedError {
     case message(String)
     /// SMJobBless rejected the helper because its signature doesn't satisfy the app's SMPrivilegedExecutables requirement
     case invalidSignature(underlyingError: Error)
+    /// SMJobBless wasn't authorized, e.g. the administrator prompt was cancelled or couldn't be shown
+    case authorizationFailed(underlyingError: Error)
     /// The helper was blessed but doesn't answer, e.g. it rejects this app's signature via SMAuthorizedClients
     case unreachableAfterInstall(underlyingError: Error?)
 
@@ -291,6 +299,8 @@ enum HelperClientError: LocalizedError {
             return message
         case let .invalidSignature(underlyingError):
             return Self.withDetails(localizeString("HelperClient.error.InvalidSignature"), underlyingError)
+        case let .authorizationFailed(underlyingError):
+            return Self.withDetails(localizeString("HelperClient.error.AuthorizationFailed"), underlyingError)
         case let .unreachableAfterInstall(underlyingError):
             return Self.withDetails(localizeString("HelperClient.error.UnreachableAfterInstall"), underlyingError)
         }
