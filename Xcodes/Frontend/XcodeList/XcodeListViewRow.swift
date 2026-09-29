@@ -5,7 +5,7 @@ import XcodesKit
 
 struct XcodeListViewRow: View {
     enum Style {
-        /// "27.0 Beta 6 (27A5252f)", used by the flat list
+        /// "27.0 Beta 6", used by the flat list
         case flat
         /// "27.0" followed by release tags (Beta 6, RC, Latest), with the build in the caption, used under a version group
         case grouped
@@ -30,19 +30,16 @@ struct XcodeListViewRow: View {
     private var title: String {
         switch style {
         case .flat:
-            return "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)"
+            return xcode.description
         case .grouped:
             let version = xcode.version
             return Version(major: version.major, minor: version.minor, patch: version.patch).appleDescription
         }
     }
 
-    /// Secondary line: the build (grouped style only) and the install path, when present.
+    /// Secondary line: the build and the install path, when present.
     private var caption: String? {
-        var parts: [String] = []
-        if style == .grouped {
-            parts.append(contentsOf: xcode.version.buildMetadataIdentifiers)
-        }
+        var parts: [String] = xcode.version.buildMetadataIdentifiers
         if case let .installed(path) = xcode.installState {
             parts.append(path.string)
         }
