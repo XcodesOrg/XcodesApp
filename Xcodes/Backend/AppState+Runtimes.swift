@@ -342,3 +342,41 @@ extension DownloadableRuntime.Platform {
         }
     }
 }
+
+extension AppState {
+    /// Installed simulator runtimes that match this Xcode's SDKs and no other installed Xcode's,
+    /// so they can be offered for removal along with it.
+    func installedRuntimesUsedOnly(by xcode: Xcode) -> [DownloadableRuntime] {
+        func runtimes(matching xcode: Xcode) -> Set<String> {
+            let builds = xcode.sdks?.allBuilds ?? []
+            return Set(downloadableRuntimes
+                .filter { runtime in builds.contains { runtime.sdkBuildUpdate?.contains($0) ?? false } }
+                .map(\.identifier))
+        }
+
+        let otherInstalledXcodes = allXcodes.filter { $0.id != xcode.id && $0.installState.installed }
+        let usedElsewhere = otherInstalledXcodes.reduce(into: Set<String>()) { $0.formUnion(runtimes(matching: $1)) }
+        let candidates = runtimes(matching: xcode).subtracting(usedElsewhere)
+
+        return downloadableRuntimes
+            .filter { candidates.contains($0.identifier) && coreSimulatorInfo(runtime: $0) != nil }
+            .sorted { ($0.platform.displayOrder, $1.name) < ($1.platform.displayOrder, $0.name) }
+    }
+
+    /// Uninstalls an Xcode, then removes the given simulator runtimes.
+    func uninstall(xcode: Xcode, removingRuntimes runtimes: [DownloadableRuntime]) {
+        uninstall(xcode: xcode)
+        guard !runtimes.isEmpty else { return }
+        Task { @MainActor [weak self] in
+            // Remove the platforms once the Xcode itself is gone, so a failure there doesn't leave it half-removed
+            await self?.uninstallTask?.value
+            for runtime in runtimes {
+                do {
+                    try await self?.deleteRuntime(runtime: runtime)
+                } catch {
+                    self?.presentedAlert = .generic(title: "Error", message: error.legibleLocalizedDescription)
+                }
+            }
+        }
+    }
+}

@@ -22,11 +22,26 @@ struct MainWindow: View {
         NavigationSplitViewWrapper {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly, architecture: architecture)
                 .layoutPriority(1)
-                .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
-                    Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
-                          message: Text("Alert.Uninstall.Message"),
-                          primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(xcode: xcode) }),
-                          secondaryButton: .cancel(Text("Cancel")))
+                .alert(
+                    Text(String(format: localizeString("Alert.Uninstall.Title"), appState.xcodeBeingConfirmedForUninstallation?.description ?? "")),
+                    isPresented: $appState.xcodeBeingConfirmedForUninstallation.isNotNil,
+                    presenting: appState.xcodeBeingConfirmedForUninstallation
+                ) { xcode in
+                    let platforms = appState.installedRuntimesUsedOnly(by: xcode)
+                    Button("Uninstall", role: .destructive) { appState.uninstall(xcode: xcode) }
+                    if !platforms.isEmpty {
+                        Button("Alert.Uninstall.WithPlatforms", role: .destructive) {
+                            appState.uninstall(xcode: xcode, removingRuntimes: platforms)
+                        }
+                    }
+                    Button("Cancel", role: .cancel) {}
+                } message: { xcode in
+                    let platforms = appState.installedRuntimesUsedOnly(by: xcode)
+                    if platforms.isEmpty {
+                        Text("Alert.Uninstall.Message")
+                    } else {
+                        Text(verbatim: localizeString("Alert.Uninstall.Message") + "\n\n" + String(format: localizeString("Alert.Uninstall.PlatformsMessage"), platforms.map(\.visibleIdentifier).joined(separator: ", ")))
+                    }
                 }
                 .searchable(text: $searchText, placement: .sidebar)
                 .mainToolbar(

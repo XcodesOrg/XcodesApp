@@ -4282,6 +4282,17 @@
         }
       }
     },
+    "Alert.Uninstall.PlatformsMessage" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "These simulator platforms are installed for this Xcode and not used by your other installed Xcodes: %@"
+          }
+        }
+      }
+    },
     "Alert.Uninstall.Title" : {
       "comment" : "Uninstall",
       "extractionState" : "manual",
@@ -4410,6 +4421,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "解除安裝 Xcode %@？"
+          }
+        }
+      }
+    },
+    "Alert.Uninstall.WithPlatforms" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Uninstall with Platforms"
           }
         }
       }

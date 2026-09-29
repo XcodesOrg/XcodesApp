@@ -78,6 +78,56 @@ class AppStateUpdateTests: XCTestCase {
         XCTAssertEqual(subject.selectedXcodePath, "/Applications/Xcode-Beta.app")
     }
 
+    func test_InstalledRuntimesUsedOnlyByXcode_SkipsSharedAndNotInstalledPlatforms() throws {
+        subject.downloadableRuntimes = try [
+            platformRuntime(platform: "iphoneos", identifier: "ios-27.0", sdkBuild: "24A430", simulatorBuild: "24A434"),
+            platformRuntime(platform: "watchos", identifier: "watch-27.0", sdkBuild: "24R360", simulatorBuild: "24R362"),
+            platformRuntime(platform: "appletvos", identifier: "tv-27.0", sdkBuild: "24J360", simulatorBuild: "24J360"),
+        ]
+        subject.installedRuntimes = [
+            CoreSimulatorImage(uuid: "1", path: [:], runtimeInfo: CoreSimulatorRuntimeInfo(build: "24A434", supportedArchitectures: [.arm64])),
+            CoreSimulatorImage(uuid: "2", path: [:], runtimeInfo: CoreSimulatorRuntimeInfo(build: "24R362", supportedArchitectures: [.arm64])),
+        ]
+        let uninstalling = Xcode(
+            version: Version("27.0.0+27A266a")!,
+            installState: .installed(Path("/Applications/Xcode-27.0.0.app")!),
+            selected: false,
+            icon: nil,
+            sdks: SDKs(iOS: XcodeVersion("24A430"), watchOS: XcodeVersion("24R360"), tvOS: XcodeVersion("24J360")),
+            architectures: [.arm64]
+        )
+        // Another installed Xcode still uses the watchOS runtime
+        let other = Xcode(
+            version: Version("27.1.0-beta+27A9269")!,
+            installState: .installed(Path("/Applications/Xcode-27.1.0-Beta.app")!),
+            selected: false,
+            icon: nil,
+            sdks: SDKs(watchOS: XcodeVersion("24R360")),
+            architectures: [.arm64]
+        )
+        subject.allXcodes = [uninstalling, other]
+
+        // tvOS matches but isn't installed; watchOS is shared
+        XCTAssertEqual(subject.installedRuntimesUsedOnly(by: uninstalling).map(\.identifier), ["ios-27.0"])
+    }
+
+    private func platformRuntime(platform: String, identifier: String, sdkBuild: String, simulatorBuild: String) throws -> DownloadableRuntime {
+        let json: [String: Any] = [
+            "sdkBuildUpdate": [sdkBuild],
+            "architectures": ["arm64"],
+            "name": identifier,
+            "platform": "com.apple.platform.\(platform)",
+            "simulatorVersion": ["version": "27.0", "buildUpdate": simulatorBuild],
+            "contentType": "cryptexDiskImage",
+            "dictionaryVersion": 2,
+            "version": "27.0.0.1",
+            "category": "simulator",
+            "identifier": identifier,
+            "fileSize": 1,
+        ]
+        return try JSONDecoder().decode(DownloadableRuntime.self, from: JSONSerialization.data(withJSONObject: json))
+    }
+
     func testDoesNotReplaceInstallState() throws {
         subject.allXcodes = [
             Xcode(version: Version("0.0.0")!, installState: .installing(.unarchiving), selected: false, icon: nil)
