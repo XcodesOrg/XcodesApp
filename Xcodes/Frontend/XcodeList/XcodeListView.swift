@@ -458,7 +458,9 @@ private struct XcodeVersionGroupRow: View {
 
     @ViewBuilder
     private var installControl: some View {
-        if let installingVersion,
+        // Progress is shown once, on the deepest visible row: an expanded group leaves it to its children.
+        if !isExpanded,
+           let installingVersion,
            case let .installing(installationStep) = installingVersion.installState {
             InstallationStepRowView(
                 installationStep: installationStep,
