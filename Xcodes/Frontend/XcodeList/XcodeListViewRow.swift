@@ -57,16 +57,17 @@ struct XcodeListViewRow: View {
                 HStack {
                     Text(verbatim: title)
                         .font(.body)
+                        .treeGuideTitle()
 
                     if style == .grouped {
                         if let prereleaseTag = ReleaseTagView(prereleaseOf: xcode.version) {
-                            prereleaseTag.onSelection(selected)
+                            prereleaseTag
                         }
                         if isLatestRelease {
-                            ReleaseTagView.latest.onSelection(selected)
+                            ReleaseTagView.latest
                         }
                         if xcode.selected {
-                            ReleaseTagView.active.onSelection(selected)
+                            ReleaseTagView.active
                         }
                     }
 
@@ -209,7 +210,7 @@ struct XcodeListViewRow: View {
         case .installed:
             Button("Open") { appState.open(xcode: xcode) }
                 .textCase(.uppercase)
-                .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))
+                .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: false))
                 .help("OpenDescription")
         case .notInstalled:
             InstallButton(xcode: xcode)
@@ -218,7 +219,7 @@ struct XcodeListViewRow: View {
         case let .installing(installationStep):
             InstallationStepRowView(
                 installationStep: installationStep,
-                highlighted: selected,
+                highlighted: false,
                 cancel: { appState.presentedAlert = .cancelInstall(xcode: xcode) }
             )
         case .uninstalling:

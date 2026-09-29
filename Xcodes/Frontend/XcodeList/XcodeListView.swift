@@ -11,6 +11,8 @@ struct XcodeListView: View {
     private let architecture: XcodeListArchitecture
     private let isInstalledOnly: Bool
     @AppStorage(PreferenceKey.allowedMajorVersions.rawValue) private var allowedMajorVersions = Int.max
+    @AppStorage(PreferenceKey.expandedMajorXcodeVersions.rawValue) private var expandedMajorVersionStorage = ""
+    @AppStorage(PreferenceKey.expandedMinorXcodeVersions.rawValue) private var expandedMinorVersionStorage = ""
 
     init(selectedXcodeID: Binding<Xcode.ID?>, searchText: String, category: XcodeListCategory, isInstalledOnly: Bool, architecture: XcodeListArchitecture) {
         self._selectedXcodeID = selectedXcodeID
@@ -37,8 +39,33 @@ struct XcodeListView: View {
         appState.allXcodes.latestReleaseForSelectedPrerelease(xcode)
     }
     
+    /// Version rows in display order, for moving the selection with the arrow keys
+    private var selectableXcodeIDs: [Xcode.ID] {
+        guard appState.enableGroupedXcodeList else { return visibleXcodes.map(\.xcode.id) }
+        let expandedMajors = Set(expandedMajorVersionStorage.split(separator: ",").compactMap { Int($0) })
+        let expandedMinors = Set(expandedMinorVersionStorage.split(separator: ",").map(String.init))
+        return visibleXcodes.groupedByMajorVersion(item: \.listItem)
+            .filter { expandedMajors.contains($0.majorVersion) }
+            .flatMap(\.minorVersionGroups)
+            .filter { expandedMinors.contains($0.id) }
+            .flatMap { $0.versions.map(\.xcode.id) }
+    }
+
+    private func moveSelection(by offset: Int) -> KeyPress.Result {
+        let ids = selectableXcodeIDs
+        guard !ids.isEmpty else { return .ignored }
+        guard let current = selectedXcodeID, let index = ids.firstIndex(of: current) else {
+            selectedXcodeID = offset > 0 ? ids.first : ids.last
+            return .handled
+        }
+        selectedXcodeID = ids[min(max(index + offset, 0), ids.count - 1)]
+        return .handled
+    }
+
     var body: some View {
-        List(selection: $selectedXcodeID) {
+        // Selection is drawn by the rows (SelectableRow) rather than List(selection:), because the sidebar's
+        // system highlight can't be restyled and left tags and secondary text hard to read.
+        List {
             if appState.enableGroupedXcodeList {
                 GroupedXcodeListContent(
                     xcodes: visibleXcodes,
@@ -54,11 +81,15 @@ struct XcodeListView: View {
                         appState: appState,
                         latestReleaseForSelectedPrerelease: latestReleaseForSelectedPrerelease(entry.xcode)
                     )
-                        .tag(entry.xcode.id)
+                        .selectableRow(isSelected: selectedXcodeID == entry.xcode.id) { selectedXcodeID = entry.xcode.id }
                 }
             }
         }
         .listStyle(.sidebar)
+        .focusable()
+        .focusEffectDisabled()
+        .onKeyPress(.downArrow) { moveSelection(by: 1) }
+        .onKeyPress(.upArrow) { moveSelection(by: -1) }
         .safeAreaInset(edge: .bottom, spacing: 0) {
             PlatformsPocket()
                 .padding(.horizontal)
@@ -175,7 +206,7 @@ private struct GroupedXcodeListContent: View {
                     self.expandedMinorVersions = updatedExpandedMinorVersions
                 }
             )
-            .tag(majorVersions.first { $0.selected }?.id)
+
 
             if isMajorExpanded {
                 ForEach(Array(minorVersionGroups.enumerated()), id: \.element.id) { minorIndex, minorVersionGroup in
@@ -210,12 +241,12 @@ private struct GroupedXcodeListContent: View {
                             self.expandedMinorVersions = updatedExpandedMinorVersions
                         }
                     )
-                    .background(alignment: .leading) {
+                    .treeGuides {
                         TreeGuides(guides: [
                             TreeGuide(level: 0, extent: isLastMinor ? .elbow : .tee, isHighlighted: majorHasActiveXcode && (minorHasActiveXcode || !isLastMinor))
                         ])
                     }
-                    .tag(minorVersions.first { $0.selected }?.id)
+
 
                     if isMinorExpanded {
                         let entries = minorVersionGroup.versions
@@ -231,13 +262,13 @@ private struct GroupedXcodeListContent: View {
                                 isLatestRelease: isLatestRelease(entry.xcode)
                             )
                                 .padding(.leading, TreeGuide.contentInset(forLevel: 2))
-                                .background(alignment: .leading) {
+                                .treeGuides {
                                     TreeGuides(guides: [
                                         TreeGuide(level: 0, extent: isLastMinor ? .none : .through, isHighlighted: majorHasActiveXcode && !isLastMinor),
                                         TreeGuide(level: 1, extent: isLastEntry ? .elbow : .tee, isHighlighted: minorHasActiveXcode, branchesToLeaf: true)
                                     ])
                                 }
-                                .tag(entry.xcode.id)
+                                .selectableRow(isSelected: selectedXcodeID == entry.xcode.id) { selectedXcodeID = entry.xcode.id }
                         }
                     }
                 }
@@ -288,13 +319,15 @@ private struct TreeGuide: Hashable {
 
 private struct TreeGuides: View {
     let guides: [TreeGuide]
+    /// Where branches meet the row: the middle of its title line. Falls back to the row's middle.
+    var branchY: CGFloat? = nil
 
     var body: some View {
         Canvas { context, size in
             let lineWidth: CGFloat = 1.5
             // Rows have a little vertical breathing room; extend past it so lines connect between rows.
             let overshoot: CGFloat = 4
-            let midY = size.height / 2
+            let midY = branchY ?? size.height / 2
             for guide in guides {
                 let color: Color = guide.isHighlighted ? .accentColor.opacity(0.75) : .secondary.opacity(0.35)
                 var path = Path()
@@ -354,6 +387,7 @@ private struct XcodeVersionGroupRow: View {
                         HStack(spacing: 6) {
                             Text(verbatim: displayName)
                                 .font(level == 0 ? .headline : .body.weight(.medium))
+                                .treeGuideTitle()
 
                             if let tag {
                                 tag
@@ -386,8 +420,11 @@ private struct XcodeVersionGroupRow: View {
             }
             .buttonStyle(.plain)
 
-            selectControl
-                .padding(.trailing, 16)
+            // Like the progress ring and Active tag, the checkmark belongs to the deepest visible row
+            if !isExpanded {
+                selectControl
+                    .padding(.trailing, 16)
+            }
             installControl
                 // Same column width as the Install/Open buttons, so the progress ring lines up with them
                 .frame(minWidth: 67)
@@ -594,5 +631,48 @@ struct XcodeListView_Previews: PreviewProvider {
                 }())
         }
         .previewLayout(.sizeThatFits)
+    }
+}
+
+// MARK: - Tree guide title anchor
+
+/// The vertical middle of a row's title, so tree guide branches meet the title rather than the row's middle.
+private struct TreeGuideTitleMidYKey: SwiftUI.PreferenceKey {
+    static let defaultValue: CGFloat? = nil
+    static func reduce(value: inout CGFloat?, nextValue: () -> CGFloat?) {
+        value = value ?? nextValue()
+    }
+}
+
+private let treeGuideRowSpace = "treeGuideRow"
+
+extension View {
+    /// Marks the row's title; tree guides drawn with `treeGuides(_:)` branch at its middle.
+    func treeGuideTitle() -> some View {
+        background {
+            GeometryReader { proxy in
+                Color.clear.preference(key: TreeGuideTitleMidYKey.self, value: proxy.frame(in: .named(treeGuideRowSpace)).midY)
+            }
+        }
+    }
+
+    fileprivate func treeGuides(_ guides: @escaping () -> TreeGuides) -> some View {
+        coordinateSpace(name: treeGuideRowSpace)
+            .backgroundPreferenceValue(TreeGuideTitleMidYKey.self) { titleMidY in
+                let base = guides()
+                TreeGuides(guides: base.guides, branchY: titleMidY)
+            }
+    }
+
+    /// Selects the row on click and draws a soft highlight that keeps text and tags legible.
+    func selectableRow(isSelected: Bool, onSelect: @escaping () -> Void) -> some View {
+        contentShape(Rectangle())
+            .onTapGesture(perform: onSelect)
+            .listRowBackground(
+                RoundedRectangle(cornerRadius: 6, style: .continuous)
+                    .fill(isSelected ? Color.accentColor.opacity(0.2) : .clear)
+                    .padding(.horizontal, 10)
+            )
+            .accessibilityAddTraits(isSelected ? .isSelected : [])
     }
 }
