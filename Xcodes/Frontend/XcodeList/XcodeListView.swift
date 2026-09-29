@@ -122,6 +122,8 @@ private struct GroupedXcodeListContent: View {
             let majorVersions = majorVersionGroup.versions.map(\.xcode)
             let latestMajorRelease = majorVersions.latestRelease
             let latestInstalledMajorVersion = majorVersions.latestInstalledVersion
+            let majorHasActiveXcode = majorVersions.contains { $0.selected }
+            let minorVersionGroups = majorVersionGroup.minorVersionGroups
 
             XcodeVersionGroupRow(
                 displayName: "Xcode \(majorVersionGroup.displayName)",
@@ -131,7 +133,8 @@ private struct GroupedXcodeListContent: View {
                 selectedVersion: majorVersions.first { $0.selected },
                 installingVersion: majorVersions.first { $0.installState.installing },
                 isExpanded: isMajorExpanded,
-                indentation: 0,
+                level: 0,
+                versionCount: majorVersions.count,
                 appState: appState,
                 onToggleExpanded: {
                     var updatedExpandedMajorVersions = expandedMajorVersions
@@ -153,10 +156,12 @@ private struct GroupedXcodeListContent: View {
             .tag(majorVersions.first { $0.selected }?.id)
 
             if isMajorExpanded {
-                ForEach(majorVersionGroup.minorVersionGroups) { minorVersionGroup in
+                ForEach(Array(minorVersionGroups.enumerated()), id: \.element.id) { minorIndex, minorVersionGroup in
                     let isMinorExpanded = expandedMinorVersions.contains(minorVersionGroup.id)
                     let minorVersions = minorVersionGroup.versions.map(\.xcode)
                     let latestInstalledMinorVersion = minorVersions.latestInstalledVersion
+                    let isLastMinor = minorIndex == minorVersionGroups.count - 1
+                    let minorHasActiveXcode = minorVersions.contains { $0.selected }
 
                     XcodeVersionGroupRow(
                         displayName: minorVersionGroup.displayName,
@@ -166,7 +171,8 @@ private struct GroupedXcodeListContent: View {
                         selectedVersion: minorVersions.first { $0.selected },
                         installingVersion: minorVersions.first { $0.installState.installing },
                         isExpanded: isMinorExpanded,
-                        indentation: 20,
+                        level: 1,
+                        versionCount: minorVersions.count,
                         appState: appState,
                         onToggleExpanded: {
                             var updatedExpandedMinorVersions = expandedMinorVersions
@@ -180,10 +186,18 @@ private struct GroupedXcodeListContent: View {
                             self.expandedMinorVersions = updatedExpandedMinorVersions
                         }
                     )
+                    .background(alignment: .leading) {
+                        TreeGuides(guides: [
+                            TreeGuide(level: 0, extent: isLastMinor ? .elbow : .tee, isHighlighted: majorHasActiveXcode && (minorHasActiveXcode || !isLastMinor))
+                        ])
+                    }
                     .tag(minorVersions.first { $0.selected }?.id)
 
                     if isMinorExpanded {
-                        ForEach(minorVersionGroup.versions) { entry in
+                        let entries = minorVersionGroup.versions
+                        ForEach(Array(entries.enumerated()), id: \.element.id) { entryIndex, entry in
+                            let isLastEntry = entryIndex == entries.count - 1
+
                             XcodeListViewRow(
                                 xcode: entry.xcode,
                                 selected: selectedXcodeID == entry.xcode.id,
@@ -191,13 +205,95 @@ private struct GroupedXcodeListContent: View {
                                 latestReleaseForSelectedPrerelease: latestReleaseForSelectedPrerelease(entry.xcode),
                                 style: .grouped
                             )
-                                .padding(.leading, 40)
+                                .padding(.leading, TreeGuide.contentInset(forLevel: 2))
+                                .background(alignment: .leading) {
+                                    TreeGuides(guides: [
+                                        TreeGuide(level: 0, extent: isLastMinor ? .none : .through, isHighlighted: majorHasActiveXcode && !isLastMinor),
+                                        TreeGuide(level: 1, extent: isLastEntry ? .elbow : .tee, isHighlighted: minorHasActiveXcode, branchesToLeaf: true)
+                                    ])
+                                }
                                 .tag(entry.xcode.id)
                         }
                     }
                 }
             }
         }
+    }
+}
+
+/// A vertical guide line connecting a group row to its children, drawn like a file tree (├ └ │).
+private struct TreeGuide: Hashable {
+    enum Extent {
+        /// No line; the parent's last child has already been drawn.
+        case none
+        /// A full-height line passing a sibling's descendants.
+        case through
+        /// A full-height line with a branch to this row (├).
+        case tee
+        /// A line ending at this row with a branch to it (└).
+        case elbow
+    }
+
+    /// Chevron width plus spacing, so each level's content starts one step to the right of its parent's chevron.
+    static let levelIndent: CGFloat = 22
+    static let chevronWidth: CGFloat = 12
+
+    let level: Int
+    let extent: Extent
+    let isHighlighted: Bool
+    /// Whether this row is a leaf (no chevron), so the branch reaches further to meet its icon.
+    var branchesToLeaf = false
+
+    /// Centered under the parent's chevron.
+    var x: CGFloat {
+        CGFloat(level) * Self.levelIndent + Self.chevronWidth / 2
+    }
+
+    /// Where the branch drawn for this row stops, just short of the row's chevron or icon.
+    var branchEnd: CGFloat {
+        let childContentStart = branchesToLeaf ? Self.contentInset(forLevel: level + 1) : CGFloat(level + 1) * Self.levelIndent
+        return childContentStart - 4
+    }
+
+    /// Leaf rows have no chevron, so their icon is inset to where a chevron-less row at that level would start.
+    static func contentInset(forLevel level: Int) -> CGFloat {
+        CGFloat(level) * levelIndent + chevronWidth + 8
+    }
+}
+
+private struct TreeGuides: View {
+    let guides: [TreeGuide]
+
+    var body: some View {
+        Canvas { context, size in
+            let lineWidth: CGFloat = 1.5
+            // Rows have a little vertical breathing room; extend past it so lines connect between rows.
+            let overshoot: CGFloat = 4
+            let midY = size.height / 2
+            for guide in guides {
+                let color: Color = guide.isHighlighted ? .accentColor.opacity(0.75) : .secondary.opacity(0.35)
+                var path = Path()
+                switch guide.extent {
+                case .none:
+                    continue
+                case .through, .tee:
+                    path.move(to: CGPoint(x: guide.x, y: -overshoot))
+                    path.addLine(to: CGPoint(x: guide.x, y: size.height + overshoot))
+                case .elbow:
+                    path.move(to: CGPoint(x: guide.x, y: -overshoot))
+                    path.addLine(to: CGPoint(x: guide.x, y: midY - 5))
+                    path.addQuadCurve(to: CGPoint(x: guide.x + 5, y: midY), control: CGPoint(x: guide.x, y: midY))
+                }
+                if guide.extent == .tee || guide.extent == .elbow {
+                    let branchStart = guide.extent == .tee ? guide.x : guide.x + 5
+                    path.move(to: CGPoint(x: branchStart, y: midY))
+                    path.addLine(to: CGPoint(x: guide.branchEnd, y: midY))
+                }
+                context.stroke(path, with: .color(color), style: StrokeStyle(lineWidth: lineWidth, lineCap: .round))
+            }
+        }
+        .allowsHitTesting(false)
+        .accessibilityHidden(true)
     }
 }
 
@@ -209,7 +305,8 @@ private struct XcodeVersionGroupRow: View {
     let selectedVersion: Xcode?
     let installingVersion: Xcode?
     let isExpanded: Bool
-    let indentation: CGFloat
+    let level: Int
+    let versionCount: Int
     let appState: AppState
     let onToggleExpanded: () -> Void
 
@@ -225,8 +322,18 @@ private struct XcodeVersionGroupRow: View {
                     icon
 
                     VStack(alignment: .leading, spacing: 2) {
-                        Text(verbatim: displayName)
-                            .font(.body.weight(indentation == 0 ? .medium : .regular))
+                        HStack(spacing: 6) {
+                            Text(verbatim: displayName)
+                                .font(level == 0 ? .headline : .body.weight(.medium))
+
+                            Text(verbatim: "\(versionCount)")
+                                .font(.caption2.weight(.semibold).monospacedDigit())
+                                .foregroundStyle(.secondary)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 1)
+                                .background(.quaternary, in: Capsule())
+                                .accessibilityHidden(true)
+                        }
 
                         if let latestRelease {
                             Text(verbatim: "Latest: \(latestRelease.description)")
@@ -246,8 +353,8 @@ private struct XcodeVersionGroupRow: View {
                 .padding(.trailing, 16)
             installControl
         }
-        .padding(.leading, indentation)
-        .padding(.vertical, indentation == 0 ? 8 : 6)
+        .padding(.leading, CGFloat(level) * TreeGuide.levelIndent)
+        .padding(.vertical, level == 0 ? 8 : 5)
         .contentShape(Rectangle())
     }
 
