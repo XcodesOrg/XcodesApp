@@ -325,7 +325,7 @@ extension AppState {
 /// The simulator platforms to download automatically after Xcodes installs an Xcode, as chosen in Settings.
 struct AutoDownloadPlatformsSelection: Equatable {
     static let defaultsKey = "autoDownloadPlatforms"
-    static let choosablePlatforms: [DownloadableRuntime.Platform] = [.iOS, .watchOS, .tvOS, .visionOS]
+    static let choosablePlatforms: [DownloadableRuntime.Platform] = [.iOS, .watchOS, .visionOS, .tvOS]
     private static let allToken = "all"
 
     var isAll: Bool
@@ -392,7 +392,11 @@ extension AppState {
                 if case .installing = runtime.installState { return false }
                 return !isInstalled(runtime)
             }
-            .sorted { $0.platform.order < $1.platform.order }
+            .sorted { Self.platformOrder($0.platform) < Self.platformOrder($1.platform) }
+    }
+
+    private static func platformOrder(_ platform: DownloadableRuntime.Platform) -> Int {
+        AutoDownloadPlatformsSelection.choosablePlatforms.firstIndex(of: platform) ?? .max
     }
 
     /// Downloads the platforms chosen in Settings for an Xcode being installed, in parallel with each
