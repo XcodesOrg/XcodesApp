@@ -24309,6 +24309,17 @@
         }
       }
     },
+    "Tag.Active" : {
+      "comment" : "Tag on the Xcode that is currently selected with xcode-select",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
+          }
+        }
+      }
+    },
     "Tag.Latest" : {
       "comment" : "Tag on the newest non-prerelease Xcode in the list",
       "localizations" : {

@@ -155,6 +155,8 @@ private struct GroupedXcodeListContent: View {
                 level: 0,
                 versionCount: majorVersions.count,
                 tag: majorVersions.contains(where: isLatestRelease) ? .latest : nil,
+                // The active Xcode is tagged on the deepest visible row: here only while collapsed
+                showsActiveTag: majorHasActiveXcode && !isMajorExpanded,
                 appState: appState,
                 onToggleExpanded: {
                     var updatedExpandedMajorVersions = expandedMajorVersions
@@ -194,6 +196,7 @@ private struct GroupedXcodeListContent: View {
                         level: 1,
                         versionCount: minorVersions.count,
                         tag: groupTag(for: minorVersions),
+                        showsActiveTag: minorHasActiveXcode && !isMinorExpanded,
                         appState: appState,
                         onToggleExpanded: {
                             var updatedExpandedMinorVersions = expandedMinorVersions
@@ -330,6 +333,7 @@ private struct XcodeVersionGroupRow: View {
     let level: Int
     let versionCount: Int
     let tag: ReleaseTagView?
+    let showsActiveTag: Bool
     let appState: AppState
     let onToggleExpanded: () -> Void
 
@@ -355,6 +359,10 @@ private struct XcodeVersionGroupRow: View {
                                 tag
                             }
 
+                            if showsActiveTag {
+                                ReleaseTagView.active
+                            }
+
                             Text(verbatim: "\(versionCount)")
                                 .font(.caption2.weight(.semibold).monospacedDigit())
                                 .foregroundStyle(.secondary)
@@ -364,10 +372,10 @@ private struct XcodeVersionGroupRow: View {
                                 .accessibilityHidden(true)
                         }
 
-                        if let latestRelease {
-                            Text(verbatim: "Latest: \(latestRelease.description)")
+                        if let subtitle {
+                            Text(verbatim: subtitle)
                                 .font(.caption)
-                                .foregroundColor(.secondary)
+                                .foregroundStyle(.secondary)
                         }
                     }
 
@@ -387,6 +395,15 @@ private struct XcodeVersionGroupRow: View {
         .padding(.leading, CGFloat(level) * TreeGuide.levelIndent)
         .padding(.vertical, level == 0 ? 8 : 5)
         .contentShape(Rectangle())
+    }
+
+    /// "Latest: 27.0 · Active: 27.0 Beta 6"
+    private var subtitle: String? {
+        let parts = [
+            latestRelease.map { "Latest: \($0.description)" },
+            selectedVersion.map { "Active: \($0.description)" },
+        ].compactMap { $0 }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
     @ViewBuilder

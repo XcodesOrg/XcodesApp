@@ -65,6 +65,9 @@ struct XcodeListViewRow: View {
                         if isLatestRelease {
                             ReleaseTagView.latest.onSelection(selected)
                         }
+                        if xcode.selected {
+                            ReleaseTagView.active.onSelection(selected)
+                        }
                     }
 
                     if !xcode.identicalBuildsForCurrentVariant.isEmpty {

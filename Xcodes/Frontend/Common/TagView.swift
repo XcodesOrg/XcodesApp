@@ -32,6 +32,7 @@ struct ReleaseTagView: View {
         case releaseCandidate
         case otherPrerelease
         case latest
+        case active
 
         var color: Color {
             switch self {
@@ -39,6 +40,7 @@ struct ReleaseTagView: View {
             case .releaseCandidate: return .purple
             case .otherPrerelease: return .teal
             case .latest: return .green
+            case .active: return .blue
             }
         }
     }
@@ -84,6 +86,10 @@ extension ReleaseTagView {
         if identifiers.contains("beta") { return .beta }
         if identifiers.contains("release") || identifiers.contains("rc") || identifiers.contains("gm") { return .releaseCandidate }
         return .otherPrerelease
+    }
+
+    static var active: ReleaseTagView {
+        ReleaseTagView(label: Text("Tag.Active"), kind: .active)
     }
 
     static var latest: ReleaseTagView {
