@@ -204,6 +204,20 @@ struct MainWindow: View {
                     Text("Cancel")
                 )
             )
+        case .unauthenticatedDataSource:
+            return Alert(
+                title: Text("Alert.Update.AuthError.Title"),
+                message: Text("Alert.Update.AuthError.Message"),
+                primaryButton: .default(
+                    Text("Login"),
+                    action: {
+                        appState.presentedSheet = .signIn
+                    }
+                ),
+                secondaryButton: .cancel(
+                    Text("Cancel")
+                )
+            )
         case let .checkMinSupportedVersion(xcode, deviceVersion):
             return Alert(
                 title: Text("Alert.MinSupported.Title"),

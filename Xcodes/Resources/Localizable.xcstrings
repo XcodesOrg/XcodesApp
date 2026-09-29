@@ -4414,6 +4414,26 @@
         }
       }
     },
+    "Alert.Update.AuthError.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to refresh from Apple"
+          }
+        }
+      }
+    },
+    "Alert.Update.AuthError.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Apple data source lists Xcode releases from your Apple Developer account, so it needs you to be signed in. Sign in to refresh the list, or switch the data source to Xcode Releases in Settings."
+          }
+        }
+      }
+    },
     "Alert.Update.Error.Title" : {
       "comment" : "Update",
       "extractionState" : "manual",
