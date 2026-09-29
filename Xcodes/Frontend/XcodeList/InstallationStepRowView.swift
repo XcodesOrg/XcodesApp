@@ -85,7 +85,7 @@ private struct ProgressRing: View {
         .buttonStyle(.plain)
         .onHover { isHovering = $0 }
         .onAppear { isSpinning = fraction == nil }
-        .onChange(of: fraction == nil) { isSpinning = $0 }
+        .onChange(of: fraction == nil) { _, isIndeterminate in isSpinning = isIndeterminate }
         .accessibilityLabel(Text("StopInstallation"))
     }
 
