@@ -28,6 +28,7 @@ enum PreferenceKey: String {
     case hideSupportXcodes
     case xcodeListArchitectures
     case enableGroupedXcodeList
+    case showTags
     case expandedMajorXcodeVersions
     case expandedMinorXcodeVersions
     case usePrivilegeHelperForFileOperations
@@ -173,6 +174,12 @@ class AppState: ObservableObject {
         }
     }
 
+    @Published var showTags = true {
+        didSet {
+            Current.defaults.set(showTags, forKey: PreferenceKey.showTags.rawValue)
+        }
+    }
+
     // MARK: - Runtimes
 
     @Published var downloadableRuntimes: [DownloadableRuntime] = []
@@ -272,6 +279,7 @@ class AppState: ObservableObject {
         terminateAfterLastWindowClosed = Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
         enableGroupedXcodeList = Current.defaults.get(forKey: PreferenceKey.enableGroupedXcodeList.rawValue) as? Bool ?? true
         usePrivilegedHelperForFileOperations = Current.defaults.bool(forKey: PreferenceKey.usePrivilegeHelperForFileOperations.rawValue) ?? false
+        showTags = Current.defaults.get(forKey: PreferenceKey.showTags.rawValue) as? Bool ?? true
     }
 
     // MARK: Timer
