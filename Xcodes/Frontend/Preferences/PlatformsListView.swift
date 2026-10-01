@@ -20,7 +20,7 @@ struct PlatformsListView: View {
         List(selection: $selectedRuntime) {
             Text("PlatformsList.Title")
                 .font(.body)
-            ForEach(runtimes.elements.sorted(\.key.order), id: \.key) { platform, runtimeList in
+            ForEach(runtimes.elements.sorted(\.key.displayOrder), id: \.key) { platform, runtimeList in
                 Section {
                     ForEach(runtimeList, id: \.self) { runtime in
                         HStack {
@@ -55,15 +55,19 @@ struct PlatformsListView: View {
         .task {
             loadRuntimes()
         }
-        .onChange(of: appState.installedRuntimes) { _ in
+        .onChange(of: appState.installedRuntimes) {
+            loadRuntimes()
+        }
+        .onChange(of: appState.downloadableRuntimes) {
             loadRuntimes()
         }
     }
     
     func loadRuntimes() {
+        // Match on architecture too, so a build published as both Apple Silicon and Universal
+        // only lists the variant that is actually installed (and can therefore be deleted).
         let filteredRuntimes = appState.downloadableRuntimes.filter { runtime in
-            appState.installedRuntimes.contains { $0.runtimeInfo.build == runtime.simulatorVersion.buildUpdate
-            }
+            appState.coreSimulatorInfo(runtime: runtime) != nil
         }
         runtimes = OrderedDictionary(grouping: filteredRuntimes, by: { $0.platform })
     }
