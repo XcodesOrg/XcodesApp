@@ -35,6 +35,111 @@ class AppStateUpdateTests: XCTestCase {
         subject = AppState()
     }
 
+    func test_SelectionRefresh_UpdatesActiveBadgeDuringFullRefresh() async throws {
+        let firstPath = Path("/Applications/Xcode-26.app")!
+        let secondPath = Path("/Applications/Xcode-27.app")!
+        Current.files.installedXcodes = { _ in [
+            InstalledXcode(path: firstPath, version: Version("26.0.0")!),
+            InstalledXcode(path: secondPath, version: Version("27.0.0")!)
+        ] }
+        await subject.updateInstalledXcodesAsync()
+        subject.selectedXcodePath = firstPath.string + "/Contents/Developer"
+        XCTAssertTrue(subject.allXcodes.first(where: { $0.installedPath == firstPath })?.selected == true)
+
+        // A catalog refresh must not delay noticing a selection changed outside Xcodes.
+        subject.updateTaskIsFullRefresh = true
+        let catalogTask = Task<Void, Never> { }
+        subject.updateTask = catalogTask
+        Current.shell.xcodeSelectPrintPath = { (0, secondPath.string + "/Contents/Developer", "") }
+
+        subject.refreshSelectedXcodePath()
+        let task = try XCTUnwrap(subject.selectedXcodeRefreshTask)
+        await task.value
+
+        XCTAssertEqual(subject.selectedXcodePath, secondPath.string + "/Contents/Developer")
+        XCTAssertTrue(subject.allXcodes.first(where: { $0.installedPath == secondPath })?.selected == true)
+        XCTAssertFalse(subject.allXcodes.first(where: { $0.installedPath == firstPath })?.selected == true)
+        XCTAssertNotNil(subject.updateTask)
+        XCTAssertFalse(catalogTask.isCancelled)
+    }
+
+    func test_SelectionRefresh_KeepsSelectionWhenReadFails() async throws {
+        let path = "/Applications/Xcode.app/Contents/Developer"
+        subject.selectedXcodePath = path
+        Current.shell.xcodeSelectPrintPath = { throw HelperClientError.message("Read failed") }
+
+        subject.refreshSelectedXcodePath()
+        let task = try XCTUnwrap(subject.selectedXcodeRefreshTask)
+        await task.value
+
+        XCTAssertEqual(subject.selectedXcodePath, path)
+        XCTAssertNil(subject.error)
+        XCTAssertNil(subject.selectedXcodeRefreshTask)
+    }
+
+    func test_UpdateIfNeeded_FirstCallThisLaunch_RefreshesEvenWithFreshCache() async throws {
+        subject.availableXcodes = [
+            AvailableXcode(version: Version("0.0.0")!, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+        ]
+        Current.defaults.date = { _ in Date.mock() }
+        XCTAssertFalse(subject.isReadyForUpdate)
+        let continuations = blockXcodeSelect()
+
+        subject.updateIfNeeded()
+        XCTAssertTrue(subject.updateTaskIsFullRefresh)
+        XCTAssertTrue(subject.hasRefreshedAvailableXcodesThisLaunch)
+        let fullRefreshTaskID = try XCTUnwrap(subject.updateTaskID)
+
+        // Becoming active again must not cancel the running full refresh
+        subject.updateIfNeeded()
+        XCTAssertEqual(subject.updateTaskID, fullRefreshTaskID)
+        XCTAssertTrue(subject.updateTaskIsFullRefresh)
+
+        await cancelUpdateTask(releasing: continuations)
+    }
+
+    func test_Update_OnlyRestartsRunningFullRefreshWhenAsked() async throws {
+        let continuations = blockXcodeSelect()
+
+        subject.update()
+        let firstTask = try XCTUnwrap(subject.updateTask)
+        let firstTaskID = try XCTUnwrap(subject.updateTaskID)
+
+        subject.update()
+        XCTAssertEqual(subject.updateTaskID, firstTaskID)
+
+        subject.update(restartingInFlightUpdate: true)
+        XCTAssertNotNil(subject.updateTaskID)
+        XCTAssertNotEqual(subject.updateTaskID, firstTaskID)
+
+        await cancelUpdateTask(releasing: continuations)
+        await firstTask.value
+    }
+
+    private func blockXcodeSelect() -> AppStateUpdateTestLockedBox<[CheckedContinuation<ProcessOutput, Error>]> {
+        let continuations = AppStateUpdateTestLockedBox<[CheckedContinuation<ProcessOutput, Error>]>([])
+        Current.shell.xcodeSelectPrintPath = {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                continuations.withValue { $0.append(continuation) }
+            }
+        }
+        return continuations
+    }
+
+    private func cancelUpdateTask(releasing continuations: AppStateUpdateTestLockedBox<[CheckedContinuation<ProcessOutput, Error>]>) async {
+        let task = subject.updateTask
+        task?.cancel()
+        for _ in 0..<100 where continuations.read({ $0.isEmpty }) {
+            await Task.yield()
+        }
+        continuations.withValue { pending in
+            pending.forEach { $0.resume(throwing: CancellationError()) }
+            pending.removeAll()
+        }
+        await task?.value
+    }
+
     func test_UpdateIfNeeded_OldTaskDoesNotClearReplacementTask() async throws {
         subject.availableXcodes = [
             AvailableXcode(
@@ -45,6 +150,7 @@ class AppStateUpdateTests: XCTestCase {
             )
         ]
         Current.defaults.date = { _ in Date.mock() }
+        subject.hasRefreshedAvailableXcodesThisLaunch = true
 
         let continuations = AppStateUpdateTestLockedBox<[CheckedContinuation<ProcessOutput, Error>]>([])
         Current.shell.xcodeSelectPrintPath = {

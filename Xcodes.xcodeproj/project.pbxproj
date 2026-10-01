@@ -847,6 +847,7 @@
 		};
 		D971F84C2E79102E005F84C9 /* Fix libfido2 structure */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);

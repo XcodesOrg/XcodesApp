@@ -16,11 +16,16 @@ struct XcodesApp: App {
             MainWindow()
                 .environmentObject(appState)
                 .environmentObject(updater)
+                // Recheck external selections as soon as the user returns from Terminal.
+                .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+                    guard !isTesting else { return }
+                    appState.refreshSelectedXcodePath()
+                }
                 // This is intentionally used on a View, and not on a WindowGroup,
                 // so that it's triggered when an individual window's phase changes instead of all window phases.
                 // When used on a View it's also invoked on launch, which doesn't occur with a WindowGroup.
                 // FB8954581 ScenePhase read from App doesn't return a value on launch
-                .onChange(of: scenePhase) { newScenePhase in
+                .onChange(of: scenePhase) { _, newScenePhase in
                     guard !isTesting else { return }
                     if case .active = newScenePhase {
                         appState.updateIfNeeded()

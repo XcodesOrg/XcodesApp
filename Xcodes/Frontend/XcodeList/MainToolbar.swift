@@ -16,7 +16,7 @@ struct MainToolbarModifier: ViewModifier {
         ToolbarItemGroup {
             ProgressButton(
                 isInProgress: appState.isUpdating,
-                action: appState.update
+                action: { appState.update() }
             ) {
                 Label("Refresh", systemImage: "arrow.clockwise")
             }

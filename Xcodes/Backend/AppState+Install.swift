@@ -242,8 +242,7 @@ extension AppState {
         do {
             try await performPostInstallStepsAsync(for: installedXcode)
         } catch {
-            self.error = error
-            self.presentedAlert = .generic(title: localizeString("Alert.InstallArchive.Error.Title"), message: error.legibleLocalizedDescription)
+            presentPostInstallRecovery(for: installedXcode)
         }
         resetDockProgressTracking()
 
@@ -256,8 +255,14 @@ extension AppState {
             fileExists: { path in Current.files.fileExists(atPath: path) },
             moveItem: { source, destination in
                 if Current.helper.usePrivilegedHelperForFileOperations {
-                    try await self.installHelperIfNecessaryAsync()
-                    try await Current.helper.moveAppAsync(source.path, destination.path)
+                    do {
+                        try await self.installHelperIfNecessaryAsync()
+                        try await Current.helper.moveAppAsync(source.path, destination.path)
+                    } catch is CancellationError {
+                        throw CancellationError()
+                    } catch {
+                        throw HelperFileOperationError(underlyingError: error, command: HelperRecovery.moveCommand(source: source.path, destination: destination.path))
+                    }
                 } else {
                     try Current.files.moveItem(at: source, to: destination)
                 }
@@ -354,8 +359,7 @@ extension AppState {
             } catch is CancellationError {
             } catch {
                 guard postInstallTaskID == taskID else { return }
-                self.error = error
-                self.presentedAlert = .generic(title: localizeString("Alert.PostInstall.Title"), message: error.legibleLocalizedDescription)
+                presentPostInstallRecovery(for: xcode)
             }
         }
     }
@@ -373,7 +377,9 @@ extension AppState {
             try await xcodePostInstallWorkflowService.performPostInstallSteps(for: xcode)
         } catch {
             Logger.appState.error("Performing post-install steps failed: \(error.legibleLocalizedDescription)")
-            throw InstallationError.postInstallStepsNotPerformed(version: xcode.version, helperInstallState: helperInstallState)
+            // Keep the underlying reason (unless the user simply declined), so the alert can say why it failed.
+            let reason: String? = if case InstallationError.postInstallStepsNotPerformed = error { nil } else { error.legibleLocalizedDescription }
+            throw InstallationError.postInstallStepsNotPerformed(version: xcode.version, helperInstallState: helperInstallState, reason: reason)
         }
     }
 
@@ -411,7 +417,8 @@ extension AppState {
                         helperConsent.resume(
                             throwing: InstallationError.postInstallStepsNotPerformed(
                                 version: version,
-                                helperInstallState: self.helperInstallState
+                                helperInstallState: self.helperInstallState,
+                                reason: nil
                             )
                         )
                     }
@@ -511,7 +518,8 @@ public enum InstallationError: LocalizedError, Equatable {
     case versionAlreadyInstalled(InstalledXcode)
     case invalidVersion(String)
     case versionNotInstalled(Version)
-    case postInstallStepsNotPerformed(version: Version, helperInstallState: HelperInstallState)
+    /// `reason` describes the underlying failure, if there was one besides the user declining to install the helper
+    case postInstallStepsNotPerformed(version: Version, helperInstallState: HelperInstallState, reason: String?)
 
     public var errorDescription: String? {
         switch self {
@@ -545,13 +553,16 @@ public enum InstallationError: LocalizedError, Equatable {
             return String(format: localizeString("InstallationError.InvalidVersion"), version)
         case let .versionNotInstalled(version):
             return String(format: localizeString("InstallationError.VersionNotInstalled"), version.appleDescription)
-        case let .postInstallStepsNotPerformed(version, helperInstallState):
+        case let .postInstallStepsNotPerformed(version, helperInstallState, reason):
+            let message: String
             switch helperInstallState {
             case .installed:
-                return String(format: localizeString("InstallationError.PostInstallStepsNotPerformed.Installed"), version.appleDescription)
+                message = String(format: localizeString("InstallationError.PostInstallStepsNotPerformed.Installed"), version.appleDescription)
             case .notInstalled, .unknown:
-                return String(format: localizeString("InstallationError.PostInstallStepsNotPerformed.NotInstalled"), version.appleDescription)
+                message = String(format: localizeString("InstallationError.PostInstallStepsNotPerformed.NotInstalled"), version.appleDescription)
             }
+            guard let reason else { return message }
+            return "\(message)\n\n\(reason)"
         }
     }
 }

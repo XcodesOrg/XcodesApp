@@ -81,6 +81,120 @@ class AppStateTests: XCTestCase {
         subject = AppState()
     }
 
+    func test_Select_HelperFailureOffersTerminalCommand() async throws {
+        let path = try XCTUnwrap(Path("/Applications/Xcode 27's Preview.app"))
+        let xcode = Xcode(version: Version("27.0.0")!, installState: .installed(path), selected: false, icon: nil)
+        subject.helperInstallState = .installed
+        subject.onSelectActionType = .none
+        Current.helper.switchXcodePathAsync = { _ in throw HelperClientError.message("Helper unavailable") }
+
+        subject.select(xcode: xcode, shouldPrepareUserForHelperInstallation: false)
+        let task = try XCTUnwrap(subject.selectTask)
+        await task.value
+
+        guard case let .helperRecovery(recovery) = subject.presentedSheet else {
+            return XCTFail("Expected helper recovery")
+        }
+        XCTAssertEqual(recovery.command, "sudo /usr/bin/xcode-select --switch '/Applications/Xcode 27'\"'\"'s Preview.app'")
+        XCTAssertTrue(recovery.message.contains("Helper unavailable"))
+        XCTAssertNil(subject.error)
+        XCTAssertNil(subject.presentedAlert)
+        XCTAssertNil(subject.selectedXcodePath)
+    }
+
+    func test_Select_HelperInstallFailureOffersTerminalCommand() async throws {
+        let path = try XCTUnwrap(Path("/Applications/Xcode.app"))
+        let xcode = Xcode(version: Version("27.0.0")!, installState: .installed(path), selected: false, icon: nil)
+        subject.helperInstallState = .notInstalled
+        Current.helper.install = { throw HelperClientError.message("Installation failed") }
+
+        subject.select(xcode: xcode, shouldPrepareUserForHelperInstallation: false)
+        let task = try XCTUnwrap(subject.selectTask)
+        await task.value
+
+        guard case let .helperRecovery(recovery) = subject.presentedSheet else {
+            return XCTFail("Expected helper recovery")
+        }
+        XCTAssertEqual(recovery.command, HelperRecovery.selectCommand(path: path.string))
+        XCTAssertTrue(recovery.message.contains("Installation failed"))
+        XCTAssertNil(subject.presentedAlert)
+    }
+
+    func test_PostInstall_HelperFailureOffersOpeningInstalledXcode() async throws {
+        subject.helperInstallState = .installed
+        let xcode = InstalledXcode(path: Path("/Applications/Xcode Preview.app")!, version: Version("27.0.0")!)
+        Current.helper.devToolsSecurityEnableAsync = { throw HelperClientError.message("Helper unavailable") }
+
+        subject.performPostInstallSteps(for: xcode)
+        let task = try XCTUnwrap(subject.postInstallTask)
+        await task.value
+
+        guard case let .postInstallFailed(installedXcode) = subject.presentedAlert else {
+            return XCTFail("Expected an option to open Xcode")
+        }
+        XCTAssertEqual(installedXcode.path, xcode.path)
+        XCTAssertEqual(installedXcode.version, xcode.version)
+        XCTAssertNil(subject.error)
+        XCTAssertNil(subject.presentedSheet)
+    }
+
+    func test_HelperRecovery_QuotedPathRoundTripsThroughShell() throws {
+        let path = "/Applications/Xcode's $(touch /tmp/xcodes-should-not-exist) `whoami` \"Preview\".app"
+        let process = Process()
+        let output = Pipe()
+        process.executableURL = URL(fileURLWithPath: "/bin/sh")
+        process.arguments = ["-c", "printf '%s' " + HelperRecovery.quote(path)]
+        process.standardOutput = output
+        try process.run()
+        let result = output.fileHandleForReading.readDataToEndOfFile()
+        process.waitUntilExit()
+        XCTAssertEqual(process.terminationStatus, 0)
+        XCTAssertEqual(String(data: result, encoding: .utf8), path)
+    }
+
+    func test_InstallHelper_RetriesUntilNewlyInstalledHelperAnswers() async throws {
+        subject.helperInstallState = .notInstalled
+        subject.helperInstallRetryDelay = .zero
+        let checks = AppStateTestsCounter()
+        Current.helper.install = { }
+        Current.helper.checkIfLatestHelperIsInstalledAsync = {
+            // launchd hasn't started the helper for the first couple of checks
+            checks.increment() >= 3
+        }
+
+        try await subject.installHelperIfNecessaryAsync()
+
+        XCTAssertEqual(subject.helperInstallState, .installed)
+        XCTAssertEqual(checks.value, 3)
+    }
+
+    func test_InstallHelper_ThrowsWithReasonWhenInstalledHelperIsUnreachable() async throws {
+        subject.helperInstallState = .notInstalled
+        subject.helperInstallRetryDelay = .zero
+        Current.helper.install = { }
+        Current.helper.checkIfLatestHelperIsInstalledAsync = {
+            throw NSError(domain: NSCocoaErrorDomain, code: NSXPCConnectionInvalid)
+        }
+
+        do {
+            try await subject.installHelperIfNecessaryAsync()
+            XCTFail("Expected an unreachable helper to throw")
+        } catch let HelperClientError.unreachableAfterInstall(underlyingError) {
+            XCTAssertEqual((underlyingError as NSError?)?.code, NSXPCConnectionInvalid)
+        }
+        XCTAssertEqual(subject.helperInstallState, .notInstalled)
+    }
+
+    func test_PostInstallStepsError_IncludesUnderlyingReason() {
+        let error = InstallationError.postInstallStepsNotPerformed(
+            version: Version("27.2.0")!,
+            helperInstallState: .notInstalled,
+            reason: HelperClientError.unreachableAfterInstall(underlyingError: nil).localizedDescription
+        )
+
+        XCTAssertTrue(error.errorDescription?.contains(localizeString("HelperClient.error.UnreachableAfterInstall")) == true)
+    }
+
     func test_InstallError_Network401IsUnauthorized() {
         let error = NetworkError.non200StatusCode(statusCode: 401, data: Data())
 
@@ -1044,5 +1158,21 @@ private extension HTTPCookie {
             .secure: "TRUE",
             .expires: Date.distantFuture
         ]))
+    }
+}
+
+private final class AppStateTestsCounter: @unchecked Sendable {
+    private let lock = NSLock()
+    private var count = 0
+
+    var value: Int {
+        lock.withLock { count }
+    }
+
+    func increment() -> Int {
+        lock.withLock {
+            count += 1
+            return count
+        }
     }
 }
