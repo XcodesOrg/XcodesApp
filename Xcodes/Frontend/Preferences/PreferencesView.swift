@@ -77,8 +77,15 @@ struct PreferencesView: View {
                 }
             }
         }
+        .onAppear { selectHelperSettingsIfRequested() }
+        .onChange(of: appState.showHelperSettings) { _, _ in selectHelperSettingsIfRequested() }
         .padding(20)
         .frame(width: 600)
     }
 
+    private func selectHelperSettingsIfRequested() {
+        guard appState.showHelperSettings else { return }
+        selectedTab = .advanced
+        appState.showHelperSettings = false
+    }
 }

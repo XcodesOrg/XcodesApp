@@ -2,6 +2,7 @@ import Foundation
 import XcodesLoginKit
 
 enum XcodesSheet: Identifiable {
+    case helperRecovery(HelperRecovery)
     case signIn
     case twoFactor(SecondFactorData)
     case securityKeyTouchToConfirm
@@ -17,7 +18,7 @@ enum XcodesSheet: Identifiable {
 
 extension XcodesSheet {
     private enum Kind: Hashable {
-        case signIn, twoFactor(TwoFactorOption), securityKeyTouchToConfirm
+        case signIn, twoFactor(TwoFactorOption), securityKeyTouchToConfirm, helperRecovery
 
         enum TwoFactorOption {
             case smsSent
@@ -28,6 +29,7 @@ extension XcodesSheet {
 
         init(_ sheet: XcodesSheet) {
             switch sheet {
+            case .helperRecovery: self = .helperRecovery
             case .signIn: self = .signIn
             case .twoFactor(let data):
                 switch data.option {

@@ -98,6 +98,9 @@ struct MainWindow: View {
         .emittingError($appState.error, recoveryHandler: { _ in })
         .sheet(item: $appState.presentedSheet) { sheet in
             switch sheet {
+            case .helperRecovery(let recovery):
+                HelperRecoveryView(recovery: recovery)
+                    .environmentObject(appState)
             case .signIn:
                 signInView()
                     .environmentObject(appState)
@@ -198,6 +201,15 @@ struct MainWindow: View {
                     appState.respondToPreparedHelperAction(userConsented: false)
                 }
             )
+        case let .postInstallFailed(xcode):
+            return Alert(
+                title: Text("Alert.PostInstall.OpenXcode.Title"),
+                message: Text(verbatim: String(format: localizeString("Alert.PostInstall.OpenXcode.Message"), xcode.version.appleDescription)),
+                primaryButton: .default(Text("Alert.PostInstall.OpenXcode.Button"), action: {
+                    appState.open(xcode: xcode)
+                }),
+                secondaryButton: .cancel(Text("Done"))
+            )
         case let .generic(title, message):
             return Alert(
                 title: Text(title),
@@ -231,6 +243,20 @@ struct MainWindow: View {
                     action: { appState.confirmDeleteRuntime(runtime: runtime, presentErrorInSettings: false) }
                 ),
                 secondaryButton: .cancel(Text("Cancel"))
+            )
+        case .unauthenticatedDataSource:
+            return Alert(
+                title: Text("Alert.Update.AuthError.Title"),
+                message: Text("Alert.Update.AuthError.Message"),
+                primaryButton: .default(
+                    Text("Login"),
+                    action: {
+                        appState.presentedSheet = .signIn
+                    }
+                ),
+                secondaryButton: .cancel(
+                    Text("Cancel")
+                )
             )
         case let .checkMinSupportedVersion(xcode, deviceVersion):
             return Alert(
