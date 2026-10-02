@@ -40,7 +40,12 @@ extension AppState {
     }
 
     func installAsync(_ installationType: InstallationType, downloader: Downloader, attemptNumber: Int) async throws -> InstalledXcode {
-        try await xcodeInstallRetryService.install(
+        if attemptNumber == 0, case let .version(availableXcode) = installationType {
+            // Runtimes don't depend on the new Xcode being installed, so download them alongside it.
+            autoDownloadPlatforms(for: availableXcode)
+        }
+
+        return try await xcodeInstallRetryService.install(
             attemptNumber: attemptNumber,
             shouldRetryAfterDamagedArchive: installationType.shouldRetryAfterDamagedArchive,
             attempt: { @MainActor _ in

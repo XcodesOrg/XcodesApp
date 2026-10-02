@@ -17,12 +17,12 @@ struct PlatformsView: View {
  
     var body: some View {
         
-        let builds = xcode.sdks?.allBuilds
-        let availableRuntimes = (builds?.flatMap { sdkBuild in
+        let builds = xcode.platformSDKBuilds
+        let availableRuntimes = builds.flatMap { sdkBuild in
             appState.downloadableRuntimes.filter {
                 $0.sdkBuildUpdate?.contains(sdkBuild) ?? false
             }
-        } ?? []).removingReleaseCandidateDisplayDuplicates(installedRuntimes: appState.installedRuntimes)
+        }.removingReleaseCandidateDisplayDuplicates(installedRuntimes: appState.installedRuntimes)
 
         let availableVariants = ArchitectureVariant.allCases.filter { variant in
             availableRuntimes.contains { $0.supports(variant) }
@@ -31,6 +31,13 @@ struct PlatformsView: View {
         let runtimes = availableRuntimes.filter { runtime in
             guard !(runtime.architectures?.isEmpty ?? true), let displayedVariant else { return true }
             return runtime.supports(displayedVariant)
+        }
+        // iOS, watchOS, visionOS, tvOS; newest version first within a platform
+        .sorted { lhs, rhs in
+            if lhs.platform.displayOrder != rhs.platform.displayOrder {
+                return lhs.platform.displayOrder < rhs.platform.displayOrder
+            }
+            return lhs.simulatorVersion.version.localizedStandardCompare(rhs.simulatorVersion.version) == .orderedDescending
         }
         
         VStack {
@@ -84,20 +91,20 @@ struct PlatformsView: View {
                 }
                
                 pathIfAvailable(xcode: xcode, runtime: runtime)
-                
-                if runtime.installState == .notInstalled {
-                    // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
-                    if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
-                        EmptyView()
-                    } else {
-                        HStack {
-                            Spacer()
-                            DownloadRuntimeButton(runtime: runtime)
-                        }
-                    }
-                }
-					
+
+                // One spacer, so the action button sits next to the size column on every row
                 Spacer()
+
+                // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
+                if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
+                    Button("Uninstall", role: .destructive) {
+                        appState.presentedAlert = .deletePlatform(runtime: runtime)
+                    }
+                    .help("Alert.DeletePlatform.PrimaryButton")
+                } else if runtime.installState == .notInstalled {
+                    DownloadRuntimeButton(runtime: runtime)
+                }
+
                 Text(runtime.downloadFileSizeString)
                     .font(.subheadline)
 						  .frame(width: 70, alignment: .trailing)

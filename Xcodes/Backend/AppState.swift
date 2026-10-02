@@ -930,7 +930,11 @@ class AppState: ObservableObject {
         )
 
         self.allXcodes = items.map { item in
-            Xcode(item, icon: item.installedPath.map { NSWorkspace.shared.icon(forFile: $0.string) })
+            Xcode(
+                item,
+                icon: item.installedPath.map { NSWorkspace.shared.icon(forFile: $0.string) },
+                installedSDKBuilds: item.installedPath.map { InstalledSDKBuilds.builds(forXcodeAt: $0, version: item.version) } ?? []
+            )
         }
     }
 
