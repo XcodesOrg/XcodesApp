@@ -2971,6 +2971,37 @@
         }
       }
     },
+    "Alert.PostInstall.OpenXcode.Button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Xcode"
+          }
+        }
+      }
+    },
+    "Alert.PostInstall.OpenXcode.Message" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ is installed, but some setup steps weren’t completed automatically. Open Xcode to finish setting it up."
+          }
+        }
+      }
+    },
+    "Alert.PostInstall.OpenXcode.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish Setting Up Xcode"
+          }
+        }
+      }
+    },
     "Alert.PostInstall.Title" : {
       "comment" : "Post install",
       "extractionState" : "manual",
@@ -4410,6 +4441,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "解除安裝 Xcode %@？"
+          }
+        }
+      }
+    },
+    "Alert.Update.AuthError.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Apple data source lists Xcode releases from your Apple Developer account, so it needs you to be signed in. Sign in to refresh the list, or switch the data source to Xcode Releases in Settings."
+          }
+        }
+      }
+    },
+    "Alert.Update.AuthError.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to refresh from Apple"
           }
         }
       }
@@ -11157,6 +11208,39 @@
         }
       }
     },
+    "HelperClient.error.AuthorizationFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS didn't authorize installing the privileged helper. Try again and enter an administrator's name and password when asked; the helper can also be installed from Settings > Advanced."
+          }
+        }
+      }
+    },
+    "HelperClient.error.InvalidSignature" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS refused to install the privileged helper because its code signature doesn't match what Xcodes expects. The app and helper must be signed by the same developer team."
+          }
+        }
+      }
+    },
+    "HelperClient.error.UnreachableAfterInstall" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The privileged helper was installed, but Xcodes couldn't connect to it. This usually means the helper and Xcodes are signed by different developer teams, for example a local development build running alongside a helper installed by the released app."
+          }
+        }
+      }
+    },
     "HelperInstalled" : {
       "localizations" : {
         "ar" : {
@@ -11413,6 +11497,46 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "尚未安裝輔助程式"
+          }
+        }
+      }
+    },
+    "HelperRecovery.Copied" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copied"
+          }
+        }
+      }
+    },
+    "HelperRecovery.CopyCommand" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy Command"
+          }
+        }
+      }
+    },
+    "HelperRecovery.Explanation" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Advanced Settings to install the privileged helper, then retry. Or copy the command below and paste it into Terminal. Terminal may ask for your administrator password; it will not appear as you type."
+          }
+        }
+      }
+    },
+    "HelperRecovery.OpenSettings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
           }
         }
       }

@@ -94,6 +94,13 @@ Xcodes.app and CLI is updated, maintained with contributors like yourself. Even 
 
 You'll need macOS 15.6 Ventura and Xcode 26 in order to build and run Xcodes.app.
 
+### Known build warnings
+
+The following dependency and helper limitations remain:
+
+- `ld: building for macOS-14.6, but linking with dylib '@rpath/libcbor.0.11.0.dylib' which was built for newer version 15.0`: the prebuilt `libcbor` in LibFido2Swift targets macOS 15 while the app targets 14.6. Resolving it means raising the app's deployment target or rebuilding that dependency for 14.6.
+- `SMJobBless` is deprecated in favor of `SMAppService`. The one legacy call is isolated in a marked shim in `HelperClient.swift` until the privileged helper moves to `SMAppService`, which uses a different install and approval model.
+
 `Unxip` and `aria2` must be compiled as a universal binary
 ```
 # compile for Intel
