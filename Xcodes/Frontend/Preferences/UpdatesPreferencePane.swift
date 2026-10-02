@@ -110,9 +110,9 @@ class ObservableUpdater: ObservableObject {
         automaticallyChecksForUpdatesObservation = updater.observe(
             \.automaticallyChecksForUpdates, 
             options: [.initial, .new, .old],
-            changeHandler: { [weak self] updater, change in
-                guard change.newValue != change.oldValue else { return }
-                let automaticallyChecksForUpdates = updater.automaticallyChecksForUpdates
+            changeHandler: { [weak self] _, change in
+                // Use the observed value: the updater's properties are main actor-isolated and this handler isn't
+                guard change.newValue != change.oldValue, let automaticallyChecksForUpdates = change.newValue else { return }
                 Task { @MainActor [weak self] in
                     self?.automaticallyChecksForUpdates = automaticallyChecksForUpdates
                 }
@@ -121,8 +121,8 @@ class ObservableUpdater: ObservableObject {
         lastUpdateCheckDateObservation = updater.observe(
             \.lastUpdateCheckDate, 
             options: [.initial, .new, .old],
-            changeHandler: { [weak self] updater, change in
-                let lastUpdateCheckDate = updater.lastUpdateCheckDate
+            changeHandler: { [weak self] _, change in
+                let lastUpdateCheckDate = change.newValue ?? nil
                 Task { @MainActor [weak self] in
                     self?.lastUpdateCheckDate = lastUpdateCheckDate
                 }

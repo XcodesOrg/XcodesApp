@@ -28,6 +28,7 @@ struct XcodesApp: App {
                     }
                 }
         }
+        .defaultSize(width: 1040, height: 720)
         .commands {
             CommandGroup(replacing: .appInfo) {
                 Button("Menu.About") {
