@@ -23168,6 +23168,17 @@
         }
       }
     },
+    "ReleasePlusNewBetas" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Release & unreleased beta"
+          }
+        }
+      }
+    },
     "Required" : {
       "localizations" : {
         "ar" : {
