@@ -2,6 +2,7 @@ import Combine
 import Cocoa
 import AsyncNetworkService
 @preconcurrency import Path
+import class SwiftUI.NSHostingView
 import Version
 import XCTest
 import XcodesLoginKit
@@ -365,6 +366,85 @@ class AppStateTests: XCTestCase {
         XCTAssertEqual(subject.selectedXcodePath, secondPath.string)
     }
 
+    func test_UninstallAlert_PermanentDeletionResetsAfterCancelAndUsesRemoveWhenConfirmed() async throws {
+        let (xcode, operations) = makeUninstallFixture(useHelper: false)
+        let previousKeyWindow = NSApp.keyWindow
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 900, height: 600),
+            styleMask: [.titled, .closable, .resizable],
+            backing: .buffered,
+            defer: false
+        )
+        window.isReleasedWhenClosed = false
+        window.contentView = NSHostingView(rootView: MainWindow().environmentObject(subject))
+        defer {
+            subject.xcodeBeingConfirmedForUninstallation = nil
+            subject.uninstallTask?.cancel()
+            if let sheet = window.attachedSheet {
+                window.endSheet(sheet, returnCode: .cancel)
+                sheet.orderOut(nil)
+            }
+            window.contentView = nil
+            window.close()
+            previousKeyWindow?.makeKey()
+        }
+        window.makeKeyAndOrderFront(nil)
+        window.contentView?.layoutSubtreeIfNeeded()
+        try await Task.sleep(nanoseconds: 100_000_000)
+
+        func waitUntil(_ message: String, condition: @MainActor () -> Bool) async throws {
+            for _ in 0..<200 {
+                if condition() { return }
+                try await Task.sleep(nanoseconds: 25_000_000)
+            }
+            _ = try XCTUnwrap(condition() ? true : nil, message)
+        }
+
+        let checkboxTitle = localizeString("Alert.Uninstall.DeletePermanently")
+        func sheetButton(titled title: String) -> NSButton? {
+            window.attachedSheet?.contentView?.recursiveSubviews(ofType: NSButton.self)
+                .first { $0.title == title }
+        }
+
+        subject.xcodeBeingConfirmedForUninstallation = xcode
+        try await waitUntil("Expected the native uninstall sheet and suppression checkbox") {
+            sheetButton(titled: checkboxTitle) != nil
+        }
+        let firstCheckbox = try XCTUnwrap(sheetButton(titled: checkboxTitle))
+        XCTAssertEqual(firstCheckbox.state, .off)
+        firstCheckbox.performClick(nil)
+        XCTAssertEqual(firstCheckbox.state, .on)
+        let cancelButton = try XCTUnwrap(sheetButton(titled: localizeString("Cancel")))
+        cancelButton.performClick(nil)
+        try await waitUntil("Expected Cancel to dismiss the sheet and clear its target") {
+            window.attachedSheet == nil && self.subject.xcodeBeingConfirmedForUninstallation == nil
+        }
+        XCTAssertTrue(operations.read { $0.isEmpty })
+        XCTAssertNil(subject.uninstallTask)
+
+        subject.xcodeBeingConfirmedForUninstallation = xcode
+        try await waitUntil("Expected the uninstall sheet to reopen for the same Xcode") {
+            sheetButton(titled: checkboxTitle) != nil
+        }
+        let reopenedCheckbox = try XCTUnwrap(sheetButton(titled: checkboxTitle))
+        XCTAssertEqual(reopenedCheckbox.state, .off)
+        reopenedCheckbox.performClick(nil)
+        XCTAssertEqual(reopenedCheckbox.state, .on)
+        let uninstallButton = try XCTUnwrap(sheetButton(titled: localizeString("Uninstall")))
+        uninstallButton.performClick(nil)
+        try await waitUntil("Expected the mocked permanent uninstall to finish and dismiss its sheet") {
+            !operations.read { $0.isEmpty }
+                && self.subject.uninstallTask == nil
+                && self.subject.xcodeBeingConfirmedForUninstallation == nil
+                && window.attachedSheet == nil
+        }
+
+        XCTAssertEqual(operations.read { $0 }, [
+            "remove:\(xcode.installedPath!.string)", "refreshSelection", "refreshInstalled"
+        ])
+        assertUninstallSucceeded()
+    }
+
     func test_Uninstall_MissingXcodePresentsFileNotFoundError() async throws {
         let missingPath = try XCTUnwrap(Path("/Applications/Xcode-Missing.app"))
         let xcode = Xcode(version: Version("15.0.0")!, installState: .installed(missingPath), selected: false, icon: nil)
@@ -409,6 +489,237 @@ class AppStateTests: XCTestCase {
         await uninstallTask.value
 
         XCTAssertEqual(subject.allXcodes[0].installState, .notInstalled)
+    }
+
+    func test_Uninstall_DefaultAndExplicitTrashUseCurrentUserWithEitherHelperPreference() async throws {
+        for useHelper in [false, true] {
+            for useDefault in [false, true] {
+                let (xcode, operations) = makeUninstallFixture(useHelper: useHelper)
+
+                if useDefault {
+                    subject.uninstall(xcode: xcode)
+                } else {
+                    subject.uninstall(xcode: xcode, permanently: false)
+                }
+                XCTAssertEqual(subject.allXcodes[0].installState, .uninstalling(xcode.installedPath!))
+                let task = try XCTUnwrap(subject.uninstallTask)
+                await task.value
+
+                XCTAssertEqual(operations.read { $0 }, [
+                    "trash:\(xcode.installedPath!.string)", "refreshSelection", "refreshInstalled"
+                ])
+                assertUninstallSucceeded()
+            }
+        }
+    }
+
+    func test_Uninstall_PermanentRemovesOriginalBundleWithEitherHelperPreference() async throws {
+        for useHelper in [false, true] {
+            let (xcode, operations) = makeUninstallFixture(useHelper: useHelper)
+
+            subject.uninstall(xcode: xcode, permanently: true)
+            XCTAssertEqual(subject.allXcodes[0].installState, .uninstalling(xcode.installedPath!))
+            let task = try XCTUnwrap(subject.uninstallTask)
+            await task.value
+
+            let deletion = useHelper
+                ? ["installHelper", "checkHelper", "helperRemove:\(xcode.installedPath!.string)"]
+                : ["remove:\(xcode.installedPath!.string)"]
+            XCTAssertEqual(operations.read { $0 }, deletion + ["refreshSelection", "refreshInstalled"])
+            assertUninstallSucceeded()
+        }
+    }
+
+    func test_Uninstall_FailureRestoresInstalledStateAndCleansUpTask() async throws {
+        for useHelper in [false, true] {
+            for permanently in [false, true] {
+                let failure = NSError(domain: "UninstallTests", code: 1, userInfo: [NSLocalizedDescriptionKey: "Deletion failed"])
+                let (xcode, operations) = makeUninstallFixture(useHelper: useHelper, failure: failure)
+
+                subject.uninstall(xcode: xcode, permanently: permanently)
+                let task = try XCTUnwrap(subject.uninstallTask)
+                await task.value
+
+                let deletion: [String]
+                if permanently && useHelper {
+                    deletion = ["installHelper", "checkHelper", "helperRemove:\(xcode.installedPath!.string)"]
+                } else {
+                    deletion = ["\(permanently ? "remove" : "trash"):\(xcode.installedPath!.string)"]
+                }
+                XCTAssertEqual(operations.read { $0 }, deletion)
+                XCTAssertEqual(subject.allXcodes[0].installState, xcode.installState)
+                XCTAssertEqual(subject.error as NSError?, failure)
+                guard case let .generic(title, message) = subject.presentedAlert else {
+                    return XCTFail("Expected generic uninstall error alert")
+                }
+                XCTAssertEqual(title, localizeString("Alert.Uninstall.Error.Title"))
+                XCTAssertEqual(message, failure.localizedDescription)
+                XCTAssertNil(subject.uninstallTask)
+                XCTAssertNil(subject.uninstallTaskID)
+            }
+        }
+    }
+
+    func test_Uninstall_MissingMetadataPreventsAllDeletionAndHelperOperations() async throws {
+        for useHelper in [false, true] {
+            for permanently in [false, true] {
+                let (xcode, operations) = makeUninstallFixture(useHelper: useHelper)
+                Current.files.contentsAtPath = { _ in nil }
+
+                subject.uninstall(xcode: xcode, permanently: permanently)
+                let task = try XCTUnwrap(subject.uninstallTask)
+                await task.value
+
+                XCTAssertTrue(operations.read { $0.isEmpty })
+                XCTAssertEqual(subject.allXcodes[0].installState, xcode.installState)
+                guard case let .fileNotFound(path) = subject.error as? FileError else {
+                    return XCTFail("Expected file-not-found error")
+                }
+                XCTAssertEqual(path, xcode.installedPath!.string)
+                XCTAssertNotNil(subject.presentedAlert)
+                XCTAssertNil(subject.uninstallTask)
+                XCTAssertNil(subject.uninstallTaskID)
+            }
+        }
+    }
+
+    func test_Uninstall_EarlierLocalDeletionRefreshesAfterLaterUninstallFails() async throws {
+        for permanently in [false, true] {
+            let (firstXcode, operations) = makeUninstallFixture(useHelper: false)
+            let secondPath = Path("/Applications/Xcode-1.0.0.app")!
+            let secondVersion = Version("1.0.0")!
+            let secondXcode = Xcode(version: secondVersion, installState: .installed(secondPath), selected: false, icon: nil)
+            let remainingXcode = InstalledXcode(path: secondPath, version: secondVersion)
+            subject.availableXcodes.append(
+                AvailableXcode(version: secondVersion, url: URL(string: "https://apple.com/second.xip")!, filename: "second.xip", releaseDate: nil)
+            )
+            subject.allXcodes = [firstXcode, secondXcode]
+
+            let contentsAtPath = Current.files.contentsAtPath
+            Current.files.contentsAtPath = { path in
+                path.hasPrefix(secondPath.string + "/") ? nil : contentsAtPath(path)
+            }
+            Current.files.installedXcodes = { _ in
+                operations.withValue { $0.append("refreshInstalled") }
+                return [remainingXcode]
+            }
+            Current.shell.xcodeSelectPrintPath = {
+                operations.withValue { $0.append("refreshSelection") }
+                return ProcessOutput(status: 0, out: secondPath.string, err: "")
+            }
+
+            let deletionStarted = AsyncStream<Void>.makeStream()
+            let allowDeletionToFinish = DispatchSemaphore(value: 0)
+            defer { allowDeletionToFinish.signal() }
+            let delete: @Sendable (URL) -> Void = { url in
+                XCTAssertFalse(Thread.isMainThread)
+                operations.withValue { $0.append("delete:\(url.path)") }
+                deletionStarted.continuation.yield(())
+                deletionStarted.continuation.finish()
+                XCTAssertEqual(allowDeletionToFinish.wait(timeout: .now() + 10), .success)
+            }
+            Current.files.removeItem = { delete($0) }
+            Current.files.trashItem = {
+                delete($0)
+                return URL(fileURLWithPath: "/Users/test/.Trash/Xcode-0.0.0.app")
+            }
+
+            subject.uninstall(xcode: firstXcode, permanently: permanently)
+            let firstTask = try XCTUnwrap(subject.uninstallTask)
+            var started = deletionStarted.stream.makeAsyncIterator()
+            _ = await started.next()
+
+            subject.uninstall(xcode: secondXcode, permanently: permanently)
+            let secondTask = try XCTUnwrap(subject.uninstallTask)
+            await secondTask.value
+
+            XCTAssertFalse(firstTask.isCancelled)
+            XCTAssertEqual(subject.allXcodes.first { $0.id == firstXcode.id }?.installState, .uninstalling(firstXcode.installedPath!))
+            XCTAssertEqual(subject.allXcodes.first { $0.id == secondXcode.id }?.installState, .installed(secondPath))
+            guard case let .fileNotFound(path) = subject.error as? FileError else {
+                allowDeletionToFinish.signal()
+                await firstTask.value
+                return XCTFail("Expected the second uninstall to fail metadata validation")
+            }
+            XCTAssertEqual(path, secondPath.string)
+            XCTAssertNil(subject.uninstallTask)
+            XCTAssertNil(subject.uninstallTaskID)
+
+            allowDeletionToFinish.signal()
+            await firstTask.value
+
+            XCTAssertEqual(operations.read { $0 }, [
+                "delete:\(firstXcode.installedPath!.string)", "refreshSelection", "refreshInstalled"
+            ])
+            XCTAssertEqual(subject.allXcodes.first { $0.id == firstXcode.id }?.installState, .notInstalled)
+            XCTAssertEqual(subject.allXcodes.first { $0.id == secondXcode.id }?.installState, .installed(secondPath))
+            XCTAssertEqual(subject.selectedXcodePath, secondPath.string)
+            XCTAssertEqual(subject.allXcodes.first { $0.id == secondXcode.id }?.selected, true)
+            XCTAssertNil(subject.uninstallTask)
+            XCTAssertNil(subject.uninstallTaskID)
+        }
+    }
+
+    private func makeUninstallFixture(
+        useHelper: Bool,
+        failure: NSError? = nil
+    ) -> (Xcode, TestLockedBox<[String]>) {
+        Current = .mock
+        subject = AppState()
+        subject.helperInstallState = .notInstalled
+        let path = Path("/Applications/Xcode-0.0.0.app")!
+        let version = Version("0.0.0")!
+        let xcode = Xcode(version: version, installState: .installed(path), selected: true, icon: nil)
+        subject.availableXcodes = [
+            AvailableXcode(version: version, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+        ]
+        subject.selectedXcodePath = path.string
+        subject.allXcodes = [xcode]
+        let operations = TestLockedBox<[String]>([])
+        Current.defaults.bool = { key in
+            key == PreferenceKey.usePrivilegeHelperForFileOperations.rawValue ? useHelper : nil
+        }
+        Current.files.trashItem = { url in
+            XCTAssertFalse(Thread.isMainThread)
+            operations.withValue { $0.append("trash:\(url.path)") }
+            if let failure { throw failure }
+            return URL(fileURLWithPath: "/Users/test/.Trash/Xcode-0.0.0.app")
+        }
+        Current.files.removeItem = { url in
+            XCTAssertFalse(Thread.isMainThread)
+            operations.withValue { $0.append("remove:\(url.path)") }
+            if let failure { throw failure }
+        }
+        Current.helper.install = {
+            operations.withValue { $0.append("installHelper") }
+        }
+        Current.helper.checkIfLatestHelperIsInstalledAsync = {
+            operations.withValue { $0.append("checkHelper") }
+            return true
+        }
+        Current.helper.removeAsync = { path in
+            operations.withValue { $0.append("helperRemove:\(path)") }
+            if let failure { throw failure }
+        }
+        Current.shell.xcodeSelectPrintPath = {
+            operations.withValue { $0.append("refreshSelection") }
+            return ProcessOutput(status: 0, out: "", err: "")
+        }
+        Current.files.installedXcodes = { _ in
+            operations.withValue { $0.append("refreshInstalled") }
+            return []
+        }
+        return (xcode, operations)
+    }
+
+    private func assertUninstallSucceeded(file: StaticString = #filePath, line: UInt = #line) {
+        XCTAssertEqual(subject.allXcodes[0].installState, .notInstalled, file: file, line: line)
+        XCTAssertFalse(subject.allXcodes[0].selected, file: file, line: line)
+        XCTAssertEqual(subject.selectedXcodePath, "", file: file, line: line)
+        XCTAssertNil(subject.error, file: file, line: line)
+        XCTAssertNil(subject.presentedAlert, file: file, line: line)
+        XCTAssertNil(subject.uninstallTask, file: file, line: line)
+        XCTAssertNil(subject.uninstallTaskID, file: file, line: line)
     }
 
     func test_Signout_RemovesCookiesFromDownloadSession() throws {

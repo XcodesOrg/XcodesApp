@@ -8,6 +8,7 @@ struct MainWindow: View {
     @EnvironmentObject var appState: AppState
     @State private var selectedXcodeID: Xcode.ID?
     @State private var searchText: String = ""
+    @State private var deletePermanently = false
     @AppStorage("lastUpdated") private var lastUpdated: Double?
     // These two properties should be per-scene state managed by @SceneStorage property wrappers.
     // There's currently a bug with @SceneStorage on macOS, though, where quitting the app will discard the values, which removes a lot of its utility.
@@ -22,11 +23,23 @@ struct MainWindow: View {
         NavigationSplitViewWrapper {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly, architecture: architecture)
                 .layoutPriority(1)
-                .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
-                    Alert(title: Text(String(format: localizeString("Alert.Uninstall.Title"), xcode.description)),
-                          message: Text("Alert.Uninstall.Message"),
-                          primaryButton: .destructive(Text("Uninstall"), action: { self.appState.uninstall(xcode: xcode) }),
-                          secondaryButton: .cancel(Text("Cancel")))
+                .alert(
+                    String(format: localizeString("Alert.Uninstall.Title"), appState.xcodeBeingConfirmedForUninstallation?.description ?? ""),
+                    isPresented: $appState.xcodeBeingConfirmedForUninstallation.isNotNil,
+                    presenting: appState.xcodeBeingConfirmedForUninstallation
+                ) { xcode in
+                    Button("Uninstall", role: .destructive) {
+                        appState.uninstall(xcode: xcode, permanently: deletePermanently)
+                    }
+                    Button("Cancel", role: .cancel) {}
+                } message: { _ in
+                    Text("Alert.Uninstall.Message")
+                }
+                .dialogSuppressionToggle("Alert.Uninstall.DeletePermanently", isSuppressed: $deletePermanently)
+                .onChange(of: appState.xcodeBeingConfirmedForUninstallation?.id) { _, id in
+                    if id != nil {
+                        deletePermanently = false
+                    }
                 }
                 .searchable(text: $searchText, placement: .sidebar)
                 .mainToolbar(

@@ -706,14 +706,13 @@ class AppState: ObservableObject {
     }
 
     // MARK: - Uninstall
-    func uninstall(xcode: Xcode) {
+    func uninstall(xcode: Xcode, permanently: Bool = false) {
         guard let installedXcodePath = xcode.installedPath else { return }
 
         if let index = allXcodes.firstIndex(where: { $0.id == xcode.id }) {
             allXcodes[index].installState = .uninstalling(installedXcodePath)
         }
 
-        uninstallTask?.cancel()
         let taskID = UUID()
         uninstallTaskID = taskID
         uninstallTask = Task { @MainActor in
@@ -725,7 +724,7 @@ class AppState: ObservableObject {
             }
             do {
                 try Task.checkCancellation()
-                try await uninstallXcodeAsync(path: installedXcodePath)
+                try await uninstallXcodeAsync(path: installedXcodePath, permanently: permanently)
                 try Task.checkCancellation()
                 await updateSelectedXcodePathAsync()
                 await updateInstalledXcodesAsync()
@@ -955,7 +954,7 @@ class AppState: ObservableObject {
 
     // MARK: - Private
 
-    private func uninstallXcodeAsync(path: Path) async throws {
+    private func uninstallXcodeAsync(path: Path, permanently: Bool) async throws {
         guard let xcode = InstalledXcode(
             path: path,
             contentsAtPath: { path in Current.files.contents(atPath: path) },
@@ -964,14 +963,17 @@ class AppState: ObservableObject {
             throw FileError.fileNotFound(path.string)
         }
 
-        if Current.helper.usePrivilegedHelperForFileOperations {
+        if permanently && Current.helper.usePrivilegedHelperForFileOperations {
             try await installHelperIfNecessaryAsync()
             try await Current.helper.removeAsync(xcode.path.string)
         } else {
-            _ = try XcodeUninstallService(
-                removeItem: { url in try Current.files.removeItem(at: url) },
-                trashItem: { url in try Current.files.trashItem(at: url) }
-            ).uninstall(xcode, emptyTrash: false)
+            let files = Current.files
+            try await Task.detached(priority: .userInitiated) {
+                _ = try XcodeUninstallService(
+                    removeItem: files.removeItem,
+                    trashItem: files.trashItem
+                ).uninstall(xcode, emptyTrash: permanently)
+            }.value
         }
     }
 
