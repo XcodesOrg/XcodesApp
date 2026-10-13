@@ -1,4 +1,5 @@
 import Foundation
+import LegibleError
 import os.log
 import ServiceManagement
 import XcodesKit
@@ -234,8 +235,21 @@ final class HelperClient {
         do {
             let authRef = try authorizationRef(&authRights, nil, [.interactionAllowed, .extendRights, .preAuthorize])
             var cfError: Unmanaged<CFError>?
-            SMJobBless(kSMDomainSystemLaunchd, machServiceName as CFString, authRef, &cfError)
-            if let error = cfError?.takeRetainedValue() { throw error }
+            (SMJobBlessInstaller() as PrivilegedHelperBlessing).bless(label: machServiceName, authorization: authRef, error: &cfError)
+            if let error = cfError?.takeRetainedValue() {
+                // kSMErrorDomainLaunchd is deprecated, but SMJobBless still reports its errors in that domain
+                if CFErrorGetDomain(error) as String == "CFErrorDomainLaunchd" {
+                    switch CFErrorGetCode(error) {
+                    case kSMErrorInvalidSignature:
+                        throw HelperClientError.invalidSignature(underlyingError: error)
+                    case kSMErrorAuthorizationFailure:
+                        throw HelperClientError.authorizationFailed(underlyingError: error)
+                    default:
+                        break
+                    }
+                }
+                throw error
+            }
 
             self.connection?.invalidate()
             self.connection = nil
@@ -268,9 +282,32 @@ final class HelperClient {
     }
 }
 
+/// Installs the privileged helper with SMJobBless, which macOS 13 deprecated in favor of SMAppService.
+/// SMAppService uses a different install and approval model (a bundled launch daemon plist, approved in
+/// System Settings), so the move is a separate change. Until then the one legacy call lives here, and is
+/// reached through a protocol so the known deprecation doesn't warn on every build.
+private protocol PrivilegedHelperBlessing {
+    @discardableResult
+    func bless(label: String, authorization: AuthorizationRef?, error: inout Unmanaged<CFError>?) -> Bool
+}
+
+private struct SMJobBlessInstaller: PrivilegedHelperBlessing {
+    @available(macOS, deprecated: 13.0, message: "Move the privileged helper to SMAppService")
+    @discardableResult
+    func bless(label: String, authorization: AuthorizationRef?, error: inout Unmanaged<CFError>?) -> Bool {
+        SMJobBless(kSMDomainSystemLaunchd, label as CFString, authorization, &error)
+    }
+}
+
 enum HelperClientError: LocalizedError {
     case failedToCreateRemoteObjectProxy
     case message(String)
+    /// SMJobBless rejected the helper because its signature doesn't satisfy the app's SMPrivilegedExecutables requirement
+    case invalidSignature(underlyingError: Error)
+    /// SMJobBless wasn't authorized, e.g. the administrator prompt was cancelled or couldn't be shown
+    case authorizationFailed(underlyingError: Error)
+    /// The helper was blessed but doesn't answer, e.g. it rejects this app's signature via SMAuthorizedClients
+    case unreachableAfterInstall(underlyingError: Error?)
 
     var errorDescription: String? {
         switch self {
@@ -278,6 +315,17 @@ enum HelperClientError: LocalizedError {
             return localizeString("HelperClient.error")
         case let .message(message):
             return message
+        case let .invalidSignature(underlyingError):
+            return Self.withDetails(localizeString("HelperClient.error.InvalidSignature"), underlyingError)
+        case let .authorizationFailed(underlyingError):
+            return Self.withDetails(localizeString("HelperClient.error.AuthorizationFailed"), underlyingError)
+        case let .unreachableAfterInstall(underlyingError):
+            return Self.withDetails(localizeString("HelperClient.error.UnreachableAfterInstall"), underlyingError)
         }
+    }
+
+    private static func withDetails(_ message: String, _ underlyingError: Error?) -> String {
+        guard let underlyingError else { return message }
+        return "\(message)\n\n\(underlyingError.legibleLocalizedDescription)"
     }
 }

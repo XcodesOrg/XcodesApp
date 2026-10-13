@@ -45,7 +45,10 @@ class AppState: ObservableObject {
     @Published var authenticationState: AuthenticationState = .unauthenticated
     @Published var availableXcodes: [AvailableXcode] = [] {
         willSet {
-            if !Self.newlyAvailableXcodes(oldXcodes: availableXcodes, newXcodes: newValue).isEmpty {
+            if isChangingDataSource {
+                // The sources identify releases differently, so everything would look new.
+                isChangingDataSource = false
+            } else if !Self.newlyAvailableXcodes(oldXcodes: availableXcodes, newXcodes: newValue).isEmpty {
                 Current.notificationManager.scheduleNotification(title: localizeString("Notification.NewXcodeVersion.Title"), body: localizeString("Notification.NewXcodeVersion.Body"), category: .normal)
             }
             updateAllXcodes(
@@ -83,6 +86,13 @@ class AppState: ObservableObject {
     @Published var updateTask: Task<Void, Never>?
     var updateTaskID: UUID?
     var isUpdating: Bool { updateTask != nil }
+    /// Whether `updateTask` fetches available Xcodes, as opposed to only rescanning installed ones.
+    var updateTaskIsFullRefresh = false
+    /// The available Xcode list is always refreshed once per launch, regardless of cache age.
+    var hasRefreshedAvailableXcodesThisLaunch = false
+    /// Set while refreshing after a data source change, so the new list isn't announced as new versions
+    var isChangingDataSource = false
+    @Published var showHelperSettings = false
     @Published var presentedSheet: XcodesSheet? = nil
     @Published var isProcessingAuthRequest = false
     private var authenticationRequestID: UUID?
@@ -92,6 +102,8 @@ class AppState: ObservableObject {
     @Published var presentedAlert: XcodesAlert?
     @Published var presentedPreferenceAlert: XcodesPreferencesAlert?
     @Published var helperInstallState: HelperInstallState = .notInstalled
+    /// Delay between attempts to reach a newly installed helper
+    var helperInstallRetryDelay: Duration = .milliseconds(500)
     /// Whether the user is being prepared for the helper installation alert with an explanation.
     /// This closure will be performed after the user chooses whether or not to proceed.
     @Published var isPreparingUserForActionRequiringHelper: ((Bool) -> Void)?
@@ -194,6 +206,7 @@ class AppState: ObservableObject {
     internal var helperInstallTaskID: UUID?
     internal var postInstallTask: Task<Void, Never>?
     internal var postInstallTaskID: UUID?
+    internal var selectedXcodeRefreshTask: Task<Void, Never>?
     private var helperStatusTask: Task<Void, Never>?
     internal var selectTask: Task<Void, Never>?
     internal var selectTaskID: UUID?
@@ -480,8 +493,12 @@ class AppState: ObservableObject {
                     authenticationTaskID = nil
                 }
             }
+            let wasAuthenticated = isAuthenticated
             do {
                 try await operation()
+                if !wasAuthenticated, isAuthenticated {
+                    refreshAfterSignIn()
+                }
             } catch is CancellationError {
             } catch {
                 // performAuthenticationRequest owns auth error presentation.
@@ -489,10 +506,33 @@ class AppState: ObservableObject {
         }
     }
 
+    private var isAuthenticated: Bool {
+        if case .authenticated = authenticationState { return true }
+        return false
+    }
+
+    /// Signing in unlocks the Apple data source, so restart any refresh that ran without a session.
+    private func refreshAfterSignIn() {
+        guard !isTesting else { return }
+        update(restartingInFlightUpdate: dataSource == .apple)
+    }
+
     func signOut() {
         clearLoginCredentials()
         Current.network.signout()
         authenticationState = .unauthenticated
+    }
+
+    func presentHelperRecovery(title: String, error: Error, command: String, message: String? = nil) {
+        self.error = nil
+        presentedAlert = nil
+        presentedSheet = .helperRecovery(HelperRecovery(title: title, message: message ?? error.legibleLocalizedDescription, command: command))
+    }
+
+    func presentPostInstallRecovery(for xcode: InstalledXcode) {
+        error = nil
+        presentedSheet = nil
+        presentedAlert = .postInstallFailed(xcode: xcode)
     }
 
     // MARK: - Helper
@@ -546,15 +586,37 @@ class AppState: ObservableObject {
             try Task.checkCancellation()
             try await Current.helper.install()
             try Task.checkCancellation()
-            await checkIfHelperIsInstalled()
+            // launchd starts a newly blessed helper asynchronously, so give it a moment to answer.
+            let connectionError = await checkIfHelperIsInstalled(attempts: 5)
+            try Task.checkCancellation()
+            guard helperInstallState == .installed else {
+                throw HelperClientError.unreachableAfterInstall(underlyingError: connectionError)
+            }
         }
     }
 
-    private func checkIfHelperIsInstalled() async {
+    /// Asks the helper for its version, retrying up to `attempts` times.
+    /// - Returns: The last connection error, if the helper couldn't be reached.
+    @discardableResult
+    private func checkIfHelperIsInstalled(attempts: Int = 1) async -> Error? {
         helperInstallState = .unknown
 
-        let installed = (try? await Current.helper.checkIfLatestHelperIsInstalledAsync()) ?? false
-        helperInstallState = installed ? .installed : .notInstalled
+        var lastError: Error?
+        for attempt in 1...max(1, attempts) {
+            do {
+                if try await Current.helper.checkIfLatestHelperIsInstalledAsync() {
+                    helperInstallState = .installed
+                    return nil
+                }
+                lastError = nil
+            } catch {
+                lastError = error
+            }
+            guard attempt < attempts, !Task.isCancelled else { break }
+            try? await Task.sleep(for: helperInstallRetryDelay)
+        }
+        helperInstallState = .notInstalled
+        return lastError
     }
 
     @discardableResult
@@ -734,8 +796,12 @@ class AppState: ObservableObject {
                 if let index = allXcodes.firstIndex(where: { $0.id == xcode.id }) {
                     allXcodes[index].installState = .installed(installedXcodePath)
                 }
-                self.error = error
-                self.presentedAlert = .generic(title: localizeString("Alert.Uninstall.Error.Title"), message: error.legibleLocalizedDescription)
+                if Current.helper.usePrivilegedHelperForFileOperations && !(error is FileError) {
+                    presentHelperRecovery(title: localizeString("Alert.Uninstall.Error.Title"), error: error, command: "sudo /bin/rm -rf " + HelperRecovery.quote(installedXcodePath.string))
+                } else {
+                    self.error = error
+                    self.presentedAlert = .generic(title: localizeString("Alert.Uninstall.Error.Title"), message: error.legibleLocalizedDescription)
+                }
             }
         }
     }
@@ -786,8 +852,8 @@ class AppState: ObservableObject {
                     selectTaskID = nil
                 }
             }
+            var installedXcodePath = installedXcodePath
             do {
-                var installedXcodePath = installedXcodePath
                 try await installHelperIfNecessaryAsync()
                 try Task.checkCancellation()
 
@@ -804,8 +870,7 @@ class AppState: ObservableObject {
                 }
             } catch is CancellationError {
             } catch {
-                self.error = error
-                self.presentedAlert = .generic(title: localizeString("Alert.Select.Error.Title"), message: error.legibleLocalizedDescription)
+                presentHelperRecovery(title: localizeString("Alert.Select.Error.Title"), error: error, command: HelperRecovery.selectCommand(path: installedXcodePath.string))
             }
         }
     }
@@ -823,6 +888,12 @@ class AppState: ObservableObject {
             Logger.appState.error("\(xcode.id.version) is not installed")
             return
         }
+    }
+
+    func open(xcode: InstalledXcode) {
+        let configuration = NSWorkspace.OpenConfiguration()
+        configuration.allowsRunningApplicationSubstitution = false
+        NSWorkspace.shared.openApplication(at: xcode.path.url, configuration: configuration)
     }
 
     func copyPath(xcode: Xcode) {
@@ -881,7 +952,11 @@ class AppState: ObservableObject {
             let message = error as? XcodeSelectionFilesystemError == .destinationExistsAndIsNotSymlink(destinationPath)
                 ? localizeString("Alert.SymLink.Message")
                 : error.legibleLocalizedDescription
-            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: message)
+            if Current.helper.usePrivilegedHelperForFileOperations {
+                presentHelperRecovery(title: localizeString("Alert.SymLink.Title"), error: error, command: HelperRecovery.symlinkCommand(source: installedXcodePath.string, destination: destinationPath.string), message: message)
+            } else {
+                self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: message)
+            }
         }
     }
 
@@ -913,8 +988,18 @@ class AppState: ObservableObject {
         } catch {
             Logger.appState.error("Unable to create rename Xcode.app back to original")
             self.error = error
-            // TODO UPDATE MY ERROR STRING
-            self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+            if Current.helper.usePrivilegedHelperForFileOperations {
+                let destination = (Path.installDirectory/"Xcode.app").string
+                var commands: [String] = []
+                if let originalXcode = Current.files.installedXcode(destination: Path.installDirectory/"Xcode.app") {
+                    commands.append(HelperRecovery.moveCommand(source: destination, destination: (Path.installDirectory/"Xcode-\(originalXcode.version.descriptionWithoutBuildMetadata).app").string))
+                }
+                commands.append(HelperRecovery.moveCommand(source: installedXcodePath.string, destination: destination))
+                commands.append(HelperRecovery.selectCommand(path: destination))
+                presentHelperRecovery(title: localizeString("Alert.Select.Error.Title"), error: error, command: commands.joined(separator: " &&\n"))
+            } else {
+                self.presentedAlert = .generic(title: localizeString("Alert.SymLink.Title"), message: error.legibleLocalizedDescription)
+            }
         }
         return nil
     }
@@ -1006,6 +1091,8 @@ class AppState: ObservableObject {
             self.error = error
             self.presentedAlert = .unauthenticated
 
+        } else if let failure = error as? HelperFileOperationError {
+            presentHelperRecovery(title: localizeString("Alert.Install.Error.Title"), error: failure.underlyingError, command: failure.command)
         } else if error as? AuthenticationError != .invalidSession {
             self.error = error
             self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)

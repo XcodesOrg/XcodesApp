@@ -13,11 +13,14 @@ extension AppState {
     }
     
     func updateIfNeeded() {
+        // Never cancel a full refresh just because the window became active again.
+        if isUpdating, updateTaskIsFullRefresh { return }
         guard
-            isReadyForUpdate
+            isReadyForUpdate || !hasRefreshedAvailableXcodesThisLaunch
         else {
             updateTask?.cancel()
             let taskID = UUID()
+            updateTaskIsFullRefresh = false
             updateTaskID = taskID
             let task = Task { @MainActor in
                 defer {
@@ -35,8 +38,19 @@ extension AppState {
         update() as Void
     }
 
-    func update() {
-        guard !isUpdating else { return }
+    /// Refreshes installed and available Xcodes and runtimes.
+    /// - Parameter restartingInFlightUpdate: Cancel a running refresh and start over, e.g. when the
+    ///   data source or sign-in state changed and the running refresh would return stale results.
+    func update(restartingInFlightUpdate: Bool = false) {
+        if isUpdating {
+            // A quick installed-only rescan is always superseded; a full refresh only when asked.
+            guard restartingInFlightUpdate || !updateTaskIsFullRefresh else { return }
+            updateTask?.cancel()
+            updateTask = nil
+            updateTaskID = nil
+        }
+        hasRefreshedAvailableXcodesThisLaunch = true
+        updateTaskIsFullRefresh = true
         updateDownloadableRuntimes()
         updateInstalledRuntimes()
 
@@ -52,14 +66,22 @@ extension AppState {
             do {
                 await self.updateInstalledXcodesAsync()
                 await self.updateSelectedXcodePathAsync()
+                try Task.checkCancellation()
                 let xcodes = try await self.updateAvailableXcodes(from: self.dataSource)
                 try Task.checkCancellation()
                 self.availableXcodes = xcodes
                 Current.defaults.setDate(Current.date(), forKey: "lastUpdated")
             } catch is CancellationError {
             } catch {
-                // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
-                if error as? AuthenticationError != .invalidSession {
+                // A restarted refresh can surface its cancellation as a URLError instead
+                guard !Task.isCancelled else { return }
+
+                if self.dataSource == .apple, Self.isUnauthorizedInstallError(error) || error as? AuthenticationError == .invalidSession {
+                    // The Apple data source needs a developer session; ask the user to sign in rather than
+                    // showing a raw 401.
+                    self.presentedAlert = .unauthenticatedDataSource
+                } else if error as? AuthenticationError != .invalidSession {
+                    // Prevent setting the app state error if it is an invalid session, we will present the sign in view instead
                     self.error = error
                     self.presentedAlert = .generic(title: localizeString("Alert.Update.Error.Title"), message: error.legibleLocalizedDescription)
                 }
@@ -68,10 +90,21 @@ extension AppState {
         updateTask = task
     }
 
+    /// Selection can change in Terminal while a full catalog refresh is still running.
+    func refreshSelectedXcodePath() {
+        guard selectedXcodeRefreshTask == nil else { return }
+        selectedXcodeRefreshTask = Task { @MainActor in
+            defer { selectedXcodeRefreshTask = nil }
+            await updateSelectedXcodePathAsync()
+        }
+    }
+
     func updateSelectedXcodePathAsync() async {
         do {
             let output = try await Current.shell.xcodeSelectPrintPath()
-            selectedXcodePath = output.out
+            if selectedXcodePath != output.out {
+                selectedXcodePath = output.out
+            }
         } catch {
             // Ignore xcode-select failures
         }

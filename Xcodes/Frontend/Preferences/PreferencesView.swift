@@ -2,13 +2,14 @@ import SwiftUI
 
 struct PreferencesView: View {
     private enum Tabs: Hashable {
-        case general, updates, advanced, experiment
+        case general, updates, downloads, advanced, experiment
     }
+    @State private var selectedTab = Tabs.general
     @EnvironmentObject var appState: AppState
     @EnvironmentObject var updater: ObservableUpdater
     
     var body: some View {
-        TabView {
+        TabView(selection: $selectedTab) {
             GeneralPreferencePane()
                 .environmentObject(appState)
                 .tabItem {
@@ -26,6 +27,7 @@ struct PreferencesView: View {
                 .tabItem {
                     Label("Downloads", systemImage: "icloud.and.arrow.down")
                 }
+                .tag(Tabs.downloads)
             AdvancedPreferencePane()
                 .environmentObject(appState)
                 .tabItem {
@@ -38,7 +40,15 @@ struct PreferencesView: View {
                 }
                 .tag(Tabs.experiment)
         }
+        .onAppear { selectHelperSettingsIfRequested() }
+        .onChange(of: appState.showHelperSettings) { _, _ in selectHelperSettingsIfRequested() }
         .padding(20)
         .frame(width: 600)
+    }
+
+    private func selectHelperSettingsIfRequested() {
+        guard appState.showHelperSettings else { return }
+        selectedTab = .advanced
+        appState.showHelperSettings = false
     }
 }
