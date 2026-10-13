@@ -264,6 +264,32 @@ struct CreateSymbolicBetaLinkButton: View {
     }
 }
 
+// MARK: - XcodeCommandShortcuts
+
+/// Centralizes the keyboard shortcuts for the always-on `CommandMenu` items.
+///
+/// SwiftUI silently keeps only the first `.keyboardShortcut` when two menu
+/// items bind the same key + modifiers — the later binding becomes unreachable
+/// from the keyboard, with no compiler warning. Routing the always-on command
+/// shortcuts through a single seam makes that collision testable:
+/// `XcodeCommandShortcutsTests` asserts the set is pairwise distinct, so a
+/// duplicate binding fails the build instead of silently breaking the menu.
+enum XcodeCommandShortcuts {
+    /// Make Active (SelectCommand).
+    static let makeActive = KeyboardShortcut(KeyEquivalent("s"), modifiers: [.command, .option])
+    /// Open (OpenCommand).
+    static let open = KeyboardShortcut(.downArrow, modifiers: .command)
+    /// Reveal in Finder (RevealCommand).
+    static let reveal = KeyboardShortcut(KeyEquivalent("r"), modifiers: [.command, .option])
+    /// Copy Path (CopyPathCommand).
+    static let copyPath = KeyboardShortcut(KeyEquivalent("c"), modifiers: [.command, .option])
+    /// Uninstall (UninstallCommand).
+    static let uninstall = KeyboardShortcut(KeyEquivalent("u"), modifiers: [.command, .option])
+    /// Create Symbolic Link (CreateSymbolicLinkCommand) — "L" for Link, kept
+    /// distinct from Make Active's "S" to avoid a silent ⌘⌥S collision.
+    static let createSymbolicLink = KeyboardShortcut(KeyEquivalent("l"), modifiers: [.command, .option])
+}
+
 // MARK: - Commands
 
 struct InstallCommand: View {
@@ -288,7 +314,7 @@ struct SelectCommand: View {
 
     var body: some View {
         SelectButton(xcode: selectedXcode.unwrapped)
-            .keyboardShortcut("s", modifiers: [.command, .option])
+            .keyboardShortcut(XcodeCommandShortcuts.makeActive)
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
@@ -299,7 +325,7 @@ struct OpenCommand: View {
 
     var body: some View {
         OpenButton(xcode: selectedXcode.unwrapped)
-            .keyboardShortcut(KeyboardShortcut(.downArrow, modifiers: .command))
+            .keyboardShortcut(XcodeCommandShortcuts.open)
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
@@ -310,7 +336,7 @@ struct RevealCommand: View {
 
     var body: some View {
         RevealButton(xcode: selectedXcode.unwrapped)
-            .keyboardShortcut("r", modifiers: [.command, .option])
+            .keyboardShortcut(XcodeCommandShortcuts.reveal)
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
@@ -321,7 +347,7 @@ struct CopyPathCommand: View {
 
     var body: some View {
         CopyPathButton(xcode: selectedXcode.unwrapped)
-            .keyboardShortcut("c", modifiers: [.command, .option])
+            .keyboardShortcut(XcodeCommandShortcuts.copyPath)
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
@@ -332,7 +358,7 @@ struct UninstallCommand: View {
     
     var body: some View {
         UninstallButton(xcode: selectedXcode.unwrapped)
-            .keyboardShortcut("u", modifiers: [.command, .option])
+            .keyboardShortcut(XcodeCommandShortcuts.uninstall)
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
@@ -343,7 +369,7 @@ struct CreateSymbolicLinkCommand: View {
     
     var body: some View {
         CreateSymbolicLinkButton(xcode: selectedXcode.unwrapped)
-            .keyboardShortcut("s", modifiers: [.command, .option])
+            .keyboardShortcut(XcodeCommandShortcuts.createSymbolicLink)
             .disabled(selectedXcode.unwrapped?.installState.installed != true)
     }
 }
