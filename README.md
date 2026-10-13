@@ -74,7 +74,7 @@ v3.X - requires macOS 13 - architecture variants and updated icon.
 Developer ID-signed and notarized release builds are available on Homebrew. These don't require Xcode to already be installed in order to use.
 
 ```sh
-brew install --cask xcodes
+brew install --cask xcodes-app
 ```
 
 ### Manually install
