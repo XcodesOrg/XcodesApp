@@ -24,10 +24,17 @@ struct InfoPane: View {
                         HStack {
                             IconView(xcode: xcode)
                             
-                            Text(verbatim: "Xcode \(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
-                                .font(.title)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                                .textSelection(.enabled)
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text(verbatim: "Xcode \(xcode.description)")
+                                    .font(.title)
+                                if !xcode.version.buildMetadataIdentifiers.isEmpty {
+                                    Text(verbatim: xcode.version.buildMetadataIdentifiers.joined(separator: " "))
+                                        .font(.subheadline.monospaced())
+                                        .foregroundStyle(.secondary)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .textSelection(.enabled)
                         }
                         InfoPaneControls(xcode: xcode)
                     }

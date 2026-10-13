@@ -7259,6 +7259,16 @@
         }
       }
     },
+    "CollapseMajorMinorVersions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Collapse Major/Minor versions"
+          }
+        }
+      }
+    },
     "Compatibility" : {
       "localizations" : {
         "ar" : {
@@ -24643,6 +24653,16 @@
         }
       }
     },
+    "ShowTags" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Show Tags"
+          }
+        }
+      }
+    },
     "SignIn" : {
       "localizations" : {
         "ar" : {
@@ -25443,6 +25463,28 @@
         }
       }
     },
+    "Tag.Active" : {
+      "comment" : "Tag on the Xcode that is currently selected with xcode-select",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Active"
+          }
+        }
+      }
+    },
+    "Tag.Latest" : {
+      "comment" : "Tag on the newest non-prerelease Xcode in the list",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Latest"
+          }
+        }
+      }
+    },
     "TerminateAfterLastWindowClosed" : {
       "localizations" : {
         "ar" : {
@@ -25830,6 +25872,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "正在將封存檔移動至垃圾桶"
+          }
+        }
+      }
+    },
+    "UI" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UI"
           }
         }
       }

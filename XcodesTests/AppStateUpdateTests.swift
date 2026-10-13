@@ -35,6 +35,59 @@ class AppStateUpdateTests: XCTestCase {
         subject = AppState()
     }
 
+    func test_GroupedListExpansion_OnlyRemovesDescendantsOfCollapsedMajor() {
+        var expansion = XcodeListExpansion(majorVersions: [26, 27], minorVersions: ["26.5", "26.6", "27.0"])
+        expansion.toggleMajor(26, minorIDs: ["26.5", "26.6"])
+        XCTAssertEqual(expansion.majorVersions, [27])
+        XCTAssertEqual(expansion.minorVersions, ["27.0"])
+        expansion.toggleMajor(26, minorIDs: ["26.5", "26.6"])
+        XCTAssertEqual(expansion.majorVersions, [26, 27])
+        XCTAssertEqual(expansion.minorVersions, ["27.0"])
+    }
+
+    func test_GroupedListSnapshot_ShowsOnlyExpandedDescendantsWithStableIdentity() {
+        let xcodes = ["27.0.0+27A1", "26.6.0+17F1", "26.5.0+17E1"].map {
+            Xcode(version: Version($0)!, installState: .notInstalled, selected: false, icon: nil)
+        }
+        let entries = xcodes.enumerated().map { XcodeListEntry(index: $0.offset, xcode: $0.element) }
+        let snapshot = XcodeGroupedListSnapshot(xcodes: entries, allXcodes: xcodes)
+        var expansion = XcodeListExpansion(majorVersions: [], minorVersions: [])
+        XCTAssertEqual(snapshot.rows(expansion: expansion).map(\.id), ["major-27", "major-26"])
+
+        expansion.toggleMajor(26, minorIDs: ["26.6", "26.5"])
+        XCTAssertEqual(snapshot.rows(expansion: expansion).map(\.id), ["major-27", "major-26", "minor-26.6", "minor-26.5"])
+        expansion.toggleMinor("26.6")
+        let expandedRows = snapshot.rows(expansion: expansion)
+        XCTAssertEqual(expandedRows.count, 5)
+        guard case let .version(entry, _, _, _) = expandedRows[3] else {
+            return XCTFail("Expanded minor should immediately contain its version row")
+        }
+        XCTAssertEqual(entry.xcode.id, xcodes[1].id)
+        let versionID = expandedRows[3].id
+        let reindexed = xcodes.reversed().enumerated().map { XcodeListEntry(index: $0.offset, xcode: $0.element) }
+        let refreshed = XcodeGroupedListSnapshot(xcodes: reindexed, allXcodes: xcodes)
+        XCTAssertEqual(refreshed.rows(expansion: expansion)[3].id, versionID)
+        expansion.toggleMinor("26.6")
+        XCTAssertEqual(snapshot.rows(expansion: expansion).count, 4)
+    }
+
+    func test_GroupedListSnapshot_PreservesActiveVersionAndLatestReleaseSummary() throws {
+        let stable = Xcode(version: Version("27.0.0+27A1")!, installState: .notInstalled, selected: false, icon: nil)
+        let activeBeta = Xcode(version: Version("27.0.0-beta.6+27A0")!, installState: .installed(Path("/Applications/Xcode-Beta.app")!), selected: true, icon: nil)
+        let xcodes = [stable, activeBeta]
+        let snapshot = XcodeGroupedListSnapshot(xcodes: xcodes.enumerated().map { XcodeListEntry(index: $0.offset, xcode: $0.element) }, allXcodes: xcodes)
+        let summary = try XCTUnwrap(snapshot.majors.first?.summary)
+        XCTAssertEqual(summary.latestRelease?.id, stable.id)
+        XCTAssertEqual(summary.selectedVersion?.id, activeBeta.id)
+        XCTAssertEqual(summary.latestSelectionTarget?.id, activeBeta.id)
+        let rows = snapshot.rows(expansion: XcodeListExpansion(majorVersions: [27], minorVersions: ["27.0"]))
+        let replacement = rows.compactMap { row -> Xcode? in
+            if case let .version(entry, _, _, replacement) = row, entry.xcode.selected { return replacement }
+            return nil
+        }.first
+        XCTAssertEqual(replacement?.id, stable.id)
+    }
+
     func test_UpdateIfNeeded_OldTaskDoesNotClearReplacementTask() async throws {
         subject.availableXcodes = [
             AvailableXcode(

@@ -21,9 +21,15 @@ struct GeneralPreferencePane: View {
             .groupBoxStyle(PreferencesGroupBoxStyle())
             Divider()
             
+            GroupBox(label: Text("UI")) {
+                Toggle("CollapseMajorMinorVersions", isOn: $appState.enableGroupedXcodeList)
+                Toggle("ShowTags", isOn: $appState.showTags)
+            }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
+            Divider()
+
             GroupBox(label: Text("Misc")) {
                 Toggle("TerminateAfterLastWindowClosed", isOn: $appState.terminateAfterLastWindowClosed)
-                Toggle("GroupXcodeVersionsInList", isOn: $appState.enableGroupedXcodeList)
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
         }

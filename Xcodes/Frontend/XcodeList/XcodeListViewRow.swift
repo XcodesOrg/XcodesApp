@@ -4,49 +4,64 @@ import Version
 import XcodesKit
 
 struct XcodeListViewRow: View {
+    enum Style {
+        /// Standalone rows include the Xcode icon.
+        case flat
+        /// Rows under a version group rely on the group's icon.
+        case grouped
+    }
+
     let xcode: Xcode
     let selected: Bool
-    let appState: AppState
+    @ObservedObject var appState: AppState
     let latestReleaseForSelectedPrerelease: Xcode?
+    let style: Style
+    let isLatestRelease: Bool
 
-    init(xcode: Xcode, selected: Bool, appState: AppState, latestReleaseForSelectedPrerelease: Xcode? = nil) {
+    init(xcode: Xcode, selected: Bool, appState: AppState, latestReleaseForSelectedPrerelease: Xcode? = nil, style: Style = .flat, isLatestRelease: Bool = false) {
         self.xcode = xcode
         self.selected = selected
         self.appState = appState
         self.latestReleaseForSelectedPrerelease = latestReleaseForSelectedPrerelease
+        self.style = style
+        self.isLatestRelease = isLatestRelease
+    }
+
+    private var title: String {
+        // Tags carry the prerelease name in either layout; keep it in the title when tags are hidden.
+        guard appState.showTags else { return xcode.description }
+        let version = xcode.version
+        return Version(major: version.major, minor: version.minor, patch: version.patch).appleDescription
+    }
+
+    /// Secondary line: the build and the install path, when present.
+    private var caption: String? {
+        var parts: [String] = xcode.version.buildMetadataIdentifiers
+        if case let .installed(path) = xcode.installState {
+            parts.append(path.string)
+        }
+        return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
 
     var body: some View {
         HStack {
-            appIconView(for: xcode)
+            // Rows under a version group rely on the group's icon
+            if style == .flat {
+                appIconView(for: xcode)
+            }
 
             VStack(alignment: .leading) {
-                HStack {
-                    Text(verbatim: "\(xcode.description) \(xcode.version.buildMetadataIdentifiersDisplay)")
-                        .font(.body)
-
-                    if !xcode.identicalBuildsForCurrentVariant.isEmpty {
-                        Image(systemName: "square.fill.on.square.fill")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .accessibility(label: Text("IdenticalBuilds"))
-                            .accessibility(value: Text(xcode.identicalBuildsForCurrentVariant.map(\.version.appleDescription).joined(separator: ", ")))
-                            .help("IdenticalBuilds.help")
-                    }
-                    
-                    if xcode.architectures?.isAppleSilicon ?? false {
-                        Image(systemName: "m4.button.horizontal")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                            .accessibility(label: Text("Apple Silicon"))
-                            .help("Apple Silicon")
-                    }
+                // The version must never truncate; when space is tight, drop the small symbols first
+                ViewThatFits(in: .horizontal) {
+                    titleLine(showsSymbols: true)
+                    titleLine(showsSymbols: false)
                 }
 
-                if case let .installed(path) = xcode.installState {
-                    Text(verbatim: path.string)
+                if let caption {
+                    Text(verbatim: caption)
                         .font(.caption)
-                        .foregroundColor(.secondary)
+                        // A hierarchical style stays legible on the selection highlight, unlike Color.secondary
+                        .foregroundStyle(.secondary)
                 }
             }
 
@@ -55,6 +70,8 @@ struct XcodeListViewRow: View {
             selectControl(for: xcode)
                 .padding(.trailing, 16)
             installControl(for: xcode)
+                // Same column width as the Install/Open buttons, so the progress ring lines up with them
+                .frame(minWidth: 67)
         }
         .padding(.vertical, 4)
         .contextMenu {
@@ -91,6 +108,46 @@ struct XcodeListViewRow: View {
         }
     }
 
+    private func titleLine(showsSymbols: Bool) -> some View {
+        HStack {
+            Text(verbatim: title)
+                .font(.body)
+                .fixedSize()
+                .treeGuideTitle()
+
+            if appState.showTags {
+                if let prereleaseTag = ReleaseTagView(prereleaseOf: xcode.version) {
+                    prereleaseTag
+                }
+                if isLatestRelease {
+                    ReleaseTagView.latest
+                }
+                if xcode.selected {
+                    ReleaseTagView.active
+                }
+            }
+
+            if showsSymbols {
+                if !xcode.identicalBuildsForCurrentVariant.isEmpty {
+                    Image(systemName: "square.fill.on.square.fill")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .accessibility(label: Text("IdenticalBuilds"))
+                        .accessibility(value: Text(xcode.identicalBuildsForCurrentVariant.map(\.version.appleDescription).joined(separator: ", ")))
+                        .help("IdenticalBuilds.help")
+                }
+
+                if xcode.architectures?.isAppleSilicon ?? false {
+                    Image(systemName: "m4.button.horizontal")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                        .accessibility(label: Text("Apple Silicon"))
+                        .help("Apple Silicon")
+                }
+            }
+        }
+    }
+
     @ViewBuilder
     func appIconView(for xcode: Xcode) -> some View {
         if let icon = xcode.icon {
@@ -101,7 +158,7 @@ struct XcodeListViewRow: View {
             Image(xcode.version.isPrerelease ? "xcode-beta" : "xcode")
                 .resizable()
                 .frame(width: 32, height: 32)
-                .opacity(0.2)
+                .opacity(0.5)
         }
     }
 
@@ -130,8 +187,9 @@ struct XcodeListViewRow: View {
                     .help("ActiveVersionDescription")
             } else {
                 Button(action: { appState.select(xcode: xcode) }) {
+                    // Installed but not active: green outline; the active Xcode gets the filled check
                     Image(systemName: "checkmark.circle")
-                        .foregroundColor(.secondary)
+                        .foregroundColor(.green)
                 }
                 .buttonStyle(PlainButtonStyle())
                 .help("MakeActiveVersionDescription")
@@ -160,7 +218,7 @@ struct XcodeListViewRow: View {
         case .installed:
             Button("Open") { appState.open(xcode: xcode) }
                 .textCase(.uppercase)
-                .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: selected))
+                .buttonStyle(AppStoreButtonStyle(primary: true, highlighted: false))
                 .help("OpenDescription")
         case .notInstalled:
             InstallButton(xcode: xcode)
@@ -169,7 +227,7 @@ struct XcodeListViewRow: View {
         case let .installing(installationStep):
             InstallationStepRowView(
                 installationStep: installationStep,
-                highlighted: selected,
+                highlighted: false,
                 cancel: { appState.presentedAlert = .cancelInstall(xcode: xcode) }
             )
         case .uninstalling:
