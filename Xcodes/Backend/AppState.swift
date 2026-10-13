@@ -80,6 +80,7 @@ class AppState: ObservableObject {
         }
     }
     private var installedXcodes: [InstalledXcode] = []
+    private var installedXcodesRevision = UUID()
     @Published var updateTask: Task<Void, Never>?
     var updateTaskID: UUID?
     var isUpdating: Bool { updateTask != nil }
@@ -934,14 +935,24 @@ class AppState: ObservableObject {
         }
     }
 
+    func recordInstalledXcode(_ xcode: InstalledXcode) {
+        // Invalidate scans started before this installation completed.
+        installedXcodesRevision = UUID()
+        installedXcodes.removeAll { $0.path == xcode.path }
+        installedXcodes.append(xcode)
+    }
+
     @discardableResult
     func updateInstalledXcodesAsync(recomposeAllXcodes: Bool = true) async -> [InstalledXcode] {
+        let revision = UUID()
+        installedXcodesRevision = revision
         let installDirectory = Path.installDirectory
         let files = Current.files
         let installedXcodes = await Task.detached(priority: .userInitiated) {
             files.installedXcodes(installDirectory)
         }.value
 
+        guard installedXcodesRevision == revision else { return self.installedXcodes }
         self.installedXcodes = installedXcodes
         if recomposeAllXcodes {
             updateAllXcodes(
