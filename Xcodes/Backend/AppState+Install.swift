@@ -52,10 +52,12 @@ extension AppState {
                 try Task.checkCancellation()
                 let installedXcode = try await installArchivedXcodeAsync(xcode, at: url)
 
-                guard let index = allXcodes.firstIndex(where: { $0.version.isEquivalent(to: installedXcode.version) }) else {
-                    return installedXcode
+                if let index = allXcodes.firstIndex(where: { $0.version.isEquivalent(to: installedXcode.version) }) {
+                    allXcodes[index].installState = .installed(installedXcode.path)
                 }
-                allXcodes[index].installState = .installed(installedXcode.path)
+
+                await autoInstallRuntimesIfNeeded()
+
                 return installedXcode
             },
             onAttemptFailed: { @MainActor _ in
