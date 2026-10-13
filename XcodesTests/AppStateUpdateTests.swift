@@ -35,6 +35,198 @@ class AppStateUpdateTests: XCTestCase {
         subject = AppState()
     }
 
+    func test_AutoDownloadPlatformsSelection_RoundTrips() {
+        XCTAssertTrue(AutoDownloadPlatformsSelection(rawValue: "").isEmpty)
+        XCTAssertTrue(AutoDownloadPlatformsSelection(rawValue: "all").includes(.visionOS))
+
+        let selection = AutoDownloadPlatformsSelection(platforms: [.watchOS, .iOS])
+        XCTAssertEqual(selection.rawValue, "com.apple.platform.iphoneos,com.apple.platform.watchos")
+        XCTAssertEqual(AutoDownloadPlatformsSelection(rawValue: selection.rawValue), selection)
+        XCTAssertFalse(selection.includes(.tvOS))
+    }
+
+    func test_RuntimesToAutoDownload_PicksSelectedPlatformsMatchingSDKsAndArchitecture() throws {
+        let runtimes = try [
+            runtime(platform: "iphoneos", identifier: "ios-arm", sdkBuild: "24A5422a", simulatorBuild: "24A5422a", architectures: ["arm64"]),
+            runtime(platform: "iphoneos", identifier: "ios-universal", sdkBuild: "24A5422a", simulatorBuild: "24A5422a", architectures: ["arm64", "x86_64"]),
+            runtime(platform: "iphoneos", identifier: "ios-older", sdkBuild: "24A5408c", simulatorBuild: "24A5408c", architectures: ["arm64"]),
+            runtime(platform: "watchos", identifier: "watch-arm", sdkBuild: "24R5355a", simulatorBuild: "24R5355a", architectures: ["arm64"]),
+            runtime(platform: "appletvos", identifier: "tv-arm", sdkBuild: "24J5356a", simulatorBuild: "24J5356a", architectures: ["arm64"]),
+        ]
+
+        let picked = AppState.runtimesToAutoDownload(
+            sdkBuilds: ["24A5422a", "24R5355a", "24J5356a"],
+            downloadableRuntimes: runtimes,
+            selection: AutoDownloadPlatformsSelection(platforms: [.iOS, .watchOS]),
+            variant: .appleSilicon,
+            isInstalled: { $0.identifier == "watch-arm" }
+        )
+
+        XCTAssertEqual(picked.map(\.identifier), ["ios-arm"])
+    }
+
+    func test_RuntimesToAutoDownload_NothingSelectedDownloadsNothing() throws {
+        let runtimes = try [runtime(platform: "iphoneos", identifier: "ios-arm", sdkBuild: "24A5422a", simulatorBuild: "24A5422a", architectures: ["arm64"])]
+
+        let picked = AppState.runtimesToAutoDownload(
+            sdkBuilds: ["24A5422a"],
+            downloadableRuntimes: runtimes,
+            selection: AutoDownloadPlatformsSelection(),
+            variant: .appleSilicon,
+            isInstalled: { _ in false }
+        )
+
+        XCTAssertTrue(picked.isEmpty)
+    }
+
+    private func runtime(platform: String, identifier: String, sdkBuild: String, simulatorBuild: String, architectures: [String]) throws -> DownloadableRuntime {
+        let json: [String: Any] = [
+            "sdkBuildUpdate": [sdkBuild],
+            "architectures": architectures,
+            "name": identifier,
+            "platform": "com.apple.platform.\(platform)",
+            "simulatorVersion": ["version": "27.0", "buildUpdate": simulatorBuild],
+            "contentType": "cryptexDiskImage",
+            "dictionaryVersion": 2,
+            "version": "27.0.0.1",
+            "category": "simulator",
+            "identifier": identifier,
+            "fileSize": 1,
+        ]
+        return try JSONDecoder().decode(DownloadableRuntime.self, from: JSONSerialization.data(withJSONObject: json))
+    }
+
+    func test_UninstallWithPlatforms_KeepsPlatformsWhenXcodeRemovalFails() async throws {
+        let xcode = Xcode(version: Version("27.0.0")!, installState: .installed(Path("/Applications/Xcode-Test.app")!), selected: false, icon: nil)
+        subject.allXcodes = [xcode]
+        let platform = try runtime(platform: "iphoneos", identifier: "ios-test", sdkBuild: "24A1", simulatorBuild: "24A1", architectures: ["arm64"])
+        Current.files.trashItem = { _ in
+            throw NSError(domain: "UninstallTests", code: 1, userInfo: [NSLocalizedDescriptionKey: "Xcode removal failed"])
+        }
+
+        let task = try XCTUnwrap(subject.uninstall(xcode: xcode, removingRuntimes: [platform]))
+        await task.value
+
+        // Attempting runtime removal would replace this error with "No simulator found".
+        XCTAssertEqual(subject.error?.localizedDescription, "Xcode removal failed")
+        XCTAssertEqual(subject.allXcodes.first?.installedPath, xcode.installedPath)
+    }
+
+    func test_InstalledRuntimesUsedOnlyByXcode_SkipsSharedAndNotInstalledPlatforms() throws {
+        subject.downloadableRuntimes = try [
+            platformRuntime(platform: "iphoneos", identifier: "ios-27.0", sdkBuild: "24A430", simulatorBuild: "24A434"),
+            platformRuntime(platform: "watchos", identifier: "watch-27.0", sdkBuild: "24R360", simulatorBuild: "24R362"),
+            platformRuntime(platform: "appletvos", identifier: "tv-27.0", sdkBuild: "24J360", simulatorBuild: "24J360"),
+        ]
+        subject.installedRuntimes = [
+            CoreSimulatorImage(uuid: "1", path: [:], runtimeInfo: CoreSimulatorRuntimeInfo(build: "24A434", supportedArchitectures: [.arm64])),
+            CoreSimulatorImage(uuid: "2", path: [:], runtimeInfo: CoreSimulatorRuntimeInfo(build: "24R362", supportedArchitectures: [.arm64])),
+        ]
+        let uninstalling = Xcode(
+            version: Version("27.0.0+27A266a")!,
+            installState: .installed(Path("/Applications/Xcode-27.0.0.app")!),
+            selected: false,
+            icon: nil,
+            sdks: SDKs(iOS: XcodeVersion("24A430"), watchOS: XcodeVersion("24R360"), tvOS: XcodeVersion("24J360")),
+            architectures: [.arm64]
+        )
+        // Another installed Xcode still uses the watchOS runtime
+        let other = Xcode(
+            version: Version("27.1.0-beta+27A9269")!,
+            installState: .installed(Path("/Applications/Xcode-27.1.0-Beta.app")!),
+            selected: false,
+            icon: nil,
+            sdks: SDKs(watchOS: XcodeVersion("24R360")),
+            architectures: [.arm64]
+        )
+        subject.allXcodes = [uninstalling, other]
+
+        // tvOS matches but isn't installed; watchOS is shared
+        XCTAssertEqual(subject.installedRuntimesUsedOnly(by: uninstalling).map(\.identifier), ["ios-27.0"])
+    }
+
+    func test_LatestInstalledReleaseXcode_SkipsBetasAndNotInstalled() {
+        func xcode(_ version: String, installed: Bool) -> Xcode {
+            Xcode(
+                version: Version(version)!,
+                installState: installed ? .installed(Path("/Applications/Xcode-\(version).app")!) : .notInstalled,
+                selected: false,
+                icon: nil
+            )
+        }
+        subject.allXcodes = [
+            xcode("27.2.0-beta.2+27B5028f", installed: true),
+            xcode("27.1.0+27B100", installed: false),
+            xcode("27.0.0+27A266a", installed: true),
+            xcode("26.6.0+17G1", installed: true),
+        ]
+
+        XCTAssertEqual(subject.latestInstalledReleaseXcode?.version, Version("27.0.0+27A266a"))
+    }
+
+    func test_LatestInstalledReleaseXcode_NilWithOnlyBetas() {
+        subject.allXcodes = [
+            Xcode(version: Version("27.2.0-beta.2+27B5028f")!, installState: .installed(Path("/Applications/Xcode-Beta.app")!), selected: false, icon: nil)
+        ]
+
+        XCTAssertNil(subject.latestInstalledReleaseXcode)
+    }
+
+    func test_IsMissingDeveloperToolError() {
+        XCTAssertTrue(AppState.isMissingDeveloperToolError(#"xcrun: error: unable to find utility "simctl", not a developer tool or in PATH"#))
+        XCTAssertTrue(AppState.isMissingDeveloperToolError("xcode-select: error: tool 'xcodebuild' requires Xcode, but active developer directory '/Library/Developer/CommandLineTools' is a command line tools instance"))
+        XCTAssertFalse(AppState.isMissingDeveloperToolError("No simulator found with ios-27.0"))
+    }
+
+    private func platformRuntime(platform: String, identifier: String, sdkBuild: String, simulatorBuild: String) throws -> DownloadableRuntime {
+        let json: [String: Any] = [
+            "sdkBuildUpdate": [sdkBuild],
+            "architectures": ["arm64"],
+            "name": identifier,
+            "platform": "com.apple.platform.\(platform)",
+            "simulatorVersion": ["version": "27.0", "buildUpdate": simulatorBuild],
+            "contentType": "cryptexDiskImage",
+            "dictionaryVersion": 2,
+            "version": "27.0.0.1",
+            "category": "simulator",
+            "identifier": identifier,
+            "fileSize": 1,
+        ]
+        return try JSONDecoder().decode(DownloadableRuntime.self, from: JSONSerialization.data(withJSONObject: json))
+    }
+
+    func test_InstalledSDKBuilds_ReadsEachRealSDKOnce() throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
+        defer { try? FileManager.default.removeItem(at: root) }
+        let xcodeURL = root.appending(path: "Xcode.app")
+        func addSDK(platform: String, sdk: String, build: String) throws {
+            let coreServices = xcodeURL.appending(path: "Contents/Developer/Platforms/\(platform).platform/Developer/SDKs/\(sdk).sdk/System/Library/CoreServices")
+            try FileManager.default.createDirectory(at: coreServices, withIntermediateDirectories: true)
+            let plist = try PropertyListSerialization.data(fromPropertyList: ["ProductBuildVersion": build], format: .xml, options: 0)
+            try plist.write(to: coreServices.appending(path: "SystemVersion.plist"))
+        }
+        try addSDK(platform: "iPhoneOS", sdk: "iPhoneOS", build: "24A5422a")
+        try addSDK(platform: "iPhoneSimulator", sdk: "iPhoneSimulator", build: "24A5422a")
+        try addSDK(platform: "XROS", sdk: "XROS", build: "24M5357a")
+        // Versioned SDK names are symlinks to the real SDK and must be skipped
+        let sdksURL = xcodeURL.appending(path: "Contents/Developer/Platforms/XROS.platform/Developer/SDKs")
+        try FileManager.default.createSymbolicLink(at: sdksURL.appending(path: "XROS27.0.sdk"), withDestinationURL: sdksURL.appending(path: "XROS.sdk"))
+        Current.files.contentsAtPath = { FileManager.default.contents(atPath: $0) }
+
+        let builds = InstalledSDKBuilds.builds(forXcodeAt: Path(url: xcodeURL)!, version: Version("27.0.0-beta.6+27A5252f")!)
+
+        XCTAssertEqual(Set(builds), ["24A5422a", "24M5357a"])
+        XCTAssertEqual(builds.count, 2)
+    }
+
+    func test_PlatformSDKBuilds_PreferInstalledBundleOverReleaseMetadata() {
+        let xcode = Xcode(version: Version("27.0.0")!, installState: .notInstalled, selected: false, icon: nil, installedSDKBuilds: ["24A5422a"])
+        XCTAssertEqual(xcode.platformSDKBuilds, ["24A5422a"])
+
+        let notInstalled = Xcode(version: Version("27.0.0")!, installState: .notInstalled, selected: false, icon: nil)
+        XCTAssertEqual(notInstalled.platformSDKBuilds, [])
+    }
+
     func test_UpdateIfNeeded_OldTaskDoesNotClearReplacementTask() async throws {
         subject.availableXcodes = [
             AvailableXcode(

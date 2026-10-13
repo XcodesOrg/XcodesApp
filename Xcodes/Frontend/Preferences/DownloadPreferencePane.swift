@@ -1,10 +1,42 @@
 import SwiftUI
+import XcodesKit
 
 struct DownloadPreferencePane: View {
     @EnvironmentObject var appState: AppState
     
     @AppStorage("dataSource") var dataSource: DataSource = .xcodeReleases
     @AppStorage("downloader") var downloader: Downloader = .aria2
+    @AppStorage(AutoDownloadPlatformsSelection.defaultsKey) private var autoDownloadPlatforms = ""
+
+    private var platformSelection: AutoDownloadPlatformsSelection {
+        AutoDownloadPlatformsSelection(rawValue: autoDownloadPlatforms)
+    }
+
+    private var downloadsAllPlatforms: Binding<Bool> {
+        Binding(
+            get: { platformSelection.isAll },
+            set: { isAll in
+                var selection = platformSelection
+                selection.isAll = isAll
+                autoDownloadPlatforms = selection.rawValue
+            }
+        )
+    }
+
+    private func downloadsPlatform(_ platform: DownloadableRuntime.Platform) -> Binding<Bool> {
+        Binding(
+            get: { platformSelection.includes(platform) },
+            set: { isOn in
+                var selection = platformSelection
+                if isOn {
+                    selection.platforms.insert(platform)
+                } else {
+                    selection.platforms.remove(platform)
+                }
+                autoDownloadPlatforms = selection.rawValue
+            }
+        )
+    }
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -47,6 +79,27 @@ struct DownloadPreferencePane: View {
             }
             .groupBoxStyle(PreferencesGroupBoxStyle())
             .disabled(downloader.isManaged)
+
+            GroupBox(label: Text("AutoDownloadPlatforms")) {
+                VStack(alignment: .leading) {
+                    Toggle("AutoDownloadPlatforms.All", isOn: downloadsAllPlatforms)
+
+                    HStack(spacing: 16) {
+                        ForEach(AutoDownloadPlatformsSelection.choosablePlatforms, id: \.self) { platform in
+                            Toggle(isOn: downloadsPlatform(platform)) {
+                                Text(verbatim: platform.shortName)
+                            }
+                        }
+                    }
+                    .disabled(platformSelection.isAll)
+
+                    Text("AutoDownloadPlatformsDescription")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .groupBoxStyle(PreferencesGroupBoxStyle())
         }
     }
 }
