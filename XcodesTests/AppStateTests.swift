@@ -1021,6 +1021,14 @@ class AppStateTests: XCTestCase {
         )
     }
 
+    func test_RequiresDirectLaunch_OnlyForXcodeOlderThanRunningMacOS() {
+        // Older than the OS: blocked by LaunchServices, must launch directly.
+        XCTAssertTrue(AppState.requiresDirectLaunch(xcodeVersion: Version(major: 26, minor: 6, patch: 0), osMajorVersion: 27))
+        // Same generation or newer: opens normally via NSWorkspace.
+        XCTAssertFalse(AppState.requiresDirectLaunch(xcodeVersion: Version(major: 27, minor: 0, patch: 0), osMajorVersion: 27))
+        XCTAssertFalse(AppState.requiresDirectLaunch(xcodeVersion: Version(major: 27, minor: 0, patch: 0), osMajorVersion: 26))
+    }
+
     private func recordAllXcodeInstallStates(during operation: () async throws -> Void) async throws -> [[XcodeInstallState]] {
         var states: [[XcodeInstallState]] = []
         var cancellable: AnyCancellable?
