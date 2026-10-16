@@ -8,6 +8,7 @@ struct MainWindow: View {
     @EnvironmentObject var appState: AppState
     @State private var selectedXcodeID: Xcode.ID?
     @State private var searchText: String = ""
+    @State private var columnVisibility: NavigationSplitViewVisibility = .automatic
     @AppStorage("lastUpdated") private var lastUpdated: Double?
     // These two properties should be per-scene state managed by @SceneStorage property wrappers.
     // There's currently a bug with @SceneStorage on macOS, though, where quitting the app will discard the values, which removes a lot of its utility.
@@ -19,7 +20,7 @@ struct MainWindow: View {
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
 
     var body: some View {
-        NavigationSplitViewWrapper {
+        NavigationSplitViewWrapper(columnVisibility: $columnVisibility) {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly, architecture: architecture)
                 .layoutPriority(1)
                 .alert(item: $appState.xcodeBeingConfirmedForUninstallation) { xcode in
@@ -33,7 +34,8 @@ struct MainWindow: View {
                     category: $category,
                     isInstalledOnly: $isInstalledOnly,
                     isShowingInfoPane: $isShowingInfoPane,
-                    architecture: $architecture
+                    architecture: $architecture,
+                    isSidebarCollapsed: columnVisibility == .detailOnly
                 )
         } detail: {
             Group {
