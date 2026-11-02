@@ -365,6 +365,29 @@ class AppStateTests: XCTestCase {
         XCTAssertEqual(subject.selectedXcodePath, secondPath.string)
     }
 
+    func test_Select_MarksXcodeInstalledSinceLastScanAsSelected() async throws {
+        subject.helperInstallState = .installed
+        let installedPath = try XCTUnwrap(Path("/Applications/Xcode-27.2.0.app"))
+        let version = try XCTUnwrap(Version("27.2.0"))
+        let installedXcode = InstalledXcode(path: installedPath, version: version)
+        let developerPath = (installedPath/"Contents/Developer").string
+        subject.availableXcodes = [
+            AvailableXcode(version: version, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+        ]
+        subject.allXcodes[0].installState = .installed(installedPath)
+        Current.files.installedXcodes = { _ in [installedXcode] }
+        Current.shell.xcodeSelectPrintPath = {
+            ProcessOutput(status: 0, out: developerPath, err: "")
+        }
+
+        subject.select(xcode: subject.allXcodes[0], shouldPrepareUserForHelperInstallation: false)
+        let selectTask = try XCTUnwrap(subject.selectTask)
+        await selectTask.value
+
+        XCTAssertEqual(subject.allXcodes[0].installState, .installed(installedPath))
+        XCTAssertTrue(subject.allXcodes[0].selected)
+    }
+
     func test_Uninstall_MissingXcodePresentsFileNotFoundError() async throws {
         let missingPath = try XCTUnwrap(Path("/Applications/Xcode-Missing.app"))
         let xcode = Xcode(version: Version("15.0.0")!, installState: .installed(missingPath), selected: false, icon: nil)
@@ -409,6 +432,37 @@ class AppStateTests: XCTestCase {
         await uninstallTask.value
 
         XCTAssertEqual(subject.allXcodes[0].installState, .notInstalled)
+    }
+
+    func test_Uninstall_DoesNotShowRemovedXcodeAsInstalledAgain() async throws {
+        let installedPath = try XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))
+        let version = try XCTUnwrap(Version("0.0.0"))
+        let installedXcode = InstalledXcode(path: installedPath, version: version)
+        subject.availableXcodes = [
+            AvailableXcode(version: version, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+        ]
+        Current.files.installedXcodes = { _ in [installedXcode] }
+        await subject.updateInstalledXcodesAsync()
+        Current.files.installedXcodes = { _ in [] }
+        Current.shell.xcodeSelectPrintPath = {
+            ProcessOutput(status: 0, out: "", err: "")
+        }
+
+        let allXcodeInstallStates = try await recordAllXcodeInstallStates {
+            subject.uninstall(xcode: subject.allXcodes[0])
+            let uninstallTask = try XCTUnwrap(subject.uninstallTask)
+            await uninstallTask.value
+        }
+
+        XCTAssertEqual(
+            allXcodeInstallStates,
+            [
+                [XcodeInstallState.installed(installedPath)],
+                [.uninstalling(installedPath)],
+                [.notInstalled],
+                [.notInstalled]
+            ]
+        )
     }
 
     func test_Signout_RemovesCookiesFromDownloadSession() throws {
