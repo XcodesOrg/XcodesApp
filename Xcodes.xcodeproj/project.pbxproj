@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		AF29174092FE4E0F921AB001 /* InstallationProgressViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF29174092FE4E0F921AB002 /* InstallationProgressViewTests.swift */; };
 		0057A89B460239B9C03E2785 /* CleanupModel+Simulators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 943A892E9D1550BCA9AC8C1D /* CleanupModel+Simulators.swift */; };
 		06E850F37A4C9C059EC20FC0 /* CleanupProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 514610E48D0A3E33DD2EE721 /* CleanupProgress.swift */; };
 		08944F5D35F96564A22A3C17 /* CleanupModel+Folders.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AB0DF63B3A24915AA3249C /* CleanupModel+Folders.swift */; };
@@ -36,6 +35,7 @@
 		7E8EE522B53E88AFC8D93FA9 /* CleanupOperationsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBD0AEA29C230D27119168A4 /* CleanupOperationsTests.swift */; };
 		930D1923B868D440EDD7A9CF /* CleanupSectionData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53E51D50B588CF4B608471F6 /* CleanupSectionData.swift */; };
 		9DD4FFCB2B13EC1800C974F1 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = 9DD4FFCA2B13EC1800C974F1 /* Localizable.xcstrings */; };
+		AF29174092FE4E0F921AB001 /* InstallationProgressViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF29174092FE4E0F921AB002 /* InstallationProgressViewTests.swift */; };
 		B0403CF02AD92D7B00137C09 /* ReleaseNotesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */; };
 		B0403CF22AD934B600137C09 /* CompatibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CF12AD934B600137C09 /* CompatibilityView.swift */; };
 		B0403CF42AD9381D00137C09 /* SDKsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0403CF32AD9381D00137C09 /* SDKsView.swift */; };
@@ -210,12 +210,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		AF29174092FE4E0F921AB002 /* InstallationProgressViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationProgressViewTests.swift; sourceTree = "<group>"; };
 		046BBB6A3C2BEF6B6837D732 /* CleanupAccessHelp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanupAccessHelp.swift; sourceTree = "<group>"; };
 		1596C2903043765600178C86 /* FileOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileOperations.swift; sourceTree = "<group>"; };
 		15F5B88F2CCF09B900705E2F /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
 		19A39A69E18249AB7D2031B7 /* CleanupOperations.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanupOperations.swift; sourceTree = "<group>"; };
-		1BB0ABBA150119A78A843366 /* XcodesCleanupKitNotices.txt */ = {isa = PBXFileReference; includeInIndex = 1; path = XcodesCleanupKitNotices.txt; sourceTree = "<group>"; };
+		1BB0ABBA150119A78A843366 /* XcodesCleanupKitNotices.txt */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = XcodesCleanupKitNotices.txt; sourceTree = "<group>"; };
 		20104AAD8704C5FF9B7E3AC1 /* CleanupModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanupModel.swift; sourceTree = "<group>"; };
 		2F8688396C2D2A41A86D5DC8 /* CleanupRuntimeItemRow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanupRuntimeItemRow.swift; sourceTree = "<group>"; };
 		30F778E2F0EE54A8DDE77312 /* CleanupSelectionCheckbox.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CleanupSelectionCheckbox.swift; sourceTree = "<group>"; };
@@ -239,6 +238,7 @@
 		943A892E9D1550BCA9AC8C1D /* CleanupModel+Simulators.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CleanupModel+Simulators.swift"; sourceTree = "<group>"; };
 		9BC12989FA7FB89BEC5635C8 /* CleanupModel+Cleanup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = "CleanupModel+Cleanup.swift"; sourceTree = "<group>"; };
 		9DD4FFCA2B13EC1800C974F1 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		AF29174092FE4E0F921AB002 /* InstallationProgressViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationProgressViewTests.swift; sourceTree = "<group>"; };
 		B0403CEF2AD92D7B00137C09 /* ReleaseNotesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseNotesView.swift; sourceTree = "<group>"; };
 		B0403CF12AD934B600137C09 /* CompatibilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompatibilityView.swift; sourceTree = "<group>"; };
 		B0403CF32AD9381D00137C09 /* SDKsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SDKsView.swift; sourceTree = "<group>"; };
@@ -718,7 +718,6 @@
 				514610E48D0A3E33DD2EE721 /* CleanupProgress.swift */,
 				5985DF0133D8149A4ADF1808 /* CleanupProgressView.swift */,
 			);
-			name = Cleanup;
 			path = Cleanup;
 			sourceTree = "<group>";
 		};
@@ -854,7 +853,7 @@
 				CABFA9FB2592F13300380FEE /* XCRemoteSwiftPackageReference "LegibleError" */,
 				E689540125BE8C64000EBCEA /* XCRemoteSwiftPackageReference "DockProgress" */,
 				E8FD5725291EE4AC001E004C /* XCRemoteSwiftPackageReference "AsyncHTTPNetworkService" */,
-				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path.swift" */,
+				E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */,
 				E89CBD3B2D5FC0B10037ED95 /* XCRemoteSwiftPackageReference "XcodesLoginKit" */,
 				E83FDC422CBB649100679C6B /* XCRemoteSwiftPackageReference "Sparkle" */,
 				E899297E2FFDFA9A0019DB31 /* XCRemoteSwiftPackageReference "XcodesKit" */,
@@ -1174,7 +1173,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -1186,7 +1185,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 4.1.1;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -1427,7 +1426,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1439,7 +1438,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 4.1.1;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 6.0;
@@ -1456,7 +1455,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 42;
 				DEVELOPMENT_ASSET_PATHS = "\"Xcodes/Preview Content\"";
 				DEVELOPMENT_TEAM = ZU6GR6B2FY;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -1468,7 +1467,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.6;
-				MARKETING_VERSION = 4.1.1;
+				MARKETING_VERSION = 4.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xcodesorg.xcodesapp;
 				PRODUCT_NAME = Xcodes;
 				SWIFT_VERSION = 6.0;
@@ -1566,14 +1565,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		FB155AE6AE4A1DCFF051E336 /* XCRemoteSwiftPackageReference "XcodesCleanupKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/XcodesOrg/XcodesCleanupKit.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
 		CABFA9E22592F08E00380FEE /* XCRemoteSwiftPackageReference "Version" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Version";
@@ -1638,7 +1629,7 @@
 				kind = branch;
 			};
 		};
-		E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path.swift" */ = {
+		E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mxcl/Path.swift";
 			requirement = {
@@ -1652,6 +1643,14 @@
 			requirement = {
 				branch = main;
 				kind = branch;
+			};
+		};
+		FB155AE6AE4A1DCFF051E336 /* XCRemoteSwiftPackageReference "XcodesCleanupKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/XcodesOrg/XcodesCleanupKit.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
@@ -1713,7 +1712,7 @@
 		};
 		E8F44A1D296B4CD7002D6592 /* Path */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path.swift" */;
+			package = E8F44A1C296B4CD7002D6592 /* XCRemoteSwiftPackageReference "Path" */;
 			productName = Path;
 		};
 		E8FD5726291EE4AC001E004C /* AsyncNetworkService */ = {
