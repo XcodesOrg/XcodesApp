@@ -7,13 +7,21 @@ import XcodesKit
 struct XcodesApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate: AppDelegate
     @SwiftUI.Environment(\.scenePhase) private var scenePhase: ScenePhase
+    @SwiftUI.Environment(\.openWindow) private var openWindow
     @SwiftUI.Environment(\.openURL) var openURL: OpenURLAction
     @StateObject private var appState = AppState()
     @StateObject private var updater = ObservableUpdater()
+    // Own the shared model without refreshing every scene for scan progress.
+    // CleanupWindow subscribes to it; Settings subscribes only to folder configuration.
+    @State private var cleanupModel = CleanupModel(useFileConfiguration: !isTesting)
 
     var body: some Scene {
         Window("Xcodes", id: "main") {
-            MainWindow()
+            MainWindow(cleanupModel: cleanupModel)
+                .task {
+                    guard !isTesting else { return }
+                    cleanupModel.start(appState: appState)
+                }
                 .environmentObject(appState)
                 .environmentObject(updater)
                 // Recheck external selections as soon as the user returns from Terminal.
@@ -54,6 +62,10 @@ struct XcodesApp: App {
                 .disabled(appState.isUpdating)
             }
 
+            CommandGroup(after: .newItem) {
+                Button("Clean Up…") { openWindow(id: "cleanup") }
+            }
+
             XcodeCommands(appState: appState)
 
             CommandGroup(replacing: CommandGroupPlacement.help) {
@@ -77,7 +89,7 @@ struct XcodesApp: App {
         }
 #if os(macOS)
       Settings {
-        PreferencesView()
+        PreferencesView(cleanupModel: cleanupModel)
           .environmentObject(appState)
           .environmentObject(updater)
           .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
@@ -85,13 +97,11 @@ struct XcodesApp: App {
           })
       }
         
-        Window("Platforms", id: "platforms") {
-            PlatformsListView()
-                .environmentObject(appState)
-                .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
-                    alert(for: presentedAlert)
-                })
+        Window("Clean Up", id: "cleanup") {
+            CleanupWindow().environmentObject(appState).environmentObject(cleanupModel)
         }
+        .defaultSize(width: 880, height: 720)
+
 #endif
     }
     
@@ -99,17 +109,6 @@ struct XcodesApp: App {
         switch alertType {
         case let .noActiveXcode(runtime, xcode):
             return .noActiveXcode(appState: appState, runtime: runtime, xcode: xcode, inSettings: true)
-        case let .deletePlatform(runtime):
-            return Alert(
-                title: Text(String(format: localizeString("Alert.DeletePlatform.Title"), runtime.name)),
-                  primaryButton: .destructive(
-                    Text("Alert.DeletePlatform.PrimaryButton"),
-                    action: {
-                        self.appState.confirmDeleteRuntime(runtime: runtime)
-                    }
-                  ),
-                  secondaryButton: .cancel(Text("Cancel"))
-            )
         case let .generic(title, message):
             return Alert(
                 title: Text(title),

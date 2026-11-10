@@ -23,6 +23,11 @@ extension Path {
         XcodesPathResolver.appInstallDirectory(savedPath: Current.defaults.string(forKey: "installPath"))
     }
     
+    // Human-editable cleanup configuration lives beside the Xcode and runtime lists.
+    static var cleanupFoldersFile: Path {
+        xcodesApplicationSupport/"cleanup-folders.json"
+    }
+
     static var runtimeCacheFile: Path {
         XcodesPathResolver.downloadableRuntimesCacheFile(in: xcodesApplicationSupport)
     }
