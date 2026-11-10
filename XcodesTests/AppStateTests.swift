@@ -81,6 +81,21 @@ class AppStateTests: XCTestCase {
         subject = AppState()
     }
 
+    func test_CopyPath_WritesOneItemWithPathAndFileURL() throws {
+        let installedPath = try XCTUnwrap(Path("/Applications/Xcode 26.0.app"))
+        let xcode = Xcode(version: Version("26.0.0")!, installState: .installed(installedPath), selected: false, icon: nil)
+        let pasteboard = NSPasteboard(name: NSPasteboard.Name("AppStateTests-\(UUID().uuidString)"))
+        defer { pasteboard.releaseGlobally() }
+
+        subject.copyPath(xcode: xcode, pasteboard: pasteboard)
+
+        let items = try XCTUnwrap(pasteboard.pasteboardItems)
+        XCTAssertEqual(items.count, 1)
+        XCTAssertEqual(items.first?.types, [.fileURL, .string])
+        XCTAssertEqual(items.first?.string(forType: .string), "/Applications/Xcode 26.0.app")
+        XCTAssertEqual(items.first?.string(forType: .fileURL), "file:///Applications/Xcode%2026.0.app")
+    }
+
     func test_InstallError_Network401IsUnauthorized() {
         let error = NetworkError.non200StatusCode(statusCode: 401, data: Data())
 

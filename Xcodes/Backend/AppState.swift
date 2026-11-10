@@ -825,12 +825,16 @@ class AppState: ObservableObject {
         }
     }
 
-    func copyPath(xcode: Xcode) {
+    func copyPath(xcode: Xcode, pasteboard: NSPasteboard = .general) {
         guard let installedXcodePath = xcode.installedPath else { return }
 
-        NSPasteboard.general.declareTypes([.URL, .string], owner: nil)
-        NSPasteboard.general.writeObjects([installedXcodePath.url as NSURL])
-        NSPasteboard.general.setString(installedXcodePath.string, forType: .string)
+        // Write a single item with real data for each type. Declaring `.URL` without
+        // providing data left an empty first item that Terminal and other apps couldn't paste.
+        let item = NSPasteboardItem()
+        item.setString(installedXcodePath.url.absoluteString, forType: .fileURL)
+        item.setString(installedXcodePath.string, forType: .string)
+        pasteboard.clearContents()
+        pasteboard.writeObjects([item])
     }
 
     func copyReleaseNote(from url: URL?) {
