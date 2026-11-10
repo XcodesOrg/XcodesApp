@@ -731,8 +731,8 @@ class AppState: ObservableObject {
                 try Task.checkCancellation()
                 try await uninstallXcodeAsync(path: installedXcodePath)
                 try Task.checkCancellation()
-                await updateSelectedXcodePathAsync()
                 await updateInstalledXcodesAsync()
+                await updateSelectedXcodePathAsync()
             } catch is CancellationError {
             } catch {
                 if let index = allXcodes.firstIndex(where: { $0.id == xcode.id }) {
@@ -802,6 +802,7 @@ class AppState: ObservableObject {
 
                 try await Current.helper.switchXcodePathAsync(installedXcodePath.string)
                 try Task.checkCancellation()
+                await updateInstalledXcodesAsync()
                 await updateSelectedXcodePathAsync()
                 if createSymLinkOnSelect && onSelectActionType != .rename {
                     await createSymbolicLink(to: installedXcodePath)

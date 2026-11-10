@@ -51,6 +51,9 @@ extension AppState {
                 let (xcode, url) = try await getXcodeArchiveAsync(installationType, downloader: downloader)
                 try Task.checkCancellation()
                 let installedXcode = try await installArchivedXcodeAsync(xcode, at: url)
+                // Refreshed before the row is patched: `updateAllXcodes` rebuilds every row from this cache
+                // on the next selection or update, carrying over only rows that are still `.installing`.
+                await updateInstalledXcodesAsync(recomposeAllXcodes: false)
 
                 guard let index = allXcodes.firstIndex(where: { $0.version.isEquivalent(to: installedXcode.version) }) else {
                     return installedXcode
