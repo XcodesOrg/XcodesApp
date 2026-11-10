@@ -10,6 +10,53 @@
             
                 
                     <item>
+                        <title>4.2.0</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/XcodesOrg/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<ul>
+  <li>Support AEA archives in Xcodes.app (#889) @MattKiazyk</li>
+  <li>Add disk cleanup to Xcodes (#888) @MattKiazyk</li>
+  <li>Usability improvements: refresh, sign-in and helper recovery (#874) @anciltech, @MattKiazyk, @maxpproppo</li>
+  <li>UI update: clearer Xcode hierarchy, tags and Settings (#873) @anciltech, @MattKiazyk, @maxpproppo</li>
+  <li>Platform management: detection, automatic downloads and safe removal (#875) @anciltech, @MattKiazyk, @maxpproppo</li>
+  <li>Update row install status button (#882) @LePips, @MattKiazyk</li>
+  <li>Fix installed and active state not refreshing after install, select, and uninstall. (#886) @jrlanglois, @MattKiazyk</li>
+  <li>Preserve Apple account credentials after transient authentication failures (#884) @zunda-pixel, @MattKiazyk</li>
+  <li>Update leading toolbar buttons (#877) @LePips, @MattKiazyk</li>
+  <li>Fix frozen download progress after a retry (#885) @mahadshahib, @MattKiazyk, Mohammad Shahibzadeh</li>
+  <li>Added Swedish translations (#860) @dhindrik, @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=WBZGC2J9EhXF9YY71DOQc8Zq/eGCOM2j3QFlTC/nwxbWFJ8W++77TcaEfzSaVDjXQdKY9LiCZdTpGhmDu+C5BA== -->
+]]></description>
+                        <pubDate>Tue, 10 Nov 2026 19:17:58 +0000</pubDate>
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v4.2.0b42/Xcodes.zip"
+                                    sparkle:version="42"
+                                    sparkle:shortVersionString="4.2.0"
+                                    sparkle:edSignature="WBZGC2J9EhXF9YY71DOQc8Zq/eGCOM2j3QFlTC/nwxbWFJ8W++77TcaEfzSaVDjXQdKY9LiCZdTpGhmDu+C5BA=="
+                                    length="27612336"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
+        
+            
+                
+                    <item>
                         <title>Login Fix. Platforms parse fix</title>
                         <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/XcodesOrg/XcodesApp#installation">here</a>.
 Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
