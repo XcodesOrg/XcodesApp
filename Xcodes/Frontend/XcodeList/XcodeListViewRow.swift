@@ -43,11 +43,21 @@ struct XcodeListViewRow: View {
                     }
                 }
 
-                if case let .installed(path) = xcode.installState {
-                    Text(verbatim: path.string)
-                        .font(.caption)
-                        .foregroundColor(.secondary)
+                Group {
+                    switch xcode.installState {
+                    case let .installed(path):
+                        Text(verbatim: path.string)
+                    case let .installing(installationStep):
+                        Text(installationStep.message)
+                    case .uninstalling:
+                        Text("Uninstalling")
+                    case .notInstalled:
+                        EmptyView()
+                    }
                 }
+                .font(.caption)
+                .foregroundColor(.secondary)
+                .lineLimit(1)
             }
 
             Spacer()
@@ -169,17 +179,12 @@ struct XcodeListViewRow: View {
         case let .installing(installationStep):
             InstallationStepRowView(
                 installationStep: installationStep,
-                highlighted: selected,
                 cancel: { appState.presentedAlert = .cancelInstall(xcode: xcode) }
             )
         case .uninstalling:
-            HStack(spacing: 4) {
-                ProgressView()
-                    .scaleEffect(0.5)
-                Text("Uninstalling")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+            InstallProgressRing(fractionCompleted: nil, showsStopGlyph: false)
+                .frame(minWidth: 65)
+                .help("Uninstalling")
         }
     }
 

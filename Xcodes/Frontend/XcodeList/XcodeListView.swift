@@ -327,7 +327,6 @@ private struct XcodeVersionGroupRow: View {
            case let .installing(installationStep) = installingVersion.installState {
             InstallationStepRowView(
                 installationStep: installationStep,
-                highlighted: false,
                 cancel: { appState.presentedAlert = .cancelInstall(xcode: installingVersion) }
             )
         } else if let latestRelease {
