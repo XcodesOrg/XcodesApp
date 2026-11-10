@@ -60,13 +60,13 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
         notificationStatusTask = Task { [weak self] in
             let settings = await UNUserNotificationCenter.current().notificationSettings()
             guard !Task.isCancelled else {
-                await self?.clearNotificationStatusTask(id: taskID)
+                self?.clearNotificationStatusTask(id: taskID)
                 return
             }
 
             let status = NotificationManager.systemPromptStatusFromSettings(settings)
-            await self?.setNotificationStatus(status, ifNotificationStatusTaskID: taskID)
-            await self?.clearNotificationStatusTask(id: taskID)
+            self?.setNotificationStatus(status, ifNotificationStatusTaskID: taskID)
+            self?.clearNotificationStatusTask(id: taskID)
         }
     }
     
@@ -94,14 +94,14 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
             do {
                 let granted = try await UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge])
                 guard !Task.isCancelled else {
-                    await self?.clearRequestAccessTask(id: taskID)
+                    self?.clearRequestAccessTask(id: taskID)
                     return
                 }
 
                 Logger.appState.log("User has \(granted ? "Granted" : "NOT GRANTED") notification permission")
             } catch {
                 guard !Task.isCancelled else {
-                    await self?.clearRequestAccessTask(id: taskID)
+                    self?.clearRequestAccessTask(id: taskID)
                     return
                 }
 
@@ -110,13 +110,13 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
 
             let settings = await UNUserNotificationCenter.current().notificationSettings()
             guard !Task.isCancelled else {
-                await self?.clearRequestAccessTask(id: taskID)
+                self?.clearRequestAccessTask(id: taskID)
                 return
             }
 
             let status = NotificationManager.systemPromptStatusFromSettings(settings)
-            await self?.setNotificationStatus(status, ifRequestAccessTaskID: taskID)
-            await self?.clearRequestAccessTask(id: taskID)
+            self?.setNotificationStatus(status, ifRequestAccessTaskID: taskID)
+            self?.clearRequestAccessTask(id: taskID)
         }
     }
 
@@ -154,9 +154,11 @@ public final class NotificationManager: NSObject, UNUserNotificationCenterDelega
     }
     
     func scheduleNotification(title: String?, body: String, category: XcodesNotificationCategory) {
-          
         let content = UNMutableNotificationContent()
-        if let title = title {
+        // Unit tests run inside the app and simulate installing Xcode "0.0"; label those so they aren't mistaken for real installs.
+        if isTesting {
+            content.title = ["Test", title].compactMap { $0 }.joined(separator: ": ")
+        } else if let title = title {
             content.title = title
         }
         content.body = body

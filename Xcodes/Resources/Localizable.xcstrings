@@ -3657,6 +3657,415 @@
         }
       }
     },
+    "Alert.PostInstall.OpenXcode.Button" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فتح Xcode"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obre Xcode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode öffnen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα του Xcode"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Xcode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Xcode"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avaa Xcode"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir Xcode"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode खोलें"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri Xcode"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode を開く"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode 열기"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Xcode"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otwórz Xcode"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Xcode"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть Xcode"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öppna Xcode"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิด Xcode"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode’u aç"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відкрити Xcode"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开 Xcode"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打開 Xcode"
+          }
+        }
+      }
+    },
+    "Alert.PostInstall.OpenXcode.Message" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تثبيت Xcode %@، لكن بعض خطوات الإعداد لم تكتمل تلقائيًا. افتح Xcode لإكمال الإعداد."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ està instal·lat, però alguns passos de configuració no s’han completat automàticament. Obre Xcode per acabar de configurar-lo."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ ist installiert, aber einige Einrichtungsschritte wurden nicht automatisch abgeschlossen. Öffne Xcode, um die Einrichtung abzuschließen."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το Xcode %@ εγκαταστάθηκε, αλλά ορισμένα βήματα διαμόρφωσης δεν ολοκληρώθηκαν αυτόματα. Ανοίξτε το Xcode για να ολοκληρώσετε τη διαμόρφωση."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ is installed, but some setup steps weren’t completed automatically. Open Xcode to finish setting it up."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ está instalado, pero algunos pasos de configuración no se completaron automáticamente. Abre Xcode para terminar de configurarlo."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ on asennettu, mutta kaikkia käyttöönoton vaiheita ei suoritettu automaattisesti. Viimeistele käyttöönotto avaamalla Xcode."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ est installé, mais certaines étapes de configuration ne se sont pas terminées automatiquement. Ouvrez Xcode pour terminer sa configuration."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ इंस्टॉल है, लेकिन सेटअप के कुछ चरण अपने आप पूरे नहीं हुए। सेटअप पूरा करने के लिए Xcode खोलें।"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ è installato, ma alcuni passaggi di configurazione non sono stati completati automaticamente. Apri Xcode per completare la configurazione."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ はインストールされていますが、一部の設定手順が自動で完了しませんでした。Xcode を開いて設定を完了してください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@이(가) 설치되었지만 일부 설정 단계가 자동으로 완료되지 않았습니다. Xcode를 열어 설정을 마치십시오."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ is geïnstalleerd, maar sommige configuratiestappen zijn niet automatisch voltooid. Open Xcode om de configuratie af te ronden."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ jest zainstalowane, ale niektóre etapy konfiguracji nie zostały ukończone automatycznie. Otwórz Xcode, aby dokończyć konfigurację."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O Xcode %@ está instalado, mas algumas etapas da configuração não foram concluídas automaticamente. Abra o Xcode para concluir a configuração."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ установлен, но некоторые шаги настройки не были выполнены автоматически. Откройте Xcode, чтобы завершить настройку."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ är installerat, men vissa inställningssteg slutfördes inte automatiskt. Öppna Xcode för att slutföra inställningen."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้ง Xcode %@ แล้ว แต่ขั้นตอนการตั้งค่าบางส่วนไม่เสร็จสิ้นโดยอัตโนมัติ เปิด Xcode เพื่อตั้งค่าให้เสร็จ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ yüklendi ancak bazı kurulum adımları otomatik olarak tamamlanmadı. Kurulumu tamamlamak için Xcode’u açın."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ інстальовано, але деякі етапи налаштування не завершилися автоматично. Відкрийте Xcode, щоб завершити налаштування."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ 已安装，但部分设置步骤未能自动完成。请打开 Xcode 完成设置。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode %@ 已安裝，但部分設定步驟未自動完成。請打開 Xcode 以完成設定。"
+          }
+        }
+      }
+    },
+    "Alert.PostInstall.OpenXcode.Title" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "إكمال إعداد Xcode"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Acaba de configurar Xcode"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode-Einrichtung abschließen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ολοκλήρωση διαμόρφωσης του Xcode"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Finish Setting Up Xcode"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminar de configurar Xcode"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Viimeistele Xcoden käyttöönotto"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Terminer la configuration de Xcode"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode का सेटअप पूरा करें"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Completa la configurazione di Xcode"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode の設定を完了"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode 설정 완료"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Voltooi de configuratie van Xcode"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Dokończ konfigurację Xcode"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Concluir a configuração do Xcode"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершение настройки Xcode"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Slutför inställningen av Xcode"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ตั้งค่า Xcode ให้เสร็จ"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcode kurulumunu tamamlayın"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Завершіть налаштування Xcode"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成 Xcode 设置"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "完成 Xcode 設定"
+          }
+        }
+      }
+    },
     "Alert.PostInstall.Title" : {
       "comment" : "Post install",
       "extractionState" : "manual",
@@ -5435,6 +5844,278 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "連同平台一併解除安裝"
+          }
+        }
+      }
+    },
+    "Alert.Update.AuthError.Message" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "يعرض مصدر بيانات Apple إصدارات Xcode المتاحة عبر حساب مطوّري Apple الخاص بك، لذا يلزم تسجيل الدخول. سجّل الدخول لتحديث القائمة أو بدّل المصدر إلى Xcode Releases في الإعدادات."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La font de dades d’Apple mostra les versions d’Xcode del teu compte d’Apple Developer, per això cal iniciar-hi sessió. Inicia la sessió per actualitzar la llista o canvia la font de dades a Xcode Releases a la configuració."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Die Datenquelle von Apple zeigt Xcode-Versionen aus deinem Apple-Developer-Konto an und erfordert deshalb eine Anmeldung. Melde dich an, um die Liste zu aktualisieren, oder wechsle in den Einstellungen zur Datenquelle Xcode Releases."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Η πηγή δεδομένων της Apple εμφανίζει τις εκδόσεις Xcode από τον λογαριασμό σας στο Apple Developer και απαιτεί σύνδεση. Συνδεθείτε για να ανανεώσετε τη λίστα ή επιλέξτε την πηγή Xcode Releases στις Ρυθμίσεις."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The Apple data source lists Xcode releases from your Apple Developer account, so it needs you to be signed in. Sign in to refresh the list, or switch the data source to Xcode Releases in Settings."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La fuente de datos de Apple muestra las versiones de Xcode de tu cuenta de Apple Developer, por lo que requiere iniciar sesión. Inicia sesión para actualizar la lista o cambia la fuente de datos a Xcode Releases en Ajustes."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Applen tietolähde näyttää Apple Developer -tilisi Xcode-julkaisut, joten se edellyttää kirjautumista. Päivitä luettelo kirjautumalla sisään tai vaihda asetuksissa tietolähteeksi Xcode Releases."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La source de données Apple affiche les versions de Xcode de votre compte Apple Developer et nécessite donc une connexion. Connectez-vous pour actualiser la liste, ou choisissez la source de données Xcode Releases dans les réglages."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple डेटा स्रोत आपके Apple Developer खाते में उपलब्ध Xcode रिलीज़ दिखाता है, इसलिए साइन इन करना ज़रूरी है। सूची रीफ़्रेश करने के लिए साइन इन करें या सेटिंग्स में डेटा स्रोत को Xcode Releases पर बदलें।"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "La fonte dati Apple mostra le versioni di Xcode disponibili per il tuo account Apple Developer e richiede l’accesso. Accedi per aggiornare l’elenco oppure seleziona Xcode Releases come fonte dati nelle impostazioni."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple のデータソースでは Apple Developer アカウントで利用できる Xcode のリリースを表示するため、サインインが必要です。一覧を更新するにはサインインするか、設定でデータソースを Xcode Releases に切り替えてください。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple 데이터 소스는 Apple Developer 계정의 Xcode 릴리스를 표시하므로 로그인이 필요합니다. 목록을 새로 고치려면 로그인하거나 설정에서 데이터 소스를 Xcode Releases로 변경하십시오."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "De gegevensbron van Apple toont Xcode-releases uit je Apple Developer-account. Daarom moet je inloggen. Log in om de lijst te vernieuwen of kies in Instellingen de gegevensbron Xcode Releases."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Źródło danych Apple wyświetla wydania Xcode z Twojego konta Apple Developer, dlatego wymaga zalogowania. Zaloguj się, aby odświeżyć listę, albo wybierz w ustawieniach źródło Xcode Releases."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "A fonte de dados da Apple lista as versões do Xcode disponíveis na sua conta Apple Developer e exige que você inicie sessão. Inicie sessão para atualizar a lista ou selecione Xcode Releases como fonte de dados nos ajustes."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Источник данных Apple показывает выпуски Xcode из вашей учётной записи Apple Developer и требует входа в неё. Войдите, чтобы обновить список, или выберите источник Xcode Releases в настройках."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apples datakälla visar Xcode-versioner från ditt Apple Developer-konto och kräver därför inloggning. Logga in för att uppdatera listan eller byt till datakällan Xcode Releases i inställningarna."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "แหล่งข้อมูล Apple แสดงรุ่น Xcode จากบัญชี Apple Developer ของคุณ จึงต้องลงชื่อเข้าใช้ ลงชื่อเข้าใช้เพื่อรีเฟรชรายการ หรือเปลี่ยนแหล่งข้อมูลเป็น Xcode Releases ในการตั้งค่า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple veri kaynağı, Apple Developer hesabınızdaki Xcode sürümlerini listeler ve giriş yapmanızı gerektirir. Listeyi yenilemek için giriş yapın veya Ayarlar’da veri kaynağını Xcode Releases olarak değiştirin."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Джерело даних Apple показує випуски Xcode, доступні у вашому обліковому записі Apple Developer, тому вимагає входу. Увійдіть, щоб оновити список, або виберіть у налаштуваннях джерело Xcode Releases."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple 数据源会列出你的 Apple Developer 帐户可用的 Xcode 版本，因此需要登录。请登录以刷新列表，或在设置中将数据源切换为 Xcode Releases。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple 資料來源會列出你的 Apple Developer 帳號可使用的 Xcode 版本，因此需要登入。請登入以重新整理列表，或在設定中將資料來源切換為 Xcode Releases。"
+          }
+        }
+      }
+    },
+    "Alert.Update.AuthError.Title" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "سجّل الدخول للتحديث من Apple"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia la sessió per actualitzar des d’Apple"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Für Aktualisierungen von Apple anmelden"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Συνδεθείτε για ανανέωση από την Apple"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in to refresh from Apple"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicia sesión para actualizar desde Apple"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kirjaudu sisään päivittääksesi Applelta"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Se connecter pour actualiser depuis Apple"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple से रीफ़्रेश करने के लिए साइन इन करें"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Accedi per aggiornare da Apple"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple から更新するにはサインイン"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple에서 새로 고치려면 로그인"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Log in om te vernieuwen via Apple"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Zaloguj się, aby odświeżyć dane z Apple"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inicie sessão para atualizar os dados da Apple"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Войдите для обновления из источника Apple"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Logga in för att uppdatera från Apple"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ลงชื่อเข้าใช้เพื่อรีเฟรชจาก Apple"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apple’dan yenilemek için giriş yapın"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Увійдіть, щоб оновити дані з Apple"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登录以从 Apple 刷新"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "登入以從 Apple 重新整理"
           }
         }
       }
@@ -13044,6 +13725,417 @@
         }
       }
     },
+    "HelperClient.error.AuthorizationFailed" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "لم يأذن macOS بتثبيت الأداة المساعدة ذات الصلاحيات. أعد المحاولة وأدخل اسم مسؤول وكلمة مروره عند الطلب. يمكنك أيضًا تثبيت الأداة من الإعدادات > متقدم."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El macOS no ha autoritzat la instal·lació de l’assistent amb privilegis. Torna-ho a provar i introdueix el nom i la contrasenya d’un administrador quan se’t demanin. També pots instal·lar l’assistent a Configuració > Avançat."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS hat die Installation des privilegierten Hilfsprogramms nicht genehmigt. Versuche es erneut und gib bei Aufforderung den Namen und das Passwort eines Administrators ein. Du kannst das Hilfsprogramm auch unter Einstellungen > Erweitert installieren."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το macOS δεν ενέκρινε την εγκατάσταση του βοηθητικού προγράμματος με αυξημένα δικαιώματα. Δοκιμάστε ξανά και εισαγάγετε όνομα και συνθηματικό διαχειριστή όταν σας ζητηθούν. Μπορείτε επίσης να το εγκαταστήσετε από τις Ρυθμίσεις > Προηγμένα."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS didn't authorize installing the privileged helper. Try again and enter an administrator's name and password when asked; the helper can also be installed from Settings > Advanced."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS no autorizó la instalación del asistente con privilegios. Vuelve a intentarlo e introduce el nombre y la contraseña de un administrador cuando se te soliciten. También puedes instalar el asistente en Ajustes > Avanzado."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS ei antanut lupaa asentaa korotetuilla oikeuksilla toimivaa apuohjelmaa. Yritä uudelleen ja anna pyydettäessä ylläpitäjän nimi ja salasana. Voit asentaa apuohjelman myös kohdasta Asetukset > Lisäasetukset."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS n’a pas autorisé l’installation de l’utilitaire privilégié. Réessayez et saisissez le nom et le mot de passe d’un administrateur lorsque vous y êtes invité. Vous pouvez aussi installer l’utilitaire dans Réglages > Avancé."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS ने विशेषाधिकार वाले सहायक टूल को इंस्टॉल करने की अनुमति नहीं दी। फिर से कोशिश करें और पूछे जाने पर किसी ऐडमिन का नाम और पासवर्ड डालें। टूल को सेटिंग्स > उन्नत से भी इंस्टॉल किया जा सकता है।"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS non ha autorizzato l’installazione dello strumento ausiliario con privilegi. Riprova e inserisci il nome e la password di un amministratore quando richiesto. Puoi anche installarlo da Impostazioni > Avanzate."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS が特権ヘルパーのインストールを許可しませんでした。もう一度試して、求められた場合は管理者名とパスワードを入力してください。「設定」＞「詳細」からもヘルパーをインストールできます。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS에서 권한이 필요한 도우미 설치를 승인하지 않았습니다. 다시 시도하고 메시지가 표시되면 관리자 이름과 암호를 입력하십시오. 설정 > 고급에서도 도우미를 설치할 수 있습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS heeft de installatie van het hulpprogramma met verhoogde rechten niet toegestaan. Probeer het opnieuw en voer desgevraagd de naam en het wachtwoord van een beheerder in. Je kunt het hulpprogramma ook installeren via Instellingen > Geavanceerd."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS nie zezwolił na instalację narzędzia pomocniczego z podwyższonymi uprawnieniami. Spróbuj ponownie i podaj nazwę oraz hasło administratora, gdy pojawi się monit. Narzędzie możesz też zainstalować w sekcji Ustawienia > Zaawansowane."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O macOS não autorizou a instalação do auxiliar privilegiado. Tente novamente e insira o nome e a senha de um administrador quando solicitado. Você também pode instalar o auxiliar em Ajustes > Avançado."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS не разрешила установку вспомогательной программы с повышенными правами. Повторите попытку и при запросе введите имя и пароль администратора. Программу также можно установить в разделе «Настройки > Дополнительно»."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS godkände inte installationen av hjälpprogrammet med utökade behörigheter. Försök igen och ange en administratörs namn och lösenord när du blir ombedd. Du kan också installera hjälpprogrammet under Inställningar > Avancerat."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS ไม่อนุญาตให้ติดตั้งโปรแกรมช่วยที่ต้องใช้สิทธิ์ระดับสูง ลองอีกครั้ง แล้วป้อนชื่อและรหัสผ่านของผู้ดูแลระบบเมื่อได้รับแจ้ง คุณยังติดตั้งโปรแกรมช่วยได้จาก การตั้งค่า > ขั้นสูง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS, ayrıcalıklı yardımcı programın yüklenmesine izin vermedi. Yeniden deneyin ve istendiğinde bir yöneticinin adını ve parolasını girin. Yardımcı programı Ayarlar > İleri Düzey bölümünden de yükleyebilirsiniz."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS не дозволила встановити допоміжну програму з підвищеними правами. Спробуйте ще раз і введіть ім’я та пароль адміністратора, коли з’явиться запит. Програму також можна встановити в розділі «Налаштування > Додатково»."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS 未授权安装特权辅助工具。请重试，并在提示时输入管理员名称和密码。你也可以从“设置 > 高级”安装辅助工具。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS 未授權安裝特權輔助工具。請再試一次，並在提示時輸入管理者名稱和密碼。你也可以從「設定 > 進階」安裝輔助工具。"
+          }
+        }
+      }
+    },
+    "HelperClient.error.InvalidSignature" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "رفض macOS تثبيت الأداة المساعدة ذات الصلاحيات لأن توقيعها البرمجي لا يطابق ما يتوقعه Xcodes. يجب أن يوقّع فريق التطوير نفسه التطبيق والأداة."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El macOS ha rebutjat la instal·lació de l’assistent amb privilegis perquè la seva signatura de codi no coincideix amb la que espera Xcodes. L’aplicació i l’assistent han d’estar signats pel mateix equip de desenvolupament."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS hat die Installation des privilegierten Hilfsprogramms abgelehnt, weil seine Codesignatur nicht der von Xcodes erwarteten Signatur entspricht. App und Hilfsprogramm müssen vom selben Entwicklerteam signiert sein."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το macOS αρνήθηκε την εγκατάσταση του βοηθητικού προγράμματος με αυξημένα δικαιώματα επειδή η υπογραφή κώδικά του δεν είναι αυτή που αναμένει το Xcodes. Η εφαρμογή και το βοηθητικό πρόγραμμα πρέπει να έχουν υπογραφεί από την ίδια ομάδα ανάπτυξης."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS refused to install the privileged helper because its code signature doesn't match what Xcodes expects. The app and helper must be signed by the same developer team."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS rechazó la instalación del asistente con privilegios porque su firma de código no coincide con la que espera Xcodes. La aplicación y el asistente deben estar firmados por el mismo equipo de desarrollo."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS kieltäytyi asentamasta korotetuilla oikeuksilla toimivaa apuohjelmaa, koska sen koodiallekirjoitus ei vastaa Xcodesin odottamaa allekirjoitusta. Saman kehittäjätiimin on allekirjoitettava sekä sovellus että apuohjelma."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS a refusé d’installer l’utilitaire privilégié, car sa signature de code ne correspond pas à celle attendue par Xcodes. L’application et l’utilitaire doivent être signés par la même équipe de développement."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS ने विशेषाधिकार वाले सहायक टूल को इंस्टॉल नहीं किया क्योंकि उसका कोड हस्ताक्षर Xcodes की अपेक्षा से मेल नहीं खाता। ऐप और सहायक टूल पर एक ही डेवलपर टीम के हस्ताक्षर होने चाहिए।"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS ha rifiutato di installare lo strumento ausiliario con privilegi perché la firma del codice non corrisponde a quella prevista da Xcodes. L’app e lo strumento devono essere firmati dallo stesso team di sviluppo."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特権ヘルパーのコード署名が Xcodes の想定と一致しないため、macOS はインストールを拒否しました。アプリとヘルパーは同じ開発チームによって署名されている必要があります。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "도우미의 코드 서명이 Xcodes에서 예상한 서명과 일치하지 않아 macOS가 설치를 거부했습니다. 앱과 도우미는 동일한 개발 팀에서 서명해야 합니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS heeft de installatie geweigerd omdat de codehandtekening van het hulpprogramma met verhoogde rechten niet overeenkomt met wat Xcodes verwacht. De app en het hulpprogramma moeten door hetzelfde ontwikkelaarsteam zijn ondertekend."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS odmówił instalacji narzędzia pomocniczego z podwyższonymi uprawnieniami, ponieważ podpis kodu nie jest zgodny z oczekiwaniami Xcodes. Aplikacja i narzędzie muszą być podpisane przez ten sam zespół deweloperski."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O macOS recusou a instalação do auxiliar privilegiado porque a assinatura do código não corresponde à esperada pelo Xcodes. O app e o auxiliar devem ser assinados pela mesma equipe de desenvolvimento."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS отказалась установить вспомогательную программу с повышенными правами: подпись её кода не соответствует ожидаемой в Xcodes. Приложение и вспомогательная программа должны быть подписаны одной командой разработчиков."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS nekade installationen av hjälpprogrammet med utökade behörigheter eftersom dess kodsignatur inte matchar den som Xcodes förväntar sig. Appen och hjälpprogrammet måste signeras av samma utvecklarteam."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS ปฏิเสธการติดตั้งโปรแกรมช่วยที่ต้องใช้สิทธิ์ระดับสูง เพราะลายเซ็นโค้ดไม่ตรงกับที่ Xcodes คาดไว้ แอปและโปรแกรมช่วยต้องลงนามโดยทีมพัฒนาเดียวกัน"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS, ayrıcalıklı yardımcı programın kod imzası Xcodes’un beklediği imzayla eşleşmediği için yüklemeyi reddetti. Uygulama ve yardımcı program aynı geliştirici ekibi tarafından imzalanmalıdır."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS відмовилася встановити допоміжну програму з підвищеними правами, бо підпис її коду не відповідає очікуваному в Xcodes. Застосунок і допоміжна програма мають бути підписані тією самою командою розробників."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS 拒绝安装特权辅助工具，因为其代码签名与 Xcodes 预期的不符。应用和辅助工具必须由同一个开发团队签名。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "macOS 拒絕安裝特權輔助工具，因為其程式碼簽章與 Xcodes 預期的不符。App 和輔助工具必須由同一個開發團隊簽署。"
+          }
+        }
+      }
+    },
+    "HelperClient.error.UnreachableAfterInstall" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم تثبيت الأداة المساعدة ذات الصلاحيات، لكن Xcodes لم يتمكّن من الاتصال بها. يحدث ذلك عادةً إذا وقّع فريقا تطوير مختلفان الأداة والتطبيق، مثل تشغيل نسخة تطوير محلية بجانب أداة ثبّتها الإصدار المنشور."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’assistent amb privilegis s’ha instal·lat, però Xcodes no s’hi ha pogut connectar. Normalment això vol dir que estan signats per equips diferents, per exemple si s’executa una compilació de desenvolupament local amb l’assistent instal·lat per l’aplicació publicada."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Das privilegierte Hilfsprogramm wurde installiert, aber Xcodes konnte keine Verbindung herstellen. Das bedeutet meist, dass beide von verschiedenen Entwicklerteams signiert wurden, etwa wenn ein lokaler Entwicklungsbuild mit dem Hilfsprogramm der veröffentlichten App verwendet wird."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Το βοηθητικό πρόγραμμα με αυξημένα δικαιώματα εγκαταστάθηκε, αλλά το Xcodes δεν μπόρεσε να συνδεθεί σε αυτό. Συνήθως αυτό σημαίνει ότι έχουν υπογραφεί από διαφορετικές ομάδες ανάπτυξης, όπως όταν μια τοπική έκδοση ανάπτυξης χρησιμοποιεί το βοηθητικό πρόγραμμα της δημοσιευμένης εφαρμογής."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "The privileged helper was installed, but Xcodes couldn't connect to it. This usually means the helper and Xcodes are signed by different developer teams, for example a local development build running alongside a helper installed by the released app."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "El asistente con privilegios se instaló, pero Xcodes no pudo conectarse a él. Esto suele indicar que están firmados por equipos de desarrollo distintos, por ejemplo, cuando una compilación local de desarrollo usa el asistente de la aplicación publicada."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Korotetuilla oikeuksilla toimiva apuohjelma asennettiin, mutta Xcodes ei saanut siihen yhteyttä. Yleensä tämä tarkoittaa, että eri kehittäjätiimit ovat allekirjoittaneet ne, esimerkiksi kun paikallista kehitysversiota käytetään julkaistun sovelluksen asentaman apuohjelman kanssa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "L’utilitaire privilégié a été installé, mais Xcodes n’a pas pu s’y connecter. Cela signifie généralement qu’ils sont signés par des équipes différentes, par exemple lorsqu’une version de développement locale utilise l’utilitaire installé par la version publique de l’application."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "विशेषाधिकार वाला सहायक टूल इंस्टॉल हो गया, लेकिन Xcodes उससे कनेक्ट नहीं हो सका। इसका सामान्य कारण यह है कि दोनों पर अलग-अलग डेवलपर टीमों के हस्ताक्षर हैं, जैसे कि स्थानीय डेवलपमेंट बिल्ड को रिलीज़ किए गए ऐप के सहायक टूल के साथ चलाना।"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Lo strumento ausiliario con privilegi è stato installato, ma Xcodes non è riuscito a connettersi. In genere significa che sono firmati da team di sviluppo diversi, ad esempio quando una build di sviluppo locale usa lo strumento installato dalla versione pubblica dell’app."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特権ヘルパーはインストールされましたが、Xcodes は接続できませんでした。通常、ローカルの開発ビルドで公開版アプリがインストールしたヘルパーを使う場合など、異なる開発チームがそれぞれを署名していることが原因です。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "권한이 필요한 도우미가 설치되었지만 Xcodes에서 연결하지 못했습니다. 일반적으로 로컬 개발 빌드에서 배포된 앱이 설치한 도우미를 사용하는 경우처럼 두 구성 요소를 서로 다른 개발 팀이 서명했을 때 발생합니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Het hulpprogramma met verhoogde rechten is geïnstalleerd, maar Xcodes kon er geen verbinding mee maken. Dit betekent meestal dat ze door verschillende ontwikkelaarsteams zijn ondertekend, bijvoorbeeld als een lokale ontwikkelbuild het hulpprogramma van de uitgebrachte app gebruikt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Narzędzie pomocnicze z podwyższonymi uprawnieniami zostało zainstalowane, ale Xcodes nie mogło się z nim połączyć. Zwykle oznacza to, że zostały podpisane przez różne zespoły, na przykład gdy lokalna kompilacja deweloperska korzysta z narzędzia zainstalowanego przez opublikowaną aplikację."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "O auxiliar privilegiado foi instalado, mas o Xcodes não conseguiu se conectar a ele. Isso normalmente significa que foram assinados por equipes de desenvolvimento diferentes, como quando uma compilação local usa o auxiliar instalado pela versão publicada do app."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Вспомогательная программа с повышенными правами установлена, но Xcodes не удалось подключиться к ней. Обычно это означает, что они подписаны разными командами разработчиков, например когда локальная сборка использует вспомогательную программу из опубликованной версии приложения."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hjälpprogrammet med utökade behörigheter installerades, men Xcodes kunde inte ansluta till det. Det beror oftast på att de signerats av olika utvecklarteam, till exempel när en lokal utvecklingsversion använder hjälpprogrammet från den publicerade appen."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ติดตั้งโปรแกรมช่วยที่ต้องใช้สิทธิ์ระดับสูงแล้ว แต่ Xcodes เชื่อมต่อกับโปรแกรมไม่ได้ โดยทั่วไปหมายความว่าทั้งสองลงนามโดยทีมพัฒนาคนละทีม เช่น เมื่อบิลด์สำหรับพัฒนาในเครื่องใช้โปรแกรมช่วยที่ติดตั้งโดยแอปรุ่นเผยแพร่"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayrıcalıklı yardımcı program yüklendi ancak Xcodes ona bağlanamadı. Bu genellikle ikisinin farklı geliştirici ekipleri tarafından imzalandığını gösterir; örneğin yerel bir geliştirme derlemesi, yayımlanan uygulamanın yüklediği yardımcı programla çalıştırıldığında."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Допоміжну програму з підвищеними правами встановлено, але Xcodes не вдалося до неї під’єднатися. Зазвичай це означає, що їх підписали різні команди розробників, наприклад коли локальна збірка використовує допоміжну програму, встановлену опублікованим застосунком."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特权辅助工具已安装，但 Xcodes 无法连接到它。这通常表示两者由不同的开发团队签名，例如本地开发版本正在使用发布版应用安装的辅助工具。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "特權輔助工具已安裝，但 Xcodes 無法連線。這通常表示兩者由不同的開發團隊簽署，例如本機開發版本正在使用正式發布的 App 所安裝的輔助工具。"
+          }
+        }
+      }
+    },
     "HelperInstalled" : {
       "localizations" : {
         "ar" : {
@@ -13312,6 +14404,550 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "尚未安裝輔助程式"
+          }
+        }
+      }
+    },
+    "HelperRecovery.Copied" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "تم النسخ"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiat"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopiert"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγράφηκε"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copied"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiado"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopioitu"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copié"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कॉपी किया गया"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiato"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コピー済み"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "복사됨"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gekopieerd"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skopiowano"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiado"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировано"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopierat"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดลอกแล้ว"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopyalandı"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопійовано"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已复制"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已拷貝"
+          }
+        }
+      }
+    },
+    "HelperRecovery.CopyCommand" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "نسخ الأمر"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia l’ordre"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Befehl kopieren"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Αντιγραφή εντολής"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copy Command"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar comando"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopioi komento"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copier la commande"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "कमांड कॉपी करें"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copia comando"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "コマンドをコピー"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "명령 복사"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopieer commando"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Skopiuj polecenie"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Copiar comando"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопировать команду"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kopiera kommando"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "คัดลอกคำสั่ง"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Komutu kopyala"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Скопіювати команду"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "复制命令"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "拷貝指令"
+          }
+        }
+      }
+    },
+    "HelperRecovery.Explanation" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "افتح الإعدادات المتقدمة لتثبيت الأداة المساعدة ذات الصلاحيات، ثم أعد المحاولة. أو انسخ الأمر أدناه وألصقه في تطبيق Terminal. قد يطلب Terminal كلمة مرور المسؤول؛ لن تظهر أثناء كتابتها."
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obre la configuració avançada per instal·lar l’assistent amb privilegis i torna-ho a provar. També pots copiar l’ordre següent i enganxar-la al Terminal. El Terminal pot demanar la contrasenya d’administrador; no es mostrarà mentre l’escriguis."
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öffne die erweiterten Einstellungen, um das privilegierte Hilfsprogramm zu installieren, und versuche es erneut. Du kannst auch den folgenden Befehl kopieren und in Terminal einfügen. Terminal fragt möglicherweise nach deinem Administratorpasswort. Es wird bei der Eingabe nicht angezeigt."
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ανοίξτε τις προηγμένες ρυθμίσεις για να εγκαταστήσετε το βοηθητικό πρόγραμμα με αυξημένα δικαιώματα και δοκιμάστε ξανά. Εναλλακτικά, αντιγράψτε την παρακάτω εντολή και επικολλήστε τη στο Τερματικό. Αν ζητηθεί το συνθηματικό διαχειριστή, δεν θα εμφανίζεται κατά την πληκτρολόγηση."
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Advanced Settings to install the privileged helper, then retry. Or copy the command below and paste it into Terminal. Terminal may ask for your administrator password; it will not appear as you type."
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abre los ajustes avanzados para instalar el asistente con privilegios y vuelve a intentarlo. También puedes copiar el siguiente comando y pegarlo en Terminal. Si Terminal solicita la contraseña de administrador, no se mostrará al escribirla."
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Asenna korotetuilla oikeuksilla toimiva apuohjelma lisäasetuksista ja yritä sitten uudelleen. Voit myös kopioida alla olevan komennon ja liittää sen Päätteeseen. Pääte saattaa pyytää ylläpitäjän salasanaa, jota ei näytetä kirjoitettaessa."
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrez les réglages avancés pour installer l’utilitaire privilégié, puis réessayez. Vous pouvez aussi copier la commande ci-dessous et la coller dans Terminal. Si Terminal vous demande le mot de passe administrateur, il ne s’affichera pas pendant la saisie."
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "विशेषाधिकार वाला सहायक टूल इंस्टॉल करने के लिए उन्नत सेटिंग्स खोलें और फिर से कोशिश करें। या नीचे दी गई कमांड कॉपी करके Terminal में पेस्ट करें। Terminal आपका ऐडमिन पासवर्ड माँग सकता है; टाइप करते समय वह दिखाई नहीं देगा।"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri le impostazioni avanzate per installare lo strumento ausiliario con privilegi, poi riprova. In alternativa, copia il comando qui sotto e incollalo in Terminale. Se Terminale richiede la password di amministratore, non la vedrai mentre la digiti."
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "詳細設定を開いて特権ヘルパーをインストールし、再試行してください。または、以下のコマンドをコピーして「ターミナル」にペーストしてください。「ターミナル」で管理者パスワードを求められることがあります。入力した文字は表示されません。"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "고급 설정을 열어 권한이 필요한 도우미를 설치한 다음 다시 시도하십시오. 또는 아래 명령을 복사하여 터미널에 붙여 넣으십시오. 터미널에서 관리자 암호를 요청할 수 있으며, 입력하는 동안 암호는 표시되지 않습니다."
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open de geavanceerde instellingen om het hulpprogramma met verhoogde rechten te installeren en probeer het opnieuw. Je kunt ook het onderstaande commando kopiëren en in Terminal plakken. Terminal kan om je beheerderswachtwoord vragen. Het wachtwoord verschijnt niet terwijl je typt."
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otwórz ustawienia zaawansowane, zainstaluj narzędzie pomocnicze z podwyższonymi uprawnieniami i spróbuj ponownie. Możesz też skopiować poniższe polecenie i wkleić je w Terminalu. Terminal może poprosić o hasło administratora, które nie będzie widoczne podczas wpisywania."
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abra os ajustes avançados para instalar o auxiliar privilegiado e tente novamente. Você também pode copiar o comando abaixo e colá-lo no Terminal. O Terminal pode pedir a senha de administrador, que não será exibida enquanto você digita."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Откройте дополнительные настройки, чтобы установить вспомогательную программу с повышенными правами, и повторите попытку. Также можно скопировать команду ниже и вставить её в Терминал. Терминал может запросить пароль администратора; при вводе пароль не отображается."
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öppna de avancerade inställningarna för att installera hjälpprogrammet med utökade behörigheter och försök sedan igen. Du kan också kopiera kommandot nedan och klistra in det i Terminal. Terminal kan be om administratörslösenordet; det visas inte medan du skriver."
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดการตั้งค่าขั้นสูงเพื่อติดตั้งโปรแกรมช่วยที่ต้องใช้สิทธิ์ระดับสูง แล้วลองอีกครั้ง หรือคัดลอกคำสั่งด้านล่างแล้ววางในเทอร์มินัล เทอร์มินัลอาจขอรหัสผ่านผู้ดูแลระบบ โดยจะไม่แสดงรหัสผ่านขณะพิมพ์"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayrıcalıklı yardımcı programı yüklemek için ileri düzey ayarları açın ve yeniden deneyin. İsterseniz aşağıdaki komutu kopyalayıp Terminal’e yapıştırın. Terminal yönetici parolanızı isteyebilir; parola yazarken görünmez."
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відкрийте додаткові налаштування, щоб установити допоміжну програму з підвищеними правами, і спробуйте ще раз. Або скопіюйте команду нижче й вставте її в Термінал. Термінал може запитати пароль адміністратора; під час введення пароль не відображається."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "请打开高级设置以安装特权辅助工具，然后重试。也可以复制下方的命令并粘贴到“终端”。“终端”可能会要求输入管理员密码；输入时密码不会显示。"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "請打開進階設定以安裝特權輔助工具，然後再試一次。你也可以拷貝下方的指令並貼到「終端機」。終端機可能會要求輸入管理者密碼；輸入時不會顯示密碼。"
+          }
+        }
+      }
+    },
+    "HelperRecovery.OpenSettings" : {
+      "localizations" : {
+        "ar" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "فتح الإعدادات"
+          }
+        },
+        "ca" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Obre la configuració"
+          }
+        },
+        "de" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Einstellungen öffnen"
+          }
+        },
+        "el" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Άνοιγμα ρυθμίσεων"
+          }
+        },
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Settings"
+          }
+        },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Ajustes"
+          }
+        },
+        "fi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Avaa asetukset"
+          }
+        },
+        "fr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ouvrir les réglages"
+          }
+        },
+        "hi" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "सेटिंग्स खोलें"
+          }
+        },
+        "it" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Apri impostazioni"
+          }
+        },
+        "ja" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "設定を開く"
+          }
+        },
+        "ko" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "설정 열기"
+          }
+        },
+        "nl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Open Instellingen"
+          }
+        },
+        "pl" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Otwórz ustawienia"
+          }
+        },
+        "pt-BR" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Abrir Ajustes"
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Открыть настройки"
+          }
+        },
+        "sv" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Öppna inställningar"
+          }
+        },
+        "th" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "เปิดการตั้งค่า"
+          }
+        },
+        "tr" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ayarları aç"
+          }
+        },
+        "uk" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Відкрити налаштування"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打开设置"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "打開設定"
           }
         }
       }
