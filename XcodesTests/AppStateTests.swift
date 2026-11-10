@@ -365,6 +365,29 @@ class AppStateTests: XCTestCase {
         XCTAssertEqual(subject.selectedXcodePath, secondPath.string)
     }
 
+    func test_Select_MarksXcodeInstalledSinceLastScanAsSelected() async throws {
+        subject.helperInstallState = .installed
+        let installedPath = try XCTUnwrap(Path("/Applications/Xcode-27.2.0.app"))
+        let version = try XCTUnwrap(Version("27.2.0"))
+        let installedXcode = InstalledXcode(path: installedPath, version: version)
+        let developerPath = (installedPath/"Contents/Developer").string
+        subject.availableXcodes = [
+            AvailableXcode(version: version, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+        ]
+        subject.allXcodes[0].installState = .installed(installedPath)
+        Current.files.installedXcodes = { _ in [installedXcode] }
+        Current.shell.xcodeSelectPrintPath = {
+            ProcessOutput(status: 0, out: developerPath, err: "")
+        }
+
+        subject.select(xcode: subject.allXcodes[0], shouldPrepareUserForHelperInstallation: false)
+        let selectTask = try XCTUnwrap(subject.selectTask)
+        await selectTask.value
+
+        XCTAssertEqual(subject.allXcodes[0].installState, .installed(installedPath))
+        XCTAssertTrue(subject.allXcodes[0].selected)
+    }
+
     func test_Uninstall_MissingXcodePresentsFileNotFoundError() async throws {
         let missingPath = try XCTUnwrap(Path("/Applications/Xcode-Missing.app"))
         let xcode = Xcode(version: Version("15.0.0")!, installState: .installed(missingPath), selected: false, icon: nil)
@@ -409,6 +432,37 @@ class AppStateTests: XCTestCase {
         await uninstallTask.value
 
         XCTAssertEqual(subject.allXcodes[0].installState, .notInstalled)
+    }
+
+    func test_Uninstall_DoesNotShowRemovedXcodeAsInstalledAgain() async throws {
+        let installedPath = try XCTUnwrap(Path("/Applications/Xcode-0.0.0.app"))
+        let version = try XCTUnwrap(Version("0.0.0"))
+        let installedXcode = InstalledXcode(path: installedPath, version: version)
+        subject.availableXcodes = [
+            AvailableXcode(version: version, url: URL(string: "https://apple.com/xcode.xip")!, filename: "mock.xip", releaseDate: nil)
+        ]
+        Current.files.installedXcodes = { _ in [installedXcode] }
+        await subject.updateInstalledXcodesAsync()
+        Current.files.installedXcodes = { _ in [] }
+        Current.shell.xcodeSelectPrintPath = {
+            ProcessOutput(status: 0, out: "", err: "")
+        }
+
+        let allXcodeInstallStates = try await recordAllXcodeInstallStates {
+            subject.uninstall(xcode: subject.allXcodes[0])
+            let uninstallTask = try XCTUnwrap(subject.uninstallTask)
+            await uninstallTask.value
+        }
+
+        XCTAssertEqual(
+            allXcodeInstallStates,
+            [
+                [XcodeInstallState.installed(installedPath)],
+                [.uninstalling(installedPath)],
+                [.notInstalled],
+                [.notInstalled]
+            ]
+        )
     }
 
     func test_Signout_RemovesCookiesFromDownloadSession() throws {
@@ -463,6 +517,42 @@ class AppStateTests: XCTestCase {
         try await subject.restoreAuthenticationStateIfNeeded()
 
         XCTAssertEqual(subject.authenticationState, expectedState)
+    }
+
+    func test_RestoreAuthenticationStateIfNeeded_NetworkFailureDoesNotRetryLogin() async throws {
+        let didReadPassword = TestLockedBox(false)
+        Current.defaults.string = { _ in "jane@example.com" }
+        Current.keychain.getString = { _ in
+            didReadPassword.withValue { $0 = true }
+            return "password"
+        }
+        Current.network.validateSessionAsync = { throw URLError(.notConnectedToInternet) }
+
+        do {
+            try await subject.restoreAuthenticationStateIfNeeded()
+            XCTFail("Expected the network error")
+        } catch {
+            XCTAssertEqual((error as? URLError)?.code, .notConnectedToInternet)
+        }
+
+        XCTAssertFalse(didReadPassword.read { $0 })
+        XCTAssertNil(subject.authError)
+    }
+
+    func test_SignIn_NetworkFailurePreservesSavedCredentials() async throws {
+        let removedCredentials = TestLockedBox<[String]>([])
+        Current.keychain.remove = { key in removedCredentials.withValue { $0.append(key) } }
+        Current.defaults.removeObject = { key in removedCredentials.withValue { $0.append(key) } }
+        Current.network.session = MockURLProtocol.session { _ in throw URLError(.timedOut) }
+
+        do {
+            _ = try await subject.signInAsync(username: "jane@example.com", password: "password")
+            XCTFail("Expected authentication to fail")
+        } catch {
+            XCTAssertNotNil(subject.authError)
+        }
+
+        XCTAssertTrue(removedCredentials.read { $0.isEmpty })
     }
 
     func test_RestoreAuthenticationStateIfNeeded_SkipsValidationWithoutSavedUsername() async throws {

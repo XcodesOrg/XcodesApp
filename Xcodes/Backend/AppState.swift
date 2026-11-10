@@ -320,6 +320,10 @@ class AppState: ObservableObject {
         } catch is CancellationError {
             throw CancellationError()
         } catch {
+            // A transport failure does not mean the session has expired.
+            guard error as? AuthenticationError == .invalidSession || Self.isUnauthorizedInstallError(error) else {
+                throw error
+            }
             guard
                 let username = savedUsername,
                 let password = try? Current.keychain.getString(username)
@@ -433,8 +437,8 @@ class AppState: ObservableObject {
     }
 
     private func handleAuthenticationFlowFailure(_ error: Error) {
-        // remove saved username and any stored keychain password if authentication fails so it doesn't try again.
-        clearLoginCredentials()
+        // Keep saved credentials available for retry after transient failures.
+        // Explicit sign-out owns removal of the saved account and password.
         Logger.appState.error("Authentication error: \(error.legibleDescription)")
         self.authError = error
     }
@@ -470,7 +474,7 @@ class AppState: ObservableObject {
             handleAuthenticationFlowSuccess()
             return authenticationState
         } catch {
-            if authenticationRequestID == requestID {
+            if !(error is CancellationError), authenticationRequestID == requestID {
                 handleAuthenticationFlowFailure(error)
             }
             throw error
@@ -735,8 +739,8 @@ class AppState: ObservableObject {
                 try Task.checkCancellation()
                 try await uninstallXcodeAsync(path: installedXcodePath)
                 try Task.checkCancellation()
-                await updateSelectedXcodePathAsync()
                 await updateInstalledXcodesAsync()
+                await updateSelectedXcodePathAsync()
             } catch is CancellationError {
             } catch {
                 if let index = allXcodes.firstIndex(where: { $0.id == xcode.id }) {
@@ -806,6 +810,7 @@ class AppState: ObservableObject {
 
                 try await Current.helper.switchXcodePathAsync(installedXcodePath.string)
                 try Task.checkCancellation()
+                await updateInstalledXcodesAsync()
                 await updateSelectedXcodePathAsync()
                 if createSymLinkOnSelect && onSelectActionType != .rename {
                     await createSymbolicLink(to: installedXcodePath)
@@ -938,7 +943,11 @@ class AppState: ObservableObject {
         )
 
         self.allXcodes = items.map { item in
-            Xcode(item, icon: item.installedPath.map { NSWorkspace.shared.icon(forFile: $0.string) })
+            Xcode(
+                item,
+                icon: item.installedPath.map { NSWorkspace.shared.icon(forFile: $0.string) },
+                installedSDKBuilds: item.installedPath.map { InstalledSDKBuilds.builds(forXcodeAt: $0, version: item.version) } ?? []
+            )
         }
     }
 

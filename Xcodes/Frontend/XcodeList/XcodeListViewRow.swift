@@ -34,11 +34,18 @@ struct XcodeListViewRow: View {
         return Version(major: version.major, minor: version.minor, patch: version.patch).appleDescription
     }
 
-    /// Secondary line: the build and the install path, when present.
+    /// Secondary line: the build and either the install path or current step.
     private var caption: String? {
         var parts: [String] = xcode.version.buildMetadataIdentifiers
-        if case let .installed(path) = xcode.installState {
+        switch xcode.installState {
+        case let .installed(path):
             parts.append(path.string)
+        case let .installing(installationStep):
+            parts.append(installationStep.message)
+        case .uninstalling:
+            parts.append(String(localized: "Uninstalling"))
+        case .notInstalled:
+            break
         }
         return parts.isEmpty ? nil : parts.joined(separator: " · ")
     }
@@ -60,8 +67,8 @@ struct XcodeListViewRow: View {
                 if let caption {
                     Text(verbatim: caption)
                         .font(.caption)
-                        // A hierarchical style stays legible on the selection highlight, unlike Color.secondary
                         .foregroundStyle(.secondary)
+                        .lineLimit(1)
                 }
             }
 
@@ -227,17 +234,12 @@ struct XcodeListViewRow: View {
         case let .installing(installationStep):
             InstallationStepRowView(
                 installationStep: installationStep,
-                highlighted: false,
                 cancel: { appState.presentedAlert = .cancelInstall(xcode: xcode) }
             )
         case .uninstalling:
-            HStack(spacing: 4) {
-                ProgressView()
-                    .scaleEffect(0.5)
-                Text("Uninstalling")
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+            InstallProgressRing(fractionCompleted: nil, showsStopGlyph: false)
+                .frame(minWidth: 65)
+                .help("Uninstalling")
         }
     }
 

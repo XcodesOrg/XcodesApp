@@ -29,6 +29,9 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 ## Platforms/Runtimes
 
 - Xcodes supports downloading the Apple runtimes via the app. Simply click on the Platform, and Xcodes will install automatically for you.
+- Platforms are listed in the order iOS, watchOS, visionOS, tvOS, with the newest version first.
+- Uninstall an installed platform with the **Uninstall** button next to it in the Xcode's Platforms list.
+- When uninstalling an Xcode, choose **Uninstall with Platforms** to also remove the simulator platforms that only that Xcode uses. Platforms that another installed Xcode still uses are never offered for removal.
 
 **Note: iOS 18+, tvOS 18+, watchOS 11+, visionOS 2+ requires that Xcode 16.1 Beta 3+ be installed and active.** 
 
@@ -60,7 +63,7 @@ The following languages are supported because of the following community users!
 |German 🇩🇪|[@drct](https://github.com/drct)|Dutch 🇳🇱|[@jfversluis](https://github/com/jfversluis)|
 |Brazilian Portuguese 🇧🇷|[@brunomunizaf](https://github.com/brunomunizaf)|Polish 🇵🇱|[@jakex7](https://github.com/jakex7)|
 |Catalan|[@ferranabello](https://github.com/ferranabello)|Greek 🇬🇷|[@alladinian](https://github.com/alladinian)
-|Thai 🇹🇭|[@neetrath](https://github.com/neetrath)|
+|Thai 🇹🇭|[@neetrath](https://github.com/neetrath)|Swedish 🇸🇪|[@dhindrik](https://github.com/dhindrik)|
 
 Want to add more languages? Simply create a PR with the updated strings file.
 
