@@ -13,6 +13,8 @@ struct InstallationStepRowView: View {
                 // This Progress is vended by URLSession so I don't think we can control that.
                 // Use our own version of ProgressView that does this instead.
                 DownloadProgressRing(progress, installationStep: installationStep)
+                    // A retry can replace the Progress without changing the installation step.
+                    .id(ObjectIdentifier(progress))
             case .authenticating, .unarchiving, .moving, .trashingArchive, .checkingSecurity, .finishing:
                 InstallProgressRing(fractionCompleted: nil)
                     .help(installationStep.stepDescription())
