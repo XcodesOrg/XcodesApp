@@ -27,6 +27,8 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 - Support installing Apple Silicon variants
 - Review and clean developer storage in a separate Clean Up window.
 
+Xcodes can install Apple’s `.aea` archives on macOS versions with `archiveutil extractXcodeAEA`. If Xcode Releases has an outdated download link, try the Apple Developer data source in Settings.
+
 ## Clean Up
 
 Clean Up helps you review developer files, caches, and simulator storage. Open it from the bottom-left **Clean Up** button or the app menu. Nothing is selected or deleted automatically.
