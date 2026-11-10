@@ -1627,7 +1627,7 @@
 			repositoryURL = "https://github.com/XcodesOrg/XcodesKit";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.1.0;
+				minimumVersion = 1.2.0;
 			};
 		};
 		E89CBD3B2D5FC0B10037ED95 /* XCRemoteSwiftPackageReference "XcodesLoginKit" */ = {
