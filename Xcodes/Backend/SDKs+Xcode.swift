@@ -11,7 +11,13 @@ import XcodesKit
 
 extension DownloadableRuntime {
     func icon() -> Image {
-        switch self.platform {
+        platform.icon()
+    }
+}
+
+extension DownloadableRuntime.Platform {
+    func icon() -> Image {
+        switch self {
         case .iOS:
             return Image(systemName: "iphone")
         case .macOS:
