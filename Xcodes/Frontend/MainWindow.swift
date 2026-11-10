@@ -5,6 +5,7 @@ import Path
 import Version
 
 struct MainWindow: View {
+    var cleanupModel: CleanupModel? = nil
     @EnvironmentObject var appState: AppState
     @State private var selectedXcodeID: Xcode.ID?
     @State private var searchText: String = ""
@@ -91,7 +92,7 @@ struct MainWindow: View {
                 }
             }
         }
-        .bottomStatusBar()
+        .bottomStatusBar(cleanupModel: cleanupModel)
         .padding([.top], 0)
         .navigationSubtitle(subtitleText)
         .frame(minWidth: 600, maxWidth: .infinity, minHeight: 300, maxHeight: .infinity)

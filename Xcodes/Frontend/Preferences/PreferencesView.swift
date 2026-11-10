@@ -1,14 +1,16 @@
 import SwiftUI
 
 struct PreferencesView: View {
+    let cleanupModel: CleanupModel
     private enum Tabs: Hashable, CaseIterable {
-        case general, updates, downloads, advanced, experiment
+        case general, updates, downloads, cleanup, advanced, experiment
 
         var title: LocalizedStringKey {
             switch self {
             case .general: return "General"
             case .updates: return "Updates"
             case .downloads: return "Downloads"
+            case .cleanup: return "Cleanup"
             case .advanced: return "Advanced"
             case .experiment: return "Experiments"
             }
@@ -19,6 +21,7 @@ struct PreferencesView: View {
             case .general: return "gearshape"
             case .updates: return "arrow.triangle.2.circlepath.circle"
             case .downloads: return "icloud.and.arrow.down"
+            case .cleanup: return "externaldrive"
             case .advanced: return "gearshape.2"
             case .experiment: return "lightbulb"
             }
@@ -68,6 +71,8 @@ struct PreferencesView: View {
                 case .downloads:
                     DownloadPreferencePane()
                         .environmentObject(appState)
+                case .cleanup:
+                    CleanupFoldersView(model: cleanupModel, isSettings: true)
                 case .advanced:
                     AdvancedPreferencePane()
                         .environmentObject(appState)

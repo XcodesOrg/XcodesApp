@@ -25,6 +25,45 @@ XcodesApp is now part of the `XcodesOrg` - [read more here](nextstep.md)
 - Security Key Authentication supported 
 - Support installing Platforms/Runtimes
 - Support installing Apple Silicon variants
+- Review and clean developer storage in a separate Clean Up window.
+
+## Clean Up
+
+Clean Up helps you review developer files, caches, and simulator storage. Open it from the bottom-left **Clean Up** button or the app menu. Nothing is selected or deleted automatically.
+
+Xcodes scans on launch. The previous results appear immediately while a background scan refreshes them; the spinner shows when it is running. The window shows the last scan time and identifies cached results. Its **Available to clean up** estimate matches the bottom bar; **Total scanned** also includes incomplete and externally managed storage.
+
+### Default folders
+
+`~` means your home folder. Custom DerivedData and Xcodes storage paths are respected.
+
+| Category | Location |
+|---|---|
+| Xcode build files | `~/Library/Developer/Xcode/DerivedData` |
+| Archives | `~/Library/Developer/Xcode/Archives` |
+| Device support | `~/Library/Developer/Xcode/iOS DeviceSupport` |
+| Simulator devices | `~/Library/Developer/CoreSimulator/Devices` |
+| Simulator runtimes | `/Library/Developer/CoreSimulator` (inventoried through `simctl`) |
+| Xcodes downloads | Your configured Xcodes storage folder |
+
+### Your folders
+
+Use **Folders…** or **Settings → Cleanup** to add or remove scan locations. Suggestions include Downloads, device backups, app caches (`~/Library/Caches`), Trash, npm, Cargo, Gradle, and Docker storage; **Choose Folder…** adds any other folder. Removing a location only excludes it from scanning. Removed defaults can be restored through **Add Folder → Developer Folders**.
+
+Added folders default to **1 level**: list immediate entries without opening child folders. Increase **Scan depth**, or choose **Unlimited**, for complete folder sizes. Developer locations scan fully. Recognized `node_modules` folders are also listed. Unreadable or depth-limited folders show unavailable or partial sizes. Protected locations may need Full Disk Access for the running copy of Xcodes, followed by a restart or rescan.
+
+Folder settings are saved in `cleanup-folders.json` beside the Xcode and runtime lists in your configured Xcodes storage directory (normally `~/Library/Application Support/com.robotsandpencils.XcodesApp`). The readable JSON includes `developerFolders` category IDs, added `folders` with absolute `path` values, and `scanDepth` (`0` means unlimited). Edit it outside Xcodes, then restart or click **Rescan** to reload. IDs and names for added folders are optional. Existing preferences migrate automatically; invalid JSON is reported without overwriting it.
+
+### Cleaning
+
+Cleanup shows the current item and batch progress in the window and bottom bar. Closing the cleanup window keeps it running while Xcodes stays open. **Stop after current item** leaves remaining items untouched. Failures remain available for review.
+
+- Select categories or individual rows. Use the OS filter to find older simulator, runtime, and device-support versions; changing the filter clears selections.
+- Ordinary files move to Trash after confirmation. Space is reclaimed when Trash is emptied in Finder; Xcodes does not empty it.
+- Shut-down simulator devices and eligible runtimes are removed through `simctl`. This permanently removes device data or uninstalls the runtime. Xcode associations are shown during confirmation.
+- Docker, backups, and existing Trash are review/manage-only. Active tools, Xcodes operations, and changed targets can block cleanup; failures are reported individually.
+
+Successful cleanup updates the results and persisted amount without rescanning. Use **Rescan** for changes made outside Xcodes. Changing folders or depth invalidates the cache.
 
 ## Platforms/Runtimes
 
@@ -96,6 +135,8 @@ Xcodes.app and CLI is updated, maintained with contributors like yourself. Even 
 ## Development
 
 You'll need macOS 15.6 Ventura and Xcode 26 in order to build and run Xcodes.app.
+
+The Clean Up window uses [XcodesCleanupKit](https://github.com/XcodesOrg/XcodesCleanupKit), pinned to version 1.0.0. Default folders come from `FindingCatalog.developer(...)`; Add Folder suggestions and their metadata come from `FindingCatalog.OptionalFolder` and `optional(home:)`. Folder models and the JSON configuration schema also live in the package; Xcodes owns saving and reloading the file. OS metadata, category candidate queries, and read-only classification are shared as well. Other UIs can use the same APIs. Xcode resolves the package from GitHub. See the package README for independent tests, API examples, and performance verification. The existing CLI does not depend on it.
 
 ### Known build warnings
 

@@ -131,6 +131,9 @@
         }
       }
     },
+    "—" : {
+
+    },
     "%@" : {
       "localizations" : {
         "ar" : {
@@ -393,6 +396,61 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%1$@ %2$@ %3$@"
+          }
+        }
+      }
+    },
+    "Access denied. Allow Xcodes Full Disk Access, then rescan." : {
+
+    },
+    "About estimated savings" : {
+
+    },
+    "~%@" : {
+
+    },
+    "%lld selected" : {
+
+    },
+    "%lld of %lld processed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld of %2$lld processed"
+          }
+        }
+      }
+    },
+    "%lld levels" : {
+
+    },
+    "%lld %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$lld %2$@"
+          }
+        }
+      }
+    },
+    "%@, %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@"
+          }
+        }
+      }
+    },
+    "%@ estimated savings from %lld selected" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ estimated savings from %2$lld selected"
           }
         }
       }
@@ -1196,6 +1254,15 @@
           }
         }
       }
+    },
+    "Added folders only. Limited scans show partial sizes. Deeper scans take longer." : {
+
+    },
+    "Add Folder" : {
+
+    },
+    "Add a suggested folder or choose your own." : {
+
     },
     "Advanced" : {
       "comment" : "Advanced Preference Pane",
@@ -6388,6 +6455,9 @@
         }
       }
     },
+    "All OS versions" : {
+
+    },
     "An error occurred" : {
       "localizations" : {
         "ca" : {
@@ -6505,6 +6575,9 @@
           }
         }
       }
+    },
+    "APFS snapshots may retain space after deletion." : {
+
     },
     "Apple Silicon" : {
       "localizations" : {
@@ -7979,6 +8052,9 @@
         }
       }
     },
+    "Available to clean up" : {
+
+    },
     "Beta" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -9039,6 +9115,30 @@
         }
       }
     },
+    "Cleanup progress" : {
+
+    },
+    "Cleanup in progress" : {
+
+    },
+    "Cleanup continues in the background" : {
+
+    },
+    "Cleanup" : {
+
+    },
+    "Clean Up…" : {
+
+    },
+    "Clean Up · ~%@" : {
+
+    },
+    "Clean Up" : {
+
+    },
+    "Choose Folder…" : {
+
+    },
     "Close" : {
       "localizations" : {
         "ar" : {
@@ -9304,6 +9404,12 @@
           }
         }
       }
+    },
+    "Closing this window keeps cleanup running." : {
+
+    },
+    "Close Window" : {
+
     },
     "Compatibility" : {
       "localizations" : {
@@ -10512,6 +10618,9 @@
         }
       }
     },
+    "Developer Folders" : {
+
+    },
     "DigitCodeDescription" : {
       "comment" : "SMS/2FA",
       "extractionState" : "manual",
@@ -10767,6 +10876,9 @@
           }
         }
       }
+    },
+    "Done" : {
+
     },
     "Downloader" : {
       "localizations" : {
@@ -12124,6 +12236,15 @@
         }
       }
     },
+    "Estimating savings from %lld selected…" : {
+
+    },
+    "Estimated storage eligible for cleanup across all OS versions, matching the main window. Shared APFS storage may reduce actual savings. Total scanned also includes storage requiring external management and incomplete results." : {
+
+    },
+    "Estimated Savings" : {
+
+    },
     "Experiments" : {
       "comment" : "Experiment Preference Pane",
       "localizations" : {
@@ -12528,6 +12649,9 @@
         }
       }
     },
+    "Files moved to Trash occupy space until Trash is emptied." : {
+
+    },
     "Filter" : {
       "localizations" : {
         "ar" : {
@@ -12657,6 +12781,9 @@
           }
         }
       }
+    },
+    "Filter by OS major version. Changing the filter clears your selection." : {
+
     },
     "FilterArchitecturesDescription" : {
       "localizations" : {
@@ -13184,6 +13311,12 @@
           }
         }
       }
+    },
+    "Full Disk Access…" : {
+
+    },
+    "Folders…" : {
+
     },
     "General" : {
       "comment" : "General Preference Pane",
@@ -14951,6 +15084,9 @@
           }
         }
       }
+    },
+    "Hide simulator runtimes" : {
+
     },
     "IdenticalBuilds" : {
       "comment" : "Info Pane",
@@ -18888,6 +19024,9 @@
         }
       }
     },
+    "Last scan: %@" : {
+
+    },
     "LastChecked" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -21461,6 +21600,12 @@
         }
       }
     },
+    "No items match this OS version." : {
+
+    },
+    "No cleanup findings. Add a folder to scan." : {
+
+    },
     "Notification.FinishedInstalling" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -23476,6 +23621,12 @@
         }
       }
     },
+    "Open Clean Up to view progress or review failures. Cleanup continues when its window is closed." : {
+
+    },
+    "Open Clean Up to review storage." : {
+
+    },
     "Open In Rosetta" : {
       "localizations" : {
         "ar" : {
@@ -23741,6 +23892,15 @@
           }
         }
       }
+    },
+    "Partial size. Increase the scan depth in Folders or resolve unreadable entries for a complete scan." : {
+
+    },
+    "Overlapping file selections and shared storage are accounted for together." : {
+
+    },
+    "Operating system" : {
+
     },
     "Password" : {
       "localizations" : {
@@ -25624,6 +25784,9 @@
         }
       }
     },
+    "Refreshing cleanup storage" : {
+
+    },
     "Release" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -26169,6 +26332,12 @@
         }
       }
     },
+    "Remove from the scan" : {
+
+    },
+    "Remove" : {
+
+    },
     "Required" : {
       "localizations" : {
         "ar" : {
@@ -26298,6 +26467,21 @@
           }
         }
       }
+    },
+    "Reveal simulator runtimes in Finder" : {
+
+    },
+    "Reveal in Finder" : {
+
+    },
+    "Reveal %@ in Finder" : {
+
+    },
+    "Rescan to retry CoreSimulator's runtime inventory." : {
+
+    },
+    "Rescan" : {
+
     },
     "RevealInFinder" : {
       "localizations" : {
@@ -26434,6 +26618,27 @@
           }
         }
       }
+    },
+    "Scanning…" : {
+
+    },
+    "Scanning %llu files…" : {
+
+    },
+    "Scan Folders" : {
+
+    },
+    "Scan depth" : {
+
+    },
+    "Runtime inventory unavailable" : {
+
+    },
+    "Runtime estimates use sizes reported by CoreSimulator; sharing and system assets can make actual reclaimed space lower." : {
+
+    },
+    "Review developer storage and choose what to clean." : {
+
     },
     "SDKs" : {
       "localizations" : {
@@ -26969,6 +27174,12 @@
         }
       }
     },
+    "Select all eligible runtimes shown by this filter" : {
+
+    },
+    "Select all eligible items in this category" : {
+
+    },
     "Selected" : {
       "localizations" : {
         "ar" : {
@@ -27371,6 +27582,15 @@
           }
         }
       }
+    },
+    "Showing last completed estimate while refreshing" : {
+
+    },
+    "Showing cached results" : {
+
+    },
+    "Show simulator runtimes" : {
+
     },
     "ShowOpenInRosetta" : {
       "localizations" : {
@@ -28307,6 +28527,18 @@
         }
       }
     },
+    "Stop after current item" : {
+
+    },
+    "Some sharing or metadata could not be fully accounted for." : {
+
+    },
+    "Size reported by CoreSimulator; reclaimed space may differ." : {
+
+    },
+    "Simulator runtimes, %@" : {
+
+    },
     "StopInstallation" : {
       "localizations" : {
         "ar" : {
@@ -28442,6 +28674,9 @@
           }
         }
       }
+    },
+    "Stopping…" : {
+
     },
     "Support.Xcodes" : {
       "extractionState" : "manual",
@@ -28990,6 +29225,9 @@
         }
       }
     },
+    "The selected folder is level 0. One level lists immediate files and folders. Developer folders are always scanned fully." : {
+
+    },
     "This Apple ID uses federated authentication via %@." : {
       "localizations" : {
         "ca" : {
@@ -29107,6 +29345,12 @@
           }
         }
       }
+    },
+    "Total scanned: %@" : {
+
+    },
+    "This folder could not be read." : {
+
     },
     "TrashingArchive" : {
       "extractionState" : "manual",
@@ -29902,6 +30146,9 @@
           }
         }
       }
+    },
+    "Unlimited" : {
+
     },
     "UnxipExperiment" : {
       "localizations" : {

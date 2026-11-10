@@ -119,6 +119,15 @@
         }
       },
       {
+        "package": "XcodesCleanupKit",
+        "repositoryURL": "https://github.com/XcodesOrg/XcodesCleanupKit.git",
+        "state": {
+          "branch": null,
+          "revision": "4aa3695c1f59232688b0b069967d985a3f4c534b",
+          "version": "1.0.0"
+        }
+      },
+      {
         "package": "XcodesKit",
         "repositoryURL": "https://github.com/XcodesOrg/XcodesKit",
         "state": {
