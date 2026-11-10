@@ -91,6 +91,8 @@ struct XcodesApp: App {
     
     private func alert(for alertType: XcodesPreferencesAlert) -> Alert {
         switch alertType {
+        case let .noActiveXcode(runtime, xcode):
+            return .noActiveXcode(appState: appState, runtime: runtime, xcode: xcode, inSettings: true)
         case let .deletePlatform(runtime):
             return Alert(
                 title: Text(String(format: localizeString("Alert.DeletePlatform.Title"), runtime.name)),
