@@ -18,6 +18,7 @@ struct InstallationStepRowView: View {
                     controlSize: .small,
                     style: .spinning
                 )
+                .id(ObjectIdentifier(progress))
             case .authenticating, .unarchiving, .moving, .trashingArchive, .checkingSecurity, .finishing:
                 ProgressView()
                     .scaleEffect(0.5)

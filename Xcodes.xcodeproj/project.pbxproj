@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AF29174092FE4E0F921AB001 /* InstallationProgressViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF29174092FE4E0F921AB002 /* InstallationProgressViewTests.swift */; };
 		14d2f5a1273f6c350cad4406 /* NewVersionNotificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 884f01aed2f43048ab4d3323 /* NewVersionNotificationTests.swift */; };
 		1596C2913043765600178C86 /* FileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596C2903043765600178C86 /* FileOperations.swift */; };
 		1596C2923043765600178C86 /* FileOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596C2903043765600178C86 /* FileOperations.swift */; };
@@ -188,6 +189,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		AF29174092FE4E0F921AB002 /* InstallationProgressViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InstallationProgressViewTests.swift; sourceTree = "<group>"; };
 		1596C2903043765600178C86 /* FileOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileOperations.swift; sourceTree = "<group>"; };
 		15F5B88F2CCF09B900705E2F /* CryptoKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CryptoKit.framework; path = System/Library/Frameworks/CryptoKit.framework; sourceTree = SDKROOT; };
 		3328073E2CA5E2C80036F691 /* SignInSecurityKeyPinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInSecurityKeyPinView.swift; sourceTree = "<group>"; };
@@ -598,6 +600,7 @@
 			isa = PBXGroup;
 			children = (
 				CA452BBD259FDDBF0072DFA4 /* Fixtures */,
+				AF29174092FE4E0F921AB002 /* InstallationProgressViewTests.swift */,
 				CAC281E1259FA44600B8AB0B /* Bundle+XcodesTests.swift */,
 				CAC281E6259FA45A00B8AB0B /* Environment+Mock.swift */,
 				CAD2E7B72449575100113D76 /* AppStateTests.swift */,
@@ -980,6 +983,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CAC281E7259FA45A00B8AB0B /* Environment+Mock.swift in Sources */,
+				AF29174092FE4E0F921AB001 /* InstallationProgressViewTests.swift in Sources */,
 				CAC281E2259FA44600B8AB0B /* Bundle+XcodesTests.swift in Sources */,
 				CA2518EC25A7FF2B00F08414 /* AppStateUpdateTests.swift in Sources */,
 				14d2f5a1273f6c350cad4406 /* NewVersionNotificationTests.swift in Sources */,
