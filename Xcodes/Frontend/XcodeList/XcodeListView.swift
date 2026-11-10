@@ -106,12 +106,6 @@ struct XcodeListView: View {
         .focusEffectDisabled()
         .onKeyPress(.downArrow) { moveSelection(by: 1) }
         .onKeyPress(.upArrow) { moveSelection(by: -1) }
-        .safeAreaInset(edge: .bottom, spacing: 0) {
-            PlatformsPocket()
-                .padding(.horizontal)
-                .padding(.vertical, 8)
-           
-        }
     }
 }
 
@@ -619,41 +613,6 @@ private extension Array where Element == Xcode {
                 candidate.version.isNotPrerelease &&
                 candidate.installState.installing == false
         }
-    }
-}
-
-struct PlatformsPocket: View {
-    @SwiftUI.Environment(\.openWindow) private var openWindow
-   
-    var body: some View {
-        Button(action: {
-            openWindow(id: "platforms")
-        }
-        ) {
-            if #available(macOS 26.0, *) {
-                platformsLabel
-                    .glassEffect(in: .rect(cornerRadius: 8, style: .continuous))
-            } else {
-                platformsLabel
-                .background(.quaternary.opacity(0.75))
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-            }
-           
-        }
-        .buttonStyle(.plain)
-    }
-    
-    var platformsLabel: some View {
-        HStack(spacing: 5) {
-            Image(systemName: "square.3.layers.3d")
-                .font(.title3.weight(.medium))
-            Text("PlatformsDescription")
-                            Spacer()
-        }
-        .font(.body.weight(.medium))
-        .padding(.horizontal)
-        .padding(.vertical, 12)
-        .contentShape(Rectangle())
     }
 }
 

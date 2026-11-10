@@ -102,13 +102,6 @@ struct XcodesApp: App {
         }
         .defaultSize(width: 880, height: 720)
 
-        Window("Platforms", id: "platforms") {
-            PlatformsListView()
-                .environmentObject(appState)
-                .alert(item: $appState.presentedPreferenceAlert, content: { presentedAlert in
-                    alert(for: presentedAlert)
-                })
-        }
 #endif
     }
     
@@ -116,17 +109,6 @@ struct XcodesApp: App {
         switch alertType {
         case let .noActiveXcode(runtime, xcode):
             return .noActiveXcode(appState: appState, runtime: runtime, xcode: xcode, inSettings: true)
-        case let .deletePlatform(runtime):
-            return Alert(
-                title: Text(String(format: localizeString("Alert.DeletePlatform.Title"), runtime.name)),
-                  primaryButton: .destructive(
-                    Text("Alert.DeletePlatform.PrimaryButton"),
-                    action: {
-                        self.appState.confirmDeleteRuntime(runtime: runtime)
-                    }
-                  ),
-                  secondaryButton: .cancel(Text("Cancel"))
-            )
         case let .generic(title, message):
             return Alert(
                 title: Text(title),

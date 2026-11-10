@@ -69,7 +69,7 @@ Successful cleanup updates the results and persisted amount without rescanning. 
 
 - Xcodes supports downloading the Apple runtimes via the app. Simply click on the Platform, and Xcodes will install automatically for you.
 - Platforms are listed in the order iOS, watchOS, visionOS, tvOS, with the newest version first.
-- Uninstall an installed platform with the **Uninstall** button next to it in the Xcode's Platforms list.
+- Remove installed runtimes from **Clean Up** or with **Uninstall** in an Xcode’s Platforms list.
 - When uninstalling an Xcode, choose **Uninstall with Platforms** to also remove the simulator platforms that only that Xcode uses. Platforms that another installed Xcode still uses are never offered for removal.
 
 **Note: iOS 18+, tvOS 18+, watchOS 11+, visionOS 2+ requires that Xcode 16.1 Beta 3+ be installed and active.** 

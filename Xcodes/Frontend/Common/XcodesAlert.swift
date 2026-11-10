@@ -34,12 +34,10 @@ enum XcodesAlert: Identifiable {
 // and users awkwardly switch screens, sometimes losing the preference screen
 enum XcodesPreferencesAlert: Identifiable {
     case noActiveXcode(runtime: DownloadableRuntime, xcode: Xcode?)
-    case deletePlatform(runtime: DownloadableRuntime)
     case generic(title: String, message: String)
     
     var id: Int {
         switch self {
-        case .deletePlatform: return 1
         case .generic: return 2
         case .noActiveXcode: return 3
         }
