@@ -16,6 +16,7 @@ struct InstallationStepDetailView: View {
                         style: .bar,
                         showsAdditionalDescription: true
                     )
+                    .id(ObjectIdentifier(progress))
 
                 case .authenticating, .unarchiving, .moving, .trashingArchive, .checkingSecurity, .finishing:
                     ProgressView()

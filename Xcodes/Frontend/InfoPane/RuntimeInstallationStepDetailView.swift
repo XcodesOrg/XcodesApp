@@ -24,6 +24,7 @@ struct RuntimeInstallationStepDetailView: View {
                     style: .bar,
                     showsAdditionalDescription: true
                 )
+                .id(ObjectIdentifier(progress))
                 
             case .installing, .trashingArchive:
                 ObservingProgressIndicator(
