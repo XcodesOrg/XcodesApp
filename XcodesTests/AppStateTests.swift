@@ -465,6 +465,42 @@ class AppStateTests: XCTestCase {
         XCTAssertEqual(subject.authenticationState, expectedState)
     }
 
+    func test_RestoreAuthenticationStateIfNeeded_NetworkFailureDoesNotRetryLogin() async throws {
+        let didReadPassword = TestLockedBox(false)
+        Current.defaults.string = { _ in "jane@example.com" }
+        Current.keychain.getString = { _ in
+            didReadPassword.withValue { $0 = true }
+            return "password"
+        }
+        Current.network.validateSessionAsync = { throw URLError(.notConnectedToInternet) }
+
+        do {
+            try await subject.restoreAuthenticationStateIfNeeded()
+            XCTFail("Expected the network error")
+        } catch {
+            XCTAssertEqual((error as? URLError)?.code, .notConnectedToInternet)
+        }
+
+        XCTAssertFalse(didReadPassword.read { $0 })
+        XCTAssertNil(subject.authError)
+    }
+
+    func test_SignIn_NetworkFailurePreservesSavedCredentials() async throws {
+        let removedCredentials = TestLockedBox<[String]>([])
+        Current.keychain.remove = { key in removedCredentials.withValue { $0.append(key) } }
+        Current.defaults.removeObject = { key in removedCredentials.withValue { $0.append(key) } }
+        Current.network.session = MockURLProtocol.session { _ in throw URLError(.timedOut) }
+
+        do {
+            _ = try await subject.signInAsync(username: "jane@example.com", password: "password")
+            XCTFail("Expected authentication to fail")
+        } catch {
+            XCTAssertNotNil(subject.authError)
+        }
+
+        XCTAssertTrue(removedCredentials.read { $0.isEmpty })
+    }
+
     func test_RestoreAuthenticationStateIfNeeded_SkipsValidationWithoutSavedUsername() async throws {
         let didValidate = TestLockedBox(false)
         Current.network.validateSessionAsync = {
