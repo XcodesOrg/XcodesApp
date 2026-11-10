@@ -21,7 +21,7 @@ struct XcodeListView: View {
     }
     
     private var visibleXcodes: [XcodeListEntry] {
-        appState.allXcodes
+        let entries = appState.allXcodes
             .enumerated()
             .map { XcodeListEntry(index: $0.offset, xcode: $0.element) }
             .applying(XcodeListFilters(
@@ -31,6 +31,19 @@ struct XcodeListView: View {
                 searchText: searchText,
                 installedOnly: isInstalledOnly
             ), item: \.listItem)
+        
+        if category == .releasePlusNewBetas {
+            let releases = Set(
+                entries
+                    .filter { $0.xcode.version.isNotPrerelease }
+                    .map { $0.xcode.version.withoutIdentifiers }
+            )
+            return entries.filter {
+                $0.xcode.version.isNotPrerelease || !releases.contains($0.xcode.version.withoutIdentifiers)
+            }
+        } else {
+            return entries
+        }
     }
 
     private func latestReleaseForSelectedPrerelease(_ xcode: Xcode) -> Xcode? {
@@ -435,5 +448,11 @@ struct XcodeListView_Previews: PreviewProvider {
                 }())
         }
         .previewLayout(.sizeThatFits)
+    }
+}
+
+private extension Version {
+    var withoutIdentifiers: Version {
+        Version(major, minor, patch)
     }
 }
