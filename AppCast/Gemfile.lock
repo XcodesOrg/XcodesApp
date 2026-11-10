@@ -18,12 +18,20 @@ GEM
       ruby2_keywords
     faraday-net_http (1.0.1)
     ffi (1.17.2)
+    ffi (1.17.2-arm64-darwin)
     ffi (1.17.2-x86_64-darwin)
+    ffi (1.17.2-x86_64-linux-gnu)
     forwardable-extended (2.6.0)
     google-protobuf (4.31.1)
       bigdecimal
       rake (>= 13)
+    google-protobuf (4.31.1-arm64-darwin)
+      bigdecimal
+      rake (>= 13)
     google-protobuf (4.31.1-x86_64-darwin)
+      bigdecimal
+      rake (>= 13)
+    google-protobuf (4.31.1-x86_64-linux-gnu)
       bigdecimal
       rake (>= 13)
     http_parser.rb (0.8.0)
@@ -83,7 +91,11 @@ GEM
     sass-embedded (1.89.2)
       google-protobuf (~> 4.31)
       rake (>= 13)
+    sass-embedded (1.89.2-arm64-darwin)
+      google-protobuf (~> 4.31)
     sass-embedded (1.89.2-x86_64-darwin)
+      google-protobuf (~> 4.31)
+    sass-embedded (1.89.2-x86_64-linux-gnu)
       google-protobuf (~> 4.31)
     sawyer (0.8.2)
       addressable (>= 2.3.5)
@@ -100,8 +112,10 @@ GEM
     webrick (1.9.1)
 
 PLATFORMS
+  arm64-darwin
   ruby
   x86_64-darwin-20
+  x86_64-linux-gnu
 
 DEPENDENCIES
   jekyll (~> 4.4.1)

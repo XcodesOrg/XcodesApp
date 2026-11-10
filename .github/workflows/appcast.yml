@@ -3,48 +3,46 @@ name: Build and publish a new appcast file
 on:
   workflow_dispatch:
   release:
+    types: [published]
 
 jobs:
   jekyll:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
+    permissions:
+      contents: write
+      pages: write
     steps:
     - name: Checkout 🛎
-      uses: actions/checkout@v4
+      uses: actions/checkout@v7
       with:
-        # If you're using actions/checkout@v4 you must set persist-credentials to false in most cases for the deployment to work correctly.
         persist-credentials: false
 
-#    - name: Cache 📦
-#      uses: actions/cache@v4.1.1
-#      with:
-#        path: AppCast/vendor/bundle
-#        key: ${{ runner.os }}-gems-v1.0-${{ hashFiles('AppCast/Gemfile') }}
-#        restore-keys: |
-#          ${{ runner.os }}-gems-
-          
-    - name: Setup Ruby, JRuby and TruffleRuby
-      uses: ruby/setup-ruby@v1.197.0
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
       with:
-        ruby-version: '3.0'
-
-    - name: Bundler 💎
-      working-directory: AppCast
-      env:
-        BUNDLE_PATH: vendor/bundle
-      run: |
-        gem install bundler
-        bundle install
+        ruby-version: '3.4'
+        working-directory: AppCast
+        bundler-cache: true
 
     - name: Build 🛠
       working-directory: AppCast
       env:
-        BUNDLE_PATH: vendor/bundle
         JEKYLL_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: bundle exec jekyll build
-      
+
     - name: Publish 🚀
+      # Manual runs on branches other than the default branch only build the feeds.
+      if: github.event_name == 'release' || github.ref == format('refs/heads/{0}', github.event.repository.default_branch)
+      id: publish
       uses: JamesIves/github-pages-deploy-action@releases/v4
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
         folder: AppCast/_site
+
+    - name: Request GitHub Pages build
+      # Pushes made with GITHUB_TOKEN don't trigger a branch-based Pages build.
+      if: steps.publish.outcome == 'success'
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds"
