@@ -86,7 +86,9 @@ struct CleanupWindow: View {
                 CleanupProgressView(progress: progress, stop: model.stopCleanupAfterCurrentItem)
             }
             ScrollView {
-                LazyVStack(alignment: .leading, spacing: 14) {
+                // Eager on purpose: as a LazyVStack, the tall, variable-height section cards kept invalidating its
+                // size estimates and item phases, leaving the main thread stuck in a layout loop.
+                VStack(alignment: .leading, spacing: 14) {
                     if sections.isEmpty && !model.isScanning {
                         Text(model.selectedOperatingSystem == nil ? "No cleanup findings. Add a folder to scan." : "No items match this OS version.").foregroundStyle(.secondary)
                     }

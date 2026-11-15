@@ -77,7 +77,7 @@ struct CleanupCategorySection: View {
             }
             if expanded {
                 Divider()
-                LazyVStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
                     if let explanation {
                         Text(explanation).foregroundStyle(.secondary).padding(.vertical, 8)
                     }

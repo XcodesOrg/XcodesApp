@@ -43,7 +43,7 @@ struct CleanupRuntimeSection: View {
             .onHover { hovering = $0 }
             if expanded {
                 Divider()
-                LazyVStack(alignment: .leading, spacing: 0) {
+                VStack(alignment: .leading, spacing: 0) {
                     ForEach(runtimes) { runtime in CleanupRuntimeItemRow(model: model, runtime: runtime) }
                 }
                 .padding(.horizontal, 12).padding(.leading, 28)
