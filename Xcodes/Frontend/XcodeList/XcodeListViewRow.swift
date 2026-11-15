@@ -51,7 +51,7 @@ struct XcodeListViewRow: View {
     }
 
     var body: some View {
-        HStack {
+        HStack(spacing: 8) {
             // Rows under a version group rely on the group's icon
             if style == .flat {
                 appIconView(for: xcode)
@@ -71,14 +71,15 @@ struct XcodeListViewRow: View {
                         .lineLimit(1)
                 }
             }
+            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
-            Spacer()
-
-            selectControl(for: xcode)
-                .padding(.trailing, 16)
-            installControl(for: xcode)
-                // Same column width as the Install/Open buttons, so the progress ring lines up with them
-                .frame(minWidth: 67)
+            HStack(spacing: 8) {
+                selectControl(for: xcode)
+                installControl(for: xcode)
+                    // Same column width as the Install/Open buttons, so the progress ring lines up with them
+                    .frame(minWidth: 67)
+            }
+            .fixedSize()
         }
         .padding(.vertical, 4)
         .contextMenu {

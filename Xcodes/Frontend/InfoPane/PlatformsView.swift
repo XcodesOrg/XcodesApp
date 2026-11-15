@@ -40,13 +40,12 @@ struct PlatformsView: View {
             return lhs.simulatorVersion.version.localizedStandardCompare(rhs.simulatorVersion.version) == .orderedDescending
         }
         
-        VStack {
-            HStack {
+        VStack(spacing: 8) {
+            HStack(spacing: 8) {
                 Text("Platforms")
                     .font(.title3)
                     .frame(maxWidth: .infinity, alignment: .leading)
                 if availableVariants.count > 1 {
-                    Spacer()
                     Picker("Architecture", selection: $selectedVariant) {
                         ForEach(availableVariants, id: \.self) { arch in
                             Label(variantLabel(for: arch), systemImage: arch.iconName)
@@ -65,7 +64,7 @@ struct PlatformsView: View {
             ForEach(runtimes, id: \.identifier) { runtime in
                 runtimeView(runtime: runtime)
                     .frame(minWidth: 200)
-                    .padding()
+                    .padding(12)
                     .background(.quinary)
                     .clipShape(RoundedRectangle(cornerRadius: 5, style: .continuous))
             }
@@ -81,9 +80,10 @@ struct PlatformsView: View {
     
     @ViewBuilder
     func runtimeView(runtime: DownloadableRuntime) -> some View {
-        VStack(spacing: 10) {
-            HStack {
+        VStack(spacing: 8) {
+            HStack(spacing: 8) {
                 runtime.icon()
+                    .frame(width: 20)
                 Text("\(runtime.visibleIdentifier)")
                     .font(.headline)
                 ForEach(runtime.architectures ?? [], id: \.self) { architecture in
@@ -92,32 +92,34 @@ struct PlatformsView: View {
                
                 pathIfAvailable(xcode: xcode, runtime: runtime)
 
-                // One spacer, so the action button sits next to the size column on every row
-                Spacer()
+                Spacer(minLength: 12)
 
-                // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
-                if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
-                    Button("Uninstall", role: .destructive) {
-                        appState.presentedAlert = .deletePlatform(runtime: runtime)
+                HStack(spacing: 8) {
+                    // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
+                    if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
+                        Button("Uninstall", role: .destructive) {
+                            appState.presentedAlert = .deletePlatform(runtime: runtime)
+                        }
+                        .help("Alert.DeletePlatform.PrimaryButton")
+                    } else if runtime.installState == .notInstalled {
+                        DownloadRuntimeButton(runtime: runtime)
                     }
-                    .help("Alert.DeletePlatform.PrimaryButton")
-                } else if runtime.installState == .notInstalled {
-                    DownloadRuntimeButton(runtime: runtime)
-                }
 
-                Text(runtime.downloadFileSizeString)
-                    .font(.subheadline)
-						  .frame(width: 70, alignment: .trailing)
+                    Text(runtime.downloadFileSizeString)
+                        .font(.subheadline.monospacedDigit())
+                }
+                .fixedSize()
             }
-			  
-			  if case let .installing(installationStep) = runtime.installState {
-				  HStack(alignment: .top, spacing: 5){
-					  RuntimeInstallationStepDetailView(installationStep: installationStep)
-						  .fixedSize(horizontal: false, vertical: true)
-					  Spacer()
-					  CancelRuntimeInstallButton(runtime: runtime)
-				  }
-			  }
+
+            if case let .installing(installationStep) = runtime.installState {
+                HStack(alignment: .top, spacing: 8) {
+                    RuntimeInstallationStepDetailView(installationStep: installationStep)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    CancelRuntimeInstallButton(runtime: runtime)
+                        .fixedSize()
+                }
+            }
         }
     }
     
