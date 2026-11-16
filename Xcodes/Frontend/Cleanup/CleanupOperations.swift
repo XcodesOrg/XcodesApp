@@ -38,6 +38,52 @@ enum CleanupOperations {
               UInt64(UInt32(bitPattern: metadata.st_dev)) == item.identity.device else { throw CleanupOperationError.changed }
     }
 
+    /// nil means at least one xcodebuild could be using the default Derived Data location.
+    static func xcodebuildDerivedDataPaths(
+        processList: String,
+        arguments: (pid_t) -> [String]? = processArguments
+    ) -> [FilesystemPath]? {
+        var paths: [FilesystemPath] = []
+        for line in processList.split(separator: "\n") {
+            let fields = line.split(maxSplits: 1, whereSeparator: \.isWhitespace)
+            guard fields.count == 2, let pid = pid_t(fields[0]),
+                  URL(fileURLWithPath: String(fields[1])).lastPathComponent.lowercased() == "xcodebuild" else { continue }
+            guard let args = arguments(pid) else { return nil }
+            let flags = args.indices.filter { args[$0] == "-derivedDataPath" }
+            guard flags.count == 1, let flag = flags.first, flag + 1 < args.count,
+                  args[flag + 1].hasPrefix("/"),
+                  let path = try? FilesystemPath(URL(fileURLWithPath: args[flag + 1]).resolvingSymlinksInPath())
+            else { return nil }
+            paths.append(path)
+        }
+        return paths
+    }
+
+    static func xcodebuildMayUseDerivedData(_ path: FilesystemPath, scopedPaths: [FilesystemPath]?) -> Bool {
+        guard let scopedPaths, !scopedPaths.isEmpty,
+              let canonicalPath = try? FilesystemPath(path.url.resolvingSymlinksInPath()) else { return true }
+        return scopedPaths.contains { $0.contains(canonicalPath) || canonicalPath.contains($0) }
+    }
+
+    private static func processArguments(_ pid: pid_t) -> [String]? {
+        var mib: [Int32] = [CTL_KERN, KERN_PROCARGS2, pid]
+        var size = 0
+        guard sysctl(&mib, 3, nil, &size, nil, 0) == 0, size > MemoryLayout<Int32>.size else { return nil }
+        var bytes = [UInt8](repeating: 0, count: size)
+        let status = bytes.withUnsafeMutableBytes { sysctl(&mib, 3, $0.baseAddress, &size, nil, 0) }
+        guard status == 0, size > MemoryLayout<Int32>.size else { return nil }
+        let count = bytes.withUnsafeBytes { Int($0.loadUnaligned(as: Int32.self)) }
+        guard count > 0 else { return nil }
+        // The kernel buffer begins with argc, the executable path, then NUL padding before argv.
+        let payload = bytes[MemoryLayout<Int32>.size..<size]
+        guard let executableEnd = payload.firstIndex(of: 0),
+              let argumentsStart = payload[executableEnd...].firstIndex(where: { $0 != 0 }) else { return nil }
+        let rawArguments = payload[argumentsStart...].split(separator: 0, maxSplits: count, omittingEmptySubsequences: false)
+        guard rawArguments.count > count else { return nil }
+        let arguments = rawArguments.prefix(count).compactMap { String(bytes: $0, encoding: .utf8) }
+        return arguments.count == count ? arguments : nil
+    }
+
     struct SimulatorRuntime: Sendable, Codable, Identifiable, Equatable {
         let identifier: String
         let runtimeIdentifier: String

@@ -107,8 +107,12 @@ extension CleanupModel {
             case "chromeLeftovers": tools = ["google chrome"]
             default: tools = []
             }
-            let running = activeTools.intersection(tools).sorted()
-            if !running.isEmpty { return "In use by \(running.joined(separator: ", ")). Stop these processes and try again." }
+            var running = activeTools.intersection(tools)
+            if category.id == "derivedData", running.contains("xcodebuild"),
+               !CleanupOperations.xcodebuildMayUseDerivedData(item.path, scopedPaths: xcodebuildDerivedDataPaths) {
+                running.remove("xcodebuild")
+            }
+            if !running.isEmpty { return "In use by \(running.sorted().joined(separator: ", ")). Stop these processes and try again." }
         }
         if item.path.bytes.split(separator: 47).contains(where: { $0.elementsEqual("node_modules".utf8) }), !activeTools.isDisjoint(with: ["node", "npm", "pnpm", "yarn"]) {
             return "Stop Node.js and package-manager processes before cleanup."
