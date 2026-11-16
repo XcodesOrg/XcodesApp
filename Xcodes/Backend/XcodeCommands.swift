@@ -58,11 +58,7 @@ struct CancelInstallButton: View {
     let xcode: Xcode?
     
     var body: some View {
-        Button(action: cancelInstall) {
-            Label("Cancel", systemImage: "xmark")
-        }
-        .help(localizeString("StopInstallation"))
-        .buttonStyle(.plain)
+        DownloadCancelButton(action: cancelInstall)
     }
     
     private func cancelInstall() {
@@ -76,15 +72,25 @@ struct CancelRuntimeInstallButton: View {
     let runtime: DownloadableRuntime?
     
     var body: some View {
-        Button(action: cancelInstall) {
-            Image(systemName: "xmark.circle.fill")
-        }.help(localizeString("StopInstallation"))
-            .buttonStyle(.plain)
+        DownloadCancelButton(action: cancelInstall)
     }
     
     private func cancelInstall() {
         guard let runtime = runtime else { return }
         appState.presentedAlert = .cancelRuntimeInstall(runtime: runtime)
+    }
+}
+
+struct DownloadCancelButton: View {
+    let action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "xmark.circle.fill")
+        }
+        .accessibilityLabel(Text("StopInstallation"))
+        .help(localizeString("StopInstallation"))
+        .buttonStyle(.plain)
     }
 }
 

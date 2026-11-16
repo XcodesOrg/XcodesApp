@@ -106,6 +106,9 @@ extension CleanupModel {
     }
 
     func runtimeSelectionUnavailableReason(_ runtime: CleanupOperations.SimulatorRuntime) -> String? {
+        if appState?.removingRuntimeImages.contains(runtime.id) == true {
+            return "This simulator runtime is being removed."
+        }
         if isScanning || isShowingCachedResults { return "Wait for the scan to finish." }
         if runtimeInventoryUnavailable || runtimeAssociationCheckFailed { return "Could not check runtime associations. Rescan before removing runtimes." }
         guard runtime.deletable == true, ["Ready", "Unusable"].contains(runtime.state) else { return "CoreSimulator does not currently allow removal of this runtime." }

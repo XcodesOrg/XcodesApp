@@ -96,7 +96,6 @@ extension AppState {
                       preferred.installState.installed,
                       (try? RuntimeInstallPolicy().installMethod(for: runtime, selectedXcodeVersion: preferred.version)) == method,
                       let directory = preferred.developerDirectory else { throw error }
-                setRuntimeStep(.installing, runtime: runtime, taskID: taskID)
                 try await installRuntimeWithXcodebuild(
                     runtime, architecture: architecture, developerDirectory: directory, taskID: taskID
                 )
@@ -122,7 +121,18 @@ extension AppState {
                 ?? installed.max { $0.version < $1.version }
         }
 
-        if let xcode = installedXcode() { return xcode }
+        let available = installedXcode()
+        if runtime.betaNumber != nil, let preferredID, let task = installationTasks[preferredID],
+           available?.id != preferredID,
+           available?.platformSDKBuilds.contains(where: { runtime.sdkBuildUpdate?.contains($0) == true }) != true {
+            // A toolchain that meets the platform minimum can still stall on a newer beta asset.
+            try await waitForXcodeInstall(task, runtime: runtime)
+            guard let xcode = installedXcode(), xcode.id == preferredID else {
+                throw XcodesKitError(localizeString("Xcode installation did not finish. Install Xcode and try this simulator runtime again."))
+            }
+            return xcode
+        }
+        if let available { return available }
 
         let pending = allXcodes.filter { installationTasks[$0.id] != nil && compatible($0) }
         if let xcode = pending.first(where: { $0.id == preferredID }) ?? pending.max(by: { $0.version < $1.version }),
@@ -149,6 +159,7 @@ extension AppState {
         developerDirectory: String?,
         taskID: UUID
     ) async throws {
+        setRuntimeStep(.downloading(progress: Progress(totalUnitCount: 100)), runtime: runtime, taskID: taskID)
         let download = Current.shell.downloadRuntime
         try await RuntimeXcodebuildInstallService(download: { platform, build, architecture in
             download(platform, build, architecture, developerDirectory)
@@ -172,11 +183,11 @@ extension AppState {
 
     func downloadRuntime(runtime: DownloadableRuntime, for xcodeID: XcodeID? = nil) {
         let id = runtime.identifier
-        guard runtimeTasks[id] == nil else { return }
+        guard runtimeTasks[id] == nil, !isRemovingRuntime(runtime) else { return }
 
         let taskID = UUID()
         runtimeTaskIDs[id] = taskID
-        setInstallationStep(of: runtime, to: .installing, postNotification: false)
+        setInstallationStep(of: runtime, to: .downloading(progress: Progress(totalUnitCount: 100)), postNotification: false)
         runtimeTasks[id] = Task { @MainActor [weak self] in
             guard let self else { return }
             defer {
@@ -329,21 +340,94 @@ extension AppState {
             .coreSimulatorImage(for: runtime, in: installedRuntimes)
     }
 
-    func deleteRuntime(runtime: DownloadableRuntime) async throws {
-        if let info = coreSimulatorInfo(runtime: runtime) {
-            try await runtimeService.deleteRuntime(identifier: info.uuid)
+    func isRemovingRuntime(_ runtime: DownloadableRuntime) -> Bool {
+        guard let image = coreSimulatorInfo(runtime: runtime) else { return false }
+        return removingRuntimeImages.contains(image.uuid.uppercased())
+    }
 
-            // give it some time to actually finish deleting before updating
-            try await Task.sleep(nanoseconds: 500_000_000)
-            updateInstalledRuntimes()
-        } else {
+    func deleteRuntime(runtime: DownloadableRuntime, using xcodePath: Path? = nil) async throws {
+        guard let info = coreSimulatorInfo(runtime: runtime) else {
             throw XcodesKitError("No simulator found with \(runtime.identifier)")
         }
+
+        let imageID = info.uuid.uppercased()
+        guard removingRuntimeImages.insert(imageID).inserted else {
+            throw XcodesKitError(localizeString("This simulator runtime is being removed."))
+        }
+        defer { removingRuntimeImages.remove(imageID) }
+
+        do {
+            try await requestRuntimeRemoval(identifier: info.uuid, using: xcodePath)
+        } catch {
+            guard Self.isRuntimeRemovalInProgress(runtimeDeletionErrorMessage(error)) else { throw error }
+        }
+
+        let clock = ContinuousClock()
+        let deadline = clock.now + .seconds(210)
+        while clock.now < deadline {
+            try Task.checkCancellation()
+            if let inventory = try? await runtimeService.localInstalledRuntimes(),
+               !inventory.contains(where: { $0.uuid.uppercased() == imageID }) {
+                installedRuntimes.removeAll { $0.uuid.uppercased() == imageID }
+                updateInstalledRuntimes()
+                if let index = downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }),
+                   downloadableRuntimes[index].installState == .installed {
+                    downloadableRuntimes[index].installState = .notInstalled
+                }
+                return
+            }
+            try await Task.sleep(for: .seconds(1))
+        }
+        throw XcodesKitError(localizeString("CoreSimulator is still removing this runtime. Try again if it remains installed."))
+    }
+
+    static func isRuntimeRemovalInProgress(_ message: String) -> Bool {
+        message.contains("com.apple.CoreSimulator.simdiskimaged.SimDiskImageError")
+            && message.contains("code=24)")
+            && message.localizedCaseInsensitiveContains("Attempting to delete image")
+    }
+
+    private func requestRuntimeRemoval(identifier: String, using xcodePath: Path?) async throws {
+        if let xcodePath {
+            try await deleteRuntime(identifier: identifier, using: xcodePath)
+        } else {
+            do {
+                try await runtimeService.deleteRuntime(identifier: identifier)
+            } catch {
+                guard Self.isMissingDeveloperToolError(runtimeDeletionErrorMessage(error)),
+                      let path = newestInstalledXcode()?.installedPath else { throw error }
+                try await deleteRuntime(identifier: identifier, using: path)
+            }
+        }
+    }
+
+    private func deleteRuntime(identifier: String, using xcodePath: Path) async throws {
+        let developerDirectory = xcodePath.url.appendingPathComponent("Contents/Developer").path
+        try await Current.shell.deleteRuntimeWithDeveloperDirectory(identifier, developerDirectory)
+    }
+
+    func newestInstalledXcode(excluding id: XcodeID? = nil) -> Xcode? {
+        allXcodes.filter { $0.id != id && $0.installState.installed }.max { $0.version < $1.version }
+    }
+
+    func removeRuntimesForUninstall(_ runtimes: [DownloadableRuntime], using path: Path) async -> Bool {
+        for runtime in runtimes where coreSimulatorInfo(runtime: runtime) != nil {
+            do {
+                try Task.checkCancellation()
+                try await deleteRuntime(runtime: runtime, using: path)
+            } catch is CancellationError {
+                return false
+            } catch {
+                presentRuntimeDeletionError(error, runtime: runtime, inSettings: false)
+                return false
+            }
+        }
+        return true
     }
 
     /// - Parameter presentErrorInSettings: Show failures in the Settings window (Platforms list) instead of the main window.
     func confirmDeleteRuntime(runtime: DownloadableRuntime, presentErrorInSettings: Bool = true) {
-        deleteRuntimeTask?.cancel()
+        guard deleteRuntimeTask == nil, !isRemovingRuntime(runtime) else { return }
         let taskID = UUID()
         deleteRuntimeTaskID = taskID
         deleteRuntimeTask = Task { @MainActor [weak self] in
@@ -413,6 +497,9 @@ extension AppState {
             return error.message
         }
 
+        if let error = error as? ProcessExecutionError {
+            return error.runtimeFailureMessage
+        }
         return error.localizedDescription
     }
 }
@@ -564,27 +651,7 @@ extension AppState {
             .sorted { ($0.platform.displayOrder, $1.name) < ($1.platform.displayOrder, $0.name) }
     }
 
-    /// Uninstalls an Xcode, then removes the given simulator runtimes.
-    @discardableResult
-    func uninstall(xcode: Xcode, removingRuntimes runtimes: [DownloadableRuntime]) -> Task<Void, Never>? {
-        guard let installedPath = xcode.installedPath else { return nil }
-        uninstall(xcode: xcode)
-        guard !runtimes.isEmpty, let removalTask = uninstallTask else { return uninstallTask }
-        return Task { @MainActor [weak self] in
-            await removalTask.value
-            // Failed or cancelled removal leaves the Xcode in the list. Keep its platforms too.
-            guard let self, !Task.isCancelled, !removalTask.isCancelled,
-                  !self.allXcodes.contains(where: { $0.installedPath == installedPath }) else { return }
-            for runtime in runtimes {
-                do {
-                    try await self.deleteRuntime(runtime: runtime)
-                } catch {
-                    self.presentRuntimeDeletionError(error, runtime: runtime, inSettings: false)
-                    return
-                }
-            }
-        }
-    }
+
 }
 
 private extension Xcode {

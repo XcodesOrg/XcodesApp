@@ -690,8 +690,13 @@ class AppStateTests: XCTestCase {
         try await assertRuntimeUsesNewXcode(olderXcodeInstalled: true)
     }
 
-    private func assertRuntimeUsesNewXcode(olderXcodeInstalled: Bool) async throws {
-        let runtime = try Self.downloadableRuntime(contentType: "cryptexDiskImage")
+    func test_DownloadRuntime_BetaWaitsForMatchingXcodeInsteadOfUsingOlderToolchain() async throws {
+        try await assertRuntimeUsesNewXcode(olderXcodeInstalled: true, betaRuntime: true)
+    }
+
+    private func assertRuntimeUsesNewXcode(olderXcodeInstalled: Bool, betaRuntime: Bool = false) async throws {
+        var runtime = try Self.downloadableRuntime(contentType: "cryptexDiskImage")
+        if betaRuntime { runtime.seedNumber = 1 }
         let path = Path("/Applications/Test Xcode.app")!
         var xcode = Xcode(version: Version("27.3.0")!, installState: .notInstalled, selected: false, icon: nil)
         let xcodeID = xcode.id
@@ -732,7 +737,7 @@ class AppStateTests: XCTestCase {
             await Task.yield()
         }
         XCTAssertTrue(subject.waitingForXcodeRuntimes.contains(runtime.identifier))
-        let expectedFirstAttempts: [String?] = olderXcodeInstalled ? [nil] : []
+        let expectedFirstAttempts: [String?] = olderXcodeInstalled && !betaRuntime ? [nil] : []
         XCTAssertEqual(directories.read { $0 }, expectedFirstAttempts)
         XCTAssertNil(subject.presentedAlert)
 
@@ -743,6 +748,32 @@ class AppStateTests: XCTestCase {
         XCTAssertFalse(subject.waitingForXcodeRuntimes.contains(runtime.identifier))
         XCTAssertNil(subject.runtimeTasks[runtime.identifier])
         XCTAssertEqual(subject.downloadableRuntimes.first?.installState, .installed)
+    }
+
+    func test_RuntimeCommandStreamsDownloadProgressThenInstallingAndPreservesFailure() async throws {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/bin/sh")
+        process.arguments = ["-c", """
+            printf 'Finding content...\\n\\rDownloading iOS: 63.'
+            printf '0%% (1.2 GB of 2.0 GB)\\rInstalling iOS Simulator\\n'
+            printf 'runtime diagnostic\\n' >&2
+            exit 70
+            """]
+
+        var sawDownload = false
+        var sawInstalling = false
+        do {
+            for try await progress in XcodebuildRuntimeDownloadService.runtimeProgressStream(for: process) {
+                sawDownload = sawDownload || progress.completedUnitCount == 63
+                sawInstalling = sawInstalling || progress.isIndeterminate
+            }
+            XCTFail("Expected the command to fail")
+        } catch let error as ProcessExecutionError {
+            XCTAssertEqual(error.terminationStatus, 70)
+            XCTAssertEqual(error.standardError, "runtime diagnostic\n")
+        }
+        XCTAssertTrue(sawDownload)
+        XCTAssertTrue(sawInstalling)
     }
 
     func test_DownloadRuntime_FailureShowsStderrAndAllowsRetry() async throws {
@@ -776,7 +807,7 @@ class AppStateTests: XCTestCase {
         XCTAssertNil(subject.runtimeTasks[runtime.identifier])
     }
 
-    func test_ConfirmDeleteRuntime_OldTaskDoesNotClearReplacementTask() async throws {
+    func test_ConfirmDeleteRuntime_IgnoresDuplicateAndAcceptsRemovalInProgress() async throws {
         let runtime = try Self.downloadableRuntime()
         let installedRuntime = CoreSimulatorImage(
             uuid: "runtime-uuid",
@@ -784,37 +815,37 @@ class AppStateTests: XCTestCase {
             runtimeInfo: CoreSimulatorRuntimeInfo(build: runtime.simulatorVersion.buildUpdate)
         )
         let deletedIdentifiers = TestLockedBox<[String]>([])
-        let continuations = TestLockedBox<[CheckedContinuation<ProcessOutput, Error>]>([])
+        let request = OneShotContinuation<Bool>()
         subject = AppState(
             runtimeService: Self.runtimeService { identifier in
                 deletedIdentifiers.withValue { $0.append(identifier) }
-                return try await withCheckedThrowingContinuation { continuation in
-                    continuations.withValue { $0.append(continuation) }
-                }
+                _ = try await request.value {}
+                throw ProcessExecutionError(
+                    process: Process(), terminationStatus: 24, standardOutput: nil,
+                    standardError: """
+                    (domain=com.apple.CoreSimulator.simdiskimaged.SimDiskImageError, code=24):
+                    Attempting to delete image: runtime-uuid (Please retry in 174s, if the image is not removed)
+                    """
+                )
             }
         )
         subject.installedRuntimes = [installedRuntime]
 
         subject.confirmDeleteRuntime(runtime: runtime)
-        for _ in 0..<100 where continuations.read({ $0.count }) < 1 {
+        let task = try XCTUnwrap(subject.deleteRuntimeTask)
+        for _ in 0..<100 where !subject.isRemovingRuntime(runtime) {
             await Task.yield()
         }
-        let firstTask = try XCTUnwrap(subject.deleteRuntimeTask)
-        XCTAssertEqual(deletedIdentifiers.read { $0 }, [installedRuntime.uuid])
+        XCTAssertTrue(subject.isRemovingRuntime(runtime))
 
         subject.confirmDeleteRuntime(runtime: runtime)
-        for _ in 0..<100 where continuations.read({ $0.count }) < 2 {
-            await Task.yield()
-        }
-        let replacementTask = try XCTUnwrap(subject.deleteRuntimeTask)
-        XCTAssertEqual(deletedIdentifiers.read { $0 }, [installedRuntime.uuid, installedRuntime.uuid])
+        request.resume(with: .success(true))
+        await task.value
 
-        continuations.read { $0[0] }.resume(returning: ProcessOutput(status: 0, out: "", err: ""))
-        await firstTask.value
-        XCTAssertNotNil(subject.deleteRuntimeTask)
-
-        continuations.read { $0[1] }.resume(returning: ProcessOutput(status: 0, out: "", err: ""))
-        await replacementTask.value
+        XCTAssertEqual(deletedIdentifiers.read { $0 }, [installedRuntime.uuid])
+        XCTAssertNil(subject.presentedPreferenceAlert)
+        XCTAssertNil(subject.coreSimulatorInfo(runtime: runtime))
+        XCTAssertFalse(subject.isRemovingRuntime(runtime))
         XCTAssertNil(subject.deleteRuntimeTask)
         XCTAssertNil(subject.deleteRuntimeTaskID)
     }

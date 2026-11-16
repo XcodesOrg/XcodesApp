@@ -82,6 +82,7 @@ struct PlatformsView: View {
     @ViewBuilder
     func runtimeView(runtime: DownloadableRuntime) -> some View {
         let waitingForXcode = appState.waitingForXcodeRuntimes.contains(runtime.identifier)
+        let isInstalled = appState.coreSimulatorInfo(runtime: runtime) != nil
         VStack(spacing: 10) {
             HStack {
                 runtime.icon()
@@ -97,12 +98,15 @@ struct PlatformsView: View {
                 Spacer()
 
                 // TODO: Update the downloadableRuntimes with the appropriate installState so we don't have to check path awkwardly
-                if appState.runtimeInstallPath(xcode: xcode, runtime: runtime) != nil {
+                if appState.isRemovingRuntime(runtime) {
+                    ProgressView().controlSize(.small)
+                    Text("Removing…").foregroundStyle(.secondary)
+                } else if isInstalled {
                     Button("Uninstall", role: .destructive) {
                         appState.presentedAlert = .deletePlatform(runtime: runtime)
                     }
                     .help("Alert.DeletePlatform.PrimaryButton")
-                } else if runtime.installState == .notInstalled && !waitingForXcode {
+                } else if appState.runtimeTasks[runtime.identifier] == nil && !waitingForXcode {
                     DownloadRuntimeButton(runtime: runtime, xcodeID: xcode.id)
                 }
 
@@ -111,13 +115,14 @@ struct PlatformsView: View {
                     .frame(width: 70, alignment: .trailing)
             }
 
-            if waitingForXcode {
+            if !isInstalled, waitingForXcode {
                 HStack {
                     Text("Waiting for Xcode to finish installing…")
                     Spacer()
                     CancelRuntimeInstallButton(runtime: runtime)
                 }
-            } else if case let .installing(installationStep) = runtime.installState {
+            } else if !isInstalled, appState.runtimeTasks[runtime.identifier] != nil,
+                      case let .installing(installationStep) = runtime.installState {
                 HStack(alignment: .top, spacing: 5) {
                     RuntimeInstallationStepDetailView(installationStep: installationStep)
                         .fixedSize(horizontal: false, vertical: true)

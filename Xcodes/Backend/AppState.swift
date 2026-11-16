@@ -196,6 +196,7 @@ class AppState: ObservableObject {
 
     @Published var downloadableRuntimes: [DownloadableRuntime] = []
     @Published var waitingForXcodeRuntimes: Set<String> = []
+    @Published var removingRuntimeImages: Set<String> = []
     @Published var installedRuntimes: [CoreSimulatorImage] = []
 
     // MARK: - Operation State
@@ -781,8 +782,10 @@ class AppState: ObservableObject {
     }
 
     // MARK: - Uninstall
-    func uninstall(xcode: Xcode) {
-        guard let installedXcodePath = xcode.installedPath else { return }
+    @discardableResult
+    func uninstall(xcode: Xcode, removingRuntimes runtimes: [DownloadableRuntime] = []) -> Task<Void, Never>? {
+        guard let installedXcodePath = xcode.installedPath, xcode.installState.installed else { return nil }
+        let survivingXcode = newestInstalledXcode(excluding: xcode.id)
 
         if let index = allXcodes.firstIndex(where: { $0.id == xcode.id }) {
             allXcodes[index].installState = .uninstalling(installedXcodePath)
@@ -800,10 +803,27 @@ class AppState: ObservableObject {
             }
             do {
                 try Task.checkCancellation()
+                if survivingXcode == nil, !runtimes.isEmpty {
+                    // The last full Xcode supplies simctl. Preserve it if runtime removal fails.
+                    guard Current.files.fileExists(atPath: installedXcodePath.string) else {
+                        throw FileError.fileNotFound(installedXcodePath.string)
+                    }
+                    guard await removeRuntimesForUninstall(runtimes, using: installedXcodePath) else {
+                        try Task.checkCancellation()
+                        if let index = allXcodes.firstIndex(where: { $0.id == xcode.id }) {
+                            allXcodes[index].installState = .installed(installedXcodePath)
+                        }
+                        return
+                    }
+                }
+                try Task.checkCancellation()
                 try await uninstallXcodeAsync(path: installedXcodePath)
                 try Task.checkCancellation()
                 await updateInstalledXcodesAsync()
                 await updateSelectedXcodePathAsync()
+                if let survivingPath = survivingXcode?.installedPath, !runtimes.isEmpty {
+                    _ = await removeRuntimesForUninstall(runtimes, using: survivingPath)
+                }
             } catch is CancellationError {
             } catch {
                 if let index = allXcodes.firstIndex(where: { $0.id == xcode.id }) {
@@ -817,6 +837,7 @@ class AppState: ObservableObject {
                 }
             }
         }
+        return uninstallTask
     }
 
     func reveal(_ path: Path?) {

@@ -49,7 +49,7 @@ extension Alert {
     /// Removing a platform runs `simctl`, which only comes with Xcode. Offers to make the newest installed release active and retry.
     @MainActor
     static func noActiveXcode(appState: AppState, runtime: DownloadableRuntime, xcode: Xcode?, inSettings: Bool) -> Alert {
-        let explanation = String(format: localizeString("Alert.NoActiveXcode.Message"), runtime.name, appState.selectedXcodePath ?? "–")
+        let explanation = String(format: localizeString("Alert.NoActiveXcode.Message"), runtime.name, appState.selectedXcodePath?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "–")
         guard let xcode else {
             return Alert(
                 title: Text("Alert.NoActiveXcode.Title"),
