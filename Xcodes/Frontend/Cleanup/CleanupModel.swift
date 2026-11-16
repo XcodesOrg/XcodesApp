@@ -95,6 +95,7 @@ final class CleanupModel: ObservableObject {
     var activityUnavailable = true
     var runningApplications: [(name: String, bundleID: String?, path: FilesystemPath?)] = []
     var activeTools: Set<String> = []
+    var xcodebuildDerivedDataPaths: [FilesystemPath]?
 
     init(defaults: Defaults = Current.defaults, folderConfigurationURL: URL? = nil, useFileConfiguration: Bool = false) {
         folderDefaults = defaults
