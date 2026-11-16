@@ -22,7 +22,14 @@ extension AppState {
                 let runtimes = try await store.updateDownloadableRuntimes()
                 try Task.checkCancellation()
 
-                self.downloadableRuntimes = runtimes
+                let activeStates: [String: RuntimeInstallState] = Dictionary(self.downloadableRuntimes.compactMap { runtime in
+                    self.runtimeTasks[runtime.identifier] == nil ? nil : (runtime.identifier, runtime.installState)
+                }, uniquingKeysWith: { existing, _ in existing })
+                self.downloadableRuntimes = runtimes.map { runtime in
+                    var runtime = runtime
+                    runtime.installState = activeStates[runtime.identifier] ?? runtime.installState
+                    return runtime
+                }
             } catch is CancellationError {
             } catch {
                 Logger.appState.error("Error downloading runtimes: \(error.localizedDescription)")
@@ -55,129 +62,171 @@ extension AppState {
         }
     }
 
-    func downloadRuntime(runtime: DownloadableRuntime) {
-        do {
-            let method = try RuntimeInstallPolicy().installMethod(
-                for: runtime,
-                selectedXcodeVersion: allXcodes.first(where: { $0.selected })?.version
+    private func installRuntime(_ runtime: DownloadableRuntime, for xcodeID: XcodeID?, taskID: UUID) async throws {
+        if runtime.contentType == .diskImage {
+            let archiveURL = try await downloadRuntimeArchive(runtime: runtime, taskID: taskID)
+            let xcode = try await xcodeForRuntime(runtime, preferredID: xcodeID)
+            let developerDirectory = xcode.selected ? nil : xcode.developerDirectory
+            try await runtimeArchiveInstallService(developerDirectory: developerDirectory).install(
+                runtime: runtime,
+                archiveURL: archiveURL,
+                stepChanged: { step in
+                    await self.setRuntimeStep(step, runtime: runtime, taskID: taskID, postNotification: true)
+                }
             )
-
-            switch method {
-            case .archive:
-                downloadRuntimeViaArchive(runtime: runtime)
-            case let .xcodebuild(architecture):
-                downloadRuntimeViaXcodeBuild(runtime: runtime, architecture: architecture)
+        } else {
+            let preferredInstall = xcodeID.flatMap { installationTasks[$0] }
+            let xcode = try await xcodeForRuntime(runtime, preferredID: xcodeID)
+            let method = try RuntimeInstallPolicy().installMethod(for: runtime, selectedXcodeVersion: xcode.version)
+            guard case let .xcodebuild(architecture) = method else {
+                throw XcodesKitError("This simulator runtime format is unsupported.")
             }
-        } catch {
-            presentRuntimeInstallPolicyError(error)
+            do {
+                try await installRuntimeWithXcodebuild(
+                    runtime, architecture: architecture,
+                    developerDirectory: xcode.selected ? nil : xcode.developerDirectory, taskID: taskID
+                )
+            } catch let error as ProcessExecutionError {
+                // A parallel attempt may have used a different Xcode. Retry once with the
+                // requested Xcode if it was still installing when the download began.
+                try Task.checkCancellation()
+                guard let xcodeID, xcodeID != xcode.id, let preferredInstall else { throw error }
+                try await waitForXcodeInstall(preferredInstall, runtime: runtime)
+                guard let preferred = allXcodes.first(where: { $0.id == xcodeID }),
+                      preferred.installState.installed,
+                      (try? RuntimeInstallPolicy().installMethod(for: runtime, selectedXcodeVersion: preferred.version)) == method,
+                      let directory = preferred.developerDirectory else { throw error }
+                setRuntimeStep(.installing, runtime: runtime, taskID: taskID)
+                try await installRuntimeWithXcodebuild(
+                    runtime, architecture: architecture, developerDirectory: directory, taskID: taskID
+                )
+            }
         }
     }
 
-    private func presentRuntimeInstallPolicyError(_ error: Error) {
-        Logger.appState.error("Trying to download a runtime we can't download: \(error.localizedDescription)")
+    private func xcodeForRuntime(_ runtime: DownloadableRuntime, preferredID: XcodeID?) async throws -> Xcode {
+        try Task.checkCancellation()
+        let policy = RuntimeInstallPolicy()
+        func compatible(_ xcode: Xcode) -> Bool {
+            (try? policy.installMethod(for: runtime, selectedXcodeVersion: xcode.version)) != nil
+        }
+        func installedXcode() -> Xcode? {
+            let installed = allXcodes.filter {
+                $0.installState.installed && installationTasks[$0.id] == nil && compatible($0)
+            }
+            return installed.first { $0.id == preferredID }
+                ?? installed.first { xcode in
+                    xcode.platformSDKBuilds.contains { runtime.sdkBuildUpdate?.contains($0) == true }
+                }
+                ?? installed.first(where: \.selected)
+                ?? installed.max { $0.version < $1.version }
+        }
 
-        if let error = error as? RuntimeInstallPolicyError {
+        if let xcode = installedXcode() { return xcode }
+
+        let pending = allXcodes.filter { installationTasks[$0.id] != nil && compatible($0) }
+        if let xcode = pending.first(where: { $0.id == preferredID }) ?? pending.max(by: { $0.version < $1.version }),
+           let task = installationTasks[xcode.id] {
+            try await waitForXcodeInstall(task, runtime: runtime)
+            if let xcode = installedXcode() { return xcode }
+            throw XcodesKitError(localizeString("Xcode installation did not finish. Install Xcode and try this simulator runtime again."))
+        }
+
+        _ = try policy.installMethod(for: runtime, selectedXcodeVersion: allXcodes.first(where: \.selected)?.version)
+        throw RuntimeInstallPolicyError.noSelectedXcode
+    }
+
+    private func waitForXcodeInstall(_ task: Task<Void, Never>, runtime: DownloadableRuntime) async throws {
+        waitingForXcodeRuntimes.insert(runtime.identifier)
+        await task.value
+        try Task.checkCancellation()
+        waitingForXcodeRuntimes.remove(runtime.identifier)
+    }
+
+    private func installRuntimeWithXcodebuild(
+        _ runtime: DownloadableRuntime,
+        architecture: String?,
+        developerDirectory: String?,
+        taskID: UUID
+    ) async throws {
+        let download = Current.shell.downloadRuntime
+        try await RuntimeXcodebuildInstallService(download: { platform, build, architecture in
+            download(platform, build, architecture, developerDirectory)
+        }).downloadAndInstall(runtime: runtime, architecture: architecture) { progress in
+            Task { @MainActor [weak self] in
+                let step: RuntimeInstallationStep = progress.isIndeterminate ? .installing : .downloading(progress: progress)
+                self?.setRuntimeStep(step, runtime: runtime, taskID: taskID)
+            }
+        }
+    }
+
+    private func setRuntimeStep(
+        _ step: RuntimeInstallationStep,
+        runtime: DownloadableRuntime,
+        taskID: UUID,
+        postNotification: Bool = false
+    ) {
+        guard runtimeTaskIDs[runtime.identifier] == taskID else { return }
+        setInstallationStep(of: runtime, to: step, postNotification: postNotification)
+    }
+
+    func downloadRuntime(runtime: DownloadableRuntime, for xcodeID: XcodeID? = nil) {
+        let id = runtime.identifier
+        guard runtimeTasks[id] == nil else { return }
+
+        let taskID = UUID()
+        runtimeTaskIDs[id] = taskID
+        setInstallationStep(of: runtime, to: .installing, postNotification: false)
+        runtimeTasks[id] = Task { @MainActor [weak self] in
+            guard let self else { return }
+            defer {
+                if self.runtimeTaskIDs[id] == taskID {
+                    self.waitingForXcodeRuntimes.remove(id)
+                    self.runtimeTasks[id] = nil
+                    self.runtimeTaskIDs[id] = nil
+                }
+            }
+            do {
+                try Task.checkCancellation()
+                try await self.installRuntime(runtime, for: xcodeID, taskID: taskID)
+                try Task.checkCancellation()
+                if let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == id }) {
+                    self.downloadableRuntimes[index].installState = .installed
+                }
+                self.updateInstalledRuntimes()
+            } catch {
+                guard !Task.isCancelled, self.runtimeTaskIDs[id] == taskID else { return }
+                if let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == id }) {
+                    self.downloadableRuntimes[index].installState = .notInstalled
+                }
+                self.presentRuntimeInstallError(error, runtime: runtime)
+            }
+        }
+    }
+
+    private func presentRuntimeInstallError(_ error: Error, runtime: DownloadableRuntime) {
+        self.error = error
+        let message: String
+        switch error {
+        case let error as ProcessExecutionError:
+            Logger.appState.error("Simulator runtime command exited with status \(error.terminationStatus): \(error.standardError, privacy: .public)")
+            message = error.runtimeFailureMessage
+        case let error as RuntimeInstallPolicyError:
             switch error {
             case .noSelectedXcode:
-                presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: "No selected Xcode. Please make an Xcode active")
+                message = localizeString("Install a compatible version of Xcode, then try installing this simulator runtime again.")
             case .xcode16_1OrGreaterRequired:
-                presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: localizeString("Alert.Install.Error.Need.Xcode16.1"))
+                message = localizeString("Alert.Install.Error.Need.Xcode16.1")
             case .xcode26OrGreaterRequired:
-                presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: localizeString("Alert.Install.Error.Need.Xcode26"))
+                message = localizeString("Alert.Install.Error.Need.Xcode26")
             }
-        } else {
-            presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
+        case let error as XcodesKitError:
+            message = error.message
+        default:
+            message = error.legibleLocalizedDescription
         }
-    }
-
-    func downloadRuntimeViaXcodeBuild(runtime: DownloadableRuntime, architecture: String? = nil) {
-        runtimeTasks[runtime.identifier]?.cancel()
-        let runtimeTaskID = UUID()
-        runtimeTaskIDs[runtime.identifier] = runtimeTaskID
-        runtimeTasks[runtime.identifier] = Task { @MainActor [weak self] in
-            guard let self = self else { return }
-            defer {
-                if self.runtimeTaskIDs[runtime.identifier] == runtimeTaskID {
-                    self.runtimeTasks[runtime.identifier] = nil
-                    self.runtimeTaskIDs[runtime.identifier] = nil
-                }
-            }
-            do {
-                try await RuntimeXcodebuildInstallService(download: Current.shell.downloadRuntime).downloadAndInstall(
-                    runtime: runtime,
-                    architecture: architecture
-                ) { progress in
-                    Task { @MainActor [weak self] in
-                        guard
-                            let self,
-                            self.runtimeTaskIDs[runtime.identifier] == runtimeTaskID
-                        else { return }
-
-                        if progress.isIndeterminate {
-                            self.setInstallationStep(of: runtime, to: .installing, postNotification: false)
-                        } else {
-                            self.setInstallationStep(of: runtime, to: .downloading(progress: progress), postNotification: false)
-                        }
-                    }
-                }
-                try Task.checkCancellation()
-                Logger.appState.debug("Done downloading runtime - \(runtime.name)")
-
-                guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
-                self.downloadableRuntimes[index].installState = .installed
-                self.update()
-
-            } catch is CancellationError {
-            } catch {
-                Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
-                self.error = error
-                if let error = error as? XcodesKitError {
-                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.message)
-                } else {
-                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
-                }
-            }
-        }
-    }
-
-    func downloadRuntimeViaArchive(runtime: DownloadableRuntime) {
-        runtimeTasks[runtime.identifier]?.cancel()
-        let runtimeTaskID = UUID()
-        runtimeTaskIDs[runtime.identifier] = runtimeTaskID
-        runtimeTasks[runtime.identifier] = Task { @MainActor [weak self] in
-            guard let self = self else { return }
-            defer {
-                if self.runtimeTaskIDs[runtime.identifier] == runtimeTaskID {
-                    self.runtimeTasks[runtime.identifier] = nil
-                    self.runtimeTaskIDs[runtime.identifier] = nil
-                }
-            }
-            do {
-                let downloadedURL = try await downloadRuntimeArchive(runtime: runtime, taskID: runtimeTaskID)
-                try Task.checkCancellation()
-                Logger.appState.debug("Installing runtime: \(runtime.name)")
-                try await self.runtimeArchiveInstallService.install(
-                    runtime: runtime,
-                    archiveURL: downloadedURL,
-                    stepChanged: { step in
-                        await self.setInstallationStep(of: runtime, to: step)
-                    }
-                )
-
-                guard let index = self.downloadableRuntimes.firstIndex(where: { $0.identifier == runtime.identifier }) else { return }
-                self.downloadableRuntimes[index].installState = .installed
-                updateInstalledRuntimes()
-            } catch is CancellationError {
-            } catch {
-                Logger.appState.error("Error downloading runtime: \(error.localizedDescription)")
-                self.error = error
-                if let error = error as? XcodesKitError {
-                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.message)
-                } else {
-                    self.presentedAlert = .generic(title: localizeString("Alert.Install.Error.Title"), message: error.legibleLocalizedDescription)
-                }
-            }
-        }
+        presentedAlert = .generic(title: localizeString("Unable to install simulator runtime"),
+                                  message: runtime.visibleIdentifier + "\n\n" + message)
     }
 
     func downloadRuntimeArchive(runtime: DownloadableRuntime, taskID: UUID? = nil) async throws -> URL {
@@ -229,11 +278,17 @@ extension AppState {
         )
     }
 
-    private var runtimeArchiveInstallService: RuntimeArchiveInstallService {
+    private func runtimeArchiveInstallService(developerDirectory: String?) -> RuntimeArchiveInstallService {
         let runtimeService = self.runtimeService
         return RuntimeArchiveInstallService(
             installDiskImage: { url in
-                try await runtimeService.installRuntimeImage(dmgURL: url)
+                guard let developerDirectory else {
+                    try await runtimeService.installRuntimeImage(dmgURL: url)
+                    return
+                }
+                _ = try await Process.runAsync(URL(fileURLWithPath: "/usr/bin/env"), [
+                    "DEVELOPER_DIR=\(developerDirectory)", "/usr/bin/xcrun", "simctl", "runtime", "add", url.path
+                ])
             },
             removeArchive: { url in
                 try Current.files.removeItem(at: url)
@@ -249,6 +304,7 @@ extension AppState {
         runtimeTasks[runtime.identifier]?.cancel()
         runtimeTasks[runtime.identifier] = nil
         runtimeTaskIDs[runtime.identifier] = nil
+        waitingForXcodeRuntimes.remove(runtime.identifier)
 
         ArchiveCancellationCleanupService(
             removeItem: { try Current.files.removeItem(at: $0) }
@@ -457,7 +513,7 @@ extension AppState {
         guard !runtimes.isEmpty else { return }
         Logger.appState.info("Automatically downloading platforms: \(runtimes.map(\.name).joined(separator: ", "))")
 
-        runtimes.forEach(downloadRuntime(runtime:))
+        runtimes.forEach { downloadRuntime(runtime: $0, for: availableXcode.xcodeID) }
     }
 }
 
@@ -528,5 +584,11 @@ extension AppState {
                 }
             }
         }
+    }
+}
+
+private extension Xcode {
+    var developerDirectory: String? {
+        installedPath?.url.appendingPathComponent("Contents/Developer").path
     }
 }

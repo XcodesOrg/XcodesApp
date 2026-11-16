@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import SwiftUI
 import XcodesKit
@@ -160,4 +161,23 @@ private struct HelperSettingsButton: View {
             openSettings()
         }
     }
+}
+
+/// Native alerts size to their message. Keep the buttons visible even for command output.
+@MainActor
+func boundedErrorAlert(title: String, message: String) -> Alert {
+    let lines = message.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
+    let preview = String(lines.prefix(6).joined(separator: "\n").prefix(480))
+    guard preview != message else {
+        return Alert(title: Text(title), message: Text(message), dismissButton: .default(Text("OK")))
+    }
+    return Alert(
+        title: Text(title),
+        message: Text(preview + "…"),
+        primaryButton: .default(Text("OK")),
+        secondaryButton: .default(Text("Copy Details"), action: {
+            NSPasteboard.general.clearContents()
+            NSPasteboard.general.setString(message, forType: .string)
+        })
+    )
 }

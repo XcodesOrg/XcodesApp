@@ -66,8 +66,13 @@ public struct Shell: Sendable {
         return try await Process.runAsync(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
     }
     
-    public var downloadRuntime: @Sendable (String, String, String?) -> AsyncThrowingStream<Progress, Error> = { platform, version, architecture in
-        XcodebuildRuntimeDownloadService().download(platform: platform, buildVersion: version, architecture: architecture)
+    public var downloadRuntime: @Sendable (String, String, String?, String?) -> AsyncThrowingStream<Progress, Error> = { platform, version, architecture, developerDirectory in
+        if let developerDirectory {
+            return XcodebuildRuntimeDownloadService.download(
+                platform: platform, buildVersion: version, architecture: architecture, developerDirectory: developerDirectory
+            )
+        }
+        return XcodebuildRuntimeDownloadService().download(platform: platform, buildVersion: version, architecture: architecture)
     }
 }
 

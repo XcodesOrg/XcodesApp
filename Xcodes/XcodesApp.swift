@@ -110,14 +110,7 @@ struct XcodesApp: App {
         case let .noActiveXcode(runtime, xcode):
             return .noActiveXcode(appState: appState, runtime: runtime, xcode: xcode, inSettings: true)
         case let .generic(title, message):
-            return Alert(
-                title: Text(title),
-                message: Text(message),
-                dismissButton: .default(
-                    Text("OK"),
-                    action: { appState.presentedAlert = nil }
-                )
-            )
+            return boundedErrorAlert(title: title, message: message)
         }
     }
 }

@@ -195,6 +195,7 @@ class AppState: ObservableObject {
     // MARK: - Runtimes
 
     @Published var downloadableRuntimes: [DownloadableRuntime] = []
+    @Published var waitingForXcodeRuntimes: Set<String> = []
     @Published var installedRuntimes: [CoreSimulatorImage] = []
 
     // MARK: - Operation State

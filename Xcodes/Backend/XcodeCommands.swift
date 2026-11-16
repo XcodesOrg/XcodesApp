@@ -233,6 +233,7 @@ struct CreateSymbolicLinkButton: View {
 struct DownloadRuntimeButton: View {
     @EnvironmentObject var appState: AppState
     let runtime: DownloadableRuntime?
+    let xcodeID: XcodeID
     
     var body: some View {
         Button(action: install) {
@@ -243,7 +244,7 @@ struct DownloadRuntimeButton: View {
     
     private func install() {
         guard let runtime = runtime else { return }
-        appState.downloadRuntime(runtime: runtime)
+        appState.downloadRuntime(runtime: runtime, for: xcodeID)
     }
 }
 

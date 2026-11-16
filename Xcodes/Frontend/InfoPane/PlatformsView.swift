@@ -81,6 +81,7 @@ struct PlatformsView: View {
     
     @ViewBuilder
     func runtimeView(runtime: DownloadableRuntime) -> some View {
+        let waitingForXcode = appState.waitingForXcodeRuntimes.contains(runtime.identifier)
         VStack(spacing: 10) {
             HStack {
                 runtime.icon()
@@ -101,23 +102,29 @@ struct PlatformsView: View {
                         appState.presentedAlert = .deletePlatform(runtime: runtime)
                     }
                     .help("Alert.DeletePlatform.PrimaryButton")
-                } else if runtime.installState == .notInstalled {
-                    DownloadRuntimeButton(runtime: runtime)
+                } else if runtime.installState == .notInstalled && !waitingForXcode {
+                    DownloadRuntimeButton(runtime: runtime, xcodeID: xcode.id)
                 }
 
                 Text(runtime.downloadFileSizeString)
                     .font(.subheadline)
-						  .frame(width: 70, alignment: .trailing)
+                    .frame(width: 70, alignment: .trailing)
             }
-			  
-			  if case let .installing(installationStep) = runtime.installState {
-				  HStack(alignment: .top, spacing: 5){
-					  RuntimeInstallationStepDetailView(installationStep: installationStep)
-						  .fixedSize(horizontal: false, vertical: true)
-					  Spacer()
-					  CancelRuntimeInstallButton(runtime: runtime)
-				  }
-			  }
+
+            if waitingForXcode {
+                HStack {
+                    Text("Waiting for Xcode to finish installing…")
+                    Spacer()
+                    CancelRuntimeInstallButton(runtime: runtime)
+                }
+            } else if case let .installing(installationStep) = runtime.installState {
+                HStack(alignment: .top, spacing: 5) {
+                    RuntimeInstallationStepDetailView(installationStep: installationStep)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Spacer()
+                    CancelRuntimeInstallButton(runtime: runtime)
+                }
+            }
         }
     }
     

@@ -212,14 +212,7 @@ struct MainWindow: View {
                 secondaryButton: .cancel(Text("Done"))
             )
         case let .generic(title, message):
-            return Alert(
-                title: Text(title),
-                message: Text(message),
-                dismissButton: .default(
-                    Text("OK"),
-                    action: { appState.presentedAlert = nil }
-                )
-            )
+            return boundedErrorAlert(title: title, message: message)
         case .unauthenticated:
             return Alert(
                 title: Text("Alert.Install.Error.Title"),
