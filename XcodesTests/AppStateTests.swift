@@ -814,12 +814,24 @@ class AppStateTests: XCTestCase {
             path: ["relative": "/Library/Developer/CoreSimulator/Images/runtime.dmg"],
             runtimeInfo: CoreSimulatorRuntimeInfo(build: runtime.simulatorVersion.buildUpdate)
         )
+        let registeredImage = try PropertyListSerialization.data(fromPropertyList: [
+            "images": [[
+                "uuid": installedRuntime.uuid,
+                "path": installedRuntime.path,
+                "runtimeInfo": ["build": installedRuntime.runtimeInfo.build],
+            ]]
+        ], format: .binary, options: 0)
+        let emptyInventory = try PropertyListSerialization.data(fromPropertyList: ["images": []], format: .binary, options: 0)
         let deletedIdentifiers = TestLockedBox<[String]>([])
-        let request = OneShotContinuation<Bool>()
+        let inventory = TestLockedBox(registeredImage)
+        let firstRead = OneShotContinuation<Void>()
         subject = AppState(
-            runtimeService: Self.runtimeService { identifier in
+            runtimeService: Self.runtimeService(contentsAtPath: { _ in
+                let snapshot = inventory.read { $0 }
+                firstRead.resume()
+                return snapshot
+            }) { identifier in
                 deletedIdentifiers.withValue { $0.append(identifier) }
-                _ = try await request.value {}
                 throw ProcessExecutionError(
                     process: Process(), terminationStatus: 24, standardOutput: nil,
                     standardError: """
@@ -833,13 +845,20 @@ class AppStateTests: XCTestCase {
 
         subject.confirmDeleteRuntime(runtime: runtime)
         let task = try XCTUnwrap(subject.deleteRuntimeTask)
-        for _ in 0..<100 where !subject.isRemovingRuntime(runtime) {
-            await Task.yield()
+        let observedInventory = expectation(description: "CoreSimulator still lists the runtime after the first delete")
+        let observation = Task {
+            try await firstRead.value {}
+            observedInventory.fulfill()
         }
+        await fulfillment(of: [observedInventory], timeout: 2)
+        observation.cancel()
+
         XCTAssertTrue(subject.isRemovingRuntime(runtime))
+        XCTAssertNotNil(subject.coreSimulatorInfo(runtime: runtime))
+        XCTAssertNil(subject.presentedPreferenceAlert)
 
         subject.confirmDeleteRuntime(runtime: runtime)
-        request.resume(with: .success(true))
+        inventory.withValue { $0 = emptyInventory }
         await task.value
 
         XCTAssertEqual(deletedIdentifiers.read { $0 }, [installedRuntime.uuid])
@@ -1125,24 +1144,14 @@ class AppStateTests: XCTestCase {
     }
 
     private static func runtimeService(
+        contentsAtPath: @escaping RuntimeService.ContentsAtPath,
         deleteRuntimeOutput: @escaping @Sendable (String) async throws -> ProcessOutput
     ) -> RuntimeService {
         RuntimeService(
             loadData: { request in
                 (Data(), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
             },
-            contentsAtPath: { _ in
-                Data("""
-                <?xml version="1.0" encoding="UTF-8"?>
-                <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-                <plist version="1.0">
-                <dict>
-                    <key>images</key>
-                    <array/>
-                </dict>
-                </plist>
-                """.utf8)
-            },
+            contentsAtPath: contentsAtPath,
             installedRuntimesOutput: {
                 ProcessOutput(status: 0, out: "{}", err: "")
             },
