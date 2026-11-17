@@ -682,97 +682,189 @@ class AppStateTests: XCTestCase {
         XCTAssertEqual(subject.authenticationState, .unauthenticated)
     }
 
-    func test_DownloadRuntimeViaXcodeBuild_ClearsRuntimeTaskWhenComplete() async throws {
-        let runtime = try Self.downloadableRuntime()
+    func test_DownloadRuntime_WaitsForFirstXcodeThenUsesItsDeveloperDirectory() async throws {
+        try await assertRuntimeUsesNewXcode(olderXcodeInstalled: false)
+    }
+
+    func test_DownloadRuntime_RetriesFailedParallelAttemptWithNewXcode() async throws {
+        try await assertRuntimeUsesNewXcode(olderXcodeInstalled: true)
+    }
+
+    func test_DownloadRuntime_BetaWaitsForMatchingXcodeInsteadOfUsingOlderToolchain() async throws {
+        try await assertRuntimeUsesNewXcode(olderXcodeInstalled: true, betaRuntime: true)
+    }
+
+    private func assertRuntimeUsesNewXcode(olderXcodeInstalled: Bool, betaRuntime: Bool = false) async throws {
+        var runtime = try Self.downloadableRuntime(contentType: "cryptexDiskImage")
+        if betaRuntime { runtime.seedNumber = 1 }
+        let path = Path("/Applications/Test Xcode.app")!
+        var xcode = Xcode(version: Version("27.3.0")!, installState: .notInstalled, selected: false, icon: nil)
+        let xcodeID = xcode.id
+        subject.allXcodes = [xcode]
+        if olderXcodeInstalled {
+            subject.allXcodes.append(
+                Xcode(version: Version("27.2.0")!, installState: .installed(Path("/Applications/Older Xcode.app")!),
+                      selected: true, icon: nil)
+            )
+        }
         subject.downloadableRuntimes = [runtime]
-        Current.shell.downloadRuntime = { _, _, _ in
-            let (stream, continuation) = AsyncThrowingStream.makeStream(of: Progress.self, throwing: Error.self)
-            continuation.finish()
-            return stream
+
+        let dependency = OneShotContinuation<Void>()
+        subject.installationTasks[xcodeID] = Task { @MainActor in
+            try? await dependency.value {}
+            xcode.installState = .installed(path)
+            subject.allXcodes = [xcode]
+            subject.installationTasks[xcodeID] = nil
         }
 
-        subject.downloadRuntimeViaXcodeBuild(runtime: runtime)
-        let task = try XCTUnwrap(subject.runtimeTasks[runtime.identifier])
-        try await task.value
+        let directories = TestLockedBox<[String?]>([])
+        Current.shell.downloadRuntime = { _, _, _, directory in
+            directories.withValue { $0.append(directory) }
+            return AsyncThrowingStream { continuation in
+                if directory == nil {
+                    continuation.finish(throwing: ProcessExecutionError(
+                        process: Process(), terminationStatus: 70, standardOutput: nil, standardError: "Runtime unavailable"
+                    ))
+                } else {
+                    continuation.finish()
+                }
+            }
+        }
 
+        subject.downloadRuntime(runtime: runtime, for: xcodeID)
+        let task = try XCTUnwrap(subject.runtimeTasks[runtime.identifier])
+        for _ in 0..<100 where !subject.waitingForXcodeRuntimes.contains(runtime.identifier) {
+            await Task.yield()
+        }
+        XCTAssertTrue(subject.waitingForXcodeRuntimes.contains(runtime.identifier))
+        let expectedFirstAttempts: [String?] = olderXcodeInstalled && !betaRuntime ? [nil] : []
+        XCTAssertEqual(directories.read { $0 }, expectedFirstAttempts)
+        XCTAssertNil(subject.presentedAlert)
+
+        dependency.resume()
+        await task.value
+
+        XCTAssertEqual(directories.read { $0 }, expectedFirstAttempts + ["/Applications/Test Xcode.app/Contents/Developer"])
+        XCTAssertFalse(subject.waitingForXcodeRuntimes.contains(runtime.identifier))
         XCTAssertNil(subject.runtimeTasks[runtime.identifier])
-        XCTAssertNil(subject.runtimeTaskIDs[runtime.identifier])
         XCTAssertEqual(subject.downloadableRuntimes.first?.installState, .installed)
     }
 
-    func test_DownloadRuntimeViaXcodeBuild_OldTaskDoesNotClearReplacementTask() async throws {
-        let runtime = try Self.downloadableRuntime()
-        subject.downloadableRuntimes = [runtime]
-        let continuations = TestLockedBox<[AsyncThrowingStream<Progress, Error>.Continuation]>([])
-        Current.shell.downloadRuntime = { _, _, _ in
-            let (stream, continuation) = AsyncThrowingStream.makeStream(of: Progress.self, throwing: Error.self)
-            continuations.withValue { $0.append(continuation) }
-            return stream
+    func test_RuntimeCommandStreamsDownloadProgressThenInstallingAndPreservesFailure() async throws {
+        let process = Process()
+        process.executableURL = URL(fileURLWithPath: "/bin/sh")
+        process.arguments = ["-c", """
+            printf 'Finding content...\\n\\rDownloading iOS: 63.'
+            printf '0%% (1.2 GB of 2.0 GB)\\rInstalling iOS Simulator\\n'
+            printf 'runtime diagnostic\\n' >&2
+            exit 70
+            """]
+
+        var sawDownload = false
+        var sawInstalling = false
+        do {
+            for try await progress in XcodebuildRuntimeDownloadService.runtimeProgressStream(for: process) {
+                sawDownload = sawDownload || progress.completedUnitCount == 63
+                sawInstalling = sawInstalling || progress.isIndeterminate
+            }
+            XCTFail("Expected the command to fail")
+        } catch let error as ProcessExecutionError {
+            XCTAssertEqual(error.terminationStatus, 70)
+            XCTAssertEqual(error.standardError, "runtime diagnostic\n")
         }
-
-        subject.downloadRuntimeViaXcodeBuild(runtime: runtime)
-        for _ in 0..<100 where continuations.read({ $0.count }) < 1 {
-            await Task.yield()
-        }
-        let firstTask = try XCTUnwrap(subject.runtimeTasks[runtime.identifier])
-        XCTAssertEqual(continuations.read { $0.count }, 1)
-
-        subject.downloadRuntimeViaXcodeBuild(runtime: runtime)
-        for _ in 0..<100 where continuations.read({ $0.count }) < 2 {
-            await Task.yield()
-        }
-        let replacementTask = try XCTUnwrap(subject.runtimeTasks[runtime.identifier])
-        XCTAssertEqual(continuations.read { $0.count }, 2)
-
-        continuations.read { $0[0] }.finish()
-        try await firstTask.value
-        XCTAssertNotNil(subject.runtimeTasks[runtime.identifier])
-
-        continuations.read { $0[1] }.finish()
-        try await replacementTask.value
-        XCTAssertNil(subject.runtimeTasks[runtime.identifier])
-        XCTAssertNil(subject.runtimeTaskIDs[runtime.identifier])
+        XCTAssertTrue(sawDownload)
+        XCTAssertTrue(sawInstalling)
     }
 
-    func test_ConfirmDeleteRuntime_OldTaskDoesNotClearReplacementTask() async throws {
+    func test_DownloadRuntime_FailureShowsStderrAndAllowsRetry() async throws {
+        let runtime = try Self.downloadableRuntime(contentType: "cryptexDiskImage")
+        subject.downloadableRuntimes = [runtime]
+        subject.allXcodes = [
+            Xcode(version: Version("27.3.0")!, installState: .installed(Path("/Applications/Xcode.app")!),
+                  selected: true, icon: nil)
+        ]
+        Current.shell.downloadRuntime = { _, _, _, _ in
+            AsyncThrowingStream {
+                $0.finish(throwing: ProcessExecutionError(
+                    process: Process(), terminationStatus: 70,
+                    standardOutput: String(repeating: "Downloading iOS: 50%\r", count: 1_000),
+                    standardError: "Download failed: Connection lost."
+                ))
+            }
+        }
+
+        subject.downloadRuntime(runtime: runtime)
+        let task = try XCTUnwrap(subject.runtimeTasks[runtime.identifier])
+        await task.value
+
+        guard case let .generic(_, message) = subject.presentedAlert else {
+            return XCTFail("Expected a runtime install error")
+        }
+        XCTAssertTrue(message.contains("Connection lost"))
+        XCTAssertTrue(message.contains("70"))
+        XCTAssertFalse(message.contains("Downloading iOS"))
+        XCTAssertEqual(subject.downloadableRuntimes.first?.installState, .notInstalled)
+        XCTAssertNil(subject.runtimeTasks[runtime.identifier])
+    }
+
+    func test_ConfirmDeleteRuntime_IgnoresDuplicateAndAcceptsRemovalInProgress() async throws {
         let runtime = try Self.downloadableRuntime()
         let installedRuntime = CoreSimulatorImage(
             uuid: "runtime-uuid",
             path: ["relative": "/Library/Developer/CoreSimulator/Images/runtime.dmg"],
             runtimeInfo: CoreSimulatorRuntimeInfo(build: runtime.simulatorVersion.buildUpdate)
         )
+        let registeredImage = try PropertyListSerialization.data(fromPropertyList: [
+            "images": [[
+                "uuid": installedRuntime.uuid,
+                "path": installedRuntime.path,
+                "runtimeInfo": ["build": installedRuntime.runtimeInfo.build],
+            ]]
+        ], format: .binary, options: 0)
+        let emptyInventory = try PropertyListSerialization.data(fromPropertyList: ["images": []], format: .binary, options: 0)
         let deletedIdentifiers = TestLockedBox<[String]>([])
-        let continuations = TestLockedBox<[CheckedContinuation<ProcessOutput, Error>]>([])
+        let inventory = TestLockedBox(registeredImage)
+        let firstRead = OneShotContinuation<Void>()
         subject = AppState(
-            runtimeService: Self.runtimeService { identifier in
+            runtimeService: Self.runtimeService(contentsAtPath: { _ in
+                let snapshot = inventory.read { $0 }
+                firstRead.resume()
+                return snapshot
+            }) { identifier in
                 deletedIdentifiers.withValue { $0.append(identifier) }
-                return try await withCheckedThrowingContinuation { continuation in
-                    continuations.withValue { $0.append(continuation) }
-                }
+                throw ProcessExecutionError(
+                    process: Process(), terminationStatus: 24, standardOutput: nil,
+                    standardError: """
+                    (domain=com.apple.CoreSimulator.simdiskimaged.SimDiskImageError, code=24):
+                    Attempting to delete image: runtime-uuid (Please retry in 174s, if the image is not removed)
+                    """
+                )
             }
         )
         subject.installedRuntimes = [installedRuntime]
 
         subject.confirmDeleteRuntime(runtime: runtime)
-        for _ in 0..<100 where continuations.read({ $0.count }) < 1 {
-            await Task.yield()
+        let task = try XCTUnwrap(subject.deleteRuntimeTask)
+        let observedInventory = expectation(description: "CoreSimulator still lists the runtime after the first delete")
+        let observation = Task {
+            try await firstRead.value {}
+            observedInventory.fulfill()
         }
-        let firstTask = try XCTUnwrap(subject.deleteRuntimeTask)
-        XCTAssertEqual(deletedIdentifiers.read { $0 }, [installedRuntime.uuid])
+        await fulfillment(of: [observedInventory], timeout: 2)
+        observation.cancel()
+
+        XCTAssertTrue(subject.isRemovingRuntime(runtime))
+        XCTAssertNotNil(subject.coreSimulatorInfo(runtime: runtime))
+        XCTAssertNil(subject.presentedPreferenceAlert)
 
         subject.confirmDeleteRuntime(runtime: runtime)
-        for _ in 0..<100 where continuations.read({ $0.count }) < 2 {
-            await Task.yield()
-        }
-        let replacementTask = try XCTUnwrap(subject.deleteRuntimeTask)
-        XCTAssertEqual(deletedIdentifiers.read { $0 }, [installedRuntime.uuid, installedRuntime.uuid])
+        inventory.withValue { $0 = emptyInventory }
+        await task.value
 
-        continuations.read { $0[0] }.resume(returning: ProcessOutput(status: 0, out: "", err: ""))
-        await firstTask.value
-        XCTAssertNotNil(subject.deleteRuntimeTask)
-
-        continuations.read { $0[1] }.resume(returning: ProcessOutput(status: 0, out: "", err: ""))
-        await replacementTask.value
+        XCTAssertEqual(deletedIdentifiers.read { $0 }, [installedRuntime.uuid])
+        XCTAssertNil(subject.presentedPreferenceAlert)
+        XCTAssertNil(subject.coreSimulatorInfo(runtime: runtime))
+        XCTAssertFalse(subject.isRemovingRuntime(runtime))
         XCTAssertNil(subject.deleteRuntimeTask)
         XCTAssertNil(subject.deleteRuntimeTaskID)
     }
@@ -1020,7 +1112,7 @@ class AppStateTests: XCTestCase {
         )
     }
 
-    private static func downloadableRuntime() throws -> DownloadableRuntime {
+    private static func downloadableRuntime(contentType: String = "diskImage") throws -> DownloadableRuntime {
         let json = """
         {
           "category": "simulator",
@@ -1031,7 +1123,7 @@ class AppStateTests: XCTestCase {
           "source": "https://example.com/iOS_16_Runtime.dmg",
           "architectures": null,
           "dictionaryVersion": 1,
-          "contentType": "diskImage",
+          "contentType": "\(contentType)",
           "platform": "com.apple.platform.iphoneos",
           "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-16-0",
           "version": "16.0",
@@ -1052,24 +1144,14 @@ class AppStateTests: XCTestCase {
     }
 
     private static func runtimeService(
+        contentsAtPath: @escaping RuntimeService.ContentsAtPath,
         deleteRuntimeOutput: @escaping @Sendable (String) async throws -> ProcessOutput
     ) -> RuntimeService {
         RuntimeService(
             loadData: { request in
                 (Data(), HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: nil, headerFields: nil)!)
             },
-            contentsAtPath: { _ in
-                Data("""
-                <?xml version="1.0" encoding="UTF-8"?>
-                <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-                <plist version="1.0">
-                <dict>
-                    <key>images</key>
-                    <array/>
-                </dict>
-                </plist>
-                """.utf8)
-            },
+            contentsAtPath: contentsAtPath,
             installedRuntimesOutput: {
                 ProcessOutput(status: 0, out: "{}", err: "")
             },

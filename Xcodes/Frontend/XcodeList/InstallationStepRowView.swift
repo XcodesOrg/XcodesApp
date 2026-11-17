@@ -6,7 +6,7 @@ struct InstallationStepRowView: View {
     let cancel: () -> Void
 
     var body: some View {
-        Button(action: cancel) {
+        HStack(spacing: 6) {
             switch installationStep {
             case let .downloading(progress):
                 // FB8955769 ProgressView.init(_: Progress) doesn't ensure that changes from the Progress object are applied to the UI on the main thread
@@ -16,13 +16,12 @@ struct InstallationStepRowView: View {
                     // A retry can replace the Progress without changing the installation step.
                     .id(ObjectIdentifier(progress))
             case .authenticating, .unarchiving, .moving, .trashingArchive, .checkingSecurity, .finishing:
-                InstallProgressRing(fractionCompleted: nil)
+                InstallProgressRing(fractionCompleted: nil, showsStopGlyph: false)
                     .help(installationStep.stepDescription())
             }
+            DownloadCancelButton(action: cancel)
+                .accessibilityValue(Text(installationStep.stepDescription()))
         }
-        .buttonStyle(PlainButtonStyle())
-        .accessibilityLabel(Text("StopInstallation"))
-        .accessibilityValue(Text(installationStep.stepDescription()))
         .frame(minWidth: 65)
     }
 }
@@ -38,7 +37,8 @@ private struct DownloadProgressRing: View {
 
     var body: some View {
         InstallProgressRing(
-            fractionCompleted: progress.progress.isIndeterminate ? nil : progress.progress.fractionCompleted
+            fractionCompleted: progress.progress.isIndeterminate ? nil : progress.progress.fractionCompleted,
+            showsStopGlyph: false
         )
         .help(helpText)
     }

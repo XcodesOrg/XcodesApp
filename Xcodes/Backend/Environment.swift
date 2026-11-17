@@ -66,8 +66,14 @@ public struct Shell: Sendable {
         return try await Process.runAsync(unxipPath.url, workingDirectory: url.deletingLastPathComponent(), ["\(url.path)"])
     }
     
-    public var downloadRuntime: @Sendable (String, String, String?) -> AsyncThrowingStream<Progress, Error> = { platform, version, architecture in
-        XcodebuildRuntimeDownloadService().download(platform: platform, buildVersion: version, architecture: architecture)
+    public var deleteRuntimeWithDeveloperDirectory: @Sendable (String, String) async throws -> Void = { identifier, directory in
+        _ = try await CleanupOperations.runSimctl(["runtime", "delete", identifier], developerDirectory: directory)
+    }
+
+    public var downloadRuntime: @Sendable (String, String, String?, String?) -> AsyncThrowingStream<Progress, Error> = { platform, version, architecture, developerDirectory in
+        XcodebuildRuntimeDownloadService.download(
+            platform: platform, buildVersion: version, architecture: architecture, developerDirectory: developerDirectory
+        )
     }
 }
 

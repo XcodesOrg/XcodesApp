@@ -165,6 +165,32 @@ class AppStateUpdateTests: XCTestCase {
         XCTAssertEqual(subject.allXcodes.first?.installedPath, xcode.installedPath)
     }
 
+    func test_UninstallWithPlatforms_UsesLastXcodeBeforeRemovingIt() async throws {
+        let path = Path("/Applications/Test Xcode.app")!
+        let xcode = Xcode(version: Version("27.3.0-beta.1")!, installState: .installed(path), selected: true, icon: nil)
+        subject.allXcodes = [xcode]
+        let platform = try runtime(platform: "iphoneos", identifier: "ios-test", sdkBuild: "24A1", simulatorBuild: "24A2", architectures: ["arm64"])
+        subject.installedRuntimes = [
+            CoreSimulatorImage(uuid: "test-runtime", path: [:], runtimeInfo: CoreSimulatorRuntimeInfo(build: "24A2", supportedArchitectures: [.arm64]))
+        ]
+        let operations = AppStateUpdateTestLockedBox<[String]>([])
+        Current.shell.deleteRuntimeWithDeveloperDirectory = { id, directory in
+            operations.withValue { $0.append("delete " + id + " using " + directory) }
+        }
+        Current.files.trashItem = { url in
+            operations.withValue { $0.append("trash " + url.path) }
+            return url
+        }
+
+        let task = try XCTUnwrap(subject.uninstall(xcode: xcode, removingRuntimes: [platform]))
+        await task.value
+
+        XCTAssertEqual(operations.read { $0 }, [
+            "delete test-runtime using /Applications/Test Xcode.app/Contents/Developer",
+            "trash /Applications/Test Xcode.app"
+        ])
+    }
+
     func test_InstalledRuntimesUsedOnlyByXcode_SkipsSharedAndNotInstalledPlatforms() throws {
         subject.downloadableRuntimes = try [
             platformRuntime(platform: "iphoneos", identifier: "ios-27.0", sdkBuild: "24A430", simulatorBuild: "24A434"),
