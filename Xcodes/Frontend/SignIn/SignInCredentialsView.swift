@@ -9,6 +9,7 @@ struct SignInCredentialsView: View {
     @State private var username: String = ""
     @State private var password: String = ""
     @FocusState private var focusedField: FocusedField?
+    @State private var canSignInWithTouchID = false
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -42,10 +43,17 @@ struct SignInCredentialsView: View {
             }
             
             HStack {
+                if canSignInWithTouchID {
+                    Button {
+                        appState.signInWithTouchID(username: username)
+                    } label: {
+                        Label("SignInWithTouchID", systemImage: "touchid")
+                    }
+                    .disabled(appState.isProcessingAuthRequest || appState.isAuthenticatingWithTouchID)
+                }
                 Spacer()
                 Button("Cancel") {
-                    appState.authError = nil
-                    appState.presentedSheet = nil
+                    appState.cancelSignIn()
                 }
                     .keyboardShortcut(.cancelAction)
                 ProgressButton(
@@ -55,12 +63,29 @@ struct SignInCredentialsView: View {
                         Text("Next")
                     }
                 )
-                .disabled(username.isEmpty)
+                .disabled(username.isEmpty || appState.isAuthenticatingWithTouchID)
                 .keyboardShortcut(.defaultAction)
             }
             .frame(height: 25)
         }
         .padding()
+        .onAppear {
+            if username.isEmpty, let savedUsername = appState.savedUsername {
+                username = savedUsername
+            }
+        }
+        .task(id: username) {
+            // Wait for typing to pause before checking the keychain, instead of reading it on every keystroke.
+            if !canSignInWithTouchID {
+                try? await Task.sleep(for: .milliseconds(400))
+                guard !Task.isCancelled else { return }
+            }
+            updateCanSignInWithTouchID()
+        }
+    }
+
+    private func updateCanSignInWithTouchID() {
+        canSignInWithTouchID = appState.canSignInWithTouchID(username: username)
     }
 }
 

@@ -13,6 +13,7 @@ enum XcodesAlert: Identifiable {
     case unauthenticated
     case deletePlatform(runtime: DownloadableRuntime)
     case noActiveXcode(runtime: DownloadableRuntime, xcode: Xcode?)
+    case offerTouchID
 
     var id: Int {
         switch self {
@@ -26,6 +27,7 @@ enum XcodesAlert: Identifiable {
         case .unauthenticated: return 6
         case .deletePlatform: return 8
         case .noActiveXcode: return 9
+        case .offerTouchID: return 11
         }
     }
 }

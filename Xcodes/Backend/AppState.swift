@@ -114,6 +114,12 @@ class AppState: ObservableObject {
 
     @Published var error: Error?
     @Published var authError: Error?
+    /// Set when the user types a password, so the app can offer Touch ID once sign-in finishes.
+    private var shouldOfferTouchIDAfterSignIn = false
+    /// `true` while a Touch ID prompt for the saved password is on screen.
+    @Published private(set) var isAuthenticatingWithTouchID = false
+    /// The Touch ID prompt in progress, shared so that callers checking the session at the same time see one prompt.
+    private var touchIDPasswordTask: Task<SavedPasswordResult, Never>?
 
     // MARK: Advanced Preferences
     @Published var localPath = "" {
@@ -171,6 +177,13 @@ class AppState: ObservableObject {
     @Published var showOpenInRosettaOption = false {
         didSet {
             Current.defaults.set(showOpenInRosettaOption, forKey: "showOpenInRosettaOption")
+        }
+    }
+
+    /// When `true`, Touch ID is required before the saved Apple ID password is used to sign in again.
+    @Published private(set) var requireTouchIDForSavedPassword = false {
+        didSet {
+            Current.defaults.set(requireTouchIDForSavedPassword, forKey: "requireTouchIDForSavedPassword")
         }
     }
 
@@ -290,6 +303,7 @@ class AppState: ObservableObject {
         installPath = Current.defaults.string(forKey: "installPath") ?? Path.defaultInstallDirectory.string
         showOpenInRosettaOption = Current.defaults.bool(forKey: "showOpenInRosettaOption") ?? false
         terminateAfterLastWindowClosed = Current.defaults.bool(forKey: "terminateAfterLastWindowClosed") ?? false
+        requireTouchIDForSavedPassword = Current.defaults.bool(forKey: "requireTouchIDForSavedPassword") ?? false
         enableGroupedXcodeList = Current.defaults.get(forKey: PreferenceKey.enableGroupedXcodeList.rawValue) as? Bool ?? true
         usePrivilegedHelperForFileOperations = Current.defaults.bool(forKey: PreferenceKey.usePrivilegeHelperForFileOperations.rawValue) ?? false
         showTags = Current.defaults.get(forKey: PreferenceKey.showTags.rawValue) as? Bool ?? true
@@ -325,6 +339,10 @@ class AppState: ObservableObject {
     }
 
     func signInIfNeededAsync() async throws {
+        try await signInIfNeededAsync(presentSignInOnTouchIDFailure: false)
+    }
+
+    private func signInIfNeededAsync(presentSignInOnTouchIDFailure: Bool) async throws {
         do {
             let authenticationState = try await validateSessionAsync()
             try Task.checkCancellation()
@@ -337,24 +355,167 @@ class AppState: ObservableObject {
             guard error as? AuthenticationError == .invalidSession || Self.isUnauthorizedInstallError(error) else {
                 throw error
             }
-            guard
-                let username = savedUsername,
-                let password = try? Current.keychain.getString(username)
-            else {
+            guard let username = savedUsername else { throw error }
+
+            switch await savedPasswordResult(for: username) {
+            case let .password(password):
+                // An automatic sign-in isn't the user typing a password, so don't offer Touch ID for it.
+                shouldOfferTouchIDAfterSignIn = false
+                _ = try await signInAsync(username: username, password: password)
+            case .touchIDFailed:
+                try Task.checkCancellation()
+                if presentSignInOnTouchIDFailure {
+                    presentedSheet = .signIn
+                }
+                throw error
+            case .none:
                 throw error
             }
+        }
+    }
 
-            _ = try await signInAsync(username: username, password: password)
+    enum SavedPasswordResult: Sendable, Equatable {
+        /// The saved password, unlocked with Touch ID if the user turned it on.
+        case password(String)
+        /// No password is saved for this account.
+        case none
+        /// Touch ID is required but failed, was cancelled, or isn't available right now.
+        case touchIDFailed
+    }
+
+    /// Reads the saved Apple ID password, returning `nil` if there isn't one or Touch ID didn't succeed.
+    func savedPasswordAsync(for username: String) async -> String? {
+        if case let .password(password) = await savedPasswordResult(for: username) {
+            return password
+        }
+        return nil
+    }
+
+    /// Reads the saved Apple ID password, first requiring Touch ID when the user has turned it on.
+    ///
+    /// Callers that ask at the same time share one Touch ID prompt. No prompt is shown while the app
+    /// is in the background (for example, from the auto-install timer), since nobody may be there to answer it.
+    private func savedPasswordResult(for username: String) async -> SavedPasswordResult {
+        guard requireTouchIDForSavedPassword else {
+            guard let password = try? Current.keychain.getString(username) else { return .none }
+            return .password(password)
+        }
+        if let touchIDPasswordTask {
+            return await touchIDPasswordTask.value
+        }
+        guard (try? Current.keychain.getString(username)) != nil else { return .none }
+        guard Current.biometrics.isAvailable(), Current.biometrics.isAppActive() else { return .touchIDFailed }
+
+        let task = Task { @MainActor () -> SavedPasswordResult in
+            let reason = String(format: localizeString("TouchIDReason.UseSavedPassword"), username)
+            guard await Current.biometrics.authenticate(reason: reason),
+                  let password = try? Current.keychain.getString(username) else {
+                return .touchIDFailed
+            }
+            return .password(password)
+        }
+        touchIDPasswordTask = task
+        isAuthenticatingWithTouchID = true
+        defer {
+            touchIDPasswordTask = nil
+            isAuthenticatingWithTouchID = false
+        }
+        // Cancelling the caller cancels the prompt too, so a stale prompt can't finish later.
+        return await withTaskCancellationHandler {
+            await task.value
+        } onCancel: {
+            task.cancel()
+        }
+    }
+
+    /// After the first sign-in with a typed password, asks once whether to use Touch ID next time.
+    private func offerTouchIDIfNeeded() {
+        guard
+            !requireTouchIDForSavedPassword,
+            Current.defaults.bool(forKey: "hasOfferedTouchID") != true,
+            Current.biometrics.isAvailable()
+        else { return }
+        Task { @MainActor in
+            // Wait for the sign-in sheet to close and for any other alert to be dismissed, so the offer
+            // neither gets dropped by SwiftUI nor replaces a message the user needs to see.
+            for _ in 0..<60 {
+                try? await Task.sleep(for: .milliseconds(500))
+                guard !requireTouchIDForSavedPassword else { return }
+                if presentedSheet == nil, presentedAlert == nil {
+                    presentedAlert = .offerTouchID
+                    return
+                }
+            }
+        }
+    }
+
+    /// Records the user's answer to the Touch ID offer so it isn't shown again.
+    func respondToTouchIDOffer(useTouchID: Bool) async {
+        Current.defaults.set(true, forKey: "hasOfferedTouchID")
+        if useTouchID {
+            await setRequireTouchIDForSavedPassword(true)
+        }
+    }
+
+    /// Whether the sign-in window can offer Touch ID instead of typing the password for this account.
+    func canSignInWithTouchID(username: String) -> Bool {
+        let username = username.lowercased()
+        guard
+            !username.isEmpty,
+            requireTouchIDForSavedPassword,
+            Current.biometrics.isAvailable()
+        else { return false }
+        return (try? Current.keychain.getString(username)) != nil
+    }
+
+    /// Signs in with the saved password after the user authenticates with Touch ID.
+    func signInWithTouchID(username: String) {
+        guard !isAuthenticatingWithTouchID else { return }
+        authError = nil
+        shouldOfferTouchIDAfterSignIn = false
+        let username = username.lowercased()
+        startAuthenticationTask {
+            let result = await self.savedPasswordResult(for: username)
+            // Ignore a result that arrives after the user cancelled or started another sign-in.
+            try Task.checkCancellation()
+            guard case .signIn = self.presentedSheet else { return }
+            guard case let .password(password) = result else {
+                self.authError = TouchIDSignInError.failed
+                return
+            }
+            _ = try await self.signInAsync(username: username, password: password)
+        }
+    }
+
+    /// Cancels an in-progress sign-in, including an open Touch ID prompt.
+    func cancelSignIn() {
+        authenticationTask?.cancel()
+        authError = nil
+        presentedSheet = nil
+    }
+
+    /// Turns the Touch ID requirement on or off. Turning it on asks for Touch ID first,
+    /// so the user knows it works before the app relies on it.
+    func setRequireTouchIDForSavedPassword(_ isRequired: Bool) async {
+        guard isRequired else {
+            requireTouchIDForSavedPassword = false
+            return
+        }
+        guard Current.biometrics.isAvailable() else { return }
+        if await Current.biometrics.authenticate(reason: localizeString("TouchIDReason.Enable")) {
+            requireTouchIDForSavedPassword = true
         }
     }
 
     func restoreAuthenticationStateIfNeeded() async throws {
         guard hasSavedUsername else { return }
-        try await signInIfNeededAsync()
+        // At launch, if the user cancels or fails Touch ID, show the sign-in window rather than nothing.
+        try await signInIfNeededAsync(presentSignInOnTouchIDFailure: true)
     }
 
     func signIn(username: String, password: String?) {
         authError = nil
+        shouldOfferTouchIDAfterSignIn = password?.isEmpty == false
         startAuthenticationTask {
             _ = try await self.signInAsync(username: username.lowercased(), password: password)
         }
@@ -454,11 +615,18 @@ class AppState: ObservableObject {
         // Explicit sign-out owns removal of the saved account and password.
         Logger.appState.error("Authentication error: \(error.legibleDescription)")
         self.authError = error
+        shouldOfferTouchIDAfterSignIn = false
     }
 
     private func handleAuthenticationFlowSuccess() {
         switch self.authenticationState {
-        case .authenticated, .unauthenticated, .notAppleDeveloper:
+        case .authenticated:
+            self.presentedSheet = nil
+            if shouldOfferTouchIDAfterSignIn {
+                shouldOfferTouchIDAfterSignIn = false
+                offerTouchIDIfNeeded()
+            }
+        case .unauthenticated, .notAppleDeveloper:
             self.presentedSheet = nil
         case .waitingForFederatedAuthentication:
             break
@@ -1142,6 +1310,9 @@ class AppState: ObservableObject {
             try? Current.keychain.remove(username)
         }
         Current.defaults.removeObject(forKey: "username")
+        // Signing out removes the saved password, so turn Touch ID off and offer it again on the next sign-in.
+        requireTouchIDForSavedPassword = false
+        Current.defaults.removeObject(forKey: "hasOfferedTouchID")
 
     }
 
@@ -1151,5 +1322,13 @@ class AppState: ObservableObject {
         var title: String
         var message: String
         var id: String { title + message }
+    }
+}
+
+enum TouchIDSignInError: LocalizedError {
+    case failed
+
+    var errorDescription: String? {
+        localizeString("TouchIDSignInFailed")
     }
 }

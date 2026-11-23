@@ -653,6 +653,249 @@ class AppStateTests: XCTestCase {
         XCTAssertNil(subject.authError)
     }
 
+    func test_SavedPassword_WithoutTouchIDRequirement_DoesNotPrompt() async {
+        let didPrompt = TestLockedBox(false)
+        Current.keychain.getString = { _ in "password" }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in
+            didPrompt.withValue { $0 = true }
+            return true
+        }
+
+        let password = await subject.savedPasswordAsync(for: "jane@example.com")
+
+        XCTAssertEqual(password, "password")
+        XCTAssertFalse(didPrompt.read { $0 })
+    }
+
+    func test_SetRequireTouchID_TouchIDSuccess_TurnsOnAndSaves() async {
+        let savedValue = TestLockedBox<Bool?>(nil)
+        Current.defaults.set = { value, key in
+            guard key == "requireTouchIDForSavedPassword" else { return }
+            let isRequired = value as? Bool
+            savedValue.withValue { $0 = isRequired }
+        }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+
+        await subject.setRequireTouchIDForSavedPassword(true)
+
+        XCTAssertTrue(subject.requireTouchIDForSavedPassword)
+        XCTAssertEqual(savedValue.read { $0 }, true)
+    }
+
+    func test_SetRequireTouchID_TouchIDFailure_StaysOff() async {
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in false }
+
+        await subject.setRequireTouchIDForSavedPassword(true)
+
+        XCTAssertFalse(subject.requireTouchIDForSavedPassword)
+    }
+
+    func test_SetRequireTouchID_Unavailable_StaysOffWithoutPrompting() async {
+        let didPrompt = TestLockedBox(false)
+        Current.biometrics.isAvailable = { false }
+        Current.biometrics.authenticate = { _ in
+            didPrompt.withValue { $0 = true }
+            return true
+        }
+
+        await subject.setRequireTouchIDForSavedPassword(true)
+
+        XCTAssertFalse(subject.requireTouchIDForSavedPassword)
+        XCTAssertFalse(didPrompt.read { $0 })
+    }
+
+    func test_SavedPassword_WithTouchIDSuccess_ReturnsPassword() async {
+        Current.keychain.getString = { _ in "password" }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+        await subject.setRequireTouchIDForSavedPassword(true)
+
+        let reason = TestLockedBox<String?>(nil)
+        Current.biometrics.authenticate = { text in
+            reason.withValue { $0 = text }
+            return true
+        }
+        let password = await subject.savedPasswordAsync(for: "jane@example.com")
+
+        XCTAssertEqual(password, "password")
+        XCTAssertEqual(reason.read { $0 }, "use the saved Apple ID password for jane@example.com")
+    }
+
+    func test_SavedPassword_WithTouchIDFailure_ReturnsNil() async {
+        Current.keychain.getString = { _ in "password" }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+        await subject.setRequireTouchIDForSavedPassword(true)
+        Current.biometrics.authenticate = { _ in false }
+
+        let password = await subject.savedPasswordAsync(for: "jane@example.com")
+
+        XCTAssertNil(password)
+    }
+
+    func test_SavedPassword_WithTouchIDUnavailable_ReturnsNil() async {
+        Current.keychain.getString = { _ in "password" }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+        await subject.setRequireTouchIDForSavedPassword(true)
+        Current.biometrics.isAvailable = { false }
+
+        let password = await subject.savedPasswordAsync(for: "jane@example.com")
+
+        XCTAssertNil(password)
+    }
+
+    func test_SignInIfNeeded_TouchIDFailure_DoesNotSignInWithSavedPassword() async throws {
+        let didSignIn = TestLockedBox(false)
+        Current.defaults.string = { key in key == "username" ? "jane@example.com" : nil }
+        Current.keychain.getString = { _ in "password" }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+        await subject.setRequireTouchIDForSavedPassword(true)
+        Current.biometrics.authenticate = { _ in false }
+        Current.network.session = MockURLProtocol.session { _ in
+            didSignIn.withValue { $0 = true }
+            throw URLError(.timedOut)
+        }
+        // Set after `session`, which resets the session validation closure.
+        Current.network.validateSessionAsync = { throw AuthenticationError.invalidSession }
+
+        do {
+            try await subject.signInIfNeededAsync()
+            XCTFail("Expected the invalid session error so the sign-in window is shown")
+        } catch {
+            XCTAssertEqual(error as? AuthenticationError, .invalidSession)
+        }
+
+        XCTAssertFalse(didSignIn.read { $0 })
+    }
+
+    func test_CanSignInWithTouchID_RequiresSettingAndSavedPassword() async {
+        Current.keychain.getString = { key in key == "jane@example.com" ? "password" : nil }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+
+        XCTAssertFalse(subject.canSignInWithTouchID(username: "jane@example.com"))
+
+        await subject.setRequireTouchIDForSavedPassword(true)
+
+        XCTAssertTrue(subject.canSignInWithTouchID(username: "Jane@Example.com"))
+        XCTAssertFalse(subject.canSignInWithTouchID(username: "other@example.com"))
+        XCTAssertFalse(subject.canSignInWithTouchID(username: ""))
+
+        Current.biometrics.isAvailable = { false }
+        XCTAssertFalse(subject.canSignInWithTouchID(username: "jane@example.com"))
+    }
+
+    func test_SignInWithTouchID_Failure_ShowsErrorWithoutSigningIn() async throws {
+        let didSignIn = TestLockedBox(false)
+        Current.keychain.getString = { _ in "password" }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+        await subject.setRequireTouchIDForSavedPassword(true)
+        Current.biometrics.authenticate = { _ in false }
+        Current.network.session = MockURLProtocol.session { _ in
+            didSignIn.withValue { $0 = true }
+            throw URLError(.timedOut)
+        }
+
+        subject.presentedSheet = .signIn
+        subject.signInWithTouchID(username: "jane@example.com")
+        for _ in 0..<100 where subject.authError == nil {
+            try await Task.sleep(for: .milliseconds(10))
+        }
+
+        XCTAssertTrue(subject.authError is TouchIDSignInError)
+        XCTAssertFalse(didSignIn.read { $0 })
+    }
+
+    func test_SavedPassword_ConcurrentCallers_ShareOneTouchIDPrompt() async {
+        let promptCount = TestLockedBox(0)
+        Current.keychain.getString = { _ in "password" }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+        await subject.setRequireTouchIDForSavedPassword(true)
+        Current.biometrics.authenticate = { _ in
+            promptCount.withValue { $0 += 1 }
+            try? await Task.sleep(for: .milliseconds(200))
+            return true
+        }
+
+        let appState: AppState = subject
+        let first = Task { @MainActor in await appState.savedPasswordAsync(for: "jane@example.com") }
+        let second = Task { @MainActor in await appState.savedPasswordAsync(for: "jane@example.com") }
+        let passwords = [await first.value, await second.value]
+
+        XCTAssertEqual(passwords, ["password", "password"])
+        XCTAssertEqual(promptCount.read { $0 }, 1)
+    }
+
+    func test_SavedPassword_AppInBackground_DoesNotPrompt() async {
+        let didPrompt = TestLockedBox(false)
+        Current.keychain.getString = { _ in "password" }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+        await subject.setRequireTouchIDForSavedPassword(true)
+        Current.biometrics.isAppActive = { false }
+        Current.biometrics.authenticate = { _ in
+            didPrompt.withValue { $0 = true }
+            return true
+        }
+
+        let password = await subject.savedPasswordAsync(for: "jane@example.com")
+
+        XCTAssertNil(password)
+        XCTAssertFalse(didPrompt.read { $0 })
+    }
+
+    func test_RestoreAuthenticationState_TouchIDFailure_ShowsSignInWindow() async throws {
+        Current.defaults.string = { key in key == "username" ? "jane@example.com" : nil }
+        Current.keychain.getString = { _ in "password" }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+        await subject.setRequireTouchIDForSavedPassword(true)
+        Current.biometrics.authenticate = { _ in false }
+        Current.network.validateSessionAsync = { throw AuthenticationError.invalidSession }
+
+        try? await subject.restoreAuthenticationStateIfNeeded()
+
+        guard case .signIn = subject.presentedSheet else {
+            return XCTFail("Expected the sign-in window after Touch ID failed at launch")
+        }
+    }
+
+    func test_SignOut_TurnsOffTouchIDAndOffersItAgain() async {
+        let removedKeys = TestLockedBox<[String]>([])
+        Current.defaults.removeObject = { key in removedKeys.withValue { $0.append(key) } }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+        await subject.setRequireTouchIDForSavedPassword(true)
+
+        subject.signOut()
+
+        XCTAssertFalse(subject.requireTouchIDForSavedPassword)
+        XCTAssertTrue(removedKeys.read { $0.contains("hasOfferedTouchID") })
+    }
+
+    func test_RespondToTouchIDOffer_RecordsAnswer() async {
+        let savedKeys = TestLockedBox<[String]>([])
+        Current.defaults.set = { _, key in savedKeys.withValue { $0.append(key) } }
+        Current.biometrics.isAvailable = { true }
+        Current.biometrics.authenticate = { _ in true }
+
+        await subject.respondToTouchIDOffer(useTouchID: false)
+
+        XCTAssertTrue(savedKeys.read { $0.contains("hasOfferedTouchID") })
+        XCTAssertFalse(subject.requireTouchIDForSavedPassword)
+
+        await subject.respondToTouchIDOffer(useTouchID: true)
+
+        XCTAssertTrue(subject.requireTouchIDForSavedPassword)
+    }
+
     func test_SignIn_NetworkFailurePreservesSavedCredentials() async throws {
         let removedCredentials = TestLockedBox<[String]>([])
         Current.keychain.remove = { key in removedCredentials.withValue { $0.append(key) } }

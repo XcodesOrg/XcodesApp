@@ -16,7 +16,8 @@ extension Xcodes.Environment {
             keychain: .mock,
             defaults: .mock,
             date: Date.mock,
-            helper: .mock
+            helper: .mock,
+            biometrics: .mock
         )
     }
 }
@@ -83,6 +84,16 @@ extension Network {
             },
             validateSessionAsync: { .unauthenticated },
             signout: { }
+        )
+    }
+}
+
+extension Biometrics {
+    static var mock: Biometrics {
+        Biometrics(
+            isAvailable: { false },
+            isAppActive: { true },
+            authenticate: { _ in false }
         )
     }
 }
