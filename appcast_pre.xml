@@ -6,6 +6,45 @@
         <language>en</language>
         
             
+                
+                    <item>
+                        <title>4.2.1 (43)</title>
+                        <description><![CDATA[<p>Install Xcodes using one of the methods listed <a href="https://github.com/XcodesOrg/XcodesApp#installation">here</a>.
+Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu bar.</p>
+
+<h2 id="changes">Changes</h2>
+
+<ul>
+  <li>Scope xcodebuild cleanup protection to active Derived Data (#898) @anciltech, @MattKiazyk</li>
+  <li>Pin XcodesLoginKit to v1.2.0 (#902) @MattKiazyk</li>
+  <li>Adjust sidebar sizing, collapse behavior (#891) @LePips, @MattKiazyk</li>
+  <li>Fix AppCast publishing on Ubuntu 26.04 (#890) @MattKiazyk</li>
+</ul>
+
+<!-- sparkle:edSignature=VNtn74wAOByeYZr98cJmb/2gUAU9rruoCd9csuM8eWSLeCE7hIK7zMMhx4vke0PDCTmsFcS68PYzxxPER6QzBw== -->
+]]></description>
+                        <pubDate>Tue, 24 Nov 2026 15:04:53 +0000</pubDate>
+                        
+                        
+                            
+
+                            
+                            
+                                
+                                
+
+                                <enclosure
+                                    url="https://github.com/XcodesOrg/XcodesApp/releases/download/v4.2.1b43/Xcodes.zip"
+                                    sparkle:version="43"
+                                    sparkle:shortVersionString="4.2.1"
+                                    sparkle:edSignature="VNtn74wAOByeYZr98cJmb/2gUAU9rruoCd9csuM8eWSLeCE7hIK7zMMhx4vke0PDCTmsFcS68PYzxxPER6QzBw=="
+                                    length="27683021"
+                                    type="application/octet-stream" />
+                            
+                        
+                    </item>
+                
+            
         
             
                 
@@ -33,6 +72,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=WBZGC2J9EhXF9YY71DOQc8Zq/eGCOM2j3QFlTC/nwxbWFJ8W++77TcaEfzSaVDjXQdKY9LiCZdTpGhmDu+C5BA== -->
 ]]></description>
                         <pubDate>Tue, 10 Nov 2026 19:17:58 +0000</pubDate>
+                        
                         
                             
 
@@ -82,6 +122,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Mon, 14 Sep 2026 14:10:27 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -118,6 +159,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=giu/eWoL76zcia+eKHmCse6iZrya/KV82s5VTRRsD3zw+QlJT7gmwaFbfBEwlt/tfXY0Qjj8L4CHsqODm9YTCw== -->
 ]]></description>
                         <pubDate>Wed, 08 Jul 2026 03:50:43 +0000</pubDate>
+                        
                         
                             
 
@@ -157,6 +199,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Tue, 30 Jun 2026 02:31:04 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -194,6 +237,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=Bfe+tuA0FeHDgpKkgvqfd2EkE0U3pGXTajwZKALln7J5euwdoNGTSv1ycYcNXrRjUQnvmKti9Adlqy4rn2yqCA== -->
 ]]></description>
                         <pubDate>Thu, 11 Jun 2026 03:24:29 +0000</pubDate>
+                        
                         
                             
 
@@ -304,6 +348,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Mon, 08 Jun 2026 15:15:48 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -410,6 +455,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Mon, 08 Jun 2026 02:37:43 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -466,6 +512,7 @@ New icon designed by <a href="https://x.com/matthewskiles">Matthew Skiles</a> ht
 ]]></description>
                         <pubDate>Sat, 20 Sep 2025 04:31:44 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -511,6 +558,7 @@ This will be a prerelease to unblock downloading Xcode 26 Beta 5+ that support m
 ]]></description>
                         <pubDate>Wed, 27 Aug 2025 03:35:50 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -548,6 +596,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=7lyLaPMpJ8SZ0CXNh0nZncHh+nj1JPupk1wl1iuE83Junr1bn8k52F+xTNIuP5O5k042IY2YhuPuq2iuClk1AA== -->
 ]]></description>
                         <pubDate>Tue, 10 Jun 2025 03:28:33 +0000</pubDate>
+                        
                         
                             
 
@@ -590,6 +639,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 </ul>
 ]]></description>
                         <pubDate>Tue, 05 Nov 2024 03:55:43 +0000</pubDate>
+                        
                         
                             
 
@@ -638,6 +688,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=sAWbFqtV6k5AZNsQ82sBhH/Rcy2cr6kU3UmWY2a5n1edM2/JhKekv2l3E1aGr6WLxvBuo+NvDw5pOM2R6ymIDA== -->
 ]]></description>
                         <pubDate>Tue, 29 Oct 2024 03:37:31 +0000</pubDate>
+                        
                         
                             
 
@@ -713,6 +764,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Fri, 18 Oct 2024 14:12:33 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -783,6 +835,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=ETmgl1OlCxLtl4FuncZOkMByft+lNTNywGws2ewQClp2NpT4bX6UWwGXmQ3hG4PnQRwOM5mkqNkglBOSWirpBQ== -->
 ]]></description>
                         <pubDate>Fri, 28 Jun 2024 15:49:59 +0000</pubDate>
+                        
                         
                             
 
@@ -865,6 +918,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Sun, 17 Mar 2024 14:19:15 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -937,6 +991,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=kChtCsch/u+2D023oWCVJYd4m9KbQRQ7o+P5TAuO3GZ/GWo2SK6zmreSLqPOBVgLoAuowy9Vm+rbZjVJamS7Dg== -->
 ]]></description>
                         <pubDate>Sun, 17 Mar 2024 00:43:52 +0000</pubDate>
+                        
                         
                             
 
@@ -1064,6 +1119,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Fri, 26 Jan 2024 04:37:50 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -1179,6 +1235,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Fri, 19 Jan 2024 17:53:33 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -1242,6 +1299,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=Ttm9zduGZ1nayiSModh8sZilyC8GHyEioCQYl0d73ezH3Daj63CdS1xMh9hfROgcp0XpOOl7z84qgW+RAxkBDA== -->
 ]]></description>
                         <pubDate>Wed, 01 Mar 2023 01:23:04 +0000</pubDate>
+                        
                         
                             
 
@@ -1311,6 +1369,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Wed, 23 Nov 2022 03:56:04 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -1378,6 +1437,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=SgcxGfx96rqxNpxpecvyLbgzAg6gqSk6pYPn38zyRqs4Tp1RSTAp4kNLJJSbwSdYneo8yaHrIkJyBWft48XnAw== -->
 ]]></description>
                         <pubDate>Sat, 17 Sep 2022 04:05:30 +0000</pubDate>
+                        
                         
                             
 
@@ -1455,6 +1515,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Tue, 09 Aug 2022 01:34:27 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -1509,6 +1570,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=whzvbz/AK1Zv7laaOlBC+O5b2ra1stDa38FI30cA1+KxRExSIve/sf7d0JEBz18rbFBHxO1DpOpIiB5rwZRODQ== -->
 ]]></description>
                         <pubDate>Sun, 05 Jun 2022 02:55:33 +0000</pubDate>
+                        
                         
                             
 
@@ -1574,6 +1636,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 
 ]]></description>
                         <pubDate>Thu, 12 May 2022 18:57:32 +0000</pubDate>
+                        
                         
                             
 
@@ -1642,6 +1705,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Thu, 14 Apr 2022 20:38:10 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -1701,6 +1765,7 @@ In the first experiment - thanks to the wonderful work of https://github.com/saa
 ]]></description>
                         <pubDate>Tue, 29 Mar 2022 02:58:15 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -1758,6 +1823,7 @@ In the first experiment - thanks to the wonderful work of https://github.com/saa
 <!-- sparkle:edSignature=sgLWFusBeT/DO6ca2oEen+dkuVNp8uE/XjOl+fjZy2G7rtmAJrhB8H4ElXMryI0dMybyFtZX+3+wj11aLT32DA== -->
 ]]></description>
                         <pubDate>Tue, 08 Feb 2022 05:02:56 +0000</pubDate>
+                        
                         
                             
 
@@ -1821,6 +1887,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Fri, 22 Oct 2021 12:40:57 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -1882,6 +1949,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Mon, 07 Jun 2021 16:31:35 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -1927,6 +1995,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=o68WXbj/QpF+uMivHgPdRV1cafP/EuYQycCVXAEl+TqNgI2eKbu5jUuelP1ZmLwQIVADOyPUA4E2hq4Wz+kJCQ== -->
 ]]></description>
                         <pubDate>Thu, 11 Mar 2021 01:07:43 +0000</pubDate>
+                        
                         
                             
 
@@ -1985,6 +2054,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Mon, 22 Feb 2021 21:50:31 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -2041,6 +2111,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Tue, 26 Jan 2021 16:21:01 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -2074,6 +2145,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=Z4orm82DLqUB0q5B+9PsVWgm8FYEqije7umuylooLZM8+XaiX9IEH2OoNoHWIGh8e+PRekMJ5DfL0iTmqz2eBQ== -->
 ]]></description>
                         <pubDate>Wed, 20 Jan 2021 18:12:04 +0000</pubDate>
+                        
                         
                             
 
@@ -2111,6 +2183,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 ]]></description>
                         <pubDate>Wed, 20 Jan 2021 05:36:33 +0000</pubDate>
                         
+                        
                             
 
                             
@@ -2140,6 +2213,7 @@ Update Xcodes by selecting Check for Updates… in the Xcodes menu in the menu b
 <!-- sparkle:edSignature=ELrJn0LYxAlaAUbO4FNcEXtQDAMV1md0eWbtRfsCwBRwa6em+RrVB0Bcm3KlIGW1L6zTTqdsWmf7isyJwRs4CQ== -->
 ]]></description>
                         <pubDate>Tue, 19 Jan 2021 03:35:06 +0000</pubDate>
+                        
                         
                             
 
