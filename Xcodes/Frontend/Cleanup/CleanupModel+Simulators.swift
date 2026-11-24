@@ -35,9 +35,15 @@ extension CleanupModel {
     /// Ordinary Trash operations need active-use checks, not a full CoreSimulator inventory.
     func refreshRunningTools() async {
         protectedPaths = Self.makeProtectedPaths()
-        let output = try? await Process.runAsync(URL(fileURLWithPath: "/bin/ps"), ["-axo", "comm="])
+        let output = try? await Process.runAsync(URL(fileURLWithPath: "/bin/ps"), ["-axo", "pid=,comm="])
         guard !Task.isCancelled else { return }
-        activeTools = Set((output?.out ?? "").split(separator: "\n").map { URL(fileURLWithPath: String($0).trimmingCharacters(in: .whitespaces)).lastPathComponent.lowercased() })
+        let processList = output?.out ?? ""
+        activeTools = Set(processList.split(separator: "\n").compactMap { line in
+            let fields = line.split(maxSplits: 1, whereSeparator: \.isWhitespace)
+            guard fields.count == 2 else { return nil }
+            return URL(fileURLWithPath: String(fields[1])).lastPathComponent.lowercased()
+        })
+        xcodebuildDerivedDataPaths = CleanupOperations.xcodebuildDerivedDataPaths(processList: processList)
         runningApplications = NSWorkspace.shared.runningApplications.map {
             (name: $0.localizedName ?? "the running app", bundleID: $0.bundleIdentifier, path: $0.bundleURL.flatMap { try? FilesystemPath($0) })
         }

@@ -146,8 +146,20 @@ struct CleanupWindow: View {
             Text(model.cleanupConfirmationMessage)
         }
         .alert("Cleanup", isPresented: Binding(get: { model.message != nil }, set: { if !$0 { model.message = nil } })) {
-            Button("OK") { model.message = nil }
-        } message: { Text(model.message ?? "") }
+            Button("OK", role: .cancel) { model.message = nil }
+            if let details = model.message, details != Self.errorPreview(details) {
+                Button("Copy Details") {
+                    NSPasteboard.general.clearContents()
+                    NSPasteboard.general.setString(details, forType: .string)
+                }
+            }
+        } message: { Text(Self.errorPreview(model.message ?? "")) }
+    }
+
+    private static func errorPreview(_ message: String) -> String {
+        let lines = message.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
+        let preview = String(lines.prefix(6).joined(separator: "\n").prefix(480))
+        return preview == message ? preview : preview + "…"
     }
 
     private var savingsHelp: some View {

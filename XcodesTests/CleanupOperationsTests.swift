@@ -5,6 +5,65 @@ import XcodesCleanupKit
 @testable import Xcodes
 
 final class CleanupOperationsTests: XCTestCase {
+    func testXcodebuildWithExplicitDerivedDataProtectsOnlyOverlappingPaths() throws {
+        let processes = "   123 /Applications/Xcode Beta.app/Contents/Developer/usr/bin/xcodebuild"
+        let paths = try XCTUnwrap(CleanupOperations.xcodebuildDerivedDataPaths(processList: processes) { pid in
+            XCTAssertEqual(pid, 123)
+            return ["xcodebuild", "-derivedDataPath", "/tmp/Build Cache/Active", "test"]
+        })
+
+        for path in ["/tmp/Build Cache", "/tmp/Build Cache/Active", "/tmp/Build Cache/Active/Build"] {
+            XCTAssertTrue(CleanupOperations.xcodebuildMayUseDerivedData(
+                try FilesystemPath(URL(fileURLWithPath: path)), scopedPaths: paths
+            ))
+        }
+        XCTAssertFalse(CleanupOperations.xcodebuildMayUseDerivedData(
+            try FilesystemPath(URL(fileURLWithPath: "/tmp/Build Cache/Active-Old")), scopedPaths: paths
+        ))
+    }
+
+    func testXcodebuildWithUnknownOutputPathKeepsConservativeGuard() throws {
+        let processes = "123 /usr/bin/xcodebuild\n456 /usr/bin/xcodebuild"
+        for unknownArguments in [nil, ["xcodebuild", "test"], ["xcodebuild", "-derivedDataPath", "Relative"]] {
+            let paths = CleanupOperations.xcodebuildDerivedDataPaths(processList: processes) { pid in
+                pid == 123 ? ["xcodebuild", "-derivedDataPath", "/tmp/Scoped"] : unknownArguments
+            }
+            XCTAssertNil(paths)
+            XCTAssertTrue(CleanupOperations.xcodebuildMayUseDerivedData(
+                try FilesystemPath(URL(fileURLWithPath: "/tmp/Unrelated")), scopedPaths: paths
+            ))
+        }
+    }
+
+    @MainActor
+    func testCleanupBlocksActiveDerivedDataAndAllowsUnrelatedCache() async throws {
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        let active = root.appendingPathComponent("Active Build")
+        let stale = root.appendingPathComponent("Stale Build")
+        for directory in [active, stale] {
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        }
+        defer { try? FileManager.default.removeItem(at: root) }
+
+        let location = try FilesystemPath(root)
+        let category = FindingCategory(id: "derivedData", title: "Derived Data", explanation: "",
+                                       location: location, classification: .review)
+        let result = try await ScanSession(request: ScanRequest(roots: [location])).result()
+        let model = CleanupModel(defaults: .mock)
+        model.configureScan(categories: [category], policyCategories: [category])
+        model.activityUnavailable = false
+        model.activeTools = ["xcodebuild"]
+        model.xcodebuildDerivedDataPaths = [try FilesystemPath(active.resolvingSymlinksInPath())]
+
+        let activeItem = try XCTUnwrap(result.item(at: FilesystemPath(active)))
+        let staleItem = try XCTUnwrap(result.item(at: FilesystemPath(stale)))
+        XCTAssertNotNil(model.blockingReason(activeItem, classification: .review))
+        XCTAssertNil(model.blockingReason(staleItem, classification: .review))
+
+        model.activeTools.insert("clang")
+        XCTAssertNotNil(model.blockingReason(staleItem, classification: .review))
+    }
+
     func testSimulatorInventoryRetainsAvailabilityAndAllDeviceNames() throws {
         let unavailable = UUID().uuidString
         let available = UUID().uuidString
@@ -74,7 +133,7 @@ final class CleanupOperationsTests: XCTestCase {
         let missing = try FilesystemPath(folder.appendingPathComponent("missing"))
         let session = try ScanSession(request: ScanRequest(roots: [FilesystemPath(folder), missing]))
         let result = try await session.result()
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.finishScan(result)
         let root = try XCTUnwrap(result.item(at: FilesystemPath(folder)))
         let children = result.children(of: root.id)
@@ -102,7 +161,7 @@ final class CleanupOperationsTests: XCTestCase {
         let session = try ScanSession(request: ScanRequest(roots: [FilesystemPath(folder)]))
         let result = try await session.result()
         let item = try XCTUnwrap(result.children(of: result.rootIDs[0]).first)
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.finishScan(result)
         model.setSelected(item, selected: true)
         model.close()
@@ -123,7 +182,7 @@ final class CleanupOperationsTests: XCTestCase {
         let category = FindingCategory(id: "fixture", title: "Fixture", explanation: "Fixture", location: try FilesystemPath(folder), classification: .review)
         let session = try ScanSession(request: ScanRequest(roots: [category.location], categories: [category]))
         let progressResult = try await session.result()
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         // Feed a queryable progress view without invoking the app's finishScan path.
         model.configureScan(categories: [category], policyCategories: [category])
         model.receiveScanProgress(progressResult)
@@ -149,7 +208,7 @@ final class CleanupOperationsTests: XCTestCase {
         let result = try await session.result()
         let deviceItem = try XCTUnwrap(result.item(at: FilesystemPath(device)))
         let ordinaryItem = try XCTUnwrap(result.item(at: FilesystemPath(ordinary)))
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.finishScan(result)
         model.selected = [ordinaryItem.id]
         XCTAssertEqual(model.cleanupActionTitle, "Move to Trash")
@@ -173,7 +232,7 @@ final class CleanupOperationsTests: XCTestCase {
         let session = try ScanSession(request: ScanRequest(roots: [FilesystemPath(folder)], detectNodeModules: true))
         let result = try await session.result()
         let finding = try XCTUnwrap(result.findings.first { $0.categoryID == "nodeModules" })
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.finishScan(result)
         let items = model.items(for: finding)
         let start = ContinuousClock.now
@@ -196,7 +255,7 @@ final class CleanupOperationsTests: XCTestCase {
         }
         let session = try ScanSession(request: ScanRequest(roots: [FilesystemPath(folder), categories[1].location], categories: categories))
         let result = try await session.result()
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: categories, policyCategories: categories)
         model.finishScan(result)
         XCTAssertEqual(model.sections.count, 3)
@@ -217,7 +276,7 @@ final class CleanupOperationsTests: XCTestCase {
         let session = try ScanSession(request: ScanRequest(roots: [category.location], categories: [category]))
         let result = try await session.result()
         let item = try XCTUnwrap(result.children(of: result.rootIDs[0]).first)
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: [category], policyCategories: [category])
         model.finishScan(result)
         XCTAssertEqual(model.classification(for: item), .regenerable)
@@ -252,7 +311,7 @@ final class CleanupOperationsTests: XCTestCase {
         let orphanItem = try XCTUnwrap(result.item(at: FilesystemPath(orphan)))
         let local = await CleanupOperations.localSimulatorDetails([item, orphanItem]).mapValues(\.name)
         XCTAssertEqual(local, [deviceID: "Renamed iPhone"])
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: [category], policyCategories: [category])
         model.applySimulatorInventory(names: [deviceID: "iPhone 17"])
         model.finishScan(result)
@@ -330,7 +389,7 @@ final class CleanupOperationsTests: XCTestCase {
         var assessment = CleanupOperations.SimulatorAssessment()
         assessment.include(.init(devices: [availableID: available, obsoleteID: obsolete, bootedID: booted]), xcode: selected)
         assessment.include(.init(devices: [availableID: available, obsoleteID: obsolete]), xcode: installed)
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: [category], policyCategories: [category])
         model.applySimulatorAssessment(assessment)
         model.finishScan(result)
@@ -403,7 +462,7 @@ final class CleanupOperationsTests: XCTestCase {
         XCTAssertEqual(versions[oldItem.id], "iOS 17.5")
         XCTAssertEqual(versions[currentItem.id], "iOS 27.0")
         XCTAssertEqual(versions[backupItem.id], "iOS 17.6.1")
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: categories, policyCategories: categories)
         model.finishScan(result)
         defer { model.close() }
@@ -444,7 +503,7 @@ final class CleanupOperationsTests: XCTestCase {
         let ios = CleanupOperations.SimulatorRuntime(identifier: UUID().uuidString, runtimeIdentifier: "com.apple.CoreSimulator.SimRuntime.iOS-17-5", build: "21F79", path: image.path, parentImagePath: nil, runtimeBundlePath: nil, sizeBytes: 100, deletable: true, state: "Ready")
         let vision = CleanupOperations.SimulatorRuntime(identifier: UUID().uuidString, runtimeIdentifier: "com.apple.CoreSimulator.SimRuntime.xrOS-26-0", build: "23M1", path: "/unused/vision.dmg", parentImagePath: nil, runtimeBundlePath: nil, sizeBytes: 200, deletable: true, state: "Ready")
         let xcode = CleanupOperations.SimulatorXcode(developerDirectory: "/Selected", name: "Xcode 27", selected: true)
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.finishScan(result)
         defer { model.close() }
         model.applyRuntimeInventory([vision, ios], associations: [ios.id: [xcode]])
@@ -517,7 +576,7 @@ final class CleanupOperationsTests: XCTestCase {
         let project = try XCTUnwrap(result.item(at: FilesystemPath(folder.appendingPathComponent("project"))))
         let modules = try XCTUnwrap(result.item(at: FilesystemPath(nested)))
         let failed = try XCTUnwrap(result.item(at: FilesystemPath(other)))
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: [category], policyCategories: [category])
         model.finishScan(result)
         defer { model.close() }
@@ -546,7 +605,7 @@ final class CleanupOperationsTests: XCTestCase {
     func testCleanupKeepsOSFilterAndRemovesOnlySuccessfulRuntimes() {
         let old = CleanupOperations.SimulatorRuntime(identifier: UUID().uuidString, runtimeIdentifier: "com.apple.CoreSimulator.SimRuntime.iOS-17-5", build: "21F79", path: "/old.dmg", parentImagePath: nil, runtimeBundlePath: nil, sizeBytes: 100, deletable: true, state: "Ready")
         let failed = CleanupOperations.SimulatorRuntime(identifier: UUID().uuidString, runtimeIdentifier: "com.apple.CoreSimulator.SimRuntime.iOS-17-0", build: "21A1", path: "/failed.dmg", parentImagePath: nil, runtimeBundlePath: nil, sizeBytes: 200, deletable: true, state: "Ready")
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.applyRuntimeInventory([old, failed], associations: [:])
         model.selectedOperatingSystem = "iOS 17"
         model.toggleRuntimeSelection()
@@ -737,7 +796,7 @@ final class CleanupOperationsTests: XCTestCase {
         let missing = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         let category = FindingCategory(id: "trash", title: "Trash", explanation: "Review only", location: try FilesystemPath(missing), classification: .manageExternally)
         let session = try ScanSession(request: ScanRequest(roots: [category.location], categories: [category]))
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: [category], policyCategories: [category])
         model.finishScan(try await session.result())
         let section = try XCTUnwrap(model.sections.first)
@@ -764,7 +823,7 @@ final class CleanupOperationsTests: XCTestCase {
         let restricted = try XCTUnwrap(result.item(at: FilesystemPath(denied)))
         XCTAssertEqual(restricted.status, .inaccessible)
         XCTAssertTrue(restricted.isAccessDenied)
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: [category], policyCategories: [category])
         model.finishScan(result)
         XCTAssertTrue(try XCTUnwrap(model.sections.first).accessDenied, "An unreadable descendant must be reported on its collapsed category")
@@ -798,7 +857,7 @@ final class CleanupOperationsTests: XCTestCase {
         let category = FindingCategory(id: "limited", title: "Folder", explanation: "", location: try FilesystemPath(folder), classification: .review)
         let session = try ScanSession(request: ScanRequest(roots: [category.location], categories: [category], maximumDepth: 1))
         let result = try await session.result()
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: [category], policyCategories: [category])
         model.finishScan(result)
         let section = try XCTUnwrap(model.sections.first)
@@ -846,7 +905,7 @@ final class CleanupOperationsTests: XCTestCase {
         let session = try ScanSession(request: ScanRequest(roots: categories.map(\.location), categories: categories))
         let result = try await session.result()
         let item = try XCTUnwrap(result.item(at: FilesystemPath(project)))
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.configureScan(categories: categories, policyCategories: categories)
         model.receiveScanProgress(result)
         XCTAssertNil(model.availableCleanupBytes, "Progress must not publish a completed total")
@@ -1030,7 +1089,7 @@ final class CleanupOperationsTests: XCTestCase {
     func testCleanupContinuesAfterWindowClosesAndPublishesProgress() async throws {
         let fixture = try await Self.cleanupProgressFixture()
         defer { try? FileManager.default.removeItem(at: fixture.root) }
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.finishScan(fixture.result)
         let gate = AsyncStream<Void>.makeStream()
         let started = expectation(description: "First operation started")
@@ -1066,7 +1125,7 @@ final class CleanupOperationsTests: XCTestCase {
     func testStopCleanupFinishesCurrentItemAndLeavesRemainingSelection() async throws {
         let fixture = try await Self.cleanupProgressFixture()
         defer { try? FileManager.default.removeItem(at: fixture.root) }
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.finishScan(fixture.result)
         model.selected = Set(fixture.items.map(\.id))
         let gate = AsyncStream<Void>.makeStream()
@@ -1102,7 +1161,7 @@ final class CleanupOperationsTests: XCTestCase {
     func testCleanupFailureAdvancesProgressAndRemainsAvailableForReview() async throws {
         let fixture = try await Self.cleanupProgressFixture()
         defer { try? FileManager.default.removeItem(at: fixture.root) }
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.finishScan(fixture.result)
         model.selected = Set(fixture.items.map(\.id))
         model.startCleanup(items: fixture.items, runtimes: [], performItem: { item in
@@ -1125,7 +1184,7 @@ final class CleanupOperationsTests: XCTestCase {
     func testOrdinaryCleanupSkipsCoreSimulatorRefreshButStillValidatesAndChecksActivity() async throws {
         let fixture = try await Self.cleanupProgressFixture()
         defer { try? FileManager.default.removeItem(at: fixture.root) }
-        let model = CleanupModel()
+        let model = CleanupModel(defaults: .mock)
         model.finishScan(fixture.result)
         let xcode = CleanupOperations.SimulatorXcode(developerDirectory: "/fixture/Xcode.app/Contents/Developer", name: "Fixture Xcode", selected: false)
         model.simulatorAssessment = .init(failedXcodes: [xcode])
