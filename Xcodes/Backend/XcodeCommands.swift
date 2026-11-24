@@ -113,19 +113,22 @@ struct SelectButton: View {
 struct OpenButton: View {
     @EnvironmentObject var appState: AppState
     let xcode: Xcode?
-    
-    var openInRosetta: Bool {
+
+    // Whether the explicit "Open In Rosetta" alternate should be offered. This only
+    // gates visibility of the alternate menu item; the plain "Open" action always
+    // opens natively, and "Open In Rosetta" always opens under Rosetta.
+    var showsOpenInRosettaOption: Bool {
         appState.showOpenInRosettaOption && HostHardware.isAppleSilicon()
     }
-    
+
     var body: some View {
-        if openInRosetta {
+        if showsOpenInRosettaOption {
             Menu("Open") {
                 Button(action: open) {
                     Text("Open")
                 }
                 .help("Open")
-                Button(action: open) {
+                Button(action: openInRosetta) {
                     Text("Open In Rosetta")
                 }
                 .help("Open In Rosetta")
@@ -136,12 +139,16 @@ struct OpenButton: View {
             }
             .help("Open")
         }
-        
     }
-    
+
     private func open() {
         guard let xcode = xcode else { return }
-        appState.open(xcode: xcode, openInRosetta: openInRosetta)
+        appState.open(xcode: xcode, openInRosetta: false)
+    }
+
+    private func openInRosetta() {
+        guard let xcode = xcode else { return }
+        appState.open(xcode: xcode, openInRosetta: true)
     }
 }
 
