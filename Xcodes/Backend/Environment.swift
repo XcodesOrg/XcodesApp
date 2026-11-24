@@ -1,6 +1,8 @@
+import AppKit
 import Foundation
 import Path
 import KeychainAccess
+import LocalAuthentication
 import XcodesKit
 import XcodesLoginKit
 import os
@@ -20,6 +22,7 @@ public struct Environment: Sendable {
     public var date: @Sendable () -> Date = { Date() }
     public var helper = Helper()
     public var notificationManager = NotificationManager()
+    public var biometrics = Biometrics()
 }
 
 private let currentEnvironment = CurrentEnvironmentStorage(Environment())
@@ -234,6 +237,50 @@ public struct Keychain: Sendable {
     public var remove: @Sendable (String) throws -> Void = { try keychain.remove($0) }
     public func remove(_ key: String) throws -> Void {
         try remove(key)
+    }
+}
+
+/// Touch ID checks used to protect the Apple ID password saved in the keychain.
+public struct Biometrics: Sendable {
+    /// Returns `true` when this Mac can currently authenticate with Touch ID.
+    public var isAvailable: @Sendable () -> Bool = {
+        LAContext().canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: nil)
+    }
+
+    /// Returns `true` when the app is frontmost, so a Touch ID prompt has someone to answer it.
+    public var isAppActive: @MainActor @Sendable () -> Bool = {
+        NSApplication.shared.isActive
+    }
+
+    /// Asks the user to authenticate with Touch ID, returning `true` only on success.
+    /// Cancelling the calling task closes the prompt.
+    ///
+    /// The reason is shown in the system prompt after "Xcodes is trying to".
+    public var authenticate: @Sendable (_ reason: String) async -> Bool = { reason in
+        let box = LAContextBox()
+        return await withTaskCancellationHandler {
+            do {
+                return try await box.context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: reason)
+            } catch {
+                return false
+            }
+        } onCancel: {
+            box.context.invalidate()
+        }
+    }
+    public func authenticate(reason: String) async -> Bool {
+        await authenticate(reason)
+    }
+}
+
+/// Lets the cancellation handler close the Touch ID prompt. `LAContext.invalidate()` is safe to call from any thread.
+private final class LAContextBox: @unchecked Sendable {
+    let context: LAContext
+
+    init() {
+        context = LAContext()
+        // Hide the "Enter Password" button: the fallback is the app's own sign-in window.
+        context.localizedFallbackTitle = ""
     }
 }
 

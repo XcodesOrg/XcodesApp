@@ -239,6 +239,17 @@ struct MainWindow: View {
             )
         case let .noActiveXcode(runtime, xcode):
             return .noActiveXcode(appState: appState, runtime: runtime, xcode: xcode, inSettings: false)
+        case .offerTouchID:
+            return Alert(
+                title: Text("Alert.OfferTouchID.Title"),
+                message: Text("Alert.OfferTouchID.Message"),
+                primaryButton: .default(Text("Alert.OfferTouchID.Button"), action: {
+                    Task { await appState.respondToTouchIDOffer(useTouchID: true) }
+                }),
+                secondaryButton: .cancel(Text("NotNow"), action: {
+                    Task { await appState.respondToTouchIDOffer(useTouchID: false) }
+                })
+            )
         case let .deletePlatform(runtime):
             return Alert(
                 title: Text(String(format: localizeString("Alert.DeletePlatform.Title"), runtime.name)),

@@ -31596,6 +31596,86 @@
         }
       }
     },
+    "SignInWithTouchID" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Sign in with Touch ID"
+          }
+        }
+      }
+    },
+    "TouchIDSignInFailed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Touch ID didn't succeed. Enter your password to sign in."
+          }
+        }
+      }
+    },
+    "Alert.OfferTouchID.Title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use Touch ID next time?"
+          }
+        }
+      }
+    },
+    "Alert.OfferTouchID.Message" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Xcodes saved your Apple ID password in your keychain. Instead of typing it again, you can sign in with your fingerprint."
+          }
+        }
+      }
+    },
+    "Alert.OfferTouchID.Button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Use Touch ID"
+          }
+        }
+      }
+    },
+    "NotNow" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not Now"
+          }
+        }
+      }
+    },
+    "TouchIDReason.UseSavedPassword" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "use the saved Apple ID password for %@"
+          }
+        }
+      }
+    },
+    "TouchIDReason.Enable" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "use Touch ID to sign in to your Apple ID"
+          }
+        }
+      }
+    },
     "Reveal simulator runtimes in Finder" : {
       "localizations" : {
         "ca" : {
