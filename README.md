@@ -164,69 +164,36 @@ The following dependency and helper limitations remain:
 [`xcode-install`](https://github.com/xcpretty/xcode-install) and [fastlane/spaceship](https://github.com/fastlane/fastlane/tree/master/spaceship) both deserve credit for figuring out the hard parts of what makes this possible.
 
 
-<details>
-<summary>Releasing a new version</summary>
+## Releasing a new version
 
-Follow the steps below to build and release a new version of Xcodes.app. For any of the git steps, you can use your preferred tool, but please sign the tag.
+Merge the intended changes into `XcodesOrg/XcodesApp` `main`. Review the Release Drafter draft on GitHub and edit the notes there if needed. If any merged PRs were uncategorized, label them and rerun Release Drafter before reviewing the notes. If the privileged helper changed, decide whether to bump its version separately. A helper version bump requires users to reinstall the helper and approve it again.
+
+From this checkout on your Mac, substitute the version you want to ship.
 
 ```sh
-# Update the version number in Xcode and commit the change, if necessary
-
-# Question: Did anything in XPCHelper change?
-# - com.xcodesorg.xcodesapp.Helper folder and HelperXPCShared
-# - if so, bump the version number in com.xcodesorg.xcodesapp.Helper target.
-# Note: you do not have to bump the version number if nothing has changed.
-# Note2: If you do bump the version, the end user, must re-install the XPCHelper and give permission again.
-
-# Increment the build number
-scripts/increment_build_number.sh
-
-# Commit the change
-git add Xcodes/Resources/Info.plist
-git commit -asm "Increment build number"
-
-# Tag the latest commit
-# Replace $VERSION and $BUILD below with the latest real values
-git tag -asm "v$VERSIONb$BUILD" "v$VERSIONb$BUILD"
-
-# Push to origin
-git push --follow-tags
-
-# Build the app
-# Make sure you have the Xcode Selected you want to build with
-scripts/package_release.sh
-
-# Notarize the app
-# Do this from the Product directory so the app is zipped without being nested inside Product
-# Create a app specific password on appleid.apple.com if you haven't already
-# xcrun notarytool store-credentials "AC_PASSWORD" \
-#              --apple-id "test@example.com" \
-#              --team-id "teamid" \
-#               --password "app specific password"
-
-pushd Product
-../scripts/notarize.sh Xcodes.zip <MYORG>
-
-# Sign the .zip for Sparkle, note the signature in the output for later
-# If you're warned about the signing key not being found, see the Xcodes 1Password vault for the key and installation instructions.
-../scripts/sign_update Xcodes.zip
-popd
-
-# Go to https://github.com/XcodesOrg/XcodesApp/releases
-# If there are uncategorized PRs, add the appropriate label and run the Release Drafter action manually
-# Edit the latest draft release
-# Set its tag to the tag you just pushed
-# Set its title to a string with the format "$VERSION ($BUILD)"
-# Polish the draft release notes, if necessary
-# Add the signature to the bottom of the release notes in a comment, like:
-<!-- sparkle:edSignature=$SIGNATURE -->
-# Attach the zip that was created in the Product directory to the release
-# Publish the release
-
-shasum -a 256 xcodes.zip
-# Update the [Homebrew Cask](https://github.com/XcodesOrg/homebrew-cask/blob/master/Casks/x/xcodes.rb).
+./Scripts/release 4.2.1 --dry-run
+./Scripts/release 4.2.1
 ```
-</details>
+
+Add `--prerelease` to preview or publish a prerelease. The publish command builds the latest GitHub `main`, sets the app version and build, pushes the signed tag and version commit, and publishes the notarized `Xcodes.zip` with its Sparkle signature. It updates both appcasts in `XcodesOrg/website` and verifies them on `www.xcodes.app`. Prereleases appear only in the prerelease feed. Use the printed SHA-256 for the [Homebrew cask](https://github.com/XcodesOrg/homebrew-cask/blob/master/Casks/x/xcodes.rb).
+
+### One-time local setup
+
+- Select the Xcode you want to build with. Install its Apple Development signing identity and the Developer ID Application identity for team `ZU6GR6B2FY` in Keychain.
+- Install Python 3.9 or newer and GitHub CLI. Sign in with `gh auth login` using a GitHub account that can publish releases, run Actions, and push to `XcodesOrg/XcodesApp` and `XcodesOrg/website`. Configure a Git signing key for release tags.
+- Install the existing Sparkle private key from the Xcodes 1Password vault in your login Keychain. Store your Apple ID notarization credentials in the `AC_PASSWORD` Keychain profile. With an app-specific password ready, run the following and enter it when prompted.
+
+```sh
+xcrun notarytool store-credentials AC_PASSWORD --apple-id YOUR_APPLE_ID --team-id ZU6GR6B2FY
+```
+
+### Resuming a release
+
+If the command stops after saving a signed archive, use the tag it prints to continue. Use the same checkout for an unpublished release so the command can find the saved archive in its Git directory. For a published release, `--resume` uses the existing GitHub release to repair or verify the appcasts.
+
+```sh
+./Scripts/release --resume v4.2.1b43
+```
 
 ## Maintainers
 

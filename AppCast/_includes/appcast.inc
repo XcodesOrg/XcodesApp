@@ -11,7 +11,8 @@
                         <title>{{ release.name }}</title>
                         <description><![CDATA[{{ release.body | markdownify }}]]></description>
                         <pubDate>{{ release.published_at | date_to_rfc822 }}</pubDate>
-                        {% for asset in release.assets limit:1 %}
+                        {% assign archives = release.assets | where: 'name', 'Xcodes.zip' %}
+                        {% for asset in archives %}
                             {% assign signature = release.body | sparkle_signature %}
 
                             {% assign build_nums = release.tag_name | replace_first:'v','' | replace_first:'b',',' | split:',' %}

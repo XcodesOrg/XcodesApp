@@ -1,0 +1,515 @@
+#!/usr/bin/env python3
+"""Build and publish Xcodes.app from a maintainer's Mac."""
+
+import argparse
+import base64
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import plistlib
+import re
+import shutil
+import subprocess
+import sys
+import tempfile
+import time
+import xml.etree.ElementTree as ET
+
+
+ROOT = Path(__file__).resolve().parent.parent
+APP = "XcodesOrg/XcodesApp"
+WEBSITE = "XcodesOrg/website"
+TEAM = "ZU6GR6B2FY"
+VERSION_FILE = Path("Xcodes/Resources/Version.xcconfig")
+ARCHIVE = "Xcodes.zip"
+FEEDS = ("appcast.xml", "appcast_pre.xml")
+SPARKLE = "{http://www.andymatuschak.org/xml-namespaces/sparkle}"
+VERSION = r"(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)\.(?:0|[1-9][0-9]*)"
+TAG = re.compile(rf"v({VERSION})b([1-9][0-9]*)")
+COMMENT = re.compile(r"(?m)^<!--[ \t]*sparkle:edSignature=([^\r\n]*?)-->[ \t]*\r?$")
+SIGNATURE = re.compile(r"[A-Za-z0-9+/]{86}==")
+
+
+class ReleaseError(Exception):
+    pass
+
+
+def run(*command, cwd=ROOT, data=None, capture=True):
+    result = subprocess.run(command, cwd=cwd, input=data, stdout=subprocess.PIPE if capture else None)
+    if result.returncode:
+        name = " ".join(map(os.fspath, command[:2]))
+        raise ReleaseError(f"{name} exited with status {result.returncode}.")
+    return result.stdout
+
+
+def git(*args, cwd=ROOT, capture=True):
+    return run("git", "-c", "credential.helper=", "-c", "credential.helper=!gh auth git-credential",
+               *args, cwd=cwd, capture=capture)
+
+
+def github_url(repo):
+    return f"https://github.com/{repo}.git"
+
+
+def github(endpoint, *, body=None, method=None, paginate=False):
+    args = ["gh", "api", endpoint]
+    if method:
+        args += ["--method", method]
+    if paginate:
+        args += ["--paginate", "--slurp"]
+    if body is not None:
+        args += ["--input", "-"]
+    data = None if body is None else json.dumps(body).encode()
+    return json.loads(run(*args, data=data))
+
+
+def remote_refs(repo, *patterns):
+    lines = git("ls-remote", "--refs", github_url(repo), *patterns).decode().splitlines()
+    return {ref: sha for sha, ref in (line.split("\t") for line in lines)}
+
+
+def next_build(refs):
+    builds = []
+    for ref in refs:
+        if ref.startswith("refs/tags/"):
+            match = TAG.fullmatch(ref.removeprefix("refs/tags/"))
+            if match:
+                builds.append(int(match[2]))
+    return max(builds, default=0) + 1
+
+
+def releases():
+    pages = github(f"repos/{APP}/releases?per_page=100", paginate=True)
+    return [release for page in pages for release in page]
+
+
+def reviewed_draft(all_releases):
+    drafts = [
+        release for release in all_releases
+        if release["draft"]
+        and release["tag_name"].startswith("untagged-")
+        and release["target_commitish"] in ("main", "refs/heads/main")
+    ]
+    if len(drafts) != 1:
+        raise ReleaseError(f"Expected one Release Drafter draft for main, found {len(drafts)}.")
+    if not (drafts[0].get("body") or "").strip():
+        raise ReleaseError("The Release Drafter draft has no release notes.")
+    return drafts[0]
+
+
+def signature_comment(notes, signature):
+    return COMMENT.sub("", notes).rstrip() + f"\n\n<!-- sparkle:edSignature={signature} -->\n"
+
+
+def valid_signature(signature):
+    return bool(SIGNATURE.fullmatch(signature)) and len(base64.b64decode(signature, validate=True)) == 64
+
+
+def sha256(path):
+    digest = hashlib.sha256()
+    with path.open("rb") as archive:
+        for block in iter(lambda: archive.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()
+
+
+def copy_signing_config(destination):
+    result = subprocess.run(
+        ["git", "config", "--null", "--get-regexp", r"^(user\.(name|email|signingkey)$|gpg\.|commit\.gpgsign$)"],
+        cwd=ROOT, stdout=subprocess.PIPE, check=False,
+    )
+    if result.returncode not in (0, 1):
+        raise ReleaseError("Could not read Git signing settings from this checkout.")
+    for setting in result.stdout.decode().split("\0"):
+        if setting:
+            key, value = setting.split("\n", 1)
+            git("config", "--local", key, value, cwd=destination)
+
+
+def save_state(path, state):
+    temporary = path / "release.json.tmp"
+    temporary.write_text(json.dumps(state, indent=2) + "\n")
+    temporary.replace(path / "release.json")
+
+
+def read_state(path):
+    return json.loads((path / "release.json").read_text())
+
+
+def prepare(path, state):
+    print(f"Preparing {state['tag']} from {state['base'][:12]}", flush=True)
+    source = path / "source"
+    git("clone", "--quiet", "--depth", "1", "--no-tags", "--branch", "main", github_url(APP), source)
+    if git("rev-parse", "HEAD", cwd=source).decode().strip() != state["base"]:
+        raise ReleaseError("main moved during preparation. Run the version command again.")
+    if not (source / VERSION_FILE).is_file():
+        raise ReleaseError("Merge the release automation into XcodesApp main before publishing.")
+    copy_signing_config(source)
+    (source / VERSION_FILE).write_text(
+        f"MARKETING_VERSION = {state['version']}\nCURRENT_PROJECT_VERSION = {state['build']}\n"
+    )
+    git("add", "--", VERSION_FILE, cwd=source)
+    git("commit", "--signoff", "-m", f"Release {state['version']} ({state['build']})", cwd=source, capture=False)
+    git("tag", "--sign", "-m", state["tag"], state["tag"], cwd=source, capture=False)
+    state["commit"] = git("rev-parse", "HEAD", cwd=source).decode().strip()
+    state["tag_sha"] = git("rev-parse", f"refs/tags/{state['tag']}", cwd=source).decode().strip()
+
+    run("./Scripts/package_release.sh", cwd=source, capture=False)
+    product = source / "Product"
+    app = product / "Xcodes.app"
+    with (app / "Contents/Info.plist").open("rb") as file:
+        info = plistlib.load(file)
+    if (info["CFBundleShortVersionString"], info["CFBundleVersion"]) != (state["version"], str(state["build"])):
+        raise ReleaseError("The exported app version or build does not match the release tag.")
+    run("codesign", "--verify", "--deep", "--strict", app, capture=False)
+    signing = subprocess.run(
+        ["codesign", "--display", "--verbose=4", app], check=True, stderr=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+    ).stderr.decode()
+    if f"TeamIdentifier={TEAM}" not in signing.splitlines() or not re.search(
+        r"^Authority=Developer ID Application: ", signing, re.MULTILINE
+    ):
+        raise ReleaseError(f"The exported app is missing a Developer ID Application signature for {TEAM}.")
+
+    run("../Scripts/notarize.sh", ARCHIVE, TEAM, cwd=product, capture=False)
+    archive = product / ARCHIVE
+    output = run("../Scripts/sign_update", ARCHIVE, cwd=product).decode()
+    signatures = re.findall(r'sparkle:edSignature="([^"]+)"', output)
+    if len(signatures) != 1 or not valid_signature(signatures[0]):
+        raise ReleaseError("Sparkle did not return a valid signature. Check the signing key in Keychain.")
+    run("xcrun", "swift", source / "Scripts/verify_update.swift", archive, signatures[0], info["SUPublicEDKey"])
+    state.update(signature=signatures[0], digest=sha256(archive), size=archive.stat().st_size)
+    archive.rename(path / ARCHIVE)
+    shutil.rmtree(source / "Archive")
+    shutil.rmtree(product)
+    save_state(path, state)
+
+
+def push_version(path, state):
+    tag_ref = f"refs/tags/{state['tag']}"
+    refs = remote_refs(APP, "refs/heads/main", "refs/tags/v*")
+    remote_tag = refs.get(tag_ref)
+    if remote_tag == state["tag_sha"]:
+        return
+    if remote_tag or refs.get("refs/heads/main") != state["base"] or next_build(refs) != state["build"]:
+        raise ReleaseError("The source or build number has changed on GitHub. Run the version command again.")
+    git("push", "--atomic", "origin", f"{state['commit']}:refs/heads/main", f"{tag_ref}:{tag_ref}",
+        cwd=path / "source", capture=False)
+    if remote_refs(APP, tag_ref).get(tag_ref) != state["tag_sha"]:
+        raise ReleaseError("Could not confirm the signed tag on GitHub.")
+
+
+def release_asset(release):
+    assets = [asset for asset in release["assets"] if asset["name"] == ARCHIVE]
+    if len(assets) > 1:
+        raise ReleaseError(f"The release has multiple assets named {ARCHIVE}.")
+    return assets[0] if assets else None
+
+
+def check_uploaded_asset(asset, state):
+    if (
+        not asset or asset["state"] != "uploaded" or asset["size"] != state["size"]
+        or asset.get("digest") != f"sha256:{state['digest']}"
+    ):
+        raise ReleaseError(f"The GitHub asset size or SHA-256 does not match the signed {ARCHIVE}.")
+
+
+def publish_release(path, state):
+    archive = path / ARCHIVE
+    if archive.stat().st_size != state["size"] or sha256(archive) != state["digest"]:
+        raise ReleaseError(f"The saved {ARCHIVE} no longer matches the signed archive.")
+    endpoint = f"repos/{APP}/releases/{state['draft_id']}"
+    draft = github(endpoint)
+    if not draft["draft"] or draft["tag_name"] not in (state["draft_tag"], state["tag"]):
+        raise ReleaseError("The selected draft has been repurposed. Check the release in GitHub.")
+    if not (draft.get("body") or "").strip():
+        raise ReleaseError("The selected draft has no release notes.")
+    if set(asset["name"] for asset in draft["assets"]) - {ARCHIVE}:
+        raise ReleaseError("The draft contains an unexpected asset. Check the release in GitHub.")
+    if draft["tag_name"] != state["tag"] and release_asset(draft):
+        raise ReleaseError("The untagged draft already contains an archive. Check the release in GitHub.")
+
+    push_version(path, state)
+    payload = {
+        "name": f"{state['version']} ({state['build']})",
+        "body": signature_comment(draft["body"], state["signature"]),
+        "tag_name": state["tag"],
+        "prerelease": state["prerelease"],
+    }
+    draft = github(endpoint, method="PATCH", body=payload)
+    if not draft["draft"] or draft["tag_name"] != state["tag"]:
+        raise ReleaseError("GitHub did not apply the tag to the draft.")
+    asset = release_asset(draft)
+    if asset and asset["state"] == "starter" and asset["size"] == 0:
+        # GitHub may leave this placeholder after a failed upload.
+        run("gh", "api", "--method", "DELETE", f"repos/{APP}/releases/assets/{asset['id']}")
+        asset = None
+    if not asset:
+        run("gh", "release", "upload", state["tag"], archive, "--repo", APP, capture=False)
+    updated = github(endpoint)
+    check_uploaded_asset(release_asset(updated), state)
+    if not updated["draft"] or any(updated[key] != value for key, value in payload.items()):
+        raise ReleaseError("The release draft changed during upload. Check its notes and rerun with --resume.")
+    if next_build(remote_refs(APP, "refs/tags/v*")) != state["build"] + 1:
+        raise ReleaseError("A newer build tag now exists. Check the release in GitHub.")
+    payload.update(draft=False, make_latest="false" if state["prerelease"] else "true")
+    published = github(endpoint, method="PATCH", body=payload)
+    if published["draft"]:
+        raise ReleaseError("GitHub did not publish the release.")
+    print(f"Published {published['html_url']}", flush=True)
+    return published
+
+
+def feed_entries(data):
+    items = {}
+    for enclosure in ET.fromstring(data).findall("./channel/item/enclosure"):
+        url = enclosure.attrib["url"]
+        if url in items:
+            raise ReleaseError(f"Duplicate enclosure in appcast: {url}")
+        items[url] = (
+            enclosure.get(SPARKLE + "version"), enclosure.get(SPARKLE + "shortVersionString"),
+            enclosure.get(SPARKLE + "edSignature"), enclosure.get("length"),
+        )
+    return items
+
+
+def expected_entry(release):
+    tag = TAG.fullmatch(release["tag_name"])
+    asset = release_asset(release)
+    comments = COMMENT.findall(release.get("body") or "")
+    if not tag or not asset or asset["state"] != "uploaded" or len(comments) != 1:
+        raise ReleaseError("The published release is missing its tag, archive, or Sparkle signature.")
+    signature = comments[0].strip()
+    if not valid_signature(signature):
+        raise ReleaseError("The published release has an invalid Sparkle signature.")
+    url = f"https://github.com/{APP}/releases/download/{tag[0]}/{ARCHIVE}"
+    if asset["browser_download_url"] != url or asset["size"] <= 0:
+        raise ReleaseError("The published release has an unexpected archive URL or size.")
+    return url, (tag[2], tag[1], signature, str(asset["size"]))
+
+
+def validate_feeds(feeds, release, entry):
+    stable, prerelease = (feed_entries(feeds[name]) for name in FEEDS)
+    url, metadata = entry
+    if prerelease.get(url) != metadata:
+        raise ReleaseError("The prerelease feed is missing the expected enclosure.")
+    if release["prerelease"]:
+        if url in stable:
+            raise ReleaseError("The prerelease appears in the stable feed.")
+    elif stable.get(url) != metadata:
+        raise ReleaseError("The stable feed is missing the expected enclosure.")
+    if not stable.items() <= prerelease.items():
+        raise ReleaseError("The prerelease feed is missing stable entries.")
+
+
+def preserve_feed_entries(current, candidate):
+    for name in FEEDS:
+        if not feed_entries(current[name]).items() <= feed_entries(candidate[name]).items():
+            raise ReleaseError(f"The candidate {name} would remove or change an existing release enclosure.")
+
+
+def repository_feeds(repo, sha):
+    return {
+        name: run("gh", "api", "-H", "Accept: application/vnd.github.raw+json",
+                  f"repos/{repo}/contents/{name}?ref={sha}")
+        for name in FEEDS
+    }
+
+
+def wait_for_appcasts(release, entry):
+    print("Waiting for GitHub Actions to generate the appcasts", flush=True)
+    dispatch_after = time.monotonic() + 45
+    deadline = time.monotonic() + 600
+    last_sha = None
+    run_id = None
+    while time.monotonic() < deadline:
+        sha = remote_refs(APP, "refs/heads/gh-pages").get("refs/heads/gh-pages")
+        if sha and sha != last_sha:
+            feeds = repository_feeds(APP, sha)
+            try:
+                validate_feeds(feeds, release, entry)
+                return feeds
+            except (ReleaseError, ET.ParseError) as error:
+                print(f"gh-pages {sha[:12]}: {error}", flush=True)
+            last_sha = sha
+        if run_id is None and time.monotonic() >= dispatch_after:
+            dispatch = run(
+                "gh", "api", "--method", "POST", "-H", "X-GitHub-Api-Version: 2026-03-10",
+                f"repos/{APP}/actions/workflows/appcast.yml/dispatches", "--input", "-",
+                data=json.dumps({"ref": "main", "return_run_details": True}).encode(),
+            )
+            workflow = json.loads(dispatch)
+            run_id = workflow["workflow_run_id"]
+            print(f"Requested appcast rebuild: {workflow['html_url']}", flush=True)
+        if run_id is not None:
+            workflow = github(f"repos/{APP}/actions/runs/{run_id}")
+            if workflow["status"] == "completed" and workflow["conclusion"] not in ("success", "cancelled"):
+                raise ReleaseError(f"Appcast workflow failed: {workflow['html_url']}")
+        time.sleep(10)
+    raise ReleaseError("Timed out waiting for validated appcasts on gh-pages.")
+
+
+def update_website(feeds, tag):
+    with tempfile.TemporaryDirectory(prefix="xcodes-website-") as directory:
+        git("clone", "--quiet", "--depth", "1", "--no-tags", "--branch", "master", github_url(WEBSITE), directory)
+        website = Path(directory)
+        current = {name: (website / name).read_bytes() for name in FEEDS}
+        preserve_feed_entries(current, feeds)
+        if feeds != current:
+            for name, data in feeds.items():
+                (website / name).write_bytes(data)
+            copy_signing_config(website)
+            git("add", "--", *FEEDS, cwd=website)
+            git("commit", "-m", f"Update Xcodes appcasts for {tag}", cwd=website, capture=False)
+            git("push", "origin", "HEAD:refs/heads/master", cwd=website, capture=False)
+        sha = git("rev-parse", "HEAD", cwd=website).decode().strip()
+        print(f"Website commit: https://github.com/{WEBSITE}/commit/{sha}", flush=True)
+        return sha
+
+
+def wait_for_website(sha, feeds, release, entry):
+    print("Waiting for https://www.xcodes.app to serve both appcasts", flush=True)
+    deadline = time.monotonic() + 600
+    requested_rebuild = False
+    problem = ""
+    while time.monotonic() < deadline:
+        try:
+            live = {
+                name: run("curl", "-fsSL", "--max-time", "20", "-H", "Cache-Control: no-cache",
+                          f"https://www.xcodes.app/{name}?release={sha}")
+                for name in FEEDS
+            }
+            validate_feeds(live, release, entry)
+            preserve_feed_entries(feeds, live)
+            return
+        except (ReleaseError, ET.ParseError) as error:
+            problem = str(error)
+        if not requested_rebuild:
+            build = github(f"repos/{WEBSITE}/pages/builds/latest")
+            if build["commit"] == sha and build["status"] == "errored":
+                github(f"repos/{WEBSITE}/pages/builds", method="POST")
+                requested_rebuild = True
+        time.sleep(10)
+    raise ReleaseError(f"Timed out verifying the live appcasts. {problem}")
+
+
+def sync_appcasts(release):
+    entry = expected_entry(release)
+    feeds = wait_for_appcasts(release, entry)
+    sha = update_website(feeds, release["tag_name"])
+    wait_for_website(sha, feeds, release, entry)
+    print("Verified https://www.xcodes.app/appcast.xml and https://www.xcodes.app/appcast_pre.xml")
+    digest = release_asset(release).get("digest")
+    if digest:
+        print(f"{ARCHIVE} SHA-256: {digest.removeprefix('sha256:')}")
+
+
+def preflight():
+    for repo in (APP, WEBSITE):
+        if not github(f"repos/{repo}")["permissions"]["push"]:
+            raise ReleaseError(f"The active GitHub account cannot push to {repo}.")
+    for repo, branch in ((APP, "gh-pages"), (WEBSITE, "master")):
+        pages = github(f"repos/{repo}/pages")
+        if pages.get("source") != {"branch": branch, "path": "/"}:
+            raise ReleaseError(f"GitHub Pages for {repo} is not configured for the root of {branch}.")
+
+
+def publish_new(args, storage=None):
+    refs = remote_refs(APP, "refs/heads/main", "refs/tags/v*")
+    build = next_build(refs)
+    base = refs["refs/heads/main"]
+    tag = f"v{args.version}b{build}"
+    if storage is not None:
+        for journal in storage.glob("v*/release.json"):
+            saved = read_state(journal.parent)
+            if (saved["version"], saved["prerelease"]) != (args.version, args.prerelease) or saved.get("complete"):
+                continue
+            if refs.get(f"refs/tags/{saved['tag']}") == saved["tag_sha"] or (saved["tag"] == tag and saved["base"] == base):
+                raise ReleaseError(f"An unfinished release exists. Run ./Scripts/release --resume {saved['tag']}.")
+    draft = reviewed_draft(releases())
+    channel = "prerelease" if args.prerelease else "stable"
+    print(f"{'Dry run: ' if args.dry_run else ''}{tag} ({channel}) from {APP} main at {base[:12]}", flush=True)
+    print(f"GitHub draft: {draft['html_url']}", flush=True)
+    print(f"Appcasts: {APP} gh-pages → {WEBSITE} master → https://www.xcodes.app", flush=True)
+    if storage is None:
+        return
+
+    path = storage / tag
+    state = dict(tag=tag, version=args.version, build=build, base=base, prerelease=args.prerelease,
+                 draft_id=draft["id"], draft_tag=draft["tag_name"])
+    with tempfile.TemporaryDirectory(prefix="prepare-", dir=storage) as temporary:
+        staged = Path(temporary) / tag
+        staged.mkdir()
+        prepare(staged, state)
+        if path.exists():
+            path.rename(staged.parent / "superseded")
+        staged.rename(path)
+    finish(tag, storage)
+
+
+def finish(tag, storage):
+    path = storage / tag
+    try:
+        state = read_state(path) if (path / "release.json").is_file() else None
+        release = next((item for item in releases() if item["tag_name"] == tag and not item["draft"]), None)
+        if release is None:
+            if state is None:
+                raise ReleaseError("There is no local saved archive or published GitHub release for this tag.")
+            release = publish_release(path, state)
+        if state is not None:
+            check_uploaded_asset(release_asset(release), state)
+            _, metadata = expected_entry(release)
+            if metadata[2] != state["signature"] or release["prerelease"] != state["prerelease"]:
+                raise ReleaseError("The published signature or channel does not match the saved release.")
+        sync_appcasts(release)
+        if state is not None:
+            state["complete"] = True
+            save_state(path, state)
+    except (ReleaseError, OSError, subprocess.SubprocessError, ValueError, ET.ParseError, KeyError, KeyboardInterrupt):
+        print(f"To continue after resolving the error, run ./Scripts/release --resume {tag}.", file=sys.stderr)
+        raise
+
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    target = parser.add_mutually_exclusive_group(required=True)
+    target.add_argument("version", metavar="VERSION", nargs="?", help="marketing version, for example 4.2.1")
+    target.add_argument("--resume", metavar="TAG", help="continue an existing release or repair its appcasts")
+    parser.add_argument("--dry-run", action="store_true", help="preview a new release without making changes")
+    parser.add_argument("--prerelease", action="store_true", help="publish a prerelease")
+    args = parser.parse_args()
+    if args.resume is not None and (args.dry_run or args.prerelease):
+        parser.error("--resume uses the existing release's settings and cannot be combined with the other flags")
+    if args.resume is not None and not TAG.fullmatch(args.resume):
+        parser.error("--resume expects a tag like v4.2.1b43")
+    if args.version is not None and not re.fullmatch(VERSION, args.version):
+        parser.error("VERSION must have the form MAJOR.MINOR.PATCH, for example 4.2.1")
+
+    preflight()
+    if args.dry_run:
+        publish_new(args)
+        return
+
+    common_git = Path(git("rev-parse", "--path-format=absolute", "--git-common-dir").decode().strip())
+    storage = common_git / "xcodes-releases"
+    storage.mkdir(exist_ok=True)
+    with (storage / "release.lock").open("a") as lock:
+        try:
+            fcntl.flock(lock, fcntl.LOCK_EX | fcntl.LOCK_NB)
+        except BlockingIOError:
+            raise ReleaseError("Another release command is already running in this checkout.") from None
+        if args.resume:
+            finish(args.resume, storage)
+        else:
+            publish_new(args, storage)
+
+
+if __name__ == "__main__":
+    try:
+        main()
+    except (ReleaseError, OSError, subprocess.SubprocessError, ValueError, ET.ParseError, KeyError) as error:
+        sys.exit(f"Release stopped: {error}")
+    except KeyboardInterrupt:
+        sys.exit("Release interrupted.")
