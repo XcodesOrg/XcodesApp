@@ -131,8 +131,8 @@
         "package": "XcodesLoginKit",
         "repositoryURL": "https://github.com/XcodesOrg/XcodesLoginKit",
         "state": {
-          "branch": "main",
-          "revision": "929f9aac3140caf7b64cbb5385f4f645c5f9913d",
+          "branch": "v1.2.0",
+          "revision": "2ef7f39462ab29b56211e35a01ad85ae6cca00a2",
           "version": null
         }
       },
