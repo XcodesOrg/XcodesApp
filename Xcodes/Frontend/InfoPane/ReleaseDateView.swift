@@ -15,18 +15,16 @@ struct ReleaseDateView: View {
         if let date = date {
            
                 VStack(alignment: .leading) {
-                    HStack {
-                        Text("ReleaseDate")
-                            .font(.headline)
-                        Spacer()
-                        if let url {
-                            ReleaseNotesView(url: url)
-                        }
-                    }
+                    Text("ReleaseDate")
+                        .font(.headline)
                     
                     Text("\(date, style: .date)")
                         .font(.subheadline)
                   
+                    if let url {
+                        ReleaseNotesView(url: url)
+                            .padding(.top, 2)
+                    }
                 }
                 
            
