@@ -411,7 +411,7 @@ private struct XcodeVersionGroupRow: View {
     let onToggleExpanded: () -> Void
 
     var body: some View {
-        HStack {
+        HStack(spacing: 8) {
             Button(action: onToggleExpanded) {
                 // Nested rows line the chevron up with the title, where the tree guide branch ends;
                 // top-level rows center it on the icon.
@@ -426,56 +426,88 @@ private struct XcodeVersionGroupRow: View {
                     }
 
                     VStack(alignment: .leading, spacing: 2) {
-                        HStack(spacing: 6) {
-                            Text(verbatim: displayName)
-                                .font(level == 0 ? .headline : .body.weight(.medium))
-                                .fixedSize(horizontal: true, vertical: false)
-                                .treeGuideTitle()
-
-                            if appState.showTags, let tag {
-                                tag
-                            }
-
-                            if appState.showTags && showsActiveTag {
-                                ReleaseTagView.active
-                            }
-
-                            Text(verbatim: "\(versionCount)")
-                                .font(.caption2.weight(.semibold).monospacedDigit())
-                                .foregroundStyle(.secondary)
-                                .padding(.horizontal, 6)
-                                .padding(.vertical, 1)
-                                .background(.quaternary, in: Capsule())
-                                .accessibilityHidden(true)
-                        }
+                        titleAndTags
 
                         if let subtitle {
                             Text(verbatim: subtitle)
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
+                                .lineLimit(1)
+                                .help(subtitle)
                         }
                     }
-
-                    Spacer()
+                    .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
             }
             .buttonStyle(.plain)
+            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
 
             // Like the progress ring and Active tag, the checkmark and Open/Install belong to the deepest
             // visible row, so an expanded group leaves them to the rows below it
             if !isExpanded {
-                selectControl
-                    .padding(.trailing, 16)
-                installControl
-                    // Same column width as the Install/Open buttons, so the progress ring lines up with them
-                    .frame(minWidth: 67)
+                HStack(spacing: 8) {
+                    selectControl
+                    installControl
+                        // Same column width as the Install/Open buttons, so the progress ring lines up with them
+                        .frame(minWidth: 67)
+                }
+                .fixedSize()
             }
         }
         .padding(.leading, CGFloat(level) * TreeGuide.levelIndent)
         .padding(.vertical, level == 0 ? 8 : 5)
         .contentShape(Rectangle())
+    }
+
+    private var titleAndTags: some View {
+        ViewThatFits(in: .horizontal) {
+            HStack(spacing: 6) {
+                title
+                tags
+                count
+            }
+
+            VStack(alignment: .leading, spacing: 2) {
+                HStack(spacing: 6) {
+                    title
+                    count
+                }
+                HStack(spacing: 6) {
+                    tags
+                }
+            }
+        }
+    }
+
+    private var title: some View {
+        Text(verbatim: displayName)
+            .font(level == 0 ? .headline : .body.weight(.medium))
+            .fixedSize(horizontal: true, vertical: false)
+            .treeGuideTitle()
+    }
+
+    @ViewBuilder
+    private var tags: some View {
+        if appState.showTags {
+            if let tag {
+                tag
+            }
+            if showsActiveTag {
+                ReleaseTagView.active
+            }
+        }
+    }
+
+    private var count: some View {
+        Text(verbatim: "\(versionCount)")
+            .font(.caption2.weight(.semibold).monospacedDigit())
+            .foregroundStyle(.secondary)
+            .padding(.horizontal, 6)
+            .padding(.vertical, 1)
+            .background(.quaternary, in: Capsule())
+            .fixedSize()
+            .accessibilityHidden(true)
     }
 
     /// "Latest: 27.0 · Active: 27.0 Beta 6"

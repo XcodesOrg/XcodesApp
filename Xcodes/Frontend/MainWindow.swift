@@ -21,7 +21,10 @@ struct MainWindow: View {
     @AppStorage("isInstalledOnly") private var isInstalledOnly = false
 
     var body: some View {
-        NavigationSplitViewWrapper(columnVisibility: $columnVisibility) {
+        NavigationSplitViewWrapper(
+            columnVisibility: $columnVisibility,
+            detailMinimumWidth: xcode == nil ? 0 : InfoPane.minimumWidth
+        ) {
             XcodeListView(selectedXcodeID: $selectedXcodeID, searchText: searchText, category: category, isInstalledOnly: isInstalledOnly, architecture: architecture)
                 .layoutPriority(1)
                 .alert(
